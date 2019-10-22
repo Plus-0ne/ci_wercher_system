@@ -46,9 +46,9 @@
 											<option>
 												Employee
 											</option>
-											<option>
+											<!-- <option>
 												On-Call
-											</option>
+											</option> -->
 										</select>
 									</div>
 								</div>
@@ -208,7 +208,7 @@
 										<button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Save</button>
 									</div>
 									<div class="form-group ml-auto">
-										<a href="<?=base_url()?>Employee" class="btn btn-secondary"><i class="fas fa-chevron-left"></i> Back</a>
+										<a href="<?=base_url()?>Applicants" class="btn btn-secondary"><i class="fas fa-chevron-left"></i> Back</a>
 									</div>
 								</div>
 							</form>
@@ -282,7 +282,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form action="Main_Controller/AddtoAcadCart" method="post">
+					<form action="<?=base_url()?>Main_Controller/AddtoAcadCart" method="post">
 						<div class="form-row">
 							<div class="form-group">
 								<select id="SchoolLevel" class="form-control" name="SchoolLevel">
@@ -335,65 +335,13 @@
 			$('#sidebar').toggleClass('active');
 			$('.ncontent').toggleClass('shContent');
 		});
-		// $('#ssscbox').on('click', function () {
-		// 	if ($('#ssscbox').prop("checked") == true) 
-		// 	{
-		// 		$('#sssa').append('<input id="ssstb" class=" mt-3 text-center form-control" type="text" name="SSS" placeholder="SSS #">');
-		// 	}
-		// 	else
-		// 	{
-		// 		$('#ssstb').remove();
-		// 	}
-		// });
-		// $('#phealtcbox').on('click', function () {
-		// 	if ($('#phealtcbox').prop("checked") == true) 
-		// 	{
-		// 		$('#phealta').append('<input id="phealtb" class=" mt-3 text-center form-control" type="text" name="Philhealth" placeholder="Philhealth #">');
-		// 	}
-		// 	else
-		// 	{
-		// 		$('#phealtb').remove();
-		// 	}
-		// });
-		// $('#HDMFcbox').on('click', function () {
-		// 	if ($('#HDMFcbox').prop("checked") == true) 
-		// 	{
-		// 		$('#HDMFa').append('<input id="HDMFb" class=" mt-3 text-center form-control" type="text" name="HDMF" placeholder="HDMF #">');
-		// 	}
-		// 	else
-		// 	{
-		// 		$('#HDMFb').remove();
-		// 	}
-		// });
-		// $('#TINcbox').on('click', function () {
-		// 	if ($('#TINcbox').prop("checked") == true) 
-		// 	{
-		// 		$('#TINa').append('<input id="TINb" class=" mt-3 text-center form-control" type="text" name="TIN" placeholder="TIN #">');
-		// 	}
-		// 	else
-		// 	{
-		// 		$('#TINb').remove();
-		// 	}
-		// });
-		// $('#ATMcbox').on('click', function () {
-		// 	if ($('#ATMcbox').prop("checked") == true) 
-		// 	{
-		// 		$('#ATMa').append('<input id="ATMb" class=" mt-3 text-center form-control" type="text" name="ATM" placeholder="ATM">');
-		// 	}
-		// 	else
-		// 	{
-		// 		$('#ATMb').remove();
-		// 	}
-		// });
 		$('#blah').click(function(){ $('#imgInp').trigger('click'); });
 		function readURL(input) {
 			if (input.files && input.files[0]) {
 				var reader = new FileReader();
-
 				reader.onload = function(e) {
 					$('#blah').attr('src', e.target.result);
 				}
-
 				reader.readAsDataURL(input.files[0]);
 			}
 		}
@@ -402,6 +350,7 @@
 		});
 		// Cart Academic History
 		$('#add_sssscc').click(function(){
+
 			var SchoolLevel = $('#SchoolLevel').val();
 			var SchoolName = $('#SchoolName').val();
 			var FromYearSchool = $('#FromYearSchool').val();
@@ -411,7 +360,7 @@
 				method : "POST",
 				data : {SchoolLevel: SchoolLevel, SchoolName: SchoolName, FromYearSchool: FromYearSchool, ToYearSchool: ToYearSchool},
 				success: function(data){
-					$('#SchoolLevel').val("");
+					$('#SchoolLevel option:selected').index();
 					$('#SchoolName').val("");
 					$('#FromYearSchool').val("");
 					$('#ToYearSchool').val("");

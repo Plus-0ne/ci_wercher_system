@@ -10,12 +10,12 @@ class Main_Controller extends CI_Controller {
 	public function index()
 	{
 		$this->session->unset_userdata('acadcart');
-		redirect('Dashboard');
+		$this->load->view('Login');
 	}
 	public function Dashboard()
 	{
 		$this->session->unset_userdata('acadcart');
-		$header['title'] = 'Dashboard';
+		$header['title'] = 'Dashboard | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$this->load->view('users/u_dashboard');
 	}
@@ -23,7 +23,7 @@ class Main_Controller extends CI_Controller {
 	public function V_Applicants()
 	{
 		$this->session->unset_userdata('acadcart');
-		$header['title'] = 'Applicants';
+		$header['title'] = 'Applicants | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['get_employee'] = $this->Model_Selects->getApplicant();
 		$this->load->view('users/u_applicant',$data);
@@ -31,7 +31,7 @@ class Main_Controller extends CI_Controller {
 	public function Employee()
 	{
 		$this->session->unset_userdata('acadcart');
-		$header['title'] = 'Employees';
+		$header['title'] = 'Employees | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['get_employee'] = $this->Model_Selects->GetEmployee();
 		$this->load->view('users/u_users',$data);
@@ -88,8 +88,10 @@ class Main_Controller extends CI_Controller {
 	}
 	public function NewEmployee()
 	{
-		$header['title'] = 'New Employee';
+		$header['title'] = 'New Employee | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['name'] = $this->security->get_csrf_token_name();
+		$data['hash'] = $this->security->get_csrf_hash();
 		$this->load->view('users/u_addemployee',$data);
 	}
 	public function showAcad()
