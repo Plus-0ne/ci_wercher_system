@@ -12,6 +12,7 @@
 			height: 100%;
 			padding: 0px;
 			margin: 0px;
+			background-color: #2A2A2A;
 		}
 		.header
 		{
@@ -19,6 +20,7 @@
 		}
 		.login-container
 		{
+			background-color: #FFFEFE;
 			border-radius: 6px;
 			-webkit-box-shadow: 0px 0px 57px -9px rgba(0,0,0,0.34);
 			-moz-box-shadow: 0px 0px 57px -9px rgba(0,0,0,0.34);
@@ -33,22 +35,27 @@
 	<div class="content">
 		<div class="container">
 			<div class="row">
-				<div class="col p-5 mt-5">
-					<img src="https://scontent.fmnl9-1.fna.fbcdn.net/v/t1.0-9/13240629_242086709504627_6587238279405995147_n.jpg?_nc_cat=111&_nc_eui2=AeFIkegEnuFMZPmHGeqO-6uIG-rM1RZ5XD-LNf9UTUgJmn0v1GaIwczrIaQhaOx612Te_DTWS27mrMXaP9PA5cLpK8kq-b9p50v730jmKNf0AqIIRSow2qCKyf0fw6FzNHY&_nc_oc=AQkTOQ3cESjy4W8r09IC7PA9h5THnvCINqcdQc5TM6tFP_vT2ZcGHt00ZXrKc8umZbs&_nc_ht=scontent.fmnl9-1.fna&oh=2d4b6f1485ef1087abad0bdee3661e2d&oe=5E22AE3E" alt="LOGO">
-				</div>
-				<div class="col-sm-12 col-md-11 col-lg-4 ml-auto">
-					<div class="login-container pt-5 pl-4 pb-5 pr-4">
+				<div class="col-sm-12 col-md-11 col-lg-4 m-auto">
+					<div class="login-container pt-4 pl-4 pb-4 pr-4">
 						<?php echo form_open(base_url().'Dashboard','method="post"'); ?>
+						<!-- <div class="text-center mb-3">
+							<img src="https://scontent.fmnl9-1.fna.fbcdn.net/v/t1.0-9/13240629_242086709504627_6587238279405995147_n.jpg?_nc_cat=111&_nc_eui2=AeFIkegEnuFMZPmHGeqO-6uIG-rM1RZ5XD-LNf9UTUgJmn0v1GaIwczrIaQhaOx612Te_DTWS27mrMXaP9PA5cLpK8kq-b9p50v730jmKNf0AqIIRSow2qCKyf0fw6FzNHY&_nc_oc=AQkTOQ3cESjy4W8r09IC7PA9h5THnvCINqcdQc5TM6tFP_vT2ZcGHt00ZXrKc8umZbs&_nc_ht=scontent.fmnl9-1.fna&oh=2d4b6f1485ef1087abad0bdee3661e2d&oe=5E22AE3E" alt="LOGO" width="100">
+						</div> -->
+						<div class="text-center mb-5 mt-4">
+							<h5>
+								Welcome
+							</h5>
+						</div>
 						<div class="form-row">
-							<div class="form-group w-100">
+							<div class="form-group w-100 text-center">
 								<label>Username</label>
-								<input class="form-control" type="text" name="">
+								<input class="form-control text-center" type="text" name="UserName">
 							</div>
 						</div>
 						<div class="form-row">
-							<div class="form-group w-100">
+							<div class="form-group w-100 text-center">
 								<label>Password</label>
-								<input class="form-control" type="text" name="">
+								<input class="form-control text-center" type="password" name="Password">
 							</div>
 						</div>
 						<div class="form-row">

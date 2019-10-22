@@ -25,7 +25,7 @@
 			<a class="link-s" href="#pageSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-cog"></i> Settings </a>
 			<ul class="collapse list-unstyled collapseSettings animated fadeIn" id="pageSettings">
 				<li>
-					<a class="link-s" class="sublink" href="#"><i class="fas fa-sign-out-alt"></i> Logout </a>
+					<a class="link-s" class="sublink" href="<?=base_url()?>"><i class="fas fa-sign-out-alt"></i> Logout </a>
 				</li>
 			</ul>
 		</li>
