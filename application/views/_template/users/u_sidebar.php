@@ -16,7 +16,7 @@
 			<a class="link-s" href="<?=base_url()?>Dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard </a>
 		</li>
 		<li class="nav-item">
-			<a class="link-s" href="<?=base_url()?>Applicants"><i class="fas fa-users"></i> Applicants </a>
+			<a class="link-s" href="<?=base_url()?>Applicants"><i class="fas fa-user-tie"></i> Applicants </a>
 		</li>
 		<li class="nav-item">
 			<a class="link-s" href="<?=base_url()?>Employee"><i class="fas fa-users"></i> Employees </a>
