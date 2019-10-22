@@ -31,7 +31,7 @@ class Main_Controller extends CI_Controller {
 	public function Employee()
 	{
 		$this->session->unset_userdata('acadcart');
-		$header['title'] = 'Employee';
+		$header['title'] = 'Employees';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['get_employee'] = $this->Model_Selects->GetEmployee();
 		$this->load->view('users/u_users',$data);
