@@ -27,9 +27,8 @@ class Add_Controller extends CI_Controller {
 		$HDMF = $this->input->post('HDMF');
 		$TIN = $this->input->post('TIN');
 		$ATM = $this->input->post('ATM');
-		$DateSeparated = $this->input->post('DateSeparated');
 
-		if ($EmploymentType == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Address == NULL || $MaritalStatus == NULL || $bDate == NULL || $bPlace == NULL || $ProjectAssigned == NULL || $DateSeparated == NULL) {
+		if ($EmploymentType == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Address == NULL || $MaritalStatus == NULL || $bDate == NULL || $bPlace == NULL || $ProjectAssigned == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			redirect('NewEmployee');
 		}
@@ -93,8 +92,6 @@ class Add_Controller extends CI_Controller {
 						'HDMF' => $HDMF,
 						'TIN' => $TIN,
 						'ATM' => $ATM,
-						'DateHired' => $DateHired,
-						'DateSeparated' => $DateSeparated,
 						'Status' => 'Applicant',
 					);
 					$addedEmployee = $this->Model_Inserts->AddThisEmployee($data);

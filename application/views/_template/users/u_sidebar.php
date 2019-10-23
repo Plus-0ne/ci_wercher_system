@@ -13,19 +13,19 @@
 			</h6>
 		</div>
 		<li class="nav-item">
-			<a class="link-s" href="<?=base_url()?>Dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard </a>
+			<a class="link-s" href="<?=base_url()?>Dashboard"><span class="fas fa-tachometer-alt fa-fw"></span> Dashboard </a>
 		</li>
 		<li class="nav-item">
-			<a class="link-s" href="<?=base_url()?>Applicants"><i class="fas fa-user-tie"></i> Applicants </a>
+			<a class="link-s" href="<?=base_url()?>Applicants"><span class="fas fa-user-tie fa-fw"></span> Applicants </a>
 		</li>
 		<li class="nav-item">
-			<a class="link-s" href="<?=base_url()?>Employee"><i class="fas fa-users"></i> Employees </a>
+			<a class="link-s" href="<?=base_url()?>Employee"><span class="fas fa-users fa-fw"></span> Employees </a>
 		</li>
 		<li>
-			<a class="link-s" href="#pageSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-cog"></i> Settings </a>
+			<a class="link-s" href="#pageSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-cog fa-fw"></i> Settings </a>
 			<ul class="collapse list-unstyled collapseSettings animated fadeIn" id="pageSettings">
 				<li>
-					<a class="link-s" class="sublink" href="<?=base_url()?>"><i class="fas fa-sign-out-alt"></i> Logout </a>
+					<a class="link-s" class="sublink" href="<?=base_url()?>"><span class="fas fa-sign-out-alt fa-fw"></span> Logout </a>
 				</li>
 			</ul>
 		</li>

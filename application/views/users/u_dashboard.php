@@ -47,16 +47,166 @@
 						</nav>
 					</div>
 				</div>
+				<style type="text/css">
+					.bcolor3BB515 {
+						background-color: #3BB515;
+					}
+					.bcolorD9B319 {
+						background-color: #D9B319;
+					}
+					.bcolor199EC4 {
+						background-color: #199EC4;
+					}
+					.bcolorE75858 {
+						background-color: #E75858;
+					}
+					.card-headers {
+						border-radius: 3px 3px 0px 0px;
+						padding-top: 20px;
+						padding-bottom: 20px;
+						padding-right: 20px;
+						padding-left: 20px;
+						color: #FFFFFF;
+					}
+					.card-bodys {
+						border-radius: 0px 0px 3px 3px;
+						padding-top: 20px;
+						padding-bottom: 20px;
+						padding-right: 20px;
+						padding-left: 20px;
+						background-color: #EBEBEB;
+						border-right: 1px solid #D0D0D0;
+						border-bottom: 1px solid #D0D0D0;
+						border-left: 1px solid #D0D0D0;
+						font-family: 'Open Sans', sans-serif;
+					}
+					.titless
+					{
+						color: #434343;
+					}
+				</style>
+				<div class="row rcontent p-5">
+					<div class="col-md-12 col-lg-3 mb-4">
+						<div class="card-container">
+							<div class="card-headers clearfix bcolor3BB515">
+								<h5 class="float-left">
+									Applicant
+								</h5>
+								<h1 class="ml-auto float-right">
+									<i class="fas fa-user-friends fa-fw"></i> 10
+								</h1>
+							</div>
+							<div class="card-bodys clearfix">
+								<a class="dc-links float-left" href="#"><i class="fas fa-angle-right fa-fw"></i> View </a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 col-lg-3 mb-4">
+						<div class="card-container">
+							<div class="card-headers clearfix bcolorD9B319">
+								<h5 class="float-left">
+									Employee
+								</h5>
+								<h1 class="ml-auto float-right">
+									<i class="fas fa-user-tie fa-fw"></i> 20
+								</h1>
+							</div>
+							<div class="card-bodys clearfix">
+								<a class="dc-links float-left" href="#"><i class="fas fa-angle-right fa-fw"></i> View </a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 col-lg-3 mb-4">
+						<div class="card-container">
+							<div class="card-headers clearfix bcolor199EC4">
+								<h5 class="float-left">
+									Client
+								</h5>
+								<h1 class="ml-auto float-right">
+									<i class="fas fa-user-tag fa-fw"></i> 20
+								</h1>
+							</div>
+							<div class="card-bodys clearfix">
+								<a class="dc-links float-left" href="#"><i class="fas fa-angle-right fa-fw"></i> View </a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 col-lg-3 mb-4">
+						<div class="card-container">
+							<div class="card-headers clearfix bcolorE75858">
+								<h5 class="float-left">
+									Admin
+								</h5>
+								<h1 class="ml-auto float-right">
+									<i class="fas fa-user-secret fa-fw"></i> 20
+								</h1>
+							</div>
+							<div class="card-bodys clearfix">
+								<a class="dc-links float-left" href="#"><i class="fas fa-angle-right fa-fw"></i> View </a>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12 col-lg-12 mt-5">
+						<div class="chart-title text-center">
+							<h5 class="titless">
+								<i class="fas fa-calendar-week fa-fw"></i> 2019 Applicants
+							</h5>
+						</div>
+						<canvas id="ApplicantChart" class="w-100" width="400" height="100"></canvas>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 <script type="text/javascript">
 	$(document).ready(function () {
 		$('#sidebarCollapse').on('click', function () {
 			$('#sidebar').toggleClass('active');
 			$('.ncontent').toggleClass('shContent');
+		});
+		var ctx = document.getElementById('ApplicantChart');
+		var myChart = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: ['January', 'February', 'March', 'April', 'May', 'June' , 'July', 'August', 'September', 'October', 'November', 'December'],
+				datasets: [{
+					label: '# Applicants',
+					data: [100, 19, 3, 5, 2, 3,21, 19, 3, 5, 2, 3],
+					backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					],
+					borderColor: [
+					'rgba(255, 99, 132, 1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)',
+					'rgba(255, 99, 132, 1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)'
+					],
+					borderWidth: 1
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				}
+			}
 		});
 	});
 </script>

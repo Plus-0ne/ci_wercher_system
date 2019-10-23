@@ -115,12 +115,6 @@
 										<input class="form-control" type="text" name="ProjectAssigned">
 									</div>
 								</div>
-								<div class="form-row">
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Date Separated</label>
-										<input class="form-control" type="date" name="DateSeparated">
-									</div>
-								</div>
 								<div class="pb-3">
 									<h5>
 										<i class="fas fa-user-alt"></i> Benificiaries
