@@ -13,4 +13,9 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('acad_history', $data);
 		return $result;
 	}
+	public function InsertAdmin($data)
+	{
+		$result = $this->db->insert('admin', $data);
+		return $result;
+	}
 }

@@ -58,8 +58,11 @@ $route['Employee'] = 'Main_Controller/Employee';
 $route['ViewEmployee'] = 'Main_Controller/ViewEmployee';
 $route['Applicants'] = 'Main_Controller/V_Applicants';
 $route['NewEmployee'] = 'Main_Controller/NewEmployee';
+$route['Admin_List'] = 'Main_Controller/View_Admins';
 
 // CREATE
 $route['addNewEmployee'] = 'Add_Controller/addNewEmployee';
+$route['Add_NewAdmin'] = 'Add_Controller/Add_NewAdmin';
+
 // DELETE
 $route['RemoveEmployee'] = 'Delete_Controller/RemoveEmployee';

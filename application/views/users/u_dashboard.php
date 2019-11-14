@@ -60,6 +60,14 @@
 					.bcolorE75858 {
 						background-color: #E75858;
 					}
+					.hei-100
+					{
+						min-height: 100% !important;
+					}
+					.card-container
+					{
+						height: 100% !important;
+					}
 					.card-headers {
 						border-radius: 3px 3px 0px 0px;
 						padding-top: 20px;
@@ -84,17 +92,25 @@
 					{
 						color: #434343;
 					}
+					.head-text
+					{
+						font-size: 1em;
+					}
+					.head-ico-text
+					{
+						font-size: 2em;
+					}
 				</style>
 				<div class="row rcontent p-5">
 					<div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
 							<div class="card-headers clearfix bcolor3BB515">
-								<h5 class="float-left">
+								<span class="float-left head-text">
 									Applicant
-								</h5>
-								<h1 class="ml-auto float-right">
+								</span>
+								<span class="ml-auto float-right head-ico-text">
 									<i class="fas fa-user-friends fa-fw"></i> 10
-								</h1>
+								</span>
 							</div>
 							<div class="card-bodys clearfix">
 								<a class="dc-links float-left" href="#"><i class="fas fa-angle-right fa-fw"></i> View </a>
@@ -104,12 +120,12 @@
 					<div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
 							<div class="card-headers clearfix bcolorD9B319">
-								<h5 class="float-left">
+								<span class="float-left head-text">
 									Employee
-								</h5>
-								<h1 class="ml-auto float-right">
+								</span>
+								<span class="ml-auto float-right head-ico-text">
 									<i class="fas fa-user-tie fa-fw"></i> 20
-								</h1>
+								</span>
 							</div>
 							<div class="card-bodys clearfix">
 								<a class="dc-links float-left" href="#"><i class="fas fa-angle-right fa-fw"></i> View </a>
@@ -119,12 +135,12 @@
 					<div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
 							<div class="card-headers clearfix bcolor199EC4">
-								<h5 class="float-left">
+								<span class="float-left head-text">
 									Client
-								</h5>
-								<h1 class="ml-auto float-right">
+								</span>
+								<span class="ml-auto float-right head-ico-text">
 									<i class="fas fa-user-tag fa-fw"></i> 20
-								</h1>
+								</span>
 							</div>
 							<div class="card-bodys clearfix">
 								<a class="dc-links float-left" href="#"><i class="fas fa-angle-right fa-fw"></i> View </a>
@@ -134,26 +150,45 @@
 					<div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
 							<div class="card-headers clearfix bcolorE75858">
-								<h5 class="float-left">
+								<span class="float-left head-text">
 									Admin
-								</h5>
-								<h1 class="ml-auto float-right">
-									<i class="fas fa-user-secret fa-fw"></i> 20
-								</h1>
+								</span>
+								<span class="ml-auto float-right head-ico-text">
+									<i class="fas fa-user-secret fa-fw"></i> <?php if ($C_Admin->num_rows() > 0 ) {
+										echo $C_Admin->num_rows(); 
+									} ?>
+								</span>
 							</div>
 							<div class="card-bodys clearfix">
 								<a class="dc-links float-left" href="#"><i class="fas fa-angle-right fa-fw"></i> View </a>
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-12 col-lg-12 mt-5">
+					<div class="col-sm-12 col-lg-6 mt-5 mb-5">
+						<div class="chart-title text-center">
+							<h5 class="titless">
+								<i class="fas fa-chart-pie fa-fw"></i> Total Appilicant
+							</h5>
+						</div>
+						<canvas id="pie-chart" width="800" height="450"></canvas>
+					</div>
+					<div class="col-sm-12 col-lg-6 mt-5 mb-5">
+						<div class="chart-title text-center">
+							<h5 class="titless">
+								<i class="fas fa-chart-line fa-fw"></i> Total Employed
+							</h5>
+						</div>
+						<canvas id="bar-chart-horizontal" width="800" height="450"></canvas>
+					</div>
+					<div class="col-sm-12 col-lg-12 mt-5 mb-5">
 						<div class="chart-title text-center">
 							<h5 class="titless">
 								<i class="fas fa-calendar-week fa-fw"></i> 2019 Applicants
 							</h5>
 						</div>
-						<canvas id="ApplicantChart" class="w-100" width="400" height="100"></canvas>
+						<canvas id="ApplicantChart" class="w-100" width="800" height="250"></canvas>
 					</div>
+					
 				</div>
 			</div>
 		</div>
@@ -169,13 +204,52 @@
 			$('#sidebar').toggleClass('active');
 			$('.ncontent').toggleClass('shContent');
 		});
+		new Chart(document.getElementById("pie-chart"), {
+			type: 'pie',
+			data: {
+				labels: ["Skill 1", "Skill 2", "Skill 3", "Skill 4", "Skill 5"],
+				datasets: [{
+					label: "",
+					backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+					data: [2478,5267,734,784,433]
+				}]
+			},
+			options: {
+				title: {
+					display: true,
+					text: 'Total Applicant / Position'
+				}
+			}
+		});
+		new Chart(document.getElementById("bar-chart-horizontal"), {
+			type: 'horizontalBar',
+			data: {
+				labels: ["Client #", "Client #", "Client #", "Client #", "Client #"],
+				datasets: [
+				{
+					label : "",
+					backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+					data: [2478,5267,734,784,433]
+				}
+				]
+			},
+			options: {
+				legend: {
+					display: false
+				},
+				title: {
+					display: true,
+					text: 'Total / Client'
+				}
+			}
+		});
 		var ctx = document.getElementById('ApplicantChart');
 		var myChart = new Chart(ctx, {
 			type: 'line',
 			data: {
 				labels: ['January', 'February', 'March', 'April', 'May', 'June' , 'July', 'August', 'September', 'October', 'November', 'December'],
 				datasets: [{
-					label: '# Applicants',
+					label: '# of Applicants',
 					data: [100, 19, 3, 5, 2, 3,21, 19, 3, 5, 2, 3],
 					backgroundColor: [
 					'rgba(255, 99, 132, 0.2)',
@@ -205,6 +279,13 @@
 							beginAtZero: true
 						}
 					}]
+				},
+				title: {
+					display: true,
+					text: 'Total Applicant this year'
+				},
+				legend: {
+					display: false
 				}
 			}
 		});

@@ -109,7 +109,7 @@ class Add_Controller extends CI_Controller {
 							}
 						}
 						unset($_SESSION["acadcart"]);
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-times"></i> New Employee added!</h5></div>');
+						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Employee added!</h5></div>');
 						redirect('NewEmployee');
 					}
 					else
@@ -120,5 +120,60 @@ class Add_Controller extends CI_Controller {
 				}
 			}
 		}
+	}
+	public function Add_NewAdmin()
+	{
+		$AdminLevel = $this->input->post('AdminLevel',TRUE);
+		$Position = $this->input->post('Position',TRUE);
+		$AdminID = $this->input->post('AdminID',TRUE);
+		$Password = $this->input->post('Password',TRUE);
+		$FirstName = $this->input->post('FirstName',TRUE);
+		$MiddleIN = $this->input->post('MiddleIN',TRUE);
+		$LastName = $this->input->post('LastName',TRUE);
+		$Gender = $this->input->post('Gender',TRUE);
+
+		if ($AdminLevel == NULL || $Position == NULL || $AdminID == NULL || $Password == NULL || $FirstName == NULL || $MiddleIN == NULL || $LastName == NULL || $Gender == NULL) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			redirect('Admin_List');
+		}
+		else
+		{
+			$CheckAdminID = $this->Model_Selects->CheckAdminID($AdminID);
+			if ($CheckAdminID->num_rows() > 0) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Admin exist!</h5></div>');
+				redirect('Admin_List');
+			}
+			else
+			{
+				$now = new DateTime();
+				$now->setTimezone(new DateTimeZone('Asia/Manila'));
+				$DateAdded = $now->format('g:i A');
+
+				$En_Password = password_hash($Password, PASSWORD_BCRYPT);
+				$DateAdded = time();
+				$data = array(
+					'AdminLevel' => $AdminLevel,
+					'Position' => $Position,
+					'AdminID' => $AdminID,
+					'Password' => $En_Password,
+					'FirstName' => $FirstName,
+					'MiddleInitial' => $MiddleIN,
+					'LastName' => $LastName,
+					'Gender' => $Gender,
+					'DateAdded' => $DateAdded,
+				);
+				$InsertAdmin = $this->Model_Inserts->InsertAdmin($data);
+				if ($InsertAdmin == TRUE) {
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Admin added!</h5></div>');
+					redirect('Admin_List');
+				}
+				else
+				{
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+					redirect('Admin_List');
+				}
+			}
+		}
+		
 	}
 }

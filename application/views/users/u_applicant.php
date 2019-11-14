@@ -21,9 +21,9 @@
 						</nav>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-sm-12 rcontent">
-						<div class="table-responsive pt-3 pb-2 pl-2 pr-2">
+				<div class="row rcontent">
+					<div class="col-sm-12">
+						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
 							<table id="emp" class="table table-striped table-bordered" style="width: 100%;">
 								<thead>
 									<tr>

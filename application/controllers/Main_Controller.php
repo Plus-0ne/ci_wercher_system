@@ -17,7 +17,9 @@ class Main_Controller extends CI_Controller {
 		$this->session->unset_userdata('acadcart');
 		$header['title'] = 'Dashboard | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		$this->load->view('users/u_dashboard');
+		// GET ADMIN COUNT
+		$data['C_Admin'] = $this->Model_Selects->GetAdmin();
+		$this->load->view('users/u_dashboard',$data);
 	}
 	
 	public function V_Applicants()
@@ -90,9 +92,14 @@ class Main_Controller extends CI_Controller {
 	{
 		$header['title'] = 'New Employee | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		$data['name'] = $this->security->get_csrf_token_name();
-		$data['hash'] = $this->security->get_csrf_hash();
 		$this->load->view('users/u_addemployee',$data);
+	}
+	public function View_Admins()
+	{
+		$header['title'] = 'Administrator | Wercher Solutions and Resources Workers Cooperative';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['ShowAdmin'] = $this->Model_Selects->GetAdmin();
+		$this->load->view('users/u_admins',$data);
 	}
 	public function showAcad()
 	{

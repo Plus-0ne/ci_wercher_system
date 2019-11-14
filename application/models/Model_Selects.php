@@ -33,4 +33,16 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetAdmin()
+	{
+		$SQL = "SELECT * FROM admin";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function CheckAdminID($AdminID)
+	{
+		$SQL = "SELECT * FROM admin WHERE AdminID = ?";
+		$result = $this->db->query($SQL,$AdminID);
+		return $result;
+	}
 }
