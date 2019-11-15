@@ -27,8 +27,8 @@
 							<table id="emp" class="table table-striped table-bordered" style="width: 100%;">
 								<thead>
 									<tr>
-										<th> Employee </th>
-										<th> Employee ID </th>
+										<th> Applicant </th>
+										<th> Applicant ID </th>
 										<th> Full Name </th>
 										<th> Gender </th>
 										<th> Action </th>
@@ -38,10 +38,10 @@
 									<?php foreach ($get_employee->result_array() as $row): ?>
 										<tr>
 											<td class="text-center">
-												<img src="<?php echo $row['EmployeeImage']; ?>" width="70" height="70">
+												<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70">
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['Employee_ID']; ?>
+												<?php echo $row['ApplicantID']; ?>
 											</td>
 											<td class="text-center align-middle">
 												<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
@@ -50,9 +50,9 @@
 												<?php echo $row['Gender']; ?>
 											</td>
 											<td class="text-center align-middle" width="100">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['Employee_No']; ?>"onclick=" return confirm('View Employee?')"><i class="far fa-eye"></i> View</a>
-												<a class="btn btn-info btn-sm w-100 mb-1" href="#<?php echo $row['Employee_No']; ?>"onclick=" return confirm('Hire Employee?')"><i class="fas fa-user-edit"></i> Hire</a>
-												<a href="<?=base_url()?>RemoveEmployee?id=<?php echo $row['Employee_No']; ?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Employee?')"><i class="fas fa-trash"></i> Delete</a>
+												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantNo']; ?>"onclick=" return confirm('View Employee?')"><i class="far fa-eye"></i> View</a>
+												<a class="btn btn-info btn-sm w-100 mb-1" href="#<?php echo $row['ApplicantNo']; ?>"onclick=" return confirm('Hire Employee?')"><i class="fas fa-user-edit"></i> Hire</a>
+												<a href="<?=base_url()?>RemoveEmployee?id=<?php echo $row['ApplicantNo']; ?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Employee?')"><i class="fas fa-trash"></i> Delete</a>
 											</td>
 										</tr>
 									<?php endforeach ?>

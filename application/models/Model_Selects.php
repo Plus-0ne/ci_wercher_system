@@ -5,25 +5,25 @@ class Model_Selects extends CI_Model {
 
 	public function GetEmployee()
 	{
-		$SQL = "SELECT * FROM employee WHERE Status = 'Active'";
+		$SQL = "SELECT * FROM applicants WHERE Status = 'Active'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
 	public function getApplicant()
 	{
-		$SQL = "SELECT * FROM employee WHERE Status = 'Applicant'";
+		$SQL = "SELECT * FROM applicants WHERE Status = 'Applicant'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function CheckEmployee($Employee_ID)
+	public function CheckEmployee($ApplicantID)
 	{
-		$SQL = "SELECT * FROM employee WHERE Employee_ID = ?";
-		$result = $this->db->query($SQL,$Employee_ID);
+		$SQL = "SELECT * FROM applicants WHERE ApplicantID = ?";
+		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
 	public function GetEmployeeDetails($id)
 	{
-		$SQL = "SELECT * FROM employee WHERE Employee_No = ?";
+		$SQL = "SELECT * FROM applicants WHERE ApplicantNo = ?";
 		$result = $this->db->query($SQL,$id);
 		return $result;
 	}

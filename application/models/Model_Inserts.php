@@ -5,7 +5,7 @@ class Model_Inserts extends CI_Model {
 
 	public function AddThisEmployee($data)
 	{
-		$result = $this->db->insert('employee', $data);
+		$result = $this->db->insert('applicants', $data);
 		return $result;
 	}
 	public function InsertAcadH($data)

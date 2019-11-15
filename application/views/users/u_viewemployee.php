@@ -36,26 +36,36 @@
 						</h5>
 					</div>
 					<div class="col-sm-12 mb-5 e-title">
-						<img src="<?php echo $EmployeeImage; ?>" width="120" height="120">
+						<img src="<?php echo $ApplicantImage; ?>" width="120" height="120">
 					</div>
 					<div class="col-sm-12 col-md-2 e-title">
 						<h6>
-							Employment Type
+							Position Desired
 						</h6>
 					</div>
 					<div class="col-sm-12 col-md-4 e-det">
 						<p>
-							<?php echo $EmploymentType; ?>
+							<?php echo $PositionDesired; ?>
 						</p>
 					</div>
 					<div class="col-sm-12 col-md-2 e-title">
 						<h6>
-							Employee ID
+							Salary Expected
 						</h6>
 					</div>
 					<div class="col-sm-12 col-md-4 e-det">
 						<p>
-							<?php echo $Employee_ID; ?>
+							<?php echo $SalaryExpected; ?>
+						</p>
+					</div>
+					<div class="col-sm-12 col-md-2 e-title">
+						<h6>
+							Applicant ID
+						</h6>
+					</div>
+					<div class="col-sm-12 col-md-4 e-det">
+						<p>
+							<?php echo $ApplicantID; ?>
 						</p>
 					</div>
 					<div class="col-sm-12 col-md-2 e-title">
@@ -70,12 +80,52 @@
 					</div>
 					<div class="col-sm-12 col-md-2 e-title">
 						<h6>
-							Address
+							Gender
 						</h6>
 					</div>
 					<div class="col-sm-12 col-md-4 e-det">
 						<p>
-							<?php echo $Address; ?>
+							<?php echo $Gender; ?>
+						</p>
+					</div>
+					<div class="col-sm-12 col-md-2 e-title">
+						<h6>
+							Age
+						</h6>
+					</div>
+					<div class="col-sm-12 col-md-4 e-det">
+						<p>
+							<?php echo $Age; ?>
+						</p>
+					</div>
+					<div class="col-sm-12 col-md-2 e-title">
+						<h6>
+							Height
+						</h6>
+					</div>
+					<div class="col-sm-12 col-md-4 e-det">
+						<p>
+							<?php echo $Height; ?>
+						</p>
+					</div>
+					<div class="col-sm-12 col-md-2 e-title">
+						<h6>
+							Weight
+						</h6>
+					</div>
+					<div class="col-sm-12 col-md-4 e-det">
+						<p>
+							<?php echo $Weight; ?>
+						</p>
+					</div>
+					<div class="col-sm-12 col-md-2 e-title">
+						<h6>
+							Religion
+						</h6>
+					</div>
+					<div class="col-sm-12 col-md-4 e-det">
+						<p>
+							<?php echo $Religion; ?>
 						</p>
 					</div>
 					<div class="col-sm-12 col-md-2 e-title">
@@ -100,12 +150,32 @@
 					</div>
 					<div class="col-sm-12 col-md-2 e-title">
 						<h6>
-							Date Hired
+							Citizenship
 						</h6>
 					</div>
 					<div class="col-sm-12 col-md-4 e-det">
 						<p>
-							<?php echo $DateHired; ?>
+							<?php echo $Citizenship; ?>
+						</p>
+					</div>
+					<div class="col-sm-12 col-md-2 e-title">
+						<h6>
+							Civil Status
+						</h6>
+					</div>
+					<div class="col-sm-12 col-md-4 e-det">
+						<p>
+							<?php echo $CivilStatus; ?>
+						</p>
+					</div>
+					<div class="col-sm-12 col-md-2 e-title">
+						<h6>
+							# of Children
+						</h6>
+					</div>
+					<div class="col-sm-12 col-md-4 e-det">
+						<p>
+							<?php echo $No_OfChildren; ?>
 						</p>
 					</div>
 					<div class="col-sm-12 col-md-2 e-title">
@@ -122,51 +192,116 @@
 							<?php } ?>
 						</p>
 					</div>
+					<div class="col-sm-12 mt-5 mb-3">
+						<h6>
+							<i class="fas fa-stream"></i> Address
+						</h6>
+					</div>
+					<div class="col-sm-12 col-md-4 e-title">
+						<h6>
+							Present
+						</h6>
+					</div>
+					<div class="col-sm-12 col-md-8 e-det">
+						<p>
+							<?php echo $Address_Present; ?>
+						</p>
+					</div>
+					<div class="col-sm-12 col-md-4 e-title">
+						<h6>
+							Provincial
+						</h6>
+					</div>
+					<div class="col-sm-12 col-md-8 e-det">
+						<p>
+							<?php echo $Address_Provincial; ?>
+						</p>
+					</div>
+					<div class="col-sm-12 col-md-4 e-title">
+						<h6>
+							Manila
+						</h6>
+					</div>
+					<div class="col-sm-12 col-md-8 e-det">
+						<p>
+							<?php echo $Address_Manila; ?>
+						</p>
+					</div>
 				</div>
 				<div class="row rcontent p-5">
 					<div class="col-sm-12 mb-5">
 						<h5>
-							<i class="fas fa-stream"></i> Benificiaries
+							<i class="fas fa-stream"></i> Documents
 						</h5>
 					</div>
-					<div class="col-sm-12 col-md-2 ml-auto text-center">
+					<div class="col-sm-12 col-md-2 e-title">
 						<h6>
-							SSS
+							S.S.S. #
 						</h6>
+					</div>
+					<div class="col-sm-12 col-md-4 e-det">
 						<p>
-							<?php echo $SSS; ?>
+							<?php echo $SSS_No; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 ml-auto text-center">
+					<div class="col-sm-12 col-md-2 e-title">
 						<h6>
-							PhilHealth
+							Effective Date of Coverage
 						</h6>
+					</div>
+					<div class="col-sm-12 col-md-4 e-det">
 						<p>
-							<?php echo $Philhealth; ?>
+							<?php echo $EffectiveDateCoverage; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 ml-auto text-center">
+					<div class="col-sm-12 col-md-2 e-title">
 						<h6>
-							HDMF
+							Residence Certificate No.
 						</h6>
+					</div>
+					<div class="col-sm-12 col-md-4 e-det">
 						<p>
-							<?php echo $HDMF; ?>
+							<?php echo $ResidenceCertificateNo; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 ml-auto text-center">
+					<div class="col-sm-12 col-md-2 e-title">
 						<h6>
-							TIN
+							Issued At
 						</h6>
+						<h6>
+							Issued On
+						</h6>
+					</div>
+					<div class="col-sm-12 col-md-4 e-det">
+						<p>
+							<?php echo $Rcn_At; ?>
+							<br>
+							<?php echo $Rcn_On; ?>
+						</p>
+					</div>
+					<div class="col-sm-12 col-md-2 e-title">
+						<h6>
+							Tax Identification No.
+						</h6>
+					</div>
+					<div class="col-sm-12 col-md-4 e-det">
 						<p>
 							<?php echo $TIN; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 ml-auto text-center">
+					<div class="col-sm-12 col-md-2 e-title">
 						<h6>
-							ATM
+							Issued At
 						</h6>
+						<h6>
+							Issued On
+						</h6>
+					</div>
+					<div class="col-sm-12 col-md-4 e-det">
 						<p>
-							<?php echo $ATM; ?>
+							<?php echo $TIN_At; ?>
+							<br>
+							<?php echo $TIN_On; ?>
 						</p>
 					</div>
 				</div>
@@ -187,7 +322,7 @@
 								</thead>
 								<tbody>
 									<?php foreach ($GetAcadHistory->result_array() as $row): ?>
-										<?php if ($Employee_ID == $row['EmployeeID']) { ?>
+										<?php if ($ApplicantID == $row['ApplicantID']) { ?>
 											<tr>
 												<td><?php echo $row['Level'];?></td>
 												<td><?php echo $row['SchoolName'];?></td>

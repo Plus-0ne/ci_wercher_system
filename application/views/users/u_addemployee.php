@@ -26,7 +26,7 @@
 					<div class="col-sm-12 rcontent">
 						<div class="p-5">
 							<?php echo $this->session->flashdata('prompts'); ?>
-							<div class="pb-3">
+							<div class="mb-3">
 								<h5>
 									<i class="fas fa-user-alt"></i> Personal Information
 								</h5>
@@ -41,15 +41,19 @@
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-2">
-										<label>Employment Type</label>
-										<select class="form-control" name="EmploymentType">
+										<label>Position Desired</label>
+										<select class="form-control" name="PositionDesired">
 											<option>
-												Employee
+												Office Staff
 											</option>
 											<!-- <option>
 												On-Call
 											</option> -->
 										</select>
+									</div>
+									<div class="form-group col-sm-12 col-md-2">
+										<label>Salary Expected</label>
+										<input class="form-control" type="text" name="SalaryExpected">
 									</div>
 								</div>
 								<div class="form-row">
@@ -78,14 +82,39 @@
 									</div>
 								</div>
 								<div class="form-row">
-
-									<div class="form-group col-sm-12 col-md-8">
-										<label>Address</label>
-										<input class="form-control" type="text" name="Address">
+									<div class="form-group col-sm-12 col-md-1">
+										<label>Age</label>
+										<input class="form-control" type="number" name="Age">
+									</div>
+									<div class="form-group col-sm-12 col-md-1">
+										<label>Height</label>
+										<input class="form-control" type="number" name="Height">
+									</div>
+									<div class="form-group col-sm-12 col-md-1">
+										<label>Weight</label>
+										<input class="form-control" type="number" name="Weight">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
-										<label>Marital Status</label>
-										<select class="form-control" name="MaritalStatus">
+										<label>Religion</label>
+										<input class="form-control" type="text" name="Religion">
+									</div>
+									<div class="form-group col-sm-12 col-md-2">
+										<label>Birth Date</label>
+										<input class="form-control" type="date" name="bDate">
+									</div>
+									<div class="form-group col-sm-12 col-md-5">
+										<label>Birth Place</label>
+										<input class="form-control" type="text" name="bPlace">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Citizenship</label>
+										<input class="form-control" type="text" name="Citizenship">
+									</div>
+									<div class="form-group col-sm-12 col-md-2">
+										<label>Civil Status</label>
+										<select class="form-control" name="CivilStatus">
 											<option>
 												Single
 											</option>
@@ -93,98 +122,82 @@
 												Married
 											</option>
 											<option>
-												Widow
+												Widowed
 											</option>
 											<option>
-												Divorce
+												Divorced
 											</option>
 										</select>
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
-										<label>Birth Date</label>
-										<input class="form-control" type="date" name="bDate">
+										<label>No. of Children</label>
+										<input class="form-control" type="number" name="No_Children">
+									</div>
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Phone Number</label>
+										<input class="form-control" type="number" name="PhoneNumber">
+									</div>
+								</div>
+								<div class="mt-5 mb-4">
+									<h5>
+										<i class="fas fa-user-alt"></i> Documents
+									</h5>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-lg-3">
+										<label>S.S.S. #</label>
+										<input class="form-control" type="text" name="SSS">
+									</div>
+									<div class="form-group col-sm-12 col-lg-2">
+										<label>Effective Date of Coverage</label>
+										<input class="form-control" type="date" name="SSS_Effective">
 									</div>
 								</div>
 								<div class="form-row">
-									<div class="form-group col-sm-12 col-md-8">
-										<label>Birth Place</label>
-										<input class="form-control" type="text" name="bPlace">
+									<div class="form-group col-sm-12 col-lg-3">
+										<label>Residence Certificate No.</label>
+										<input class="form-control" type="text" name="RCN">
 									</div>
-									<div class="form-group col-sm-12 col-md-4">
-										<label>Project Assigned</label>
-										<input class="form-control" type="text" name="ProjectAssigned">
+									<div class="form-group col-sm-12 col-lg-2">
+										<label>Issued At</label>
+										<input class="form-control" type="date" name="RCN_at">
+									</div>
+									<div class="form-group col-sm-12 col-lg-2">
+										<label>On</label>
+										<input class="form-control" type="date" name="RCN_On">
 									</div>
 								</div>
-								<div class="pb-3">
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-lg-3">
+										<label>Tax Identification No.</label>
+										<input class="form-control" type="text" name="TIN">
+									</div>
+									<div class="form-group col-sm-12 col-lg-2">
+										<label>Issued At</label>
+										<input class="form-control" type="date" name="TIN_At">
+									</div>
+									<div class="form-group col-sm-12 col-lg-2">
+										<label>On</label>
+										<input class="form-control" type="date" name="TIN_On">
+									</div>
+								</div>
+								<div class="mt-5 mb-4">
 									<h5>
-										<i class="fas fa-user-alt"></i> Benificiaries
+										<i class="fas fa-user-alt"></i> Addresses
 									</h5>
 								</div>
-								<div class="form-row pt-4 pb-4">
-									<div class="form-group col-sm-12 col-md-2 text-center m-auto">
-										<!-- <img src="assets/img/sss_logo_yugatech1.jpg" width="200"> -->
-										<input id="ssstb" class=" mt-3 text-center form-control" type="text" name="SSS" placeholder="SSS #">
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Present</label>
+										<input class="form-control" type="text" name="Address_Present">
 									</div>
-									<div class="form-group col-sm-12 col-md-2 text-center m-auto">
-										<!-- <img src="assets/img/1200px-Philippine_Health_Insurance_Corporation_(PhilHealth).svg (1).png" width="200"> -->
-										<input id="phealtb" class=" mt-3 text-center form-control" type="text" name="Philhealth" placeholder="Philhealth #">
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Provincial</label>
+										<input class="form-control" type="text" name="Address_Provincial">
 									</div>
-									<div class="form-group col-sm-12 col-md-2 text-center m-auto">
-										<!-- <img src="assets/img/2000px-Pag-IBIG.svg.png" width="80"> -->
-										<input id="HDMFb" class=" mt-3 text-center form-control" type="text" name="HDMF" placeholder="HDMF #">
-									</div>
-									<div class="form-group col-sm-12 col-md-2 text-center m-auto">
-										<!-- <img src="assets/img/Bureau_of_Internal_Revenue_(BIR).svg.png" width="85"> -->
-										<input id="TINb" class=" mt-3 text-center form-control" type="text" name="TIN" placeholder="TIN #">
-									</div>
-									<div class="form-group col-sm-12 col-md-2 text-center m-auto">
-										<!-- <img src="assets/img/iStock_ATMSmallw.jpg" width="70"> -->
-										<input id="ATMb" class=" mt-3 text-center form-control" type="text" name="ATM" placeholder="ATM">
-									</div>
-								</div>
-								<!-- <div class="form-row pb-4">
-									<div class="form-group col-sm-12 col-md-2 text-center m-auto">
-										<input id="ssscbox" class="in-beni form-control" type="checkbox" name="" value="Ok">
-									</div>
-									<div class="form-group col-sm-12 col-md-2 text-center m-auto">
-										<input id="phealtcbox" class="in-beni form-control" type="checkbox" name="" value="Ok">
-									</div>
-									<div class="form-group col-sm-12 col-md-2 text-center m-auto">
-										<input id="HDMFcbox" class="in-beni form-control" type="checkbox" name="" value="Ok">
-									</div>
-									<div class="form-group col-sm-12 col-md-2 text-center m-auto">
-										<input id="TINcbox" class="in-beni form-control" type="checkbox" name="" value="Ok">
-									</div>
-									<div class="form-group col-sm-12 col-md-2 text-center m-auto">
-										<input id="ATMcbox" class="in-beni form-control" type="checkbox" name="" value="Ok">
-										
-									</div>
-								</div> -->
-								<div class="form-row pt-4 pb-4">
-									<div class="form-group col-sm-12 col-md-2 text-center m-auto">
-										<div id="sssa">
-											
-										</div>
-									</div>
-									<div class="form-group col-sm-12 col-md-2 text-center m-auto">
-										<div id="phealta">
-											
-										</div>
-									</div>
-									<div class="form-group col-sm-12 col-md-2 text-center m-auto">
-										<div id="HDMFa">
-											
-										</div>
-									</div>
-									<div class="form-group col-sm-12 col-md-2 text-center m-auto">
-										<div id="TINa">
-											
-										</div>
-									</div>
-									<div class="form-group col-sm-12 col-md-2 text-center m-auto">
-										<div id="ATMa">
-											
-										</div>
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Manila</label>
+										<input class="form-control" type="text" name="Address_Manila">
 									</div>
 								</div>
 								<div class="form-row pb-5 pt-5">
@@ -233,13 +246,13 @@
 										Choose Level
 									</option>
 									<option>
-										Primary
+										High School
 									</option>
 									<option>
-										Secodary
+										College
 									</option>
 									<option>
-										Tertiary
+										Other courses / Special Training
 									</option>
 								</select>
 							</div>
@@ -251,11 +264,23 @@
 							</div>
 						</div>
 						<div class="form-row">
-							<div class="form-group col-sm-3 m-auto">
+							<div class="form-group col-sm-12">
+								<label>School Address</label>
+								<input id="SchoolAddress" class="form-control" type="text" name="SchoolAddress">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-sm-12 col-md-6 m-auto">
 								<input id="FromYearSchool" class="form-control" type="text" name="FromYearSchool" placeholder="From year" maxlength="4">
 							</div>
-							<div class="form-group col-sm-3 m-auto">
+							<div class="form-group col-sm-12 col-md-6 m-auto">
 								<input id="ToYearSchool" class="form-control" type="text" name="ToYearSchool" placeholder="To year" maxlength="4">
+							</div>
+						</div>
+						<div class="form-row mt-3">
+							<div class="form-group col-sm-12 m-auto">
+								<label>Highest Degree / Certificate Attained</label>
+								<input id="H_Attained" class="form-control" type="text" name="H_Attained">
 							</div>
 						</div>
 					</form>
@@ -347,12 +372,17 @@
 
 			var SchoolLevel = $('#SchoolLevel').val();
 			var SchoolName = $('#SchoolName').val();
+			var SchoolAddress = $('#SchoolAddress').val();
+			
 			var FromYearSchool = $('#FromYearSchool').val();
 			var ToYearSchool = $('#ToYearSchool').val();
+			var H_Attained = $('#H_Attained').val();
+			
+
 			$.ajax({
 				url : "<?php echo site_url('Main_Controller/add_to_cart');?>",
 				method : "POST",
-				data : {SchoolLevel: SchoolLevel, SchoolName: SchoolName, FromYearSchool: FromYearSchool, ToYearSchool: ToYearSchool},
+				data : {SchoolLevel: SchoolLevel, SchoolName: SchoolName,SchoolAddress: SchoolAddress, FromYearSchool: FromYearSchool, ToYearSchool: ToYearSchool,H_Attained: H_Attained},
 				success: function(data){
 					$('#SchoolLevel option:selected').index();
 					$('#SchoolName').val("");

@@ -54,26 +54,38 @@ class Main_Controller extends CI_Controller {
 			if ($GetEmployeeDetails->num_rows() > 0) {
 				$ged = $GetEmployeeDetails->row_array();
 				$data = array(
-					'Employee_No' => $ged['Employee_No'],
-					'Employee_ID' => $ged['Employee_ID'],
-					'EmployeeImage' => $ged['EmployeeImage'],
-					'EmploymentType' => $ged['EmploymentType'],
+					'ApplicantImage' => $ged['ApplicantImage'],
+					'ApplicantID' => $ged['ApplicantID'],
+					'PositionDesired' => $ged['PositionDesired'],
+					'SalaryExpected' => $ged['SalaryExpected'],
 					'LastName' => $ged['LastName'],
 					'FirstName' => $ged['FirstName'],
 					'MiddleInitial' => $ged['MiddleInitial'],
-					'Address' => $ged['Address'],
+					'Gender' => $ged['Gender'],
+					'Age' => $ged['Age'],
+					'Height' => $ged['Height'],
+					'Weight' => $ged['Weight'],
+					'Religion' => $ged['Religion'],
 					'BirthDate' => $ged['BirthDate'],
 					'BirthPlace' => $ged['BirthPlace'],
-					'Gender' => $ged['Gender'],
-					'MaritalStatus' => $ged['MaritalStatus'],
-					'ProjectAssigned' => $ged['ProjectAssigned'],
-					'SSS' => $ged['SSS'],
-					'Philhealth' => $ged['Philhealth'],
-					'HDMF' => $ged['HDMF'],
+					'Citizenship' => $ged['Citizenship'],
+					'CivilStatus' => $ged['CivilStatus'],
+					'No_OfChildren' => $ged['No_OfChildren'],
+					'Phone_No' => $ged['Phone_No'],
+					'Address_Present' => $ged['Address_Present'],
+					'Address_Provincial' => $ged['Address_Provincial'],
+					'Address_Manila' => $ged['Address_Manila'],
+
+					'SSS_No' => $ged['SSS_No'],
+					'EffectiveDateCoverage' => $ged['EffectiveDateCoverage'],
+					'ResidenceCertificateNo' => $ged['ResidenceCertificateNo'],
+					'Rcn_At' => $ged['Rcn_At'],
+					'Rcn_On' => $ged['Rcn_On'],
 					'TIN' => $ged['TIN'],
-					'ATM' => $ged['ATM'],
-					'DateHired' => $ged['DateHired'],
+					'TIN_At' => $ged['TIN_At'],
+					'TIN_On' => $ged['TIN_On'],
 					'Status' => $ged['Status'],
+
 				);
 				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis();
 				$this->load->view('users/u_viewemployee',$data);
@@ -115,6 +127,7 @@ class Main_Controller extends CI_Controller {
 			<th>School Name</th>
 			<th>From</th>
 			<th>To</th>
+			<th>Highest Degree / Certificate Attained</th>
 			<th>Action</th>
 			</thead>
 			<tbody>';
@@ -134,7 +147,10 @@ class Main_Controller extends CI_Controller {
 				'.$s_da['acadcart']['ToYearSchool'] .'
 				</td>
 				<td>
-				<button id="'.$s_da['acadcart']['SchoolLevel'].'" class="remoach btn-tr" type="button"><i class="fas fa-trash"></i></button>
+				'.$s_da['acadcart']['H_Attained'] .'
+				</td>
+				<td>
+				<button id="'.$s_da['acadcart']['c_id'].'" class="remoach btn-tr" type="button"><i class="fas fa-trash"></i></button>
 				</td>
 				</tr>
 				';
@@ -146,17 +162,23 @@ class Main_Controller extends CI_Controller {
 	}
 	public function add_to_cart()
 	{
+		$min=10000000;
+		$max=99999999;
+		$rint = random_int($min,$max);
+
 		$SchoolLevel = $_POST["SchoolLevel"];
 		$SchoolName = $_POST["SchoolName"];
+		$SchoolAddress = $_POST["SchoolAddress"];
 		$FromYearSchool = $_POST["FromYearSchool"];
 		$ToYearSchool = $_POST["ToYearSchool"];
-		if ($SchoolLevel == NULL || $SchoolName == NULL || $FromYearSchool == NULL || $ToYearSchool == NULL) {
+		$H_Attained = $_POST["H_Attained"];
+		if ($SchoolLevel == NULL || $SchoolName == NULL || $FromYearSchool == NULL || $ToYearSchool == NULL || $SchoolAddress == NULL || $H_Attained == NULL) {
 			echo "Error";
 		}
 		else
 		{
 			foreach ($_SESSION["acadcart"] as $s_da => $row) {
-				if ($row['acadcart']['SchoolLevel'] == $_POST['SchoolLevel']) {
+				if ($row['acadcart']['c_id'] == $rint) {
 					exit();
 				}
 			}
@@ -164,10 +186,13 @@ class Main_Controller extends CI_Controller {
 				$_SESSION ['acadcart'] = array ();
 			}
 			$data['acadcart'] = array(
+				'c_id' => $rint,
 				'SchoolLevel' => $SchoolLevel,
 				'SchoolName' => $SchoolName,
+				'SchoolAddress' => $SchoolAddress,
 				'FromYearSchool' => $FromYearSchool,
 				'ToYearSchool' => $ToYearSchool,
+				'H_Attained' => $H_Attained,
 			);
 			$_SESSION['acadcart'][] = $data;
 		}
@@ -175,7 +200,7 @@ class Main_Controller extends CI_Controller {
 	public function removeAcad()
 	{
 		foreach ($_SESSION["acadcart"] as $s_da => $row) {
-			if ($row['acadcart']['SchoolLevel'] == $_POST['row_id']) {
+			if ($row['acadcart']['c_id'] == $_POST['row_id']) {
 				unset($_SESSION["acadcart"][$s_da]);
 				if(empty($_SESSION["acadcart"]))
 					unset($_SESSION["acadcart"]);

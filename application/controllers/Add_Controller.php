@@ -12,36 +12,52 @@ class Add_Controller extends CI_Controller {
 	}
 	public function addNewEmployee()
 	{
-		$EmploymentType = $this->input->post('EmploymentType');
+		# PERSONAL INFORMATION
+		$PositionDesired = $this->input->post('PositionDesired');
+		$SalaryExpected = $this->input->post('SalaryExpected');
 		$LastName = $this->input->post('LastName');
 		$FirstName = $this->input->post('FirstName');
 		$MI = $this->input->post('MI');
 		$Gender = $this->input->post('Gender');
-		$Address = $this->input->post('Address');
-		$MaritalStatus = $this->input->post('MaritalStatus');
+		$Age = $this->input->post('Age');
+		$Height = $this->input->post('Height');
+		$Weight = $this->input->post('Weight');
+		$Religion = $this->input->post('Religion');
+		
 		$bDate = $this->input->post('bDate');
 		$bPlace = $this->input->post('bPlace');
-		$ProjectAssigned = $this->input->post('ProjectAssigned');
+		$Citizenship = $this->input->post('Citizenship');
+		$CivilStatus = $this->input->post('CivilStatus');
+		$No_Children = $this->input->post('No_Children');
+		$PhoneNumber = $this->input->post('PhoneNumber');
+		# DOCUMENTS
 		$SSS = $this->input->post('SSS');
-		$Philhealth = $this->input->post('Philhealth');
-		$HDMF = $this->input->post('HDMF');
+		$SSS_Effective = $this->input->post('SSS_Effective');
+		$RCN = $this->input->post('RCN');
+		$RCN_at = $this->input->post('RCN_at');
+		$RCN_On = $this->input->post('RCN_On');
 		$TIN = $this->input->post('TIN');
-		$ATM = $this->input->post('ATM');
+		$TIN_At = $this->input->post('TIN_At');
+		$TIN_On = $this->input->post('TIN_On');
+		# ADDRESSES
+		$Address_Present = $this->input->post('Address_Present');
+		$Address_Provincial = $this->input->post('Address_Provincial');
+		$Address_Manila = $this->input->post('Address_Manila');
 
-		if ($EmploymentType == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Address == NULL || $MaritalStatus == NULL || $bDate == NULL || $bPlace == NULL || $ProjectAssigned == NULL) {
+		if ($PositionDesired == NULL || $SalaryExpected == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Age == NULL || $Height == NULL || $Weight == NULL || $Religion == NULL || $bDate == NULL || $bPlace == NULL || $Citizenship == NULL || $CivilStatus == NULL || $No_Children == NULL || $PhoneNumber == NULL || $SSS == NULL || $SSS_Effective == NULL || $RCN == NULL || $RCN_at == NULL || $RCN_On == NULL || $TIN == NULL || $TIN_At == NULL || $TIN_On == NULL || $Address_Present == NULL || $Address_Provincial == NULL || $Address_Manila == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			redirect('NewEmployee');
 		}
 		else
 		{
-			$cc = $this->db->count_all('employee');
+			$cc = $this->db->count_all('applicants');
 			$ccc = $cc + 1;
 			$coun = str_pad($ccc,5,0,STR_PAD_LEFT);
 			$id = '-A';
 			$customid = $coun.$id;
-			$Employee_ID = $customid;
+			$ApplicantID = $customid;
 			// Check Employee if exist
-			$chkem = $this->Model_Selects->CheckEmployee($Employee_ID);
+			$chkem = $this->Model_Selects->CheckEmployee($ApplicantID);
 			if ($chkem->num_rows() > 0) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Employee ID exist</h5></div>');
 				redirect('NewEmployee');
@@ -75,23 +91,39 @@ class Add_Controller extends CI_Controller {
 					$pImage = base_url().'uploads/'.$customid.'/'.$this->upload->data('file_name');
 					// INSERT EMPLOYEE
 					$data = array(
-						'EmploymentType' => $EmploymentType,
-						'Employee_ID' => $customid,
-						'EmployeeImage' => $pImage,
+						'ApplicantImage' => $pImage,
+						'ApplicantID' => $customid,
+						'PositionDesired' => $PositionDesired,
+						'SalaryExpected' => $SalaryExpected,
 						'LastName' => ucfirst($LastName),
 						'FirstName' => ucfirst($FirstName),
 						'MiddleInitial' => ucfirst($MI),
 						'Gender' => $Gender,
-						'Address' => $Address,
-						'MaritalStatus' => $MaritalStatus,
+						'Age' => $Age,
+						'Height' => $Height,
+						'Weight' => $Weight,
+						'Religion' => $Religion,
 						'BirthDate' => $bDate,
 						'BirthPlace' => $bPlace,
-						'ProjectAssigned' => $ProjectAssigned,
-						'SSS' => $SSS,
-						'Philhealth' => $Philhealth,
-						'HDMF' => $HDMF,
+						'Citizenship' => $Citizenship,
+						'CivilStatus' => $CivilStatus,
+						'No_OfChildren' => $No_Children,
+						
+						'Address_Present' => $Address_Present,
+						'Address_Provincial' => $Address_Provincial,
+						'Address_Manila' => $Address_Manila,
+
+						'Phone_No' => $PhoneNumber,
+
+						'SSS_No' => $SSS,
+						'EffectiveDateCoverage' => $SSS_Effective,
+						'ResidenceCertificateNo' => $RCN,
+						'Rcn_At' => $RCN_at,
+						'Rcn_On' => $RCN_On,
 						'TIN' => $TIN,
-						'ATM' => $ATM,
+						'TIN_At' => $TIN_At,
+						'TIN_On' => $TIN_On,
+
 						'Status' => 'Applicant',
 					);
 					$addedEmployee = $this->Model_Inserts->AddThisEmployee($data);
@@ -99,11 +131,14 @@ class Add_Controller extends CI_Controller {
 						if (isset($_SESSION["acadcart"])) {
 							foreach ($_SESSION["acadcart"] as $s_da) {
 								$data = array(
-									'EmployeeID' => $customid,
+									'ApplicantID' => $customid,
 									'Level' => $s_da['acadcart']['SchoolLevel'],
 									'SchoolName' => $s_da['acadcart']['SchoolName'],
+									'SchoolAddress' => $s_da['acadcart']['SchoolAddress'],
 									'DateStarted' => $s_da['acadcart']['FromYearSchool'],
 									'DateEnds' => $s_da['acadcart']['ToYearSchool'],
+									'HighDegree' => $s_da['acadcart']['H_Attained'],
+
 								);
 								$this->Model_Inserts->InsertAcadH($data);
 							}
