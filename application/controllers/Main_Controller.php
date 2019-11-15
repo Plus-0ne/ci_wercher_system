@@ -46,7 +46,7 @@ class Main_Controller extends CI_Controller {
 
 			$id = $_GET['id'];
 
-			$header['title'] = 'Information';
+			$header['title'] = 'Information | Wercher Solutions and Resources Workers Cooperative';
 			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 
 			$GetEmployeeDetails = $this->Model_Selects->GetEmployeeDetails($id);
@@ -102,12 +102,14 @@ class Main_Controller extends CI_Controller {
 	}
 	public function NewEmployee()
 	{
+		$this->session->unset_userdata('acadcart');
 		$header['title'] = 'New Employee | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$this->load->view('users/u_addemployee',$data);
 	}
 	public function View_Admins()
 	{
+		$this->session->unset_userdata('acadcart');
 		$header['title'] = 'Administrator | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['ShowAdmin'] = $this->Model_Selects->GetAdmin();

@@ -317,8 +317,10 @@
 								<thead>
 									<th>Level</th>
 									<th>School Name</th>
+									<th>School Address</th>
 									<th>From Year</th>
 									<th>To Year</th>
+									<th>Highest Degree / Certificate Attained</th>
 								</thead>
 								<tbody>
 									<?php foreach ($GetAcadHistory->result_array() as $row): ?>
@@ -326,8 +328,10 @@
 											<tr>
 												<td><?php echo $row['Level'];?></td>
 												<td><?php echo $row['SchoolName'];?></td>
+												<td><?php echo $row['SchoolAddress'];?></td>
 												<td><?php echo $row['DateStarted'];?></td>
 												<td><?php echo $row['DateEnds'];?></td>
+												<td><?php echo $row['HighDegree'];?></td>
 											</tr>
 										<?php } ?>
 									<?php endforeach ?>

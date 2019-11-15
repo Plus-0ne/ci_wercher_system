@@ -5,7 +5,7 @@ class Model_Deletes extends CI_Model {
 
 	public function RemoveEmpl($id)
 	{
-		$SQL = "UPDATE employee SET Status ='Deleted' WHERE Employee_No = ?";
+		$SQL = "UPDATE applicants SET Status ='Deleted' WHERE ApplicantNo = ?";
 		$result = $this->db->query($SQL,$id);
 		return $result;
 	}
