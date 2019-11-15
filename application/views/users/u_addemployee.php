@@ -298,52 +298,52 @@
 		</div>
 	</div>
 	<div class="modal fade" id="skillsFields" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Skill Details</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Employment Details</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<form action="<?=base_url()?>Main_Controller/AddtoAcadCart" method="post">
+					<form action="#" method="post">
 						<div class="form-row">
-							<div class="form-group">
-								<select id="SchoolLevel" class="form-control" name="SchoolLevel">
-									<option hidden="" disabled="" selected="">
-										Choose Level
-									</option>
-									<option>
-										Primary
-									</option>
-									<option>
-										Secodary
-									</option>
-									<option>
-										Tertiary
-									</option>
-								</select>
+							<div class="form-group col-sm-12 col-md-6">
+								<label>Employeer Name</label>
+								<input id="EmployeerName" class="form-control" type="text" name="">
 							</div>
 						</div>
 						<div class="form-row">
 							<div class="form-group col-sm-12">
-								<label>School Name</label>
-								<input id="SchoolName" class="form-control" type="text" name="SchoolName">
+								<label>Address</label>
+								<input id="emAddress" class="form-control" type="text" name="SchoolName">
 							</div>
 						</div>
 						<div class="form-row">
-							<div class="form-group col-sm-3 m-auto">
-								<input id="FromYearSchool" class="form-control" type="text" name="FromYearSchool" placeholder="From year" maxlength="4">
+							<div class="form-group col-sm-12 col-md-6 m-auto">
+								<label>Period Covered</label>
+								<input id="PeriodCovered" class="form-control" type="text" name="FromYearSchool" maxlength="4">
 							</div>
-							<div class="form-group col-sm-3 m-auto">
-								<input id="ToYearSchool" class="form-control" type="text" name="ToYearSchool" placeholder="To year" maxlength="4">
+							<div class="form-group col-sm-12 col-md-6 m-auto">
+								<label> Position</label>
+								<input id="Position" class="form-control" type="text" name="ToYearSchool" maxlength="4">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-sm-12 col-md-6 m-auto">
+								<label>Salary</label>
+								<input id="Salary" class="form-control" type="text" name="FromYearSchool" maxlength="4">
+							</div>
+							<div class="form-group col-sm-12 col-md-6 m-auto">
+								<label> Cause of separation</label>
+								<input id="cos" class="form-control" type="text" name="ToYearSchool" maxlength="4">
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button id="add_sssscc" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Add changes</button>
+					<button id="add_empdet" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Add changes</button>
 				</div>
 			</div>
 		</div>
@@ -412,6 +412,39 @@
         });
 		$('#AcadHsssistory').load("<?php echo site_url('Main_Controller/showAcad');?>");
 
+		// ADD EMPLOYMENT DETAILS
+		$('#add_empdet').click(function(){
+
+			var EmployeerName = $('#EmployeerName').val();
+			var emAddress = $('#emAddress').val();
+			var PeriodCovered = $('#PeriodCovered').val();
+			
+			var Position = $('#Position').val();
+			var Salary = $('#Salary').val();
+			var cos = $('#cos').val();
+			
+
+			$.ajax({
+				url : "<?php echo site_url('Main_Controller/add_toemp');?>",
+				method : "POST",
+				data : {EmployeerName: EmployeerName, emAddress: emAddress,PeriodCovered: PeriodCovered, Position: Position, Salary: Salary,cos: cos},
+				success: function(data){
+					$('#empskills').load("<?php echo site_url('Main_Controller/showSkills');?>");
+				}
+			});
+		});
+		$(document).on('click','.remoaemop',function(){
+			var row_id = $(this).attr("id");
+            // alert(row_id);
+            $.ajax({
+            	url : "<?php echo site_url('Main_Controller/removeemp');?>",
+            	method : "POST",
+            	data : {row_id : row_id},
+            	success :function(data){
+            		$('#empskills').load("<?php echo site_url('Main_Controller/showSkills');?>");
+            	}
+            });
+        });
 		$('#empskills').load("<?php echo site_url('Main_Controller/showSkills');?>");
 	});
 </script>

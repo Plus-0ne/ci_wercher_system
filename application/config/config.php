@@ -459,6 +459,9 @@ $config['csrf_exclude_uris'] = array(
 	'Main_Controller/showAcad',
 	'Main_Controller/removeAcad',
 	'addNewEmployee',
+	'Main_Controller/add_toemp',
+	'Main_Controller/showSkills',
+	'Main_Controller/removeemp',
 );
 
 /*

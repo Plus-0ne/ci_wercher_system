@@ -27,9 +27,15 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL,$id);
 		return $result;
 	}
-	public function GetEmployeeAcadhis()
+	public function GetEmployeeAcadhis($ApplicantID)
 	{
-		$SQL = "SELECT * FROM acad_history";
+		$SQL = "SELECT * FROM acad_history WHERE ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetEmploymentDetails($ApplicantID)
+	{
+		$SQL = "SELECT * FROM employment_record WHERE ApplicantID = '$ApplicantID'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

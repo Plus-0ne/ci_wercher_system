@@ -143,7 +143,23 @@ class Add_Controller extends CI_Controller {
 								$this->Model_Inserts->InsertAcadH($data);
 							}
 						}
+						if (isset($_SESSION["emp_cart"])) {
+							foreach ($_SESSION["emp_cart"] as $s_da) {
+								$data = array(
+									'ApplicantID' => $customid,
+									'Name' => $s_da['emp_cart']['EmployeerName'],
+									'Address' => $s_da['emp_cart']['emAddress'],
+									'PeriodCovered' => $s_da['emp_cart']['PeriodCovered'],
+									'Position' => $s_da['emp_cart']['Position'],
+									'Salary' => $s_da['emp_cart']['Salary'],
+									'CauseOfSeparation' => $s_da['emp_cart']['cos'],
+
+								);
+								$this->Model_Inserts->InsertEmploymentRecord($data);
+							}
+						}
 						unset($_SESSION["acadcart"]);
+						unset($_SESSION["emp_cart"]);
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Employee added!</h5></div>');
 						redirect('NewEmployee');
 					}

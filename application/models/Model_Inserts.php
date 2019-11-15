@@ -18,4 +18,9 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('admin', $data);
 		return $result;
 	}
+	public function InsertEmploymentRecord($data)
+	{
+		$result = $this->db->insert('employment_record', $data);
+		return $result;
+	}
 }

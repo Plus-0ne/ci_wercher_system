@@ -101,7 +101,9 @@ class Main_Controller extends CI_Controller {
 					'Status' => $ged['Status'],
 
 				);
-				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis();
+				$ApplicantID = $ged['ApplicantID'];
+				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);
+				$data['employment_record'] = $this->Model_Selects->GetEmploymentDetails($ApplicantID);
 				$this->load->view('users/u_viewemployee',$data);
 			}
 			else
@@ -223,41 +225,86 @@ class Main_Controller extends CI_Controller {
 			}
 		}
 	}
+	public function add_toemp()
+	{
+		$min=10000000;
+		$max=99999999;
+		$rint = random_int($min,$max);
 
+		$EmployeerName = $_POST["EmployeerName"];
+		$emAddress = $_POST["emAddress"];
+		$PeriodCovered = $_POST["PeriodCovered"];
+		$Position = $_POST["Position"];
+		$Salary = $_POST["Salary"];
+		$cos = $_POST["cos"];
+		if ($EmployeerName == NULL || $emAddress == NULL || $PeriodCovered == NULL || $Position == NULL || $Salary == NULL || $cos == NULL) {
+			echo "Error";
+		}
+		else
+		{
+			foreach ($_SESSION["emp_cart"] as $s_da => $row) {
+				if ($row['emp_cart']['emp_id'] == $rint) {
+					exit();
+				}
+			}
+			if (!isset($_SESSION ['emp_cart'] )) {
+				$_SESSION ['emp_cart'] = array ();
+			}
+			$data['emp_cart'] = array(
+				'emp_id' => $rint,
+				'EmployeerName' => $EmployeerName,
+				'emAddress' => $emAddress,
+				'PeriodCovered' => $PeriodCovered,
+				'Position' => $Position,
+				'Salary' => $Salary,
+				'cos' => $cos,
+			);
+			$_SESSION['emp_cart'][] = $data;
+		}
+	}
 	public function showSkills()
 	{
-		if (!isset($_SESSION['skillscart'])) {
-			echo '<div class="pb-3"><h5><i class="fas fa-stream"></i> Skills Empty</h5></div>';
+		if (!isset($_SESSION['emp_cart'])) {
+			echo '<div class="pb-3"><h5><i class="fas fa-stream"></i> Employment Record Empty</h5></div>';
 		}
 
-		if (isset($_SESSION['skillscart'])) {
-			echo '<div class="p-3"><h5><i class="fas fa-stream"></i> Skills </h5></div>';
+		if (isset($_SESSION['emp_cart'])) {
+			echo '<div class="p-3"><h5><i class="fas fa-stream"></i> Emplyement Record </h5></div>';
 			echo '<table class="table table-bordered">
 			<thead>
-			<th>School Level</th>
-			<th>School Name</th>
-			<th>From</th>
-			<th>To</th>
+			<th>Name</th>
+			<th>Address</th>
+			<th>PeriodCovered</th>
+			<th>Position</th>
+			<th>Salary</th>
+			<th>cos</th>
+
 			<th>Action</th>
 			</thead>
 			<tbody>';
-			foreach ($_SESSION['skillscart'] as $s_da) {
+			foreach ($_SESSION['emp_cart'] as $s_da) {
 				echo '
 				<tr>
 				<td>
-				'.$s_da['skillscart']['SchoolLevel'] .'
+				'.$s_da['emp_cart']['EmployeerName'] .'
 				</td>
 				<td>
-				'.$s_da['skillscart']['SchoolName'] .'
+				'.$s_da['emp_cart']['emAddress'] .'
 				</td>
 				<td>
-				'.$s_da['skillscart']['FromYearSchool'] .'
+				'.$s_da['emp_cart']['PeriodCovered'] .'
 				</td>
 				<td>
-				'.$s_da['skillscart']['ToYearSchool'] .'
+				'.$s_da['emp_cart']['Position'] .'
 				</td>
 				<td>
-				<button id="'.$s_da['skillscart']['SchoolLevel'].'" class="remoach btn-tr" type="button"><i class="fas fa-trash"></i></button>
+				'.$s_da['emp_cart']['Salary'] .'
+				</td>
+				<td>
+				'.$s_da['emp_cart']['cos'] .'
+				</td>
+				<td>
+				<button id="'.$s_da['emp_cart']['emp_id'].'" class="remoaemop btn-tr" type="button"><i class="fas fa-trash"></i></button>
 				</td>
 				</tr>
 				';
@@ -266,6 +313,16 @@ class Main_Controller extends CI_Controller {
 			</table>';
 		}
 		echo '<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#skillsFields"><i class="fas fa-plus"></i> Add Data</button>';
+	}
+	public function removeemp()
+	{
+		foreach ($_SESSION["emp_cart"] as $s_da => $row) {
+			if ($row['emp_cart']['emp_id'] == $_POST['row_id']) {
+				unset($_SESSION["emp_cart"][$s_da]);
+				if(empty($_SESSION["emp_cart"]))
+					unset($_SESSION["emp_cart"]);
+			}
+		}
 	}
 	public function Logout()
 	{
