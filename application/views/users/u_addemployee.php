@@ -46,9 +46,15 @@
 											<option>
 												Office Staff
 											</option>
-											<!-- <option>
-												On-Call
-											</option> -->
+											<option>
+												Payroll Specialist
+											</option>
+											<option>
+												Secretary
+											</option>
+											<option>
+												Bookeeper
+											</option>
 										</select>
 									</div>
 									<div class="form-group col-sm-12 col-md-2">

@@ -17,8 +17,22 @@ class Main_Controller extends CI_Controller {
 		$this->session->unset_userdata('acadcart');
 		$header['title'] = 'Dashboard | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		// GET ADMIN COUNT
-		$data['C_Admin'] = $this->Model_Selects->GetAdmin();
+		
+		// CHART
+		$result =  $this->Model_Selects->GetApplicantSkills();
+
+		$record = $result->result();
+		$data = [];
+
+		foreach($record as $row) {
+			$data['label'][] = $row->PositionDesired;
+			$data['data'][] = (int) $row->count;
+		}
+		$data['chart_data'] = json_encode($data);
+		// COUNT ADMIN
+		$data['result_cadmin'] =  $this->Model_Selects->GetAdmin();
+		// COUNT APPLICANTS
+		$data['result_capp'] =  $this->Model_Selects->GetApplicants();
 		$this->load->view('users/u_dashboard',$data);
 	}
 	

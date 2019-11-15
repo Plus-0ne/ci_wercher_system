@@ -45,4 +45,15 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL,$AdminID);
 		return $result;
 	}
+	public function GetApplicants()
+	{
+		$SQL = "SELECT * FROM applicants";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetApplicantSkills()
+	{
+		$result =  $this->db->query("SELECT PositionDesired, COUNT(*) as count FROM applicants GROUP BY PositionDesired");
+		return $result;
+	}
 }

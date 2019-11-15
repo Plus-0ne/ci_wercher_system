@@ -109,7 +109,9 @@
 									Applicant
 								</span>
 								<span class="ml-auto float-right head-ico-text">
-									<i class="fas fa-user-friends fa-fw"></i> 10
+									<i class="fas fa-user-friends fa-fw"></i> <?php if ($result_capp->num_rows() > 0) {
+										echo $result_capp->num_rows();
+									} ?>
 								</span>
 							</div>
 							<div class="card-bodys clearfix">
@@ -154,8 +156,8 @@
 									Admin
 								</span>
 								<span class="ml-auto float-right head-ico-text">
-									<i class="fas fa-user-secret fa-fw"></i> <?php if ($C_Admin->num_rows() > 0 ) {
-										echo $C_Admin->num_rows(); 
+									<i class="fas fa-user-secret fa-fw"></i> <?php if ($result_cadmin->num_rows() > 0) {
+										echo $result_cadmin->num_rows();
 									} ?>
 								</span>
 							</div>
@@ -204,17 +206,22 @@
 			$('#sidebar').toggleClass('active');
 			$('.ncontent').toggleClass('shContent');
 		});
+		var cData = JSON.parse(`<?php echo $chart_data; ?>`);
 		new Chart(document.getElementById("pie-chart"), {
 			type: 'pie',
 			data: {
-				labels: ["Skill 1", "Skill 2", "Skill 3", "Skill 4", "Skill 5"],
+				labels: cData.label,
 				datasets: [{
 					label: "",
 					backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-					data: [2478,5267,734,784,433]
+					data: cData.data,
 				}]
 			},
 			options: {
+				legend:
+				{
+					display: false,
+				},
 				title: {
 					display: true,
 					text: 'Total Applicant / Position'

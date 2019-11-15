@@ -29,6 +29,7 @@
 									<tr>
 										<th> Applicant </th>
 										<th> Applicant ID </th>
+										<th> Position Desired </th>
 										<th> Full Name </th>
 										<th> Gender </th>
 										<th> Action </th>
@@ -42,6 +43,9 @@
 											</td>
 											<td class="text-center align-middle">
 												<?php echo $row['ApplicantID']; ?>
+											</td>
+											<td class="text-center align-middle">
+												<?php echo $row['PositionDesired']; ?>
 											</td>
 											<td class="text-center align-middle">
 												<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
