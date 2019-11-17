@@ -158,8 +158,42 @@ class Add_Controller extends CI_Controller {
 								$this->Model_Inserts->InsertEmploymentRecord($data);
 							}
 						}
+						if (isset($_SESSION["mach_cart"])) {
+							foreach ($_SESSION["mach_cart"] as $s_da) {
+								$data = array(
+									'ApplicantID' => $customid,
+									'MachineName' => $s_da['mach_cart']['MachineName'],
+								);
+								$this->Model_Inserts->InsertMachineOperated($data);
+							}
+						}
+						// if (isset($_SESSION["rela_cart"])) {
+						// 	foreach ($_SESSION["rela_cart"] as $s_da) {
+						// 		$data = array(
+						// 			'ApplicantID' => $customid,
+						// 			'Relation' => $s_da['rela_cart']['Relation'],
+						// 			'Name' => $s_da['rela_cart']['rName'],
+						// 			'Occupation' => $s_da['rela_cart']['rOccupation'],
+						// 		);
+						// 		$this->Model_Inserts->InsertRelativesdata($data);
+						// 	}
+						// }
+						// if (isset($_SESSION["beneCart"])) {
+						// 	foreach ($_SESSION["beneCart"] as $s_da) {
+						// 		$data = array(
+						// 			'ApplicantID' => $customid,
+						// 			'Name' => $s_da['beneCart']['BeneName'],
+						// 			'Relationship' => $s_da['beneCart']['BeneRelationship'],
+						// 		);
+						// 		$this->Model_Inserts->InserBeneficia($data);
+						// 	}
+						// }
 						unset($_SESSION["acadcart"]);
 						unset($_SESSION["emp_cart"]);
+						unset($_SESSION["mach_cart"]);
+						// unset($_SESSION["rela_cart"]); 
+						// unset($_SESSION["beneCart"]);
+						
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Employee added!</h5></div>');
 						redirect('NewEmployee');
 					}

@@ -66,3 +66,6 @@ $route['Add_NewAdmin'] = 'Add_Controller/Add_NewAdmin';
 
 // DELETE
 $route['RemoveEmployee'] = 'Delete_Controller/RemoveEmployee';
+
+// UPDATE
+$route['EmployApplicant'] = 'Update_Controller/EmployApplicant';

@@ -5,7 +5,7 @@ class Model_Selects extends CI_Model {
 
 	public function GetEmployee()
 	{
-		$SQL = "SELECT * FROM applicants WHERE Status = 'Active'";
+		$SQL = "SELECT * FROM applicants WHERE Status = 'Employed'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -60,6 +60,18 @@ class Model_Selects extends CI_Model {
 	public function GetApplicantSkills()
 	{
 		$result =  $this->db->query("SELECT PositionDesired, COUNT(*) as count FROM applicants GROUP BY PositionDesired");
+		return $result;
+	}
+	public function CheckApplicant($ApplicantNo)
+	{
+		$SQL = "SELECT * FROM applicants WHERE ApplicantNo = ?";
+		$result = $this->db->query($SQL,$ApplicantNo);
+		return $result;
+	}
+	public function Machine_Operatessss($ApplicantID)
+	{
+		$SQL = "SELECT * FROM machine_operated WHERE ApplicantID = ?";
+		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
 }

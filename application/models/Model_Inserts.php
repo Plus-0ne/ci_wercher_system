@@ -23,4 +23,19 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('employment_record', $data);
 		return $result;
 	}
+	public function InsertMachineOperated($data)
+	{
+		$result = $this->db->insert('machine_operated', $data);
+		return $result;
+	}
+	// public function InsertRelativesdata($data)
+	// {
+	// 	$result = $this->db->insert('relatives', $data);
+	// 	return $result;
+	// }
+	// public function InserBeneficia($data)
+	// {
+	// 	$result = $this->db->insert('beneficiaries', $data);
+	// 	return $result;
+	// }
 }

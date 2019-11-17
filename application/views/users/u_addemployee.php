@@ -216,6 +216,12 @@
 										
 									</div>
 								</div>
+								<div class="form-row pb-5">
+									<div id="mach_Op" class="" style="width: 100%;">
+										
+									</div>
+								</div>
+								
 								<div class="form-row pt-5 pb-4">
 									<div class="form-group mr-auto">
 										<button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Save</button>
@@ -323,27 +329,52 @@
 						<div class="form-row">
 							<div class="form-group col-sm-12 col-md-6 m-auto">
 								<label>Period Covered</label>
-								<input id="PeriodCovered" class="form-control" type="text" name="FromYearSchool" maxlength="4">
+								<input id="PeriodCovered" class="form-control" type="text" name="FromYearSchool">
 							</div>
 							<div class="form-group col-sm-12 col-md-6 m-auto">
 								<label> Position</label>
-								<input id="Position" class="form-control" type="text" name="ToYearSchool" maxlength="4">
+								<input id="Position" class="form-control" type="text" name="ToYearSchool">
 							</div>
 						</div>
 						<div class="form-row">
 							<div class="form-group col-sm-12 col-md-6 m-auto">
 								<label>Salary</label>
-								<input id="Salary" class="form-control" type="text" name="FromYearSchool" maxlength="4">
+								<input id="Salary" class="form-control" type="text" name="FromYearSchool">
 							</div>
 							<div class="form-group col-sm-12 col-md-6 m-auto">
 								<label> Cause of separation</label>
-								<input id="cos" class="form-control" type="text" name="ToYearSchool" maxlength="4">
+								<input id="cos" class="form-control" type="text" name="ToYearSchool">
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button id="add_empdet" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Add changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="Mach_Operated" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Machine Operated</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="#" method="post">
+						<div class="form-row">
+							<div class="form-group col-sm-12 col-md-12">
+								<label>Machine Name</label>
+								<input id="MachineName" class="form-control" type="text" name="">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button id="add_machop" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Add changes</button>
 				</div>
 			</div>
 		</div>
@@ -446,6 +477,34 @@
             });
         });
 		$('#empskills').load("<?php echo site_url('Main_Controller/showSkills');?>");
+
+		// ADD Machine Operated
+		$('#add_machop').click(function(){
+
+			var MachineName = $('#MachineName').val();
+			
+			$.ajax({
+				url : "<?php echo site_url('Main_Controller/Add_MachineOP');?>",
+				method : "POST",
+				data : {MachineName: MachineName},
+				success: function(data){
+					$('#mach_Op').load("<?php echo site_url('Main_Controller/ShowMachineOperated');?>");
+				}
+			});
+		});
+		$(document).on('click','.removemachine',function(){
+			var row_id = $(this).attr("id");
+            // alert(row_id);
+            $.ajax({
+            	url : "<?php echo site_url('Main_Controller/remomanchine');?>",
+            	method : "POST",
+            	data : {row_id : row_id},
+            	success :function(data){
+            		$('#mach_Op').load("<?php echo site_url('Main_Controller/ShowMachineOperated');?>");
+            	}
+            });
+        });
+		$('#mach_Op').load("<?php echo site_url('Main_Controller/ShowMachineOperated');?>");
 	});
 </script>
 </html>

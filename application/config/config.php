@@ -462,6 +462,15 @@ $config['csrf_exclude_uris'] = array(
 	'Main_Controller/add_toemp',
 	'Main_Controller/showSkills',
 	'Main_Controller/removeemp',
+	'Main_Controller/ShowMachineOperated',
+	'Main_Controller/Add_MachineOP',
+	'Main_Controller/remomanchine',
+	'Main_Controller/ShowRelatives',
+	'Main_Controller/Add_Relatives',
+	'Main_Controller/RemoveRelativs',
+	'Main_Controller/ShowBene',
+	'Main_Controller/Add_Bene',
+	'Main_Controller/RemoveBene',
 );
 
 /*

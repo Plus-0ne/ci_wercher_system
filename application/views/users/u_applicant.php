@@ -23,6 +23,7 @@
 				</div>
 				<div class="row rcontent">
 					<div class="col-sm-12">
+						<?php echo $this->session->flashdata('prompts'); ?>
 						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
 							<table id="emp" class="table table-striped table-bordered" style="width: 100%;">
 								<thead>
@@ -54,8 +55,8 @@
 												<?php echo $row['Gender']; ?>
 											</td>
 											<td class="text-center align-middle" width="100">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantNo']; ?>"onclick=" return confirm('View Employee?')"><i class="far fa-eye"></i> View</a>
-												<a class="btn btn-info btn-sm w-100 mb-1" href="#<?php echo $row['ApplicantNo']; ?>"onclick=" return confirm('Hire Employee?')"><i class="fas fa-user-edit"></i> Hire</a>
+												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantNo']; ?>"onclick=" return confirm('View Employee?')" target="_BLANK"><i class="far fa-eye"></i> View</a>
+												<a class="btn btn-info btn-sm w-100 mb-1" href="<?=base_url()?>EmployApplicant?id=<?php echo $row['ApplicantNo']; ?>"onclick=" return confirm('Hire Employee?')"><i class="fas fa-user-edit"></i> Hire</a>
 												<a href="<?=base_url()?>RemoveEmployee?id=<?php echo $row['ApplicantNo']; ?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Employee?')"><i class="fas fa-trash"></i> Delete</a>
 											</td>
 										</tr>

@@ -54,9 +54,9 @@
 												
 											</td>
 											<td class="text-center align-middle" width="100">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['Applicant_No']; ?>"onclick=" return confirm('View Employee?')"><i class="far fa-eye"></i> View</a>
+												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantNo']; ?>"onclick=" return confirm('View Employee?')"><i class="far fa-eye"></i> View</a>
 												<!-- <a class="btn btn-secondary btn-sm w-100 mb-1" href="#"onclick=" return confirm('Update Employee?')"><i class="fas fa-user-edit"></i> Update</a> -->
-												<a href="<?=base_url()?>RemoveEmployee?id=<?php echo $row['Applicant_No']; ?>" class="btn btn-danger btn-sm w-100 mb-1" href="#" onclick="return confirm('Remove Employee?')"><i class="fas fa-trash"></i> Delete</a>
+												<a href="<?=base_url()?>RemoveEmployee?id=<?php echo $row['ApplicantNo']; ?>" class="btn btn-danger btn-sm w-100 mb-1" href="#" onclick="return confirm('Remove Employee?')"><i class="fas fa-trash"></i> Delete</a>
 											</td>
 										</tr>
 									<?php endforeach ?>

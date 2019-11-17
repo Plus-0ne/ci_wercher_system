@@ -115,7 +115,7 @@
 								</span>
 							</div>
 							<div class="card-bodys clearfix">
-								<a class="dc-links float-left" href="#"><i class="fas fa-angle-right fa-fw"></i> View </a>
+								<a class="dc-links float-left" href="<?=base_url()?>Applicants"><i class="fas fa-angle-right fa-fw"></i> View </a>
 							</div>
 						</div>
 					</div>
@@ -126,7 +126,7 @@
 									Employee
 								</span>
 								<span class="ml-auto float-right head-ico-text">
-									<i class="fas fa-user-tie fa-fw"></i> 20
+									<i class="fas fa-user-tie fa-fw"></i> 0
 								</span>
 							</div>
 							<div class="card-bodys clearfix">
@@ -141,7 +141,7 @@
 									Client
 								</span>
 								<span class="ml-auto float-right head-ico-text">
-									<i class="fas fa-user-tag fa-fw"></i> 20
+									<i class="fas fa-user-tag fa-fw"></i> 0
 								</span>
 							</div>
 							<div class="card-bodys clearfix">
@@ -162,7 +162,7 @@
 								</span>
 							</div>
 							<div class="card-bodys clearfix">
-								<a class="dc-links float-left" href="#"><i class="fas fa-angle-right fa-fw"></i> View </a>
+								<a class="dc-links float-left" href="<?=base_url()?>Admin_List"><i class="fas fa-angle-right fa-fw"></i> View </a>
 							</div>
 						</div>
 					</div>
@@ -212,7 +212,7 @@
 			data: {
 				labels: cData.label,
 				datasets: [{
-					label: "",
+					label: cData.label,
 					backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
 					data: cData.data,
 				}]
@@ -220,7 +220,7 @@
 			options: {
 				legend:
 				{
-					display: false,
+					display: true,
 				},
 				title: {
 					display: true,
@@ -259,7 +259,7 @@
 					label: '# of Applicants',
 					data: [100, 19, 3, 5, 2, 3,21, 19, 3, 5, 2, 3],
 					backgroundColor: [
-					'rgba(255, 99, 132, 0.2)',
+					'rgba(255, 99, 132, 0.5)',
 					],
 					borderColor: [
 					'rgba(255, 99, 132, 1)',
@@ -275,7 +275,7 @@
 					'rgba(153, 102, 255, 1)',
 					'rgba(255, 159, 64, 1)'
 					],
-					borderWidth: 1
+					borderWidth: 2
 				}]
 			},
 			options: {

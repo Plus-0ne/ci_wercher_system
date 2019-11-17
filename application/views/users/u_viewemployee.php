@@ -185,8 +185,8 @@
 						</div>
 						<div class="col-sm-12 col-md-4 e-det">
 							<p>
-								<?php if ($Status == 'Active') { ?>
-									<i class="fas fa-circle" style="color: #1BDB07;"></i> Active
+								<?php if ($Status == 'Employed') { ?>
+									<i class="fas fa-circle" style="color: #1BDB07;"></i> Employed
 								<?php } else { ?>
 									<i class="fas fa-circle" style="color: #DB3E07;"></i> Applicant
 								<?php } ?>
@@ -395,6 +395,43 @@
 							</div>
 						</div>
 					</div>
+					<div class="row rcontent p-5">
+						<div class="col-sm-12 mb-5">
+							<h5>
+								<i class="fas fa-stream"></i> Machine Operated
+							</h5>
+						</div>
+						<div class="col-sm-12">
+							<div class="table-responsive">
+								<table class="table table-condensed">
+									<thead>
+										<th>Machine Name</th>
+										
+									</thead>
+									<tbody>
+										<?php if ($Machine_Operatessss->num_rows() > 0) { ?>
+											<?php foreach ($Machine_Operatessss->result_array() as $row): ?>
+												<?php if ($ApplicantID == $row['ApplicantID']) { ?>
+													<tr>
+														<td><?php echo $row['MachineName'];?></td>
+													</tr>
+												<?php } ?>
+											<?php endforeach ?>
+										<?php } else { ?>
+											<tr class="w-100 text-center">
+												<td>
+													<h5>
+														No Data
+													</h5>
+												</td>
+											</tr>
+										<?php } ?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					
 				</div>
 			</div>
 		</div>

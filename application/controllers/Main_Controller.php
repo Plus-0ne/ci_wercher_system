@@ -14,7 +14,10 @@ class Main_Controller extends CI_Controller {
 	}
 	public function Dashboard()
 	{
-		$this->session->unset_userdata('acadcart');
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
 		$header['title'] = 'Dashboard | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		
@@ -38,7 +41,10 @@ class Main_Controller extends CI_Controller {
 	
 	public function V_Applicants()
 	{
-		$this->session->unset_userdata('acadcart');
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
 		$header['title'] = 'Applicants | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['get_employee'] = $this->Model_Selects->getApplicant();
@@ -46,7 +52,10 @@ class Main_Controller extends CI_Controller {
 	}
 	public function Employee()
 	{
-		$this->session->unset_userdata('acadcart');
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
 		$header['title'] = 'Employees | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['get_employee'] = $this->Model_Selects->GetEmployee();
@@ -54,9 +63,11 @@ class Main_Controller extends CI_Controller {
 	}
 	public function ViewEmployee()
 	{
-		if (isset($_GET['id'])) {
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
 
-			$this->session->unset_userdata('acadcart');
+		if (isset($_GET['id'])) {
 
 			$id = $_GET['id'];
 
@@ -104,6 +115,7 @@ class Main_Controller extends CI_Controller {
 				$ApplicantID = $ged['ApplicantID'];
 				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);
 				$data['employment_record'] = $this->Model_Selects->GetEmploymentDetails($ApplicantID);
+				$data['Machine_Operatessss'] = $this->Model_Selects->Machine_Operatessss($ApplicantID);
 				$this->load->view('users/u_viewemployee',$data);
 			}
 			else
@@ -118,19 +130,26 @@ class Main_Controller extends CI_Controller {
 	}
 	public function NewEmployee()
 	{
-		$this->session->unset_userdata('acadcart');
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
 		$header['title'] = 'New Employee | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$this->load->view('users/u_addemployee',$data);
 	}
 	public function View_Admins()
 	{
-		$this->session->unset_userdata('acadcart');
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
 		$header['title'] = 'Administrator | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['ShowAdmin'] = $this->Model_Selects->GetAdmin();
 		$this->load->view('users/u_admins',$data);
 	}
+	// ACADEMIC HISTORY
 	public function showAcad()
 	{
 		if (!isset($_SESSION['acadcart'])) {
@@ -225,6 +244,7 @@ class Main_Controller extends CI_Controller {
 			}
 		}
 	}
+	// EMPLOYMENT RECORD
 	public function add_toemp()
 	{
 		$min=10000000;
@@ -324,6 +344,238 @@ class Main_Controller extends CI_Controller {
 			}
 		}
 	}
+	// MACHINE OPERATED
+	public function ShowMachineOperated()
+	{
+		if (!isset($_SESSION['mach_cart'])) {
+			echo '<div class="pb-3"><h5><i class="fas fa-stream"></i> Machine Operated Empty</h5></div>';
+		}
+
+		if (isset($_SESSION['mach_cart'])) {
+			echo '<div class="p-3"><h5><i class="fas fa-stream"></i> Machine Operated </h5></div>';
+			echo '<table class="table table-bordered">
+			<thead>
+			<th>Machine Name</th>
+			<th>Action</th>
+			</thead>
+			<tbody>';
+			foreach ($_SESSION['mach_cart'] as $s_da) {
+				echo '
+				<tr>
+				<td>
+				'.$s_da['mach_cart']['MachineName'] .'
+				</td>
+				<td>
+				<button id="'.$s_da['mach_cart']['MachID'].'" class="removemachine btn-tr" type="button"><i class="fas fa-trash"></i></button>
+				</td>
+				</tr>
+				';
+			}
+			echo '</tbody>
+			</table>';
+		}
+		echo '<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#Mach_Operated"><i class="fas fa-plus"></i> Add Data</button>';
+	}
+	public function Add_MachineOP()
+	{
+		$min=10000000;
+		$max=99999999;
+		$rint = random_int($min,$max);
+
+		
+		$MachineName = $_POST["MachineName"];
+		if ($MachineName == NULL) {
+			echo "Error";
+		}
+		else
+		{
+			foreach ($_SESSION["mach_cart"] as $s_da => $row) {
+				if ($row['mach_cart']['emp_id'] == $rint) {
+					exit();
+				}
+			}
+			if (!isset($_SESSION ['mach_cart'] )) {
+				$_SESSION ['mach_cart'] = array ();
+			}
+			$data['mach_cart'] = array(
+				'MachID' => $rint,
+				'MachineName' => $MachineName,
+				
+			);
+			$_SESSION['mach_cart'][] = $data;
+		}
+	}
+	public function remomanchine()
+	{
+		foreach ($_SESSION["mach_cart"] as $s_da => $row) {
+			if ($row['mach_cart']['MachID'] == $_POST['row_id']) {
+				unset($_SESSION["mach_cart"][$s_da]);
+				if(empty($_SESSION["mach_cart"]))
+					unset($_SESSION["mach_cart"]);
+			}
+		}
+	}
+	// // Relatives
+	// public function ShowRelatives()
+	// {
+	// 	if (!isset($_SESSION['rela_cart'])) {
+	// 		echo '<div class="pb-3"><h5><i class="fas fa-stream"></i> Relatives Empty</h5></div>';
+	// 	}
+
+	// 	if (isset($_SESSION['rela_cart'])) {
+	// 		echo '<div class="p-3"><h5><i class="fas fa-stream"></i> Relatives </h5></div>';
+	// 		echo '<table class="table table-bordered">
+	// 		<thead>
+	// 		<th>Relation</th>
+	// 		<th>Name</th>
+	// 		<th>Occupation</th>
+	// 		<th>Action</th>
+	// 		</thead>
+	// 		<tbody>';
+	// 		foreach ($_SESSION['rela_cart'] as $s_da) {
+	// 			echo '
+	// 			<tr>
+	// 			<td>
+	// 			'.$s_da['rela_cart']['Relation'] .'
+	// 			</td>
+	// 			<td>
+	// 			'.$s_da['rela_cart']['rName'] .'
+	// 			</td>
+	// 			<td>
+	// 			'.$s_da['rela_cart']['rOccupation'] .'
+	// 			</td>
+	// 			<td>
+	// 			<button id="'.$s_da['rela_cart']['relaID'].'" class="removeRela btn-tr" type="button"><i class="fas fa-trash"></i></button>
+	// 			</td>
+	// 			</tr>
+	// 			';
+	// 		}
+	// 		echo '</tbody>
+	// 		</table>';
+	// 	}
+	// 	echo '<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#Relatives_Modal"><i class="fas fa-plus"></i> Add Data</button>';
+	// }
+	// public function Add_Relatives()
+	// {
+	// 	$min=10000000;
+	// 	$max=99999999;
+	// 	$rint = random_int($min,$max);
+
+	// 	$Relation = $_POST["Relation"];
+	// 	$rName = $_POST["rName"];
+	// 	$rOccupation = $_POST["rOccupation"];
+
+	// 	if ($Relation == NULL || $rName == NULL || $rOccupation == NULL) {
+	// 		echo "Error";
+	// 	}
+	// 	else
+	// 	{
+	// 		foreach ($_SESSION["rela_cart"] as $s_da => $row) {
+	// 			if ($row['rela_cart']['emp_id'] == $rint) {
+	// 				exit();
+	// 			}
+	// 		}
+	// 		if (!isset($_SESSION ['rela_cart'] )) {
+	// 			$_SESSION ['rela_cart'] = array ();
+	// 		}
+	// 		$data['rela_cart'] = array(
+	// 			'relaID' => $rint,
+	// 			'Relation' => $Relation,
+	// 			'rName' => $rName,
+	// 			'rOccupation' => $rOccupation,
+				
+	// 		);
+	// 		$_SESSION['rela_cart'][] = $data;
+	// 	}
+	// }
+	// public function RemoveRelativs()
+	// {
+	// 	foreach ($_SESSION["rela_cart"] as $s_da => $row) {
+	// 		if ($row['rela_cart']['relaID'] == $_POST['row_id']) {
+	// 			unset($_SESSION["rela_cart"][$s_da]);
+	// 			if(empty($_SESSION["rela_cart"]))
+	// 				unset($_SESSION["rela_cart"]);
+	// 		}
+	// 	}
+	// }
+	// // BENIFICIARIES
+	// public function ShowBene()
+	// {
+	// 	if (!isset($_SESSION['beneCart'])) {
+	// 		echo '<div class="pb-3"><h5><i class="fas fa-stream"></i> Beneficiaries Empty</h5></div>';
+	// 	}
+
+	// 	if (isset($_SESSION['beneCart'])) {
+	// 		echo '<div class="p-3"><h5><i class="fas fa-stream"></i> Beneficiaries </h5></div>';
+	// 		echo '<table class="table table-bordered">
+	// 		<thead>
+	// 		<th>Name</th>
+	// 		<th>Relationship</th>
+	// 		<th>Action</th>
+	// 		</thead>
+	// 		<tbody>';
+	// 		foreach ($_SESSION['beneCart'] as $s_da) {
+	// 			echo '
+	// 			<tr>
+	// 			<td>
+	// 			'.$s_da['beneCart']['BeneName'] .'
+	// 			</td>
+	// 			<td>
+	// 			'.$s_da['beneCart']['BeneRelationship'] .'
+	// 			</td>
+	// 			<td>
+	// 			<button id="'.$s_da['beneCart']['beneID'].'" class="removeBENEEE btn-tr" type="button"><i class="fas fa-trash"></i></button>
+	// 			</td>
+	// 			</tr>
+	// 			';
+	// 		}
+	// 		echo '</tbody>
+	// 		</table>';
+	// 	}
+	// 	echo '<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#Bene_Modal"><i class="fas fa-plus"></i> Add Data</button>';
+	// }
+	// public function Add_Bene()
+	// {
+	// 	$min=10000000;
+	// 	$max=99999999;
+	// 	$rint = random_int($min,$max);
+
+	// 	$bName = $_POST["bName"];
+	// 	$bRelationship = $_POST["bRelationship"];
+
+	// 	if ($bName == NULL || $bRelationship == NULL) {
+	// 		echo "Error";
+	// 	}
+	// 	else
+	// 	{
+	// 		foreach ($_SESSION["beneCart"] as $s_da => $row) {
+	// 			if ($row['beneCart']['beneID'] == $rint) {
+	// 				exit();
+	// 			}
+	// 		}
+	// 		if (!isset($_SESSION ['beneCart'] )) {
+	// 			$_SESSION ['beneCart'] = array ();
+	// 		}
+	// 		$data['beneCart'] = array(
+	// 			'beneID' => $rint,
+	// 			'BeneName' => $bName,
+	// 			'BeneRelationship' => $bRelationship,
+				
+	// 		);
+	// 		$_SESSION['beneCart'][] = $data;
+	// 	}
+	// }
+	// public function RemoveBene()
+	// {
+	// 	foreach ($_SESSION["beneCart"] as $s_da => $row) {
+	// 		if ($row['beneCart']['beneID'] == $_POST['row_id']) {
+	// 			unset($_SESSION["beneCart"][$s_da]);
+	// 			if(empty($_SESSION["beneCart"]))
+	// 				unset($_SESSION["beneCart"]);
+	// 		}
+	// 	}
+	// }
+
 	public function Logout()
 	{
 		session_destroy();
