@@ -28,6 +28,11 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('machine_operated', $data);
 		return $result;
 	}
+	public function InsertNewClient($data)
+	{
+		$result = $this->db->insert('clients', $data);
+		return $result;
+	}
 	// public function InsertRelativesdata($data)
 	// {
 	// 	$result = $this->db->insert('relatives', $data);

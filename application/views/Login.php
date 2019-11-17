@@ -60,11 +60,12 @@
 						</div>
 						<div class="form-row">
 							<div class="form-group w-100">
-								<button class="btn btn-primary w-100"> Sign-in </button>
+								<!-- <button type="submit" class="btn btn-primary w-100"> Sign-in </button> -->
+								<a href="<?=base_url()?>Dashboard" class="btn btn-primary w-100"> Sign-in </a>
 							</div>
-							<div class="form-group w-100">
+							<!-- <div class="form-group w-100">
 								<button class="btn btn-secondary w-100"> Sign-up </button>
-							</div>
+							</div> -->
 						</div>
 						<div class="form-row">
 							<div class="form-group w-100 text-center">

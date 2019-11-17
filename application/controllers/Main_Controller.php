@@ -36,8 +36,10 @@ class Main_Controller extends CI_Controller {
 		$data['result_cadmin'] =  $this->Model_Selects->GetAdmin();
 		// COUNT APPLICANTS
 		$data['result_capp'] =  $this->Model_Selects->GetApplicants();
-		// COUNT APPLICANTS
+		// COUNT EMPLOYEE
 		$data['result_cemployee'] =  $this->Model_Selects->GetEmployee();
+		// COUNT CLIENT
+		$data['result_cclients'] =  $this->Model_Selects->GetClients();
 		$this->load->view('users/u_dashboard',$data);
 	}
 	
@@ -151,6 +153,18 @@ class Main_Controller extends CI_Controller {
 		$data['ShowAdmin'] = $this->Model_Selects->GetAdmin();
 		$this->load->view('users/u_admins',$data);
 	}
+	public function Clients()
+	{
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		$header['title'] = 'Clients | Wercher Solutions and Resources Workers Cooperative';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['ShowClients'] = $this->Model_Selects->GetClients();
+		$this->load->view('users/u_clients',$data);
+	}
+
 	// ACADEMIC HISTORY
 	public function showAcad()
 	{

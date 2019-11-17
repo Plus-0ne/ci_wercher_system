@@ -26,6 +26,9 @@
 			<a class="link-s" href="<?=base_url()?>Admin_List"><span class="fas fa-user-secret fa-fw"></span> Admins </a>
 		</li>
 		<!-- END COMMENT -->
+		<li class="nav-item">
+			<a class="link-s" href="<?=base_url()?>Clients"><span class="fas fa-user-tag fa-fw"></span> Clients </a>
+		</li>
 		<!-- <li>
 			<a class="link-s" href="#siteSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-cogs fa-fw"></i> Preferences </a>
 			<ul class="collapse list-unstyled collapseSettings animated fadeIn" id="siteSettings">

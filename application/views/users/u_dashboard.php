@@ -140,14 +140,16 @@
 						<div class="card-container">
 							<div class="card-headers clearfix bcolor199EC4">
 								<span class="float-left head-text">
-									Client
+									Client 
 								</span>
 								<span class="ml-auto float-right head-ico-text">
-									<i class="fas fa-user-tag fa-fw"></i> 0
+									<i class="fas fa-user-tag fa-fw"></i> <?php if ($result_cclients->num_rows() > 0) {
+										echo $result_cclients->num_rows();
+									} ?>
 								</span>
 							</div>
 							<div class="card-bodys clearfix">
-								<a class="dc-links float-left" href="#"><i class="fas fa-angle-right fa-fw"></i> View </a>
+								<a class="dc-links float-left" href="<?=base_url()?>Clients"><i class="fas fa-angle-right fa-fw"></i> View </a>
 							</div>
 						</div>
 					</div>
