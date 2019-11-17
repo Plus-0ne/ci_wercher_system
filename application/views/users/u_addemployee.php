@@ -59,21 +59,21 @@
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Salary Expected</label>
-										<input class="form-control" type="text" name="SalaryExpected">
+										<input class="form-control" type="text" name="SalaryExpected" autocomplete="off">
 									</div>
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Last Name</label>
-										<input class="form-control" type="text" name="LastName">
+										<input class="form-control" type="text" name="LastName" autocomplete="off">
 									</div>
 									<div class="form-group col-sm-12 col-md-4">
 										<label>First Name</label>
-										<input class="form-control" type="text" name="FirstName">
+										<input class="form-control" type="text" name="FirstName" autocomplete="off">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Middle Initial</label>
-										<input class="form-control" type="text" name="MI">
+										<input class="form-control" type="text" name="MI" autocomplete="off">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Gender</label>
@@ -90,19 +90,19 @@
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-1">
 										<label>Age</label>
-										<input class="form-control" type="number" name="Age">
+										<input class="form-control" type="number" name="Age" autocomplete="off">
 									</div>
 									<div class="form-group col-sm-12 col-md-1">
 										<label>Height</label>
-										<input class="form-control" type="number" name="Height">
+										<input class="form-control" type="number" name="Height" autocomplete="off">
 									</div>
 									<div class="form-group col-sm-12 col-md-1">
 										<label>Weight</label>
-										<input class="form-control" type="number" name="Weight">
+										<input class="form-control" type="number" name="Weight" autocomplete="off">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Religion</label>
-										<input class="form-control" type="text" name="Religion">
+										<input class="form-control" type="text" name="Religion" autocomplete="off">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Birth Date</label>
@@ -110,13 +110,13 @@
 									</div>
 									<div class="form-group col-sm-12 col-md-5">
 										<label>Birth Place</label>
-										<input class="form-control" type="text" name="bPlace">
+										<input class="form-control" type="text" name="bPlace" autocomplete="off">
 									</div>
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Citizenship</label>
-										<input class="form-control" type="text" name="Citizenship">
+										<input class="form-control" type="text" name="Citizenship" autocomplete="off">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Civil Status</label>
@@ -137,11 +137,11 @@
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>No. of Children</label>
-										<input class="form-control" type="number" name="No_Children">
+										<input class="form-control" type="number" name="No_Children" autocomplete="off">
 									</div>
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Phone Number</label>
-										<input class="form-control" type="number" name="PhoneNumber">
+										<input class="form-control" type="number" name="PhoneNumber" autocomplete="off">
 									</div>
 								</div>
 								<div class="mt-5 mb-4">
@@ -152,7 +152,7 @@
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-lg-3">
 										<label>S.S.S. #</label>
-										<input class="form-control" type="text" name="SSS">
+										<input class="form-control" type="text" name="SSS" autocomplete="off">
 									</div>
 									<div class="form-group col-sm-12 col-lg-2">
 										<label>Effective Date of Coverage</label>
@@ -162,11 +162,11 @@
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-lg-3">
 										<label>Residence Certificate No.</label>
-										<input class="form-control" type="text" name="RCN">
+										<input class="form-control" type="text" name="RCN" autocomplete="off">
 									</div>
-									<div class="form-group col-sm-12 col-lg-2">
+									<div class="form-group col-sm-12 col-lg-7">
 										<label>Issued At</label>
-										<input class="form-control" type="date" name="RCN_at">
+										<input class="form-control" type="text" name="RCN_at" autocomplete="off">
 									</div>
 									<div class="form-group col-sm-12 col-lg-2">
 										<label>On</label>
@@ -176,11 +176,11 @@
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-lg-3">
 										<label>Tax Identification No.</label>
-										<input class="form-control" type="text" name="TIN">
+										<input class="form-control" type="text" name="TIN" autocomplete="off">
 									</div>
-									<div class="form-group col-sm-12 col-lg-2">
+									<div class="form-group col-sm-12 col-lg-7">
 										<label>Issued At</label>
-										<input class="form-control" type="date" name="TIN_At">
+										<input class="form-control" type="text" name="TIN_At" autocomplete="off">
 									</div>
 									<div class="form-group col-sm-12 col-lg-2">
 										<label>On</label>
@@ -195,15 +195,15 @@
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Present</label>
-										<input class="form-control" type="text" name="Address_Present">
+										<input class="form-control" type="text" name="Address_Present" autocomplete="off">
 									</div>
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Provincial</label>
-										<input class="form-control" type="text" name="Address_Provincial">
+										<input class="form-control" type="text" name="Address_Provincial" autocomplete="off">
 									</div>
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Manila</label>
-										<input class="form-control" type="text" name="Address_Manila">
+										<input class="form-control" type="text" name="Address_Manila" autocomplete="off">
 									</div>
 								</div>
 								<div class="form-row pb-5 pt-5">
@@ -224,7 +224,7 @@
 								
 								<div class="form-row pt-5 pb-4">
 									<div class="form-group mr-auto">
-										<button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Save</button>
+										<button class="btn btn-primary" type="submit" onclick="return confirm('Do you want to save ?')"><i class="fas fa-save"></i> Save</button>
 									</div>
 									<div class="form-group ml-auto">
 										<a href="<?=base_url()?>Applicants" class="btn btn-secondary"><i class="fas fa-chevron-left"></i> Back</a>

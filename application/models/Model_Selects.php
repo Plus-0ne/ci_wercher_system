@@ -53,13 +53,13 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetApplicants()
 	{
-		$SQL = "SELECT * FROM applicants";
+		$SQL = "SELECT * FROM applicants WHERE Status = 'Applicant'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
 	public function GetApplicantSkills()
 	{
-		$result =  $this->db->query("SELECT PositionDesired, COUNT(*) as count FROM applicants GROUP BY PositionDesired");
+		$result =  $this->db->query("SELECT PositionDesired, COUNT(*) as count FROM applicants WHERE Status = 'Applicant' GROUP BY PositionDesired");
 		return $result;
 	}
 	public function CheckApplicant($ApplicantNo)

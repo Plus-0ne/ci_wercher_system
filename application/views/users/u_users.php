@@ -29,9 +29,9 @@
 									<tr>
 										<th> Applicant </th>
 										<th> Applicant ID </th>
+										<th> Position </th>
 										<th> Full Name </th>
 										<th> Gender </th>
-										<th> Date Hired </th>
 										<th> Action </th>
 									</tr>
 								</thead>
@@ -45,13 +45,13 @@
 												<?php echo $row['ApplicantID']; ?>
 											</td>
 											<td class="text-center align-middle">
+												<?php echo $row['PositionDesired']; ?>
+											</td>
+											<td class="text-center align-middle">
 												<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
 											</td>
 											<td class="text-center align-middle">
 												<?php echo $row['Gender']; ?>
-											</td>
-											<td class="text-center align-middle">
-												
 											</td>
 											<td class="text-center align-middle" width="100">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantNo']; ?>"onclick=" return confirm('View Employee?')"><i class="far fa-eye"></i> View</a>

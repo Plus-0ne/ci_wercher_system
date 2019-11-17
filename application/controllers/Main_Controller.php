@@ -36,6 +36,8 @@ class Main_Controller extends CI_Controller {
 		$data['result_cadmin'] =  $this->Model_Selects->GetAdmin();
 		// COUNT APPLICANTS
 		$data['result_capp'] =  $this->Model_Selects->GetApplicants();
+		// COUNT APPLICANTS
+		$data['result_cemployee'] =  $this->Model_Selects->GetEmployee();
 		$this->load->view('users/u_dashboard',$data);
 	}
 	

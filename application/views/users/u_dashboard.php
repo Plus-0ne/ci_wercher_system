@@ -14,7 +14,7 @@
 						</style>
 						<nav class="navbar navbar-expand-lg">
 							<button type="button" id="sidebarCollapse" class="btn btn-primary"><i class="fas fa-bars"></i></button>
-							<div class="dropdown ml-auto">
+							<!-- <div class="dropdown ml-auto">
 								<a class="btn btn-light ddToggle" data-toggle="dropdown"><i class="fas fa-bell"></i></a>
 								<ul class="dropdown-menu dropdown-menu-right">
 									<li class="notif-li">
@@ -33,7 +33,7 @@
 										</a>
 									</li>
 								</ul>
-							</div>
+							</div> -->
 						</nav>
 					</div>
 				</div>
@@ -123,14 +123,16 @@
 						<div class="card-container">
 							<div class="card-headers clearfix bcolorD9B319">
 								<span class="float-left head-text">
-									Employee
+									Employee 
 								</span>
 								<span class="ml-auto float-right head-ico-text">
-									<i class="fas fa-user-tie fa-fw"></i> 0
+									<i class="fas fa-user-tie fa-fw"></i> <?php if ($result_cemployee->num_rows() > 0) {
+										echo $result_cemployee->num_rows();
+									} ?>
 								</span>
 							</div>
 							<div class="card-bodys clearfix">
-								<a class="dc-links float-left" href="#"><i class="fas fa-angle-right fa-fw"></i> View </a>
+								<a class="dc-links float-left" href="<?=base_url()?>Employee"><i class="fas fa-angle-right fa-fw"></i> View </a>
 							</div>
 						</div>
 					</div>
