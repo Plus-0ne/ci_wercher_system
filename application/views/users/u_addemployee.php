@@ -43,45 +43,57 @@
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Position Desired</label>
 										<select class="form-control" name="PositionDesired">
-											<option>
+											<option value="Office Staff" <?php if ($this->session->flashdata('PositionDesired') == 'Office Staff') {
+												echo 'selected=""';
+											} ?>>
 												Office Staff
 											</option>
-											<option>
+											<option value="Payroll Specialist" <?php if ($this->session->flashdata('PositionDesired') == 'Payroll Specialist') {
+												echo 'selected=""';
+											} ?>>
 												Payroll Specialist
 											</option>
-											<option>
+											<option value="Secretary" <?php if ($this->session->flashdata('PositionDesired') == 'Secretary') {
+												echo 'selected=""';
+											} ?>>
 												Secretary
 											</option>
-											<option>
+											<option value="Bookeeper" <?php if ($this->session->flashdata('PositionDesired') == 'Bookeeper') {
+												echo 'selected=""';
+											} ?>>
 												Bookeeper
 											</option>
 										</select>
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Salary Expected</label>
-										<input class="form-control" type="text" name="SalaryExpected" autocomplete="off">
+										<input class="form-control" type="text" name="SalaryExpected" autocomplete="off" value="<?php echo $this->session->flashdata('SalaryExpected'); ?>">
 									</div>
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Last Name</label>
-										<input class="form-control" type="text" name="LastName" autocomplete="off">
+										<input class="form-control" type="text" name="LastName" autocomplete="off" value="<?php echo $this->session->flashdata('LastName'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-4">
 										<label>First Name</label>
-										<input class="form-control" type="text" name="FirstName" autocomplete="off">
+										<input class="form-control" type="text" name="FirstName" autocomplete="off" value="<?php echo $this->session->flashdata('FirstName'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Middle Initial</label>
-										<input class="form-control" type="text" name="MI" autocomplete="off">
+										<input class="form-control" type="text" name="MI" autocomplete="off" value="<?php echo $this->session->flashdata('MI'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Gender</label>
 										<select class="form-control" name="Gender">
-											<option>
+											<option value="Male" <?php if ($this->session->flashdata('Gender') == 'Male') {
+												echo 'selected=""';
+											} ?>>
 												Male
 											</option>
-											<option>
+											<option value="Female" <?php if ($this->session->flashdata('Gender') == 'Female') {
+												echo 'selected=""';
+											} ?>>
 												Female
 											</option>
 										</select>
@@ -90,58 +102,66 @@
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-1">
 										<label>Age</label>
-										<input class="form-control" type="number" name="Age" autocomplete="off">
+										<input class="form-control" type="number" name="Age" autocomplete="off" value="<?php echo $this->session->flashdata('Age'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-1">
 										<label>Height</label>
-										<input class="form-control" type="number" name="Height" autocomplete="off">
+										<input class="form-control" type="number" name="Height" autocomplete="off" value="<?php echo $this->session->flashdata('Height'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-1">
 										<label>Weight</label>
-										<input class="form-control" type="number" name="Weight" autocomplete="off">
+										<input class="form-control" type="number" name="Weight" autocomplete="off" value="<?php echo $this->session->flashdata('Weight'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Religion</label>
-										<input class="form-control" type="text" name="Religion" autocomplete="off">
+										<input class="form-control" type="text" name="Religion" autocomplete="off" value="<?php echo $this->session->flashdata('Religion'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Birth Date</label>
-										<input class="form-control" type="date" name="bDate">
+										<input class="form-control" type="date" name="bDate" value="<?php echo $this->session->flashdata('bDate'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-5">
 										<label>Birth Place</label>
-										<input class="form-control" type="text" name="bPlace" autocomplete="off">
+										<input class="form-control" type="text" name="bPlace" autocomplete="off" value="<?php echo $this->session->flashdata('bPlace'); ?>">
 									</div>
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Citizenship</label>
-										<input class="form-control" type="text" name="Citizenship" autocomplete="off">
+										<input class="form-control" type="text" name="Citizenship" autocomplete="off" value="<?php echo $this->session->flashdata('Citizenship'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Civil Status</label>
 										<select class="form-control" name="CivilStatus">
-											<option>
+											<option value="Single" <?php if ($this->session->flashdata('CivilStatus') == 'Single') {
+												echo 'selected=""';
+											} ?>>
 												Single
 											</option>
-											<option>
+											<option value="Married" <?php if ($this->session->flashdata('CivilStatus') == 'Married') {
+												echo 'selected=""';
+											} ?>>
 												Married
 											</option>
-											<option>
+											<option value="Widowed" <?php if ($this->session->flashdata('CivilStatus') == 'Widowed') {
+												echo 'selected=""';
+											} ?>>
 												Widowed
 											</option>
-											<option>
+											<option value="Divorced" <?php if ($this->session->flashdata('CivilStatus') == 'Divorced') {
+												echo 'selected=""';
+											} ?>>
 												Divorced
 											</option>
 										</select>
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>No. of Children</label>
-										<input class="form-control" type="number" name="No_Children" autocomplete="off">
+										<input class="form-control" type="number" name="No_Children" autocomplete="off" value="<?php echo $this->session->flashdata('No_Children'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Phone Number</label>
-										<input class="form-control" type="number" name="PhoneNumber" autocomplete="off">
+										<input class="form-control" type="number" name="PhoneNumber" autocomplete="off" value="<?php echo $this->session->flashdata('PhoneNumber'); ?>">
 									</div>
 								</div>
 								<div class="mt-5 mb-4">
@@ -152,39 +172,39 @@
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-lg-3">
 										<label>S.S.S. #</label>
-										<input class="form-control" type="text" name="SSS" autocomplete="off">
+										<input class="form-control" type="text" name="SSS" autocomplete="off" value="<?php echo $this->session->flashdata('SSS'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-lg-2">
 										<label>Effective Date of Coverage</label>
-										<input class="form-control" type="date" name="SSS_Effective">
+										<input class="form-control" type="date" name="SSS_Effective" value="<?php echo $this->session->flashdata('SSS_Effective'); ?>">
 									</div>
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-lg-3">
 										<label>Residence Certificate No.</label>
-										<input class="form-control" type="text" name="RCN" autocomplete="off">
+										<input class="form-control" type="text" name="RCN" autocomplete="off" value="<?php echo $this->session->flashdata('RCN'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-lg-7">
 										<label>Issued At</label>
-										<input class="form-control" type="text" name="RCN_at" autocomplete="off">
+										<input class="form-control" type="text" name="RCN_at" autocomplete="off" value="<?php echo $this->session->flashdata('RCN_at'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-lg-2">
 										<label>On</label>
-										<input class="form-control" type="date" name="RCN_On">
+										<input class="form-control" type="date" name="RCN_On" value="<?php echo $this->session->flashdata('RCN_On'); ?>">
 									</div>
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-lg-3">
 										<label>Tax Identification No.</label>
-										<input class="form-control" type="text" name="TIN" autocomplete="off">
+										<input class="form-control" type="text" name="TIN" autocomplete="off" value="<?php echo $this->session->flashdata('TIN'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-lg-7">
 										<label>Issued At</label>
-										<input class="form-control" type="text" name="TIN_At" autocomplete="off">
+										<input class="form-control" type="text" name="TIN_At" autocomplete="off" value="<?php echo $this->session->flashdata('TIN_At'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-lg-2">
 										<label>On</label>
-										<input class="form-control" type="date" name="TIN_On">
+										<input class="form-control" type="date" name="TIN_On" value="<?php echo $this->session->flashdata('TIN_On'); ?>">
 									</div>
 								</div>
 								<div class="mt-5 mb-4">
@@ -195,15 +215,15 @@
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Present</label>
-										<input class="form-control" type="text" name="Address_Present" autocomplete="off">
+										<input class="form-control" type="text" name="Address_Present" autocomplete="off" value="<?php echo $this->session->flashdata('Address_Present'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Provincial</label>
-										<input class="form-control" type="text" name="Address_Provincial" autocomplete="off">
+										<input class="form-control" type="text" name="Address_Provincial" autocomplete="off" value="<?php echo $this->session->flashdata('Address_Provincial'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Manila</label>
-										<input class="form-control" type="text" name="Address_Manila" autocomplete="off">
+										<input class="form-control" type="text" name="Address_Manila" autocomplete="off" value="<?php echo $this->session->flashdata('Address_Manila'); ?>">
 									</div>
 								</div>
 								<div class="form-row pb-5 pt-5">

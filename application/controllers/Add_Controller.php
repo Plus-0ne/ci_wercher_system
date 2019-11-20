@@ -46,6 +46,36 @@ class Add_Controller extends CI_Controller {
 
 		if ($PositionDesired == NULL || $SalaryExpected == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Age == NULL || $Height == NULL || $Weight == NULL || $Religion == NULL || $bDate == NULL || $bPlace == NULL || $Citizenship == NULL || $CivilStatus == NULL || $No_Children == NULL || $PhoneNumber == NULL || $SSS == NULL || $SSS_Effective == NULL || $RCN == NULL || $RCN_at == NULL || $RCN_On == NULL || $TIN == NULL || $TIN_At == NULL || $TIN_On == NULL || $Address_Present == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$data = array(
+				'PositionDesired' => $PositionDesired,
+				'SalaryExpected' => $SalaryExpected,
+				'LastName' => $LastName,
+				'FirstName' => $FirstName,
+				'MI' => $MI,
+				'Gender' => $Gender,
+				'Age' => $Age,
+				'Height' => $Height,
+				'Weight' => $Weight,
+				'Religion' => $Religion,
+				'bDate' => $bDate,
+				'bPlace' => $bPlace,
+				'Citizenship' => $Citizenship,
+				'CivilStatus' => $CivilStatus,
+				'No_Children' => $No_Children,
+				'PhoneNumber' => $PhoneNumber,
+				'SSS' => $SSS,
+				'SSS_Effective' => $SSS_Effective,
+				'RCN' => $RCN,
+				'RCN_at' => $RCN_at,
+				'RCN_On' => $RCN_On,
+				'TIN' => $TIN,
+				'TIN_At' => $TIN_At,
+				'TIN_On' => $TIN_On,
+				'Address_Present' => $Address_Present,
+				'Address_Provincial' => $Address_Provincial,
+				'Address_Manila' => $Address_Manila,
+			);
+			$this->session->set_flashdata($data);
 			redirect('NewEmployee');
 		}
 		else

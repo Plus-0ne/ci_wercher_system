@@ -56,7 +56,9 @@
 											</td>
 											<td class="text-center align-middle" width="100">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantNo']; ?>"onclick=" return confirm('View Employee?')" target="_BLANK"><i class="far fa-eye"></i> View</a>
-												<a class="btn btn-info btn-sm w-100 mb-1" href="<?=base_url()?>EmployApplicant?id=<?php echo $row['ApplicantNo']; ?>"onclick=" return confirm('Hire Employee?')"><i class="fas fa-user-edit"></i> Hire</a>
+												<!-- <a class="btn btn-info btn-sm w-100 mb-1" href="<?=base_url()?>EmployApplicant?id=<?php echo $row['ApplicantNo']; ?>"onclick=" return confirm('Hire Employee?')"><i class="fas fa-user-edit"></i> Hire</a> -->
+												<button id="<?php echo $row['ApplicantNo']; ?>" type="button" class="btn btn-info btn-sm w-100 mb-1 ModalHire"  data-toggle="modal" data-target="#hirthis"><i class="fas fa-user-edit"></i> Hire</button>
+
 												<a href="<?=base_url()?>RemoveEmployee?id=<?php echo $row['ApplicantNo']; ?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Employee?')"><i class="fas fa-trash"></i> Delete</a>
 											</td>
 										</tr>
@@ -74,6 +76,43 @@
 			</div>
 		</div>
 	</div>
+	<!-- MODAL -->
+	<div class="modal fade" id="hirthis" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<?php echo form_open(base_url().'EmployApplicant','method="POST"');?>
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Hire applicant</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<input id="idToHire" type="hidden" name="ApplicantID" value="">
+					<div class="form-row">
+						<div class="form-group col">
+							<label>Choose Client</label>
+							<select class="form-control" name="ClientID">
+								<?php foreach ($getClientOption->result_array() as $row): ?>
+									<option value="<?=$row['ClientID'];?>">
+										<?=$row['Name'];?>
+									</option>
+								<?php endforeach ?>
+							</select>
+						</div>
+						<div class="form-group col">
+							<label>Choose Months</label>
+							<input class="form-control" type="number" name="H_Months">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Save changes</button>
+				</div>
+				<?php echo form_close();?>
+			</div>
+		</div>
+	</div>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
@@ -83,6 +122,10 @@
 			$('.ncontent').toggleClass('shContent');
 		});
 		$('#emp').DataTable();
+		$('.ModalHire').on('click', function () {
+			$('#idToHire').val($(this).attr('id'));
+		});
+		
 	});
 </script>
 </html>

@@ -31,7 +31,9 @@
 										<th> Applicant ID </th>
 										<th> Position </th>
 										<th> Full Name </th>
-										<th> Gender </th>
+										<th> Client </th>
+										<th> Date Hired </th>
+										<th> End of Contract </th>
 										<th> Action </th>
 									</tr>
 								</thead>
@@ -50,8 +52,18 @@
 											<td class="text-center align-middle">
 												<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
 											</td>
+											<?php foreach ($getClientOption->result_array() as $nrow): ?>
+												<?php if ($row['ClientEmployed'] == $nrow['ClientID']) {
+													echo '<td class="text-center align-middle">
+												'.$nrow['Name'].'
+											</td>';
+												} ?>
+											<?php endforeach ?>
 											<td class="text-center align-middle">
-												<?php echo $row['Gender']; ?>
+												<?php echo $row['DateStarted']; ?>
+											</td>
+											<td class="text-center align-middle">
+												<?php echo $row['DateEnds']; ?>
 											</td>
 											<td class="text-center align-middle" width="100">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantNo']; ?>"onclick=" return confirm('View Employee?')"><i class="far fa-eye"></i> View</a>

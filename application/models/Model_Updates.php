@@ -3,9 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_Updates extends CI_Model {
 
-	public function EmployNewApplicant($ApplicantNo)
+	public function EmployNewApplicant($ApplicantNo,$data)
 	{
+		extract($data);
 		$data = array(
+			'ClientEmployed' => $ClientEmployed,
+			'DateStarted' => $DateStarted,
+			'DateEnds' => $DateEnds,
 			'Status' => 'Employed',
 		);
 		$this->db->where('ApplicantNo', $ApplicantNo);

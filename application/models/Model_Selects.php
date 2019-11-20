@@ -86,4 +86,10 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL,$ClientName);
 		return $result;
 	}
+	public function getClientOption()
+	{
+		$SQL = "SELECT * FROM clients";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }

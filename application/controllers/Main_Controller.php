@@ -52,6 +52,7 @@ class Main_Controller extends CI_Controller {
 		$header['title'] = 'Applicants | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['get_employee'] = $this->Model_Selects->getApplicant();
+		$data['getClientOption'] = $this->Model_Selects->getClientOption();
 		$this->load->view('users/u_applicant',$data);
 	}
 	public function Employee()
@@ -63,6 +64,7 @@ class Main_Controller extends CI_Controller {
 		$header['title'] = 'Employees | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['get_employee'] = $this->Model_Selects->GetEmployee();
+		$data['getClientOption'] = $this->Model_Selects->getClientOption();
 		$this->load->view('users/u_users',$data);
 	}
 	public function ViewEmployee()
