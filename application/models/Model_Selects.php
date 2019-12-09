@@ -82,7 +82,7 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetClients()
 	{
-		$SQL = "SELECT * FROM clients WHERE Status = 'Active'";
+		$SQL = "SELECT * FROM clients";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
