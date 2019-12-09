@@ -4,13 +4,7 @@
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
-				<div class="row">
-					<div class="col-sm-12">
-						<nav class="navbar navbar-expand-lg">
-							<button type="button" id="sidebarCollapse" class="btn btn-primary"><i class="fas fa-bars"></i></button>
-						</nav>
-					</div>
-				</div>
+				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="row">
 					<div class="col-sm-12 pt-3 pb-3">
 						<nav aria-label="breadcrumb">
@@ -23,9 +17,17 @@
 				</div>
 				<div class="row rcontent">
 					<?php echo $this->session->flashdata('prompts'); ?>
+					<div class="col-sm-6 col-md-4 PrintPageName PrintOut">
+						<h4>
+							<i class="fas fa-user-secret fa-fw"></i>Admins (<?php echo $ShowAdmin->num_rows() ?>)
+						</h4>
+					</div>
+					<div class="col-sm-6 col-md-8 text-right PrintExclude">
+						<button onClick="printContent('PrintOut')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
+					</div>
 					<div class="col-sm-12">
 						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
-							<table id="ListAdmins" class="table table-striped table-bordered" style="width: 100%;">
+							<table id="ListAdmins" class="table table-striped table-bordered PrintOut" style="width: 100%;">
 								<thead>
 									<tr>
 										<th> Level </th>
@@ -34,7 +36,7 @@
 										<th> Full Name </th>
 										<th> Gender </th>
 										<th> Date Added </th>
-										<th> Action </th>
+										<th class="PrintExclude"> Action </th>
 									</tr>
 								</thead>
 								<tbody>
@@ -66,7 +68,7 @@
 												<?php echo $row['AdminID'] ; ?>
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['FirstName'] ; ?> <?php echo $row['MiddleInitial'] ; ?> . <?php echo $row['LastName'] ; ?>
+												<?php echo $row['FirstName'] ; ?> <?php echo $row['MiddleInitial'] ; ?>. <?php echo $row['LastName'] ; ?>
 											</td>
 											<td class="text-center align-middle">
 												<?php echo $row['Gender'] ; ?>
@@ -77,8 +79,12 @@
 												echo date('m/d/Y H:i:s a',$row['DateAdded']);
 												?>
 											</td>
-											<td class="text-center align-middle">
-												<button class="btn btn-primary"> Remove </button>
+											<td class="text-center align-middle PrintExclude">
+												<?php if ($ShowAdmin->num_rows() > 1) { ?>
+													<a href="<?=base_url()?>RemoveAdmin?id=<?php echo $row['AdminNo']; ?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Admin?')"><i class="fas fa-trash"></i> Delete</a>
+												<?php } else { ?>
+													<button class="btn btn-secondary btn-sm w-100 mb-1" onclick="alert('Must have 1 admin minimum.')"><i class="fas fa-lock"></i> Delete</button>
+												<?php } ?>
 											</td>
 										</tr>
 									<?php endforeach ?>

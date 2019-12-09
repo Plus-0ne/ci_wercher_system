@@ -57,9 +57,11 @@ $route['Dashboard'] = 'Main_Controller/Dashboard';
 $route['Employee'] = 'Main_Controller/Employee';
 $route['ViewEmployee'] = 'Main_Controller/ViewEmployee';
 $route['Applicants'] = 'Main_Controller/V_Applicants';
+$route['ApplicantsExpired'] = 'Main_Controller/V_ApplicantsExpired';
 $route['NewEmployee'] = 'Main_Controller/NewEmployee';
 $route['Admin_List'] = 'Main_Controller/View_Admins';
 $route['Clients'] = 'Main_Controller/Clients';
+$route['Experimental'] = 'Main_Controller/Experimental';
 
 
 // CREATE
@@ -70,6 +72,8 @@ $route['Add_newClient'] = 'Add_Controller/Add_newClient';
 
 // DELETE
 $route['RemoveEmployee'] = 'Delete_Controller/RemoveEmployee';
+$route['RemoveAdmin'] = 'Delete_Controller/RemoveAdmin';
+$route['RemoveClient'] = 'Delete_Controller/RemoveClient';
 
 // UPDATE
 $route['EmployApplicant'] = 'Update_Controller/EmployApplicant';

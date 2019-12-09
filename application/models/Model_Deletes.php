@@ -9,4 +9,16 @@ class Model_Deletes extends CI_Model {
 		$result = $this->db->query($SQL,$id);
 		return $result;
 	}
+	public function RemoveAdminM($id)
+	{
+		$SQL = "DELETE FROM admin WHERE AdminNo = ?";
+		$result = $this->db->query($SQL,$id);
+		return $result;
+	}
+	public function RemoveClientM($id)
+	{
+		$SQL = "UPDATE clients SET Status ='Deleted' WHERE ClientID = ?";
+		$result = $this->db->query($SQL,$id);
+		return $result;
+	}
 }

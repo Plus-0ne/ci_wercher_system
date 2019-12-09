@@ -4,13 +4,7 @@
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
-				<div class="row">
-					<div class="col-sm-12">
-						<nav class="navbar navbar-expand-lg">
-							<button type="button" id="sidebarCollapse" class="btn btn-primary"><i class="fas fa-bars"></i></button>
-						</nav>
-					</div>
-				</div>
+				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="row">
 					<div class="col-sm-12 pt-3 pb-3">
 						<nav aria-label="breadcrumb">

@@ -16,4 +16,14 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->update('applicants', $data);
 		return $result;
 	}
+	public function ApplicantExpired($ApplicantNo)
+	{
+		$data = array(
+			'DateStarted' => '',
+			'Status' => 'Expired',
+		);
+		$this->db->where('ApplicantNo', $ApplicantNo);
+		$result = $this->db->update('applicants', $data);
+		return $result;
+	}
 }

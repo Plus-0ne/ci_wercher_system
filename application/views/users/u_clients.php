@@ -4,13 +4,7 @@
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
-				<div class="row">
-					<div class="col-sm-12">
-						<nav class="navbar navbar-expand-lg">
-							<button type="button" id="sidebarCollapse" class="btn btn-primary"><i class="fas fa-bars"></i></button>
-						</nav>
-					</div>
-				</div>
+				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="row">
 					<div class="col-sm-12 pt-3 pb-3">
 						<nav aria-label="breadcrumb">
@@ -23,15 +17,23 @@
 				</div>
 				<div class="row rcontent">
 					<?php echo $this->session->flashdata('prompts'); ?>
+					<div class="col-sm-6 col-md-4 PrintPageName PrintOut">
+						<h4>
+							<i class="fas fa-user-tag fa-fw"></i>Clients (<?php echo $ShowClients->num_rows() ?>)
+						</h4>
+					</div>
+					<div class="col-sm-6 col-md-8 text-right PrintExclude">
+						<button onClick="printContent('PrintOut')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
+					</div>
 					<div class="col-sm-12">
 						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
-							<table id="ListClients" class="table table-striped table-bordered" style="width: 100%;">
+							<table id="ListClients" class="table table-striped table-bordered PrintOut" style="width: 100%;">
 								<thead>
 									<tr>
 										<th> Name </th>
 										<th> Address </th>
 										<th> Contact # </th>
-										<th> Action </th>
+										<th class="PrintExclude"> Action </th>
 									</tr>
 								</thead>
 								<tbody>
@@ -46,8 +48,8 @@
 											<td class="text-center align-middle">
 												<?php echo $row['ContactNumber']; ?>
 											</td>
-											<td class="text-center align-middle">
-												<button class="btn btn-primary"> Remove </button>
+											<td class="text-center align-middle PrintExclude">
+												<a href="<?=base_url()?>RemoveClient?id=<?=$row['ClientID']?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Client?')"><i class="fas fa-trash"></i> Delete</a>
 											</td>
 										</tr>
 									<?php endforeach ?>

@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'https://localdev.test/wercher_system/';
+$config['base_url'] = 'http://localhost/ci_wercher_system/';
 
 /*
 |--------------------------------------------------------------------------

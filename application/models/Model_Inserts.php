@@ -43,4 +43,10 @@ class Model_Inserts extends CI_Model {
 	// 	$result = $this->db->insert('beneficiaries', $data);
 	// 	return $result;
 	// }
+
+	public function InsertAuditLog($data)
+	{
+		$result = $this->db->insert('audit_log', $data);
+		return $result;
+	}
 }

@@ -4,31 +4,34 @@
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
-				<div class="row">
-					<div class="col-sm-12">
-						<nav class="navbar navbar-expand-lg">
-							<button type="button" id="sidebarCollapse" class="btn btn-primary"><i class="fas fa-bars"></i></button>
-						</nav>
-					</div>
-				</div>
+				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="row">
 					<div class="col-sm-12 pt-3 pb-3">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb" style="background-color: transparent;">
-								<li class="breadcrumb-item"><a href="">Home</a></li>
-								<li class="breadcrumb-item">Employee</li>
+								<li class="breadcrumb-item"><a href="<?=base_url()?>Dashboard">Home</a></li>
+								<li class="breadcrumb-item">
+									<?php if ($Status == 'Employed') { 
+										echo '<a href="'. base_url() . 'Employee">Employee</a>';
+									} else { 
+										echo '<a href="'. base_url() . 'Applicants">Applicants</a>';
+									} ?>
+								</li>
 								<li class="breadcrumb-item active" aria-current="page">Details</li>
 							</ol>
 						</nav>
 					</div>
 				</div>
-				<div class="row rcontent p-5">
-					<div class="col-sm-12 mb-5">
+				<div class="row rcontent p-5 PrintOut">
+					<div class="col-sm-6 col-md-6 mb-5 PrintExclude">
 						<a href="<?php if (isset($_SERVER['HTTP_REFERER'])): ?>
 						<?php echo $_SERVER['HTTP_REFERER']; ?>
 						<?php else: ?>
 							<?=base_url()?>Employee
 							<?php endif ?>" class="btn btn-primary btn-sm"><i class="fas fa-chevron-left"></i> Back </a>
+					</div>
+						<div class="col-sm-6 col-md-6 text-right PrintExclude">
+							<button onClick="printContent('PrintOut')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
 						</div>
 						<div class="col-sm-12 mb-5">
 							<h5>
@@ -186,12 +189,35 @@
 						<div class="col-sm-12 col-md-4 e-det">
 							<p>
 								<?php if ($Status == 'Employed') { ?>
-									<i class="fas fa-circle" style="color: #1BDB07;"></i> Employed
+									<i class="fas fa-circle PrintExclude" style="color: #1BDB07;"></i> Employed
 								<?php } else { ?>
-									<i class="fas fa-circle" style="color: #DB3E07;"></i> Applicant
+									<i class="fas fa-circle PrintExclude" style="color: #DB3E07;"></i> Applicant
 								<?php } ?>
 							</p>
 						</div>
+						<div class="col-sm-12 col-md-2 e-title">
+							<h6>
+								Applied On
+							</h6>
+						</div>
+						<div class="col-sm-12 col-md-4 e-det">
+							<p>
+								<?php echo $AppliedOn; ?>
+							</p>
+						</div>
+						<!-- CONTRACT REPORT -->
+						<?php if ($Status == 'Employed') { ?>
+							<div class="col-sm-12 col-md-2 e-title PrintExclude">
+								<h6>
+									Contract
+								</h6>
+							</div>
+							<div class="col-sm-12 col-md-4 e-det PrintExclude">
+								<p>
+									<button id="EmpContractButton" class="btn btn-primary btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractModal"><i class="far fa-eye"></i> View Contract</button>
+								</p>
+							</div>
+						<?php } ?>
 						<div class="col-sm-12 mt-5 mb-3">
 							<h6>
 								<i class="fas fa-stream"></i> Address
@@ -228,7 +254,7 @@
 							</p>
 						</div>
 					</div>
-					<div class="row rcontent p-5">
+					<div class="row rcontent p-5 PrintOut">
 						<div class="col-sm-12 mb-5">
 							<h5>
 								<i class="fas fa-stream"></i> Documents
@@ -305,7 +331,7 @@
 							</p>
 						</div>
 					</div>
-					<div class="row rcontent p-5">
+					<div class="row rcontent p-5 PrintOut">
 						<div class="col-sm-12 mb-5">
 							<h5>
 								<i class="fas fa-stream"></i> Academic History
@@ -350,7 +376,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row rcontent p-5">
+					<div class="row rcontent p-5 PrintOut">
 						<div class="col-sm-12 mb-5">
 							<h5>
 								<i class="fas fa-stream"></i> Employment Details
@@ -435,8 +461,158 @@
 				</div>
 			</div>
 		</div>
+		<!-- The Modal -->          
+		<?php if($Status == 'Employed') { ?>          
+		<div class="modal" id="EmpContractModal">
+			<div class="modal-dialog modal-xl">
+				<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title PrintOut PrintOutModal">Contract Report for <?=$LastName?>, <?=$FirstName?> <?=$MiddleInitial?>.</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="row rcontent PrintOut PrintOutModal">
+						<div class="col-sm-2 col-md-2">
+							<h6>
+								Client Name
+							</h6>
+						</div>
+						<div class="col-sm-4 col-md-4">
+							<p>
+								<?php
+								// TODO: Find a better solution than this.
+								$found = false;
+								foreach ($get_employee->result_array() as $row) {
+									foreach ($getClientOption->result_array() as $nrow) {
+										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
+											$found = true;
+											echo $nrow['Name'];
+										}
+									}
+								}?>
+							</p>
+						</div>
+						<div class="col-sm-2 col-md-2">
+							<h6>
+								Applied On
+							</h6>
+						</div>
+						<div class="col-sm-4 col-md-4">
+							<p>
+								<?php echo $AppliedOn; ?>
+							</p>
+						</div>
+						<div class="col-sm-2 col-md-2">
+							<h6>
+								Client Contact #
+							</h6>
+						</div>
+						<div class="col-sm-4 col-md-4">
+							<p>
+								<?php
+								// TODO: Find a better solution than this.
+								$found = false;
+								foreach ($get_employee->result_array() as $row) {
+									foreach ($getClientOption->result_array() as $nrow) {
+										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
+											$found = true;
+											echo $nrow['ContactNumber'];
+										}
+									}
+								}?>
+							</p>
+						</div>
+						<div class="col-sm-2 col-md-2">
+							<h6>
+								Contract Started
+							</h6>
+						</div>
+						<div class="col-sm-4 col-md-4">
+							<p>
+								<?php echo $DateStarted; ?>
+							</p>
+						</div>
+						<div class="col-sm-2 col-md-2">
+							<h6>
+								Client Address
+							</h6>
+						</div>
+						<div class="col-sm-4 col-md-4">
+							<p>
+								<?php
+								// TODO: Find a better solution than this.
+								$found = false;
+								foreach ($get_employee->result_array() as $row) {
+									foreach ($getClientOption->result_array() as $nrow) {
+										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
+											$found = true;
+											echo $nrow['Address'];
+										}
+									}
+								}?>
+							</p>
+						</div>
+						<div class="col-sm-2 col-md-2">
+							<h6>
+								Contract Ends
+							</h6>
+						</div>
+						<div class="col-sm-4 col-md-4">
+							<p>
+								<?php echo $DateEnds; ?>
+							</p>
+						</div>
+					</div>
+					<div class="row rcontent">
+						<div class="col-sm-12 col-md-12 text-center PrintOut PrintOutModal">
+							<h6>
+								Days Remaining on Contract
+							</h6>
+						</div>
+						<div class="col-sm-12 col-md-12 text-center PrintOut PrintOutModal">
+							<p>
+								<?php
+									$currTime = time();
+									$strDateEnds = strtotime($DateEnds);
+									$strDateStarted = strtotime($DateStarted);
+									// PERCENTAGE
+									$rPercentage = (($strDateEnds - $currTime) * 100) / ($strDateEnds - $strDateStarted);
+									$rPercentage = round($rPercentage);
+									// DAYS REMAINING
+									$dateTimeZone = new DateTimeZone("Asia/Manila");
+									$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
+									$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
+									$interval = $datetime1->diff($datetime2);
+									echo $interval->format('%y years, %m months, %d days');
+								?>
+							</p>
+						</div>
+						<div class="col-sm-12 col-md-12">
+							<div class="progressBar">
+								<div class="progressBarTitle progressRemainingColor">Percentage</div>
+								<div class="progress progressRemaining"></div>
+								<div class="progress_value">45%</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button onClick="printContent('PrintOutModal')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
+					<button type="button" class="btn btn-danger ml-auto" data-dismiss="modal">Close</button>
+				</div>
+
+				</div>
+			</div>
+		</div>
+		<?php } ?>
 	</body>
-	<?php $this->load->view('_template/users/u_scripts'); ?>
+	<?php $this->load->view('_template/users/u_scripts');?>
 	<script type="text/javascript">
 		$(document).ready(function () {
 			$('#sidebarCollapse').on('click', function () {
@@ -444,5 +620,11 @@
 				$('.ncontent').toggleClass('shContent');
 			});
 		});
+		$("#EmpContractButton").click(function(){
+			var rPercentage = '<?php echo $rPercentage;?>';
+			$('.progressRemaining').animate({width:rPercentage + "%"},1500);
+			$('.progress_value').text(rPercentage + "%");
+		});
 	</script>
+	<textarea id="text"></textarea>
 	</html>

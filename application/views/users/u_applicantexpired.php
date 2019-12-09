@@ -18,11 +18,11 @@
 				<div class="row rcontent">
 					<div class="col-sm-12 col-md-4 PrintPageName PrintOut">
 						<h4>
-							<i class="fas fa-user-friends fa-fw"></i>Applicants (<?php echo $get_employee->num_rows() ?>)
+							<i class="fas fa-user-friends fa-fw"></i>Expired Contracts (<?php echo $get_ApplicantExpired->num_rows() ?>)
 						</h4>
 					</div>
 					<div class="col-sm-12 col-md-8 text-right PrintExclude">
-						<a href="<?=base_url()?>ApplicantsExpired" class="btn btn-info mr-auto"><i class="fas fa-user-friends fa-fw"></i> Expired Contracts (<?php echo $get_ApplicantExpired->num_rows()?>)</a>
+						<a href="<?=base_url()?>Applicants" class="btn btn-info mr-auto"><i class="fas fa-user-friends fa-fw"></i> New Applicants (<?php echo $get_employee->num_rows()?>)</a>
 						<button onClick="printContent('PrintOut')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
 					</div>
 					<div class="col-sm-12">
@@ -33,15 +33,16 @@
 									<tr>
 										<th> Applicant </th>
 										<th> Applicant ID </th>
-										<th> Position Desired </th>
+										<th> Previous Position </th>
 										<th> Full Name </th>
 										<th> Gender </th>
 										<th> Applied On </th>
+										<th> Expired Since </th>
 										<th class="PrintExclude"> Action </th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($get_employee->result_array() as $row): ?>
+									<?php foreach ($get_ApplicantExpired->result_array() as $row): ?>
 										<tr>
 											<td class="text-center">
 												<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70">
@@ -60,6 +61,9 @@
 											</td>
 											<td class="text-center align-middle">
 												<?php echo $row['AppliedOn']; ?>
+											</td>
+											<td class="text-center align-middle">
+												<?php echo $row['DateEnds']; ?>
 											</td>
 											<td class="text-center align-middle PrintExclude" width="100">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantNo']; ?>"><i class="far fa-eye"></i> View</a>
@@ -132,6 +136,8 @@
 		$('.ModalHire').on('click', function () {
 			$('#idToHire').val($(this).attr('id'));
 		});
+
+		$('[data-toggle="expired_tooltip"]').tooltip();   
 		
 	});
 </script>

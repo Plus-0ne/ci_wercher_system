@@ -15,6 +15,12 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function getApplicantExpired()
+	{
+		$SQL = "SELECT * FROM applicants WHERE Status = 'Expired'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function CheckEmployee($ApplicantID)
 	{
 		$SQL = "SELECT * FROM applicants WHERE ApplicantID = ?";
@@ -76,7 +82,7 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetClients()
 	{
-		$SQL = "SELECT * FROM clients";
+		$SQL = "SELECT * FROM clients WHERE Status = 'Active'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

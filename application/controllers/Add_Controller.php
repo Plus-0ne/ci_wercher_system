@@ -155,6 +155,7 @@ class Add_Controller extends CI_Controller {
 						'TIN_On' => $TIN_On,
 
 						'Status' => 'Applicant',
+						'AppliedOn' => date('Y-m-d h:i:s A'),
 					);
 					$addedEmployee = $this->Model_Inserts->AddThisEmployee($data);
 					if ($addedEmployee == TRUE) {
@@ -314,6 +315,7 @@ class Add_Controller extends CI_Controller {
 					'Name' => $ClientName,
 					'Address' => $ClientAddress,
 					'ContactNumber' => $ClientContact,
+					'Status' => 'Active',
 				);
 				$InsertNewClient = $this->Model_Inserts->InsertNewClient($data);
 				if ($InsertNewClient == TRUE) {

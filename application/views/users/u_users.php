@@ -4,13 +4,7 @@
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
-				<div class="row">
-					<div class="col-sm-12">
-						<nav class="navbar navbar-expand-lg">
-							<button type="button" id="sidebarCollapse" class="btn btn-primary"><i class="fas fa-bars"></i></button>
-						</nav>
-					</div>
-				</div>
+				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="row">
 					<div class="col-sm-12 pt-3 pb-3">
 						<nav aria-label="breadcrumb">
@@ -22,9 +16,18 @@
 					</div>
 				</div>
 				<div class="row rcontent">
+					<div class="col-sm-6 col-md-4 PrintPageName PrintOut">
+						<h4>
+							<i class="fas fa-user-tie fa-fw"></i>Employees (<?php echo $get_employee->num_rows() ?>)
+						</h4>
+					</div>
+					<div class="col-sm-6 col-md-8 text-right PrintExclude">
+						<a href="<?=base_url()?>ApplicantsExpired" class="btn btn-info mr-auto"><i class="fas fa-user-friends fa-fw"></i> Expired Contracts (<?php echo $get_ApplicantExpired->num_rows()?>)</a>
+						<button onClick="printContent('PrintOut')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
+					</div>
 					<div class="col-sm-12">
 						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
-							<table id="emp" class="table table-striped table-bordered" style="width: 100%;">
+							<table id="emp" class="table table-striped table-bordered PrintOut" style="width: 100%;">
 								<thead>
 									<tr>
 										<th> Applicant </th>
@@ -34,7 +37,7 @@
 										<th> Client </th>
 										<th> Date Hired </th>
 										<th> End of Contract </th>
-										<th> Action </th>
+										<th class="PrintExclude"> Action </th>
 									</tr>
 								</thead>
 								<tbody>
@@ -50,7 +53,7 @@
 												<?php echo $row['PositionDesired']; ?>
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
 											</td>
 											<?php foreach ($getClientOption->result_array() as $nrow): ?>
 												<?php if ($row['ClientEmployed'] == $nrow['ClientID']) {
@@ -65,8 +68,8 @@
 											<td class="text-center align-middle">
 												<?php echo $row['DateEnds']; ?>
 											</td>
-											<td class="text-center align-middle" width="100">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantNo']; ?>"onclick=" return confirm('View Employee?')"><i class="far fa-eye"></i> View</a>
+											<td class="text-center align-middle PrintExclude" width="100">
+												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantNo']; ?>"><i class="far fa-eye"></i> View</a>
 												<!-- <a class="btn btn-secondary btn-sm w-100 mb-1" href="#"onclick=" return confirm('Update Employee?')"><i class="fas fa-user-edit"></i> Update</a> -->
 												<a href="<?=base_url()?>RemoveEmployee?id=<?php echo $row['ApplicantNo']; ?>" class="btn btn-danger btn-sm w-100 mb-1" href="#" onclick="return confirm('Remove Employee?')"><i class="fas fa-trash"></i> Delete</a>
 											</td>
@@ -88,7 +91,7 @@
 			$('#sidebar').toggleClass('active');
 			$('.ncontent').toggleClass('shContent');
 		});
-		$('#emp').DataTable();
+		var emp_dt = $('#emp').DataTable();
 	});
 </script>
 </html>

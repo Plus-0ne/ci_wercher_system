@@ -6,6 +6,42 @@ class Main_Controller extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('Model_Selects');
+		$this->load->model('Model_Updates'); // TODO: Remove after fixing the call belooooow.
+		// echo $_SERVER['REMOTE_ADDR'] . '<br>';
+		// echo $_SERVER['HTTP_USER_AGENT'];
+		$GetEmployee = $this->Model_Selects->GetEmployee();
+		$currTime = time();
+		// TODO: Don't call this here. Need a real time checker. Find a better solution than this.
+		foreach ($GetEmployee->result_array() as $row) {
+
+			if (strtotime($row['DateEnds']) < $currTime) {
+				$ApplicantNo = $row['ApplicantID'];
+
+				if ($ApplicantNo == NULL) {
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+				}
+				else
+				{
+					$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantNo);
+					if ($CheckEmployee->num_rows() > 0) {
+
+						$ApplicantExpired = $this->Model_Updates->ApplicantExpired($ApplicantNo);
+						if ($ApplicantExpired == TRUE) {
+							$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ' . $ApplicantNo . ' has expired!</h5></div>');
+						}
+						else
+						{
+							$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+						}
+					}
+					else
+					{
+						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
+					}
+				}
+			}
+		}
+
 	}
 	public function index()
 	{
@@ -52,8 +88,22 @@ class Main_Controller extends CI_Controller {
 		$header['title'] = 'Applicants | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['get_employee'] = $this->Model_Selects->getApplicant();
+		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['getClientOption'] = $this->Model_Selects->getClientOption();
 		$this->load->view('users/u_applicant',$data);
+	}
+	public function V_ApplicantsExpired()
+	{
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		$header['title'] = 'Expired Contracts | Wercher Solutions and Resources Workers Cooperative';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['get_employee'] = $this->Model_Selects->getApplicant();
+		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+		$data['getClientOption'] = $this->Model_Selects->getClientOption();
+		$this->load->view('users/u_applicantexpired',$data);
 	}
 	public function Employee()
 	{
@@ -64,6 +114,7 @@ class Main_Controller extends CI_Controller {
 		$header['title'] = 'Employees | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['get_employee'] = $this->Model_Selects->GetEmployee();
+		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['getClientOption'] = $this->Model_Selects->getClientOption();
 		$this->load->view('users/u_users',$data);
 	}
@@ -117,11 +168,18 @@ class Main_Controller extends CI_Controller {
 					'TIN_On' => $ged['TIN_On'],
 					'Status' => $ged['Status'],
 
+					'ClientEmployed' => $ged['ClientEmployed'],
+					'DateStarted' => $ged['DateStarted'],
+					'DateEnds' => $ged['DateEnds'],
+					'AppliedOn' => $ged['AppliedOn'],
+
 				);
 				$ApplicantID = $ged['ApplicantID'];
 				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);
 				$data['employment_record'] = $this->Model_Selects->GetEmploymentDetails($ApplicantID);
 				$data['Machine_Operatessss'] = $this->Model_Selects->Machine_Operatessss($ApplicantID);
+				$data['get_employee'] = $this->Model_Selects->GetEmployee();
+				$data['getClientOption'] = $this->Model_Selects->getClientOption();
 				$this->load->view('users/u_viewemployee',$data);
 			}
 			else
@@ -165,6 +223,17 @@ class Main_Controller extends CI_Controller {
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['ShowClients'] = $this->Model_Selects->GetClients();
 		$this->load->view('users/u_clients',$data);
+	}
+	public function Experimental()
+	{
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		$header['title'] = 'Experimental | Wercher Solutions and Resources Workers Cooperative';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$this->load->library('SimpleXLSX');
+		$this->load->view('users/u_experimental',$data);
 	}
 
 	// ACADEMIC HISTORY
