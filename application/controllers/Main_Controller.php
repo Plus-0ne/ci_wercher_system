@@ -166,7 +166,19 @@ class Main_Controller extends CI_Controller {
 					'TIN' => $ged['TIN'],
 					'TIN_At' => $ged['TIN_At'],
 					'TIN_On' => $ged['TIN_On'],
+
+					'HDMF' => $ged['HDMF'],
+					'HDMF_At' => $ged['HDMF_At'],
+					'HDMF_On' => $ged['HDMF_On'],
+
+					'PhilHealth' => $ged['PhilHealth'],
+					'PhilHealth_At' => $ged['PhilHealth_At'],
+					'PhilHealth_On' => $ged['PhilHealth_On'],
+
+					'ATM_No' => $ged['ATM_No'],
+
 					'Status' => $ged['Status'],
+
 
 					'ClientEmployed' => $ged['ClientEmployed'],
 					'DateStarted' => $ged['DateStarted'],

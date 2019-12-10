@@ -330,6 +330,66 @@
 								<?php echo $TIN_On; ?>
 							</p>
 						</div>
+						<div class="col-sm-12 col-md-2 e-title">
+							<h6>
+								HDMF
+							</h6>
+						</div>
+						<div class="col-sm-12 col-md-4 e-det">
+							<p>
+								<?php echo $HDMF; ?>
+							</p>
+						</div>
+						<div class="col-sm-12 col-md-2 e-title">
+							<h6>
+								Issued At
+							</h6>
+							<h6>
+								Issued On
+							</h6>
+						</div>
+						<div class="col-sm-12 col-md-4 e-det">
+							<p>
+								<?php echo $HDMF_At; ?>
+								<br>
+								<?php echo $HDMF_On; ?>
+							</p>
+						</div>
+						<div class="col-sm-12 col-md-2 e-title">
+							<h6>
+								PHILHEALTH
+							</h6>
+						</div>
+						<div class="col-sm-12 col-md-4 e-det">
+							<p>
+								<?php echo $PhilHealth; ?>
+							</p>
+						</div>
+						<div class="col-sm-12 col-md-2 e-title">
+							<h6>
+								Issued At
+							</h6>
+							<h6>
+								Issued On
+							</h6>
+						</div>
+						<div class="col-sm-12 col-md-4 e-det">
+							<p>
+								<?php echo $PhilHealth_At; ?>
+								<br>
+								<?php echo $PhilHealth_On; ?>
+							</p>
+						</div>
+						<div class="col-sm-12 col-md-2 e-title">
+							<h6>
+								ATM #
+							</h6>
+						</div>
+						<div class="col-sm-12 col-md-4 e-det">
+							<p>
+								<?php echo $ATM_No; ?>
+							</p>
+						</div>
 					</div>
 					<div class="row rcontent p-5 PrintOut">
 						<div class="col-sm-12 mb-5">
