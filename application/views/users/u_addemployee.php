@@ -201,6 +201,40 @@
 										<input class="form-control" type="date" name="TIN_On" value="<?php echo $this->session->flashdata('TIN_On'); ?>">
 									</div>
 								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-lg-3">
+										<label>HDMF</label>
+										<input class="form-control" type="text" name="HDMF" autocomplete="off" value="<?php echo $this->session->flashdata('HDMF'); ?>">
+									</div>
+									<div class="form-group col-sm-12 col-lg-7">
+										<label>Issued At</label>
+										<input class="form-control" type="text" name="HDMF_At" autocomplete="off" value="<?php echo $this->session->flashdata('HDMF_At'); ?>">
+									</div>
+									<div class="form-group col-sm-12 col-lg-2">
+										<label>On</label>
+										<input class="form-control" type="date" name="HDMF_On" value="<?php echo $this->session->flashdata('HDMF_On'); ?>">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-lg-3">
+										<label>PHILHEALTH</label>
+										<input class="form-control" type="text" name="PhilHealth" autocomplete="off" value="<?php echo $this->session->flashdata('PhilHealth'); ?>">
+									</div>
+									<div class="form-group col-sm-12 col-lg-7">
+										<label>Issued At</label>
+										<input class="form-control" type="text" name="PhilHealth_At" autocomplete="off" value="<?php echo $this->session->flashdata('PhilHealth_At'); ?>">
+									</div>
+									<div class="form-group col-sm-12 col-lg-2">
+										<label>On</label>
+										<input class="form-control" type="date" name="PhilHealth_On" value="<?php echo $this->session->flashdata('PhilHealth_On'); ?>">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-lg-3">
+										<label>ATM #</label>
+										<input class="form-control" type="text" name="ATM_No" autocomplete="off" value="<?php echo $this->session->flashdata('ATM_No'); ?>">
+									</div>
+								</div>
 								<div class="mt-5 mb-4">
 									<h5>
 										<i class="fas fa-user-alt"></i> Addresses

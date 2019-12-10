@@ -39,6 +39,19 @@ class Add_Controller extends CI_Controller {
 		$TIN = $this->input->post('TIN');
 		$TIN_At = $this->input->post('TIN_At');
 		$TIN_On = $this->input->post('TIN_On');
+
+		$HDMF = $this->input->post('HDMF');
+		$HDMF_At = $this->input->post('HDMF_At');
+		$HDMF_On = $this->input->post('HDMF_On');
+
+		$PhilHealth = $this->input->post('PhilHealth');
+		$PhilHealth_At = $this->input->post('PhilHealth_At');
+		$PhilHealth_On = $this->input->post('PhilHealth_On');
+		$ATM_No = $this->input->post('ATM_No');
+
+		
+		
+
 		# ADDRESSES
 		$Address_Present = $this->input->post('Address_Present');
 		$Address_Provincial = $this->input->post('Address_Provincial');
@@ -71,6 +84,18 @@ class Add_Controller extends CI_Controller {
 				'TIN' => $TIN,
 				'TIN_At' => $TIN_At,
 				'TIN_On' => $TIN_On,
+
+				'HDMF' => $HDMF,
+				'HDMF_At' => $HDMF_At,
+				'HDMF_On' => $HDMF_On,
+				'ATM_No' => $ATM_No,
+
+				'PhilHealth' => $PhilHealth,
+				'PhilHealth_At' => $PhilHealth_At,
+				'PhilHealth_On' => $PhilHealth_On,
+				
+
+
 				'Address_Present' => $Address_Present,
 				'Address_Provincial' => $Address_Provincial,
 				'Address_Manila' => $Address_Manila,
@@ -153,6 +178,15 @@ class Add_Controller extends CI_Controller {
 						'TIN' => $TIN,
 						'TIN_At' => $TIN_At,
 						'TIN_On' => $TIN_On,
+						
+						'HDMF' => $HDMF,
+						'HDMF_At' => $HDMF_At,
+						'HDMF_On' => $HDMF_On,
+						'ATM_No' => $ATM_No,
+
+						'PhilHealth' => $PhilHealth,
+						'PhilHealth_At' => $PhilHealth_At,
+						'PhilHealth_On' => $PhilHealth_On,
 
 						'Status' => 'Applicant',
 						'AppliedOn' => date('Y-m-d h:i:s A'),
