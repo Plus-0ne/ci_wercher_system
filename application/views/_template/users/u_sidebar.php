@@ -1,7 +1,7 @@
 <nav id="sidebar" style="position: fixed;">
 	<div class="sidebar-header text-center">
 		<div class="text-center" style="width: 100%;">
-			<img class="m-auto PrintOut PrintOutModal" src="<?=base_url()?>assets/img/13240629_242086709504627_6587238279405995147_n.png" width="100">
+			<img class="m-auto PrintOut PrintOutModal PrintOutModalExpired PrintOutHistory" src="<?=base_url()?>assets/img/13240629_242086709504627_6587238279405995147_n.png" width="100">
 		</div>
 	</div>
 	<ul class="list-unstyled components">

@@ -15,13 +15,13 @@ class Update_Controller extends CI_Controller {
 	public function EmployApplicant()
 	{
 		if (isset($_POST['ApplicantID'])) {
-			$ApplicantNo = $this->input->post('ApplicantID',TRUE);
+			$ApplicantNo = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 			$ClientID = $this->input->post('ClientID',TRUE);
 			$H_Months = $this->input->post('H_Months',TRUE);
 
 			if ($ApplicantNo == NULL || $ClientID == NULL || $H_Months == NULL) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
-				redirect('Applicants');
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Employ001) A:' . $ApplicantNo . ' C:' . $ClientID .' H:' . $H_Months . ' </h5></div>');
+				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
 			{
@@ -40,25 +40,25 @@ class Update_Controller extends CI_Controller {
 					$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($ApplicantNo,$data);
 					if ($EmployNewApplicant == TRUE) {
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Applicant employed!</h5></div>');
-						redirect('Applicants');
+						redirect($_SERVER['HTTP_REFERER']);
 					}
 					else
 					{
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
-						redirect('Applicants');
+						redirect($_SERVER['HTTP_REFERER']);
 					}
 				}
 				else
 				{
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
-					redirect('Applicants');
+					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
 		}
 		else
 		{
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
-			redirect('Applicants');
+			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
 }

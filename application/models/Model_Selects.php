@@ -98,4 +98,10 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetContractHistory($id)
+	{
+		$SQL = "SELECT * FROM contract_history, applicants WHERE contract_history.ApplicantID = '$id' AND applicants.ApplicantID = '$id'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }

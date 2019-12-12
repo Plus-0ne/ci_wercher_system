@@ -16,13 +16,13 @@
 					</div>
 				</div>
 				<div class="row rcontent">
-					<div class="col-sm-12 col-md-4 PrintPageName PrintOut">
+					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 						<h4>
 							<i class="fas fa-user-friends fa-fw"></i>Expired Contracts (<?php echo $get_ApplicantExpired->num_rows() ?>)
 						</h4>
 					</div>
-					<div class="col-sm-12 col-md-8 text-right PrintExclude">
-						<a href="<?=base_url()?>Applicants" class="btn btn-info mr-auto"><i class="fas fa-user-friends fa-fw"></i> New Applicants (<?php echo $get_employee->num_rows()?>)</a>
+					<div class="col-8 col-sm-8 col-md-8 text-right PrintExclude">
+						<a href="<?=base_url()?>Applicants" class="btn btn-info mr-auto mb-1"><i class="fas fa-user-friends fa-fw"></i> New Applicants (<?php echo $get_employee->num_rows()?>)</a>
 						<button onClick="printContent('PrintOut')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
 					</div>
 					<div class="col-sm-12">
@@ -87,43 +87,8 @@
 			</div>
 		</div>
 	</div>
-	<!-- MODAL -->
-	<div class="modal fade" id="hirthis" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<?php echo form_open(base_url().'EmployApplicant','method="POST"');?>
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLongTitle">Hire applicant</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<input id="idToHire" type="hidden" name="ApplicantID" value="">
-					<div class="form-row">
-						<div class="form-group col">
-							<label>Choose Client</label>
-							<select class="form-control" name="ClientID">
-								<?php foreach ($getClientOption->result_array() as $row): ?>
-									<option value="<?=$row['ClientID'];?>">
-										<?=$row['Name'];?>
-									</option>
-								<?php endforeach ?>
-							</select>
-						</div>
-						<div class="form-group col">
-							<label>Choose Months</label>
-							<input class="form-control" type="number" name="H_Months">
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary">Save changes</button>
-				</div>
-				<?php echo form_close();?>
-			</div>
-		</div>
-	</div>
+	<!-- CLIENT HIRE MODAL -->
+	<?php $this->load->view('_template/modals/m_clienthire'); ?>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">

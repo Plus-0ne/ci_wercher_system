@@ -23,15 +23,24 @@
 					</div>
 				</div>
 				<div class="row rcontent p-5 PrintOut">
-					<div class="col-sm-6 col-md-6 mb-5 PrintExclude">
+					<?php echo $this->session->flashdata('prompts'); ?>
+					<div class="col-6 col-sm-6 col-md-6 mb-5 PrintExclude">
 						<a href="<?php if (isset($_SERVER['HTTP_REFERER'])): ?>
 						<?php echo $_SERVER['HTTP_REFERER']; ?>
 						<?php else: ?>
 							<?=base_url()?>Employee
 							<?php endif ?>" class="btn btn-primary btn-sm"><i class="fas fa-chevron-left"></i> Back </a>
 					</div>
-						<div class="col-sm-6 col-md-6 text-right PrintExclude">
-							<button onClick="printContent('PrintOut')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
+						<div class="col-6 col-sm-6 col-md-6 text-right PrintExclude dropdown">
+							<button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-cog"></i>
+							</button>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<button type="button" class="dropdown-item"><i class="fas fa-edit"></i> Edit</button>
+								<button onClick="printContent('PrintOut')" type="button" class="dropdown-item"><i class="fas fa-print"></i> Print</button>
+								<div class="dropdown-divider"></div>
+								<button type="button" class="dropdown-item"><i class="fas fa-times"></i> Blacklist</button>
+							</div>
 						</div>
 						<div class="col-sm-12 mb-5">
 							<h5>
@@ -190,8 +199,14 @@
 							<p>
 								<?php if ($Status == 'Employed') { ?>
 									<i class="fas fa-circle PrintExclude" style="color: #1BDB07;"></i> Employed
-								<?php } else { ?>
+								<?php } elseif ($Status == 'Applicant') { ?>
 									<i class="fas fa-circle PrintExclude" style="color: #DB3E07;"></i> Applicant
+								<?php } elseif ($Status == 'Expired') { ?>
+									<i class="fas fa-circle PrintExclude" style="color: #DB3E07;"></i> Applicant (Expired)
+								<?php } elseif ($Status == 'Blacklisted') { ?>
+									<i class="fas fa-circle PrintExclude" style="color: #000000;"></i> Blacklisted
+								<?php } else { ?>
+									<i class="fas fa-circle PrintExclude" style="color: #DB3E07;"></i> Unknown
 								<?php } ?>
 							</p>
 						</div>
@@ -215,6 +230,33 @@
 							<div class="col-sm-12 col-md-4 e-det PrintExclude">
 								<p>
 									<button id="EmpContractButton" class="btn btn-primary btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractModal"><i class="far fa-eye"></i> View Contract</button>
+									<button class="btn btn-primary btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> History</button>
+								</p>
+							</div>
+						<?php } elseif ($Status == 'Expired') { ?>
+							<div class="col-sm-12 col-md-2 e-title PrintExclude">
+								<h6>
+									Last Contract
+								</h6>
+							</div>
+							<div class="col-sm-12 col-md-4 e-det PrintExclude">
+								<p>
+									<button id="EmpContractButton" class="btn btn-info btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractModal"><i class="far fa-eye"></i> View Contract</button>
+									<button class="btn btn-info btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> History</button>
+								</p>
+							</div>
+						<?php } elseif ($Status == 'Applicant') { ?>
+							<div class="col-sm-12 col-md-2 e-title PrintExclude">
+								<h6>
+									Contract
+								</h6>
+							</div>
+							<div class="col-sm-12 col-md-4 e-det PrintExclude">
+								<p>
+									No contract history.
+								</p>
+								<p>
+									<button id="<?php echo $ApplicantNo; ?>" data-dismiss="modal" type="button" class="btn btn-info btn-sm mr-auto ModalHire" data-toggle="modal" data-target="#hirthis"><i class="fas fa-user-edit"></i> Hire</button>
 								</p>
 							</div>
 						<?php } ?>
@@ -521,7 +563,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- The Modal -->          
+		<!-- EMPLOYED MODAL -->          
 		<?php if($Status == 'Employed') { ?>          
 		<div class="modal" id="EmpContractModal">
 			<div class="modal-dialog modal-xl">
@@ -530,7 +572,10 @@
 				<!-- Modal Header -->
 				<div class="modal-header">
 					<h4 class="modal-title PrintOut PrintOutModal">Contract Report for <?=$LastName?>, <?=$FirstName?> <?=$MiddleInitial?>.</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<div class="text-right">
+						<button onClick="printContent('PrintOutModal')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
+						<button type="button" class="close d-none d-sm-block" data-dismiss="modal">&times;</button>
+					</div>
 				</div>
 
 				<!-- Modal body -->
@@ -626,14 +671,12 @@
 								<?php echo $DateEnds; ?>
 							</p>
 						</div>
-					</div>
-					<div class="row rcontent">
-						<div class="col-sm-12 col-md-12 text-center PrintOut PrintOutModal">
+						<div class="col-sm-12 col-md-12 mt-5 text-center">
 							<h6>
 								Days Remaining on Contract
 							</h6>
 						</div>
-						<div class="col-sm-12 col-md-12 text-center PrintOut PrintOutModal">
+						<div class="col-sm-12 col-md-12 text-center">
 							<p>
 								<?php
 									$currTime = time();
@@ -651,7 +694,7 @@
 								?>
 							</p>
 						</div>
-						<div class="col-sm-12 col-md-12">
+						<div class="col-sm-12 col-md-12 PrintExclude">
 							<div class="progressBar">
 								<div class="progressBarTitle progressRemainingColor">Percentage</div>
 								<div class="progress progressRemaining"></div>
@@ -663,7 +706,8 @@
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button onClick="printContent('PrintOutModal')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
+					<!-- TODO: Add functionality to Extend Contract. -->
+					<button onClick="printContent('PrintOutModal')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-plus"></i> Extend Contract</button>
 					<button type="button" class="btn btn-danger ml-auto" data-dismiss="modal">Close</button>
 				</div>
 
@@ -671,6 +715,135 @@
 			</div>
 		</div>
 		<?php } ?>
+		<!-- EXPIRED MODAL -->
+		<?php if($Status == 'Expired') { ?>          
+		<div class="modal" id="EmpContractModal">
+			<div class="modal-dialog modal-xl">
+				<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title PrintOut PrintOutModalExpired">Previous Contract Report for <?=$LastName?>, <?=$FirstName?> <?=$MiddleInitial?>.</h4>
+					<div class="text-right">
+						<button onClick="printContent('PrintOutModalExpired')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
+						<button type="button" class="close d-none d-sm-block" data-dismiss="modal">&times;</button>
+					</div>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="row rcontent PrintOutModalExpired">
+						<div class="col-sm-2 col-md-2">
+							<h6>
+								Previous Client
+							</h6>
+						</div>
+						<div class="col-sm-4 col-md-4">
+							<p>
+								<?php
+								// TODO: Find a better solution than this.
+								$found = false;
+								foreach ($get_employee->result_array() as $row) {
+									foreach ($getClientOption->result_array() as $nrow) {
+										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
+											$found = true;
+											echo $nrow['Name'];
+										}
+									}
+								}?>
+							</p>
+						</div>
+						<div class="col-sm-2 col-md-2">
+							<h6>
+								Applied On
+							</h6>
+						</div>
+						<div class="col-sm-4 col-md-4">
+							<p>
+								DOESNT WORK YET
+							</p>
+						</div>
+						<div class="col-sm-2 col-md-2">
+							<h6>
+								Client Contact #
+							</h6>
+						</div>
+						<div class="col-sm-4 col-md-4">
+							<p>
+								<?php
+								// TODO: Find a better solution than this.
+								$found = false;
+								foreach ($get_employee->result_array() as $row) {
+									foreach ($getClientOption->result_array() as $nrow) {
+										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
+											$found = true;
+											echo $nrow['ContactNumber'];
+										}
+									}
+								}?>
+							</p>
+						</div>
+						<div class="col-sm-2 col-md-2">
+							<h6>
+								Contract Started
+							</h6>
+						</div>
+						<div class="col-sm-4 col-md-4">
+							<p>
+								<?php echo $DateStarted; ?>
+							</p>
+						</div>
+						<div class="col-sm-2 col-md-2">
+							<h6>
+								Client Address
+							</h6>
+						</div>
+						<div class="col-sm-4 col-md-4">
+							<p>
+								<?php
+								// TODO: Find a better solution than this.
+								$found = false;
+								foreach ($get_employee->result_array() as $row) {
+									foreach ($getClientOption->result_array() as $nrow) {
+										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
+											$found = true;
+											echo $nrow['Address'];
+										} 
+									}
+								}?>
+							</p>
+						</div>
+						<div class="col-sm-2 col-md-2">
+							<h6>
+								Contract Ended
+							</h6>
+						</div>
+						<div class="col-sm-4 col-md-4">
+							<p>
+								<?php echo $DateEnds; ?>
+							</p>
+						</div>
+						<div class="col-sm-12 col-md-12 mt-5 text-center PrintOutModalExpired">
+							<button id="<?php echo $ApplicantNo; ?>" data-dismiss="modal" type="button" class="btn btn-primary mr-auto ModalHire" data-toggle="modal" data-target="#hirthis"><i class="fas fa-plus"></i> New Contract</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<!-- TODO: Add functionality to Extend Contract. -->
+					<button onClick="printContent('PrintOutModalExpired')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-plus"></i> Extend Contract</button>
+					<button type="button" class="btn btn-danger ml-auto" data-dismiss="modal">Close</button>
+				</div>
+
+				</div>
+			</div>
+		</div>
+		<?php } ?>
+		<!-- CLIENT HIRE MODAL -->
+		<?php $this->load->view('_template/modals/m_clienthire'); ?>
+		<!-- CONTRACT HISTORY MODAL -->
+		<?php $this->load->view('_template/modals/m_contracthistory'); ?>
 	</body>
 	<?php $this->load->view('_template/users/u_scripts');?>
 	<script type="text/javascript">
@@ -679,12 +852,24 @@
 				$('#sidebar').toggleClass('active');
 				$('.ncontent').toggleClass('shContent');
 			});
+			$('.ModalHire').on('click', function () {
+				$('#idToHire').val($(this).attr('id'));
+				console.log($('#idToHire').val());
+			});
 		});
 		$("#EmpContractButton").click(function(){
 			var rPercentage = '<?php echo $rPercentage;?>';
 			$('.progressRemaining').animate({width:rPercentage + "%"},1500);
 			$('.progress_value').text(rPercentage + "%");
 		});
+		function hideModal() {
+			$("#EmpContractModal").modal('hide');
+		}
 	</script>
+	<style>
+		.dropdown-item:hover {
+			background-color: rgba(235, 235, 235, 1.0);
+		}
+	</style>
 	<textarea id="text"></textarea>
 	</html>

@@ -17,12 +17,12 @@
 				</div>
 				<div class="row rcontent">
 					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-sm-6 col-md-4 PrintPageName PrintOut">
-						<h4>
+					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
+						<h4 >
 							<i class="fas fa-user-secret fa-fw"></i>Admins (<?php echo $ShowAdmin->num_rows() ?>)
 						</h4>
 					</div>
-					<div class="col-sm-6 col-md-8 text-right PrintExclude">
+					<div class="col-8 col-sm-8 col-md-8 text-right PrintExclude">
 						<button onClick="printContent('PrintOut')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
 					</div>
 					<div class="col-sm-12">
