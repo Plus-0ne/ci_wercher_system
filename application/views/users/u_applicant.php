@@ -74,7 +74,7 @@
 							</table>
 						</div>
 						<div class="p-2">
-							<a href="<?=base_url()?>NewEmployee" class="btn btn-primary" onclick="return confirm('Add Employee?')">
+							<a href="<?=base_url()?>NewEmployee" class="btn btn-primary" onclick="// return confirm('Add Employee?')">
 								<i class="fas fa-user-plus"></i> New
 							</a>
 						</div>

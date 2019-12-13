@@ -28,9 +28,12 @@
 							<!-- Start form -->
 							<form action="<?=base_url()?>addNewEmployee" method="POST" enctype="multipart/form-data">
 								<div class="form-row mb-2">
-									<div class="form-group col-sm-12 col-md-1 mr-5">
+									<div class="form-group col-sm-12">
+										Choose Picture
+									</div>
+									<div class="form-group col-sm-12">
 										<input type='file' id="imgInp" name="pImage" style="display: none;">
-										<img id="blah" src="https://avatarsed1.serversdev.getgo.com/2205256774854474505_medium.jpg" width="120" height="120">
+										<img class="image-hover" id="blah" src="https://avatarsed1.serversdev.getgo.com/2205256774854474505_medium.jpg" width="120" height="120">
 									</div>
 								</div>
 								<div class="form-row">
@@ -431,6 +434,9 @@
 <style type="text/css">
 	.in-beni:focus { box-shadow: none; }
 	.btn-tr { background-color: transparent; border: none; }
+	.image-hover:hover {
+		border: 2px dotted rgba(155, 155, 155, 1.0);
+	}
 </style>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">

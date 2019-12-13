@@ -17,859 +17,562 @@
 										echo '<a href="'. base_url() . 'Applicants">Applicants</a>';
 									} ?>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">Details</li>
+								<li class="breadcrumb-item"><a href="<?=base_url()?>ViewEmployee?id=<?=$ApplicantNo?>">Details</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Edit</li>
 							</ol>
 						</nav>
 					</div>
 				</div>
-				<div class="row rcontent p-5 PrintOut">
-					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-6 col-sm-6 col-md-6 mb-5 PrintExclude">
-						<a href="<?php if (isset($_SERVER['HTTP_REFERER'])): ?>
-						<?php echo $_SERVER['HTTP_REFERER']; ?>
-						<?php else: ?>
-							<?=base_url()?>Employee
-							<?php endif ?>" class="btn btn-primary btn-sm"><i class="fas fa-chevron-left"></i> Back </a>
-					</div>
-						<div class="col-6 col-sm-6 col-md-6 text-right PrintExclude dropdown">
-							<button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<i class="fas fa-cog"></i>
-							</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantNo?>" class="dropdown-item"><i class="fas fa-edit"></i> Edit</a>
-								<button onClick="printContent('PrintOut')" type="button" class="dropdown-item"><i class="fas fa-print"></i> Print</button>
-								<div class="dropdown-divider"></div>
-								<button type="button" class="dropdown-item"><i class="fas fa-times"></i> Blacklist</button>
+				<div class="row">
+					<div class="col-sm-12 rcontent">
+						<div class="p-5">
+							<?php echo $this->session->flashdata('prompts'); ?>
+							<div class="col-6 col-sm-6 col-md-6 mb-5 PrintExclude">
+								<a href="<?php if (isset($_SERVER['HTTP_REFERER'])): ?>
+								<?php echo $_SERVER['HTTP_REFERER']; ?>
+								<?php else: ?>
+									<?=base_url()?>Employee
+									<?php endif ?>" class="btn btn-primary btn-sm"><i class="fas fa-chevron-left"></i> Back </a>
 							</div>
-						</div>
-						<div class="col-sm-12 mb-5">
-							<h5>
-								<i class="fas fa-user-alt"></i> Personal Information
-							</h5>
-						</div>
-						<div class="col-sm-12 mb-5 e-title">
-							<img src="<?php echo $ApplicantImage; ?>" width="120" height="120">
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Position Desired
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<input class="form-control" type="text" name="Modify_PositionDesired" value="<?php echo $PositionDesired; ?>">
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Salary Expected
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<input class="form-control" type="text" name="Modify_PositionDesired" value="<?php echo $SalaryExpected; ?>">
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Applicant ID
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<input class="form-control" type="text" name="Modify_PositionDesired" value="<?php echo $ApplicantID; ?>">
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Name
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<input class="form-control" type="text" name="Modify_PositionDesired" value="<?php echo $LastName; ?> , <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.">
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Gender
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $Gender; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Age
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $Age; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Height
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $Height; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Weight
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $Weight; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Religion
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $Religion; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Birth Date
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $BirthDate; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Birth Place
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $BirthPlace; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Citizenship
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $Citizenship; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Civil Status
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $CivilStatus; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								# of Children
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $No_OfChildren; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Status
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php if ($Status == 'Employed') { ?>
-									<i class="fas fa-circle PrintExclude" style="color: #1BDB07;"></i> Employed
-								<?php } elseif ($Status == 'Applicant') { ?>
-									<i class="fas fa-circle PrintExclude" style="color: #DB3E07;"></i> Applicant
-								<?php } elseif ($Status == 'Expired') { ?>
-									<i class="fas fa-circle PrintExclude" style="color: #DB3E07;"></i> Applicant (Expired)
-								<?php } elseif ($Status == 'Blacklisted') { ?>
-									<i class="fas fa-circle PrintExclude" style="color: #000000;"></i> Blacklisted
-								<?php } else { ?>
-									<i class="fas fa-circle PrintExclude" style="color: #DB3E07;"></i> Unknown
-								<?php } ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Applied On
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $AppliedOn; ?>
-							</p>
-						</div>
-						<!-- CONTRACT REPORT -->
-						<?php if ($Status == 'Employed') { ?>
-							<div class="col-sm-12 col-md-2 e-title PrintExclude">
-								<h6>
-									Contract
-								</h6>
+							<div class="mb-3">
+								<h5>
+									<i class="fas fa-user-alt"></i> Personal Information
+								</h5>
 							</div>
-							<div class="col-sm-12 col-md-4 e-det PrintExclude">
-								<p>
-									<button id="EmpContractButton" class="btn btn-primary btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractModal"><i class="far fa-eye"></i> View Contract</button>
-									<button class="btn btn-primary btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> History</button>
-								</p>
-							</div>
-						<?php } elseif ($Status == 'Expired') { ?>
-							<div class="col-sm-12 col-md-2 e-title PrintExclude">
-								<h6>
-									Last Contract
-								</h6>
-							</div>
-							<div class="col-sm-12 col-md-4 e-det PrintExclude">
-								<p>
-									<button id="EmpContractButton" class="btn btn-info btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractModal"><i class="far fa-eye"></i> View Contract</button>
-									<button class="btn btn-info btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> History</button>
-								</p>
-							</div>
-						<?php } elseif ($Status == 'Applicant') { ?>
-							<div class="col-sm-12 col-md-2 e-title PrintExclude">
-								<h6>
-									Contract
-								</h6>
-							</div>
-							<div class="col-sm-12 col-md-4 e-det PrintExclude">
-								<p>
-									No contract history.
-								</p>
-								<p>
-									<button id="<?php echo $ApplicantNo; ?>" data-dismiss="modal" type="button" class="btn btn-info btn-sm mr-auto ModalHire" data-toggle="modal" data-target="#hirthis"><i class="fas fa-user-edit"></i> Hire</button>
-								</p>
-							</div>
-						<?php } ?>
-						<div class="col-sm-12 mt-5 mb-3">
-							<h6>
-								<i class="fas fa-stream"></i> Address
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-title">
-							<h6>
-								Present
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-8 e-det">
-							<p>
-								<?php echo $Address_Present; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-4 e-title">
-							<h6>
-								Provincial
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-8 e-det">
-							<p>
-								<?php echo $Address_Provincial; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-4 e-title">
-							<h6>
-								Manila
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-8 e-det">
-							<p>
-								<?php echo $Address_Manila; ?>
-							</p>
-						</div>
-					</div>
-					<div class="row rcontent p-5 PrintOut">
-						<div class="col-sm-12 mb-5">
-							<h5>
-								<i class="fas fa-stream"></i> Documents
-							</h5>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								S.S.S. #
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $SSS_No; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Effective Date of Coverage
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $EffectiveDateCoverage; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Residence Certificate No.
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $ResidenceCertificateNo; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Issued At
-							</h6>
-							<h6>
-								Issued On
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $Rcn_At; ?>
-								<br>
-								<?php echo $Rcn_On; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Tax Identification No.
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $TIN; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Issued At
-							</h6>
-							<h6>
-								Issued On
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $TIN_At; ?>
-								<br>
-								<?php echo $TIN_On; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								HDMF
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $HDMF; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Issued At
-							</h6>
-							<h6>
-								Issued On
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $HDMF_At; ?>
-								<br>
-								<?php echo $HDMF_On; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								PHILHEALTH
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $PhilHealth; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Issued At
-							</h6>
-							<h6>
-								Issued On
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $PhilHealth_At; ?>
-								<br>
-								<?php echo $PhilHealth_On; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								ATM #
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $ATM_No; ?>
-							</p>
-						</div>
-					</div>
-					<div class="row rcontent p-5 PrintOut">
-						<div class="col-sm-12 mb-5">
-							<h5>
-								<i class="fas fa-stream"></i> Academic History
-							</h5>
-						</div>
-						<div class="col-sm-12">
-							<div class="table-responsive">
-								<table class="table table-condensed">
-									<thead>
-										<th>Level</th>
-										<th>School Name</th>
-										<th>School Address</th>
-										<th>From Year</th>
-										<th>To Year</th>
-										<th>Highest Degree / Certificate Attained</th>
-									</thead>
-									<tbody>
-										<?php if ($GetAcadHistory->num_rows() > 0) { ?>
-											<?php foreach ($GetAcadHistory->result_array() as $row): ?>
-												<?php if ($ApplicantID == $row['ApplicantID']) { ?>
-													<tr>
-														<td><?php echo $row['Level'];?></td>
-														<td><?php echo $row['SchoolName'];?></td>
-														<td><?php echo $row['SchoolAddress'];?></td>
-														<td><?php echo $row['DateStarted'];?></td>
-														<td><?php echo $row['DateEnds'];?></td>
-														<td><?php echo $row['HighDegree'];?></td>
-													</tr>
-												<?php } ?>
-											<?php endforeach ?>
-										<?php } else { ?>
-											<tr class="w-100 text-center">
-												<td>
-													<h5>
-														No Data
-													</h5>
-												</td>
-											</tr>
-										<?php } ?>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-					<div class="row rcontent p-5 PrintOut">
-						<div class="col-sm-12 mb-5">
-							<h5>
-								<i class="fas fa-stream"></i> Employment Details
-							</h5>
-						</div>
-						<div class="col-sm-12">
-							<div class="table-responsive">
-								<table class="table table-condensed">
-									<thead>
-										<th>Name</th>
-										<th>Address</th>
-										<th>Period Covered</th>
-										<th>Position</th>
-										<th>Salary</th>
-										<th>Cause of separation</th>
-									</thead>
-									<tbody>
-										<?php if ($employment_record->num_rows() > 0) { ?>
-											<?php foreach ($employment_record->result_array() as $row): ?>
-												<?php if ($ApplicantID == $row['ApplicantID']) { ?>
-													<tr>
-														<td><?php echo $row['Name'];?></td>
-														<td><?php echo $row['Address'];?></td>
-														<td><?php echo $row['PeriodCovered'];?></td>
-														<td><?php echo $row['Position'];?></td>
-														<td><?php echo $row['Salary'];?></td>
-														<td><?php echo $row['CauseOfSeparation'];?></td>
-													</tr>
-												<?php } ?>
-											<?php endforeach ?>
-										<?php } else { ?>
-											<tr class="w-100 text-center">
-												<td>
-													<h5>
-														No Data
-													</h5>
-												</td>
-											</tr>
-										<?php } ?>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-					<div class="row rcontent p-5">
-						<div class="col-sm-12 mb-5">
-							<h5>
-								<i class="fas fa-stream"></i> Machine Operated
-							</h5>
-						</div>
-						<div class="col-sm-12">
-							<div class="table-responsive">
-								<table class="table table-condensed">
-									<thead>
-										<th>Machine Name</th>
+							<!-- Start form -->
+							<form action="<?=base_url()?>UpdateEmployee" method="POST" enctype="multipart/form-data">
+								<div class="form-row mb-2">
+									<div class="form-group col-sm-12">
+										Update Picture
+									</div>
+									<div class="form-group col-sm-12">
+										<input type='file' id="imgInp" name="pImage" style="display: none;">
+										<img class="image-hover" id="blah" src="<?php echo $ApplicantImage; ?>" width="120" height="120">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-2">
+										<label>Position Desired</label>
+										<select class="form-control" name="PositionDesired">
+											<option value="Office Staff" <?php if ($PositionDesired == 'Office Staff') {
+												echo 'selected=""';
+											} ?>>
+												Office Staff
+											</option>
+											<option value="Payroll Specialist" <?php if ($PositionDesired == 'Payroll Specialist') {
+												echo 'selected=""';
+											} ?>>
+												Payroll Specialist
+											</option>
+											<option value="Secretary" <?php if ($PositionDesired == 'Secretary') {
+												echo 'selected=""';
+											} ?>>
+												Secretary
+											</option>
+											<option value="Bookeeper" <?php if ($PositionDesired == 'Bookeeper') {
+												echo 'selected=""';
+											} ?>>
+												Bookeeper
+											</option>
+										</select>
+									</div>
+									<div class="form-group col-sm-12 col-md-2">
+										<label>Salary Expected</label>
+										<input class="form-control" type="text" name="SalaryExpected" autocomplete="off" value="<?php echo $SalaryExpected; ?>">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Last Name</label>
+										<input class="form-control" type="text" name="LastName" autocomplete="off" value="<?php echo $LastName; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-4">
+										<label>First Name</label>
+										<input class="form-control" type="text" name="FirstName" autocomplete="off" value="<?php echo $FirstName; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-2">
+										<label>Middle Initial</label>
+										<input class="form-control" type="text" name="MI" autocomplete="off" value="<?php echo $MiddleInitial; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-2">
+										<label>Gender</label>
+										<select class="form-control" name="Gender">
+											<option value="Male" <?php if ($Gender == 'Male') {
+												echo 'selected=""';
+											} ?>>
+												Male
+											</option>
+											<option value="Female" <?php if ($Gender == 'Female') {
+												echo 'selected=""';
+											} ?>>
+												Female
+											</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-1">
+										<label>Age</label>
+										<input class="form-control" type="number" name="Age" autocomplete="off" value="<?php echo $Age; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-1">
+										<label>Height</label>
+										<input class="form-control" type="number" name="Height" autocomplete="off" value="<?php echo $Height; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-1">
+										<label>Weight</label>
+										<input class="form-control" type="number" name="Weight" autocomplete="off" value="<?php echo $Weight; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-2">
+										<label>Religion</label>
+										<input class="form-control" type="text" name="Religion" autocomplete="off" value="<?php echo $Religion; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-2">
+										<label>Birth Date</label>
+										<input class="form-control" type="date" name="bDate" value="<?php echo $BirthDate; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-5">
+										<label>Birth Place</label>
+										<input class="form-control" type="text" name="bPlace" autocomplete="off" value="<?php echo $BirthPlace; ?>">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Citizenship</label>
+										<input class="form-control" type="text" name="Citizenship" autocomplete="off" value="<?php echo $Citizenship; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-2">
+										<label>Civil Status</label>
+										<select class="form-control" name="CivilStatus">
+											<option value="Single" <?php if ($CivilStatus == 'Single') {
+												echo 'selected=""';
+											} ?>>
+												Single
+											</option>
+											<option value="Married" <?php if ($CivilStatus == 'Married') {
+												echo 'selected=""';
+											} ?>>
+												Married
+											</option>
+											<option value="Widowed" <?php if ($CivilStatus == 'Widowed') {
+												echo 'selected=""';
+											} ?>>
+												Widowed
+											</option>
+											<option value="Divorced" <?php if ($CivilStatus == 'Divorced') {
+												echo 'selected=""';
+											} ?>>
+												Divorced
+											</option>
+										</select>
+									</div>
+									<div class="form-group col-sm-12 col-md-2">
+										<label>No. of Children</label>
+										<input class="form-control" type="number" name="No_Children" autocomplete="off" value="<?php echo $No_OfChildren; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Phone Number</label>
+										<input class="form-control" type="number" name="PhoneNumber" autocomplete="off" value="<?php echo $Phone_No; ?>">
+									</div>
+								</div>
+								<div class="mt-5 mb-4">
+									<h5>
+										<i class="fas fa-user-alt"></i> Documents
+									</h5>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-lg-3">
+										<label>S.S.S. #</label>
+										<input class="form-control" type="text" name="SSS" autocomplete="off" value="<?php echo $SSS_No; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-lg-2">
+										<label>Effective Date of Coverage</label>
+										<input class="form-control" type="date" name="SSS_Effective" value="<?php echo $EffectiveDateCoverage; ?>">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-lg-3">
+										<label>Residence Certificate No.</label>
+										<input class="form-control" type="text" name="RCN" autocomplete="off" value="<?php echo $ResidenceCertificateNo; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-lg-7">
+										<label>Issued At</label>
+										<input class="form-control" type="text" name="RCN_at" autocomplete="off" value="<?php echo $Rcn_At; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-lg-2">
+										<label>On</label>
+										<input class="form-control" type="date" name="RCN_On" value="<?php echo $Rcn_On; ?>">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-lg-3">
+										<label>Tax Identification No.</label>
+										<input class="form-control" type="text" name="TIN" autocomplete="off" value="<?php echo $TIN; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-lg-7">
+										<label>Issued At</label>
+										<input class="form-control" type="text" name="TIN_At" autocomplete="off" value="<?php echo $TIN_At; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-lg-2">
+										<label>On</label>
+										<input class="form-control" type="date" name="TIN_On" value="<?php echo $TIN_On; ?>">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-lg-3">
+										<label>HDMF</label>
+										<input class="form-control" type="text" name="HDMF" autocomplete="off" value="<?php echo $HDMF; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-lg-7">
+										<label>Issued At</label>
+										<input class="form-control" type="text" name="HDMF_At" autocomplete="off" value="<?php echo $HDMF_At; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-lg-2">
+										<label>On</label>
+										<input class="form-control" type="date" name="HDMF_On" value="<?php echo $HDMF_On; ?>">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-lg-3">
+										<label>PHILHEALTH</label>
+										<input class="form-control" type="text" name="PhilHealth" autocomplete="off" value="<?php echo $PhilHealth; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-lg-7">
+										<label>Issued At</label>
+										<input class="form-control" type="text" name="PhilHealth_At" autocomplete="off" value="<?php echo $PhilHealth_At; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-lg-2">
+										<label>On</label>
+										<input class="form-control" type="date" name="PhilHealth_On" value="<?php echo $PhilHealth_On; ?>">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-lg-3">
+										<label>ATM #</label>
+										<input class="form-control" type="text" name="ATM_No" autocomplete="off" value="<?php echo $ATM_No; ?>">
+									</div>
+								</div>
+								<div class="mt-5 mb-4">
+									<h5>
+										<i class="fas fa-user-alt"></i> Addresses
+									</h5>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Present</label>
+										<input class="form-control" type="text" name="Address_Present" autocomplete="off" value="<?php echo $Address_Present; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Provincial</label>
+										<input class="form-control" type="text" name="Address_Provincial" autocomplete="off" value="<?php echo $Address_Provincial; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Manila</label>
+										<input class="form-control" type="text" name="Address_Manila" autocomplete="off" value="<?php echo $Address_Manila; ?>">
+									</div>
+								</div>
+								<div class="form-row pb-5 pt-5">
+									<div id="AcadHsssistory" class="" style="width: 100%;">
 										
-									</thead>
-									<tbody>
-										<?php if ($Machine_Operatessss->num_rows() > 0) { ?>
-											<?php foreach ($Machine_Operatessss->result_array() as $row): ?>
-												<?php if ($ApplicantID == $row['ApplicantID']) { ?>
-													<tr>
-														<td><?php echo $row['MachineName'];?></td>
-													</tr>
-												<?php } ?>
-											<?php endforeach ?>
-										<?php } else { ?>
-											<tr class="w-100 text-center">
-												<td>
-													<h5>
-														No Data
-													</h5>
-												</td>
-											</tr>
-										<?php } ?>
-									</tbody>
-								</table>
+									</div>
+								</div>
+								<div class="form-row pb-5">
+									<div id="empskills" class="" style="width: 100%;">
+										
+									</div>
+								</div>
+								<div class="form-row pb-5">
+									<div id="mach_Op" class="" style="width: 100%;">
+										
+									</div>
+								</div>
+								
+								<div class="form-row pt-5 pb-4">
+									<div class="form-group mr-auto">
+										<button class="btn btn-primary" type="submit" onclick="return confirm('Do you want to save ?')"><i class="fas fa-save"></i> Save</button>
+									</div>
+									<div class="form-group ml-auto">
+										<a href="<?=base_url()?>Applicants" class="btn btn-secondary"><i class="fas fa-chevron-left"></i> Back</a>
+									</div>
+								</div>
+							</form>
+							<!-- End Form -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="acadFields" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Academic Details</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="Main_Controller/AddtoAcadCart" method="post">
+						<div class="form-row">
+							<div class="form-group">
+								<select id="SchoolLevel" class="form-control" name="SchoolLevel">
+									<option hidden="" disabled="" selected="">
+										Choose Level
+									</option>
+									<option>
+										High School
+									</option>
+									<option>
+										College
+									</option>
+									<option>
+										Other courses / Special Training
+									</option>
+								</select>
 							</div>
 						</div>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-		<!-- EMPLOYED MODAL -->          
-		<?php if($Status == 'Employed') { ?>          
-		<div class="modal" id="EmpContractModal">
-			<div class="modal-dialog modal-xl">
-				<div class="modal-content">
-
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title PrintOut PrintOutModal">Contract Report for <?=$LastName?>, <?=$FirstName?> <?=$MiddleInitial?>.</h4>
-					<div class="text-right">
-						<button onClick="printContent('PrintOutModal')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
-						<button type="button" class="close d-none d-sm-block" data-dismiss="modal">&times;</button>
-					</div>
-				</div>
-
-				<!-- Modal body -->
-				<div class="modal-body">
-					<div class="row rcontent PrintOut PrintOutModal">
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Client Name
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php
-								// TODO: Find a better solution than this.
-								$found = false;
-								foreach ($get_employee->result_array() as $row) {
-									foreach ($getClientOption->result_array() as $nrow) {
-										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-											$found = true;
-											echo $nrow['Name'];
-										}
-									}
-								}?>
-							</p>
-						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Applied On
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php echo $AppliedOn; ?>
-							</p>
-						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Client Contact #
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php
-								// TODO: Find a better solution than this.
-								$found = false;
-								foreach ($get_employee->result_array() as $row) {
-									foreach ($getClientOption->result_array() as $nrow) {
-										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-											$found = true;
-											echo $nrow['ContactNumber'];
-										}
-									}
-								}?>
-							</p>
-						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Contract Started
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php echo $DateStarted; ?>
-							</p>
-						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Client Address
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php
-								// TODO: Find a better solution than this.
-								$found = false;
-								foreach ($get_employee->result_array() as $row) {
-									foreach ($getClientOption->result_array() as $nrow) {
-										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-											$found = true;
-											echo $nrow['Address'];
-										}
-									}
-								}?>
-							</p>
-						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Contract Ends
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php echo $DateEnds; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-12 mt-5 text-center">
-							<h6>
-								Days Remaining on Contract
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-12 text-center">
-							<p>
-								<?php
-									$currTime = time();
-									$strDateEnds = strtotime($DateEnds);
-									$strDateStarted = strtotime($DateStarted);
-									// PERCENTAGE
-									$rPercentage = (($strDateEnds - $currTime) * 100) / ($strDateEnds - $strDateStarted);
-									$rPercentage = round($rPercentage);
-									// DAYS REMAINING
-									$dateTimeZone = new DateTimeZone("Asia/Manila");
-									$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
-									$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
-									$interval = $datetime1->diff($datetime2);
-									echo $interval->format('%y years, %m months, %d days');
-								?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-12 PrintExclude">
-							<div class="progressBar">
-								<div class="progressBarTitle progressRemainingColor">Percentage</div>
-								<div class="progress progressRemaining"></div>
-								<div class="progress_value">45%</div>
+						<div class="form-row">
+							<div class="form-group col-sm-12">
+								<label>School Name</label>
+								<input id="SchoolName" class="form-control" type="text" name="SchoolName">
 							</div>
 						</div>
-					</div>
+						<div class="form-row">
+							<div class="form-group col-sm-12">
+								<label>School Address</label>
+								<input id="SchoolAddress" class="form-control" type="text" name="SchoolAddress">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-sm-12 col-md-6 m-auto">
+								<input id="FromYearSchool" class="form-control" type="text" name="FromYearSchool" placeholder="From year" maxlength="4">
+							</div>
+							<div class="form-group col-sm-12 col-md-6 m-auto">
+								<input id="ToYearSchool" class="form-control" type="text" name="ToYearSchool" placeholder="To year" maxlength="4">
+							</div>
+						</div>
+						<div class="form-row mt-3">
+							<div class="form-group col-sm-12 m-auto">
+								<label>Highest Degree / Certificate Attained</label>
+								<input id="H_Attained" class="form-control" type="text" name="H_Attained">
+							</div>
+						</div>
+					</form>
 				</div>
-
-				<!-- Modal footer -->
 				<div class="modal-footer">
-					<!-- TODO: Add functionality to Extend Contract. -->
-					<button onClick="printContent('PrintOutModal')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-plus"></i> Extend Contract</button>
-					<button type="button" class="btn btn-danger ml-auto" data-dismiss="modal">Close</button>
-				</div>
-
+					<button id="add_sssscc" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Add changes</button>
 				</div>
 			</div>
 		</div>
-		<?php } ?>
-		<!-- EXPIRED MODAL -->
-		<?php if($Status == 'Expired') { ?>          
-		<div class="modal" id="EmpContractModal">
-			<div class="modal-dialog modal-xl">
-				<div class="modal-content">
-
-				<!-- Modal Header -->
+	</div>
+	<div class="modal fade" id="skillsFields" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title PrintOut PrintOutModalExpired">Previous Contract Report for <?=$LastName?>, <?=$FirstName?> <?=$MiddleInitial?>.</h4>
-					<div class="text-right">
-						<button onClick="printContent('PrintOutModalExpired')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
-						<button type="button" class="close d-none d-sm-block" data-dismiss="modal">&times;</button>
-					</div>
+					<h5 class="modal-title" id="exampleModalLabel">Employment Details</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
-
-				<!-- Modal body -->
 				<div class="modal-body">
-					<div class="row rcontent PrintOutModalExpired">
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Previous Client
-							</h6>
+					<form action="#" method="post">
+						<div class="form-row">
+							<div class="form-group col-sm-12 col-md-6">
+								<label>Employeer Name</label>
+								<input id="EmployeerName" class="form-control" type="text" name="">
+							</div>
 						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php
-								// TODO: Find a better solution than this.
-								$found = false;
-								foreach ($get_employee->result_array() as $row) {
-									foreach ($getClientOption->result_array() as $nrow) {
-										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-											$found = true;
-											echo $nrow['Name'];
-										}
-									}
-								}?>
-							</p>
+						<div class="form-row">
+							<div class="form-group col-sm-12">
+								<label>Address</label>
+								<input id="emAddress" class="form-control" type="text" name="SchoolName">
+							</div>
 						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Applied On
-							</h6>
+						<div class="form-row">
+							<div class="form-group col-sm-12 col-md-6 m-auto">
+								<label>Period Covered</label>
+								<input id="PeriodCovered" class="form-control" type="text" name="FromYearSchool">
+							</div>
+							<div class="form-group col-sm-12 col-md-6 m-auto">
+								<label> Position</label>
+								<input id="Position" class="form-control" type="text" name="ToYearSchool">
+							</div>
 						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								DOESNT WORK YET
-							</p>
+						<div class="form-row">
+							<div class="form-group col-sm-12 col-md-6 m-auto">
+								<label>Salary</label>
+								<input id="Salary" class="form-control" type="text" name="FromYearSchool">
+							</div>
+							<div class="form-group col-sm-12 col-md-6 m-auto">
+								<label> Cause of separation</label>
+								<input id="cos" class="form-control" type="text" name="ToYearSchool">
+							</div>
 						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Client Contact #
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php
-								// TODO: Find a better solution than this.
-								$found = false;
-								foreach ($get_employee->result_array() as $row) {
-									foreach ($getClientOption->result_array() as $nrow) {
-										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-											$found = true;
-											echo $nrow['ContactNumber'];
-										}
-									}
-								}?>
-							</p>
-						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Contract Started
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php echo $DateStarted; ?>
-							</p>
-						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Client Address
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php
-								// TODO: Find a better solution than this.
-								$found = false;
-								foreach ($get_employee->result_array() as $row) {
-									foreach ($getClientOption->result_array() as $nrow) {
-										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-											$found = true;
-											echo $nrow['Address'];
-										} 
-									}
-								}?>
-							</p>
-						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Contract Ended
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php echo $DateEnds; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-12 mt-5 text-center PrintOutModalExpired">
-							<button id="<?php echo $ApplicantNo; ?>" data-dismiss="modal" type="button" class="btn btn-primary mr-auto ModalHire" data-toggle="modal" data-target="#hirthis"><i class="fas fa-plus"></i> New Contract</button>
-						</div>
-					</div>
+					</form>
 				</div>
-
-				<!-- Modal footer -->
 				<div class="modal-footer">
-					<!-- TODO: Add functionality to Extend Contract. -->
-					<button onClick="printContent('PrintOutModalExpired')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-plus"></i> Extend Contract</button>
-					<button type="button" class="btn btn-danger ml-auto" data-dismiss="modal">Close</button>
-				</div>
-
+					<button id="add_empdet" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Add changes</button>
 				</div>
 			</div>
 		</div>
-		<?php } ?>
-		<!-- CLIENT HIRE MODAL -->
-		<?php $this->load->view('_template/modals/m_clienthire'); ?>
-		<!-- CONTRACT HISTORY MODAL -->
-		<?php $this->load->view('_template/modals/m_contracthistory'); ?>
-	</body>
-	<?php $this->load->view('_template/users/u_scripts');?>
-	<script type="text/javascript">
-		$(document).ready(function () {
-			$('#sidebarCollapse').on('click', function () {
-				$('#sidebar').toggleClass('active');
-				$('.ncontent').toggleClass('shContent');
-			});
-			$('.ModalHire').on('click', function () {
-				$('#idToHire').val($(this).attr('id'));
-				console.log($('#idToHire').val());
+	</div>
+	<div class="modal fade" id="Mach_Operated" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Machine Operated</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="#" method="post">
+						<div class="form-row">
+							<div class="form-group col-sm-12 col-md-12">
+								<label>Machine Name</label>
+								<input id="MachineName" class="form-control" type="text" name="">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button id="add_machop" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Add changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<style type="text/css">
+	.in-beni:focus { box-shadow: none; }
+	.btn-tr { background-color: transparent; border: none; }
+	.image-hover:hover {
+		border: 2px dotted rgba(155, 155, 155, 1.0);
+	}
+</style>
+<?php $this->load->view('_template/users/u_scripts'); ?>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('#sidebarCollapse').on('click', function () {
+			$('#sidebar').toggleClass('active');
+			$('.ncontent').toggleClass('shContent');
+		});
+		$('#blah').click(function(){ $('#imgInp').trigger('click'); });
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$('#blah').attr('src', e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+		$("#imgInp").change(function() {
+			readURL(this);
+		});
+		// Cart Academic History
+		$('#add_sssscc').click(function(){
+
+			var SchoolLevel = $('#SchoolLevel').val();
+			var SchoolName = $('#SchoolName').val();
+			var SchoolAddress = $('#SchoolAddress').val();
+			
+			var FromYearSchool = $('#FromYearSchool').val();
+			var ToYearSchool = $('#ToYearSchool').val();
+			var H_Attained = $('#H_Attained').val();
+			
+
+			$.ajax({
+				url : "<?php echo site_url('Main_Controller/add_to_cart');?>",
+				method : "POST",
+				data : {SchoolLevel: SchoolLevel, SchoolName: SchoolName,SchoolAddress: SchoolAddress, FromYearSchool: FromYearSchool, ToYearSchool: ToYearSchool,H_Attained: H_Attained},
+				success: function(data){
+					$('#SchoolLevel option:selected').index();
+					$('#SchoolName').val("");
+					$('#FromYearSchool').val("");
+					$('#ToYearSchool').val("");
+					$('#AcadHsssistory').load("<?php echo site_url('Main_Controller/showAcad');?>");
+				}
 			});
 		});
-		$("#EmpContractButton").click(function(){
-			var rPercentage = '<?php echo $rPercentage;?>';
-			$('.progressRemaining').animate({width:rPercentage + "%"},1500);
-			$('.progress_value').text(rPercentage + "%");
+		$(document).on('click','.remoach',function(){
+			var row_id = $(this).attr("id");
+            // alert(row_id);
+            $.ajax({
+            	url : "<?php echo site_url('Main_Controller/removeAcad');?>",
+            	method : "POST",
+            	data : {row_id : row_id},
+            	success :function(data){
+            		$('#AcadHsssistory').load("<?php echo site_url('Main_Controller/showAcad');?>");
+            	}
+            });
+        });
+		$('#AcadHsssistory').load("<?php echo site_url('Main_Controller/showAcad');?>");
+
+		// ADD EMPLOYMENT DETAILS
+		$('#add_empdet').click(function(){
+
+			var EmployeerName = $('#EmployeerName').val();
+			var emAddress = $('#emAddress').val();
+			var PeriodCovered = $('#PeriodCovered').val();
+			
+			var Position = $('#Position').val();
+			var Salary = $('#Salary').val();
+			var cos = $('#cos').val();
+			
+
+			$.ajax({
+				url : "<?php echo site_url('Main_Controller/add_toemp');?>",
+				method : "POST",
+				data : {EmployeerName: EmployeerName, emAddress: emAddress,PeriodCovered: PeriodCovered, Position: Position, Salary: Salary,cos: cos},
+				success: function(data){
+					$('#empskills').load("<?php echo site_url('Main_Controller/showSkills');?>");
+				}
+			});
 		});
-		function hideModal() {
-			$("#EmpContractModal").modal('hide');
-		}
-	</script>
-	<style>
-		.dropdown-item:hover {
-			background-color: rgba(235, 235, 235, 1.0);
-		}
-	</style>
-	<textarea id="text"></textarea>
-	</html>
+		$(document).on('click','.remoaemop',function(){
+			var row_id = $(this).attr("id");
+            // alert(row_id);
+            $.ajax({
+            	url : "<?php echo site_url('Main_Controller/removeemp');?>",
+            	method : "POST",
+            	data : {row_id : row_id},
+            	success :function(data){
+            		$('#empskills').load("<?php echo site_url('Main_Controller/showSkills');?>");
+            	}
+            });
+        });
+		$('#empskills').load("<?php echo site_url('Main_Controller/showSkills');?>");
+
+		// ADD Machine Operated
+		$('#add_machop').click(function(){
+
+			var MachineName = $('#MachineName').val();
+			
+			$.ajax({
+				url : "<?php echo site_url('Main_Controller/Add_MachineOP');?>",
+				method : "POST",
+				data : {MachineName: MachineName},
+				success: function(data){
+					$('#mach_Op').load("<?php echo site_url('Main_Controller/ShowMachineOperated');?>");
+				}
+			});
+		});
+		$(document).on('click','.removemachine',function(){
+			var row_id = $(this).attr("id");
+            // alert(row_id);
+            $.ajax({
+            	url : "<?php echo site_url('Main_Controller/remomanchine');?>",
+            	method : "POST",
+            	data : {row_id : row_id},
+            	success :function(data){
+            		$('#mach_Op').load("<?php echo site_url('Main_Controller/ShowMachineOperated');?>");
+            	}
+            });
+        });
+		$('#mach_Op').load("<?php echo site_url('Main_Controller/ShowMachineOperated');?>");
+	});
+</script>
+</html>

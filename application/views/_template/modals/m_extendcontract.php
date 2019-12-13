@@ -26,7 +26,7 @@
 					</div>
 					<div class="form-group col-4">
 						<label>Years</label>
-						<input class="form-control" type="number" name="E_Years" value="1">
+						<input class="form-control" type="number" name="E_Years">
 					</div>
 				</div>
 			</div>
