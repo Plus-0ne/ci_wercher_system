@@ -869,7 +869,7 @@
 		function hideModal() {
 			$("#EmpContractModal").modal('hide');
 		}
-		$('#ListContractHistory').DataTable();
+		$('#ListContractHistory').DataTable(); // TODO: DOESN'T WORK FOR EXPIRED CONTRACT HISTORY?????
 	</script>
 	<style>
 		.dropdown-item:hover {
