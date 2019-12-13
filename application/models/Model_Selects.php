@@ -9,7 +9,7 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function getApplicant()
+	public function getApplicant() // TODO: Duplicate?
 	{
 		$SQL = "SELECT * FROM applicants WHERE Status = 'Applicant'";
 		$result = $this->db->query($SQL);
@@ -57,9 +57,15 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL,$AdminID);
 		return $result;
 	}
-	public function GetApplicants()
+	public function GetApplicants() // TODO: Duplicate?
 	{
 		$SQL = "SELECT * FROM applicants WHERE Status = 'Applicant'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetTotalApplicants()
+	{
+		$SQL = "SELECT * FROM applicants WHERE Status = 'Applicant' OR Status = 'Expired'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -95,6 +101,12 @@ class Model_Selects extends CI_Model {
 	public function getClientOption()
 	{
 		$SQL = "SELECT * FROM clients";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetContractHistory($id)
+	{
+		$SQL = "SELECT * FROM contract_history, applicants WHERE contract_history.ApplicantID = '$id' AND applicants.ApplicantID = '$id'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

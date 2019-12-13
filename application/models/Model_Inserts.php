@@ -44,7 +44,14 @@ class Model_Inserts extends CI_Model {
 	// 	return $result;
 	// }
 
-	public function InsertAuditLog($data)
+	// RECORDS
+
+	public function InsertContractHistory($data)
+	{
+		$result = $this->db->insert('contract_history', $data);
+		return $result;
+	}
+	public function InsertAuditLog($data) // TODO: Add audit log functionality?
 	{
 		$result = $this->db->insert('audit_log', $data);
 		return $result;

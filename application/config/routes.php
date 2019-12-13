@@ -56,6 +56,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['Dashboard'] = 'Main_Controller/Dashboard';
 $route['Employee'] = 'Main_Controller/Employee';
 $route['ViewEmployee'] = 'Main_Controller/ViewEmployee';
+$route['ModifyEmployee'] = 'Main_Controller/ModifyEmployee';
 $route['Applicants'] = 'Main_Controller/V_Applicants';
 $route['ApplicantsExpired'] = 'Main_Controller/V_ApplicantsExpired';
 $route['NewEmployee'] = 'Main_Controller/NewEmployee';

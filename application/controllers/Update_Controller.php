@@ -15,13 +15,15 @@ class Update_Controller extends CI_Controller {
 	public function EmployApplicant()
 	{
 		if (isset($_POST['ApplicantID'])) {
-			$ApplicantNo = $this->input->post('ApplicantID',TRUE);
+			$ApplicantNo = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 			$ClientID = $this->input->post('ClientID',TRUE);
+			$H_Days = $this->input->post('H_Days',TRUE);
 			$H_Months = $this->input->post('H_Months',TRUE);
+			$H_Years = $this->input->post('H_Years',TRUE);
 
-			if ($ApplicantNo == NULL || $ClientID == NULL || $H_Months == NULL) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
-				redirect('Applicants');
+			if ($ApplicantNo == NULL || $ClientID == NULL) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Field/s) A:' . $ApplicantNo . ' C:' . $ClientID .' D:' . $H_Days . ' H:' . $H_Months . ' Y:' . $H_Years . ' </h5></div>');
+				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
 			{
@@ -30,35 +32,51 @@ class Update_Controller extends CI_Controller {
 
 					date_default_timezone_set('Asia/Manila');
 
-					$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$H_Months.' months'));
+					$DateStarted = date('Y-m-d h:i:s A');
+
+					if ($H_Months == NULL) {
+						$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 months', strtotime($DateStarted)));
+					} else {
+						$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$H_Months.' months', strtotime($DateStarted)));
+					}
+					if ($H_Days == NULL) {
+						$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 days', strtotime($DateEnds)));
+					} else {
+						$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$H_Days.' days', strtotime($DateEnds)));
+					}
+					if ($H_Years == NULL) {
+						$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 days', strtotime($DateEnds)));
+					} else {
+						$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$H_Years.' years', strtotime($DateEnds)));
+					}
 
 					$data = array(
 						'ClientEmployed' => $ClientID,
-						'DateStarted' => date('Y-m-d h:i:s A'),
+						'DateStarted' => $DateStarted,
 						'DateEnds' => $DateEnds,
 					);
 					$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($ApplicantNo,$data);
 					if ($EmployNewApplicant == TRUE) {
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Applicant employed!</h5></div>');
-						redirect('Applicants');
+						redirect($_SERVER['HTTP_REFERER']);
 					}
 					else
 					{
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
-						redirect('Applicants');
+						redirect($_SERVER['HTTP_REFERER']);
 					}
 				}
 				else
 				{
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
-					redirect('Applicants');
+					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
 		}
 		else
 		{
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
-			redirect('Applicants');
+			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
 }

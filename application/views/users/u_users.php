@@ -16,13 +16,13 @@
 					</div>
 				</div>
 				<div class="row rcontent">
-					<div class="col-sm-6 col-md-4 PrintPageName PrintOut">
+					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 						<h4>
 							<i class="fas fa-user-tie fa-fw"></i>Employees (<?php echo $get_employee->num_rows() ?>)
 						</h4>
 					</div>
-					<div class="col-sm-6 col-md-8 text-right PrintExclude">
-						<a href="<?=base_url()?>ApplicantsExpired" class="btn btn-info mr-auto"><i class="fas fa-user-friends fa-fw"></i> Expired Contracts (<?php echo $get_ApplicantExpired->num_rows()?>)</a>
+					<div class="col-8 col-sm-8 col-md-8 text-right PrintExclude">
+						<a href="<?=base_url()?>ApplicantsExpired" class="btn btn-info mr-auto mb-1"><i class="fas fa-user-friends fa-fw"></i> Expired Contracts (<?php echo $get_ApplicantExpired->num_rows()?>)</a>
 						<button onClick="printContent('PrintOut')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
 					</div>
 					<div class="col-sm-12">

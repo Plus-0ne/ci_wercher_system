@@ -57,7 +57,7 @@
 						</div>
 						<div class="col-sm-12 col-md-4 e-det">
 							<p>
-								<?php echo $PositionDesired; ?>
+								<input class="form-control" type="text" name="Modify_PositionDesired" value="<?php echo $PositionDesired; ?>">
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-2 e-title">
@@ -67,7 +67,7 @@
 						</div>
 						<div class="col-sm-12 col-md-4 e-det">
 							<p>
-								<?php echo $SalaryExpected; ?>
+								<input class="form-control" type="text" name="Modify_PositionDesired" value="<?php echo $SalaryExpected; ?>">
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-2 e-title">
@@ -77,7 +77,7 @@
 						</div>
 						<div class="col-sm-12 col-md-4 e-det">
 							<p>
-								<?php echo $ApplicantID; ?>
+								<input class="form-control" type="text" name="Modify_PositionDesired" value="<?php echo $ApplicantID; ?>">
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-2 e-title">
@@ -87,7 +87,7 @@
 						</div>
 						<div class="col-sm-12 col-md-4 e-det">
 							<p>
-								<?php echo $LastName; ?> , <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.
+								<input class="form-control" type="text" name="Modify_PositionDesired" value="<?php echo $LastName; ?> , <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.">
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-2 e-title">
@@ -831,6 +831,8 @@
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
+					<!-- TODO: Add functionality to Extend Contract. -->
+					<button onClick="printContent('PrintOutModalExpired')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-plus"></i> Extend Contract</button>
 					<button type="button" class="btn btn-danger ml-auto" data-dismiss="modal">Close</button>
 				</div>
 
@@ -863,7 +865,6 @@
 		function hideModal() {
 			$("#EmpContractModal").modal('hide');
 		}
-		$('#ListContractHistory').DataTable();
 	</script>
 	<style>
 		.dropdown-item:hover {

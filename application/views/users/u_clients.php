@@ -17,13 +17,13 @@
 				</div>
 				<div class="row rcontent">
 					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-sm-6 col-md-4 PrintPageName PrintOut">
+					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 						<h4>
 							<i class="fas fa-user-tag fa-fw"></i>Clients (<?php echo $ShowClients->num_rows() ?>)
 						</h4>
 					</div>
-					<div class="col-sm-6 col-md-8 text-right PrintExclude">
-						<button onClick="printContent('PrintOut')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
+					<div class="col-8 col-sm-8 col-md-8 text-right PrintExclude">
+						<button onClick="printContent('PrintOut')" type="button" class="btn btn-primary mr-auto mb-1"><i class="fas fa-print"></i> Print</button>
 					</div>
 					<div class="col-sm-12">
 						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">

@@ -141,7 +141,7 @@
 					<div class="col-sm-12 col-lg-6 mt-5 mb-5">
 						<div class="chart-title text-center">
 							<h5 class="titless">
-								<i class="fas fa-chart-pie fa-fw"></i> Total Appilicant
+								<i class="fas fa-chart-pie fa-fw"></i> Total Applicant
 							</h5>
 						</div>
 						<canvas id="pie-chart" width="800" height="450"></canvas>

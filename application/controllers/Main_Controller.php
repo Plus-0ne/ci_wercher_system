@@ -1,4 +1,4 @@
-<?php
+ <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Main_Controller extends CI_Controller {
@@ -7,15 +7,24 @@ class Main_Controller extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Model_Selects');
 		$this->load->model('Model_Updates'); // TODO: Remove after fixing the call belooooow.
+		$this->load->model('Model_Inserts'); // TODO: Remove after fixing the call belooooow.
 		// echo $_SERVER['REMOTE_ADDR'] . '<br>';
 		// echo $_SERVER['HTTP_USER_AGENT'];
 		$GetEmployee = $this->Model_Selects->GetEmployee();
+		$GetClient = $this->Model_Selects->getClientOption();
 		$currTime = time();
 		// TODO: Don't call this here. Need a real time checker. Find a better solution than this.
 		foreach ($GetEmployee->result_array() as $row) {
 
 			if (strtotime($row['DateEnds']) < $currTime) {
 				$ApplicantNo = $row['ApplicantID'];
+				foreach ($GetEmployee->result_array() as $row) {
+					foreach ($GetClient->result_array() as $nrow) {
+						if ($row['ClientEmployed'] == $nrow['ClientID']) {
+							$ClientName = $nrow['Name'];
+						}
+					}
+				}
 
 				if ($ApplicantNo == NULL) {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
@@ -24,7 +33,13 @@ class Main_Controller extends CI_Controller {
 				{
 					$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantNo);
 					if ($CheckEmployee->num_rows() > 0) {
-
+						$data = array(
+							'ApplicantID' => $ApplicantNo,
+							'PreviousDateStarted' => $row['DateStarted'],
+							'PreviousDateEnds' => $row['DateEnds'],
+							'Client' => $ClientName,
+						);
+						$InsertContractHistory = $this->Model_Inserts->InsertContractHistory($data);
 						$ApplicantExpired = $this->Model_Updates->ApplicantExpired($ApplicantNo);
 						if ($ApplicantExpired == TRUE) {
 							$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ' . $ApplicantNo . ' has expired!</h5></div>');
@@ -71,7 +86,7 @@ class Main_Controller extends CI_Controller {
 		// COUNT ADMIN
 		$data['result_cadmin'] =  $this->Model_Selects->GetAdmin();
 		// COUNT APPLICANTS
-		$data['result_capp'] =  $this->Model_Selects->GetApplicants();
+		$data['result_capp'] =  $this->Model_Selects->GetTotalApplicants();
 		// COUNT EMPLOYEE
 		$data['result_cemployee'] =  $this->Model_Selects->GetEmployee();
 		// COUNT CLIENT
@@ -136,6 +151,7 @@ class Main_Controller extends CI_Controller {
 			if ($GetEmployeeDetails->num_rows() > 0) {
 				$ged = $GetEmployeeDetails->row_array();
 				$data = array(
+					'ApplicantNo' => $ged['ApplicantNo'],
 					'ApplicantImage' => $ged['ApplicantImage'],
 					'ApplicantID' => $ged['ApplicantID'],
 					'PositionDesired' => $ged['PositionDesired'],
@@ -192,7 +208,98 @@ class Main_Controller extends CI_Controller {
 				$data['Machine_Operatessss'] = $this->Model_Selects->Machine_Operatessss($ApplicantID);
 				$data['get_employee'] = $this->Model_Selects->GetEmployee();
 				$data['getClientOption'] = $this->Model_Selects->getClientOption();
+				$data['ShowClients'] = $this->Model_Selects->GetClients();
+				$data['GetContractHistory'] = $this->Model_Selects->GetContractHistory($ApplicantID);
 				$this->load->view('users/u_viewemployee',$data);
+			}
+			else
+			{
+				redirect('Employee');
+			}
+		}
+		else
+		{
+			redirect('Employee');
+		}
+	}
+	public function ModifyEmployee() // MODIFY EMPLOYEE
+	{
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		if (isset($_GET['id'])) {
+
+			$id = $_GET['id'];
+
+			$header['title'] = 'Modify | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+
+			$GetEmployeeDetails = $this->Model_Selects->GetEmployeeDetails($id);
+
+			if ($GetEmployeeDetails->num_rows() > 0) {
+				$ged = $GetEmployeeDetails->row_array();
+				$data = array(
+					'ApplicantNo' => $ged['ApplicantNo'],
+					'ApplicantImage' => $ged['ApplicantImage'],
+					'ApplicantID' => $ged['ApplicantID'],
+					'PositionDesired' => $ged['PositionDesired'],
+					'SalaryExpected' => $ged['SalaryExpected'],
+					'LastName' => $ged['LastName'],
+					'FirstName' => $ged['FirstName'],
+					'MiddleInitial' => $ged['MiddleInitial'],
+					'Gender' => $ged['Gender'],
+					'Age' => $ged['Age'],
+					'Height' => $ged['Height'],
+					'Weight' => $ged['Weight'],
+					'Religion' => $ged['Religion'],
+					'BirthDate' => $ged['BirthDate'],
+					'BirthPlace' => $ged['BirthPlace'],
+					'Citizenship' => $ged['Citizenship'],
+					'CivilStatus' => $ged['CivilStatus'],
+					'No_OfChildren' => $ged['No_OfChildren'],
+					'Phone_No' => $ged['Phone_No'],
+					'Address_Present' => $ged['Address_Present'],
+					'Address_Provincial' => $ged['Address_Provincial'],
+					'Address_Manila' => $ged['Address_Manila'],
+
+					'SSS_No' => $ged['SSS_No'],
+					'EffectiveDateCoverage' => $ged['EffectiveDateCoverage'],
+					'ResidenceCertificateNo' => $ged['ResidenceCertificateNo'],
+					'Rcn_At' => $ged['Rcn_At'],
+					'Rcn_On' => $ged['Rcn_On'],
+					'TIN' => $ged['TIN'],
+					'TIN_At' => $ged['TIN_At'],
+					'TIN_On' => $ged['TIN_On'],
+
+					'HDMF' => $ged['HDMF'],
+					'HDMF_At' => $ged['HDMF_At'],
+					'HDMF_On' => $ged['HDMF_On'],
+
+					'PhilHealth' => $ged['PhilHealth'],
+					'PhilHealth_At' => $ged['PhilHealth_At'],
+					'PhilHealth_On' => $ged['PhilHealth_On'],
+
+					'ATM_No' => $ged['ATM_No'],
+
+					'Status' => $ged['Status'],
+
+
+					'ClientEmployed' => $ged['ClientEmployed'],
+					'DateStarted' => $ged['DateStarted'],
+					'DateEnds' => $ged['DateEnds'],
+					'AppliedOn' => $ged['AppliedOn'],
+
+				);
+				$ApplicantID = $ged['ApplicantID'];
+				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);
+				$data['employment_record'] = $this->Model_Selects->GetEmploymentDetails($ApplicantID);
+				$data['Machine_Operatessss'] = $this->Model_Selects->Machine_Operatessss($ApplicantID);
+				$data['get_employee'] = $this->Model_Selects->GetEmployee();
+				$data['getClientOption'] = $this->Model_Selects->getClientOption();
+				$data['ShowClients'] = $this->Model_Selects->GetClients();
+				$data['GetContractHistory'] = $this->Model_Selects->GetContractHistory($ApplicantID);
+				$this->load->view('users/u_modifyemployee',$data);
 			}
 			else
 			{
