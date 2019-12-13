@@ -706,8 +706,7 @@
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<!-- TODO: Add functionality to Extend Contract. -->
-					<button onClick="printContent('PrintOutModal')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-plus"></i> Extend Contract</button>
+					<button id="<?php echo $ApplicantNo; ?>" data-dismiss="modal" type="button" class="btn btn-primary mr-auto ExtendButton" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-plus"></i> Extend Contract</button>
 					<button type="button" class="btn btn-danger ml-auto" data-dismiss="modal">Close</button>
 				</div>
 
@@ -842,6 +841,8 @@
 		<?php $this->load->view('_template/modals/m_clienthire'); ?>
 		<!-- CONTRACT HISTORY MODAL -->
 		<?php $this->load->view('_template/modals/m_contracthistory'); ?>
+		<!-- EXTEND CONTRACT MODAL -->
+		<?php $this->load->view('_template/modals/m_extendcontract'); ?>
 	</body>
 	<?php $this->load->view('_template/users/u_scripts');?>
 	<script type="text/javascript">
@@ -853,6 +854,11 @@
 			$('.ModalHire').on('click', function () {
 				$('#idToHire').val($(this).attr('id'));
 				console.log($('#idToHire').val());
+			});
+			$('.ExtendButton').on('click', function () {
+				$('#ExtendID').val($(this).attr('id'));
+				console.log($('#ExtendID').val());
+				console.log($('#ExtendDate').val());
 			});
 		});
 		$("#EmpContractButton").click(function(){

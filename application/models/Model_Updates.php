@@ -26,4 +26,14 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->update('applicants', $data);
 		return $result;
 	}
+	public function ExtendContract($ApplicantNo,$data)
+	{
+		extract($data);
+		$data = array(
+			'DateEnds' => $DateEnds,
+		);
+		$this->db->where('ApplicantNo', $ApplicantNo);
+		$result = $this->db->update('applicants', $data);
+		return $result;
+	}
 }

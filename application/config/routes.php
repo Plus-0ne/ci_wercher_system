@@ -78,3 +78,4 @@ $route['RemoveClient'] = 'Delete_Controller/RemoveClient';
 
 // UPDATE
 $route['EmployApplicant'] = 'Update_Controller/EmployApplicant';
+$route['ExtendContract'] = 'Update_Controller/ExtendContract';
