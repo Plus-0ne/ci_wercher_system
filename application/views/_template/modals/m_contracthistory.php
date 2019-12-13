@@ -1,4 +1,4 @@
-<div class="modal" id="EmpContractHistory">
+<div class="modal fade" id="EmpContractHistory">
 			<div class="modal-dialog modal-xl">
 				<div class="modal-content">
 

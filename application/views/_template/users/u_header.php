@@ -22,4 +22,5 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css" integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous">
 	<!-- CUSTOM STYLE -->
 	<link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/css/style.css">
+	<link rel="icon" href="<?=base_url()?>/favicon.ico" type="image/gif">
 </head>

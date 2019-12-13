@@ -565,7 +565,7 @@
 		</div>
 		<!-- EMPLOYED MODAL -->          
 		<?php if($Status == 'Employed') { ?>          
-		<div class="modal" id="EmpContractModal">
+		<div class="modal fade" id="EmpContractModal">
 			<div class="modal-dialog modal-xl">
 				<div class="modal-content">
 
@@ -716,7 +716,7 @@
 		<?php } ?>
 		<!-- EXPIRED MODAL -->
 		<?php if($Status == 'Expired') { ?>          
-		<div class="modal" id="EmpContractModal">
+		<div class="modal fade" id="EmpContractModal">
 			<div class="modal-dialog modal-xl">
 				<div class="modal-content">
 

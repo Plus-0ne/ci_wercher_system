@@ -171,7 +171,7 @@
 										<label>S.S.S. #</label>
 										<input class="form-control" type="text" name="SSS" autocomplete="off" value="<?php echo $this->session->flashdata('SSS'); ?>">
 									</div>
-									<div class="form-group col-sm-12 col-lg-2">
+									<div class="form-group col-sm-12 col-lg-3">
 										<label>Effective Date of Coverage</label>
 										<input class="form-control" type="date" name="SSS_Effective" value="<?php echo $this->session->flashdata('SSS_Effective'); ?>">
 									</div>
