@@ -116,4 +116,22 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetLogbookWithLimit($Limit)
+	{
+		$SQL = "SELECT * FROM logbook ORDER BY No DESC LIMIT $Limit";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetPreviousContract($id)
+	{
+		$SQL = "SELECT * FROM contract_history, applicants WHERE contract_history.ApplicantID = '$id' AND applicants.ApplicantID = '$id' ORDER BY ID DESC LIMIT 1";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetPreviousContractInfo($name)
+	{
+		$SQL = "SELECT * FROM contract_history, clients WHERE contract_history.Client = '$name' AND clients.Name = '$name' ORDER BY ID DESC LIMIT 1";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }

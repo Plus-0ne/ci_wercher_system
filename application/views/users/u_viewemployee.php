@@ -740,15 +740,8 @@
 						<div class="col-sm-4 col-md-4">
 							<p>
 								<?php
-								// TODO: Find a better solution than this.
-								$found = false;
-								foreach ($get_employee->result_array() as $row) {
-									foreach ($getClientOption->result_array() as $nrow) {
-										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-											$found = true;
-											echo $nrow['Name'];
-										}
-									}
+								foreach ($GetPreviousContract->result_array() as $row) {
+									echo $row['Client'];
 								}?>
 							</p>
 						</div>
@@ -759,7 +752,7 @@
 						</div>
 						<div class="col-sm-4 col-md-4">
 							<p>
-								DOESNT WORK YET
+								<?php echo $AppliedOn; ?>
 							</p>
 						</div>
 						<div class="col-sm-2 col-md-2">
@@ -770,14 +763,10 @@
 						<div class="col-sm-4 col-md-4">
 							<p>
 								<?php
-								// TODO: Find a better solution than this.
-								$found = false;
-								foreach ($get_employee->result_array() as $row) {
-									foreach ($getClientOption->result_array() as $nrow) {
-										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-											$found = true;
-											echo $nrow['ContactNumber'];
-										}
+								foreach ($GetPreviousContract->result_array() as $row) {
+									$ClientName = $row['Client'];
+									foreach ($this->Model_Selects->GetPreviousContractInfo($ClientName)->result_array() as $row) {
+										echo $row['ContactNumber'];
 									}
 								}?>
 							</p>
@@ -789,7 +778,10 @@
 						</div>
 						<div class="col-sm-4 col-md-4">
 							<p>
-								<?php echo $DateStarted; ?>
+								<?php
+								foreach ($GetPreviousContract->result_array() as $row) {
+									echo $row['PreviousDateStarted'];
+								}?>
 							</p>
 						</div>
 						<div class="col-sm-2 col-md-2">
@@ -800,14 +792,10 @@
 						<div class="col-sm-4 col-md-4">
 							<p>
 								<?php
-								// TODO: Find a better solution than this.
-								$found = false;
-								foreach ($get_employee->result_array() as $row) {
-									foreach ($getClientOption->result_array() as $nrow) {
-										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-											$found = true;
-											echo $nrow['Address'];
-										} 
+								foreach ($GetPreviousContract->result_array() as $row) {
+									$ClientName = $row['Client'];
+									foreach ($this->Model_Selects->GetPreviousContractInfo($ClientName)->result_array() as $row) {
+										echo $row['Address'];
 									}
 								}?>
 							</p>
@@ -819,7 +807,10 @@
 						</div>
 						<div class="col-sm-4 col-md-4">
 							<p>
-								<?php echo $DateEnds; ?>
+								<?php
+								foreach ($GetPreviousContract->result_array() as $row) {
+									echo $row['PreviousDateEnds'];
+								}?>
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-12 mt-5 text-center PrintOutModalExpired">

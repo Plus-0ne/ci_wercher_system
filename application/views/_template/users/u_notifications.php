@@ -11,18 +11,15 @@
 			<div class="dropdown ml-auto">
 				<a class="btn btn-light ddToggle" data-toggle="dropdown"><i class="fas fa-bell"></i></a>
 				<ul class="dropdown-menu dropdown-menu-right">
-					<li class="notif-li">
-						<a class="notif-link" href="#">
-							<i class="fas fa-edit"></i> 00001-A has been updated 1 min ago
-						</a>
-					</li>
-					<li class="notif-li">
-						<a class="notif-link" href="#">
-							<i class="fas fa-edit"></i> 00002-A has been updated 1 min ago
-						</a>
-					</li>
+					<?php foreach ($this->Model_Selects->GetLogbookWithLimit(5)->result_array() as $row): ?>
+						<li class="notif-li">
+							<a class="notif-link" href="<?php echo base_url() . 'Dashboard#Logbook' ?>">
+								<i class="fas fa-edit"></i> <?php echo $row['Event']; ?>
+							</a>
+						</li>
+					<?php endforeach ?>
 					<li class="notif-li text-center">
-						<a class="notif-link" href="#">
+						<a class="notif-link" href="<?php echo base_url() . 'Dashboard#Logbook' ?>">
 							<i class="fas fa-list"></i> View All
 						</a>
 					</li>

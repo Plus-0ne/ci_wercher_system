@@ -178,7 +178,7 @@
 					</div>
 					<div class="col-sm-12">
 						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
-							<table id="emp" class="table table-condensed PrintOut" style="width: 100%;">
+							<table id="Logbook" class="table table-condensed PrintOut" style="width: 100%;">
 								<thead>
 									<tr class="text-center align-middle">
 										<th> Time </th>
