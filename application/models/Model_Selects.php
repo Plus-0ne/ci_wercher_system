@@ -110,4 +110,10 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetLogbook()
+	{
+		$SQL = "SELECT * FROM logbook ORDER BY No DESC";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }

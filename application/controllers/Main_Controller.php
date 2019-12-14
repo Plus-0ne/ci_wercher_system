@@ -91,6 +91,8 @@ class Main_Controller extends CI_Controller {
 		$data['result_cemployee'] =  $this->Model_Selects->GetEmployee();
 		// COUNT CLIENT
 		$data['result_cclients'] =  $this->Model_Selects->GetClients();
+		// LOGBOOK
+		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		$this->load->view('users/u_dashboard',$data);
 	}
 	

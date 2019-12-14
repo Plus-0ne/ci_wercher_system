@@ -20,6 +20,15 @@ class Update_Controller extends CI_Controller {
 			$H_Days = $this->input->post('H_Days',TRUE);
 			$H_Months = $this->input->post('H_Months',TRUE);
 			$H_Years = $this->input->post('H_Years',TRUE);
+			if($H_Days == NULL) {
+				$H_Days = 0;
+			}
+			if($H_Months == NULL) {
+				$H_Months = 0;
+			}
+			if($H_Years == NULL) {
+				$H_Years = 0;
+			}
 
 			if ($ApplicantNo == NULL || $ClientID == NULL) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Field/s) A:' . $ApplicantNo . ' C:' . $ClientID .' D:' . $H_Days . ' H:' . $H_Months . ' Y:' . $H_Years . ' </h5></div>');
@@ -58,6 +67,17 @@ class Update_Controller extends CI_Controller {
 					$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($ApplicantNo,$data);
 					if ($EmployNewApplicant == TRUE) {
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Applicant employed!</h5></div>');
+						// LOGBOOK
+						date_default_timezone_set('Asia/Manila');
+						$LogbookCurrentTime = date('Y-m-d h:i:s A');
+						$LogbookType = 'New';
+						$LogbookEvent = 'Applicant ID ' . $ApplicantNo .' has been employed to Client ID ' . $ClientID . ' for ' . $H_Years . ' years, ' . $H_Months . ' months, and ' . $H_Days . ' days!';
+						$data = array(
+							'Time' => $LogbookCurrentTime,
+							'Type' => $LogbookType,
+							'Event' => $LogbookEvent,
+						);
+						$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 						redirect($_SERVER['HTTP_REFERER']);
 					}
 					else
@@ -121,6 +141,17 @@ class Update_Controller extends CI_Controller {
 					$EmployNewApplicant = $this->Model_Updates->ExtendContract($ApplicantNo,$data);
 					if ($EmployNewApplicant == TRUE) {
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Contract Extended to ' . $DateEnds . '!</h5></div>');
+						// LOGBOOK
+						date_default_timezone_set('Asia/Manila');
+						$LogbookCurrentTime = date('Y-m-d h:i:s A');
+						$LogbookType = 'Update';
+						$LogbookEvent = 'Applicant ID ' . $ApplicantNo .' has their contract extended by ' . $E_Years . ' years, ' . $E_Months . ' months, and ' . $E_Days . ' days.';
+						$data = array(
+							'Time' => $LogbookCurrentTime,
+							'Type' => $LogbookType,
+							'Event' => $LogbookEvent,
+						);
+						$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 						redirect($_SERVER['HTTP_REFERER']);
 					}
 					else
@@ -390,6 +421,17 @@ class Update_Controller extends CI_Controller {
 					// unset($_SESSION["beneCart"]);
 					
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
+					// LOGBOOK
+					date_default_timezone_set('Asia/Manila');
+					$LogbookCurrentTime = date('Y-m-d h:i:s A');
+					$LogbookType = 'Update';
+					$LogbookEvent = 'Updated details on Applicant/Employee ID ' . $ApplicantID . '.';
+					$data = array(
+						'Time' => $LogbookCurrentTime,
+						'Type' => $LogbookType,
+						'Event' => $LogbookEvent,
+					);
+					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 				else
@@ -399,4 +441,22 @@ class Update_Controller extends CI_Controller {
 				}
 			}
 		}
+	public function AddNote()
+	{
+		if (isset($_POST['Note'])) {
+			$Note = $this->input->post('Note',TRUE);
+			// LOGBOOK
+			date_default_timezone_set('Asia/Manila');
+			$LogbookCurrentTime = date('Y-m-d h:i:s A');
+			$LogbookType = 'Note';
+			$data = array(
+				'Time' => $LogbookCurrentTime,
+				'Type' => $LogbookType,
+				'Event' => $Note,
+			);
+			$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+			redirect($_SERVER['HTTP_REFERER']);
+
+		}
+	}
 }

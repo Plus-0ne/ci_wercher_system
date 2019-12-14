@@ -22,6 +22,17 @@ class Delete_Controller extends CI_Controller {
 			$Removethis = $this->Model_Deletes->RemoveEmpl($id);
 			if ($Removethis == TRUE) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ID ' . $id . ' has been succesfully removed!</h5></div>');
+				// LOGBOOK
+				date_default_timezone_set('Asia/Manila');
+				$LogbookCurrentTime = date('Y-m-d h:i:s A');
+				$LogbookType = 'Deletion';
+				$LogbookEvent = 'Employee ID ' . $id .' has been removed.';
+				$data = array(
+					'Time' => $LogbookCurrentTime,
+					'Type' => $LogbookType,
+					'Event' => $LogbookEvent,
+				);
+				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
 				}
@@ -47,6 +58,17 @@ class Delete_Controller extends CI_Controller {
 			$Removethis = $this->Model_Deletes->RemoveAdminM($id);
 			if ($Removethis == TRUE) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Admin ID ' . $id . ' has been succesfully removed!</h5></div>');
+				// LOGBOOK
+				date_default_timezone_set('Asia/Manila');
+				$LogbookCurrentTime = date('Y-m-d h:i:s A');
+				$LogbookType = 'Deletion';
+				$LogbookEvent = 'Admin ID ' . $id .' has been removed.';
+				$data = array(
+					'Time' => $LogbookCurrentTime,
+					'Type' => $LogbookType,
+					'Event' => $LogbookEvent,
+				);
+				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
 				}
@@ -72,6 +94,17 @@ class Delete_Controller extends CI_Controller {
 			$Removethis = $this->Model_Deletes->RemoveClientM($id);
 			if ($Removethis == TRUE) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Client ID ' . $id . ' has been succesfully removed!</h5></div>');
+				// LOGBOOK
+				date_default_timezone_set('Asia/Manila');
+				$LogbookCurrentTime = date('Y-m-d h:i:s A');
+				$LogbookType = 'Deletion';
+				$LogbookEvent = 'Client ID ' . $id .' has been removed.';
+				$data = array(
+					'Time' => $LogbookCurrentTime,
+					'Type' => $LogbookType,
+					'Event' => $LogbookEvent,
+				);
+				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
 				}

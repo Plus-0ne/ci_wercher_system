@@ -260,7 +260,19 @@ class Add_Controller extends CI_Controller {
 						// unset($_SESSION["beneCart"]);
 						
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Employee added!</h5></div>');
-						redirect('NewEmployee');
+
+						// LOGBOOK
+						date_default_timezone_set('Asia/Manila');
+						$LogbookCurrentTime = date('Y-m-d h:i:s A');
+						$LogbookType = 'New';
+						$LogbookEvent = 'New Applicant added! (Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) .  '. | ID: ' . $ApplicantID . ')';
+						$data = array(
+							'Time' => $LogbookCurrentTime,
+							'Type' => $LogbookType,
+							'Event' => $LogbookEvent,
+						);
+						$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+						redirect('Applicant');
 					}
 					else
 					{
@@ -315,6 +327,18 @@ class Add_Controller extends CI_Controller {
 				$InsertAdmin = $this->Model_Inserts->InsertAdmin($data);
 				if ($InsertAdmin == TRUE) {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Admin added!</h5></div>');
+
+					// LOGBOOK
+					date_default_timezone_set('Asia/Manila');
+					$LogbookCurrentTime = date('Y-m-d h:i:s A');
+					$LogbookType = 'New';
+					$LogbookEvent = 'New Admin added! (Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleIN) .  '. | Position: ' . $Position . ')';
+					$data = array(
+						'Time' => $LogbookCurrentTime,
+						'Type' => $LogbookType,
+						'Event' => $LogbookEvent,
+					);
+					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 					redirect('Admin_List');
 				}
 				else
@@ -354,6 +378,17 @@ class Add_Controller extends CI_Controller {
 				$InsertNewClient = $this->Model_Inserts->InsertNewClient($data);
 				if ($InsertNewClient == TRUE) {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Client added!</h5></div>');
+					// LOGBOOK
+					date_default_timezone_set('Asia/Manila');
+					$LogbookCurrentTime = date('Y-m-d h:i:s A');
+					$LogbookType = 'New';
+					$LogbookEvent = 'New Client added! (Name: ' . $ClientName . ' | Contact: ' . $ClientContact . ')';
+					$data = array(
+						'Time' => $LogbookCurrentTime,
+						'Type' => $LogbookType,
+						'Event' => $LogbookEvent,
+					);
+					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 					redirect('Clients');
 				}
 				else

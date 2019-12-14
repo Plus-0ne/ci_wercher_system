@@ -170,45 +170,17 @@ a[data-toggle="collapse"] {
 .progressRemaining {
 	background: #5c6bc0;
 }
-.checkbox label:after {
-  content: '';
-  display: table;
-  clear: both;
+.logbook-success {
+	background: linear-gradient(90deg, rgba(148,240,146,1) 28%, rgba(216,255,216,1) 100%);
 }
-
-.checkbox .cr {
-  position: relative;
-  display: inline-block;
-  border: 1px solid #a9a9a9;
-  border-radius: .25em;
-  width: 1.3em;
-  height: 1.3em;
-  float: left;
-  margin-right: .5em;
+.logbook-danger {
+	background: linear-gradient(90deg, rgba(240,149,146,1) 28%, rgba(255,219,216,1) 100%);
 }
-
-.checkbox .cr .cr-icon {
-  position: absolute;
-  font-size: .8em;
-  line-height: 0;
-  top: 50%;
-  left: 15%;
+.logbook-info {
+	background: linear-gradient(90deg, rgba(146,220,240,1) 28%, rgba(216,250,255,1) 100%);
 }
-
-.checkbox label input[type="checkbox"] {
-  display: none;
-}
-
-.checkbox label input[type="checkbox"]+.cr>.cr-icon {
-  opacity: 0;
-}
-
-.checkbox label input[type="checkbox"]:checked+.cr>.cr-icon {
-  opacity: 1;
-}
-
-.checkbox label input[type="checkbox"]:disabled+.cr {
-  opacity: .5;
+.logbook-warning {
+	background: linear-gradient(90deg, rgba(240,223,146,1) 28%, rgba(255,247,216,1) 100%);
 }
 .link-s { text-decoration: none; color: #FFFFFF; }
 .link-s:hover { text-decoration: none; }
