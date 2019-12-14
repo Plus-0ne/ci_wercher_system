@@ -142,4 +142,245 @@ class Update_Controller extends CI_Controller {
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
+	public function UpdateEmployee()
+	{
+		$ApplicantID = $this->input->post('M_ApplicantID');
+		# PERSONAL INFORMATION
+		$PositionDesired = $this->input->post('PositionDesired');
+		$SalaryExpected = $this->input->post('SalaryExpected');
+		$LastName = $this->input->post('LastName');
+		$FirstName = $this->input->post('FirstName');
+		$MI = $this->input->post('MI');
+		$Gender = $this->input->post('Gender');
+		$Age = $this->input->post('Age');
+		$Height = $this->input->post('Height');
+		$Weight = $this->input->post('Weight');
+		$Religion = $this->input->post('Religion');
+		
+		$bDate = $this->input->post('bDate');
+		$bPlace = $this->input->post('bPlace');
+		$Citizenship = $this->input->post('Citizenship');
+		$CivilStatus = $this->input->post('CivilStatus');
+		$No_Children = $this->input->post('No_Children');
+		$PhoneNumber = $this->input->post('PhoneNumber');
+		# DOCUMENTS
+		$SSS = $this->input->post('SSS');
+		$SSS_Effective = $this->input->post('SSS_Effective');
+		$RCN = $this->input->post('RCN');
+		$RCN_at = $this->input->post('RCN_at');
+		$RCN_On = $this->input->post('RCN_On');
+		$TIN = $this->input->post('TIN');
+		$TIN_At = $this->input->post('TIN_At');
+		$TIN_On = $this->input->post('TIN_On');
+
+		$HDMF = $this->input->post('HDMF');
+		$HDMF_At = $this->input->post('HDMF_At');
+		$HDMF_On = $this->input->post('HDMF_On');
+
+		$PhilHealth = $this->input->post('PhilHealth');
+		$PhilHealth_At = $this->input->post('PhilHealth_At');
+		$PhilHealth_On = $this->input->post('PhilHealth_On');
+		$ATM_No = $this->input->post('ATM_No');
+
+		# ADDRESSES
+		$Address_Present = $this->input->post('Address_Present');
+		$Address_Provincial = $this->input->post('Address_Provincial');
+		$Address_Manila = $this->input->post('Address_Manila');
+
+		if ($PositionDesired == NULL || $SalaryExpected == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Age == NULL || $Height == NULL || $Weight == NULL || $Religion == NULL || $bDate == NULL || $bPlace == NULL || $Citizenship == NULL || $CivilStatus == NULL || $No_Children == NULL || $PhoneNumber == NULL || $SSS == NULL || $SSS_Effective == NULL || $RCN == NULL || $RCN_at == NULL || $RCN_On == NULL || $TIN == NULL || $TIN_At == NULL || $TIN_On == NULL || $HDMF == NULL || $HDMF_At == NULL || $HDMF_On == NULL || $Address_Present == NULL) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$data = array(
+				'PositionDesired' => $PositionDesired,
+				'SalaryExpected' => $SalaryExpected,
+				'LastName' => $LastName,
+				'FirstName' => $FirstName,
+				'MI' => $MI,
+				'Gender' => $Gender,
+				'Age' => $Age,
+				'Height' => $Height,
+				'Weight' => $Weight,
+				'Religion' => $Religion,
+				'bDate' => $bDate,
+				'bPlace' => $bPlace,
+				'Citizenship' => $Citizenship,
+				'CivilStatus' => $CivilStatus,
+				'No_Children' => $No_Children,
+				'PhoneNumber' => $PhoneNumber,
+				'SSS' => $SSS,
+				'SSS_Effective' => $SSS_Effective,
+				'RCN' => $RCN,
+				'RCN_at' => $RCN_at,
+				'RCN_On' => $RCN_On,
+				'TIN' => $TIN,
+				'TIN_At' => $TIN_At,
+				'TIN_On' => $TIN_On,
+
+				'HDMF' => $HDMF,
+				'HDMF_At' => $HDMF_At,
+				'HDMF_On' => $HDMF_On,
+				'ATM_No' => $ATM_No,
+
+				'PhilHealth' => $PhilHealth,
+				'PhilHealth_At' => $PhilHealth_At,
+				'PhilHealth_On' => $PhilHealth_On,
+				
+
+
+				'Address_Present' => $Address_Present,
+				'Address_Provincial' => $Address_Provincial,
+				'Address_Manila' => $Address_Manila,
+			);
+			$this->session->set_flashdata($data);
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+		else
+		{
+				// $config['upload_path']          = './uploads/'.$ApplicantID;
+				// $config['allowed_types']        = 'gif|jpg|png';
+				// $config['max_size']             = 2000;
+				// $config['max_width']            = 2000;
+				// $config['max_height']           = 2000;
+
+				// $this->load->library('upload', $config);
+				// if (!is_dir('uploads'))
+				// {
+				// 	mkdir('./uploads', 0777, true);
+				// }
+				// if (!is_dir('uploads/' . $ApplicantID))
+				// {
+				// 	mkdir('./uploads/' . $ApplicantID, 0777, true);
+				// 	$dir_exist = false;
+				// }
+				
+				// if (! $this->upload->do_upload('pImage'))
+				// {
+				// 	$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
+				// 	redirect($_SERVER['HTTP_REFERER']);
+				// }
+				// else
+				// {
+					// $pImage = base_url().'uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
+					// INSERT EMPLOYEE
+				$data = array(
+					// 'ApplicantImage' => $pImage,
+					'ApplicantID' => $ApplicantID,
+					'PositionDesired' => $PositionDesired,
+					'SalaryExpected' => $SalaryExpected,
+					'LastName' => ucfirst($LastName),
+					'FirstName' => ucfirst($FirstName),
+					'MiddleInitial' => ucfirst($MI),
+					'Gender' => $Gender,
+					'Age' => $Age,
+					'Height' => $Height,
+					'Weight' => $Weight,
+					'Religion' => $Religion,
+					'BirthDate' => $bDate,
+					'BirthPlace' => $bPlace,
+					'Citizenship' => $Citizenship,
+					'CivilStatus' => $CivilStatus,
+					'No_OfChildren' => $No_Children,
+					
+					'Address_Present' => $Address_Present,
+					'Address_Provincial' => $Address_Provincial,
+					'Address_Manila' => $Address_Manila,
+
+					'Phone_No' => $PhoneNumber,
+
+					'SSS_No' => $SSS,
+					'EffectiveDateCoverage' => $SSS_Effective,
+					'ResidenceCertificateNo' => $RCN,
+					'Rcn_At' => $RCN_at,
+					'Rcn_On' => $RCN_On,
+					'TIN' => $TIN,
+					'TIN_At' => $TIN_At,
+					'TIN_On' => $TIN_On,
+					
+					'HDMF' => $HDMF,
+					'HDMF_At' => $HDMF_At,
+					'HDMF_On' => $HDMF_On,
+					'ATM_No' => $ATM_No,
+
+					'PhilHealth' => $PhilHealth,
+					'PhilHealth_At' => $PhilHealth_At,
+					'PhilHealth_On' => $PhilHealth_On,
+				);
+				$addedEmployee = $this->Model_Updates->UpdateEmployee($ApplicantID, $data);
+				if ($addedEmployee == TRUE) {
+					if (isset($_SESSION["acadcart"])) {
+						foreach ($_SESSION["acadcart"] as $s_da) {
+							$data = array(
+								'ApplicantID' => $ApplicantID,
+								'Level' => $s_da['acadcart']['SchoolLevel'],
+								'SchoolName' => $s_da['acadcart']['SchoolName'],
+								'SchoolAddress' => $s_da['acadcart']['SchoolAddress'],
+								'DateStarted' => $s_da['acadcart']['FromYearSchool'],
+								'DateEnds' => $s_da['acadcart']['ToYearSchool'],
+								'HighDegree' => $s_da['acadcart']['H_Attained'],
+
+							);
+							$this->Model_Inserts->InsertAcadH($data);
+						}
+					}
+					if (isset($_SESSION["emp_cart"])) {
+						foreach ($_SESSION["emp_cart"] as $s_da) {
+							$data = array(
+								'ApplicantID' => $ApplicantID,
+								'Name' => $s_da['emp_cart']['EmployeerName'],
+								'Address' => $s_da['emp_cart']['emAddress'],
+								'PeriodCovered' => $s_da['emp_cart']['PeriodCovered'],
+								'Position' => $s_da['emp_cart']['Position'],
+								'Salary' => $s_da['emp_cart']['Salary'],
+								'CauseOfSeparation' => $s_da['emp_cart']['cos'],
+
+							);
+							$this->Model_Inserts->InsertEmploymentRecord($data);
+						}
+					}
+					if (isset($_SESSION["mach_cart"])) {
+						foreach ($_SESSION["mach_cart"] as $s_da) {
+							$data = array(
+								'ApplicantID' => $ApplicantID,
+								'MachineName' => $s_da['mach_cart']['MachineName'],
+							);
+							$this->Model_Inserts->InsertMachineOperated($data);
+						}
+					}
+					// if (isset($_SESSION["rela_cart"])) {
+					// 	foreach ($_SESSION["rela_cart"] as $s_da) {
+					// 		$data = array(
+					// 			'ApplicantID' => $customid,
+					// 			'Relation' => $s_da['rela_cart']['Relation'],
+					// 			'Name' => $s_da['rela_cart']['rName'],
+					// 			'Occupation' => $s_da['rela_cart']['rOccupation'],
+					// 		);
+					// 		$this->Model_Inserts->InsertRelativesdata($data);
+					// 	}
+					// }
+					// if (isset($_SESSION["beneCart"])) {
+					// 	foreach ($_SESSION["beneCart"] as $s_da) {
+					// 		$data = array(
+					// 			'ApplicantID' => $customid,
+					// 			'Name' => $s_da['beneCart']['BeneName'],
+					// 			'Relationship' => $s_da['beneCart']['BeneRelationship'],
+					// 		);
+					// 		$this->Model_Inserts->InserBeneficia($data);
+					// 	}
+					// }
+					unset($_SESSION["acadcart"]);
+					unset($_SESSION["emp_cart"]);
+					unset($_SESSION["mach_cart"]);
+					// unset($_SESSION["rela_cart"]); 
+					// unset($_SESSION["beneCart"]);
+					
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+				else
+				{
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+			}
+		}
+	
 }
