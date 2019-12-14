@@ -29,9 +29,6 @@
 							<form action="<?=base_url()?>addNewEmployee" method="POST" enctype="multipart/form-data">
 								<div class="form-row mb-2">
 									<div class="form-group col-sm-12">
-										Choose Picture
-									</div>
-									<div class="form-group col-sm-12">
 										<input type='file' id="imgInp" name="pImage" style="display: none;">
 										<img class="image-hover" id="blah" src="https://avatarsed1.serversdev.getgo.com/2205256774854474505_medium.jpg" width="120" height="120">
 									</div>
@@ -258,16 +255,25 @@
 									</div>
 								</div>
 								<div class="form-row pb-5 pt-5">
+									<div class="pb-3">
+										<h5><i class="fas fa-stream"></i> Academic History</h5>
+									</div>
 									<div id="AcadHsssistory" class="" style="width: 100%;">
 										
 									</div>
 								</div>
 								<div class="form-row pb-5">
+									<div class="pb-3">
+										<h5><i class="fas fa-stream"></i> Employment Record </h5>
+									</div>
 									<div id="empskills" class="" style="width: 100%;">
 										
 									</div>
 								</div>
 								<div class="form-row pb-5">
+									<div class="pb-3">
+										<h5><i class="fas fa-stream"></i> Machine Operated </h5>
+									</div>
 									<div id="mach_Op" class="" style="width: 100%;">
 										
 									</div>

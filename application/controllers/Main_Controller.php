@@ -358,18 +358,17 @@ class Main_Controller extends CI_Controller {
 	// ACADEMIC HISTORY
 	public function showAcad()
 	{
-		if (!isset($_SESSION['acadcart'])) {
-			echo '<div class="pb-3"><h5><i class="fas fa-stream"></i> Academic History Empty</h5></div>';
-		}
 
 		if (isset($_SESSION['acadcart'])) {
-			echo '<div class="pb-3"><h5><i class="fas fa-stream"></i> Academic History</h5></div>';
+			echo '<hr>';
+			echo '<h6 class="ml-2"><i class="fas fa-save"></i> New Record</h6>';
 			echo '<table class="table table-bordered">
 			<thead>
-			<th>School Level</th>
+			<th>Level</th>
 			<th>School Name</th>
-			<th>From</th>
-			<th>To</th>
+			<th>School Address
+			<th>From Year</th>
+			<th>To Year</th>
 			<th>Highest Degree / Certificate Attained</th>
 			<th>Action</th>
 			</thead>
@@ -384,6 +383,9 @@ class Main_Controller extends CI_Controller {
 				'.$s_da['acadcart']['SchoolName'] .'
 				</td>
 				<td>
+				'.$s_da['acadcart']['SchoolAddress'] .'
+				</td>
+				<td>
 				'.$s_da['acadcart']['FromYearSchool'] .'
 				</td>
 				<td>
@@ -393,13 +395,14 @@ class Main_Controller extends CI_Controller {
 				'.$s_da['acadcart']['H_Attained'] .'
 				</td>
 				<td>
-				<button id="'.$s_da['acadcart']['c_id'].'" class="remoach btn-tr" type="button"><i class="fas fa-trash"></i></button>
+				<button id="'.$s_da['acadcart']['c_id'].'" class="remoach btn btn-sm btn-danger" type="button"><i class="fas fa-times"></i> Discard</button>
 				</td>
 				</tr>
 				';
 			}
 			echo '</tbody>
-			</table>';
+			</table>
+			<hr>';
 		}
 		echo '<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#acadFields"><i class="fas fa-plus"></i> Add Data</button>';
 	}
@@ -490,20 +493,18 @@ class Main_Controller extends CI_Controller {
 	}
 	public function showSkills()
 	{
-		if (!isset($_SESSION['emp_cart'])) {
-			echo '<div class="pb-3"><h5><i class="fas fa-stream"></i> Employment Record Empty</h5></div>';
-		}
 
 		if (isset($_SESSION['emp_cart'])) {
-			echo '<div class="p-3"><h5><i class="fas fa-stream"></i> Emplyement Record </h5></div>';
+			echo '<hr>';
+			echo '<h6 class="ml-2"><i class="fas fa-save"></i> New Record</h6>';
 			echo '<table class="table table-bordered">
 			<thead>
 			<th>Name</th>
 			<th>Address</th>
-			<th>PeriodCovered</th>
+			<th>Period Covered</th>
 			<th>Position</th>
 			<th>Salary</th>
-			<th>cos</th>
+			<th>Cause of Seperation</th>
 
 			<th>Action</th>
 			</thead>
@@ -530,13 +531,14 @@ class Main_Controller extends CI_Controller {
 				'.$s_da['emp_cart']['cos'] .'
 				</td>
 				<td>
-				<button id="'.$s_da['emp_cart']['emp_id'].'" class="remoaemop btn-tr" type="button"><i class="fas fa-trash"></i></button>
+				<button id="'.$s_da['emp_cart']['emp_id'].'" class="remoaemop btn btn-sm btn-danger" type="button"><i class="fas fa-times"></i> Discard</button>
 				</td>
 				</tr>
 				';
 			}
 			echo '</tbody>
-			</table>';
+			</table>
+			<hr>';
 		}
 		echo '<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#skillsFields"><i class="fas fa-plus"></i> Add Data</button>';
 	}
@@ -553,12 +555,10 @@ class Main_Controller extends CI_Controller {
 	// MACHINE OPERATED
 	public function ShowMachineOperated()
 	{
-		if (!isset($_SESSION['mach_cart'])) {
-			echo '<div class="pb-3"><h5><i class="fas fa-stream"></i> Machine Operated Empty</h5></div>';
-		}
 
 		if (isset($_SESSION['mach_cart'])) {
-			echo '<div class="p-3"><h5><i class="fas fa-stream"></i> Machine Operated </h5></div>';
+			echo '<hr>';
+			echo '<h6 class="ml-2"><i class="fas fa-save"></i> New Record</h6>';
 			echo '<table class="table table-bordered">
 			<thead>
 			<th>Machine Name</th>
@@ -572,13 +572,14 @@ class Main_Controller extends CI_Controller {
 				'.$s_da['mach_cart']['MachineName'] .'
 				</td>
 				<td>
-				<button id="'.$s_da['mach_cart']['MachID'].'" class="removemachine btn-tr" type="button"><i class="fas fa-trash"></i></button>
+				<button id="'.$s_da['mach_cart']['MachID'].'" class="removemachine btn btn-sm btn-danger" type="button"><i class="fas fa-times"></i> Discard</button>
 				</td>
 				</tr>
 				';
 			}
 			echo '</tbody>
-			</table>';
+			</table>
+			<hr>';
 		}
 		echo '<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#Mach_Operated"><i class="fas fa-plus"></i> Add Data</button>';
 	}

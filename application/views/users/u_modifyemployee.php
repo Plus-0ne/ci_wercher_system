@@ -41,10 +41,8 @@
 							</div>
 							<!-- Start form -->
 							<form action="<?=base_url()?>UpdateEmployee" method="POST" enctype="multipart/form-data">
+								<input type="hidden" name="M_ApplicantID" value="<?php echo $ApplicantID; ?>"> 
 								<div class="form-row mb-2">
-									<div class="form-group col-sm-12">
-										Update Picture
-									</div>
 									<div class="form-group col-sm-12">
 										<input type='file' id="imgInp" name="pImage" style="display: none;">
 										<img class="image-hover" id="blah" src="<?php echo $ApplicantImage; ?>" width="120" height="120">
@@ -272,16 +270,132 @@
 									</div>
 								</div>
 								<div class="form-row pb-5 pt-5">
+									<div class="pb-3">
+										<h5><i class="fas fa-stream"></i> Academic History</h5>
+									</div>
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<table class="table table-condensed">
+												<thead>
+													<th>Level</th>
+													<th>School Name</th>
+													<th>School Address</th>
+													<th>From Year</th>
+													<th>To Year</th>
+													<th>Highest Degree / Certificate Attained</th>
+													<th>Action</th>
+												</thead>
+												<tbody>
+													<?php if ($GetAcadHistory->num_rows() > 0) { ?>
+														<?php foreach ($GetAcadHistory->result_array() as $row): ?>
+															<?php if ($ApplicantID == $row['ApplicantID']) { ?>
+																<tr>
+																	<td><?php echo $row['Level'];?></td>
+																	<td><?php echo $row['SchoolName'];?></td>
+																	<td><?php echo $row['SchoolAddress'];?></td>
+																	<td><?php echo $row['DateStarted'];?></td>
+																	<td><?php echo $row['DateEnds'];?></td>
+																	<td><?php echo $row['HighDegree'];?></td>
+																</tr>
+															<?php } ?>
+														<?php endforeach ?>
+													<?php } else { ?>
+														<tr class="w-100 text-center">
+															<td colspan="7">
+																<h5>
+																	No Data
+																</h5>
+															</td>
+														</tr>
+													<?php } ?>
+												</tbody>
+											</table>
+										</div>
+									</div>
 									<div id="AcadHsssistory" class="" style="width: 100%;">
 										
 									</div>
 								</div>
 								<div class="form-row pb-5">
+									<div class="pb-3">
+										<h5><i class="fas fa-stream"></i> Employment Record</h5>
+									</div>
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<table class="table table-condensed">
+												<thead>
+													<th>Name</th>
+													<th>Address</th>
+													<th>Period Covered</th>
+													<th>Position</th>
+													<th>Salary</th>
+													<th>Cause of Separation</th>
+													<th>Action</th>
+												</thead>
+												<tbody>
+													<?php if ($employment_record->num_rows() > 0) { ?>
+														<?php foreach ($employment_record->result_array() as $row): ?>
+															<?php if ($ApplicantID == $row['ApplicantID']) { ?>
+																<tr>
+																	<td><?php echo $row['Name'];?></td>
+																	<td><?php echo $row['Address'];?></td>
+																	<td><?php echo $row['PeriodCovered'];?></td>
+																	<td><?php echo $row['Position'];?></td>
+																	<td><?php echo $row['Salary'];?></td>
+																	<td><?php echo $row['CauseOfSeparation'];?></td>
+																</tr>
+															<?php } ?>
+														<?php endforeach ?>
+													<?php } else { ?>
+														<tr class="w-100 text-center">
+															<td colspan="7">
+																<h5>
+																	No Data
+																</h5>
+															</td>
+														</tr>
+													<?php } ?>
+												</tbody>
+											</table>
+										</div>
+									</div>
 									<div id="empskills" class="" style="width: 100%;">
 										
 									</div>
 								</div>
 								<div class="form-row pb-5">
+									<div class="pb-3">
+										<h5><i class="fas fa-stream"></i> Machine Operated</h5>
+									</div>
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<table class="table table-condensed">
+												<thead>
+													<th>Machine Name</th>
+													
+												</thead>
+												<tbody>
+													<?php if ($Machine_Operatessss->num_rows() > 0) { ?>
+														<?php foreach ($Machine_Operatessss->result_array() as $row): ?>
+															<?php if ($ApplicantID == $row['ApplicantID']) { ?>
+																<tr>
+																	<td><?php echo $row['MachineName'];?></td>
+																</tr>
+															<?php } ?>
+														<?php endforeach ?>
+													<?php } else { ?>
+														<tr class="w-100 text-center">
+															<td>
+																<h5>
+																	No Data
+																</h5>
+															</td>
+														</tr>
+													<?php } ?>
+												</tbody>
+											</table>
+										</div>
+									</div>
 									<div id="mach_Op" class="" style="width: 100%;">
 										
 									</div>
@@ -292,7 +406,7 @@
 										<button class="btn btn-primary" type="submit" onclick="return confirm('Do you want to save ?')"><i class="fas fa-save"></i> Save</button>
 									</div>
 									<div class="form-group ml-auto">
-										<a href="<?=base_url()?>Applicants" class="btn btn-secondary"><i class="fas fa-chevron-left"></i> Back</a>
+										<a href="<?=base_url()?>Employee" class="btn btn-secondary"><i class="fas fa-chevron-left"></i> Back</a>
 									</div>
 								</div>
 							</form>

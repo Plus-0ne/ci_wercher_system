@@ -466,7 +466,7 @@
 											<?php endforeach ?>
 										<?php } else { ?>
 											<tr class="w-100 text-center">
-												<td>
+												<td colspan="6">
 													<h5>
 														No Data
 													</h5>
@@ -481,7 +481,7 @@
 					<div class="row rcontent p-5 PrintOut">
 						<div class="col-sm-12 mb-5">
 							<h5>
-								<i class="fas fa-stream"></i> Employment Details
+								<i class="fas fa-stream"></i> Employment Record
 							</h5>
 						</div>
 						<div class="col-sm-12">
@@ -493,7 +493,7 @@
 										<th>Period Covered</th>
 										<th>Position</th>
 										<th>Salary</th>
-										<th>Cause of separation</th>
+										<th>Cause of Separation</th>
 									</thead>
 									<tbody>
 										<?php if ($employment_record->num_rows() > 0) { ?>
@@ -511,7 +511,7 @@
 											<?php endforeach ?>
 										<?php } else { ?>
 											<tr class="w-100 text-center">
-												<td>
+												<td colspan="6">
 													<h5>
 														No Data
 													</h5>
