@@ -42,6 +42,7 @@
 							<!-- Start form -->
 							<form action="<?=base_url()?>UpdateEmployee" method="POST" enctype="multipart/form-data">
 								<input type="hidden" name="M_ApplicantID" value="<?php echo $ApplicantID; ?>"> 
+								<input type="hidden" name="M_ApplicantImage" value="<?php echo $ApplicantImage; ?>"> 
 								<div class="form-row mb-2">
 									<div class="form-group col-sm-12">
 										<input type='file' id="imgInp" name="pImage" style="display: none;">

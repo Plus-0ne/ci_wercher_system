@@ -145,6 +145,7 @@ class Update_Controller extends CI_Controller {
 	public function UpdateEmployee()
 	{
 		$ApplicantID = $this->input->post('M_ApplicantID');
+		$pImage = $this->input->post('M_ApplicantImage');
 		# PERSONAL INFORMATION
 		$PositionDesired = $this->input->post('PositionDesired');
 		$SalaryExpected = $this->input->post('SalaryExpected');
@@ -235,34 +236,37 @@ class Update_Controller extends CI_Controller {
 		}
 		else
 		{
-				// $config['upload_path']          = './uploads/'.$ApplicantID;
-				// $config['allowed_types']        = 'gif|jpg|png';
-				// $config['max_size']             = 2000;
-				// $config['max_width']            = 2000;
-				// $config['max_height']           = 2000;
+				$config['upload_path']          = './uploads/'.$ApplicantID;
+				$config['allowed_types']        = 'gif|jpg|png';
+				$config['max_size']             = 2000;
+				$config['max_width']            = 2000;
+				$config['max_height']           = 2000;
 
-				// $this->load->library('upload', $config);
-				// if (!is_dir('uploads'))
-				// {
-				// 	mkdir('./uploads', 0777, true);
-				// }
-				// if (!is_dir('uploads/' . $ApplicantID))
-				// {
-				// 	mkdir('./uploads/' . $ApplicantID, 0777, true);
-				// 	$dir_exist = false;
-				// }
-				
-				// if (! $this->upload->do_upload('pImage'))
-				// {
-				// 	$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
-				// 	redirect($_SERVER['HTTP_REFERER']);
-				// }
-				// else
-				// {
-					// $pImage = base_url().'uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
-					// INSERT EMPLOYEE
+				$this->load->library('upload', $config);
+				if (!is_dir('uploads'))
+				{
+					mkdir('./uploads', 0777, true);
+				}
+				if (!is_dir('uploads/' . $ApplicantID))
+				{
+					mkdir('./uploads/' . $ApplicantID, 0777, true);
+					$dir_exist = false;
+				}
+
+				if (!$_FILES['pImage']['name'] == '') {
+					if (! $this->upload->do_upload('pImage'))
+					{
+						$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
+						redirect($_SERVER['HTTP_REFERER']);
+					}
+					else
+					{
+						$pImage = base_url().'uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
+					}
+				}
+				// INSERT EMPLOYEE
 				$data = array(
-					// 'ApplicantImage' => $pImage,
+					'ApplicantImage' => $pImage,
 					'ApplicantID' => $ApplicantID,
 					'PositionDesired' => $PositionDesired,
 					'SalaryExpected' => $SalaryExpected,
@@ -382,5 +386,4 @@ class Update_Controller extends CI_Controller {
 				}
 			}
 		}
-	
 }

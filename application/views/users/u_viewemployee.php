@@ -863,6 +863,9 @@
 		});
 		$("#EmpContractButton").click(function(){
 			var rPercentage = '<?php echo $rPercentage;?>';
+			if (rPercentage > 100) {
+				rPercentage = 100;
+			}
 			$('.progressRemaining').animate({width:rPercentage + "%"},1500);
 			$('.progress_value').text(rPercentage + "%");
 		});
