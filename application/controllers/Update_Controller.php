@@ -310,6 +310,19 @@ class Update_Controller extends CI_Controller {
 				);
 				$addedEmployee = $this->Model_Updates->UpdateEmployee($ApplicantID, $data);
 				if ($addedEmployee == TRUE) {
+
+					$AcadHCheckbox = $this->input->post('AcadHCheckbox');
+					$listCheck = "'" . implode("','", $AcadHCheckbox) . "'";
+					$this->Model_Deletes->RemoveAcadHistory($listCheck);
+
+					$EmpRecordCheckbox = $this->input->post('EmpRecordCheckbox');
+					$listCheck = "'" . implode("','", $EmpRecordCheckbox) . "'";
+					$this->Model_Deletes->RemoveEmpRecord($listCheck);
+
+					$MachOpCheckbox = $this->input->post('MachOpCheckbox');
+					$listCheck = "'" . implode("','", $MachOpCheckbox) . "'";
+					$this->Model_Deletes->RemoveMachineOperated($listCheck);
+
 					if (isset($_SESSION["acadcart"])) {
 						foreach ($_SESSION["acadcart"] as $s_da) {
 							$data = array(

@@ -284,7 +284,7 @@
 													<th>From Year</th>
 													<th>To Year</th>
 													<th>Highest Degree / Certificate Attained</th>
-													<th>Action</th>
+													<th class="text-center">Remove</th>
 												</thead>
 												<tbody>
 													<?php if ($GetAcadHistory->num_rows() > 0) { ?>
@@ -297,6 +297,7 @@
 																	<td><?php echo $row['DateStarted'];?></td>
 																	<td><?php echo $row['DateEnds'];?></td>
 																	<td><?php echo $row['HighDegree'];?></td>
+																	<td class="text-center"><input type="checkbox" name="AcadHCheckbox[]" value="<?php echo $row['Acad_No']; ?>"></td>
 																</tr>
 															<?php } ?>
 														<?php endforeach ?>
@@ -331,7 +332,7 @@
 													<th>Position</th>
 													<th>Salary</th>
 													<th>Cause of Separation</th>
-													<th>Action</th>
+													<th class="text-center">Remove</th>
 												</thead>
 												<tbody>
 													<?php if ($employment_record->num_rows() > 0) { ?>
@@ -344,6 +345,7 @@
 																	<td><?php echo $row['Position'];?></td>
 																	<td><?php echo $row['Salary'];?></td>
 																	<td><?php echo $row['CauseOfSeparation'];?></td>
+																	<td class="text-center"><input type="checkbox" name="EmpRecordCheckbox[]" value="<?php echo $row['No']; ?>"></td>
 																</tr>
 															<?php } ?>
 														<?php endforeach ?>
@@ -373,6 +375,7 @@
 											<table class="table table-condensed">
 												<thead>
 													<th>Machine Name</th>
+													<th class="text-center">Remove</th>
 													
 												</thead>
 												<tbody>
@@ -381,12 +384,13 @@
 															<?php if ($ApplicantID == $row['ApplicantID']) { ?>
 																<tr>
 																	<td><?php echo $row['MachineName'];?></td>
+																	<td class="text-center"><input type="checkbox" name="MachOpCheckbox[]" value="<?php echo $row['No']; ?>"></td>
 																</tr>
 															<?php } ?>
 														<?php endforeach ?>
 													<?php } else { ?>
 														<tr class="w-100 text-center">
-															<td>
+															<td colspan="2">
 																<h5>
 																	No Data
 																</h5>
