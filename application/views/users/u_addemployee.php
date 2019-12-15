@@ -30,7 +30,11 @@
 								<div class="form-row mb-2">
 									<div class="form-group col-sm-12">
 										<input type='file' id="imgInp" name="pImage" style="display: none;">
-										<img class="image-hover" id="blah" src="https://avatarsed1.serversdev.getgo.com/2205256774854474505_medium.jpg" width="120" height="120">
+										<?php if(!$this->agent->is_mobile()): ?>
+											<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/wercher_default_photo.png" width="120" height="120">
+										<?php else: ?>
+											<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/wercher_default_photo_mobile.png" width="120" height="120">
+										<?php endif; ?>
 									</div>
 								</div>
 								<div class="form-row">
@@ -355,7 +359,7 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button id="add_sssscc" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Add changes</button>
+					<button id="add_sssscc" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close"><i class="fas fa-plus"></i> Add</button>
 				</div>
 			</div>
 		</div>
@@ -406,7 +410,7 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button id="add_empdet" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Add changes</button>
+					<button id="add_empdet" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close"><i class="fas fa-plus"></i> Add</button>
 				</div>
 			</div>
 		</div>
@@ -431,7 +435,7 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button id="add_machop" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Add changes</button>
+					<button id="add_machop" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close"><i class="fas fa-plus"></i> Add</button>
 				</div>
 			</div>
 		</div>

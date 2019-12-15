@@ -164,7 +164,7 @@
 					</div>
 
 					<!-- LOGBOOK -->
-					<div class="col-sm-12 col-lg-12 mt-5">
+					<div id="Logbook" class="col-sm-12 col-lg-12 mt-5">
 						<div class="chart-title text-center">
 							<h5>
 								<i class="fas fa-list"></i> Logbook
@@ -178,7 +178,7 @@
 					</div>
 					<div class="col-sm-12">
 						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
-							<table id="Logbook" class="table table-condensed PrintOut" style="width: 100%;">
+							<table id="ListLogbook" class="table table-condensed PrintOut" style="width: 100%;">
 								<thead>
 									<tr class="text-center align-middle">
 										<th> Time </th>
@@ -334,6 +334,9 @@
 				}
 			}
 		});
+		$('#ListLogbook').DataTable( {
+        	"order": [[ 0, "desc" ]]
+    	});
 	});
 </script>
 </html>

@@ -482,7 +482,7 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button id="add_sssscc" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Add changes</button>
+					<button id="add_sssscc" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close"><i class="fas fa-plus"></i> Add</button>
 				</div>
 			</div>
 		</div>
@@ -533,7 +533,7 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button id="add_empdet" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Add changes</button>
+					<button id="add_empdet" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close"><i class="fas fa-plus"></i> Add</button>
 				</div>
 			</div>
 		</div>
@@ -558,7 +558,7 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button id="add_machop" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Add changes</button>
+					<button id="add_machop" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close"><i class="fas fa-plus"></i> Add</button>
 				</div>
 			</div>
 		</div>

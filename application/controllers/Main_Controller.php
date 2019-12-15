@@ -12,11 +12,11 @@ class Main_Controller extends CI_Controller {
 		// echo $_SERVER['HTTP_USER_AGENT'];
 		$GetEmployee = $this->Model_Selects->GetEmployee();
 		$GetClient = $this->Model_Selects->getClientOption();
-		$currTime = time();
+		date_default_timezone_set('Asia/Manila');
+		$currTime = date('Y-m-d h:i:s A');
 		// TODO: Don't call this here. Need a real time checker. Find a better solution than this.
 		foreach ($GetEmployee->result_array() as $row) {
-
-			if (strtotime($row['DateEnds']) < $currTime) {
+			if (strtotime($row['DateEnds']) < strtotime($currTime)) {
 				$ApplicantNo = $row['ApplicantID'];
 				foreach ($GetEmployee->result_array() as $row) {
 					foreach ($GetClient->result_array() as $nrow) {

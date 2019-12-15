@@ -603,7 +603,7 @@
 						</div>
 						<div class="col-sm-2 col-md-2">
 							<h6>
-								Applied On
+								Violations
 							</h6>
 						</div>
 						<div class="col-sm-4 col-md-4">
@@ -696,7 +696,7 @@
 						</div>
 						<div class="col-sm-12 col-md-12 PrintExclude">
 							<div class="progressBar">
-								<div class="progressBarTitle progressRemainingColor">Percentage</div>
+								<div class="progressBarTitle progressRemainingColor">Days Left</div>
 								<div class="progress progressRemaining"></div>
 								<div class="progress_value">45%</div>
 							</div>

@@ -71,7 +71,32 @@ class Update_Controller extends CI_Controller {
 						date_default_timezone_set('Asia/Manila');
 						$LogbookCurrentTime = date('Y-m-d h:i:s A');
 						$LogbookType = 'New';
-						$LogbookEvent = 'Applicant ID ' . $ApplicantNo .' has been employed to Client ID ' . $ClientID . ' for ' . $H_Years . ' years, ' . $H_Months . ' months, and ' . $H_Days . ' days!';
+						$LogbookEvent = 'Applicant ID ' . $ApplicantNo .' has been employed to Client ID ' . $ClientID . ' for ';
+						if($H_Years != 0) {
+							$LogbookEvent = $LogbookEvent . $H_Years;
+							if($H_Years == 1) {
+								$LogbookEvent = $LogbookEvent . ' year, ';
+							} else {
+								$LogbookEvent = $LogbookEvent . ' years, ';
+							}
+						}
+						if($H_Months != 0) {
+							$LogbookEvent = $LogbookEvent . $H_Months;
+							if($H_Months == 1) {
+								$LogbookEvent = $LogbookEvent . ' month, ';
+							} else {
+								$LogbookEvent = $LogbookEvent . ' months, ';
+							}
+						}
+						if($H_Days != 0) {
+							$LogbookEvent = $LogbookEvent . $H_Days;
+							if($H_Days == 1) {
+								$LogbookEvent = $LogbookEvent . ' day, ';
+							} else {
+								$LogbookEvent = $LogbookEvent . ' days, ';
+							}
+						}
+						$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
 						$data = array(
 							'Time' => $LogbookCurrentTime,
 							'Type' => $LogbookType,
@@ -145,7 +170,32 @@ class Update_Controller extends CI_Controller {
 						date_default_timezone_set('Asia/Manila');
 						$LogbookCurrentTime = date('Y-m-d h:i:s A');
 						$LogbookType = 'Update';
-						$LogbookEvent = 'Applicant ID ' . $ApplicantNo .' has their contract extended by ' . $E_Years . ' years, ' . $E_Months . ' months, and ' . $E_Days . ' days.';
+						$LogbookEvent = 'Applicant ID ' . $ApplicantNo .' has their contract extended by ';
+						if($E_Years != 0) {
+							$LogbookEvent = $LogbookEvent . $E_Years;
+							if($H_Years == 1) {
+								$LogbookEvent = $LogbookEvent . ' year, ';
+							} else {
+								$LogbookEvent = $LogbookEvent . ' years, ';
+							}
+						}
+						if($E_Months != 0) {
+							$LogbookEvent = $LogbookEvent . $E_Months;
+							if($E_Months == 1) {
+								$LogbookEvent = $LogbookEvent . ' month, ';
+							} else {
+								$LogbookEvent = $LogbookEvent . ' months, ';
+							}
+						}
+						if($E_Days != 0) {
+							$LogbookEvent = $LogbookEvent . $E_Days;
+							if($E_Days == 1) {
+								$LogbookEvent = $LogbookEvent . ' day, ';
+							} else {
+								$LogbookEvent = $LogbookEvent . ' days, ';
+							}
+						}
+						$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
 						$data = array(
 							'Time' => $LogbookCurrentTime,
 							'Type' => $LogbookType,
@@ -455,7 +505,7 @@ class Update_Controller extends CI_Controller {
 				'Event' => $Note,
 			);
 			$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-			redirect($_SERVER['HTTP_REFERER']);
+			redirect(base_url() . 'Dashboard#Logbook');
 
 		}
 	}

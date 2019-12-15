@@ -34,11 +34,11 @@
 				<div class="form-row mx-1">
 					<div class="form-group col-4">
 						<label>Days</label>
-						<input class="form-control" type="number" name="H_Days">
+						<input class="form-control" type="number" name="H_Days" value="0">
 					</div>
 					<div class="form-group col-4">
 						<label>Months</label>
-						<input class="form-control" type="number" name="H_Months">
+						<input class="form-control" type="number" name="H_Months" value="0">
 					</div>
 					<div class="form-group col-4">
 						<label>Years</label>
@@ -47,7 +47,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="submit" class="btn btn-primary">Save changes</button>
+				<button type="submit" class="btn btn-primary"><i class="fas fa-user-edit"></i> Hire</button>
 			</div>
 			<?php echo form_close();?>
 		</div>
