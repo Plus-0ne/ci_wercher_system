@@ -19,7 +19,7 @@
 					<?php echo $this->session->flashdata('prompts'); ?>
 					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 						<h4>
-							<i class="fas fa-user-tag fa-fw"></i>Clients (<?php echo $ShowClients->num_rows() ?>)
+							<i class="fas fa-user-tag fa-fw"></i> Clients (<?php echo $ShowClients->num_rows() ?>)
 						</h4>
 					</div>
 					<div class="col-8 col-sm-8 col-md-8 text-right PrintExclude">
@@ -33,7 +33,7 @@
 										<th> Name </th>
 										<th> Address </th>
 										<th> Contact # </th>
-										<th class="PrintExclude"> Action </th>
+										<th class="text-center PrintExclude"> Action </th>
 									</tr>
 								</thead>
 								<tbody>
@@ -49,7 +49,7 @@
 												<?php echo $row['ContactNumber']; ?>
 											</td>
 											<td class="text-center align-middle PrintExclude">
-												<a href="<?=base_url()?>RemoveClient?id=<?=$row['ClientID']?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Client?')"><i class="fas fa-trash"></i> Delete</a>
+												<a href="<?=base_url()?>RemoveClient?id=<?=$row['ClientID']?>" class="btn btn-danger btn-sm mb-1" onclick="return confirm('Remove Client?')"><i class="fas fa-trash"></i> Delete</a>
 											</td>
 										</tr>
 									<?php endforeach ?>

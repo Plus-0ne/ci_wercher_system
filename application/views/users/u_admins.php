@@ -19,7 +19,7 @@
 					<?php echo $this->session->flashdata('prompts'); ?>
 					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 						<h4 >
-							<i class="fas fa-user-secret fa-fw"></i>Admins (<?php echo $ShowAdmin->num_rows() ?>)
+							<i class="fas fa-user-secret fa-fw"></i> Admins (<?php echo $ShowAdmin->num_rows() ?>)
 						</h4>
 					</div>
 					<div class="col-8 col-sm-8 col-md-8 text-right PrintExclude">

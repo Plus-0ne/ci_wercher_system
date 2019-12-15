@@ -27,10 +27,10 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
-	public function GetEmployeeDetails($id)
+	public function GetEmployeeDetails($ApplicantID)
 	{
-		$SQL = "SELECT * FROM applicants WHERE ApplicantNo = ?";
-		$result = $this->db->query($SQL,$id);
+		$SQL = "SELECT * FROM applicants WHERE ApplicantID = '$ApplicantID'"; // TODO: Duplicate
+		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
 	public function GetEmployeeAcadhis($ApplicantID)
@@ -71,13 +71,13 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetApplicantSkills()
 	{
-		$result =  $this->db->query("SELECT PositionDesired, COUNT(*) as count FROM applicants WHERE Status = 'Applicant' GROUP BY PositionDesired");
+		$result =  $this->db->query("SELECT PositionDesired, COUNT(*) as count FROM applicants WHERE Status = 'Applicant' OR Status = 'Expired' GROUP BY PositionDesired");
 		return $result;
 	}
-	public function CheckApplicant($ApplicantNo)
+	public function CheckApplicant($ApplicantID)
 	{
-		$SQL = "SELECT * FROM applicants WHERE ApplicantNo = ?";
-		$result = $this->db->query($SQL,$ApplicantNo);
+		$SQL = "SELECT * FROM applicants WHERE ApplicantID = ?";
+		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
 	public function Machine_Operatessss($ApplicantID)
@@ -131,6 +131,18 @@ class Model_Selects extends CI_Model {
 	public function GetPreviousContractInfo($name)
 	{
 		$SQL = "SELECT * FROM contract_history, clients WHERE contract_history.Client = '$name' AND clients.Name = '$name' ORDER BY ID DESC LIMIT 1";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetClientsEmployed($ClientID)
+	{
+		$SQL = "SELECT * FROM applicants, clients WHERE applicants.ClientEmployed = '$ClientID' AND clients.ClientID = '$ClientID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetMonthlyTotal()
+	{
+		$SQL = "SELECT DATE_FORMAT(AppliedOn, '%Y') as 'Year', DATE_FORMAT(AppliedOn, '%m') as 'Month', COUNT(ApplicantID) as 'Total' FROM applicants GROUP BY DATE_FORMAT(AppliedOn, '%Y%m')";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

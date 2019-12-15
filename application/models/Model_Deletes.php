@@ -3,10 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_Deletes extends CI_Model {
 
-	public function RemoveEmpl($id)
+	public function RemoveEmpl($ApplicantID)
 	{
-		$SQL = "UPDATE applicants SET Status ='Deleted' WHERE ApplicantNo = ?";
-		$result = $this->db->query($SQL,$id);
+		$SQL = "UPDATE applicants SET Status ='Deleted' WHERE ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
 	public function RemoveAdminM($id)

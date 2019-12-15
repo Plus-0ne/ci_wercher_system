@@ -36,7 +36,7 @@
 							<i class="fas fa-cog"></i>
 							</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantNo?>" class="dropdown-item"><i class="fas fa-edit"></i> Edit</a>
+								<a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" class="dropdown-item"><i class="fas fa-edit"></i> Edit</a>
 								<button onClick="printContent('PrintOut')" type="button" class="dropdown-item"><i class="fas fa-print"></i> Print</button>
 								<div class="dropdown-divider"></div>
 								<button type="button" class="dropdown-item"><i class="fas fa-times"></i> Blacklist</button>
@@ -256,10 +256,20 @@
 									No contract history.
 								</p>
 								<p>
-									<button id="<?php echo $ApplicantNo; ?>" data-dismiss="modal" type="button" class="btn btn-info btn-sm mr-auto ModalHire" data-toggle="modal" data-target="#hirthis"><i class="fas fa-user-edit"></i> Hire</button>
+									<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-info btn-sm mr-auto ModalHire" data-toggle="modal" data-target="#hirthis"><i class="fas fa-user-edit"></i> Hire</button>
 								</p>
 							</div>
 						<?php } ?>
+						<div class="col-sm-12 col-md-2 e-title">
+							<h6>
+								Violations
+							</h6>
+						</div>
+						<div class="col-sm-12 col-md-4 e-det">
+							<p>
+								<?php echo $AppliedOn; ?>
+							</p>
+						</div>
 						<div class="col-sm-12 mt-5 mb-3">
 							<h6>
 								<i class="fas fa-stream"></i> Address
@@ -690,7 +700,11 @@
 									$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
 									$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
 									$interval = $datetime1->diff($datetime2);
-									echo $interval->format('%y years, %m months, %d days');
+									if($interval->format('%y years, %m months, %d days') < 86400) {
+										echo $interval->format('%H hours, %I minutes, %S seconds');
+									} else {
+										echo $interval->format('%y years, %m months, %d days');
+									}
 								?>
 							</p>
 						</div>
@@ -706,7 +720,7 @@
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button id="<?php echo $ApplicantNo; ?>" data-dismiss="modal" type="button" class="btn btn-primary mr-auto ExtendButton" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-plus"></i> Extend Contract</button>
+					<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary mr-auto ExtendButton" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-plus"></i> Extend Contract</button>
 					<button type="button" class="btn btn-danger ml-auto" data-dismiss="modal">Close</button>
 				</div>
 
@@ -814,7 +828,7 @@
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-12 mt-5 text-center PrintOutModalExpired">
-							<button id="<?php echo $ApplicantNo; ?>" data-dismiss="modal" type="button" class="btn btn-primary mr-auto ModalHire" data-toggle="modal" data-target="#hirthis"><i class="fas fa-plus"></i> New Contract</button>
+							<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary mr-auto ModalHire" data-toggle="modal" data-target="#hirthis"><i class="fas fa-plus"></i> New Contract</button>
 						</div>
 					</div>
 				</div>

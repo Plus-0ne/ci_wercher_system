@@ -15,14 +15,20 @@
 						</nav>
 					</div>
 				</div>
+				<div class="tabs">
+					<ul>
+						<li><a href="<?php echo base_url() ?>Applicants">Applicants (<?php echo $get_employee->num_rows()?>)</a></li>
+						<li class="tabs-active"><a href="<?php echo base_url() ?>ApplicantsExpired">Expired (<?php echo $get_ApplicantExpired->num_rows()?>)</a></li>
+						<li><a href="<?php echo base_url() ?>Blacklisted">Blacklisted</a></li>
+					</ul>
+				</div>
 				<div class="row rcontent">
 					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 						<h4>
-							<i class="fas fa-user-friends fa-fw"></i>Expired Contracts (<?php echo $get_ApplicantExpired->num_rows() ?>)
+							<i class="fas fa-user-friends fa-fw"></i> Expired Contracts (<?php echo $get_ApplicantExpired->num_rows() ?>)
 						</h4>
 					</div>
 					<div class="col-8 col-sm-8 col-md-8 text-right PrintExclude">
-						<a href="<?=base_url()?>Applicants" class="btn btn-info mr-auto mb-1"><i class="fas fa-user-friends fa-fw"></i> New Applicants (<?php echo $get_employee->num_rows()?>)</a>
 						<button onClick="printContent('PrintOut')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
 					</div>
 					<div class="col-sm-12">
@@ -66,11 +72,10 @@
 												<?php echo $row['DateEnds']; ?>
 											</td>
 											<td class="text-center align-middle PrintExclude" width="100">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantNo']; ?>"><i class="far fa-eye"></i> View</a>
-												<!-- <a class="btn btn-info btn-sm w-100 mb-1" href="<?=base_url()?>EmployApplicant?id=<?php echo $row['ApplicantNo']; ?>"onclick=" return confirm('Hire Employee?')"><i class="fas fa-user-edit"></i> Hire</a> -->
-												<button id="<?php echo $row['ApplicantNo']; ?>" type="button" class="btn btn-info btn-sm w-100 mb-1 ModalHire"  data-toggle="modal" data-target="#hirthis"><i class="fas fa-user-edit"></i> Hire</button>
+												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
+												<button id="<?php echo $row['ApplicantID']; ?>" type="button" class="btn btn-info btn-sm w-100 mb-1 ModalHire"  data-toggle="modal" data-target="#hirthis"><i class="fas fa-user-edit"></i> Hire</button>
 
-												<a href="<?=base_url()?>RemoveEmployee?id=<?php echo $row['ApplicantNo']; ?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Applicant?')"><i class="fas fa-trash"></i> Delete</a>
+												<a href="<?=base_url()?>RemoveEmployee?id=<?php echo $row['ApplicantID']; ?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Applicant?')"><i class="fas fa-trash"></i> Delete</a>
 											</td>
 										</tr>
 									<?php endforeach ?>
@@ -97,7 +102,9 @@
 			$('#sidebar').toggleClass('active');
 			$('.ncontent').toggleClass('shContent');
 		});
-		$('#emp').DataTable();
+		$('#emp').DataTable( {
+        	"order": [[ 5, "desc" ]]
+    	});
 		$('.ModalHire').on('click', function () {
 			$('#idToHire').val($(this).attr('id'));
 		});

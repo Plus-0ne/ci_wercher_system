@@ -18,11 +18,10 @@
 				<div class="row rcontent">
 					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 						<h4>
-							<i class="fas fa-user-tie fa-fw"></i>Employees (<?php echo $get_employee->num_rows() ?>)
+							<i class="fas fa-user-tie fa-fw"></i> Employees (<?php echo $get_employee->num_rows() ?>)
 						</h4>
 					</div>
 					<div class="col-8 col-sm-8 col-md-8 text-right PrintExclude">
-						<a href="<?=base_url()?>ApplicantsExpired" class="btn btn-info mr-auto mb-1"><i class="fas fa-user-friends fa-fw"></i> Expired Contracts (<?php echo $get_ApplicantExpired->num_rows()?>)</a>
 						<button onClick="printContent('PrintOut')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
 					</div>
 					<div class="col-sm-12">
@@ -69,9 +68,9 @@
 												<?php echo $row['DateEnds']; ?>
 											</td>
 											<td class="text-center align-middle PrintExclude" width="100">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantNo']; ?>"><i class="far fa-eye"></i> View</a>
+												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
 												<!-- <a class="btn btn-secondary btn-sm w-100 mb-1" href="#"onclick=" return confirm('Update Employee?')"><i class="fas fa-user-edit"></i> Update</a> -->
-												<a href="<?=base_url()?>RemoveEmployee?id=<?php echo $row['ApplicantNo']; ?>" class="btn btn-danger btn-sm w-100 mb-1" href="#" onclick="return confirm('Remove Employee?')"><i class="fas fa-trash"></i> Delete</a>
+												<a href="<?=base_url()?>RemoveEmployee?id=<?php echo $row['ApplicantID']; ?>" class="btn btn-danger btn-sm w-100 mb-1" href="#" onclick="return confirm('Remove Employee?')"><i class="fas fa-trash"></i> Delete</a>
 											</td>
 										</tr>
 									<?php endforeach ?>
@@ -91,7 +90,9 @@
 			$('#sidebar').toggleClass('active');
 			$('.ncontent').toggleClass('shContent');
 		});
-		var emp_dt = $('#emp').DataTable();
+		var emp_dt = $('#emp').DataTable( {
+        	"order": [[ 5, "desc" ]]
+    	});
 	});
 </script>
 </html>

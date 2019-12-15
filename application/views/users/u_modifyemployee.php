@@ -17,7 +17,7 @@
 										echo '<a href="'. base_url() . 'Applicants">Applicants</a>';
 									} ?>
 								</li>
-								<li class="breadcrumb-item"><a href="<?=base_url()?>ViewEmployee?id=<?=$ApplicantNo?>">Details</a></li>
+								<li class="breadcrumb-item"><a href="<?=base_url()?>ViewEmployee?id=<?=$ApplicantID?>">Details</a></li>
 								<li class="breadcrumb-item active" aria-current="page">Edit</li>
 							</ol>
 						</nav>

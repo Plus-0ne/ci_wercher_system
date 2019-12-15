@@ -18,7 +18,7 @@
 					<div class="form-group col-12">
 						<label>Choose Client</label>
 						<select class="form-control" name="ClientID">
-							<?php foreach ($getClientOption->result_array() as $row): // TODO: Fix so it doesn't show 'Deleted' status clients.?>
+							<?php foreach ($getClientOption->result_array() as $row): ?>
 								<option value="<?=$row['ClientID'];?>">
 									<?=$row['Name'];?>
 								</option>

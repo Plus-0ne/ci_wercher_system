@@ -182,7 +182,6 @@
 								<thead>
 									<tr class="text-center align-middle">
 										<th> Time </th>
-										<th> Type </th>
 										<th> Event </th>
 										<th> Action </th>
 									</tr>
@@ -208,11 +207,9 @@
 													echo 'logbook-warning';
 												}
 											?>">
-											<td class="text-center align-middle">
-												<?php echo $row['Time']; ?>
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['Type']; ?>
+												<?php echo $row['Time']; ?>
 											</td>
 											<td class="text-center align-middle">
 												<?php echo $row['Event']; ?>
@@ -221,7 +218,7 @@
 												<a href="<?php echo $row['Link'] ?>" class="btn btn-primary btn-sm w-100 mb-1" href="#"><i class="fas fa-list"></i> View</a>
 											</td>
 										</tr>
-									<?php endforeach ?>
+									<?php endforeach; ?>
 								</tbody>
 							</table>
 						</div>
@@ -238,6 +235,28 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+<?php
+	// BAR CHART COUNTER
+	$BarClientsLabel = '';
+	$BarClientsData = '';
+	foreach ($result_cclients->result_array() as $row):
+		$BarClientsLabel = $BarClientsLabel . $row['Name'] . '", "';
+		$BarClientsData = $BarClientsData . $this->Model_Selects->GetClientsEmployed($row['ClientID'])->num_rows() . '", "';
+	endforeach;
+	$BarClientsLabel = substr($BarClientsLabel, 0, -4);
+	$BarClientsData = str_replace('"', "", $BarClientsData);
+	// GRAPH CHART COUNTER
+	$GraphMonthData = '';
+	foreach ($result_monthly->result_array() as $row):
+		if ($row['Month'] == NULL) {
+			$GraphMonthData = $GraphMonthData . '0, "';
+		} else {
+			$GraphMonthData = $GraphMonthData . $row['Total'] . '", "';
+		}
+	endforeach;
+	$GraphMonthData = str_replace('"', "", $GraphMonthData);
+	echo $GraphMonthData;
+?>
 <script type="text/javascript">
 	$(document).ready(function () {
 		$('#sidebarCollapse').on('click', function () {
@@ -269,12 +288,12 @@
 		new Chart(document.getElementById("bar-chart-horizontal"), {
 			type: 'horizontalBar',
 			data: {
-				labels: ["Client #", "Client #", "Client #", "Client #", "Client #"],
+				labels: ["<?php echo $BarClientsLabel; ?>"],
 				datasets: [
 				{
 					label : "",
 					backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-					data: [2478,5267,734,784,433]
+					data: [<?php echo $BarClientsData; ?>, 0]
 				}
 				]
 			},
@@ -295,7 +314,7 @@
 				labels: ['January', 'February', 'March', 'April', 'May', 'June' , 'July', 'August', 'September', 'October', 'November', 'December'],
 				datasets: [{
 					label: '# of Applicants',
-					data: [100, 19, 3, 5, 2, 3,21, 19, 3, 5, 2, 3],
+					data: [<?php echo $GraphMonthData; ?>],
 					backgroundColor: [
 					'rgba(255, 99, 132, 0.5)',
 					],

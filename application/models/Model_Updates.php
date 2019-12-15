@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_Updates extends CI_Model {
 
-	public function EmployNewApplicant($ApplicantNo,$data)
+	public function EmployNewApplicant($ApplicantID,$data)
 	{
 		extract($data);
 		$data = array(
@@ -12,27 +12,27 @@ class Model_Updates extends CI_Model {
 			'DateEnds' => $DateEnds,
 			'Status' => 'Employed',
 		);
-		$this->db->where('ApplicantNo', $ApplicantNo);
+		$this->db->where('ApplicantID', $ApplicantID);
 		$result = $this->db->update('applicants', $data);
 		return $result;
 	}
-	public function ApplicantExpired($ApplicantNo)
+	public function ApplicantExpired($ApplicantID)
 	{
 		$data = array(
 			'DateStarted' => '',
 			'Status' => 'Expired',
 		);
-		$this->db->where('ApplicantNo', $ApplicantNo);
+		$this->db->where('ApplicantID', $ApplicantID);
 		$result = $this->db->update('applicants', $data);
 		return $result;
 	}
-	public function ExtendContract($ApplicantNo,$data)
+	public function ExtendContract($ApplicantID,$data)
 	{
 		extract($data);
 		$data = array(
 			'DateEnds' => $DateEnds,
 		);
-		$this->db->where('ApplicantNo', $ApplicantNo);
+		$this->db->where('ApplicantID', $ApplicantID);
 		$result = $this->db->update('applicants', $data);
 		return $result;
 	}

@@ -91,6 +91,8 @@ class Main_Controller extends CI_Controller {
 		$data['result_cemployee'] =  $this->Model_Selects->GetEmployee();
 		// COUNT CLIENT
 		$data['result_cclients'] =  $this->Model_Selects->GetClients();
+		// COUNT MONTHLY TOTAl
+		$data['result_monthly'] =  $this->Model_Selects->GetMonthlyTotal();
 		// LOGBOOK
 		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		$this->load->view('users/u_dashboard',$data);
@@ -225,7 +227,7 @@ class Main_Controller extends CI_Controller {
 			redirect('Employee');
 		}
 	}
-	public function ModifyEmployee() // MODIFY EMPLOYEE
+	public function ModifyEmployee()
 	{
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["emp_cart"]);

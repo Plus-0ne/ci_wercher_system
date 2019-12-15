@@ -12,9 +12,45 @@
 				<a class="btn btn-light ddToggle" data-toggle="dropdown"><i class="fas fa-bell"></i></a>
 				<ul class="dropdown-menu dropdown-menu-right">
 					<?php foreach ($this->Model_Selects->GetLogbookWithLimit(5)->result_array() as $row): ?>
-						<li class="notif-li">
+						<li class="notif-li 
+									<?php 
+										if ($row['Type'] == 'New' || $row['Type'] == 'Employment') 
+										{ 
+											echo 'logbook-success-lite'; 
+										}
+										elseif ($row['Type'] == 'Deletion') 
+										{
+											echo 'logbook-danger-lite';
+										} 
+										elseif ($row['Type'] == 'Update')
+										{
+											echo 'logbook-info-lite';
+										}
+										elseif ($row['Type'] == 'Reminder' || $row['Type'] == 'Note') 
+										{
+											echo 'logbook-warning-lite';
+										}
+									?>">
 							<a class="notif-link" href="<?php echo base_url() . 'Dashboard#Logbook' ?>">
-								<i class="fas fa-edit"></i> <?php echo $row['Event']; ?>
+								<i class="
+								<?php 
+									if ($row['Type'] == 'New' || $row['Type'] == 'Employment') 
+									{ 
+										echo 'fas fa-check-square'; 
+									}
+									elseif ($row['Type'] == 'Deletion') 
+									{
+										echo 'fas fa-calendar-times';
+									} 
+									elseif ($row['Type'] == 'Update')
+									{
+										echo 'fas fa-user-edit';
+									}
+									elseif ($row['Type'] == 'Reminder' || $row['Type'] == 'Note') 
+									{
+										echo 'fas fa-exclamation-triangle';
+									}
+								?>"></i> <?php echo $row['Event']; ?>
 							</a>
 						</li>
 					<?php endforeach ?>
