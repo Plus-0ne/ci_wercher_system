@@ -246,6 +246,7 @@ class Main_Controller extends CI_Controller {
 				$data['ShowClients'] = $this->Model_Selects->GetClients();
 				$data['GetContractHistory'] = $this->Model_Selects->GetContractHistory($ApplicantID);
 				$data['GetPreviousContract'] = $this->Model_Selects->GetPreviousContract($ApplicantID);
+				$data['GetViolations'] = $this->Model_Selects->GetViolations($ApplicantID);
 				$this->load->view('users/u_viewemployee',$data);
 			}
 			else

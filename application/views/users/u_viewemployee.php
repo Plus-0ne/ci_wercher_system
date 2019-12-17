@@ -261,14 +261,18 @@
 								</p>
 							</div>
 						<?php } ?>
-						<div class="col-sm-12 col-md-2 e-title">
+						<div class="col-sm-12 col-md-2 e-title PrintExclude">
 							<h6>
-								Violations
+								Violations (<?php echo $GetViolations->num_rows(); ?>)
 							</h6>
 						</div>
-						<div class="col-sm-12 col-md-4 e-det">
+						<div class="col-sm-12 col-md-4 e-det PrintExclude">
 							<p>
-								<?php echo $AppliedOn; ?>
+								<?php if ($GetViolations->num_rows() == 0): ?>
+									<button id="ViolationsButton" class="btn btn-danger btn-sm w-50 mb-1" data-toggle="modal" data-target="#ViolationsModal"><i class="far fa-eye"></i> View Violations</button>
+								<?php else: ?>
+									No violations on record.
+								<?php endif; ?>
 							</p>
 						</div>
 						<div class="col-sm-12 mt-5 mb-3">
@@ -690,23 +694,25 @@
 						<div class="col-sm-12 col-md-12 text-center">
 							<p>
 								<?php
-									$currTime = time();
-									$strDateEnds = strtotime($DateEnds);
-									$strDateStarted = strtotime($DateStarted);
-									// PERCENTAGE
-									$rPercentage = (($strDateEnds - $currTime) * 100) / ($strDateEnds - $strDateStarted);
-									$rPercentage = round($rPercentage);
-									// DAYS REMAINING
-									$dateTimeZone = new DateTimeZone("Asia/Manila");
-									$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
-									$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
-									$interval = $datetime1->diff($datetime2);
+
+								$currTime = time();
+								$strDateEnds = strtotime($DateEnds);
+								$strDateStarted = strtotime($DateStarted);
+								// PERCENTAGE
+								$rPercentage = (($strDateEnds - $currTime) * 100) / ($strDateEnds - $strDateStarted);
+								$rPercentage = round($rPercentage);
+								// DAYS REMAINING
+								$dateTimeZone = new DateTimeZone("Asia/Manila");
+								$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
+								$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
+								$interval = $datetime1->diff($datetime2);
 									if($interval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
 										echo $interval->format('%H hours, %I minutes, %S seconds');
 									} else {
 										echo $interval->format('%y years, %m months, %d days');
 									}
 								?>
+								<input type="hidden" id="TimeLeft" value="<?php echo $rPercentage;?>">
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-12 PrintExclude">
@@ -851,6 +857,8 @@
 		<?php $this->load->view('_template/modals/m_extendcontract'); ?>
 		<!-- SET A REMINDER MODAL -->
 		<?php $this->load->view('_template/modals/m_setreminder'); ?>
+		<!-- VIOLATIONS MODAL -->
+		<?php $this->load->view('_template/modals/m_violations'); ?>
 	</body>
 	<?php $this->load->view('_template/users/u_scripts');?>
 	<script type="text/javascript">
@@ -872,19 +880,20 @@
 				$('#ReminderID').val($(this).attr('id'));
 				console.log($('#ReminderID').val());
 			});
-		});
-		$("#EmpContractButton").click(function(){
-			var rPercentage = '<?php echo $rPercentage;?>';
-			// if (rPercentage > 100) {
-			// 	rPercentage = 100;
-			// }
-			$('.progressRemaining').animate({width:rPercentage + "%"},1500);
-			$('.progress_value').text(rPercentage + "%");
+			$('#ListContractHistory').DataTable();
+			$('#ListViolations').DataTable();
+			$("#EmpContractButton").click(function(){
+				var rPercentage = $("#TimeLeft").val();
+				// if (rPercentage > 100) {
+				// 	rPercentage = 100;
+				// }
+				$('.progressRemaining').animate({width:rPercentage + "%"},1500);
+				$('.progress_value').text(rPercentage + "%");
+			});
 		});
 		function hideModal() {
 			$("#EmpContractModal").modal('hide');
 		}
-		$('#ListContractHistory').DataTable(); // TODO: DOESN'T WORK FOR EXPIRED CONTRACT HISTORY?????
 	</script>
 	<style>
 		.dropdown-item:hover {

@@ -146,4 +146,10 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetViolations($ApplicantID)
+	{
+		$SQL = "SELECT * FROM violations WHERE ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }
