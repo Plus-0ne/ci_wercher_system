@@ -37,6 +37,7 @@
 							</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 								<a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" class="dropdown-item"><i class="fas fa-edit"></i> Edit</a>
+								<button id="<?php echo $ApplicantID; ?>" class="dropdown-item ReminderButton" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-stopwatch"></i> Set a Reminder</button>
 								<button onClick="printContent('PrintOut')" type="button" class="dropdown-item"><i class="fas fa-print"></i> Print</button>
 								<div class="dropdown-divider"></div>
 								<button type="button" class="dropdown-item"><i class="fas fa-times"></i> Blacklist</button>
@@ -848,6 +849,8 @@
 		<?php $this->load->view('_template/modals/m_contracthistory'); ?>
 		<!-- EXTEND CONTRACT MODAL -->
 		<?php $this->load->view('_template/modals/m_extendcontract'); ?>
+		<!-- SET A REMINDER MODAL -->
+		<?php $this->load->view('_template/modals/m_setreminder'); ?>
 	</body>
 	<?php $this->load->view('_template/users/u_scripts');?>
 	<script type="text/javascript">
@@ -864,6 +867,10 @@
 				$('#ExtendID').val($(this).attr('id'));
 				console.log($('#ExtendID').val());
 				console.log($('#ExtendDate').val());
+			});
+			$('.ReminderButton').on('click', function () {
+				$('#ReminderID').val($(this).attr('id'));
+				console.log($('#ReminderID').val());
 			});
 		});
 		$("#EmpContractButton").click(function(){

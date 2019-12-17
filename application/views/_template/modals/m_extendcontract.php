@@ -10,7 +10,7 @@
 			</div>
 			<div class="modal-body">
 				<?php if (isset($_GET['id'])): ?>
-				<input id="ExtendID" type="hidden" name="ApplicantID" value="<?php echo $ApplicantNo; ?>">
+				<input id="ExtendID" type="hidden" name="ApplicantID" value="<?php echo $ApplicantID; ?>">
 				<?php else: ?>
 				<input id="ExtendID" type="hidden" name="ApplicantID" value="">
 				<?php endif; ?>

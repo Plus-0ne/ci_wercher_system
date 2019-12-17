@@ -16,8 +16,26 @@ class Main_Controller extends CI_Controller {
 		$currTime = date('Y-m-d h:i:s A');
 		// TODO: Don't call this here. Need a real time checker. Find a better solution than this.
 		foreach ($GetEmployee->result_array() as $row) {
+			$ApplicantID = $row['ApplicantID'];
+			if ($row['ReminderLocked'] != 'Yes'){
+				if (strtotime($row['DateEnds']) < (strtotime($currTime) + 2592000) && strtotime($row['DateEnds']) > strtotime($currTime)) {
+					$LogbookInsert = $this->Model_Updates->ReminderLocked($ApplicantID);
+					// LOGBOOK
+					date_default_timezone_set('Asia/Manila');
+					$LogbookCurrentTime = date('Y-m-d h:i:s A');
+					$LogbookType = 'Reminder';
+					$LogbookEvent = 'Employee ' . $ApplicantID . ' is expiring in 1 month!';
+					$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+					$data = array(
+						'Time' => $LogbookCurrentTime,
+						'Type' => $LogbookType,
+						'Event' => $LogbookEvent,
+						'Link' => $LogbookLink,
+					);
+					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+				}
+			}
 			if (strtotime($row['DateEnds']) < strtotime($currTime)) {
-				$ApplicantNo = $row['ApplicantID'];
 				foreach ($GetEmployee->result_array() as $row) {
 					foreach ($GetClient->result_array() as $nrow) {
 						if ($row['ClientEmployed'] == $nrow['ClientID']) {
@@ -26,23 +44,36 @@ class Main_Controller extends CI_Controller {
 					}
 				}
 
-				if ($ApplicantNo == NULL) {
+				if ($ApplicantID == NULL) {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
 				}
 				else
 				{
-					$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantNo);
+					$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
 					if ($CheckEmployee->num_rows() > 0) {
 						$data = array(
-							'ApplicantID' => $ApplicantNo,
+							'ApplicantID' => $ApplicantID,
 							'PreviousDateStarted' => $row['DateStarted'],
 							'PreviousDateEnds' => $row['DateEnds'],
 							'Client' => $ClientName,
 						);
 						$InsertContractHistory = $this->Model_Inserts->InsertContractHistory($data);
-						$ApplicantExpired = $this->Model_Updates->ApplicantExpired($ApplicantNo);
+						$ApplicantExpired = $this->Model_Updates->ApplicantExpired($ApplicantID);
 						if ($ApplicantExpired == TRUE) {
-							$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ' . $ApplicantNo . ' has expired!</h5></div>');
+							$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ' . $ApplicantID . ' has expired!</h5></div>');
+							// LOGBOOK
+							date_default_timezone_set('Asia/Manila');
+							$LogbookCurrentTime = date('Y-m-d h:i:s A');
+							$LogbookType = 'Update';
+							$LogbookEvent = 'Employee ' . $ApplicantID . ' has expired!';
+							$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+							$data = array(
+								'Time' => $LogbookCurrentTime,
+								'Type' => $LogbookType,
+								'Event' => $LogbookEvent,
+								'Link' => $LogbookLink,
+							);
+							$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 						}
 						else
 						{

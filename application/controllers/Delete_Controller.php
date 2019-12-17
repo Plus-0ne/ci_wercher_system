@@ -25,12 +25,14 @@ class Delete_Controller extends CI_Controller {
 				// LOGBOOK
 				date_default_timezone_set('Asia/Manila');
 				$LogbookCurrentTime = date('Y-m-d h:i:s A');
-				$LogbookType = 'Deletion';
-				$LogbookEvent = 'Employee ID ' . $id .' has been removed.';
+				$LogbookType = 'Archival';
+				$LogbookEvent = 'Employee ID ' . $id .' has been archived.';
+				$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
 				$data = array(
 					'Time' => $LogbookCurrentTime,
 					'Type' => $LogbookType,
 					'Event' => $LogbookEvent,
+					'Link' => $LogbookLink,
 				);
 				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 				if (isset($_SERVER['HTTP_REFERER'])) {
@@ -63,10 +65,12 @@ class Delete_Controller extends CI_Controller {
 				$LogbookCurrentTime = date('Y-m-d h:i:s A');
 				$LogbookType = 'Deletion';
 				$LogbookEvent = 'Admin ID ' . $id .' has been removed.';
+				$LogbookLink = base_url() . 'Admin_List';
 				$data = array(
 					'Time' => $LogbookCurrentTime,
 					'Type' => $LogbookType,
 					'Event' => $LogbookEvent,
+					'Link' => $LogbookLink,
 				);
 				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 				if (isset($_SERVER['HTTP_REFERER'])) {
@@ -99,10 +103,12 @@ class Delete_Controller extends CI_Controller {
 				$LogbookCurrentTime = date('Y-m-d h:i:s A');
 				$LogbookType = 'Deletion';
 				$LogbookEvent = 'Client ID ' . $id .' has been removed.';
+				$LogbookLink = base_url() . 'Clients';
 				$data = array(
 					'Time' => $LogbookCurrentTime,
 					'Type' => $LogbookType,
 					'Event' => $LogbookEvent,
+					'Link' => $LogbookLink,
 				);
 				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 				if (isset($_SERVER['HTTP_REFERER'])) {

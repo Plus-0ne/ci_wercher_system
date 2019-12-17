@@ -10,7 +10,7 @@
 			</div>
 			<div class="modal-body">
 				<?php if (isset($_GET['id'])): ?>
-				<input id="idToHire" type="hidden" name="ApplicantID" value="<?php echo $ApplicantNo; ?>">
+				<input id="idToHire" type="hidden" name="ApplicantID" value="<?php echo $ApplicantID; ?>">
 				<?php else: ?>
 				<input id="idToHire" type="hidden" name="ApplicantID" value="">
 				<?php endif; ?>
@@ -33,16 +33,16 @@
 				</div>
 				<div class="form-row mx-1">
 					<div class="form-group col-4">
-						<label>Days</label>
-						<input class="form-control" type="number" name="H_Days" value="0">
+						<label>Years</label>
+						<input class="form-control" type="number" name="H_Years" value="1">
 					</div>
 					<div class="form-group col-4">
 						<label>Months</label>
 						<input class="form-control" type="number" name="H_Months" value="0">
 					</div>
 					<div class="form-group col-4">
-						<label>Years</label>
-						<input class="form-control" type="number" name="H_Years" value="1">
+						<label>Days</label>
+						<input class="form-control" type="number" name="H_Days" value="0">
 					</div>
 				</div>
 			</div>

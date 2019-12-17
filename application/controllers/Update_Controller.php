@@ -97,10 +97,12 @@ class Update_Controller extends CI_Controller {
 							}
 						}
 						$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
+						$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantNo;
 						$data = array(
 							'Time' => $LogbookCurrentTime,
 							'Type' => $LogbookType,
 							'Event' => $LogbookEvent,
+							'Link' => $LogbookLink,
 						);
 						$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 						redirect($_SERVER['HTTP_REFERER']);
@@ -196,10 +198,12 @@ class Update_Controller extends CI_Controller {
 							}
 						}
 						$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
+						$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantNo;
 						$data = array(
 							'Time' => $LogbookCurrentTime,
 							'Type' => $LogbookType,
 							'Event' => $LogbookEvent,
+							'Link' => $LogbookLink,
 						);
 						$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 						redirect($_SERVER['HTTP_REFERER']);
@@ -475,11 +479,13 @@ class Update_Controller extends CI_Controller {
 					date_default_timezone_set('Asia/Manila');
 					$LogbookCurrentTime = date('Y-m-d h:i:s A');
 					$LogbookType = 'Update';
-					$LogbookEvent = 'Updated details on Applicant/Employee ID ' . $ApplicantID . '.';
+					$LogbookEvent = 'Updated details on Person ID ' . $ApplicantID . '.';
+					$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
 					$data = array(
 						'Time' => $LogbookCurrentTime,
 						'Type' => $LogbookType,
 						'Event' => $LogbookEvent,
+						'Link' => $LogbookLink,
 					);
 					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 					redirect($_SERVER['HTTP_REFERER']);
@@ -508,5 +514,107 @@ class Update_Controller extends CI_Controller {
 			redirect(base_url() . 'Dashboard#Logbook');
 
 		}
+	}
+	public function SetReminder()
+	{
+		// TODO: Add functionality.
+	// 	if (isset($_POST['ApplicantID'])) {
+	// 		$ApplicantID = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
+	// 		$R_Days = $this->input->post('R_Days',TRUE);
+	// 		$R_Months = $this->input->post('R_Months',TRUE);
+	// 		$R_Years = $this->input->post('R_Years',TRUE);
+	// 		$ReminderDate = 0;
+
+	// 		if ($ApplicantNo == NULL) {
+	// 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Extend Contract) A:' . $ApplicantNo . ' D:' . $E_Days . ' H:' . $E_Months . ' Y:' . $E_Years . ' </h5></div>');
+	// 			redirect($_SERVER['HTTP_REFERER']);
+	// 		}
+	// 		else
+	// 		{
+	// 			$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantNo);
+	// 			if ($CheckApplicant->num_rows() > 0) {
+
+	// 				date_default_timezone_set('Asia/Manila');
+
+	// 				if ($R_Months == NULL) {
+	// 					$ReminderDate = $ReminderDate + 0;
+	// 				} else {
+	// 					$ReminderDate = $ReminderDate + ($R_Months * );
+	// 				}
+	// 				if ($E_Days == NULL) {
+	// 					$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 days', strtotime($DateEnds)));
+	// 				} else {
+	// 					$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$E_Days.' days', strtotime($DateEnds)));
+	// 				}
+	// 				if ($E_Years == NULL) {
+	// 					$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 days', strtotime($DateEnds)));
+	// 				} else {
+	// 					$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$E_Years.' years', strtotime($DateEnds)));
+	// 				}
+
+	// 				$data = array(
+	// 					'DateEnds' => $DateEnds,
+	// 				);
+	// 				$EmployNewApplicant = $this->Model_Updates->ExtendContract($ApplicantNo,$data);
+	// 				if ($EmployNewApplicant == TRUE) {
+	// 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Contract Extended to ' . $DateEnds . '!</h5></div>');
+	// 					// LOGBOOK
+	// 					date_default_timezone_set('Asia/Manila');
+	// 					$LogbookCurrentTime = date('Y-m-d h:i:s A');
+	// 					$LogbookType = 'Update';
+	// 					$LogbookEvent = 'Applicant ID ' . $ApplicantNo .' has their contract extended by ';
+	// 					if($E_Years != 0) {
+	// 						$LogbookEvent = $LogbookEvent . $E_Years;
+	// 						if($H_Years == 1) {
+	// 							$LogbookEvent = $LogbookEvent . ' year, ';
+	// 						} else {
+	// 							$LogbookEvent = $LogbookEvent . ' years, ';
+	// 						}
+	// 					}
+	// 					if($E_Months != 0) {
+	// 						$LogbookEvent = $LogbookEvent . $E_Months;
+	// 						if($E_Months == 1) {
+	// 							$LogbookEvent = $LogbookEvent . ' month, ';
+	// 						} else {
+	// 							$LogbookEvent = $LogbookEvent . ' months, ';
+	// 						}
+	// 					}
+	// 					if($E_Days != 0) {
+	// 						$LogbookEvent = $LogbookEvent . $E_Days;
+	// 						if($E_Days == 1) {
+	// 							$LogbookEvent = $LogbookEvent . ' day, ';
+	// 						} else {
+	// 							$LogbookEvent = $LogbookEvent . ' days, ';
+	// 						}
+	// 					}
+	// 					$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
+	// 					$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantNo;
+	// 					$data = array(
+	// 						'Time' => $LogbookCurrentTime,
+	// 						'Type' => $LogbookType,
+	// 						'Event' => $LogbookEvent,
+	// 						'Link' => $LogbookLink,
+	// 					);
+	// 					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+	// 					redirect($_SERVER['HTTP_REFERER']);
+	// 				}
+	// 				else
+	// 				{
+	// 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+	// 					redirect($_SERVER['HTTP_REFERER']);
+	// 				}
+	// 			}
+	// 			else
+	// 			{
+	// 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
+	// 				redirect($_SERVER['HTTP_REFERER']);
+	// 			}
+	// 		}
+	// 	}
+	// 	else
+	// 	{
+	// 		$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
+	// 		redirect($_SERVER['HTTP_REFERER']);
+	// 	}
 	}
 }

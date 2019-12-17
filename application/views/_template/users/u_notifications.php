@@ -18,7 +18,7 @@
 										{ 
 											echo 'logbook-success-lite'; 
 										}
-										elseif ($row['Type'] == 'Deletion') 
+										elseif ($row['Type'] == 'Archival') 
 										{
 											echo 'logbook-danger-lite';
 										} 
@@ -38,7 +38,7 @@
 									{ 
 										echo 'fas fa-check-square'; 
 									}
-									elseif ($row['Type'] == 'Deletion') 
+									elseif ($row['Type'] == 'Archival') 
 									{
 										echo 'fas fa-calendar-times';
 									} 

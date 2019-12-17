@@ -266,10 +266,12 @@ class Add_Controller extends CI_Controller {
 						$LogbookCurrentTime = date('Y-m-d h:i:s A');
 						$LogbookType = 'New';
 						$LogbookEvent = 'New Applicant added! (Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) .  '. | ID: ' . $ApplicantID . ')';
+						$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
 						$data = array(
 							'Time' => $LogbookCurrentTime,
 							'Type' => $LogbookType,
 							'Event' => $LogbookEvent,
+							'Link' => $LogbookLink,
 						);
 						$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 						redirect('Applicant');
@@ -333,10 +335,12 @@ class Add_Controller extends CI_Controller {
 					$LogbookCurrentTime = date('Y-m-d h:i:s A');
 					$LogbookType = 'New';
 					$LogbookEvent = 'New Admin added! (Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleIN) .  '. | Position: ' . $Position . ')';
+					$LogbookLink = base_url() . 'Admin_List';
 					$data = array(
 						'Time' => $LogbookCurrentTime,
 						'Type' => $LogbookType,
 						'Event' => $LogbookEvent,
+						'Link' => $LogbookLink,
 					);
 					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 					redirect('Admin_List');
@@ -383,10 +387,12 @@ class Add_Controller extends CI_Controller {
 					$LogbookCurrentTime = date('Y-m-d h:i:s A');
 					$LogbookType = 'New';
 					$LogbookEvent = 'New Client added! (Name: ' . $ClientName . ' | Contact: ' . $ClientContact . ')';
+					$LogbookLink = base_url() . 'Clients';
 					$data = array(
 						'Time' => $LogbookCurrentTime,
 						'Type' => $LogbookType,
 						'Event' => $LogbookEvent,
+						'Link' => $LogbookLink,
 					);
 					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 					redirect('Clients');

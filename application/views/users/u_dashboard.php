@@ -194,7 +194,7 @@
 												{ 
 													echo 'logbook-success'; 
 												}
-												elseif ($row['Type'] == 'Deletion') 
+												elseif ($row['Type'] == 'Archival') 
 												{
 													echo 'logbook-danger';
 												} 
@@ -215,7 +215,7 @@
 												<?php echo $row['Event']; ?>
 											</td>
 											<td class="text-center align-middle PrintExclude" width="100">
-												<a href="<?php echo $row['Link'] ?>" class="btn btn-primary btn-sm w-100 mb-1" href="#"><i class="fas fa-list"></i> View</a>
+												<a href="<?php echo $row['Link'] ?>" class="btn btn-primary btn-sm w-100 mb-1" href="#" target="_blank"><i class="fas fa-external-link-alt"></i> View</a>
 											</td>
 										</tr>
 									<?php endforeach; ?>

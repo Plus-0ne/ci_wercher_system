@@ -43,4 +43,13 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->update('applicants', $data);
 		return $result;
 	}
+	public function ReminderLocked($ApplicantID)
+	{
+		$data = array(
+			'ReminderLocked' => 'Yes',
+		);
+		$this->db->where('ApplicantID', $ApplicantID);
+		$result = $this->db->update('applicants', $data);
+		return $result;
+	}
 }
