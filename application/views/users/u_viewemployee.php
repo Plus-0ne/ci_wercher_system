@@ -700,7 +700,7 @@
 									$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
 									$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
 									$interval = $datetime1->diff($datetime2);
-									if($interval->format('%y years, %m months, %d days') < 86400) {
+									if($interval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
 										echo $interval->format('%H hours, %I minutes, %S seconds');
 									} else {
 										echo $interval->format('%y years, %m months, %d days');
@@ -710,7 +710,7 @@
 						</div>
 						<div class="col-sm-12 col-md-12 PrintExclude">
 							<div class="progressBar">
-								<div class="progressBarTitle progressRemainingColor">Days Left</div>
+								<div class="progressBarTitle progressRemainingColor">Time Left</div>
 								<div class="progress progressRemaining"></div>
 								<div class="progress_value">45%</div>
 							</div>
@@ -868,9 +868,9 @@
 		});
 		$("#EmpContractButton").click(function(){
 			var rPercentage = '<?php echo $rPercentage;?>';
-			if (rPercentage > 100) {
-				rPercentage = 100;
-			}
+			// if (rPercentage > 100) {
+			// 	rPercentage = 100;
+			// }
 			$('.progressRemaining').animate({width:rPercentage + "%"},1500);
 			$('.progress_value').text(rPercentage + "%");
 		});

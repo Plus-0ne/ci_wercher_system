@@ -22,7 +22,7 @@
 						</h4>
 					</div>
 					<div class="col-8 col-sm-8 col-md-8 text-right PrintExclude">
-						<button onClick="printContent('PrintOut')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
+						<div id="datatables-export"></div>
 					</div>
 					<div class="col-sm-12">
 						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
@@ -93,6 +93,58 @@
 		var emp_dt = $('#emp').DataTable( {
         	"order": [[ 5, "desc" ]]
     	});
+    	var dd_buttons = new $.fn.dataTable.Buttons(emp_dt, {
+	        buttons: [
+	            {
+	                extend: 'collection',
+	                text: '<i class="fas fa-download"></i> Export',
+	                className: 'btn btn-primary',
+
+	                buttons: [
+			            {
+			                extend: 'copy',
+			                text: '<div class="btn btn-sm btn-info w-100">Copy</div>',
+			                className: 'dropdown-item w-25 ml-auto',
+			                exportOptions: {
+			                    columns: [ 1, 2, 3, 4, 5 ]
+			                }
+			            },
+			            {
+			                extend: 'csv',
+			                text: '<div class="btn btn-sm btn-info w-100">CSV</div>',
+			                className: 'dropdown-item w-25 ml-auto',
+			                exportOptions: {
+			                    columns: [ 1, 2, 3, 4, 5 ]
+			                }
+			            },
+			            {
+			                extend: 'excel',
+			                text: '<div class="btn btn-sm btn-info w-100">Excel</div>',
+			                className: 'dropdown-item w-25 ml-auto',
+			                exportOptions: {
+			                    columns: [ 1, 2, 3, 4, 5 ]
+			                }
+			            },
+			            {
+			                extend: 'pdf',
+			                text: '<div class="btn btn-sm btn-info w-100">PDF</div>',
+			                className: 'dropdown-item w-25 ml-auto',
+			                exportOptions: {
+			                    columns: [ 1, 2, 3, 4, 5 ]
+			                }
+			            },
+			            {
+			                extend: 'print',
+			                text: '<div class="btn btn-sm btn-info w-100">Print</div>',
+			                className: 'dropdown-item w-25 ml-auto',
+			                exportOptions: {
+			                    columns: [ 1, 2, 3, 4, 5 ]
+			                }
+			            },
+			        ]
+	            }
+	        ]
+		}).container().appendTo($('#datatables-export'));
 	});
 </script>
 </html>

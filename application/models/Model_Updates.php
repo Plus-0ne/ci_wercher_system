@@ -19,6 +19,7 @@ class Model_Updates extends CI_Model {
 	public function ApplicantExpired($ApplicantID)
 	{
 		$data = array(
+			'Client' => '',
 			'DateStarted' => '',
 			'Status' => 'Expired',
 		);
