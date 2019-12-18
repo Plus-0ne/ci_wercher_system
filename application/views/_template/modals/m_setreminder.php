@@ -16,8 +16,8 @@
 				<?php endif; ?>
 				<div class="form-row">
 					<div class="form-group col-12">
-						<select class="form-control" name="Reminder_Action">
-							<option value="Reminder_ContractDuration">
+						<select class="form-control" name="R_Type">
+							<option value="R_ContractDuration">
 								Contract Duration
 							</option>
 						</select>

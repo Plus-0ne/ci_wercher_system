@@ -40,7 +40,7 @@
 								<button id="<?php echo $ApplicantID; ?>" class="dropdown-item ReminderButton" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-stopwatch"></i> Set a Reminder</button>
 								<button onClick="printContent('PrintOut')" type="button" class="dropdown-item"><i class="fas fa-print"></i> Print</button>
 								<div class="dropdown-divider"></div>
-								<button type="button" class="dropdown-item"><i class="fas fa-times"></i> Blacklist</button>
+								<a href="<?=base_url()?>BlacklistEmployee?id=<?=$ApplicantID?>" class="dropdown-item"><i class="fas fa-times"></i> Blacklist</a>
 							</div>
 						</div>
 						<div class="col-sm-12 mb-5">
@@ -695,17 +695,17 @@
 							<p>
 								<?php
 
-								$currTime = time();
-								$strDateEnds = strtotime($DateEnds);
-								$strDateStarted = strtotime($DateStarted);
-								// PERCENTAGE
-								$rPercentage = (($strDateEnds - $currTime) * 100) / ($strDateEnds - $strDateStarted);
-								$rPercentage = round($rPercentage);
-								// DAYS REMAINING
-								$dateTimeZone = new DateTimeZone("Asia/Manila");
-								$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
-								$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
-								$interval = $datetime1->diff($datetime2);
+									$currTime = time();
+									$strDateEnds = strtotime($DateEnds);
+									$strDateStarted = strtotime($DateStarted);
+									// PERCENTAGE
+									$rPercentage = (($strDateEnds - $currTime) * 100) / ($strDateEnds - $strDateStarted);
+									$rPercentage = round($rPercentage);
+									// DAYS REMAINING
+									$dateTimeZone = new DateTimeZone("Asia/Manila");
+									$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
+									$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
+									$interval = $datetime1->diff($datetime2);
 									if($interval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
 										echo $interval->format('%H hours, %I minutes, %S seconds');
 									} else {

@@ -3,10 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_Updates extends CI_Model {
 
-	public function EmployNewApplicant($ApplicantID,$data)
+	public function EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data)
 	{
 		extract($data);
 		$data = array(
+			'Temp_ApplicantID' => $Temp_ApplicantID,
 			'ClientEmployed' => $ClientEmployed,
 			'DateStarted' => $DateStarted,
 			'DateEnds' => $DateEnds,
@@ -19,7 +20,7 @@ class Model_Updates extends CI_Model {
 	public function ApplicantExpired($ApplicantID)
 	{
 		$data = array(
-			'Client' => '',
+			'ClientEmployed' => '',
 			'DateStarted' => '',
 			'Status' => 'Expired',
 		);
@@ -50,6 +51,21 @@ class Model_Updates extends CI_Model {
 		);
 		$this->db->where('ApplicantID', $ApplicantID);
 		$result = $this->db->update('applicants', $data);
+		return $result;
+	}
+	public function UpdateApplicantID($Temp_ApplicantID)
+	{
+		$data = array(
+			'ApplicantID' => $Temp_ApplicantID,
+		);
+		$this->db->where('Temp_ApplicantID', $Temp_ApplicantID);
+		$result = $this->db->update('applicants', $data);
+		return $result;
+	}
+	public function BlacklistEmployee($ApplicantID)
+	{
+		$SQL = "UPDATE applicants SET Status ='Blacklisted' WHERE ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
 }

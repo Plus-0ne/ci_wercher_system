@@ -274,7 +274,7 @@ class Add_Controller extends CI_Controller {
 							'Link' => $LogbookLink,
 						);
 						$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-						redirect('Applicant');
+						redirect('Applicants');
 					}
 					else
 					{

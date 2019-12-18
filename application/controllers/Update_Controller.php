@@ -15,7 +15,7 @@ class Update_Controller extends CI_Controller {
 	public function EmployApplicant()
 	{
 		if (isset($_POST['ApplicantID'])) {
-			$ApplicantNo = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
+			$ApplicantID = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 			$ClientID = $this->input->post('ClientID',TRUE);
 			$H_Days = $this->input->post('H_Days',TRUE);
 			$H_Months = $this->input->post('H_Months',TRUE);
@@ -29,14 +29,16 @@ class Update_Controller extends CI_Controller {
 			if($H_Years == NULL) {
 				$H_Years = 0;
 			}
+			$Temp_ApplicantID = $ApplicantID;
+			$Temp_ApplicantID++;
 
-			if ($ApplicantNo == NULL || $ClientID == NULL) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Field/s) A:' . $ApplicantNo . ' C:' . $ClientID .' D:' . $H_Days . ' H:' . $H_Months . ' Y:' . $H_Years . ' </h5></div>');
+			if ($ApplicantID == NULL || $ClientID == NULL) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Field/s) A:' . $ApplicantID . ' C:' . $ClientID .' D:' . $H_Days . ' H:' . $H_Months . ' Y:' . $H_Years . ' </h5></div>');
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
 			{
-				$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantNo);
+				$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
 				if ($CheckApplicant->num_rows() > 0) {
 
 					date_default_timezone_set('Asia/Manila');
@@ -64,14 +66,14 @@ class Update_Controller extends CI_Controller {
 						'DateStarted' => $DateStarted,
 						'DateEnds' => $DateEnds,
 					);
-					$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($ApplicantNo,$data);
+					$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
 					if ($EmployNewApplicant == TRUE) {
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Applicant employed!</h5></div>');
 						// LOGBOOK
 						date_default_timezone_set('Asia/Manila');
 						$LogbookCurrentTime = date('Y-m-d h:i:s A');
 						$LogbookType = 'New';
-						$LogbookEvent = 'Applicant ID ' . $ApplicantNo .' has been employed to Client ID ' . $ClientID . ' for ';
+						$LogbookEvent = 'Applicant ID ' . $Temp_ApplicantID .' has been employed to Client ID ' . $ClientID . ' for ';
 						if($H_Years != 0) {
 							$LogbookEvent = $LogbookEvent . $H_Years;
 							if($H_Years == 1) {
@@ -97,7 +99,7 @@ class Update_Controller extends CI_Controller {
 							}
 						}
 						$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
-						$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantNo;
+						$LogbookLink = base_url() . 'ViewEmployee?id=' . $Temp_ApplicantID;
 						$data = array(
 							'Time' => $LogbookCurrentTime,
 							'Type' => $LogbookType,
@@ -129,19 +131,19 @@ class Update_Controller extends CI_Controller {
 	public function ExtendContract()
 	{
 		if (isset($_POST['ApplicantID'])) {
-			$ApplicantNo = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
+			$ApplicantID = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 			$E_CurrentDate = $this->input->post('E_CurrentDate',TRUE);
 			$E_Days = $this->input->post('E_Days',TRUE);
 			$E_Months = $this->input->post('E_Months',TRUE);
 			$E_Years = $this->input->post('E_Years',TRUE);
 
-			if ($ApplicantNo == NULL) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Extend Contract) A:' . $ApplicantNo . ' D:' . $E_Days . ' H:' . $E_Months . ' Y:' . $E_Years . ' </h5></div>');
+			if ($ApplicantID == NULL) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Extend Contract) A:' . $ApplicantID . ' D:' . $E_Days . ' H:' . $E_Months . ' Y:' . $E_Years . ' </h5></div>');
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
 			{
-				$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantNo);
+				$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
 				if ($CheckApplicant->num_rows() > 0) {
 
 					date_default_timezone_set('Asia/Manila');
@@ -165,17 +167,17 @@ class Update_Controller extends CI_Controller {
 					$data = array(
 						'DateEnds' => $DateEnds,
 					);
-					$EmployNewApplicant = $this->Model_Updates->ExtendContract($ApplicantNo,$data);
+					$EmployNewApplicant = $this->Model_Updates->ExtendContract($ApplicantID,$data);
 					if ($EmployNewApplicant == TRUE) {
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Contract Extended to ' . $DateEnds . '!</h5></div>');
 						// LOGBOOK
 						date_default_timezone_set('Asia/Manila');
 						$LogbookCurrentTime = date('Y-m-d h:i:s A');
 						$LogbookType = 'Update';
-						$LogbookEvent = 'Applicant ID ' . $ApplicantNo .' has their contract extended by ';
+						$LogbookEvent = 'Applicant ID ' . $ApplicantID .' has their contract extended by ';
 						if($E_Years != 0) {
 							$LogbookEvent = $LogbookEvent . $E_Years;
-							if($H_Years == 1) {
+							if($E_Years == 1) {
 								$LogbookEvent = $LogbookEvent . ' year, ';
 							} else {
 								$LogbookEvent = $LogbookEvent . ' years, ';
@@ -198,7 +200,7 @@ class Update_Controller extends CI_Controller {
 							}
 						}
 						$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
-						$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantNo;
+						$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
 						$data = array(
 							'Time' => $LogbookCurrentTime,
 							'Type' => $LogbookType,
@@ -517,104 +519,144 @@ class Update_Controller extends CI_Controller {
 	}
 	public function SetReminder()
 	{
-		// TODO: Add functionality.
-	// 	if (isset($_POST['ApplicantID'])) {
-	// 		$ApplicantID = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
-	// 		$R_Days = $this->input->post('R_Days',TRUE);
-	// 		$R_Months = $this->input->post('R_Months',TRUE);
-	// 		$R_Years = $this->input->post('R_Years',TRUE);
-	// 		$ReminderDate = 0;
+		if (isset($_POST['ApplicantID'])) {
+			$ApplicantID = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
+			$R_Type = $this->input->post('R_Type',TRUE);
+			$R_Days = $this->input->post('R_Days',TRUE);
+			$R_Months = $this->input->post('R_Months',TRUE);
+			$R_Years = $this->input->post('R_Years',TRUE);
+			$ReminderDate = 0;
 
-	// 		if ($ApplicantNo == NULL) {
-	// 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Extend Contract) A:' . $ApplicantNo . ' D:' . $E_Days . ' H:' . $E_Months . ' Y:' . $E_Years . ' </h5></div>');
-	// 			redirect($_SERVER['HTTP_REFERER']);
-	// 		}
-	// 		else
-	// 		{
-	// 			$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantNo);
-	// 			if ($CheckApplicant->num_rows() > 0) {
+			if ($ApplicantID == NULL) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Extend Contract) A:' . $ApplicantID . ' D:' . $E_Days . ' H:' . $E_Months . ' Y:' . $E_Years . ' </h5></div>');
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+			else
+			{
+				$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
+				if ($CheckApplicant->num_rows() > 0) {
 
-	// 				date_default_timezone_set('Asia/Manila');
+					date_default_timezone_set('Asia/Manila');
 
-	// 				if ($R_Months == NULL) {
-	// 					$ReminderDate = $ReminderDate + 0;
-	// 				} else {
-	// 					$ReminderDate = $ReminderDate + ($R_Months * );
-	// 				}
-	// 				if ($E_Days == NULL) {
-	// 					$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 days', strtotime($DateEnds)));
-	// 				} else {
-	// 					$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$E_Days.' days', strtotime($DateEnds)));
-	// 				}
-	// 				if ($E_Years == NULL) {
-	// 					$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 days', strtotime($DateEnds)));
-	// 				} else {
-	// 					$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$E_Years.' years', strtotime($DateEnds)));
-	// 				}
+					if ($R_Months == NULL) {
+						$ReminderDate = $ReminderDate + 0;
+					} else {
+						$ReminderDate = $ReminderDate + ($R_Months * 2629743);
+					}
+					if ($R_Days == NULL) {
+						$ReminderDate = $ReminderDate + 0;
+					} else {
+						$ReminderDate = $ReminderDate + ($R_Days * 86400);
+					}
+					if ($R_Years == NULL) {
+						$ReminderDate = $ReminderDate + 0;
+					} else {
+						$ReminderDate = $ReminderDate + ($R_Years * 31556926);
+					}
 
-	// 				$data = array(
-	// 					'DateEnds' => $DateEnds,
-	// 				);
-	// 				$EmployNewApplicant = $this->Model_Updates->ExtendContract($ApplicantNo,$data);
-	// 				if ($EmployNewApplicant == TRUE) {
-	// 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Contract Extended to ' . $DateEnds . '!</h5></div>');
-	// 					// LOGBOOK
-	// 					date_default_timezone_set('Asia/Manila');
-	// 					$LogbookCurrentTime = date('Y-m-d h:i:s A');
-	// 					$LogbookType = 'Update';
-	// 					$LogbookEvent = 'Applicant ID ' . $ApplicantNo .' has their contract extended by ';
-	// 					if($E_Years != 0) {
-	// 						$LogbookEvent = $LogbookEvent . $E_Years;
-	// 						if($H_Years == 1) {
-	// 							$LogbookEvent = $LogbookEvent . ' year, ';
-	// 						} else {
-	// 							$LogbookEvent = $LogbookEvent . ' years, ';
-	// 						}
-	// 					}
-	// 					if($E_Months != 0) {
-	// 						$LogbookEvent = $LogbookEvent . $E_Months;
-	// 						if($E_Months == 1) {
-	// 							$LogbookEvent = $LogbookEvent . ' month, ';
-	// 						} else {
-	// 							$LogbookEvent = $LogbookEvent . ' months, ';
-	// 						}
-	// 					}
-	// 					if($E_Days != 0) {
-	// 						$LogbookEvent = $LogbookEvent . $E_Days;
-	// 						if($E_Days == 1) {
-	// 							$LogbookEvent = $LogbookEvent . ' day, ';
-	// 						} else {
-	// 							$LogbookEvent = $LogbookEvent . ' days, ';
-	// 						}
-	// 					}
-	// 					$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
-	// 					$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantNo;
-	// 					$data = array(
-	// 						'Time' => $LogbookCurrentTime,
-	// 						'Type' => $LogbookType,
-	// 						'Event' => $LogbookEvent,
-	// 						'Link' => $LogbookLink,
-	// 					);
-	// 					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-	// 					redirect($_SERVER['HTTP_REFERER']);
-	// 				}
-	// 				else
-	// 				{
-	// 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
-	// 					redirect($_SERVER['HTTP_REFERER']);
-	// 				}
-	// 			}
-	// 			else
-	// 			{
-	// 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
-	// 				redirect($_SERVER['HTTP_REFERER']);
-	// 			}
-	// 		}
-	// 	}
-	// 	else
-	// 	{
-	// 		$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
-	// 		redirect($_SERVER['HTTP_REFERER']);
-	// 	}
+					$data = array(
+						'ReminderType' => $R_Type,
+						'ReminderDate' => $ReminderDate,
+						'ReminderLocked' => 'No',
+					);
+					$SetReminder = $this->Model_Inserts->InsertReminder($ApplicantID,$data);
+					if ($SetReminder == TRUE) {
+						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Reminder set!</h5></div>');
+						// LOGBOOK
+						date_default_timezone_set('Asia/Manila');
+						$LogbookCurrentTime = date('Y-m-d h:i:s A');
+						$LogbookType = 'New';
+						$LogbookEvent = 'A reminder has been set for ID ' . $ApplicantID .', alerting after ';
+						if($R_Years != 0) {
+							$LogbookEvent = $LogbookEvent . $R_Years;
+							if($R_Years == 1) {
+								$LogbookEvent = $LogbookEvent . ' year, ';
+							} else {
+								$LogbookEvent = $LogbookEvent . ' years, ';
+							}
+						}
+						if($R_Months != 0) {
+							$LogbookEvent = $LogbookEvent . $R_Months;
+							if($R_Months == 1) {
+								$LogbookEvent = $LogbookEvent . ' month, ';
+							} else {
+								$LogbookEvent = $LogbookEvent . ' months, ';
+							}
+						}
+						if($R_Days != 0) {
+							$LogbookEvent = $LogbookEvent . $R_Days;
+							if($R_Days == 1) {
+								$LogbookEvent = $LogbookEvent . ' day, ';
+							} else {
+								$LogbookEvent = $LogbookEvent . ' days, ';
+							}
+						}
+						$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
+						$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+						$data = array(
+							'Time' => $LogbookCurrentTime,
+							'Type' => $LogbookType,
+							'Event' => $LogbookEvent,
+							'Link' => $LogbookLink,
+						);
+						$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+						redirect($_SERVER['HTTP_REFERER']);
+					}
+					else
+					{
+						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+						redirect($_SERVER['HTTP_REFERER']);
+					}
+				}
+				else
+				{
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+			}
+		}
+		else
+		{
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+	}
+	public function BlacklistEmployee()
+	{
+		$ApplicantID = $this->input->get('id');
+		if (!isset($_GET['id'])) {
+			redirect('Employee');
+		}
+		else
+		{
+			$Removethis = $this->Model_Updates->BlacklistEmployee($ApplicantID);
+			if ($Removethis == TRUE) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ID ' . $ApplicantID . ' has been blacklisted.</h5></div>');
+				// LOGBOOK
+				date_default_timezone_set('Asia/Manila');
+				$LogbookCurrentTime = date('Y-m-d h:i:s A');
+				$LogbookType = 'Archival';
+				$LogbookEvent = 'Employee ID ' . $ApplicantID .' has been blacklisted.';
+				$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+				$data = array(
+					'Time' => $LogbookCurrentTime,
+					'Type' => $LogbookType,
+					'Event' => $LogbookEvent,
+					'Link' => $LogbookLink,
+				);
+				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+				if (isset($_SERVER['HTTP_REFERER'])) {
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+				else
+				{
+					redirect('Employee');
+				}
+			}
+			else
+			{
+				redirect('Employee');
+			}
+		}
 	}
 }

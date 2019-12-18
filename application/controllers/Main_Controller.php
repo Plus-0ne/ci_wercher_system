@@ -16,9 +16,13 @@ class Main_Controller extends CI_Controller {
 		$currTime = date('Y-m-d h:i:s A');
 		// TODO: Don't call this here. Need a real time checker. Find a better solution than this.
 		foreach ($GetEmployee->result_array() as $row) {
+			// Assigns a new ID after successfully hiring
+			if ($row['Temp_ApplicantID'] != NULL && $row['Temp_ApplicantID'] == $row['ApplicantID']) {
+				$this->Model_Updates->UpdateApplicantID($row['Temp_ApplicantID']);
+			}
 			$ApplicantID = $row['ApplicantID'];
 			if ($row['ReminderLocked'] != 'Yes'){
-				if (strtotime($row['DateEnds']) < (strtotime($currTime) + 2592000) && strtotime($row['DateEnds']) > strtotime($currTime)) {
+				if (strtotime($row['DateEnds']) < (strtotime($currTime) + strtotime($row['ReminderDate'])) && strtotime($row['DateEnds']) > strtotime($currTime)) {
 					$LogbookInsert = $this->Model_Updates->ReminderLocked($ApplicantID);
 					// LOGBOOK
 					date_default_timezone_set('Asia/Manila');
@@ -154,6 +158,34 @@ class Main_Controller extends CI_Controller {
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['getClientOption'] = $this->Model_Selects->getClientOption();
 		$this->load->view('users/u_applicantexpired',$data);
+	}
+	public function V_Archived()
+	{
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		$header['title'] = 'Archived | Wercher Solutions and Resources Workers Cooperative';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['get_employee'] = $this->Model_Selects->getApplicant();
+		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+		$data['GetArchived'] = $this->Model_Selects->GetApplicantArchived();
+		$data['getClientOption'] = $this->Model_Selects->getClientOption();
+		$this->load->view('users/u_archived',$data);
+	}
+	public function V_Blacklisted()
+	{
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		$header['title'] = 'Blacklisted | Wercher Solutions and Resources Workers Cooperative';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['get_employee'] = $this->Model_Selects->getApplicant();
+		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+		$data['GetBlacklisted'] = $this->Model_Selects->GetApplicantBlacklisted();
+		$data['getClientOption'] = $this->Model_Selects->getClientOption();
+		$this->load->view('users/u_blacklisted',$data);
 	}
 	public function Employee()
 	{

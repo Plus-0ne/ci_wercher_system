@@ -19,24 +19,24 @@
 					<div class="d-block d-sm-none">
 						<ul style="font-size: 12px;">
 							<li><a href="<?php echo base_url() ?>Applicants">Applicants (<?php echo $get_employee->num_rows()?>)</a></li>
-							<li class="tabs-active"><a href="<?php echo base_url() ?>ApplicantsExpired">Expired (<?php echo $get_ApplicantExpired->num_rows()?>)</a></li>
+							<li><a href="<?php echo base_url() ?>ApplicantsExpired">Expired (<?php echo $get_ApplicantExpired->num_rows()?>)</a></li>
 							<li><a href="<?php echo base_url() ?>Blacklisted">Blacklisted</a></li>
-							<li><a href="<?php echo base_url() ?>Archived">Archived</a></li>
+							<li class="tabs-active"><a href="<?php echo base_url() ?>Archived">Archived</a></li>
 						</ul>
 					</div>
 					<div class="d-none d-sm-block">
 						<ul>
 							<li><a href="<?php echo base_url() ?>Applicants">Applicants (<?php echo $get_employee->num_rows()?>)</a></li>
-							<li class="tabs-active"><a href="<?php echo base_url() ?>ApplicantsExpired">Expired (<?php echo $get_ApplicantExpired->num_rows()?>)</a></li>
+							<li><a href="<?php echo base_url() ?>ApplicantsExpired">Expired (<?php echo $get_ApplicantExpired->num_rows()?>)</a></li>
 							<li><a href="<?php echo base_url() ?>Blacklisted">Blacklisted</a></li>
-							<li><a href="<?php echo base_url() ?>Archived">Archived</a></li>
+							<li class="tabs-active"><a href="<?php echo base_url() ?>Archived">Archived</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="row rcontent">
 					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 						<h4>
-							<i class="fas fa-user-friends fa-fw"></i> Expired Contracts (<?php echo $get_ApplicantExpired->num_rows() ?>)
+							<i class="fas fa-lock fa-fw"></i> Archived (<?php echo $GetArchived->num_rows() ?>)
 						</h4>
 					</div>
 					<div class="col-8 col-sm-8 col-md-8 text-right PrintExclude">
@@ -54,12 +54,11 @@
 										<th> Full Name </th>
 										<th> Gender </th>
 										<th> Applied On </th>
-										<th> Expired Since </th>
 										<th class="PrintExclude"> Action </th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($get_ApplicantExpired->result_array() as $row): ?>
+									<?php foreach ($GetArchived->result_array() as $row): ?>
 										<tr>
 											<td class="text-center">
 												<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70">
@@ -79,14 +78,9 @@
 											<td class="text-center align-middle">
 												<?php echo $row['AppliedOn']; ?>
 											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['DateEnds']; ?>
-											</td>
 											<td class="text-center align-middle PrintExclude" width="100">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
-												<button id="<?php echo $row['ApplicantID']; ?>" type="button" class="btn btn-info btn-sm w-100 mb-1 ModalHire"  data-toggle="modal" data-target="#hirthis"><i class="fas fa-user-edit"></i> Hire</button>
-
-												<a href="<?=base_url()?>RemoveEmployee?id=<?php echo $row['ApplicantID']; ?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Applicant?')"><i class="fas fa-lock"></i> Archive</a>
+												<a href="<?=base_url()?>RestoreEmployee?id=<?php echo $row['ApplicantID']; ?>" class="btn btn-success btn-sm w-100 mb-1"><i class="fas fa-book"></i> Restore</a>
 											</td>
 										</tr>
 									<?php endforeach ?>
@@ -129,7 +123,7 @@
 			                text: '<div class="btn btn-sm btn-info w-100">Copy</div>',
 			                className: 'dropdown-item w-25 ml-auto',
 			                exportOptions: {
-			                    columns: [ 1, 2, 3, 4, 5, 6 ]
+			                    columns: [ 1, 2, 3, 4, 5 ]
 			                }
 			            },
 			            {
@@ -137,7 +131,7 @@
 			                text: '<div class="btn btn-sm btn-info w-100">CSV</div>',
 			                className: 'dropdown-item w-25 ml-auto',
 			                exportOptions: {
-			                    columns: [ 1, 2, 3, 4, 5, 6 ]
+			                    columns: [ 1, 2, 3, 4, 5 ]
 			                }
 			            },
 			            {
@@ -145,7 +139,7 @@
 			                text: '<div class="btn btn-sm btn-info w-100">Excel</div>',
 			                className: 'dropdown-item w-25 ml-auto',
 			                exportOptions: {
-			                    columns: [ 1, 2, 3, 4, 5, 6 ]
+			                    columns: [ 1, 2, 3, 4, 5 ]
 			                }
 			            },
 			            {
@@ -153,7 +147,7 @@
 			                text: '<div class="btn btn-sm btn-info w-100">PDF</div>',
 			                className: 'dropdown-item w-25 ml-auto',
 			                exportOptions: {
-			                    columns: [ 1, 2, 3, 4, 5, 6 ]
+			                    columns: [ 1, 2, 3, 4, 5 ]
 			                }
 			            },
 			            {
@@ -161,7 +155,7 @@
 			                text: '<div class="btn btn-sm btn-info w-100">Print</div>',
 			                className: 'dropdown-item w-25 ml-auto',
 			                exportOptions: {
-			                    columns: [ 1, 2, 3, 4, 5, 6 ]
+			                    columns: [ 1, 2, 3, 4, 5 ]
 			                }
 			            },
 			        ]

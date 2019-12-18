@@ -63,6 +63,8 @@ $route['NewEmployee'] = 'Main_Controller/NewEmployee';
 $route['Admin_List'] = 'Main_Controller/View_Admins';
 $route['Clients'] = 'Main_Controller/Clients';
 $route['Experimental'] = 'Main_Controller/Experimental';
+$route['Archived'] = 'Main_Controller/V_Archived';
+$route['Blacklisted'] = 'Main_Controller/V_Blacklisted';
 
 
 // CREATE
@@ -82,3 +84,4 @@ $route['ExtendContract'] = 'Update_Controller/ExtendContract';
 $route['UpdateEmployee'] = 'Update_Controller/UpdateEmployee';
 $route['AddNote'] = 'Update_Controller/AddNote';
 $route['SetReminder'] = 'Update_Controller/SetReminder';
+$route['BlacklistEmployee'] = 'Update_Controller/BlacklistEmployee';

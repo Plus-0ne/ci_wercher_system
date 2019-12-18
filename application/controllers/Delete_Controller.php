@@ -27,7 +27,7 @@ class Delete_Controller extends CI_Controller {
 				$LogbookCurrentTime = date('Y-m-d h:i:s A');
 				$LogbookType = 'Archival';
 				$LogbookEvent = 'Employee ID ' . $id .' has been archived.';
-				$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+				$LogbookLink = base_url() . 'ViewEmployee?id=' . $id;
 				$data = array(
 					'Time' => $LogbookCurrentTime,
 					'Type' => $LogbookType,

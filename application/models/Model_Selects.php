@@ -21,6 +21,18 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetApplicantArchived()
+	{
+		$SQL = "SELECT * FROM applicants WHERE Status = 'Deleted'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetApplicantBlacklisted()
+	{
+		$SQL = "SELECT * FROM applicants WHERE Status = 'Blacklisted'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function CheckEmployee($ApplicantID)
 	{
 		$SQL = "SELECT * FROM applicants WHERE ApplicantID = ?";
