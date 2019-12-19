@@ -164,4 +164,10 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function CheckAdminCred($UserName)
+	{
+		$SQL = "SELECT * FROM admin WHERE AdminID = '$UserName'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }

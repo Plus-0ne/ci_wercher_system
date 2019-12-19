@@ -1,11 +1,11 @@
  <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+ defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Main_Controller extends CI_Controller {
+ class Main_Controller extends CI_Controller {
 
-	public function __construct() {
-		parent::__construct();
-		$this->load->model('Model_Selects');
+ 	public function __construct() {
+ 		parent::__construct();
+ 		$this->load->model('Model_Selects');
 		$this->load->model('Model_Updates'); // TODO: Remove after fixing the call belooooow.
 		$this->load->model('Model_Inserts'); // TODO: Remove after fixing the call belooooow.
 		// echo $_SERVER['REMOTE_ADDR'] . '<br>';
@@ -106,7 +106,7 @@ class Main_Controller extends CI_Controller {
 
 		$header['title'] = 'Dashboard | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		
+
 		// CHART
 		$result =  $this->Model_Selects->GetApplicantSkills();
 
@@ -131,6 +131,7 @@ class Main_Controller extends CI_Controller {
 		// LOGBOOK
 		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		$this->load->view('users/u_dashboard',$data);
+		
 	}
 	
 	public function V_Applicants()
@@ -145,6 +146,7 @@ class Main_Controller extends CI_Controller {
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['getClientOption'] = $this->Model_Selects->getClientOption();
 		$this->load->view('users/u_applicant',$data);
+
 	}
 	public function V_ApplicantsExpired()
 	{
@@ -759,7 +761,7 @@ class Main_Controller extends CI_Controller {
 	// 			'Relation' => $Relation,
 	// 			'rName' => $rName,
 	// 			'rOccupation' => $rOccupation,
-				
+
 	// 		);
 	// 		$_SESSION['rela_cart'][] = $data;
 	// 	}
@@ -836,7 +838,7 @@ class Main_Controller extends CI_Controller {
 	// 			'beneID' => $rint,
 	// 			'BeneName' => $bName,
 	// 			'BeneRelationship' => $bRelationship,
-				
+
 	// 		);
 	// 		$_SESSION['beneCart'][] = $data;
 	// 	}

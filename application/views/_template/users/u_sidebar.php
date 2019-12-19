@@ -6,21 +6,18 @@
 	</div>
 	<ul class="list-unstyled components">
 		<div class="text-center pt-2 pb-3">
-			<h6>
 				<?php
-				if (isset($_SESSION['isActive'])) {
-					switch (variable) {
-						case 'REGISTRAR':
-						echo "REGISTRAR";
-						break;
-
-						default:
-						echo 'Unknown';
-						break;
-					}
+				if (isset($_SESSION['is_logged_in'])) {
+					
+					echo '<small>'.strtoupper($_SESSION['FirstName']).' '.strtoupper($_SESSION['MiddleInitial']).' '.strtoupper($_SESSION['LastName']).'</small>';
+					echo '<h6>'.strtoupper($_SESSION['Position']).'</h6>';
+				}
+				else
+				{
+					echo "GUEST";
 				}
 				?>
-			</h6>
+			
 		</div>
 		<li class="nav-item">
 			<a class="link-s" href="<?=base_url()?>Dashboard"><span class="fas fa-tachometer-alt fa-fw"></span> Dashboard </a>

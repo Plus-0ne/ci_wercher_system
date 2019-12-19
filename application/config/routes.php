@@ -66,7 +66,8 @@ $route['Experimental'] = 'Main_Controller/Experimental';
 $route['Archived'] = 'Main_Controller/V_Archived';
 $route['Blacklisted'] = 'Main_Controller/V_Blacklisted';
 
-
+// LOGIN
+$route['LoginValidation'] = 'Login_Controller/LoginValidation';
 // CREATE
 $route['addNewEmployee'] = 'Add_Controller/addNewEmployee';
 $route['Add_NewAdmin'] = 'Add_Controller/Add_NewAdmin';
@@ -85,3 +86,4 @@ $route['UpdateEmployee'] = 'Update_Controller/UpdateEmployee';
 $route['AddNote'] = 'Update_Controller/AddNote';
 $route['SetReminder'] = 'Update_Controller/SetReminder';
 $route['BlacklistEmployee'] = 'Update_Controller/BlacklistEmployee';
+
