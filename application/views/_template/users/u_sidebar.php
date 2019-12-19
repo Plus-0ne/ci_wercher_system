@@ -8,7 +8,6 @@
 		<div class="text-center pt-2 pb-3">
 				<?php
 				if (isset($_SESSION['is_logged_in'])) {
-					
 					echo '<small>'.strtoupper($_SESSION['FirstName']).' '.strtoupper($_SESSION['MiddleInitial']).' '.strtoupper($_SESSION['LastName']).'</small>';
 					echo '<h6>'.strtoupper($_SESSION['Position']).'</h6>';
 				}
