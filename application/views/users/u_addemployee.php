@@ -65,7 +65,8 @@
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Salary Expected</label>
-										<input class="form-control" type="text" name="SalaryExpected" autocomplete="off" value="<?php echo $this->session->flashdata('SalaryExpected'); ?>">
+										<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#SalaryModal"><i class="fas fa-exclamation"></i> Set Salary</button>
+										<!-- <input class="form-control" type="text" name="SalaryExpected" autocomplete="off" value="<?php echo $this->session->flashdata('SalaryExpected'); ?>" readonly> -->
 									</div>
 								</div>
 								<div class="form-row">
@@ -440,12 +441,101 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal fade" id="SalaryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Salary Expected</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="#" method="post">
+						<div class="form-row">
+							<div class="form-group col-sm-12 col-md-2">
+								<label>Type</label>
+								<select class="form-control" name="SalaryType">
+									<option value="Weekly">
+										Weekly
+									</option>
+									<option value="Monthly">
+										Monthly
+									</option>
+									<option value="Semi-Monthly">
+										Semi-Monthly
+									</option>
+								</select>
+							</div>
+							<div class="form-group col-sm-12 col-md-2">
+								<label>Salary</label>
+								<input id="SalaryRaw" class="form-control" type="number" name="">
+							</div>
+							<div id="SalaryOvertimeFade" class="form-group col-sm-12 col-md-2 ml-auto" style="display: none;">
+								<label>Overtime Bonus</label>
+								<input id="SalaryOvertime" class="form-control" type="text" name="" readonly>
+							</div>
+						</div>
+						<div id="SalaryDays" class="form-row" style="display: none;">
+							<div class="form-group col-sm-12 col-md-12 text-center">
+								<table id="SalaryTable" class="table table-condensed">
+									<th>Monday</th>
+									<th>Tuesday</th>
+									<th>Wednesday</th>
+									<th>Thursday</th>
+									<th>Friday</th>
+									<th>Saturday</th>
+									<tr>
+										<td><input id="SalaryDayOne" class="form-control" type="text" name="" readonly></td>
+										<td><input id="SalaryDayTwo" class="form-control" type="text" name="" readonly></td>
+										<td><input id="SalaryDayThree" class="form-control" type="text" name="" readonly></td>
+										<td><input id="SalaryDayFour" class="form-control" type="text" name="" readonly></td>
+										<td><input id="SalaryDayFive" class="form-control" type="text" name="" readonly></td>
+										<td><input id="SalaryDaySix" class="form-control" type="text" name="" readonly></td>
+									</tr>
+									<tr>
+										<td>Hours</td>
+										<td>Hours</td>
+										<td>Hours</td>
+										<td>Hours</td>
+										<td>Hours</td>
+										<td>Hours</td>
+									</tr>
+									<tr>
+										<td><input id="HoursDayOne" class="form-control" type="number" name="" value="8"></td>
+										<td><input id="HoursDayTwo" class="form-control" type="number" name="" value="8"></td>
+										<td><input id="HoursDayThree" class="form-control" type="number" name="" value="8"></td>
+										<td><input id="HoursDayFour" class="form-control" type="number" name="" value="8"></td>
+										<td><input id="HoursDayFive" class="form-control" type="number" name="" value="8"></td>
+										<td><input id="HoursDaySix" class="form-control" type="number" name="" value="8"></td>
+									</tr>
+									<tr>
+										<td colspan="2">Estimated Per Hour</td>
+									</tr>
+									<tr>
+										<td colspan="2"><input id="SalaryPerHour" class="form-control" type="text" name="" readonly></td>	
+									</tr>
+								</table>
+							</div>
+						</div>											
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button id="add_machop" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close"><i class="fas fa-plus"></i> Add</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 <style type="text/css">
 	.in-beni:focus { box-shadow: none; }
 	.btn-tr { background-color: transparent; border: none; }
 	.image-hover:hover {
 		border: 2px dotted rgba(155, 155, 155, 1.0);
+	}
+	#SalaryTable {
+		table-layout: fixed;
+		word-wrap: break-word;
 	}
 </style>
 <?php $this->load->view('_template/users/u_scripts'); ?>
@@ -569,6 +659,36 @@
             });
         });
 		$('#mach_Op').load("<?php echo site_url('Main_Controller/ShowMachineOperated');?>");
+		$('#SalaryRaw,#HoursDayOne,#HoursDayTwo,#HoursDayThree,#HoursDayFour,#HoursDayFive,#HoursDaySix').on('input', function() {
+			// TODO: Clean & optimize this.
+		    $('#SalaryOvertimeFade').fadeIn();
+		    $('#SalaryDays').fadeIn();
+
+		    var HourOne = $("#HoursDayOne").val();
+		    var HourTwo = $("#HoursDayTwo").val();
+		    var HourThree = $("#HoursDayThree").val();
+		    var HourFour = $("#HoursDayFour").val();
+		    var HourFive = $("#HoursDayFive").val();
+		    var HourSix = $("#HoursDaySix").val();
+
+		    var SalaryWeekly = $('#SalaryRaw').val();
+		    var TotalHoursInAWeek = parseFloat(HourOne) + parseFloat(HourTwo) + parseFloat(HourThree) + parseFloat(HourFour) + parseFloat(HourFive) + parseFloat(HourSix);
+		    var SalaryPerHour = SalaryWeekly / TotalHoursInAWeek;
+		    $('#SalaryPerHour').val(SalaryPerHour.toFixed(2));
+
+		    var SalaryPerDay = SalaryPerHour * parseFloat(HourOne);
+		    $('#SalaryDayOne').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourTwo);
+		    $('#SalaryDayTwo').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourThree);
+		    $('#SalaryDayThree').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourFour);
+		    $('#SalaryDayFour').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourFive);
+		    $('#SalaryDayFive').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourSix);
+		    $('#SalaryDaySix').val(SalaryPerDay.toFixed(2));
+		});
 	});
 </script>
 </html>

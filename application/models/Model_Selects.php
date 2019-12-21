@@ -170,4 +170,10 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetApplicantsViaPartial($URL) // TODO: Not used yet.
+	{
+		$SQL = "SELECT * FROM applicants WHERE ApplicantID LIKE '$URL-%'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }

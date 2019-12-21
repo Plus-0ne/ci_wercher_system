@@ -28,11 +28,7 @@
 						<div class="p-5">
 							<?php echo $this->session->flashdata('prompts'); ?>
 							<div class="col-6 col-sm-6 col-md-6 mb-5 PrintExclude">
-								<a href="<?php if (isset($_SERVER['HTTP_REFERER'])): ?>
-								<?php echo $_SERVER['HTTP_REFERER']; ?>
-								<?php else: ?>
-									<?=base_url()?>Employee
-									<?php endif ?>" class="btn btn-primary btn-sm"><i class="fas fa-chevron-left"></i> Back </a>
+								<a href="<?php echo base_url() . 'ViewEmployee?id=' . $ApplicantID; ?>" class="btn btn-primary btn-sm"><i class="fas fa-chevron-left"></i> Back </a>
 							</div>
 							<div class="mb-3">
 								<h5>
@@ -44,9 +40,17 @@
 								<input type="hidden" name="M_ApplicantID" value="<?php echo $ApplicantID; ?>"> 
 								<input type="hidden" name="M_ApplicantImage" value="<?php echo $ApplicantImage; ?>"> 
 								<div class="form-row mb-2">
-									<div class="form-group col-sm-12">
+									<div class="form-group col-sm-12 image-holder">
+										<?php if($this->agent->is_mobile()): ?>
+											<p>
+												Tap the image to change
+											</p>
+										<?php endif; ?>
 										<input type='file' id="imgInp" name="pImage" style="display: none;">
 										<img class="image-hover" id="blah" src="<?php echo $ApplicantImage; ?>" width="120" height="120">
+										<?php if(!$this->agent->is_mobile()): ?>
+											<img class="image-text image-hidden" src="<?php echo base_url(); ?>assets/img/wercher_change_photo.png" width="120" height="120">
+										<?php endif; ?>
 									</div>
 								</div>
 								<div class="form-row">
@@ -567,8 +571,21 @@
 <style type="text/css">
 	.in-beni:focus { box-shadow: none; }
 	.btn-tr { background-color: transparent; border: none; }
+	.image-holder {
+		position: relative;
+		display: block;
+	}
 	.image-hover:hover {
 		border: 2px dotted rgba(155, 155, 155, 1.0);
+	}
+	.image-hover:hover + .image-text {
+		display: block;
+		position: absolute;
+		top: 1%;
+	}
+	.image-text {
+		display: none;
+		pointer-events:none; 
 	}
 </style>
 <?php $this->load->view('_template/users/u_scripts'); ?>

@@ -23,6 +23,9 @@ class Model_Updates extends CI_Model {
 			'ClientEmployed' => '',
 			'DateStarted' => '',
 			'Status' => 'Expired',
+			'ReminderType' => '',
+			'ReminderDate' => '',
+			'ReminderLocked' => 'No',
 		);
 		$this->db->where('ApplicantID', $ApplicantID);
 		$result = $this->db->update('applicants', $data);

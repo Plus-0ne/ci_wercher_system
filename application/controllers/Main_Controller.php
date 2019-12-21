@@ -270,6 +270,8 @@
 					'DateEnds' => $ged['DateEnds'],
 					'AppliedOn' => $ged['AppliedOn'],
 
+					'ReminderDate' => $ged['ReminderDate'],
+
 				);
 				$ApplicantID = $ged['ApplicantID'];
 				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);

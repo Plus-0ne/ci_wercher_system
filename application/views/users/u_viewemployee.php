@@ -25,19 +25,29 @@
 				<div class="row rcontent p-5 PrintOut">
 					<?php echo $this->session->flashdata('prompts'); ?>
 					<div class="col-6 col-sm-6 col-md-6 mb-5 PrintExclude">
-						<a href="<?php if (isset($_SERVER['HTTP_REFERER'])): ?>
-						<?php echo $_SERVER['HTTP_REFERER']; ?>
-						<?php else: ?>
-							<?=base_url()?>Employee
-							<?php endif ?>" class="btn btn-primary btn-sm"><i class="fas fa-chevron-left"></i> Back </a>
+						<a href="
+						<?php if ($Status == 'Employed') {
+							echo base_url() . 'Employee';
+						} else {
+							echo base_url() . 'Applicants';
+						} ?>" class="btn btn-primary btn-sm"><i class="fas fa-chevron-left"></i> Back </a>
 					</div>
 						<div class="col-6 col-sm-6 col-md-6 text-right PrintExclude dropdown">
+							<?php if ($Status == 'Employed'): ?> 
+								<?php if ($ReminderDate == NULL): ?> 
+									<button id="<?php echo $ApplicantID; ?>" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-exclamation"></i> No reminder set</button>
+								<?php else: ?>
+									<button id="<?php echo $ApplicantID; ?>" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-check"></i> You will be notified TEST months before expiring</button>
+								<?php endif; ?>
+							<?php endif; ?>
 							<button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<i class="fas fa-cog"></i>
 							</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 								<a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" class="dropdown-item"><i class="fas fa-edit"></i> Edit</a>
-								<button id="<?php echo $ApplicantID; ?>" class="dropdown-item ReminderButton" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-stopwatch"></i> Set a Reminder</button>
+								<?php if ($Status == 'Employed'): ?> 
+									<button id="<?php echo $ApplicantID; ?>" class="dropdown-item ReminderButton" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-stopwatch"></i> Set a Reminder</button>
+								<?php endif; ?>
 								<button onClick="printContent('PrintOut')" type="button" class="dropdown-item"><i class="fas fa-print"></i> Print</button>
 								<div class="dropdown-divider"></div>
 								<a href="<?=base_url()?>BlacklistEmployee?id=<?=$ApplicantID?>" class="dropdown-item"><i class="fas fa-times"></i> Blacklist</a>
