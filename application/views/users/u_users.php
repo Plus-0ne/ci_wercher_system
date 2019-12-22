@@ -69,6 +69,7 @@
 											</td>
 											<td class="text-center align-middle PrintExclude" width="100">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
+												<button type="button" class="btn btn-info btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-clock"></i> Work</button>
 												<!-- <a class="btn btn-secondary btn-sm w-100 mb-1" href="#"onclick=" return confirm('Update Employee?')"><i class="fas fa-user-edit"></i> Update</a> -->
 												<a href="<?=base_url()?>RemoveEmployee?id=<?php echo $row['ApplicantID']; ?>" class="btn btn-danger btn-sm w-100 mb-1" href="#" onclick="return confirm('Remove Employee?')"><i class="fas fa-lock"></i> Archive</a>
 											</td>
@@ -82,6 +83,7 @@
 			</div>
 		</div>
 	</div>
+	<?php $this->load->view('_template/modals/m_hoursweekly'); ?>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
@@ -145,6 +147,41 @@
 	            }
 	        ]
 		}).container().appendTo($('#datatables-export'));
+		$('#MoreOptions').on('click', function () {
+			$('#MoreOptions').hide();
+			$('.modal-fade').fadeIn();
+		});
+
+		$('#SalaryRaw,#HoursDayOne,#HoursDayTwo,#HoursDayThree,#HoursDayFour,#HoursDayFive,#HoursDaySix').on('input', function() {
+			// TODO: Clean & optimize this.
+		    $('#SalaryOvertimeFade').fadeIn();
+		    $('#SalaryDays').fadeIn();
+
+		    var HourOne = $("#HoursDayOne").val();
+		    var HourTwo = $("#HoursDayTwo").val();
+		    var HourThree = $("#HoursDayThree").val();
+		    var HourFour = $("#HoursDayFour").val();
+		    var HourFive = $("#HoursDayFive").val();
+		    var HourSix = $("#HoursDaySix").val();
+
+		    var SalaryWeekly = $('#SalaryRaw').val();
+		    var TotalHoursInAWeek = parseFloat(HourOne) + parseFloat(HourTwo) + parseFloat(HourThree) + parseFloat(HourFour) + parseFloat(HourFive) + parseFloat(HourSix);
+		    var SalaryPerHour = SalaryWeekly / TotalHoursInAWeek;
+		    $('#SalaryPerHour').val(SalaryPerHour.toFixed(2));
+
+		    var SalaryPerDay = SalaryPerHour * parseFloat(HourOne);
+		    $('#SalaryDayOne').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourTwo);
+		    $('#SalaryDayTwo').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourThree);
+		    $('#SalaryDayThree').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourFour);
+		    $('#SalaryDayFour').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourFive);
+		    $('#SalaryDayFive').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourSix);
+		    $('#SalaryDaySix').val(SalaryPerDay.toFixed(2));
+		});
 	});
 </script>
 </html>

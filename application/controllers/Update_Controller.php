@@ -40,6 +40,7 @@ class Update_Controller extends CI_Controller {
 			{
 				$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
 				if ($CheckApplicant->num_rows() > 0) {
+					$row = $CheckApplicant->row_array();
 
 					date_default_timezone_set('Asia/Manila');
 
@@ -67,6 +68,14 @@ class Update_Controller extends CI_Controller {
 						'DateEnds' => $DateEnds,
 					);
 					$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
+					$data = array(
+						'ClientID' => $ClientID,
+						'FirstName' => $row['FirstName'],
+						'MiddleInitial' => $row['MiddleInitial'],
+						'LastName' => $row['LastName'],
+						'SalaryExpected' => $row['SalaryExpected'],
+					);
+					$EmployNewApplicant = $this->Model_Inserts->InsertToClient($ClientID,$Temp_ApplicantID,$data);
 					if ($EmployNewApplicant == TRUE) {
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Applicant employed!</h5></div>');
 						// LOGBOOK
@@ -657,6 +666,93 @@ class Update_Controller extends CI_Controller {
 			{
 				redirect('Employee');
 			}
+		}
+	}
+	public function SetWeeklyHours()
+	{
+		if (isset($_POST['ApplicantID'])) {
+			$ApplicantID = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
+			$Monday = $this->input->post('HoursDayOne',TRUE);
+			$Tuesday = $this->input->post('HoursDayTwo',TRUE);
+			$Wednesday = $this->input->post('HoursDayThree',TRUE);
+			$Thursday = $this->input->post('HoursDayFour',TRUE);
+			$Friday = $this->input->post('HoursDayFive',TRUE);
+			$Saturday = $this->input->post('HoursDaySix',TRUE);
+			if($Monday == NULL) {
+				$Monday = 0;
+			}
+			if($Tuesday == NULL) {
+				$Tuesday = 0;
+			}
+			if($Wednesday == NULL) {
+				$Wednesday = 0;
+			}
+			if($Thursday == NULL) {
+				$Thursday = 0;
+			}
+			if($Friday == NULL) {
+				$Friday = 0;
+			}
+			if($Saturday == NULL) {
+				$Saturday = 0;
+			}
+
+			if ($ApplicantID == NULL) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Field/s)</h5></div>');
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+			else
+			{
+				$GetWeeklyListEmployee = $this->Model_Selects->GetWeeklyListEmployee($ApplicantID);
+				if ($GetWeeklyListEmployee->num_rows() > 0) {
+					$row = $GetWeeklyListEmployee->row_array();
+
+					date_default_timezone_set('Asia/Manila');
+
+					$data = array(
+						'Monday' => $Monday,
+						'Tuesday' => $Tuesday,
+						'Wednesday' => $Wednesday,
+						'Thursday' => $Thursday,
+						'Friday' => $Friday,
+						'Saturday' => $Saturday,
+					);
+					$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
+					if ($UpdateWeeklyHours == TRUE) {
+						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Updated!</h5></div>');
+						// LOGBOOK
+						date_default_timezone_set('Asia/Manila');
+						$LogbookCurrentTime = date('Y-m-d h:i:s A');
+						$LogbookType = 'Update';
+						$LogbookEvent = 'Updated weekly hours for ' . $ApplicantID . '.';
+						// $LogbookLink = base_url() . 'ViewClient?id=' . $Temp_ApplicantID;
+						$LogbookLink = base_url() . 'Clients';
+						$data = array(
+							'Time' => $LogbookCurrentTime,
+							'Type' => $LogbookType,
+							'Event' => $LogbookEvent,
+							'Link' => $LogbookLink,
+						);
+						$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+						redirect($_SERVER['HTTP_REFERER']);
+					}
+					else
+					{
+						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+						redirect($_SERVER['HTTP_REFERER']);
+					}
+				}
+				else
+				{
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+			}
+		}
+		else
+		{
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
+			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
 }

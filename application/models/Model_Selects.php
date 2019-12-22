@@ -176,4 +176,22 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetWeeklyList($ClientID) // Argument is $id originally.
+	{
+		$SQL = "SELECT * FROM hours_weekly WHERE ClientID = '$ClientID'";
+		$result = $this->db->query($SQL,$ClientID);
+		return $result;
+	}
+	public function GetClientID($ClientID)
+	{
+		$SQL = "SELECT * FROM clients WHERE ClientID = '$ClientID'";
+		$result = $this->db->query($SQL,$ClientID);
+		return $result;
+	}
+	public function GetWeeklyListEmployee($ApplicantID)
+	{
+		$SQL = "SELECT * FROM hours_weekly WHERE ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL,$ApplicantID);
+		return $result;
+	}
 }

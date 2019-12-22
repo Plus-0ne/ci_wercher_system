@@ -53,6 +53,27 @@
 								<a href="<?=base_url()?>BlacklistEmployee?id=<?=$ApplicantID?>" class="dropdown-item"><i class="fas fa-times"></i> Blacklist</a>
 							</div>
 						</div>
+						<?php if ($Status == 'Blacklisted'): ?>
+						<div class="row ml-auto mr-auto pb-5 w-100">
+							<div class="col-sm-12 col-mb-12 w-100 text-center blacklisted-notice">
+								<div class="col-sm-12 pb-2 pt-4">
+									<h2>
+										<i class="fas fa-exclamation-triangle"></i><b> Notice </b><i class="fas fa-exclamation-triangle"></i>
+									</h2>
+								</div>
+								<div class="col-sm-12 pb-2">
+									This applicant has been marked as <b>Blacklisted</b> for the following reason:
+								</div>
+								<div class="col-sm-12 pb-5">
+									TEST TEST TEST TEST
+								</div>
+								<div class="col-sm-12 col-mb-12 pb-2">
+									<button id="ViolationsButton" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#ViolationsModal"><i class="far fa-eye"></i> View Violations</button>
+									<button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Relevant Document</button>
+								</div>
+							</div>
+						</div>
+						<?php endif; ?>
 						<div class="col-sm-12 mb-5">
 							<h5>
 								<i class="fas fa-user-alt"></i> Personal Information
@@ -278,7 +299,7 @@
 						</div>
 						<div class="col-sm-12 col-md-4 e-det PrintExclude">
 							<p>
-								<?php if ($GetViolations->num_rows() == 0): ?>
+								<?php if ($GetViolations->num_rows() > 0): ?>
 									<button id="ViolationsButton" class="btn btn-danger btn-sm w-50 mb-1" data-toggle="modal" data-target="#ViolationsModal"><i class="far fa-eye"></i> View Violations</button>
 								<?php else: ?>
 									No violations on record.
@@ -908,6 +929,15 @@
 	<style>
 		.dropdown-item:hover {
 			background-color: rgba(235, 235, 235, 1.0);
+		}
+		.blacklisted-notice {
+			border-top: 2px;
+			border-bottom: 2px;
+			border-left: 0px;
+			border-right: 0px;
+			border-style: solid;
+			border-color: rgba(255, 50, 50);
+			background-color: rgba(255, 50, 50, 0.55);
 		}
 	</style>
 	<textarea id="text"></textarea>

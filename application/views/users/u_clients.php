@@ -29,27 +29,32 @@
 						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
 							<table id="ListClients" class="table table-striped table-bordered PrintOut" style="width: 100%;">
 								<thead>
-									<tr>
+									<tr class="text-center align-middle">
 										<th> Name </th>
 										<th> Address </th>
-										<th> Contact # </th>
+										<th> Contact No. </th>
+										<th> No. of Employees
 										<th class="text-center PrintExclude"> Action </th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php foreach ($ShowClients->result_array() as $row): ?>
-										<tr>
-											<td class="text-center align-middle">
+										<tr class="text-center align-middle">
+											<td>
 												<?php echo $row['Name']; ?>
 											</td>
-											<td class="text-center align-middle">
+											<td>
 												<?php echo $row['Address']; ?>
 											</td>
-											<td class="text-center align-middle">
+											<td>
 												<?php echo $row['ContactNumber']; ?>
 											</td>
+											<td>
+												<?php echo $this->Model_Selects->GetWeeklyList($row['ClientID'])->num_rows(); ?>
+											</td>
 											<td class="text-center align-middle PrintExclude">
-												<a href="<?=base_url()?>RemoveClient?id=<?=$row['ClientID']?>" class="btn btn-danger btn-sm mb-1" onclick="return confirm('Remove Client?')"><i class="fas fa-trash"></i> Delete</a>
+												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewClient?id=<?php echo $row['ClientID']; ?>"><i class="far fa-eye"></i> View</a>
+												<a href="<?=base_url()?>RemoveClient?id=<?=$row['ClientID']?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Client?')"><i class="fas fa-trash"></i> Delete</a>
 											</td>
 										</tr>
 									<?php endforeach ?>
@@ -112,7 +117,12 @@
 			$('#sidebar').toggleClass('active');
 			$('.ncontent').toggleClass('shContent');
 		});
-		var table = $('#ListClients').DataTable();
+		var table = $('#ListClients').DataTable( {
+						"columnDefs": [
+							{ 
+								"width": "10%", "targets": 4
+							}
+						] });
 		var dd_buttons = new $.fn.dataTable.Buttons(table, {
 	        buttons: [
 	            {

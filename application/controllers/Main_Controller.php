@@ -416,6 +416,50 @@
 		$data['ShowClients'] = $this->Model_Selects->GetClients();
 		$this->load->view('users/u_clients',$data);
 	}
+	public function ViewClient()
+	{
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		if (isset($_GET['id'])) {
+
+			$id = $_GET['id'];
+
+			$header['title'] = 'Client Information | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+
+			$GetWeeklyList = $this->Model_Selects->GetWeeklyList($id);
+
+			if ($GetWeeklyList->num_rows() > 0) {
+				$row = $GetWeeklyList->row_array();
+				$data = array(
+					'ClientID' => $row['ClientID'],
+					'ApplicantID' => $row['ApplicantID'],
+					'Name' => $row['Name'],
+					'Monday' => $row['Monday'],
+					'Tuesday' => $row['Tuesday'],
+					'Wednesday' => $row['Wednesday'],
+					'Thursday' => $row['Thursday'],
+					'Friday' => $row['Friday'],
+					'Saturday' => $row['Saturday'],
+
+				);
+				$ApplicantID = $row['ApplicantID'];
+				$data['GetWeeklyList'] = $this->Model_Selects->GetWeeklyList($id);
+				$data['GetClientID'] = $this->Model_Selects->GetClientID($id);
+				$this->load->view('users/u_viewclient',$data);
+			}
+			else
+			{
+				redirect('Clients');
+			}
+		}
+		else
+		{
+			redirect('Clients');
+		}
+	}
 	public function Experimental()
 	{
 		unset($_SESSION["acadcart"]);

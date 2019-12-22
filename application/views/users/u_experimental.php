@@ -17,17 +17,43 @@
 				</div>
 				<div class="row rcontent PrintOutTable">
 					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-sm-4 col-md-4 mb-5">
+					<div class="col-sm-12 col-md-12 mb-5">
 						<h4>
 							<i class="fas fa-vial"></i> Tax Table
 						</h4>
 					</div>
-					<div class="col-sm-8 col-md-8 ml-auto text-right PrintExclude">
+					<div class="col-sm-12 col-mb-12">
+						<table id="SalaryTable" class="table table-condensed">
+							<th>Name</th>
+							<th>Client</th>
+							<th>Salary</th>
+							<th>Date???</th>
+							<th>Monday</th>
+							<th>Tuesday</th>
+							<th>Wednesday</th>
+							<th>Thursday</th>
+							<th>Friday</th>
+							<th>Saturday</th>
+							<tr>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+								<td>1</td>
+							</tr>
+						</table>
+					</div>
+					<!-- <div class="col-sm-8 col-md-8 ml-auto text-right PrintExclude">
 						<button id="ShowDemo" type="button" class="btn btn-primary mr-auto"><i class="fas fa-flask"></i> Demo</button>
 						<button type="button" class="btn btn-primary mr-auto"><i class="fas fa-import-file"></i> Import Excel File</button>
 						<button onClick="printContent('PrintOutTable')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
 					</div>
-					<div id="TaxTable" class="col-sm-12">
+					<div id="TaxTable" class="col-sm-12"> -->
 
 						<?php
 
@@ -52,7 +78,7 @@
 						// }
 						?>
 
-						<table class="table table-hover">
+						<!-- <table class="table table-hover">
 							<th>Compensation Range</th>
 							<th>Withholding Tax</th>
 							<tr>
@@ -133,7 +159,7 @@
 						<label>Take Home Pay</label>
 						<input type="text" class="form-control" name="TakeHomePay" id="TakeHomePay" readonly>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
@@ -147,62 +173,5 @@
 		});
 		$('#TaxTable').hide();
 	});
-
-	$('#ShowDemo').click(function() {
-		$('#TaxTable').show();
-	});
-
-	function Compute() {
-		var grossIncome = $('#Gross').val();
-		var SSSDeduction = $('#SSS').val();
-		var PHDeduction = $('#PhilHealth').val();
-
-		taxableIncome = grossIncome - SSSDeduction;
-		taxableIncome = taxableIncome - PHDeduction;
-		if (taxableIncome < 10417) {
-			wTaxFixed = 0;
-			wTaxPercent = 0;
-			compensationRange = "Below 10,417";
-			wTax = 0;
-		};
-		if (taxableIncome >= 10417 && taxableIncome < 16667 ) {
-			wTaxFixed = 0;
-			wTaxPercent = 0.2;
-			compensationRange = "10,417 to 16,667";
-			wTax = (taxableIncome - 10417)*wTaxPercent;
-		};
-		if (taxableIncome >= 16667 && taxableIncome < 33333 ) {
-			wTaxFixed = 1250;
-			wTaxPercent = 0.25;
-			compensationRange = "16,667 to 33,333";
-			wTax = wTaxFixed + ((taxableIncome - 16667)*wTaxPercent);
-		};
-		if (taxableIncome >= 33333 && taxableIncome < 83333 ) {
-			wTaxFixed = 5416.67;
-			wTaxPercent = 0.3;
-			compensationRange = "33,334 to 83,333";
-			wTax = wTaxFixed + ((taxableIncome - 33333)*wTaxPercent);
-		};
-		if (taxableIncome >= 83333 && taxableIncome < 333333 ) {
-			wTaxFixed = 20416.67;
-			wTaxPercent = 0.32;
-			compensationRange = "83,334 to 333,333";
-			wTax = wTaxFixed + ((taxableIncome - 83333)*wTaxPercent);
-		};
-		if (taxableIncome >= 333333 && taxableIncome <= 500000 ) {
-			wTaxFixed = 100416.67;
-			wTaxPercent = 0.35;
-			compensationRange = "333,334 to 500,000";
-			wTax = wTaxFixed + ((taxableIncome - 333333)*wTaxPercent);
-		};
-		takeHomePay = taxableIncome - wTax;
-		totalTax = Math.abs(takeHomePay - grossIncome);
-		text = '(' + grossIncome + ' - (' + SSSDeduction + ' + ' + PHDeduction + ')) - ' + '(' + wTaxFixed + ' - (Excess * ' + wTaxPercent + '))';  
-		$('#TaxableIncome').val(taxableIncome);
-		$('#TotalTax').val(totalTax);
-		$('#Formula').val(text);
-		$('#CompRange').val(compensationRange);
-		$('#TakeHomePay').val(takeHomePay);
-	}
 </script>
 </html>

@@ -353,8 +353,10 @@
 				}
 			}
 		});
+		$.fn.dataTable.moment('MM/dd/yyyy hh:mm:ss A');
 		$('#ListLogbook').DataTable( {
-        	"order": [[ 0, "desc" ]]
+        	"order": [[ 0, "desc" ]],
+        	columnDefs: [{ targets: [0], type: 'date'}]
     	});
 	});
 </script>

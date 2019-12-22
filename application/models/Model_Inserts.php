@@ -67,4 +67,17 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->update('applicants', $data);
 		return $result;
 	}
+	public function InsertToClient($ClientID, $Temp_ApplicantID, $data)
+	{
+		extract($data);
+		$Name = $LastName . ', ' . $FirstName . ' ' . $MiddleInitial . '.';
+		$data = array(
+			'ClientID' => $ClientID,
+			'ApplicantID' => $Temp_ApplicantID,
+			'Name' => $Name,
+			'Salary' => $SalaryExpected,
+		);
+		$result = $this->db->insert('hours_weekly', $data);
+		return $result;
+	}
 }

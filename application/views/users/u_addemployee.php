@@ -65,8 +65,7 @@
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Salary Expected</label>
-										<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#SalaryModal"><i class="fas fa-exclamation"></i> Set Salary</button>
-										<!-- <input class="form-control" type="text" name="SalaryExpected" autocomplete="off" value="<?php echo $this->session->flashdata('SalaryExpected'); ?>" readonly> -->
+										<input class="form-control" type="text" name="SalaryExpected" autocomplete="off" value="<?php echo $this->session->flashdata('SalaryExpected'); ?>">
 									</div>
 								</div>
 								<div class="form-row">
@@ -659,36 +658,36 @@
             });
         });
 		$('#mach_Op').load("<?php echo site_url('Main_Controller/ShowMachineOperated');?>");
-		$('#SalaryRaw,#HoursDayOne,#HoursDayTwo,#HoursDayThree,#HoursDayFour,#HoursDayFive,#HoursDaySix').on('input', function() {
-			// TODO: Clean & optimize this.
-		    $('#SalaryOvertimeFade').fadeIn();
-		    $('#SalaryDays').fadeIn();
+		// $('#SalaryRaw,#HoursDayOne,#HoursDayTwo,#HoursDayThree,#HoursDayFour,#HoursDayFive,#HoursDaySix').on('input', function() {
+		// 	// TODO: Clean & optimize this.
+		//     $('#SalaryOvertimeFade').fadeIn();
+		//     $('#SalaryDays').fadeIn();
 
-		    var HourOne = $("#HoursDayOne").val();
-		    var HourTwo = $("#HoursDayTwo").val();
-		    var HourThree = $("#HoursDayThree").val();
-		    var HourFour = $("#HoursDayFour").val();
-		    var HourFive = $("#HoursDayFive").val();
-		    var HourSix = $("#HoursDaySix").val();
+		//     var HourOne = $("#HoursDayOne").val();
+		//     var HourTwo = $("#HoursDayTwo").val();
+		//     var HourThree = $("#HoursDayThree").val();
+		//     var HourFour = $("#HoursDayFour").val();
+		//     var HourFive = $("#HoursDayFive").val();
+		//     var HourSix = $("#HoursDaySix").val();
 
-		    var SalaryWeekly = $('#SalaryRaw').val();
-		    var TotalHoursInAWeek = parseFloat(HourOne) + parseFloat(HourTwo) + parseFloat(HourThree) + parseFloat(HourFour) + parseFloat(HourFive) + parseFloat(HourSix);
-		    var SalaryPerHour = SalaryWeekly / TotalHoursInAWeek;
-		    $('#SalaryPerHour').val(SalaryPerHour.toFixed(2));
+		//     var SalaryWeekly = $('#SalaryRaw').val();
+		//     var TotalHoursInAWeek = parseFloat(HourOne) + parseFloat(HourTwo) + parseFloat(HourThree) + parseFloat(HourFour) + parseFloat(HourFive) + parseFloat(HourSix);
+		//     var SalaryPerHour = SalaryWeekly / TotalHoursInAWeek;
+		//     $('#SalaryPerHour').val(SalaryPerHour.toFixed(2));
 
-		    var SalaryPerDay = SalaryPerHour * parseFloat(HourOne);
-		    $('#SalaryDayOne').val(SalaryPerDay.toFixed(2));
-		    SalaryPerDay = SalaryPerHour * parseFloat(HourTwo);
-		    $('#SalaryDayTwo').val(SalaryPerDay.toFixed(2));
-		    SalaryPerDay = SalaryPerHour * parseFloat(HourThree);
-		    $('#SalaryDayThree').val(SalaryPerDay.toFixed(2));
-		    SalaryPerDay = SalaryPerHour * parseFloat(HourFour);
-		    $('#SalaryDayFour').val(SalaryPerDay.toFixed(2));
-		    SalaryPerDay = SalaryPerHour * parseFloat(HourFive);
-		    $('#SalaryDayFive').val(SalaryPerDay.toFixed(2));
-		    SalaryPerDay = SalaryPerHour * parseFloat(HourSix);
-		    $('#SalaryDaySix').val(SalaryPerDay.toFixed(2));
-		});
+		//     var SalaryPerDay = SalaryPerHour * parseFloat(HourOne);
+		//     $('#SalaryDayOne').val(SalaryPerDay.toFixed(2));
+		//     SalaryPerDay = SalaryPerHour * parseFloat(HourTwo);
+		//     $('#SalaryDayTwo').val(SalaryPerDay.toFixed(2));
+		//     SalaryPerDay = SalaryPerHour * parseFloat(HourThree);
+		//     $('#SalaryDayThree').val(SalaryPerDay.toFixed(2));
+		//     SalaryPerDay = SalaryPerHour * parseFloat(HourFour);
+		//     $('#SalaryDayFour').val(SalaryPerDay.toFixed(2));
+		//     SalaryPerDay = SalaryPerHour * parseFloat(HourFive);
+		//     $('#SalaryDayFive').val(SalaryPerDay.toFixed(2));
+		//     SalaryPerDay = SalaryPerHour * parseFloat(HourSix);
+		//     $('#SalaryDaySix').val(SalaryPerDay.toFixed(2));
+		// });
 	});
 </script>
 </html>

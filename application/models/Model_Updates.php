@@ -71,4 +71,10 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
+	public function UpdateWeeklyHours($ApplicantID,$data)
+	{
+		$this->db->where('ApplicantID', $ApplicantID);
+		$result = $this->db->update('hours_weekly', $data);
+		return $result;
+	}
 }
