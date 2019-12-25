@@ -80,4 +80,9 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('hours_weekly', $data);
 		return $result;
 	}
+	public function InsertClientViewTime($data)
+	{
+		$result = $this->db->replace('dummy_hours', $data);
+		return $result;
+	}
 }

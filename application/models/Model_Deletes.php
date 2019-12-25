@@ -39,4 +39,10 @@ class Model_Deletes extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function CleanWeeklyDates()
+	{
+		$SQL = "DELETE FROM dummy_hours WHERE Current IS NULL";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }

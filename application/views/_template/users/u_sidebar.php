@@ -35,6 +35,9 @@
 		<li class="nav-item">
 			<a class="link-s" href="<?=base_url()?>Clients"><span class="fas fa-user-tag fa-fw"></span> Clients </a>
 		</li>
+		<li class="nav-item">
+			<a class="link-s" href="<?=base_url()?>PayrollClients"><span class="fas fa-dollar-sign fa-fw"></span> Payroll </a>
+		</li>
 		<!-- <li>
 			<a class="link-s" href="#siteSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-cogs fa-fw"></i> Preferences </a>
 			<ul class="collapse list-unstyled collapseSettings animated fadeIn" id="siteSettings">

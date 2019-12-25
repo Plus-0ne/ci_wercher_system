@@ -24,40 +24,44 @@
 							<i class="fas fa-user-tag"></i> 
 							<?php foreach ($GetClientID->result_array() as $row): 
 								echo $row['Name'];
-							endforeach; ?>'s Employees (<?php echo $GetWeeklyList->num_rows(); ?>)
+							endforeach; ?>'s Employees (<?php echo $GetWeeklyListEmployee->num_rows(); ?>)
 						</h4>
 					</div>
 					<div class="col-sm-12 col-mb-12">
-						<table id="WeeklyTable" class="table table-condensed">
+						<table id
+						="WeeklyTable" class="table table-condensed">
 							<thead>
 								<th>Applicant ID</th>
 								<th>Name</th>
 								<th>Salary</th>
-								<th>Monday</th>
-								<th>Tuesday</th>
-								<th>Wednesday</th>
-								<th>Thursday</th>
-								<th>Friday</th>
-								<th>Saturday</th>
-								<th>Action</th>
+								<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
+									<th><?php echo $row['Time']; ?></th>
+								<?php endforeach; ?>
+								<th>Total Hours</th>
 							</thead>
 							<tbody>
-								<?php foreach ($GetWeeklyList->result_array() as $row): ?>
-									<tr>
+								<?php foreach ($GetWeeklyListEmployee->result_array() as $row): ?>
+									<tr id="<?php echo $row['SalaryExpected']; ?>" data-clientid="<?php echo $row['ClientEmployed']; ?>" data="<?php echo $row['ApplicantID']; ?>" class='clickable-row' data-toggle="modal" data-target="#HoursWeeklyModal">
 										<td><?php echo $row['ApplicantID'];?></td>
-										<td><?php echo $row['Name'];?></td>
-										<td><?php echo $row['Salary'];?></td>
-										<td><?php echo $row['Monday'];?></td>
-										<td><?php echo $row['Tuesday'];?></td>
-										<td><?php echo $row['Wednesday'];?></td>
-										<td><?php echo $row['Thursday'];?></td>
-										<td><?php echo $row['Friday'];?></td>
-										<td><?php echo $row['Saturday'];?></td>
-										<td class="text-center">
-											<button id="<?php echo $row['Salary']; ?>" data="<?php echo $row['ApplicantID']; ?>" type="button" class="btn btn-primary btn-sm HoursButton" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-clock"></i></button>
-											<!-- <button type="button" class="btn btn-primary btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-list"></i> Contract</button>
-											<button type="button" class="btn btn-primary btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-book"></i> History</button> -->
-										</td>
+										<td><?php echo $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'];?></td>
+										<td><?php echo '₱' . $row['SalaryExpected'];?></td>
+										<?php foreach ($GetWeeklyDates->result_array() as $brow):
+											?> <td> <?php
+											if($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->num_rows() > 0) {
+												foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->result_array() as $nrow):
+													$Hours = $nrow['Hours'];
+													echo $Hours;
+												endforeach;
+											} else {
+												echo '0';
+											} ?> </td>
+										<?php endforeach; ?>
+										<td></td>
+<!-- 										<td class="text-center">
+											<button id="<?php echo $row['Salary']; ?>" data="<?php echo $row['ApplicantID']; ?>" type="button" class="btn btn-primary btn-sm HoursButton" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-clock"></i> Set</button>
+											<button type="button" class="btn btn-primary btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-list"></i> Contract</button>
+											<button type="button" class="btn btn-primary btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-book"></i> History</button>
+										</td> -->
 										</tr>
 								<?php endforeach; ?>
 							</tbody>
@@ -178,17 +182,50 @@
 			</div>
 		</div>
 	</div>
-	<?php $this->load->view('_template/modals/m_hoursweekly'); ?>
+	<?php $this->load->view('_template/modals/m_p_hoursweekly'); ?>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
-		$('.HoursButton').on('click', function () {
-				$('#Salary').val($(this).attr('id'));
-				$('#ApplicantID').val($(this).attr('data'));
-				console.log($('#Salary').val());
-				console.log($('#ApplicantID').val());
-			});
+		$('#sidebar').toggleClass('active');
+		$('.ncontent').toggleClass('shContent');
+		$('.clickable-row').on('click', function () {
+			$('#Salary').val($(this).attr('id'));
+			$('#ApplicantID').val($(this).attr('data'));
+			$('#ClientID').val($(this).attr('data-clientid'));
+			console.log($('#Salary').val());
+			console.log($('#ApplicantID').val());
+			console.log($('#ClientID').val());
+			HourOne = $("#HoursDayOne").val();
+		    HourTwo = $("#HoursDayTwo").val();
+		    HourThree = $("#HoursDayThree").val();
+		    HourFour = $("#HoursDayFour").val();
+		    HourFive = $("#HoursDayFive").val();
+		    HourSix = $("#HoursDaySix").val();
+		    TotalHoursInAWeek = parseFloat(HourOne) + parseFloat(HourTwo) + parseFloat(HourThree) + parseFloat(HourFour) + parseFloat(HourFive) + parseFloat(HourSix);
+		    if (TotalHoursInAWeek < 0 || isNaN(TotalHoursInAWeek)) {
+		    	TotalHoursInAWeek = 0;
+		    }
+		    $('.TotalHoursInAWeek').text(TotalHoursInAWeek);
+	
+		    var SalaryWeekly = $('#Salary').val();
+		    var TotalHoursInAWeek = parseFloat(HourOne) + parseFloat(HourTwo) + parseFloat(HourThree) + parseFloat(HourFour) + parseFloat(HourFive) + parseFloat(HourSix);
+		    var SalaryPerHour = SalaryWeekly / TotalHoursInAWeek;
+		    $('#AveragePerHour').val(SalaryPerHour.toFixed(2));
+
+		    var SalaryPerDay = SalaryPerHour * parseFloat(HourOne);
+		    $('#SalaryDayOne').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourTwo);
+		    $('#SalaryDayTwo').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourThree);
+		    $('#SalaryDayThree').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourFour);
+		    $('#SalaryDayFour').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourFive);
+		    $('#SalaryDayFive').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourSix);
+		    $('#SalaryDaySix').val(SalaryPerDay.toFixed(2));
+		});
 		$('#sidebarCollapse').on('click', function () {
 			$('#sidebar').toggleClass('active');
 			$('.ncontent').toggleClass('shContent');
@@ -269,6 +306,24 @@
 		    	TotalHoursInAWeek = 0;
 		    }
 		    $('.TotalHoursInAWeek').text(TotalHoursInAWeek);
+	
+		    SalaryWeekly = $('#Salary').val();
+		    TotalHoursInAWeek = parseFloat(HourOne) + parseFloat(HourTwo) + parseFloat(HourThree) + parseFloat(HourFour) + parseFloat(HourFive) + parseFloat(HourSix);
+		    SalaryPerHour = SalaryWeekly / TotalHoursInAWeek;
+		    $('#AveragePerHour').val(SalaryPerHour.toFixed(2));
+
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourOne);
+		    $('#SalaryDayOne').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourTwo);
+		    $('#SalaryDayTwo').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourThree);
+		    $('#SalaryDayThree').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourFour);
+		    $('#SalaryDayFour').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourFive);
+		    $('#SalaryDayFive').val(SalaryPerDay.toFixed(2));
+		    SalaryPerDay = SalaryPerHour * parseFloat(HourSix);
+		    $('#SalaryDaySix').val(SalaryPerDay.toFixed(2));
 	 	});
 	});
 </script>
@@ -278,6 +333,52 @@
 	}
 	#WeeklyTable td {
 
+	}
+	#WeeklyTable tbody tr:hover {
+		background-color: rgba(125, 125, 255, 0.25);
+		cursor: pointer;
+		border-left: 8px;
+		border-color: red;
+		border-style: solid;
+	}
+	.modal-open {
+		overflow-y: auto !important;
+		padding-right: 0 !important;
+	}
+	.input-icon, .input-icon-sm {
+		position: relative;
+	}
+
+	.input-icon > i {
+		position: absolute;
+		display: block;
+		transform: translate(0, -50%);
+		top: 50%;
+		pointer-events: none;
+		width: 33px;
+		text-align: center;
+		font-style: normal;
+	}
+
+	.input-icon > input {
+		padding-left: 33px;
+		padding-right: 0;
+	}
+
+	.input-icon-sm > i {
+		position: absolute;
+		display: block;
+		transform: translate(0, -50%);
+		top: 50%;
+		pointer-events: none;
+		width: 20px;
+		text-align: center;
+		font-style: normal;
+	}
+
+	.input-icon-sm > input {
+		padding-left: 20px;
+		padding-right: 0;
 	}
 </style>
 </html>

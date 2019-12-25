@@ -416,6 +416,18 @@
 		$data['ShowClients'] = $this->Model_Selects->GetClients();
 		$this->load->view('users/u_clients',$data);
 	}
+	public function PayrollClients()
+	{
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		$header['title'] = 'Clients | Wercher Solutions and Resources Workers Cooperative';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['ShowClients'] = $this->Model_Selects->GetClients();
+		$data['GetLogbookLatestHires'] =  $this->Model_Selects->GetLogbookLatestHires();
+		$this->load->view('payroll/p_clients',$data);
+	}
 	public function ViewClient()
 	{
 		unset($_SESSION["acadcart"]);
@@ -431,29 +443,20 @@
 
 			$GetWeeklyList = $this->Model_Selects->GetWeeklyList($id);
 
-			if ($GetWeeklyList->num_rows() > 0) {
-				$row = $GetWeeklyList->row_array();
-				$data = array(
-					'ClientID' => $row['ClientID'],
-					'ApplicantID' => $row['ApplicantID'],
-					'Name' => $row['Name'],
-					'Monday' => $row['Monday'],
-					'Tuesday' => $row['Tuesday'],
-					'Wednesday' => $row['Wednesday'],
-					'Thursday' => $row['Thursday'],
-					'Friday' => $row['Friday'],
-					'Saturday' => $row['Saturday'],
+			$row = $GetWeeklyList->row_array();
+			$data = array(
+				'ClientID' => $row['ClientID'],
+				'ApplicantID' => $row['ApplicantID'],
 
-				);
-				$ApplicantID = $row['ApplicantID'];
-				$data['GetWeeklyList'] = $this->Model_Selects->GetWeeklyList($id);
-				$data['GetClientID'] = $this->Model_Selects->GetClientID($id);
-				$this->load->view('users/u_viewclient',$data);
-			}
-			else
-			{
-				redirect('Clients');
-			}
+			);
+			$ApplicantID = $row['ApplicantID'];
+			$data['GetWeeklyList'] = $this->Model_Selects->GetWeeklyList($id);
+			$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployee($id);
+			// $data['GetWeeklyListEmployeeActive'] = $this->Model_Selects->GetWeeklyListEmployeeActive($id);
+			$data['GetClientID'] = $this->Model_Selects->GetClientID($id);
+			$data['GetWeeklyDates'] = $this->Model_Selects->GetWeeklyDates();
+			// $data['GetWeeklyDatesForEmployee'] = $this->Model_Selects->GetWeeklyDatesForEmployee($row['ApplicantID']);
+			$this->load->view('payroll/p_viewclient',$data);
 		}
 		else
 		{

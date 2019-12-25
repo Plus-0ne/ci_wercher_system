@@ -15,7 +15,7 @@
 <script type="text/javascript" src="<?=base_url()?>assets/js/1.6.1_dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/1.6.1_buttons.flash.min.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/3.1.3_jszip.min.js"></script>
-<script type="text/javascript" src="<?=base_url()?>assets/js/0.1.53_pdfmake.min.js"></script> <!-- TODO: This script's load time is very slow. -->
+<!-- <script type="text/javascript" src="<?=base_url()?>assets/js/0.1.53_pdfmake.min.js"></script> --> <!-- TODO: This script's load time is very slow. -->
 <script type="text/javascript" src="<?=base_url()?>assets/js/0.1.53_vfs_fonts.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/1.6.1_buttons.html5.min.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/1.6.1_buttons.print.min.js"></script>

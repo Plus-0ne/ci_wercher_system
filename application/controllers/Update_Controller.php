@@ -81,7 +81,7 @@ class Update_Controller extends CI_Controller {
 						// LOGBOOK
 						date_default_timezone_set('Asia/Manila');
 						$LogbookCurrentTime = date('Y-m-d h:i:s A');
-						$LogbookType = 'New';
+						$LogbookType = 'Employment';
 						$LogbookEvent = 'Applicant ID ' . $Temp_ApplicantID .' has been employed to Client ID ' . $ClientID . ' for ';
 						if($H_Years != 0) {
 							$LogbookEvent = $LogbookEvent . $H_Years;
@@ -672,69 +672,48 @@ class Update_Controller extends CI_Controller {
 	{
 		if (isset($_POST['ApplicantID'])) {
 			$ApplicantID = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
-			$Monday = $this->input->post('HoursDayOne',TRUE);
-			$Tuesday = $this->input->post('HoursDayTwo',TRUE);
-			$Wednesday = $this->input->post('HoursDayThree',TRUE);
-			$Thursday = $this->input->post('HoursDayFour',TRUE);
-			$Friday = $this->input->post('HoursDayFive',TRUE);
-			$Saturday = $this->input->post('HoursDaySix',TRUE);
-			if($Monday == NULL) {
-				$Monday = 0;
-			}
-			if($Tuesday == NULL) {
-				$Tuesday = 0;
-			}
-			if($Wednesday == NULL) {
-				$Wednesday = 0;
-			}
-			if($Thursday == NULL) {
-				$Thursday = 0;
-			}
-			if($Friday == NULL) {
-				$Friday = 0;
-			}
-			if($Saturday == NULL) {
-				$Saturday = 0;
-			}
+			$ClientID = $this->input->post('ClientID',FALSE);
+			$GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
+			foreach ($GetWeeklyDates->result_array() as $nrow):
+				$Hours = $this->input->post('Hours_' . $nrow['Time'],TRUE);
+				$Date = $this->input->post($nrow['Time'],TRUE);
+				echo $Hours . '<br>';
+				echo $Date . '<br>';
+				if($Hours == NULL) {
+					$Hours = 0;
+				}
 
-			if ($ApplicantID == NULL) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Field/s)</h5></div>');
-				redirect($_SERVER['HTTP_REFERER']);
-			}
-			else
-			{
-				$GetWeeklyListEmployee = $this->Model_Selects->GetWeeklyListEmployee($ApplicantID);
-				if ($GetWeeklyListEmployee->num_rows() > 0) {
-					$row = $GetWeeklyListEmployee->row_array();
-
+				if ($ApplicantID == NULL) {
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Field/s)</h5></div>');
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+				else
+				{
 					date_default_timezone_set('Asia/Manila');
 
 					$data = array(
-						'Monday' => $Monday,
-						'Tuesday' => $Tuesday,
-						'Wednesday' => $Wednesday,
-						'Thursday' => $Thursday,
-						'Friday' => $Friday,
-						'Saturday' => $Saturday,
+						'ClientID' => $ClientID,
+						'Date' => $Date,
+						'Hours' => $Hours,
 					);
 					$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
 					if ($UpdateWeeklyHours == TRUE) {
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Updated!</h5></div>');
-						// LOGBOOK
-						date_default_timezone_set('Asia/Manila');
-						$LogbookCurrentTime = date('Y-m-d h:i:s A');
-						$LogbookType = 'Update';
-						$LogbookEvent = 'Updated weekly hours for ' . $ApplicantID . '.';
-						// $LogbookLink = base_url() . 'ViewClient?id=' . $Temp_ApplicantID;
-						$LogbookLink = base_url() . 'Clients';
-						$data = array(
-							'Time' => $LogbookCurrentTime,
-							'Type' => $LogbookType,
-							'Event' => $LogbookEvent,
-							'Link' => $LogbookLink,
-						);
-						$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-						redirect($_SERVER['HTTP_REFERER']);
+							$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Updated!</h5></div>');
+							// LOGBOOK
+							date_default_timezone_set('Asia/Manila');
+							$LogbookCurrentTime = date('Y-m-d h:i:s A');
+							$LogbookType = 'Update';
+							$LogbookEvent = 'Updated weekly hours for ' . $ApplicantID . '.';
+							$LogbookLink = base_url() . 'ViewClient?id=' . $Temp_ApplicantID;
+							$LogbookLink = base_url() . 'Clients';
+							$data = array(
+								'Time' => $LogbookCurrentTime,
+								'Type' => $LogbookType,
+								'Event' => $LogbookEvent,
+								'Link' => $LogbookLink,
+							);
+							$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+							// redirect($_SERVER['HTTP_REFERER']);
 					}
 					else
 					{
@@ -742,17 +721,56 @@ class Update_Controller extends CI_Controller {
 						redirect($_SERVER['HTTP_REFERER']);
 					}
 				}
-				else
-				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
-					redirect($_SERVER['HTTP_REFERER']);
-				}
-			}
+			endforeach;
+
 		}
 		else
 		{
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
+	}
+	public function ViewClientEmployees()
+	{
+		$ClientID = $this->input->post('ViewClientID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
+		$Mode = $this->input->post('Mode',TRUE);
+		$FromDate = $this->input->post('FromDate',TRUE);
+		$ToDate = $this->input->post('ToDate',TRUE);
+		$Year = substr($FromDate, 0, 4);
+		$Month = substr($FromDate, 5);
+		$Month = substr($Month, 0, 2);
+		$Day = substr($FromDate, -2);
+
+		if ($ClientID == NULL) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Client ID)</h5></div>');
+			// redirect($_SERVER['HTTP_REFERER']);
+		}
+		else
+		{
+			$date1 = new DateTime($FromDate);
+			$date2 = new DateTime($ToDate);
+
+			$diff = $date2->diff($date1)->format("%a");
+			// TODO: Clean & optimize this. May cause lag on huge database.
+			$this->Model_Updates->UpdateWeeklyHoursCurrent();
+			$this->Model_Deletes->CleanWeeklyDates();
+			for ($i = 0; $i <= $diff; $i++) {
+				if ($Day < 10 && $i != 0) {
+					$Date = $Year . '-' . $Month . '-' . '0' . $Day;
+				} else {
+					$Date = $Year . '-' . $Month . '-' . $Day;
+				}
+				$data = array(
+					'Time' => $Date,
+					'Current' => 'Current',
+				);
+				$ClientViewTime = $this->Model_Inserts->InsertClientViewTime($data);
+				$Day++;
+				if ($ClientViewTime && $i == $diff) {
+					redirect('ViewClient?id=' . $ClientID);
+				}
+			}
+		}
+		
 	}
 }

@@ -1,5 +1,5 @@
 <div class="modal fade" id="HoursWeeklyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-dialog modal-xxl" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Work Hours for each day... | <span class="TotalHoursInAWeek">48</span> Hours Total</h5>
@@ -10,6 +10,7 @@
 				<div class="modal-body">
 					<form action="<?php echo base_url().'SetWeeklyHours'; ?>" method="post">
 						<input id="ApplicantID" type="hidden" name="ApplicantID" value="">
+						<input id="ClientID" type="hidden" name="ClientID" value="">
 						<div class="form-row">
 							<div class="form-group col-sm-12 col-md-2">
 								<label>Type</label>
@@ -17,7 +18,17 @@
 							</div>
 							<div class="form-group col-sm-12 col-md-2">
 								<label>Salary</label>
-								<input id="Salary" class="form-control" type="number" name="" value="" readonly>
+								<div class="input-icon-sm">
+									<input id="Salary" class="form-control" type="number" name="" value="" readonly>
+									<i>₱</i>
+								</div>
+							</div>
+							<div class="form-group col-sm-12 col-md-2">
+								<label>Average Per Hour</label>
+								<div class="input-icon-sm">
+									<input id="AveragePerHour" class="form-control" type="number" name="" value="" readonly>
+									<i>₱</i>
+								</div>
 							</div>
 <!-- 							<div id="SalaryOvertimeFade" class="form-group col-sm-12 col-md-2 ml-auto">
 								<label>Overtime Bonus</label>
@@ -25,8 +36,32 @@
 							</div> -->
 						</div>
 						<div id="SalaryDays" class="form-row">
-							<div class="form-group col-sm-12 col-md-12 text-center">
-								<table id="SalaryTable" class="table table-condensed">
+							<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
+								<input id="<?php echo $row['Time']; ?>" type="hidden" name="<?php echo $row['Time']; ?>" value="<?php echo $row['Time']; ?>">
+								<div class="col-auto text-center rcontent">
+									<b><?php echo $row['Time']; ?></b>
+									<input id="Hours_<?php echo $row['Time']; ?>" class="form-control" type="number" name="Hours_<?php // echo $row['Time']; ?>" value="<?php
+										// foreach ($GetWeeklyListEmployee->result_array() as $nrow):
+											// if($this->Model_Selects->GetMatchingDates($nrow['ApplicantID'], $row['Time'])->num_rows() > 0) {
+												// foreach ($this->Model_Selects->GetMatchingDates($nrow['ApplicantID'], $row['Time'])->result_array() as $nrow):
+													// echo $nrow['Hours'];
+												// endforeach;
+											// }
+										// endforeach;?>">
+									<p class="mr-auto ml-auto">Hours</p>
+									<div class="input-icon">
+										<input id="SalaryDayOne" class="form-control" type="text" name="" readonly>
+										<i>₱/h</i>
+									</div>
+								</div>
+							<?php endforeach; ?>
+								<!-- <table id="SalaryTable" class="table table-condensed">
+									<th>Monday</th>
+									<th>Tuesday</th>
+									<th>Wednesday</th>
+									<th>Thursday</th>
+									<th>Friday</th>
+									<th>Saturday</th>
 									<th>Monday</th>
 									<th>Tuesday</th>
 									<th>Wednesday</th>
@@ -34,11 +69,22 @@
 									<th>Friday</th>
 									<th>Saturday</th>
 									<tr>
-										<td><input id="HoursDayOne" class="form-control" type="number" name="HoursDayOne" value="8"></td>
+										<td>
+											<div class="input-icon">
+												<input id="HoursDayOne" class="form-control" type="number" name="HoursDayOne" value="8">
+												<i>₱</i>
+											</div>
+										</td>
 										<td><input id="HoursDayTwo" class="form-control" type="number" name="HoursDayTwo" value="8"></td>
 										<td><input id="HoursDayThree" class="form-control" type="number" name="HoursDayThree" value="8"></td>
 										<td><input id="HoursDayFour" class="form-control" type="number" name="HoursDayFour" value="8"></td>
 										<td><input id="HoursDayFive" class="form-control" type="number" name="HoursDayFive" value="8"></td>
+										<td><input id="HoursDaySix" class="form-control" type="number" name="HoursDaySix" value="8"></td>
+										<td><input id="HoursDayTwo" class="form-control" type="number" name="HoursDayTwo" value="8"></td>
+										<td><input id="HoursDayThree" class="form-control" type="number" name="HoursDayThree" value="8"></td>
+										<td><input id="HoursDayFour" class="form-control" type="number" name="HoursDayFour" value="8"></td>
+										<td><input id="HoursDayFive" class="form-control" type="number" name="HoursDayFive" value="8"></td>
+										<td><input id="HoursDaySix" class="form-control" type="number" name="HoursDaySix" value="8"></td>
 										<td><input id="HoursDaySix" class="form-control" type="number" name="HoursDaySix" value="8"></td>
 									</tr>
 									<tr>
@@ -49,11 +95,31 @@
 										<td>Hours</td>
 										<td>Hours</td>
 									</tr>
-<!-- 									<tr>
-										<td><input id="SalaryDayOne" class="form-control" type="text" name="" readonly></td>
-										<td><input id="SalaryDayTwo" class="form-control" type="text" name="" readonly></td>
-										<td><input id="SalaryDayThree" class="form-control" type="text" name="" readonly></td>
-										<td><input id="SalaryDayFour" class="form-control" type="text" name="" readonly></td>
+									<tr>
+										<td>
+											<div class="input-icon">
+												<input id="SalaryDayOne" class="form-control" type="text" name="" readonly>
+												<i>₱</i>
+											</div>
+										</td>
+										<td>
+											<div class="input-icon">
+												<input id="SalaryDayTwo" class="form-control" type="text" name="" readonly>
+												<i>₱</i>
+											</div>
+										</td>
+										<td>
+											<div class="input-icon">
+												<input id="SalaryDayThree" class="form-control" type="text" name="" readonly>
+												<i>₱</i>
+											</div>
+										</td>
+										<td>
+											<div class="input-icon">
+												<input id="SalaryDayFour" class="form-control" type="text" name="" readonly>
+												<i>₱</i>
+											</div>
+										</td>
 										<td><input id="SalaryDayFive" class="form-control" type="text" name="" readonly></td>
 										<td><input id="SalaryDaySix" class="form-control" type="text" name="" readonly></td>
 									</tr>
@@ -62,10 +128,9 @@
 									</tr>
 									<tr>
 										<td colspan="2"><input id="SalaryPerHour" class="form-control" type="text" name="" readonly></td>	
-									</tr> -->
-								</table>
+									</tr>
+								</table> -->
 							</div>
-						</div>
 					<div class="modal-fade text-center" style="display: none;">
 							<hr>
 							<div class="form-row">

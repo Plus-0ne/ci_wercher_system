@@ -931,13 +931,13 @@
 			background-color: rgba(235, 235, 235, 1.0);
 		}
 		.blacklisted-notice {
-			border-top: 2px;
-			border-bottom: 2px;
-			border-left: 0px;
+			border-top: 0px;
+			border-bottom: 0px;
+			border-left: 8px;
 			border-right: 0px;
 			border-style: solid;
 			border-color: rgba(255, 50, 50);
-			background-color: rgba(255, 50, 50, 0.55);
+			background-color: rgba(255, 50, 50, 0.25);
 		}
 	</style>
 	<textarea id="text"></textarea>

@@ -4,13 +4,13 @@
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
-				<?php $this->load->view('_template/users/u_notifications'); ?>
+				<?php $this->load->view('_template/users/u_notifications'); //TODO: Limit the bell to HR access? ?>
 				<div class="row">
 					<div class="col-sm-12 pt-3 pb-3">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb" style="background-color: transparent;">
 								<li class="breadcrumb-item"><a href="">Home</a></li>
-								<li class="breadcrumb-item active" aria-current="page">Clients</li>
+								<li class="breadcrumb-item active" aria-current="page">Payroll</li>
 							</ol>
 						</nav>
 					</div>
@@ -32,8 +32,8 @@
 									<tr class="text-center align-middle">
 										<th> Name </th>
 										<th> Address </th>
-										<th> Contact No. </th>
-										<th> No. of Employees </th>
+										<th> Contact </th>
+										<th> Employees </th>
 										<th class="text-center PrintExclude"> Action </th>
 									</tr>
 								</thead>
@@ -50,22 +50,49 @@
 												<?php echo $row['ContactNumber']; ?>
 											</td>
 											<td>
-												<?php echo $this->Model_Selects->GetWeeklyList($row['ClientID'])->num_rows(); ?>
+												<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['ClientID'])->num_rows(); ?>
 											</td>
 											<td class="text-center align-middle PrintExclude">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewClient?id=<?php echo $row['ClientID']; ?>"><i class="far fa-eye"></i> View</a>
-												<a href="<?=base_url()?>RemoveClient?id=<?=$row['ClientID']?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Client?')"><i class="fas fa-trash"></i> Delete</a>
+												<button id="<?php echo $row['ClientID']; ?>" type="button" class="btn btn-info btn-sm w-100 mb-1 ViewClientIDButton"  data-toggle="modal" data-target="#ModalClientView"><i class="far fa-eye"></i> View Hours</button>
+												<!-- <a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewClient?id=<?php echo $row['ClientID']; ?>"><i class="far fa-eye"></i> View Hours</a> -->
 											</td>
 										</tr>
 									<?php endforeach ?>
 								</tbody>
 							</table>
 						</div>
+					</div> 
+				</div>
+				<div class="row">
+					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
+						<h5>
+							<i class="fas fa-user-edit fa-fw"></i> Recent Hires
+						</h5>
 					</div>
-					<div class="p-2">
-						<button class="btn btn-primary" onclick="return confirm('Add Client?')" data-toggle="modal" data-target="#addClients">
-							<i class="fas fa-user-plus"></i> New
-						</button>
+					<div class="col-sm-12">
+						<div class="table-responsive pb-5 pl-2 pr-2">
+							<table id="ListLogbook" class="table table-condensed PrintOut" style="width: 100%;">
+								<thead>
+									<tr class="text-center align-middle">
+										<th> Time </th>
+										<th> Event </th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php foreach ($GetLogbookLatestHires->result_array() as $row): ?>
+										<tr>
+											</td>
+											<td class="text-center align-middle">
+												<?php echo $row['Time']; ?>
+											</td>
+											<td class="text-center align-middle">
+												<?php echo $row['Event']; ?>
+											</td>
+										</tr>
+									<?php endforeach; ?>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -109,6 +136,7 @@
 			</div>
 		</div>
 	</div>
+	<?php $this->load->view('_template/modals/m_p_clientview'); ?>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
@@ -118,6 +146,7 @@
 			$('.ncontent').toggleClass('shContent');
 		});
 		var table = $('#ListClients').DataTable( {
+						"order": [[ 3, "desc" ]],
 						"columnDefs": [
 							{ 
 								"width": "10%", "targets": 4
@@ -175,6 +204,10 @@
 	            }
 	        ]
 		}).container().appendTo($('#datatables-export'));
+		$('.ViewClientIDButton').on('click', function () {
+			$('#ViewClientID').val($(this).attr('id'));
+			console.log($('#ViewClientID').val());
+		});
 	});
 </script>
 </html>

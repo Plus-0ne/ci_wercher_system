@@ -176,7 +176,7 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function GetWeeklyList($ClientID) // Argument is $id originally.
+	public function GetWeeklyList($ClientID) // Argument is $id originally from source.
 	{
 		$SQL = "SELECT * FROM hours_weekly WHERE ClientID = '$ClientID'";
 		$result = $this->db->query($SQL,$ClientID);
@@ -188,7 +188,43 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL,$ClientID);
 		return $result;
 	}
-	public function GetWeeklyListEmployee($ApplicantID)
+	public function GetWeeklyListEmployee($ClientID)
+	{
+		$SQL = "SELECT * FROM applicants WHERE ClientEmployed = '$ClientID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetLogbookLatestHires()
+	{
+		$SQL = "SELECT * FROM logbook WHERE Type = 'Employment' ORDER BY No DESC";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetWeeklyDates()
+	{
+		$SQL = "SELECT * FROM dummy_hours WHERE Current = 'Current'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	// public function GetWeeklyListEmployeeActive($ClientID)
+	// {
+	// 	$SQL = "SELECT * FROM hours_weekly WHERE ClientID = '$ClientID' AND ApplicantID IS NOT NULL AND Name IS NOT NULL";
+	// 	$result = $this->db->query($SQL);
+	// 	return $result;
+	// }
+	// public function GetWeeklyDatesForEmployee($ApplicantID)
+	// {
+	// 	$SQL = "SELECT * FROM hours_weekly WHERE Current IS NULL AND ApplicantID = '$ApplicantID' AND Name IS NULL";
+	// 	$result = $this->db->query($SQL);
+	// 	return $result;
+	// }
+	public function GetMatchingDates($ApplicantID, $Time)
+	{
+		$SQL = "SELECT * FROM hours_weekly, dummy_hours WHERE hours_weekly.Time = '$Time' AND dummy_hours.Time = '$Time' AND hours_weekly.ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetWeeklyListEmployeeForDates($ApplicantID)
 	{
 		$SQL = "SELECT * FROM hours_weekly WHERE ApplicantID = '$ApplicantID'";
 		$result = $this->db->query($SQL,$ApplicantID);
