@@ -674,7 +674,10 @@ class Update_Controller extends CI_Controller {
 			$ApplicantID = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 			$ClientID = $this->input->post('ClientID',FALSE);
 			$GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
+			$ArrayInt = 0;
+			$ArrayLength = $GetWeeklyDates->num_rows();
 			foreach ($GetWeeklyDates->result_array() as $nrow):
+				$ArrayInt++;
 				$Hours = $this->input->post('Hours_' . $nrow['Time'],TRUE);
 				$Date = $this->input->post($nrow['Time'],TRUE);
 				echo $Hours . '<br>';
@@ -698,6 +701,7 @@ class Update_Controller extends CI_Controller {
 					);
 					$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
 					if ($UpdateWeeklyHours == TRUE) {
+						if ($ArrayInt >= $ArrayLength) {
 							$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Updated!</h5></div>');
 							// LOGBOOK
 							date_default_timezone_set('Asia/Manila');
@@ -713,7 +717,8 @@ class Update_Controller extends CI_Controller {
 								'Link' => $LogbookLink,
 							);
 							$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-							// redirect($_SERVER['HTTP_REFERER']);
+							redirect($_SERVER['HTTP_REFERER']);
+						}
 					}
 					else
 					{

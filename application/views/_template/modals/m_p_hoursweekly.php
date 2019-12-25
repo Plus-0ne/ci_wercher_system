@@ -40,7 +40,7 @@
 								<input id="<?php echo $row['Time']; ?>" type="hidden" name="<?php echo $row['Time']; ?>" value="<?php echo $row['Time']; ?>">
 								<div class="col-auto text-center rcontent">
 									<b><?php echo $row['Time']; ?></b>
-									<input id="Hours_<?php echo $row['Time']; ?>" class="form-control" type="number" name="Hours_<?php // echo $row['Time']; ?>" value="<?php
+									<input id="Hours_<?php echo $row['Time']; ?>" class="form-control" type="number" name="Hours_<?php echo $row['Time']; ?>" value="<?php
 										// foreach ($GetWeeklyListEmployee->result_array() as $nrow):
 											// if($this->Model_Selects->GetMatchingDates($nrow['ApplicantID'], $row['Time'])->num_rows() > 0) {
 												// foreach ($this->Model_Selects->GetMatchingDates($nrow['ApplicantID'], $row['Time'])->result_array() as $nrow):
