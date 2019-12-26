@@ -50,7 +50,7 @@
 												<?php echo $row['ContactNumber']; ?>
 											</td>
 											<td>
-												<?php echo $this->Model_Selects->GetWeeklyList($row['ClientID'])->num_rows(); ?>
+												<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['ClientID'])->num_rows(); ?>
 											</td>
 											<td class="text-center align-middle PrintExclude">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewClient?id=<?php echo $row['ClientID']; ?>"><i class="far fa-eye"></i> View</a>
