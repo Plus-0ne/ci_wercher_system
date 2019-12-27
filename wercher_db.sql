@@ -611,7 +611,8 @@ ALTER TABLE `employment_record`
 -- Indexes for table `hours_weekly`
 --
 ALTER TABLE `hours_weekly`
-  ADD PRIMARY KEY (`No`);
+  ADD PRIMARY KEY (`No`),
+  ADD UNIQUE KEY `account_prod` (`ApplicantID`,`Time`);
 
 --
 -- Indexes for table `logbook`
@@ -687,7 +688,13 @@ ALTER TABLE `clients`
 -- AUTO_INCREMENT for table `contract_history`
 --
 ALTER TABLE `contract_history`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
+--
+-- AUTO_INCREMENT for table `dummy_hours`
+--
+ALTER TABLE `dummy_hours`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=170;
 
 --
 -- AUTO_INCREMENT for table `employee`
@@ -699,13 +706,19 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `employment_record`
 --
 ALTER TABLE `employment_record`
-  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `hours_weekly`
+--
+ALTER TABLE `hours_weekly`
+  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=422;
 
 --
 -- AUTO_INCREMENT for table `logbook`
 --
 ALTER TABLE `logbook`
-  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=299;
 
 --
 -- AUTO_INCREMENT for table `machine_operated`
@@ -718,12 +731,6 @@ ALTER TABLE `machine_operated`
 --
 ALTER TABLE `relatives`
   MODIFY `No` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `supp_documents`
---
-ALTER TABLE `supp_documents`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `violations`
