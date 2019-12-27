@@ -102,9 +102,9 @@
 					<div class="form-group col-sm-12 text-center">
 						<input type='file' id="imgInp" name="pImage" style="display: none;">
 						<?php if(!$this->agent->is_mobile()): ?>
-							<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/wercher_default_photo.png" width="120" height="120">
+							<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/wercher_attach_image.png" width="120" height="120">
 							<?php else: ?>
-								<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/wercher_default_photo_mobile.png" width="120" height="120">
+								<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/wercher_attach_image_mobile.png" width="120" height="120">
 							<?php endif; ?>
 						</div>
 						<div class="form-group col-sm-12 text-center">
@@ -121,7 +121,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary">Add changes</button>
+						<button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Add</button>
 					</div>
 					<?php echo form_close(); ?>
 				</div>

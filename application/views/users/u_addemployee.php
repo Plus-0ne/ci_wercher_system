@@ -533,9 +533,6 @@
 <style type="text/css">
 	.in-beni:focus { box-shadow: none; }
 	.btn-tr { background-color: transparent; border: none; }
-	.image-hover:hover {
-		border: 2px dotted rgba(155, 155, 155, 1.0);
-	}
 	#SalaryTable {
 		table-layout: fixed;
 		word-wrap: break-word;

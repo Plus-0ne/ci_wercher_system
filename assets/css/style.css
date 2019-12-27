@@ -229,6 +229,9 @@ a[data-toggle="collapse"] {
 .fa , .fas { margin-right: 5px; }
 .dc-links { text-decoration: none; }
 .dc-links:hover { text-decoration: none; }
+.image-hover:hover {
+	border: 2px dotted rgba(155, 155, 155, 1.0);
+}
 /* Mobile devices */
 @media (min-width: 1px) {
 	.e-title { text-align: center; border-left: none;  }
