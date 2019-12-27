@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2019 at 08:43 PM
+-- Generation Time: Dec 27, 2019 at 08:45 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.10
 
@@ -273,18 +273,6 @@ CREATE TABLE `dummy_hours` (
   `Time` varchar(255) DEFAULT NULL,
   `Current` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `dummy_hours`
---
-
-INSERT INTO `dummy_hours` (`ID`, `Time`, `Current`) VALUES
-(0, '2019-12-07', 'Current'),
-(0, '2019-12-08', 'Current'),
-(0, '2019-12-09', 'Current'),
-(0, '2019-12-10', 'Current'),
-(0, '2019-12-11', 'Current'),
-(0, '2019-12-12', 'Current');
 
 -- --------------------------------------------------------
 
@@ -602,6 +590,12 @@ ALTER TABLE `contract_history`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexes for table `dummy_hours`
+--
+ALTER TABLE `dummy_hours`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `employee`
 --
 ALTER TABLE `employee`
@@ -611,6 +605,12 @@ ALTER TABLE `employee`
 -- Indexes for table `employment_record`
 --
 ALTER TABLE `employment_record`
+  ADD PRIMARY KEY (`No`);
+
+--
+-- Indexes for table `hours_weekly`
+--
+ALTER TABLE `hours_weekly`
   ADD PRIMARY KEY (`No`);
 
 --
