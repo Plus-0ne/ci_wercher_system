@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2019 at 01:02 PM
+-- Generation Time: Dec 27, 2019 at 08:41 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.10
 
@@ -265,6 +265,29 @@ INSERT INTO `contract_history` (`ID`, `ApplicantID`, `PreviousDateStarted`, `Pre
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `dummy_hours`
+--
+
+CREATE TABLE `dummy_hours` (
+  `ID` int(11) NOT NULL,
+  `Time` varchar(255) DEFAULT NULL,
+  `Current` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `dummy_hours`
+--
+
+INSERT INTO `dummy_hours` (`ID`, `Time`, `Current`) VALUES
+(165, '2019-12-06', 'Current'),
+(166, '2019-12-07', 'Current'),
+(167, '2019-12-08', 'Current'),
+(168, '2019-12-09', 'Current'),
+(169, '2019-12-10', 'Current');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `employee`
 --
 
@@ -461,7 +484,8 @@ CREATE TABLE `supp_documents` (
 --
 
 INSERT INTO `supp_documents` (`ID`, `ApplicantID`, `Doc_Image`, `Subject`, `Description`, `Remarks`, `DateAdded`) VALUES
-(1, '00006-C', 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f32303070782d596f75547562654d757369635f4c6f676f2e706e67, 'Violation', 'dasdasd', 'asdasd', '2019-12-27');
+(1, '00006-C', 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f32303070782d596f75547562654d757369635f4c6f676f2e706e67, 'Violation', 'dasdasd', 'asdasd', '2019-12-27'),
+(2, '00006-C', 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f6369724e6f2e706e67, 'ABC', '123', '5555', '2019-12-27');
 
 -- --------------------------------------------------------
 
@@ -646,7 +670,7 @@ ALTER TABLE `relatives`
 -- AUTO_INCREMENT for table `supp_documents`
 --
 ALTER TABLE `supp_documents`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `violations`
