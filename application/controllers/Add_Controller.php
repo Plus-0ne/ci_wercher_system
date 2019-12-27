@@ -14,6 +14,7 @@ class Add_Controller extends CI_Controller {
 	{
 		# PERSONAL INFORMATION
 		$PositionDesired = $this->input->post('PositionDesired');
+		$PositionGroup = $this->input->post('PositionGroup');
 		$SalaryExpected = $this->input->post('SalaryExpected');
 		$LastName = $this->input->post('LastName');
 		$FirstName = $this->input->post('FirstName');
@@ -57,10 +58,11 @@ class Add_Controller extends CI_Controller {
 		$Address_Provincial = $this->input->post('Address_Provincial');
 		$Address_Manila = $this->input->post('Address_Manila');
 
-		if ($PositionDesired == NULL || $SalaryExpected == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Age == NULL || $Height == NULL || $Weight == NULL || $Religion == NULL || $bDate == NULL || $bPlace == NULL || $Citizenship == NULL || $CivilStatus == NULL || $No_Children == NULL || $PhoneNumber == NULL || $SSS == NULL || $SSS_Effective == NULL || $RCN == NULL || $RCN_at == NULL || $RCN_On == NULL || $TIN == NULL || $TIN_At == NULL || $TIN_On == NULL || $HDMF == NULL || $HDMF_At == NULL || $HDMF_On == NULL || $Address_Present == NULL) {
+		if ($PositionDesired == NULL || $PositionGroup == NULL || $SalaryExpected == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Age == NULL || $Height == NULL || $Weight == NULL || $Religion == NULL || $bDate == NULL || $bPlace == NULL || $Citizenship == NULL || $CivilStatus == NULL || $No_Children == NULL || $PhoneNumber == NULL || $SSS == NULL || $SSS_Effective == NULL || $RCN == NULL || $RCN_at == NULL || $RCN_On == NULL || $TIN == NULL || $TIN_At == NULL || $TIN_On == NULL || $HDMF == NULL || $HDMF_At == NULL || $HDMF_On == NULL || $Address_Present == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			$data = array(
 				'PositionDesired' => $PositionDesired,
+				'PositionGroup' => $PositionGroup,
 				'SalaryExpected' => $SalaryExpected,
 				'LastName' => $LastName,
 				'FirstName' => $FirstName,
@@ -149,6 +151,7 @@ class Add_Controller extends CI_Controller {
 						'ApplicantImage' => $pImage,
 						'ApplicantID' => $customid,
 						'PositionDesired' => $PositionDesired,
+						'PositionGroup' => $PositionGroup,
 						'SalaryExpected' => $SalaryExpected,
 						'LastName' => ucfirst($LastName),
 						'FirstName' => ucfirst($FirstName),
@@ -260,7 +263,7 @@ class Add_Controller extends CI_Controller {
 						// unset($_SESSION["beneCart"]);
 						
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Employee added!</h5></div>');
-
+						
 						// LOGBOOK
 						date_default_timezone_set('Asia/Manila');
 						$LogbookCurrentTime = date('Y-m-d h:i:s A');

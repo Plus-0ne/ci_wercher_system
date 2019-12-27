@@ -40,26 +40,30 @@
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Position Desired</label>
-										<select class="form-control" name="PositionDesired">
-											<option value="Office Staff" <?php if ($this->session->flashdata('PositionDesired') == 'Office Staff') {
+										<input class="form-control" type="text" name="PositionDesired" autocomplete="off" value="<?php echo $this->session->flashdata('PositionDesired'); ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-2">
+										<label>Group</label>
+										<select class="form-control" name="PositionGroup">
+											<option value="TEST GROUP 1" <?php if ($this->session->flashdata('PositionGroup') == 'TEST GROUP 1') {
 												echo 'selected=""';
 											} ?>>
-												Office Staff
+												TEST GROUP 1
 											</option>
-											<option value="Payroll Specialist" <?php if ($this->session->flashdata('PositionDesired') == 'Payroll Specialist') {
+											<option value="TEST GROUP 2" <?php if ($this->session->flashdata('PositionGroup') == 'TEST GROUP 2') {
 												echo 'selected=""';
 											} ?>>
-												Payroll Specialist
+												TEST GROUP 2
 											</option>
-											<option value="Secretary" <?php if ($this->session->flashdata('PositionDesired') == 'Secretary') {
+											<option value="TEST GROUP 3" <?php if ($this->session->flashdata('PositionGroup') == 'TEST GROUP 3') {
 												echo 'selected=""';
 											} ?>>
-												Secretary
+												TEST GROUP 3
 											</option>
-											<option value="Bookeeper" <?php if ($this->session->flashdata('PositionDesired') == 'Bookeeper') {
+											<option value="TEST GROUP 4" <?php if ($this->session->flashdata('PositionGroup') == 'TEST GROUP 4') {
 												echo 'selected=""';
 											} ?>>
-												Bookeeper
+												TEST GROUP 4
 											</option>
 										</select>
 									</div>

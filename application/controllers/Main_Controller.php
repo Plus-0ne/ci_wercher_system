@@ -114,7 +114,7 @@
 		$data = [];
 
 		foreach($record as $row) {
-			$data['label'][] = $row->PositionDesired;
+			$data['label'][] = $row->PositionGroup;
 			$data['data'][] = (int) $row->count;
 		}
 		$data['chart_data'] = json_encode($data);
@@ -224,6 +224,7 @@
 					'ApplicantImage' => $ged['ApplicantImage'],
 					'ApplicantID' => $ged['ApplicantID'],
 					'PositionDesired' => $ged['PositionDesired'],
+					'PositionGroup' => $ged['PositionGroup'],
 					'SalaryExpected' => $ged['SalaryExpected'],
 					'LastName' => $ged['LastName'],
 					'FirstName' => $ged['FirstName'],
@@ -317,6 +318,7 @@
 					'ApplicantImage' => $ged['ApplicantImage'],
 					'ApplicantID' => $ged['ApplicantID'],
 					'PositionDesired' => $ged['PositionDesired'],
+					'PositionGroup' => $ged['PositionGroup'],
 					'SalaryExpected' => $ged['SalaryExpected'],
 					'LastName' => $ged['LastName'],
 					'FirstName' => $ged['FirstName'],

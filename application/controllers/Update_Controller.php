@@ -244,6 +244,7 @@ class Update_Controller extends CI_Controller {
 		$pImage = $this->input->post('M_ApplicantImage');
 		# PERSONAL INFORMATION
 		$PositionDesired = $this->input->post('PositionDesired');
+		$PositionGroup = $this->input->post('PositionGroup');
 		$SalaryExpected = $this->input->post('SalaryExpected');
 		$LastName = $this->input->post('LastName');
 		$FirstName = $this->input->post('FirstName');
@@ -288,6 +289,7 @@ class Update_Controller extends CI_Controller {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			$data = array(
 				'PositionDesired' => $PositionDesired,
+				'PositionGroup' => $PositionGroup,
 				'SalaryExpected' => $SalaryExpected,
 				'LastName' => $LastName,
 				'FirstName' => $FirstName,
@@ -365,6 +367,7 @@ class Update_Controller extends CI_Controller {
 					'ApplicantImage' => $pImage,
 					'ApplicantID' => $ApplicantID,
 					'PositionDesired' => $PositionDesired,
+					'PositionGroup' => $PositionGroup,
 					'SalaryExpected' => $SalaryExpected,
 					'LastName' => ucfirst($LastName),
 					'FirstName' => ucfirst($FirstName),

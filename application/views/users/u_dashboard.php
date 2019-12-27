@@ -281,7 +281,7 @@
 				},
 				title: {
 					display: true,
-					text: 'Total Applicant / Position'
+					text: 'Total Applicant / Position by Group'
 				}
 			}
 		});

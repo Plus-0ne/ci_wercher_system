@@ -89,7 +89,7 @@
 						</div>
 						<div class="col-sm-12 col-md-4 e-det">
 							<p>
-								<?php echo $PositionDesired; ?>
+								<?php echo $PositionDesired; ?> (<?php echo $PositionGroup; ?>)
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-2 e-title">
@@ -774,7 +774,7 @@
 
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title PrintOut PrintOutModalExpired">Previous Contract Report for <?=$LastName?>, <?=$FirstName?> <?=$MiddleInitial?>.</h4>
+					<h4 class="modal-title PrintOutModalExpired">Previous Contract Report for <?=$LastName?>, <?=$FirstName?> <?=$MiddleInitial?>.</h4>
 					<div class="text-right">
 						<button onClick="printContent('PrintOutModalExpired')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
 						<button type="button" class="close d-none d-sm-block" data-dismiss="modal">&times;</button>
