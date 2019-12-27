@@ -230,4 +230,11 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
+	public function GetDocuments($ApplicantID)
+	{
+		$SQL = "SELECT * FROM supp_documents WHERE ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	
 }

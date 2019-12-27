@@ -605,7 +605,49 @@
 							</div>
 						</div>
 					</div>
-					
+					<div class="row rcontent p-5">
+						<div class="col-sm-12 mb-5">
+							<h5>
+								<i class="fas fa-stream"></i> Documents
+							</h5>
+						</div>
+						<div class="col-sm-12">
+							<div class="table-responsive">
+								<table class="table table-condensed">
+									<thead>
+										<th>File</th>
+										<th>Subject</th>
+										<th>Description</th>
+										<th>Remarks</th>
+										<th>Date</th>
+									</thead>
+									<tbody>
+										<?php if ($GetDocuments->num_rows() > 0) { ?>
+											<?php foreach ($GetDocuments->result_array() as $row): ?>
+												<?php if ($ApplicantID == $row['ApplicantID']) { ?>
+													<tr>
+														<td><a id="<?php echo $row['Doc_Image'];?>" class="a_eImage" href="#" data-toggle="modal" data-target="#docModals"><img class="small_docimage" src="<?php echo $row['Doc_Image'];?>" width="200"></a></td>
+														<td><?php echo $row['Subject'];?></td>
+														<td><?php echo $row['Description'];?></td>
+														<td><?php echo $row['Remarks'];?></td>
+														<td><?php echo $row['DateAdded'];?></td>
+													</tr>
+												<?php } ?>
+											<?php endforeach ?>
+										<?php } else { ?>
+											<tr class="w-100 text-center">
+												<td>
+													<h5>
+														No Data
+													</h5>
+												</td>
+											</tr>
+										<?php } ?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -890,6 +932,8 @@
 		<?php $this->load->view('_template/modals/m_setreminder'); ?>
 		<!-- VIOLATIONS MODAL -->
 		<?php $this->load->view('_template/modals/m_violations'); ?>
+		<!-- DOCUMENT MODAL -->
+		<?php $this->load->view('_template/modals/m_documents'); ?>
 	</body>
 	<?php $this->load->view('_template/users/u_scripts');?>
 	<script type="text/javascript">
@@ -921,6 +965,11 @@
 				$('.progressRemaining').animate({width:rPercentage + "%"},1500);
 				$('.progress_value').text(rPercentage + "%");
 			});
+			$('.a_eImage').on('click', function () {
+				var src1 = $(this).attr('id');
+				$("#enlargeImage_doc").attr("src", src1);
+			});
+
 		});
 		function hideModal() {
 			$("#EmpContractModal").modal('hide');

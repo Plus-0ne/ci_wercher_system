@@ -284,6 +284,7 @@
 				$data['GetContractHistory'] = $this->Model_Selects->GetContractHistory($ApplicantID);
 				$data['GetPreviousContract'] = $this->Model_Selects->GetPreviousContract($ApplicantID);
 				$data['GetViolations'] = $this->Model_Selects->GetViolations($ApplicantID);
+				$data['GetDocuments'] = $this->Model_Selects->GetDocuments($ApplicantID);
 				$this->load->view('users/u_viewemployee',$data);
 			}
 			else
