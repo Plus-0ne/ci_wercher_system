@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2019 at 08:41 PM
+-- Generation Time: Dec 27, 2019 at 08:43 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.10
 
@@ -279,11 +279,12 @@ CREATE TABLE `dummy_hours` (
 --
 
 INSERT INTO `dummy_hours` (`ID`, `Time`, `Current`) VALUES
-(165, '2019-12-06', 'Current'),
-(166, '2019-12-07', 'Current'),
-(167, '2019-12-08', 'Current'),
-(168, '2019-12-09', 'Current'),
-(169, '2019-12-10', 'Current');
+(0, '2019-12-07', 'Current'),
+(0, '2019-12-08', 'Current'),
+(0, '2019-12-09', 'Current'),
+(0, '2019-12-10', 'Current'),
+(0, '2019-12-11', 'Current'),
+(0, '2019-12-12', 'Current');
 
 -- --------------------------------------------------------
 
@@ -339,6 +340,58 @@ CREATE TABLE `employment_record` (
 INSERT INTO `employment_record` (`No`, `ApplicantID`, `Name`, `Address`, `PeriodCovered`, `Position`, `Salary`, `CauseOfSeparation`) VALUES
 (1, '00007-A', 'Some Dude', 'Somewhere in Russia', '2010', 'Manager', '75000', 'Late by 1 minute'),
 (2, '00008-A', 'SAMPLE', 'SAMPLE', 'SAMPLE', 'SAMPLE', 'SAMPLE', 'SAMPLE');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hours_weekly`
+--
+
+CREATE TABLE `hours_weekly` (
+  `No` int(25) NOT NULL,
+  `ClientID` varchar(255) DEFAULT NULL,
+  `ApplicantID` varchar(255) DEFAULT NULL,
+  `Name` varchar(255) DEFAULT NULL,
+  `Salary` varchar(255) DEFAULT NULL,
+  `Time` varchar(255) DEFAULT NULL,
+  `Hours` varchar(255) DEFAULT NULL,
+  `Current` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `hours_weekly`
+--
+
+INSERT INTO `hours_weekly` (`No`, `ClientID`, `ApplicantID`, `Name`, `Salary`, `Time`, `Hours`, `Current`) VALUES
+(1, '1', '00001-B', 'Haniyasushin, Keiki H.', '50000', NULL, NULL, NULL),
+(2, '1', '00005-B', 'Á???, Á?? Á????.', '???', NULL, NULL, NULL),
+(3, '1', '00003-B', 'Smith, Morty S.', '500', NULL, NULL, NULL),
+(383, '1', '00001-B', NULL, NULL, '2019-12-06', '1', NULL),
+(384, '1', '00001-B', NULL, NULL, '2019-12-07', '2', NULL),
+(385, '1', '00001-B', NULL, NULL, '2019-12-08', '3', NULL),
+(388, '1', '00003-B', NULL, NULL, '2019-12-06', '6', NULL),
+(389, '1', '00003-B', NULL, NULL, '2019-12-07', '7', NULL),
+(390, '1', '00003-B', NULL, NULL, '2019-12-08', '8', NULL),
+(391, '1', '00003-B', NULL, NULL, '2019-12-09', '9', NULL),
+(392, '1', '00003-B', NULL, NULL, '2019-12-10', '10', NULL),
+(393, '1', '00001-B', NULL, NULL, '2019-12-09', '4', NULL),
+(394, '1', '00001-B', NULL, NULL, '2019-12-10', '5', NULL),
+(395, '1', '00001-B', NULL, NULL, '2019-12-11', '6', NULL),
+(396, '1', '00001-B', NULL, NULL, '2019-12-12', '7', NULL),
+(397, '1', '00001-B', NULL, NULL, '2019-12-13', '8', NULL),
+(398, '1', '00001-B', NULL, NULL, '2019-12-14', '11', NULL),
+(410, '1', '00001-B', NULL, NULL, '2019-12-20', '5', NULL),
+(411, '1', '00001-B', NULL, NULL, '2019-12-21', '5', NULL),
+(412, '1', '00001-B', NULL, NULL, '2019-12-22', '5', NULL),
+(413, '1', '00001-B', NULL, NULL, '2019-12-23', '5', NULL),
+(414, '1', '00001-B', NULL, NULL, '2019-12-24', '5', NULL),
+(415, '1', '00001-B', NULL, NULL, '2019-12-25', '5', NULL),
+(416, '1', '00001-B', NULL, NULL, '2019-12-26', '5', NULL),
+(417, '1', '00001-B', NULL, NULL, '2019-12-27', '5', NULL),
+(418, '1', '00001-B', NULL, NULL, '2019-12-28', '5', NULL),
+(419, '1', '00001-B', NULL, NULL, '2019-12-29', '5', NULL),
+(420, '1', '00001-B', NULL, NULL, '2019-12-30', '5', NULL),
+(421, '1', '00001-B', NULL, NULL, '--', '1', NULL);
 
 -- --------------------------------------------------------
 
