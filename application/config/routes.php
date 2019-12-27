@@ -75,6 +75,8 @@ $route['LoginValidation'] = 'Login_Controller/LoginValidation';
 $route['addNewEmployee'] = 'Add_Controller/addNewEmployee';
 $route['Add_NewAdmin'] = 'Add_Controller/Add_NewAdmin';
 $route['Add_newClient'] = 'Add_Controller/Add_newClient';
+$route['AddSupDoc'] = 'Add_Controller/AddSupDoc';
+
 
 
 // DELETE

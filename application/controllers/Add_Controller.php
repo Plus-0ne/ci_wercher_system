@@ -405,4 +405,68 @@ class Add_Controller extends CI_Controller {
 			}
 		}
 	}
+	public function AddSupDoc()
+	{
+		$ApplicantID = $this->input->post('ApplicantID',TRUE);
+		$Subject = $this->input->post('Subject',TRUE);
+		$Description = $this->input->post('Description',TRUE);
+		$Remarks = $this->input->post('Remarks',TRUE);
+		
+		if ($ApplicantID == NULL || $Subject == NULL || $Description == NULL || $Remarks == NULL) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+			redirect('Employee');
+			exit();
+		}
+
+		else
+		{
+			$config['upload_path']          = './uploads/'.$ApplicantID;
+			$config['allowed_types']        = 'gif|jpg|png';
+			$config['max_size']             = 2000;
+			$config['max_width']            = 2000;
+			$config['max_height']           = 2000;
+
+			$this->load->library('upload', $config);
+			if (!is_dir('uploads'))
+			{
+				mkdir('./uploads', 0777, true);
+			}
+			if (!is_dir('uploads/' . $ApplicantID))
+			{
+				mkdir('./uploads/' . $ApplicantID, 0777, true);
+				$dir_exist = false;
+			}
+
+			if ( ! $this->upload->do_upload('pImage'))
+			{
+				$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
+				redirect('Employee');
+				exit();
+			}
+			else
+			{
+				$pImage = base_url().'uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
+				$data = array(
+					'ApplicantID' => $ApplicantID,
+					'Doc_Image' => $pImage,
+					'Subject' => $Subject,
+					'Description' => $Description,
+					'Remarks' => $Remarks,
+					'DateAdded' => date('Y-m-d'),
+				);
+				$AddDocuments = $this->Model_Inserts->AddDocuments($data);
+				if ($AddDocuments == TRUE) {
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Document added!</h5></div>');
+					redirect('Employee');
+					exit();
+				}
+				else
+				{
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+					redirect('Employee');
+					exit();
+				}
+			}
+		}
+	}
 }

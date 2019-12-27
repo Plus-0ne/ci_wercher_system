@@ -1,4 +1,4 @@
- <?php
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login_Controller extends CI_Controller {
@@ -14,7 +14,7 @@ class Login_Controller extends CI_Controller {
 		if ($UserName == NULL || $Password == NULL) {
 			$p_text = '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><i class="fas fa-times fa-fw"></i> Input Username and Password!</div>';
 			$this->session->set_flashdata('prompt',$p_text);
-			redirect();
+			redirect(base_url());
 		}
 		else
 		{
@@ -41,14 +41,14 @@ class Login_Controller extends CI_Controller {
 				{
 					$p_text = '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><i class="fas fa-times fa-fw"></i> Incorrect password!</div>';
 					$this->session->set_flashdata('prompt',$p_text);
-					redirect();
+					redirect(base_url());
 				}
 			}
 			else
 			{
 				$p_text = '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><i class="fas fa-times fa-fw"></i> User doesn\'t exist!</div>';
 				$this->session->set_flashdata('prompt',$p_text);
-				redirect();
+				redirect(base_url());
 			}
 		}
 	}
