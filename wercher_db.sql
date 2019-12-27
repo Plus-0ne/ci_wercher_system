@@ -733,6 +733,12 @@ ALTER TABLE `relatives`
   MODIFY `No` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `supp_documents`
+--
+ALTER TABLE `supp_documents`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `violations`
 --
 ALTER TABLE `violations`
