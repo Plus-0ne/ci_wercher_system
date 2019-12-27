@@ -85,4 +85,9 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->replace('dummy_hours', $data);
 		return $result;
 	}
+	public function AddDocuments($data)
+	{
+		$result = $this->db->insert('supp_documents', $data);
+		return $result;
+	}
 }
