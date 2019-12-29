@@ -2,13 +2,13 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<?php echo form_open(base_url().'ViewClientEmployees','method="POST"');?>
-			<div class="modal-header">
+			<div class="load-container modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">View Client</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body">
+			<div class="load-container modal-body">
 				<?php if (isset($_GET['id'])): ?>
 				<input id="ViewClientID" type="hidden" name="ViewClientID" value="<?php echo $ClientID; ?>">
 				<?php else: ?>
@@ -49,9 +49,16 @@
 						<input class="form-control" type="date" name="ToDate">
 					</div>
 				</div>
+				<div class="load-div form-row">
+					<div class="text-center ml-auto mr-auto">
+						<div class="spinner-border m-5" role="status"></div>
+						<h4>Please wait momentarily</h4>
+						<p>Preparing the table...</p>
+					</div>
+				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="submit" class="btn btn-primary"><i class="fas fa-clock"></i> View</button>
+			<div class="load-container modal-footer">
+				<button id="LoadButton" type="submit" class="btn btn-primary"><i class="fas fa-clock"></i> View</button>
 			</div>
 			<?php echo form_close();?>
 		</div>

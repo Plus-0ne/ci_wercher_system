@@ -53,7 +53,7 @@
 												<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['ClientID'])->num_rows(); ?>
 											</td>
 											<td class="text-center align-middle PrintExclude">
-												<button id="<?php echo $row['ClientID']; ?>" type="button" class="btn btn-info btn-sm w-100 mb-1 ViewClientIDButton"  data-toggle="modal" data-target="#ModalClientView"><i class="far fa-eye"></i> View Hours</button>
+												<button id="<?php echo $row['ClientID']; ?>" type="button" class="btn btn-primary btn-sm w-100 mb-1 ViewClientIDButton"  data-toggle="modal" data-target="#ModalClientView"><i class="far fa-eye"></i> View Hours</button>
 												<!-- <a class="btn btn-success btn-sm w-100 mb-1" href="<?=base_url()?>ViewClient?id=<?php echo $row['ClientID']; ?>"><i class="fas fa-file-excel"></i> Excel</a> -->
 											</td>
 										</tr>
@@ -141,6 +141,7 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('.load-div').hide();
 		$('#sidebarCollapse').on('click', function () {
 			$('#sidebar').toggleClass('active');
 			$('.ncontent').toggleClass('shContent');
@@ -207,6 +208,10 @@
 		$('.ViewClientIDButton').on('click', function () {
 			$('#ViewClientID').val($(this).attr('id'));
 			console.log($('#ViewClientID').val());
+		});
+		$('#LoadButton').on('click', function () {
+			$('.load-container').children().hide();
+			$('.load-div').show();
 		});
 	});
 </script>

@@ -459,6 +459,7 @@
 			$data['GetClientID'] = $this->Model_Selects->GetClientID($id);
 			$data['GetWeeklyDates'] = $this->Model_Selects->GetWeeklyDates();
 			// $data['GetWeeklyDatesForEmployee'] = $this->Model_Selects->GetWeeklyDatesForEmployee($row['ApplicantID']);
+			$data['IsFromExcel'] = False;
 			$this->load->view('payroll/p_viewclient',$data);
 		}
 		else

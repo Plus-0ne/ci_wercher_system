@@ -66,7 +66,7 @@ $route['Experimental'] = 'Main_Controller/Experimental';
 $route['Archived'] = 'Main_Controller/V_Archived';
 $route['Blacklisted'] = 'Main_Controller/V_Blacklisted';
 
-$route['PayrollClients'] = 'Main_Controller/PayrollClients';
+$route['Payroll'] = 'Main_Controller/PayrollClients';
 $route['ViewClient'] = 'Main_Controller/ViewClient';
 
 // LOGIN
@@ -93,3 +93,4 @@ $route['SetReminder'] = 'Update_Controller/SetReminder';
 $route['BlacklistEmployee'] = 'Update_Controller/BlacklistEmployee';
 $route['SetWeeklyHours'] = 'Update_Controller/SetWeeklyHours';
 $route['ViewClientEmployees'] = 'Update_Controller/ViewClientEmployees';
+$route['ImportExcel'] = 'Update_Controller/ImportExcel';

@@ -93,7 +93,7 @@
 						</div>
 					</div>
 					<div class="p-2">
-						<a href="#" class="btn btn-primary" onclick="return confirm('Add Admin?')" data-toggle="modal" data-target="#add_UserAdmin" data-backdrop="static" data-keyboard="false">
+						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#add_UserAdmin" data-backdrop="static" data-keyboard="false">
 							<i class="fas fa-user-plus"></i> New
 						</a>
 					</div>

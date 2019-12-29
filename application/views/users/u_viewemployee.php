@@ -89,7 +89,7 @@
 						</div>
 						<div class="col-sm-12 col-md-4 e-det">
 							<p>
-								<?php echo $PositionDesired; ?> (<?php echo $PositionGroup; ?>)
+								<?php echo $PositionDesired; ?> <?php if($PositionGroup != NULL) { echo ' (' . $PositionGroup . ')'; } ?>
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-2 e-title">

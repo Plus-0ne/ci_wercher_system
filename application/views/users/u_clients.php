@@ -32,8 +32,8 @@
 									<tr class="text-center align-middle">
 										<th> Name </th>
 										<th> Address </th>
-										<th> Contact No. </th>
-										<th> No. of Employees </th>
+										<th> Contact </th>
+										<th> Employees </th>
 										<th class="text-center PrintExclude"> Action </th>
 									</tr>
 								</thead>
@@ -53,7 +53,6 @@
 												<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['ClientID'])->num_rows(); ?>
 											</td>
 											<td class="text-center align-middle PrintExclude">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewClient?id=<?php echo $row['ClientID']; ?>"><i class="far fa-eye"></i> View</a>
 												<a href="<?=base_url()?>RemoveClient?id=<?=$row['ClientID']?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Client?')"><i class="fas fa-trash"></i> Delete</a>
 											</td>
 										</tr>
@@ -63,7 +62,7 @@
 						</div>
 					</div>
 					<div class="p-2">
-						<button class="btn btn-primary" onclick="return confirm('Add Client?')" data-toggle="modal" data-target="#addClients">
+						<button class="btn btn-primary" data-toggle="modal" data-target="#addClients">
 							<i class="fas fa-user-plus"></i> New
 						</button>
 					</div>
@@ -77,7 +76,7 @@
 			<div class="modal-content">
 				<?php echo form_open(base_url().'Add_newClient','method="post"');?>
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Add new Client</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Add New Client</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -103,7 +102,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary">Save changes</button>
+					<button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Add</button>
 				</div>
 				<?php echo form_close();?>
 			</div>
@@ -118,6 +117,7 @@
 			$('.ncontent').toggleClass('shContent');
 		});
 		var table = $('#ListClients').DataTable( {
+						"order": [[ 3, "desc" ]],
 						"columnDefs": [
 							{ 
 								"width": "10%", "targets": 4

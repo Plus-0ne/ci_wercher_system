@@ -749,9 +749,14 @@ class Update_Controller extends CI_Controller {
 		$Month = substr($Month, 0, 2);
 		$Day = substr($FromDate, -2);
 
+		if ($FromDate == NULL || $ToDate == NULL) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date range must be valid</h5></div>');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+
 		if ($ClientID == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Client ID)</h5></div>');
-			// redirect($_SERVER['HTTP_REFERER']);
+			redirect($_SERVER['HTTP_REFERER']);
 		}
 		else
 		{
@@ -759,6 +764,12 @@ class Update_Controller extends CI_Controller {
 			$date2 = new DateTime($ToDate);
 
 			$diff = $date2->diff($date1)->format("%a");
+			if ($diff > 730) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date Range for weekly must be lower than 2 years</h5></div>');
+				redirect($_SERVER['HTTP_REFERER']);
+			} elseif ($diff > 180 && $diff < 730) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #FFA500;"><h5><i class="fas fa-exclamation-triangle"></i> Note: You are viewing at a huge date range, performance may get slower than usual</h5></div>');
+			}
 			// TODO: Clean & optimize this. May cause lag on huge database.
 			$this->Model_Updates->UpdateWeeklyHoursCurrent();
 			$this->Model_Deletes->CleanWeeklyDates();
@@ -779,6 +790,130 @@ class Update_Controller extends CI_Controller {
 				}
 			}
 		}
-		
+	}
+	public function ImportExcel()
+	{
+		$ClientID = $this->input->post('ExcelClientID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
+		$File = $_FILES['file'];
+		var_dump($File);
+		$this->load->library('SimpleXLSX');	
+			if ( $xlsx = SimpleXLSX::parse( $File['tmp_name'] ) ) {
+
+				$dim = $xlsx->dimension();
+				$cols = $dim[0];
+				$RowCount = 0;
+				$ColCount = 0;
+
+				foreach ( $xlsx->rows() as $k => $r ):
+					if ($k == 0) continue; // skip first row
+					// echo '<tr class="clickable-row" data-toggle="modal" data-target="#HoursWeeklyModal">';
+					for ( $i = 0; $i < $cols; $i ++ ) {
+						if ($RowCount == 0){
+							if ($ColCount == 3) {
+								$StartingDate = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
+
+								$Year = substr($StartingDate, 0, 4);
+								$Month = substr($StartingDate, 5);
+								$Month = substr($Month, 0, 2);
+								$Day = substr($StartingDate, -2);
+
+								$this->Model_Updates->UpdateWeeklyHoursCurrent();
+								$this->Model_Deletes->CleanWeeklyDates();
+								for ($i = 0; $i <= $cols - 5; $i++) {
+									if ($Day < 10 && $i != 0) {
+										$Date = $Year . '-' . $Month . '-' . '0' . $Day;
+									} else {
+										$Date = $Year . '-' . $Month . '-' . $Day;
+									}
+									$data = array(
+										'Time' => $Date,
+										'Current' => 'Current',
+									);
+									$ClientViewTime = $this->Model_Inserts->InsertClientViewTime($data);
+									$Day++;
+								}
+
+							}
+
+						}
+						if ($RowCount >= 1) {
+							if ($ColCount == 0) {
+								$ApplicantID = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
+							}
+							if ($ColCount == 1) {
+								$Name = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
+							}
+							if ($ColCount == 2) {
+								$Salary = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
+							}
+							if ($ColCount >= 3 && $ColCount < $cols - 1) {
+								$GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
+								// foreach ($GetWeeklyDates->result_array($ColCount - 3) as $nrow):
+								// 	echo $nrow['Time'];
+								// endforeach;
+
+								date_default_timezone_set('Asia/Manila');
+
+								$data = array(
+									'ClientID' => $ClientID,
+									'Date' => $GetWeeklyDates->result_array()[$ColCount - 3]['Time'],
+									'Hours' => ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ),
+								);
+								$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
+								echo '------------- <br>';
+								echo 'Applicant ID: ' . $ApplicantID . '<br>';
+								echo 'Name: ' . $Name . '<br>';
+								echo 'Salary: ' . $Salary . '<br>';
+								echo 'Date: ' . $GetWeeklyDates->result_array()[$ColCount - 3]['Time'] . '<br>';
+								echo 'Hours: ' . ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ) . '<br>';
+								echo '------------- <br>';
+							}
+						}
+						// echo '<td><i class="Hours_' . ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ) . '"></i>' . ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ) . '</td>';
+						$ColCount++;
+					}
+					// echo '</tr>';
+					$RowCount++;
+					$ColCount = 0;
+				endforeach;
+				if ($RowCount <= $xlsx->rows()) {
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+				$this->load->view('_template/users/u_redirecting');
+				echo '<br>' . $cols;
+				// echo '</table>';
+			} else {
+				echo SimpleXLSX::parseError();
+			}
+
+			// $date1 = new DateTime($FromDate);
+			// $date2 = new DateTime($ToDate);
+
+			// $diff = $date2->diff($date1)->format("%a");
+			// if ($diff > 730) {
+			// 	$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date Range for weekly must be lower than 2 years</h5></div>');
+			// 	redirect($_SERVER['HTTP_REFERER']);
+			// } elseif ($diff > 180 && $diff < 730) {
+			// 	$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #FFA500;"><h5><i class="fas fa-exclamation-triangle"></i> Note: You are viewing at a huge date range, performance may get slower than usual</h5></div>');
+			// }
+			// // TODO: Clean & optimize this. May cause lag on huge database.
+			// $this->Model_Updates->UpdateWeeklyHoursCurrent();
+			// $this->Model_Deletes->CleanWeeklyDates();
+			// for ($i = 0; $i <= $diff; $i++) {
+			// 	if ($Day < 10 && $i != 0) {
+			// 		$Date = $Year . '-' . $Month . '-' . '0' . $Day;
+			// 	} else {
+			// 		$Date = $Year . '-' . $Month . '-' . $Day;
+			// 	}
+			// 	$data = array(
+			// 		'Time' => $Date,
+			// 		'Current' => 'Current',
+			// 	);
+			// 	$ClientViewTime = $this->Model_Inserts->InsertClientViewTime($data);
+			// 	$Day++;
+			// 	if ($ClientViewTime && $i == $diff) {
+			// 		redirect('ViewClient?id=' . $ClientID);
+			// 	}
+			// }
 	}
 }
