@@ -1,16 +1,17 @@
-<div class="modal fade" id="HoursWeeklyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<?php foreach ($GetWeeklyListEmployee->result_array() as $erow): ?>
+<div class="modal fade" id="HoursWeeklyModal_<?php echo $erow['ApplicantID']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xxl" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Work Hours for each day... | <span class="TotalHoursInAWeek">48</span> Hours Total</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Work Hours for <?php echo $erow['LastName'] . ', ' . $erow['FirstName'] . ' ' . $erow['MiddleInitial'] ?> | <span class="TotalHoursInAWeek">48</span> Hours Total</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
 					<form action="<?php echo base_url().'SetWeeklyHours'; ?>" method="post">
-						<input id="ApplicantID" type="hidden" name="ApplicantID" value="">
-						<input id="ClientID" type="hidden" name="ClientID" value="">
+						<input id="ApplicantID" type="hidden" name="ApplicantID" value="<?php echo $erow['ApplicantID']; ?>">
+						<input id="ClientID" type="hidden" name="ClientID" value="<?php echo $erow['ClientEmployed']; ?>">
 						<div class="form-row">
 							<div class="form-group col-sm-12 col-md-2">
 								<label>Type</label>
@@ -41,13 +42,10 @@
 								<div class="col-auto text-center rcontent">
 									<b><?php echo $row['Time']; ?></b>
 									<input id="Hours_<?php echo $row['Time']; ?>" class="form-control" type="number" name="Hours_<?php echo $row['Time']; ?>" value="<?php
-										// foreach ($GetWeeklyListEmployee->result_array() as $nrow):
-											// if($this->Model_Selects->GetMatchingDates($nrow['ApplicantID'], $row['Time'])->num_rows() > 0) {
-												// foreach ($this->Model_Selects->GetMatchingDates($nrow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-													// echo $nrow['Hours'];
-												// endforeach;
-											// }
-										// endforeach;?>">
+												foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
+													echo $nrow['Hours'];
+												endforeach;
+									?>">
 									<p class="mr-auto ml-auto">Hours</p>
 									<div class="input-icon">
 										<input id="SalaryDayOne" class="form-control" type="text" name="" readonly>
@@ -160,3 +158,4 @@
 			</div>
 		</div>
 	</div>
+<?php endforeach; ?>

@@ -860,13 +860,13 @@ class Update_Controller extends CI_Controller {
 									'Hours' => ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ),
 								);
 								$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
-								echo '------------- <br>';
-								echo 'Applicant ID: ' . $ApplicantID . '<br>';
-								echo 'Name: ' . $Name . '<br>';
-								echo 'Salary: ' . $Salary . '<br>';
-								echo 'Date: ' . $GetWeeklyDates->result_array()[$ColCount - 3]['Time'] . '<br>';
-								echo 'Hours: ' . ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ) . '<br>';
-								echo '------------- <br>';
+								// echo '------------- <br>';
+								// echo 'Applicant ID: ' . $ApplicantID . '<br>';
+								// echo 'Name: ' . $Name . '<br>';
+								// echo 'Salary: ' . $Salary . '<br>';
+								// echo 'Date: ' . $GetWeeklyDates->result_array()[$ColCount - 3]['Time'] . '<br>';
+								// echo 'Hours: ' . ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ) . '<br>';
+								// echo '------------- <br>';
 							}
 						}
 						// echo '<td><i class="Hours_' . ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ) . '"></i>' . ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ) . '</td>';
@@ -877,13 +877,16 @@ class Update_Controller extends CI_Controller {
 					$ColCount = 0;
 				endforeach;
 				if ($RowCount <= $xlsx->rows()) {
+					echo '<hr><h1>HELLO</h1><hr>';
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 				$this->load->view('_template/users/u_redirecting');
 				echo '<br>' . $cols;
 				// echo '</table>';
 			} else {
-				echo SimpleXLSX::parseError();
+				$Error = SimpleXLSX::parseError();
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: ' . $Error . '</h5></div>');
+				redirect($_SERVER['HTTP_REFERER']);
 			}
 
 			// $date1 = new DateTime($FromDate);

@@ -236,5 +236,11 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetWeeklyHours($ClientID, $Time) // Argument is $id originally from source.
+	{
+		$SQL = "SELECT * FROM dummy_hours, hours_weekly WHERE hours_weekly.ClientID = '$ClientID' AND dummy_hours.Time = hours_weekly.Time";
+		$result = $this->db->query($SQL,$ClientID);
+		return $result;
+	}
 	
 }

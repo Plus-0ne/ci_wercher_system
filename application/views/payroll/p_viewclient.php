@@ -20,16 +20,18 @@
 						</nav>
 					</div>
 				</div>
+				<?php echo $this->session->flashdata('prompts'); ?>
 				<div class="row rcontent PrintOutTable">
-					<div class="col-12 mb-2">
+					<div class="col-8 mb-2">
 						<form action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
 							<input id="ExcelClientID" type="hidden" name="ExcelClientID" value="<?php echo $ClientID; ?>">
 							<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">
-							<button id="ImportButton" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i> Import Excel File</button>
+							<button id="ImportButton" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i> Import</button>
+							<button id="ImportButton" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i> Export</button>
+							<button id="ImportButton" type="button" class="btn btn-primary"><i class="fas fa-file-word"></i> Generate Payslip</button>
 						</form>
 						<!-- <div id="datatables-export"></div> -->
 					</div>
-					<?php echo $this->session->flashdata('prompts'); ?>
 					<div class="col-sm-12 col-mb-12">
 						<table id="WeeklyTable" class="table table-condensed">
 							<thead>
@@ -43,7 +45,7 @@
 							</thead>
 							<tbody>
 								<?php foreach ($GetWeeklyListEmployee->result_array() as $row): ?>
-									<tr id="<?php echo $row['SalaryExpected']; ?>" data-clientid="<?php echo $row['ClientEmployed']; ?>" data="<?php echo $row['ApplicantID']; ?>" class='clickable-row' data-toggle="modal" data-target="#HoursWeeklyModal">
+									<tr id="<?php echo $row['SalaryExpected']; ?>" data-clientid="<?php echo $row['ClientEmployed']; ?>" data="<?php echo $row['ApplicantID']; ?>" class='clickable-row' data-toggle="modal" data-target="#HoursWeeklyModal_<?php echo $row['ApplicantID']; ?>">
 										<td><?php echo $row['ApplicantID'];?></td>
 										<td><?php echo $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'];?></td>
 										<td><?php echo $row['SalaryExpected'];?></td>
@@ -185,6 +187,22 @@
 		</div>
 	</div>
 	<?php $this->load->view('_template/modals/m_p_hoursweekly'); ?>
+	<!-- LOAD MODAL -->
+	<div class="modal fade" id="LoadModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="form-row">
+						<div class="text-center ml-auto mr-auto">
+							<div class="spinner-border m-5" role="status"></div>
+							<h4>Please wait momentarily</h4>
+							<p>Preparing the table...</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
@@ -199,7 +217,8 @@
 				reader.readAsDataURL(input.files[0]);
 			}
 		}
-		$("#ImportExcel").change(function() {
+		$("#file").change(function() {
+			$('#LoadModal').modal('show');
 			readURL(this);
 		});
 		$('#sidebar').toggleClass('active');
