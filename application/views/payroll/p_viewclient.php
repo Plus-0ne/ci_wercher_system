@@ -21,16 +21,19 @@
 					</div>
 				</div>
 				<?php echo $this->session->flashdata('prompts'); ?>
-				<div class="row rcontent PrintOutTable">
+				<hr>
+				<div class="row">
 					<div class="col-8 mb-2">
 						<form action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
 							<input id="ExcelClientID" type="hidden" name="ExcelClientID" value="<?php echo $ClientID; ?>">
 							<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">
 							<button id="ImportButton" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i> Import</button>
 							<button id="ImportButton" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i> Export</button>
-							<button id="ImportButton" type="button" class="btn btn-primary"><i class="fas fa-file-word"></i> Generate Payslip</button>
 						</form>
 						<!-- <div id="datatables-export"></div> -->
+					</div>
+					<div class="col-4 mb-2 text-right">
+						<button id="ImportButton" type="button" class="btn btn-primary"><i class="fas fa-file-word"></i> Generate Payslip</button>
 					</div>
 					<div class="col-sm-12 col-mb-12">
 						<table id="WeeklyTable" class="table table-condensed">
@@ -53,7 +56,7 @@
 											?> <td> <?php
 											if($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->num_rows() > 0) {
 												foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->result_array() as $nrow):
-													$Hours = $nrow['Hours'];
+													$Hours = $nrow['Regular'];
 													echo $Hours;
 												endforeach;
 											} else {
@@ -195,8 +198,8 @@
 					<div class="form-row">
 						<div class="text-center ml-auto mr-auto">
 							<div class="spinner-border m-5" role="status"></div>
-							<h4>Please wait momentarily</h4>
-							<p>Preparing the table...</p>
+							<h4>Please wait warmly</h4>
+							<p>This will only take a little bit</p>
 						</div>
 					</div>
 				</div>
@@ -207,6 +210,13 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		// var prevVal;
+		// $(".day-indicator").on("change",function(){
+		// 	var val = $(this).find('option:selected').val();
+		// 	$(".day-container").removeClass(`day-indicator-${prevVal}`).addClass(`day-indicator-${val}`);
+		// 	prevVal = val;
+		// });
+		$('[data-toggle="tooltip"]').tooltip();
 		$('#ImportButton').click(function(){ $('#file').trigger('click'); });
 		function readURL(input) {
 			if (input.files && input.files[0]) {
@@ -271,7 +281,6 @@
 		});
 		var table = $('#WeeklyTable').removeAttr('width').DataTable( {
         	"order": [[ 1, "asc" ]],
-	        "autoWidth": false,
 
     	});
     	var dd_buttons = new $.fn.dataTable.Buttons(table, {

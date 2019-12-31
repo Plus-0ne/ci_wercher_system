@@ -40,11 +40,11 @@
 					</h5>
 				</div>
 				<div class="form-row mx-1">
-					<div class="form-group col-6">
+					<div class="form-group col-sm-12 col-md-6">
 						<label>From</label>
 						<input class="form-control" type="date" name="FromDate">
 					</div>
-					<div class="form-group col-6">
+					<div class="form-group col-sm-12 col-md-6">
 						<label>To</label>
 						<input class="form-control" type="date" name="ToDate">
 					</div>

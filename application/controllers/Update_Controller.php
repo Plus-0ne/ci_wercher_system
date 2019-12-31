@@ -744,12 +744,12 @@ class Update_Controller extends CI_Controller {
 		$Mode = $this->input->post('Mode',TRUE);
 		$FromDate = $this->input->post('FromDate',TRUE);
 		$ToDate = $this->input->post('ToDate',TRUE);
-		$Year = substr($FromDate, 0, 4);
-		$Month = substr($FromDate, 5);
-		$Month = substr($Month, 0, 2);
-		$Day = substr($FromDate, -2);
+		// $Year = substr($FromDate, 0, 4);
+		// $Month = substr($FromDate, 5);
+		// $Month = substr($Month, 0, 2);
+		// $Day = substr($FromDate, -2);
 
-		if ($FromDate == NULL || $ToDate == NULL) {
+		if ($Mode == NULL || $FromDate == NULL || $ToDate == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date range must be valid</h5></div>');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
@@ -760,6 +760,7 @@ class Update_Controller extends CI_Controller {
 		}
 		else
 		{
+			date_default_timezone_set('Asia/Manila');
 			$date1 = new DateTime($FromDate);
 			$date2 = new DateTime($ToDate);
 
@@ -773,18 +774,25 @@ class Update_Controller extends CI_Controller {
 			// TODO: Clean & optimize this. May cause lag on huge database.
 			$this->Model_Updates->UpdateWeeklyHoursCurrent();
 			$this->Model_Deletes->CleanWeeklyDates();
+			$RegularHolidays = array('01-01', '04-09', '04-10', '05-01', '06-12', '07-31', '11-30', '12-25', '12-30'); // MONTH - DAY
+			$SpecialHolidays = array('01-25', '02-25', '04-11', '07-21', '11-01', '11-02', '12-08', '12-24', '12-31'); // MONTH - DAY
+
 			for ($i = 0; $i <= $diff; $i++) {
-				if ($Day < 10 && $i != 0) {
-					$Date = $Year . '-' . $Month . '-' . '0' . $Day;
+				$Date = date('Y-m-d', strtotime('+' . $i . ' day', strtotime($FromDate)));
+				$DateChecker = new DateTime($Date);
+				if (in_array($DateChecker->format('m-d'), $RegularHolidays)) {
+					$Type = 'Holiday';
+				} elseif (in_array($DateChecker->format('m-d'), $SpecialHolidays)) {
+					$Type = 'Special';
 				} else {
-					$Date = $Year . '-' . $Month . '-' . $Day;
+					$Type = 'Normal';
 				}
 				$data = array(
 					'Time' => $Date,
+					'Type' => $Type,
 					'Current' => 'Current',
 				);
-				$ClientViewTime = $this->Model_Inserts->InsertClientViewTime($data);
-				$Day++;
+				$ClientViewTime = $this->Model_Inserts->InsertDummyHours($data);
 				if ($ClientViewTime && $i == $diff) {
 					redirect('ViewClient?id=' . $ClientID);
 				}
@@ -796,6 +804,7 @@ class Update_Controller extends CI_Controller {
 		$ClientID = $this->input->post('ExcelClientID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 		$File = $_FILES['file'];
 		var_dump($File);
+		date_default_timezone_set('Asia/Manila');
 		$this->load->library('SimpleXLSX');	
 			if ( $xlsx = SimpleXLSX::parse( $File['tmp_name'] ) ) {
 
@@ -812,25 +821,24 @@ class Update_Controller extends CI_Controller {
 							if ($ColCount == 3) {
 								$StartingDate = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
 
-								$Year = substr($StartingDate, 0, 4);
-								$Month = substr($StartingDate, 5);
-								$Month = substr($Month, 0, 2);
-								$Day = substr($StartingDate, -2);
-
 								$this->Model_Updates->UpdateWeeklyHoursCurrent();
 								$this->Model_Deletes->CleanWeeklyDates();
 								for ($i = 0; $i <= $cols - 5; $i++) {
-									if ($Day < 10 && $i != 0) {
-										$Date = $Year . '-' . $Month . '-' . '0' . $Day;
+									$Date = date('Y-m-d', strtotime('+' . $i . ' day', strtotime($StartingDate)));
+									$DateChecker = new DateTime($Date);
+									if (in_array($DateChecker->format('m-d'), $RegularHolidays)) {
+										$Type = 'Holiday';
+									} elseif (in_array($DateChecker->format('m-d'), $SpecialHolidays)) {
+										$Type = 'Special';
 									} else {
-										$Date = $Year . '-' . $Month . '-' . $Day;
+										$Type = 'Normal';
 									}
 									$data = array(
 										'Time' => $Date,
+										'Type' => $Type,
 										'Current' => 'Current',
 									);
-									$ClientViewTime = $this->Model_Inserts->InsertClientViewTime($data);
-									$Day++;
+									$ClientViewTime = $this->Model_Inserts->InsertDummyHours($data);
 								}
 
 							}
@@ -852,12 +860,10 @@ class Update_Controller extends CI_Controller {
 								// 	echo $nrow['Time'];
 								// endforeach;
 
-								date_default_timezone_set('Asia/Manila');
-
 								$data = array(
 									'ClientID' => $ClientID,
 									'Date' => $GetWeeklyDates->result_array()[$ColCount - 3]['Time'],
-									'Hours' => ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ),
+									'Regular' => ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ),
 								);
 								$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
 								// echo '------------- <br>';
@@ -878,7 +884,7 @@ class Update_Controller extends CI_Controller {
 				endforeach;
 				if ($RowCount <= $xlsx->rows()) {
 					echo '<hr><h1>HELLO</h1><hr>';
-					redirect($_SERVER['HTTP_REFERER']);
+					redirect('ViewClient?id=' . $ClientID);
 				}
 				$this->load->view('_template/users/u_redirecting');
 				echo '<br>' . $cols;

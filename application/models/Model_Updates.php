@@ -78,7 +78,10 @@ class Model_Updates extends CI_Model {
 			'ApplicantID' => $ApplicantID,
 			'ClientID' => $ClientID,
 			'Time' => $Date,
-			'Hours' => $Hours,
+			'Regular' => $Regular,
+			'Overtime' => $Overtime,
+			'NightShift' => $NightShift,
+			'Type' => $Type,
 		);
 		$SQL = "REPLACE INTO hours_weekly
 SET ApplicantID = '$ApplicantID',

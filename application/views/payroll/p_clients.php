@@ -34,7 +34,7 @@
 										<th> Address </th>
 										<th> Contact </th>
 										<th> Employees </th>
-										<th class="text-center PrintExclude"> Action </th>
+										<th class="text-center PrintExclude"> View Hours </th>
 									</tr>
 								</thead>
 								<tbody>
@@ -53,7 +53,12 @@
 												<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['ClientID'])->num_rows(); ?>
 											</td>
 											<td class="text-center align-middle PrintExclude">
-												<button id="<?php echo $row['ClientID']; ?>" type="button" class="btn btn-primary btn-sm w-100 mb-1 ViewClientIDButton"  data-toggle="modal" data-target="#ModalClientView"><i class="far fa-eye"></i> View Hours</button>
+												<button id="<?php echo $row['ClientID']; ?>" type="button" class="btn btn-primary btn-sm w-100 mb-1 ViewClientIDButton"  data-toggle="modal" data-target="#ModalClientView"><i class="fas fa-calendar-alt"></i> Date Range</button>
+												<form action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
+													<input type="hidden" name="ExcelClientID" value="<?php echo $row['ClientID']; ?>">
+													<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">
+													<button type="button" class="ImportButton btn btn-sm btn-success w-100"><i class="fas fa-file-excel"></i> Excel</button>
+												</form>
 												<!-- <a class="btn btn-success btn-sm w-100 mb-1" href="<?=base_url()?>ViewClient?id=<?php echo $row['ClientID']; ?>"><i class="fas fa-file-excel"></i> Excel</a> -->
 											</td>
 										</tr>
@@ -137,10 +142,40 @@
 		</div>
 	</div>
 	<?php $this->load->view('_template/modals/m_p_clientview'); ?>
+	<!-- LOAD MODAL -->
+	<div class="modal fade" id="LoadModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="form-row">
+						<div class="text-center ml-auto mr-auto">
+							<div class="spinner-border m-5" role="status"></div>
+							<h4>Please wait momentarily</h4>
+							<p>Preparing the table...</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('.ImportButton').click(function(){ $('#file').trigger('click'); });
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$('.ImportButton').attr('src', e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+		$("#file").change(function() {
+			$('#LoadModal').modal('show');
+			readURL(this);
+		});
 		$('.load-div').hide();
 		$('#sidebarCollapse').on('click', function () {
 			$('#sidebar').toggleClass('active');
