@@ -43,23 +43,30 @@
 						<div id="SalaryDays" class="form-row">
 							<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
 								<input id="<?php echo $row['Time']; ?>" type="hidden" name="<?php echo $row['Time']; ?>" value="<?php echo $row['Time']; ?>">
+								<input type="hidden" name="<?php echo $row['DayType']; ?>" value="<?php echo $row['DayType']; ?>">
 								<div class="day-container col-sm-12 col-md-3 text-center rcontent mx-4 <?php 
-										if ($row['Type'] == 'Regular') // TODO: Only fetches from dummy_hours.
-										{ 
-											echo 'day-indicator-success'; 
-										}
-										elseif ($row['Type'] == 'Rest Day') 
-										{ 
-											echo 'day-indicator-primary'; 
-										}
-										elseif ($row['Type'] == 'Holiday')
-										{
-											echo 'day-indicator-warning';
-										}
-										elseif ($row['Type'] == 'Special')
-										{
-											echo 'day-indicator-danger';
-										}
+										foreach ($this->Model_Selects->GetMatchingDatesType($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
+											if ($nrow['Type'] == 'Normal') // TODO: Only fetches from dummy_hours.
+											{ 
+												$Type = 'Normal';
+												echo 'day-indicator-success'; 
+											}
+											elseif ($nrow['Type'] == 'Rest Day') 
+											{ 
+												$Type = 'Rest Day';
+												echo 'day-indicator-primary'; 
+											}
+											elseif ($nrow['Type'] == 'Holiday')
+											{
+												$Type = 'Holiday';
+												echo 'day-indicator-warning';
+											}
+											elseif ($nrow['Type'] == 'Special')
+											{
+												$Type = 'Special';
+												echo 'day-indicator-danger';
+											}
+										endforeach;
 										?>">
 									<b><?php echo $row['Time']; ?></b>
 									<div class="form-row mt-2">
@@ -68,7 +75,11 @@
 											<div>Regular</div>
 											<input id="REGHours_<?php echo $row['Time']; ?>" class="form-control" type="number" name="REGHours_<?php echo $row['Time']; ?>" value="<?php
 													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-														echo $nrow['Regular'];
+														if($nrow['Regular'] != NULL) {
+															echo $nrow['Regular'];
+														} else {
+															echo '0';
+														}
 													endforeach;
 											?>">
 										</div>
@@ -76,7 +87,11 @@
 											<div class="">Overtime</div>
 											<input id="OTHours_<?php echo $row['Time']; ?>" class="form-control" type="number" name="OTHours_<?php echo $row['Time']; ?>" value="<?php
 													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-														echo $nrow['Overtime'];
+														if($nrow['Overtime'] != NULL) {
+															echo $nrow['Overtime'];
+														} else {
+															echo '0';
+														}
 													endforeach;
 											?>">
 										</div>
@@ -84,7 +99,11 @@
 											<div>Night&nbsp;Shift</div>
 											<input id="NSHours_<?php echo $row['Time']; ?>" class="form-control" type="number" name="NSHours_<?php echo $row['Time']; ?>" value="<?php
 													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-														echo $nrow['NightShift'];
+														if($nrow['NightShift'] != NULL) {
+															echo $nrow['NightShift'];
+														} else {
+															echo '0';
+														}
 													endforeach;
 											?>">
 										</div>
@@ -116,16 +135,16 @@
 									<div class="form-row">
 										<div class="form-group col-12">
 											<select class="form-control" name="Type">
-												<option value="Normal" <?php if ($row['Type'] == 'Normal') { echo 'selected=""'; } ?>>
+												<option value="Normal" <?php if ($Type == 'Normal') { echo 'selected=""'; } ?>>
 													Normal
 												</option>
-												<option value="Rest Day" <?php if ($row['Type'] == 'Rest Day') { echo 'selected=""'; } ?>>
+												<option value="Rest Day" <?php if ($Type == 'Rest Day') { echo 'selected=""'; } ?>>
 													Rest Day
 												</option>
-												<option value="Holiday" <?php if ($row['Type'] == 'Holiday') { echo 'selected=""'; } ?>>
+												<option value="Holiday" <?php if ($Type == 'Holiday') { echo 'selected=""'; } ?>>
 													Holiday
 												</option>
-												<option value="Special" <?php if ($row['Type'] == 'Special') { echo 'selected=""'; } ?>>
+												<option value="Special" <?php if ($Type == 'Special') { echo 'selected=""'; } ?>>
 													Special (non-working)
 												</option>
 											</select>

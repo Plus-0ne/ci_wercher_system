@@ -675,18 +675,25 @@ class Update_Controller extends CI_Controller {
 	{
 		if (isset($_POST['ApplicantID'])) {
 			$ApplicantID = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
-			$ClientID = $this->input->post('ClientID',FALSE);
+			$ClientID = $this->input->post('ClientID',TRUE);
+			$Type = $this->input->post('Type',TRUE);
 			$GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
 			$ArrayInt = 0;
 			$ArrayLength = $GetWeeklyDates->num_rows();
 			foreach ($GetWeeklyDates->result_array() as $nrow):
 				$ArrayInt++;
-				$Hours = $this->input->post('Hours_' . $nrow['Time'],TRUE);
+				$Regular = $this->input->post('REGHours_' . $nrow['Time'],TRUE);
+				$Overtime = $this->input->post('OTHours_' . $nrow['Time'],TRUE);
+				$NightShift = $this->input->post('NSHours_' . $nrow['Time'],TRUE);
 				$Date = $this->input->post($nrow['Time'],TRUE);
-				echo $Hours . '<br>';
-				echo $Date . '<br>';
-				if($Hours == NULL) {
-					$Hours = 0;
+				if($Regular == NULL) {
+					$Regular = 0;
+				}
+				if($Overtime == NULL) {
+					$Overtime = 0;
+				}
+				if($NightShift == NULL) {
+					$NightShift = 0;
 				}
 
 				if ($ApplicantID == NULL) {
@@ -700,7 +707,10 @@ class Update_Controller extends CI_Controller {
 					$data = array(
 						'ClientID' => $ClientID,
 						'Date' => $Date,
-						'Hours' => $Hours,
+						'Regular' => $Regular,
+						'Overtime' => $Overtime,
+						'NightShift' => $NightShift,
+						'Type' => $Type,
 					);
 					$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
 					if ($UpdateWeeklyHours == TRUE) {
@@ -774,8 +784,8 @@ class Update_Controller extends CI_Controller {
 			// TODO: Clean & optimize this. May cause lag on huge database.
 			$this->Model_Updates->UpdateWeeklyHoursCurrent();
 			$this->Model_Deletes->CleanWeeklyDates();
-			$RegularHolidays = array('01-01', '04-09', '04-10', '05-01', '06-12', '07-31', '11-30', '12-25', '12-30'); // MONTH - DAY
-			$SpecialHolidays = array('01-25', '02-25', '04-11', '07-21', '11-01', '11-02', '12-08', '12-24', '12-31'); // MONTH - DAY
+			$RegularHolidays = array('01-01', '04-09', '04-10', '05-01', '06-12', '08-31', '11-30', '12-25', '12-30'); // MONTH - DAY
+			$SpecialHolidays = array('01-25', '02-25', '04-11', '08-21', '11-01', '11-02', '12-08', '12-24', '12-31'); // MONTH - DAY
 
 			for ($i = 0; $i <= $diff; $i++) {
 				$Date = date('Y-m-d', strtotime('+' . $i . ' day', strtotime($FromDate)));
@@ -789,7 +799,7 @@ class Update_Controller extends CI_Controller {
 				}
 				$data = array(
 					'Time' => $Date,
-					'Type' => $Type,
+					'DayType' => $Type,
 					'Current' => 'Current',
 				);
 				$ClientViewTime = $this->Model_Inserts->InsertDummyHours($data);
@@ -823,6 +833,9 @@ class Update_Controller extends CI_Controller {
 
 								$this->Model_Updates->UpdateWeeklyHoursCurrent();
 								$this->Model_Deletes->CleanWeeklyDates();
+								$RegularHolidays = array('01-01', '04-09', '04-10', '05-01', '06-12', '08-31', '11-30', '12-25', '12-30'); // MONTH - DAY
+								$SpecialHolidays = array('01-25', '02-25', '04-11', '08-21', '11-01', '11-02', '12-08', '12-24', '12-31'); // MONTH - DAY
+
 								for ($i = 0; $i <= $cols - 5; $i++) {
 									$Date = date('Y-m-d', strtotime('+' . $i . ' day', strtotime($StartingDate)));
 									$DateChecker = new DateTime($Date);
@@ -860,10 +873,28 @@ class Update_Controller extends CI_Controller {
 								// 	echo $nrow['Time'];
 								// endforeach;
 
+								$Split = explode('/', ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ));
+								print_r($Split);
+								if ($Split[0] == 'N') {
+									$Type = 'Normal';
+								} elseif ($Split[0] == 'R') {
+									$Type = 'Rest Day';
+								} elseif ($Split[0] == 'H') {
+									$Type = 'Holiday';
+								} elseif ($Split[0] == 'S') {
+									$Type = 'Special';
+								} else {
+									$Type = 'Unknown';
+								}
+
+
 								$data = array(
 									'ClientID' => $ClientID,
 									'Date' => $GetWeeklyDates->result_array()[$ColCount - 3]['Time'],
-									'Regular' => ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ),
+									'Type' => $Type,
+									'Regular' => $Split[1],
+									'Overtime' => $Split[2],
+									'NightShift' => $Split[3],
 								);
 								$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
 								// echo '------------- <br>';

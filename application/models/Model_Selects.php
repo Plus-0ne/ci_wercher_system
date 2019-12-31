@@ -224,6 +224,12 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetMatchingDatesType($ApplicantID, $Time)
+	{
+		$SQL = "SELECT * FROM hours_weekly, dummy_hours WHERE hours_weekly.Time = '$Time' AND dummy_hours.Time = '$Time' AND hours_weekly.ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function GetWeeklyListEmployeeForDates($ApplicantID)
 	{
 		$SQL = "SELECT * FROM hours_weekly WHERE ApplicantID = '$ApplicantID'";

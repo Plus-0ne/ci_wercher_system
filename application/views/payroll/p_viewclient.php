@@ -47,7 +47,8 @@
 								<th>Total Hours</th>
 							</thead>
 							<tbody>
-								<?php foreach ($GetWeeklyListEmployee->result_array() as $row): ?>
+								<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
+									$TotalHours = 0;?>
 									<tr id="<?php echo $row['SalaryExpected']; ?>" data-clientid="<?php echo $row['ClientEmployed']; ?>" data="<?php echo $row['ApplicantID']; ?>" class='clickable-row' data-toggle="modal" data-target="#HoursWeeklyModal_<?php echo $row['ApplicantID']; ?>">
 										<td><?php echo $row['ApplicantID'];?></td>
 										<td><?php echo $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'];?></td>
@@ -56,14 +57,15 @@
 											?> <td> <?php
 											if($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->num_rows() > 0) {
 												foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->result_array() as $nrow):
-													$Hours = $nrow['Regular'];
-													echo $Hours;
+													$Hours = $nrow['Regular'] + $nrow['Overtime'] + $nrow['NightShift'];
+													echo '<div data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: '. $nrow['Regular'] . '<br>Overtime: ' . $nrow['Overtime'] . '<br>Night Shift: ' . $nrow['NightShift'] . '">' . $Hours . '</div>';
+													$TotalHours = $TotalHours + $Hours;
 												endforeach;
 											} else {
 												echo '0';
 											} ?> </td>
 										<?php endforeach; ?>
-										<td></td>
+										<td><?php echo $TotalHours; ?></td>
 <!-- 										<td class="text-center">
 											<button id="<?php echo $row['Salary']; ?>" data="<?php echo $row['ApplicantID']; ?>" type="button" class="btn btn-primary btn-sm HoursButton" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-clock"></i> Set</button>
 											<button type="button" class="btn btn-primary btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-list"></i> Contract</button>
@@ -365,9 +367,6 @@
 	#WeeklyTable tbody tr:hover {
 		background-color: rgba(125, 125, 255, 0.25);
 		cursor: pointer;
-		border-left: 8px;
-		border-color: red;
-		border-style: solid;
 	}
 	.modal-open {
 		overflow-y: auto !important;
