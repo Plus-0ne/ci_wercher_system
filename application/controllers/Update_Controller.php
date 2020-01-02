@@ -676,24 +676,20 @@ class Update_Controller extends CI_Controller {
 		if (isset($_POST['ApplicantID'])) {
 			$ApplicantID = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 			$ClientID = $this->input->post('ClientID',TRUE);
-			$Type = $this->input->post('Type',TRUE);
 			$GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
 			$ArrayInt = 0;
 			$ArrayLength = $GetWeeklyDates->num_rows();
 			foreach ($GetWeeklyDates->result_array() as $nrow):
 				$ArrayInt++;
-				$Regular = $this->input->post('REGHours_' . $nrow['Time'],TRUE);
+				$Type = $this->input->post('Type_' . $nrow['Time'],TRUE);
+				$Hours = $this->input->post('Hours_' . $nrow['Time'],TRUE);
 				$Overtime = $this->input->post('OTHours_' . $nrow['Time'],TRUE);
-				$NightShift = $this->input->post('NSHours_' . $nrow['Time'],TRUE);
 				$Date = $this->input->post($nrow['Time'],TRUE);
-				if($Regular == NULL) {
-					$Regular = 0;
+				if($Hours == NULL) {
+					$Hours = 0;
 				}
 				if($Overtime == NULL) {
 					$Overtime = 0;
-				}
-				if($NightShift == NULL) {
-					$NightShift = 0;
 				}
 
 				if ($ApplicantID == NULL) {
@@ -707,9 +703,8 @@ class Update_Controller extends CI_Controller {
 					$data = array(
 						'ClientID' => $ClientID,
 						'Date' => $Date,
-						'Regular' => $Regular,
+						'Hours' => $Hours,
 						'Overtime' => $Overtime,
-						'NightShift' => $NightShift,
 						'Type' => $Type,
 					);
 					$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
@@ -784,13 +779,13 @@ class Update_Controller extends CI_Controller {
 			// TODO: Clean & optimize this. May cause lag on huge database.
 			$this->Model_Updates->UpdateWeeklyHoursCurrent();
 			$this->Model_Deletes->CleanWeeklyDates();
-			$RegularHolidays = array('01-01', '04-09', '04-10', '05-01', '06-12', '08-31', '11-30', '12-25', '12-30'); // MONTH - DAY
+			$HoursHolidays = array('01-01', '04-09', '04-10', '05-01', '06-12', '08-31', '11-30', '12-25', '12-30'); // MONTH - DAY
 			$SpecialHolidays = array('01-25', '02-25', '04-11', '08-21', '11-01', '11-02', '12-08', '12-24', '12-31'); // MONTH - DAY
 
 			for ($i = 0; $i <= $diff; $i++) {
 				$Date = date('Y-m-d', strtotime('+' . $i . ' day', strtotime($FromDate)));
 				$DateChecker = new DateTime($Date);
-				if (in_array($DateChecker->format('m-d'), $RegularHolidays)) {
+				if (in_array($DateChecker->format('m-d'), $HoursHolidays)) {
 					$Type = 'Holiday';
 				} elseif (in_array($DateChecker->format('m-d'), $SpecialHolidays)) {
 					$Type = 'Special';
@@ -799,7 +794,6 @@ class Update_Controller extends CI_Controller {
 				}
 				$data = array(
 					'Time' => $Date,
-					'DayType' => $Type,
 					'Current' => 'Current',
 				);
 				$ClientViewTime = $this->Model_Inserts->InsertDummyHours($data);
@@ -833,13 +827,13 @@ class Update_Controller extends CI_Controller {
 
 								$this->Model_Updates->UpdateWeeklyHoursCurrent();
 								$this->Model_Deletes->CleanWeeklyDates();
-								$RegularHolidays = array('01-01', '04-09', '04-10', '05-01', '06-12', '08-31', '11-30', '12-25', '12-30'); // MONTH - DAY
+								$HoursHolidays = array('01-01', '04-09', '04-10', '05-01', '06-12', '08-31', '11-30', '12-25', '12-30'); // MONTH - DAY
 								$SpecialHolidays = array('01-25', '02-25', '04-11', '08-21', '11-01', '11-02', '12-08', '12-24', '12-31'); // MONTH - DAY
 
 								for ($i = 0; $i <= $cols - 5; $i++) {
 									$Date = date('Y-m-d', strtotime('+' . $i . ' day', strtotime($StartingDate)));
 									$DateChecker = new DateTime($Date);
-									if (in_array($DateChecker->format('m-d'), $RegularHolidays)) {
+									if (in_array($DateChecker->format('m-d'), $HoursHolidays)) {
 										$Type = 'Holiday';
 									} elseif (in_array($DateChecker->format('m-d'), $SpecialHolidays)) {
 										$Type = 'Special';
@@ -848,9 +842,19 @@ class Update_Controller extends CI_Controller {
 									}
 									$data = array(
 										'Time' => $Date,
-										'Type' => $Type,
+										'Regular' => '1',
 										'Current' => 'Current',
 									);
+									if (isset($Holiday)) {
+										$data['Holiday'] = '1';
+									} else {
+										$data['Holiday'] = NULL;
+									}
+									if (isset($Special)) {
+										$data['Special'] = '1';
+									} else {
+										$data['Special'] = NULL;
+									}
 									$ClientViewTime = $this->Model_Inserts->InsertDummyHours($data);
 								}
 
@@ -892,7 +896,7 @@ class Update_Controller extends CI_Controller {
 									'ClientID' => $ClientID,
 									'Date' => $GetWeeklyDates->result_array()[$ColCount - 3]['Time'],
 									'Type' => $Type,
-									'Regular' => $Split[1],
+									'Hours' => $Split[1],
 									'Overtime' => $Split[2],
 									'NightShift' => $Split[3],
 								);

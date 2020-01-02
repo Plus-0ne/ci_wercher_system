@@ -152,6 +152,7 @@
 							<div class="spinner-border m-5" role="status"></div>
 							<h4>Please wait momentarily</h4>
 							<p>Preparing the table...</p>
+							<p class="load-hidden-1">This is taking longer than necessary...</p>
 						</div>
 					</div>
 				</div>

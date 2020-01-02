@@ -39,8 +39,8 @@
 							<i class="fas fa-user-friends fa-fw"></i> Expired Contracts (<?php echo $get_ApplicantExpired->num_rows() ?>)
 						</h4>
 					</div>
-					<div class="col-8 col-sm-8 col-md-8 text-right PrintExclude">
-						<div id="datatables-export"></div>
+					<div class="col-8 col-sm-8 col-md-8 text-right">
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
 					<div class="col-sm-12">
 						<?php echo $this->session->flashdata('prompts'); ?>
@@ -105,6 +105,8 @@
 	</div>
 	<!-- CLIENT HIRE MODAL -->
 	<?php $this->load->view('_template/modals/m_clienthire'); ?>
+	<!-- EXPORT MODAL -->
+	<?php $this->load->view('_template/modals/m_export'); ?>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
@@ -114,60 +116,55 @@
 			$('.ncontent').toggleClass('shContent');
 		});
 		var table = $('#emp').DataTable( {
-        	"order": [[ 5, "desc" ]]
-    	});
-    	var dd_buttons = new $.fn.dataTable.Buttons(table, {
-	        buttons: [
-	            {
-	                extend: 'collection',
-	                text: '<i class="fas fa-download"></i> Export',
-	                className: 'btn btn-primary',
-
-	                buttons: [
-			            {
-			                extend: 'copy',
-			                text: '<div class="btn btn-sm btn-info w-100">Copy</div>',
-			                className: 'dropdown-item w-25 ml-auto',
-			                exportOptions: {
-			                    columns: [ 1, 2, 3, 4, 5, 6 ]
-			                }
-			            },
-			            {
-			                extend: 'csv',
-			                text: '<div class="btn btn-sm btn-info w-100">CSV</div>',
-			                className: 'dropdown-item w-25 ml-auto',
-			                exportOptions: {
-			                    columns: [ 1, 2, 3, 4, 5, 6 ]
-			                }
-			            },
-			            {
-			                extend: 'excel',
-			                text: '<div class="btn btn-sm btn-info w-100">Excel</div>',
-			                className: 'dropdown-item w-25 ml-auto',
-			                exportOptions: {
-			                    columns: [ 1, 2, 3, 4, 5, 6 ]
-			                }
-			            },
-			            {
-			                extend: 'pdf',
-			                text: '<div class="btn btn-sm btn-info w-100">PDF</div>',
-			                className: 'dropdown-item w-25 ml-auto',
-			                exportOptions: {
-			                    columns: [ 1, 2, 3, 4, 5, 6 ]
-			                }
-			            },
-			            {
-			                extend: 'print',
-			                text: '<div class="btn btn-sm btn-info w-100">Print</div>',
-			                className: 'dropdown-item w-25 ml-auto',
-			                exportOptions: {
-			                    columns: [ 1, 2, 3, 4, 5, 6 ]
-			                }
-			            },
-			        ]
+        	"order": [[ 5, "desc" ]],
+        	buttons: [
+            {
+	            extend: 'print',
+	            exportOptions: {
+	                columns: [ 1, 2, 3, 4, 5 ]
 	            }
-	        ]
-		}).container().appendTo($('#datatables-export'));
+	        },
+	        {
+	            extend: 'copyHtml5',
+	            exportOptions: {
+	                columns: [ 1, 2, 3, 4, 5 ]
+	            }
+	        },
+	        {
+	            extend: 'excelHtml5',
+	            exportOptions: {
+	                columns: [ 1, 2, 3, 4, 5 ]
+	            }
+	        },
+	        {
+	            extend: 'csvHtml5',
+	            exportOptions: {
+	                columns: [ 1, 2, 3, 4, 5 ]
+	            }
+	        },
+	        {
+	            extend: 'pdfHtml5',
+	            exportOptions: {
+	                columns: [ 1, 2, 3, 4, 5 ]
+	            }
+	        }
+        ]
+   		});
+		$('#ExportPrint').on('click', function () {
+	        table.button('0').trigger();
+	    });
+	    $('#ExportCopy').on('click', function () {
+	        table.button('1').trigger();
+	    });
+	    $('#ExportExcel').on('click', function () {
+	        table.button('2').trigger();
+	    });
+	    $('#ExportCSV').on('click', function () {
+	        table.button('3').trigger();
+	    });
+	    $('#ExportPDF').on('click', function () {
+	        table.button('4').trigger();
+    	});
 
 		$('.ModalHire').on('click', function () {
 			$('#idToHire').val($(this).attr('id'));

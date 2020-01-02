@@ -57,8 +57,8 @@
 											?> <td> <?php
 											if($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->num_rows() > 0) {
 												foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->result_array() as $nrow):
-													$Hours = $nrow['Regular'] + $nrow['Overtime'] + $nrow['NightShift'];
-													echo '<div data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: '. $nrow['Regular'] . '<br>Overtime: ' . $nrow['Overtime'] . '<br>Night Shift: ' . $nrow['NightShift'] . '">' . $Hours . '</div>';
+													$Hours = $nrow['Hours'] + $nrow['Overtime'];
+													echo '<div data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: '. $nrow['Hours'] . '<br>Overtime: ' . $nrow['Overtime'] . '">' . $Hours . '</div>';
 													$TotalHours = $TotalHours + $Hours;
 												endforeach;
 											} else {
@@ -202,6 +202,7 @@
 							<div class="spinner-border m-5" role="status"></div>
 							<h4>Please wait warmly</h4>
 							<p>This will only take a little bit</p>
+							<p class="load-hidden-1" style="display: none;">This is taking longer than necessary...</p>
 						</div>
 					</div>
 				</div>
@@ -212,6 +213,7 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		// $('input[type=checkbox]').bootstrapToggle()
 		// var prevVal;
 		// $(".day-indicator").on("change",function(){
 		// 	var val = $(this).find('option:selected').val();
@@ -232,6 +234,11 @@
 		$("#file").change(function() {
 			$('#LoadModal').modal('show');
 			readURL(this);
+			setTimeout(function (){
+
+				$('.load-hidden-1').fadeIn();
+
+			}, 2000);
 		});
 		$('#sidebar').toggleClass('active');
 		$('.ncontent').toggleClass('shContent');

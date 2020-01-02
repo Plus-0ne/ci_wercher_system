@@ -174,6 +174,7 @@
 					<div class="col-sm-12 col-lg-12 mt-2">
 						<div class="text-center">
 							<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#AddNote"><i class="fas fa-plus"></i> Add Note</button>
+							<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download" style="margin-right: -1px;"></i></button>
 						</div>
 					</div>
 					<div class="col-sm-12">
@@ -228,8 +229,10 @@
 			</div>
 		</div>
 	</div>
-	<!-- CLIENT HIRE MODAL -->
+	<!-- ADD NOTE MODAL -->
 	<?php $this->load->view('_template/modals/m_addnote'); ?>
+	<!-- EXPORT MODAL -->
+	<?php $this->load->view('_template/modals/m_export'); ?>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css">
@@ -354,10 +357,61 @@
 			}
 		});
 		$.fn.dataTable.moment('MM/dd/yyyy hh:mm:ss A');
-		$('#ListLogbook').DataTable( {
+		var table = $('#ListLogbook').DataTable( {
         	"order": [[ 0, "desc" ]],
-        	columnDefs: [{ targets: [0], type: 'date'}]
+        	columnDefs: [{ targets: [0], type: 'date'}],
+        	buttons: [
+	            {
+		            extend: 'print',
+		            exportOptions: {
+		                columns: [ 0, 1 ]
+		            }
+		        },
+		        {
+		            extend: 'copyHtml5',
+		            exportOptions: {
+		                columns: [ 0, 1 ]
+		            }
+		        },
+		        {
+		            extend: 'excelHtml5',
+		            exportOptions: {
+		                columns: [ 0, 1 ]
+		            }
+		        },
+		        {
+		            extend: 'csvHtml5',
+		            exportOptions: {
+		                columns: [ 0, 1 ]
+		            }
+		        },
+		        {
+		            extend: 'pdfHtml5',
+		            exportOptions: {
+		                columns: [ 0, 1 ]
+		            }
+		        }
+	        ]
+   		});
+		$('#ExportPrint').on('click', function () {
+	        table.button('0').trigger();
+	    });
+	    $('#ExportCopy').on('click', function () {
+	        table.button('1').trigger();
+	    });
+	    $('#ExportExcel').on('click', function () {
+	        table.button('2').trigger();
+	    });
+	    $('#ExportCSV').on('click', function () {
+	        table.button('3').trigger();
+	    });
+	    $('#ExportPDF').on('click', function () {
+	        table.button('4').trigger();
     	});
+		$('#MoreOptions').on('click', function () {
+			$('#MoreOptions').hide();
+			$('.modal-fade').fadeIn();
+		});
 	});
 </script>
 </html>

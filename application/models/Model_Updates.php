@@ -78,15 +78,14 @@ class Model_Updates extends CI_Model {
 			'ApplicantID' => $ApplicantID,
 			'ClientID' => $ClientID,
 			'Time' => $Date,
-			'Regular' => $Regular,
+			'Hours' => $Hours,
 			'Overtime' => $Overtime,
-			'NightShift' => $NightShift,
 			'Type' => $Type,
 		);
 		$SQL = "REPLACE INTO hours_weekly
 SET ApplicantID = '$ApplicantID',
 ClientID = '$ClientID',
-Time = '$Date', Regular = '$Regular', Overtime = '$Overtime', NightShift = '$NightShift', Type = '$Type'";
+Time = '$Date', Hours = '$Hours', Overtime = '$Overtime', Type = '$Type'";
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}

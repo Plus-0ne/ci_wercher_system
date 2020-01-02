@@ -43,40 +43,40 @@
 						<div id="SalaryDays" class="form-row">
 							<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
 								<input id="<?php echo $row['Time']; ?>" type="hidden" name="<?php echo $row['Time']; ?>" value="<?php echo $row['Time']; ?>">
-								<input type="hidden" name="<?php echo $row['DayType']; ?>" value="<?php echo $row['DayType']; ?>">
-								<div class="day-container col-sm-12 col-md-3 text-center rcontent mx-4 <?php 
-										foreach ($this->Model_Selects->GetMatchingDatesType($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-											if ($nrow['Type'] == 'Normal') // TODO: Only fetches from dummy_hours.
-											{ 
-												$Type = 'Normal';
-												echo 'day-indicator-success'; 
-											}
-											elseif ($nrow['Type'] == 'Rest Day') 
-											{ 
-												$Type = 'Rest Day';
-												echo 'day-indicator-primary'; 
-											}
-											elseif ($nrow['Type'] == 'Holiday')
-											{
-												$Type = 'Holiday';
-												echo 'day-indicator-warning';
-											}
-											elseif ($nrow['Type'] == 'Special')
-											{
-												$Type = 'Special';
-												echo 'day-indicator-danger';
-											}
-										endforeach;
+								<!-- <input type="hidden" name="<?php echo $row['DayType']; ?>" value="<?php echo $row['DayType']; ?>"> -->
+								<div class="day-hover day-container_<?php echo $row['Time']; ?> col-sm-12 col-md-3 text-center rcontent mr-4 <?php 
+										// foreach ($this->Model_Selects->GetMatchingDatesType($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
+										// 	if ($nrow['Type'] == 'Normal')
+										// 	{ 
+										// 		$Type = 'Normal';
+										// 		echo 'day-indicator-success'; 
+										// 	}
+										// 	elseif ($nrow['Type'] == 'Rest Day') 
+										// 	{ 
+										// 		$Type = 'Rest Day';
+										// 		echo 'day-indicator-primary'; 
+										// 	}
+										// 	elseif ($nrow['Type'] == 'Holiday')
+										// 	{
+										// 		$Type = 'Holiday';
+										// 		echo 'day-indicator-warning';
+										// 	}
+										// 	elseif ($nrow['Type'] == 'Special')
+										// 	{
+										// 		$Type = 'Special';
+										// 		echo 'day-indicator-danger';
+										// 	}
+										// endforeach;
 										?>">
 									<b><?php echo $row['Time']; ?></b>
 									<div class="form-row mt-2">
 										<!-- data-toggle="tooltip" data-placement="bottom" title="Regular Hours" -->
-										<div class="form-group col-4">
-											<div>Regular</div>
-											<input id="REGHours_<?php echo $row['Time']; ?>" class="form-control" type="number" name="REGHours_<?php echo $row['Time']; ?>" value="<?php
+										<div class="form-group col-8">
+											<div>Hours</div>
+											<input id="Hours_<?php echo $row['Time']; ?>" class="form-control" type="number" name="Hours_<?php echo $row['Time']; ?>" value="<?php
 													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-														if($nrow['Regular'] != NULL) {
-															echo $nrow['Regular'];
+														if($nrow['Hours'] != NULL) {
+															echo $nrow['Hours'];
 														} else {
 															echo '0';
 														}
@@ -89,18 +89,6 @@
 													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
 														if($nrow['Overtime'] != NULL) {
 															echo $nrow['Overtime'];
-														} else {
-															echo '0';
-														}
-													endforeach;
-											?>">
-										</div>
-										<div class="form-group col-4">
-											<div>Night&nbsp;Shift</div>
-											<input id="NSHours_<?php echo $row['Time']; ?>" class="form-control" type="number" name="NSHours_<?php echo $row['Time']; ?>" value="<?php
-													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-														if($nrow['NightShift'] != NULL) {
-															echo $nrow['NightShift'];
 														} else {
 															echo '0';
 														}
@@ -133,8 +121,9 @@
 										</div> -->
 									</div>
 									<div class="form-row">
-										<div class="form-group col-12">
-											<select class="form-control" name="Type">
+										<div class="form-group col-4">
+											<input id="REGCheck_<?php echo $row['Time']; ?>" type="checkbox" data-toggle="toggle" data-on="Regular" data-off="Regular" data-onstyle="success" data-offstyle="secondary" data-width="85" <?php if (isset($Regular)) { echo 'checked'; } ?>>
+											<!-- <select class="form-control" name="Type_<?php echo $row['Time']; ?>">
 												<option value="Normal" <?php if ($Type == 'Normal') { echo 'selected=""'; } ?>>
 													Normal
 												</option>
@@ -147,7 +136,13 @@
 												<option value="Special" <?php if ($Type == 'Special') { echo 'selected=""'; } ?>>
 													Special (non-working)
 												</option>
-											</select>
+											</select> -->
+										</div>
+										<div class="form-group col-4">
+											<input id="NCheck_<?php echo $row['Time']; ?>" type="checkbox" data-toggle="toggle" data-on="Night" data-off="Night" data-onstyle="primary" data-offstyle="secondary" data-width="85" <?php if (isset($RestDay)) { echo 'checked'; } ?>>
+										</div>
+										<div class="form-group col-4">
+											<input id="HCheck_<?php echo $row['Time']; ?>" type="checkbox" data-toggle="toggle" data-on="Holiday" data-off="Holiday" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
 										</div>
 									</div>
 									<!-- <p class="mr-auto ml-auto">Hours</p> -->

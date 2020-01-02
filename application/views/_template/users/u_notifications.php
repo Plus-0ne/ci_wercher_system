@@ -7,7 +7,7 @@
 			.notif-li { padding-left: 21px; padding-right: 21px ; padding-top: 11px ;padding-bottom: 11px ; font-size: 12px;}
 		</style>
 		<nav class="navbar navbar-expand-lg">
-			<button type="button" id="sidebarCollapse" class="btn btn-primary"><i class="fas fa-bars"></i></button>
+			<button type="button" id="sidebarCollapse" class="btn btn-primary"><i class="fas fa-bars" style="margin-right: -1px;"></i></button>
 			<div class="dropdown ml-auto">
 				<a class="btn btn-light ddToggle" data-toggle="dropdown"><i class="fas fa-bell"></i></a>
 				<ul class="dropdown-menu dropdown-menu-right">
