@@ -271,7 +271,7 @@
 			$GraphMonthData = $GraphMonthData . $row['Total'] . '", "';
 		endforeach;
 		$GraphMonthData = str_replace('"', "", $GraphMonthData);
-		// echo $GraphMonthData;
+		echo $GraphMonthData;
 	}
 	// GRAPH CHART COUNTER FOR SELECTED YEAR
 	$GraphMonthDataCurrent = '';

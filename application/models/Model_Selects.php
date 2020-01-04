@@ -155,7 +155,7 @@ class Model_Selects extends CI_Model {
 	public function GetMonthlyTotal($Year)
 	{
 		// $SQL = "SELECT DATE_FORMAT(AppliedOn, '%Y') as 'Year', DATE_FORMAT(AppliedOn, '%m') as 'Month', COUNT(ApplicantID) as 'Total' FROM applicants GROUP BY DATE_FORMAT(AppliedOn, '%Y%m')";
-		$SQL = "SELECT * FROM dashboard_months WHERE Year = '$Year'";
+		$SQL = "SELECT * FROM dashboard_months WHERE Year = '$Year' ORDER BY `dashboard_months`.`Month` ASC";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

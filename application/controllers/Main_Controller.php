@@ -130,32 +130,58 @@
 		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		// COUNT MONTHLY TOTAl
 		$CurrentYear = date('Y');
+		$Month = date('01');
+		$data['CurrentYear'] = $CurrentYear;
 		if (isset($_GET['Year'])) {
 			$Year = $this->input->get('Year');
-			$Month = date('m');
-			$this->load->model('Model_Deletes');
-			$this->Model_Deletes->CleanDashboardMonths($Year, $CurrentYear);
-			for ($i = 0; $i < 12; $i++) {
-				$MonthAdd = date('m', strtotime('+' . $i . ' month', strtotime($Month)));
-				$sql = array(
-					'Year' => $Year,
-					'Month' => $MonthAdd,
-					'Total' => '0'
-				);
-				$ClientViewTime = $this->Model_Inserts->InsertDashboardMonths($sql);
-				if ($i == 11) {
+			$YearChecker =  $this->Model_Selects->GetMonthlyTotal($Year);
+			if ($YearChecker->num_rows() < 12) { // Loads faster if already on cache (Database)
+				for ($i = 0; $i < 12; $i++) {
+					$MonthAdd = date('m', strtotime('+' . $i . ' month', strtotime($Month)));
+					$sql = array(
+						'Year' => $Year,
+						'Month' => $MonthAdd,
+						'Total' => '0'
+					);
+					$this->Model_Inserts->InsertDashboardMonths($sql);
 					$this->Model_Inserts->InsertToGraph();
-					$data['result_monthly'] =  $this->Model_Selects->GetMonthlyTotal($Year);
-					$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
-					$data['SelectedYear'] = $Year;
-					$data['CurrentYear'] = $CurrentYear;
-					$this->load->view('users/u_dashboard',$data);
+					if ($i == 11) {
+						$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($Year);
+						$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+						$data['SelectedYear'] = $Year;
+						$this->load->view('users/u_dashboard',$data);
+					}
 				}
+			} else {
+				$this->Model_Inserts->InsertToGraph();
+				$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($Year);
+				$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+				$data['SelectedYear'] = $Year;
+				$this->load->view('users/u_dashboard',$data);
 			}
 		} else {
-			$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
-			$data['CurrentYear'] = $CurrentYear;
-			$this->load->view('users/u_dashboard',$data);
+			$YearChecker =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+			if ($YearChecker->num_rows() < 12) { // Cache on first Dashboard visit
+				for ($i = 0; $i < 12; $i++) {
+					$MonthAdd = date('m', strtotime('+' . $i . ' month', strtotime($Month)));
+					$sql = array(
+						'Year' => $CurrentYear,
+						'Month' => $MonthAdd,
+						'Total' => '0'
+					);
+					$this->Model_Inserts->InsertDashboardMonths($sql);
+					$this->Model_Inserts->InsertToGraph();
+					if ($i == 11) {
+						$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+						$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+						$data['SelectedYear'] = $CurrentYear;
+						$this->load->view('users/u_dashboard',$data);
+					}
+				}
+			} else {
+				$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+				$this->load->view('users/u_dashboard',$data);
+			}
 		}
 		
 	}
