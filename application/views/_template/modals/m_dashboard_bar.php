@@ -1,10 +1,10 @@
-<div class="modal fade" id="ExportModal">
+<div class="modal fade" id="BarChartModal">
 	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
 
 		<!-- Modal Header -->
 		<div class="modal-header">
-			<h4 class="modal-title"><i class="fas fa-download"></i> Export as...</h4>
+			<h4 class="modal-title"><i class="fas fa-calendar-week fa-fw"></i> <?php echo $SelectedYear; ?> Applicants</h4>
 			<div class="text-right">
 				<button type="button" class="close d-none d-sm-block" data-dismiss="modal">&times;</button>
 			</div>

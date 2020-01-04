@@ -90,4 +90,15 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('supp_documents', $data);
 		return $result;
 	}
+	public function InsertDashboardMonths($data) // Dummy months
+	{
+		$result = $this->db->replace('dashboard_months', $data);
+		return $result;
+	}
+	public function InsertToGraph()
+	{
+		$SQL = "REPLACE INTO dashboard_months (Year, Month, Total) SELECT DATE_FORMAT(AppliedOn, '%Y') as 'Year', DATE_FORMAT(AppliedOn, '%m') as 'Month', COUNT(ApplicantID) as 'Total' FROM applicants GROUP BY DATE_FORMAT(AppliedOn, '%Y%m')";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }

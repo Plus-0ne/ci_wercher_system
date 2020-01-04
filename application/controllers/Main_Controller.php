@@ -126,11 +126,37 @@
 		$data['result_cemployee'] =  $this->Model_Selects->GetEmployee();
 		// COUNT CLIENT
 		$data['result_cclients'] =  $this->Model_Selects->GetClients();
-		// COUNT MONTHLY TOTAl
-		$data['result_monthly'] =  $this->Model_Selects->GetMonthlyTotal();
 		// LOGBOOK
 		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
-		$this->load->view('users/u_dashboard',$data);
+		// COUNT MONTHLY TOTAl
+		$CurrentYear = date('Y');
+		if (isset($_GET['Year'])) {
+			$Year = $this->input->get('Year');
+			$Month = date('m');
+			$this->load->model('Model_Deletes');
+			$this->Model_Deletes->CleanDashboardMonths($Year, $CurrentYear);
+			for ($i = 0; $i < 12; $i++) {
+				$MonthAdd = date('m', strtotime('+' . $i . ' month', strtotime($Month)));
+				$sql = array(
+					'Year' => $Year,
+					'Month' => $MonthAdd,
+					'Total' => '0'
+				);
+				$ClientViewTime = $this->Model_Inserts->InsertDashboardMonths($sql);
+				if ($i == 11) {
+					$this->Model_Inserts->InsertToGraph();
+					$data['result_monthly'] =  $this->Model_Selects->GetMonthlyTotal($Year);
+					$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+					$data['SelectedYear'] = $Year;
+					$data['CurrentYear'] = $CurrentYear;
+					$this->load->view('users/u_dashboard',$data);
+				}
+			}
+		} else {
+			$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+			$data['CurrentYear'] = $CurrentYear;
+			$this->load->view('users/u_dashboard',$data);
+		}
 		
 	}
 	

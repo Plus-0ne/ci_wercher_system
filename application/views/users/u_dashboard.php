@@ -138,28 +138,37 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-12 col-lg-6 mt-5 mb-5">
+					<div id="PieChartButton" class="col-sm-12 col-lg-6 mt-5 mb-5 chart-hover">
 						<div class="chart-title text-center">
 							<h5 class="titless">
 								<i class="fas fa-chart-pie fa-fw"></i> Total Applicant
 							</h5>
 						</div>
+						<!-- <div class="col-1 ml-auto chart-hover-settings" style="margin-top: -30px; display: none;">
+							<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog" style="margin-right: -1px;"></i></button>
+						</div> -->
 						<canvas id="pie-chart" width="800" height="450"></canvas>
 					</div>
-					<div class="col-sm-12 col-lg-6 mt-5 mb-5">
+					<div id="BarChartButton" class="col-sm-12 col-lg-6 mt-5 mb-5 chart-hover">
 						<div class="chart-title text-center">
 							<h5 class="titless">
 								<i class="fas fa-chart-line fa-fw"></i> Total Employed
 							</h5>
 						</div>
+						<!-- <div class="col-1 ml-auto chart-hover-settings" style="margin-top: -30px; display: none;">
+							<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog" style="margin-right: -1px;"></i></button>
+						</div> -->
 						<canvas id="bar-chart-horizontal" width="800" height="450"></canvas>
 					</div>
-					<div class="col-sm-12 col-lg-12 mt-5 mb-5">
+					<div id="GraphChartButton" class="col-sm-12 col-lg-12 mt-5 mb-5 chart-hover">
 						<div class="chart-title text-center">
 							<h5 class="titless">
-								<i class="fas fa-calendar-week fa-fw"></i> 2019 Applicants
+								<i class="fas fa-calendar-week fa-fw chart-hover-static"></i> <?php echo $CurrentYear; ?> Applicants
 							</h5>
 						</div>
+						<!-- <div class="col-1 ml-auto chart-hover-settings" style="margin-top: -30px; display: none;">
+							<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog" style="margin-right: -1px;"></i></button>
+						</div> -->
 						<canvas id="ApplicantChart" class="w-100" width="800" height="250"></canvas>
 					</div>
 
@@ -233,6 +242,12 @@
 	<?php $this->load->view('_template/modals/m_addnote'); ?>
 	<!-- EXPORT MODAL -->
 	<?php $this->load->view('_template/modals/m_export'); ?>
+	<!-- PIE CHART MODAL -->
+	<?php $this->load->view('_template/modals/m_dashboard_pie'); ?>
+	<!-- BAR CHART MODAL -->
+	<?php $this->load->view('_template/modals/m_dashboard_bar'); ?>
+	<!-- GRAPH CHART MODAL -->
+	<?php $this->load->view('_template/modals/m_dashboard_graph'); ?>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css">
@@ -248,20 +263,48 @@
 	endforeach;
 	$BarClientsLabel = substr($BarClientsLabel, 0, -4);
 	$BarClientsData = str_replace('"', "", $BarClientsData);
-	// GRAPH CHART COUNTER
-	$GraphMonthData = '';
-	foreach ($result_monthly->result_array() as $row):
-		if ($row['Month'] == NULL) {
-			$GraphMonthData = $GraphMonthData . '0, "';
-		} else {
+	// GRAPH CHART COUNTER FOR CURRENT YEAR
+	if (isset($_GET['Year'])) {
+		$GraphMonthData = '';
+		// echo date('Y');
+		foreach ($result_monthly->result_array() as $row):
 			$GraphMonthData = $GraphMonthData . $row['Total'] . '", "';
-		}
+		endforeach;
+		$GraphMonthData = str_replace('"', "", $GraphMonthData);
+		// echo $GraphMonthData;
+	}
+	// GRAPH CHART COUNTER FOR SELECTED YEAR
+	$GraphMonthDataCurrent = '';
+	// echo date('Y');
+	foreach ($result_monthly_current_year->result_array() as $row):
+		$GraphMonthDataCurrent = $GraphMonthDataCurrent . $row['Total'] . '", "';
 	endforeach;
-	$GraphMonthData = str_replace('"', "", $GraphMonthData);
-	echo $GraphMonthData;
+	$GraphMonthDataCurrent = str_replace('"', "", $GraphMonthDataCurrent);
+	// echo $GraphMonthData;
 ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		<?php if (isset($_GET['Year'])): ?>
+			$('#GraphChartModal').modal('show');
+		<?php endif; ?>
+		$("#GraphYear").change(function() {
+			$(this).parents('form').submit();
+		});
+		$('.load-div').hide();
+		$('#PieChartButton').on('click', function () {
+			$('#PieChartModal').modal('show');
+		});
+		$('#BarChartButton').on('click', function () {
+			$('#BarChartModal').modal('show');
+		});
+		$('#GraphChartButton').on('click', function () {
+			$('#GraphChartModal').modal('show');
+		});
+		// $(".chart-hover").hover(function(){
+		// 	$(this).find('.chart-hover-settings').show();
+		// },function(){
+		// 	$(this).find('.chart-hover-settings').hide();
+		// });
 		$('#sidebarCollapse').on('click', function () {
 			$('#sidebar').toggleClass('active');
 			$('.ncontent').toggleClass('shContent');
@@ -317,7 +360,7 @@
 				labels: ['January', 'February', 'March', 'April', 'May', 'June' , 'July', 'August', 'September', 'October', 'November', 'December'],
 				datasets: [{
 					label: '# of Applicants',
-					data: [<?php echo $GraphMonthData; ?>],
+					data: [<?php echo $GraphMonthDataCurrent; ?>],
 					backgroundColor: [
 					'rgba(255, 99, 132, 0.5)',
 					],
@@ -350,6 +393,52 @@
 				title: {
 					display: true,
 					text: 'Total Applicant this year'
+				},
+				legend: {
+					display: false
+				}
+			}
+		});
+		var GraphChartID = document.getElementById('GraphChartModal_Chart');
+		var GraphChart = new Chart(GraphChartID, {
+			type: 'line',
+			data: {
+				labels: ['January', 'February', 'March', 'April', 'May', 'June' , 'July', 'August', 'September', 'October', 'November', 'December'],
+				datasets: [{
+					label: '# of Applicants',
+					data: [<?php if (isset($_GET['Year'])) { echo $GraphMonthData; } else { echo $GraphMonthDataCurrent; } ?>],
+					backgroundColor: [
+					'rgba(255, 99, 132, 0.5)',
+					],
+					borderColor: [
+					'rgba(255, 99, 132, 1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)',
+					'rgba(255, 99, 132, 1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)'
+					],
+					borderWidth: 2
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				},
+				title: {
+					display: true,
+					text: 'Total Applicants for <?php if (isset($_GET['Year'])) { echo $SelectedYear; } else { echo $CurrentYear; } ?>'
 				},
 				legend: {
 					display: false
