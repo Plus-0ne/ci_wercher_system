@@ -159,6 +159,18 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetMonthlyTotalNoZero($Year)
+	{
+		$SQL = "SELECT * FROM dashboard_months WHERE Year = '$Year' AND Total <> '0' ORDER BY `dashboard_months`.`Month` ASC";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetMonthlyTotalSpecificMonth($Year, $Month)
+	{
+		$SQL = "SELECT * FROM dashboard_months WHERE Year = '$Year' AND Month = '$Month'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function GetViolations($ApplicantID)
 	{
 		$SQL = "SELECT * FROM violations WHERE ApplicantID = '$ApplicantID'";

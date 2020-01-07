@@ -23,6 +23,9 @@
 						</h4>
 					</div>
 					<div class="col-8 col-sm-8 col-md-8 text-right">
+						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#add_UserAdmin" data-backdrop="static" data-keyboard="false">
+							<i class="fas fa-user-plus"></i> New
+						</a>
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
 					<div class="col-sm-12">
@@ -91,11 +94,6 @@
 								</tbody>
 							</table>
 						</div>
-					</div>
-					<div class="p-2">
-						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#add_UserAdmin" data-backdrop="static" data-keyboard="false">
-							<i class="fas fa-user-plus"></i> New
-						</a>
 					</div>
 				</div>
 			</div>

@@ -235,25 +235,25 @@
 								</table> -->
 							</div>
 					<div class="modal-fade text-center" style="display: none;">
-							<hr>
-							<div class="form-row">
-								<div class="col-4 col-sm-2">
-									<label>Fill All</label>
-									<input id="HoursDayOne" class="form-control" type="number" name="" value="8">
-									<button id="add_machop" type="submit" class="btn btn-info mt-2" data-dismiss="modal" aria-label="Close"><i class="fas fa-angle-double-right"></i></button>
-								</div>
-								<div class="col-4 col-sm-2">
-									<label>Increment</label>
-									<input id="HoursDayOne" class="form-control" type="number" name="" value="1">
-									<button id="add_machop" type="submit" class="btn btn-info mt-2" data-dismiss="modal" aria-label="Close"><i class="fas fa-angle-double-right"></i></button>
-								</div>
-								<div class="col-4 col-sm-2">
-									<label>Decrement</label>
-									<input id="HoursDayOne" class="form-control" type="number" name="" value="1">
-									<button id="add_machop" type="submit" class="btn btn-info mt-2" data-dismiss="modal" aria-label="Close"><i class="fas fa-angle-double-right"></i></button>
-								</div>
+						<hr>
+						<div class="form-row">
+							<div class="col-4 col-sm-2">
+								<label>Fill All</label>
+								<input id="HoursDayOne" class="form-control" type="number" name="" value="8">
+								<button id="add_machop" type="submit" class="btn btn-info mt-2" data-dismiss="modal" aria-label="Close"><i class="fas fa-angle-double-right"></i></button>
 							</div>
-						</div>											
+							<div class="col-4 col-sm-2">
+								<label>Increment</label>
+								<input id="HoursDayOne" class="form-control" type="number" name="" value="1">
+								<button id="add_machop" type="submit" class="btn btn-info mt-2" data-dismiss="modal" aria-label="Close"><i class="fas fa-angle-double-right"></i></button>
+							</div>
+							<div class="col-4 col-sm-2">
+								<label>Decrement</label>
+								<input id="HoursDayOne" class="form-control" type="number" name="" value="1">
+								<button id="add_machop" type="submit" class="btn btn-info mt-2" data-dismiss="modal" aria-label="Close"><i class="fas fa-angle-double-right"></i></button>
+							</div>
+						</div>
+					</div>											
 				</div>
 				<div class="modal-footer">
 					<button id="MoreOptions" type="button" class="btn btn-primary mr-auto"><i class="fas fa-cog"></i> More Options</button>

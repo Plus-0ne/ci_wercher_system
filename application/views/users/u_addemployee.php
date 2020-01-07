@@ -9,8 +9,8 @@
 					<div class="col-sm-12 pt-3 pb-3">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb" style="background-color: transparent;">
-								<li class="breadcrumb-item"><a href="">Home</a></li>
-								<li class="breadcrumb-item" aria-current="page">Employee</li>
+								<li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
+								<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
 								<li class="breadcrumb-item active" aria-current="page">Add</li>
 							</ol>
 						</nav>
@@ -43,8 +43,9 @@
 										<input class="form-control" type="text" name="PositionDesired" autocomplete="off" value="<?php echo $this->session->flashdata('PositionDesired'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
-										<label>Group</label>
-										<select class="form-control" name="PositionGroup">
+										<label>Position Group</label>
+										<input class="form-control" type="text" name="PositionGroup" autocomplete="off" value="<?php echo $this->session->flashdata('PositionGroup'); ?>">
+										<!-- <select class="form-control" name="PositionGroup">
 											<option value="TEST GROUP 1" <?php if ($this->session->flashdata('PositionGroup') == 'TEST GROUP 1') {
 												echo 'selected=""';
 											} ?>>
@@ -65,11 +66,11 @@
 											} ?>>
 												TEST GROUP 4
 											</option>
-										</select>
+										</select> -->
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
-										<label>Salary Expected</label>
-										<input class="form-control" type="text" name="SalaryExpected" autocomplete="off" value="<?php echo $this->session->flashdata('SalaryExpected'); ?>">
+										<label>Application Date</label>
+										<input class="form-control" type="date" name="ApplicationDate" autocomplete="off" value="<?php if ($this->session->flashdata('ApplicationDate')) { echo $this->session->flashdata('ApplicationDate'); } else { echo date('Y-m-d'); } ?>">
 									</div>
 								</div>
 								<div class="form-row">
@@ -86,7 +87,7 @@
 										<input class="form-control" type="text" name="MI" autocomplete="off" value="<?php echo $this->session->flashdata('MI'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
-										<label>Gender</label>
+										<label>Sex</label>
 										<select class="form-control" name="Gender">
 											<option value="Male" <?php if ($this->session->flashdata('Gender') == 'Male') {
 												echo 'selected=""';
@@ -108,11 +109,11 @@
 									</div>
 									<div class="form-group col-sm-12 col-md-1">
 										<label>Height</label>
-										<input class="form-control" type="number" name="Height" autocomplete="off" value="<?php echo $this->session->flashdata('Height'); ?>">
+										<input class="form-control" type="text" name="Height" autocomplete="off" value="<?php echo $this->session->flashdata('Height'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-1">
 										<label>Weight</label>
-										<input class="form-control" type="number" name="Weight" autocomplete="off" value="<?php echo $this->session->flashdata('Weight'); ?>">
+										<input class="form-control" type="text" name="Weight" autocomplete="off" value="<?php echo $this->session->flashdata('Weight'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Religion</label>
@@ -162,8 +163,8 @@
 										<input class="form-control" type="number" name="No_Children" autocomplete="off" value="<?php echo $this->session->flashdata('No_Children'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-4">
-										<label>Phone Number</label>
-										<input class="form-control" type="number" name="PhoneNumber" autocomplete="off" value="<?php echo $this->session->flashdata('PhoneNumber'); ?>">
+										<label>Contact Number</label>
+										<input class="form-control" type="text" name="PhoneNumber" autocomplete="off" value="<?php echo $this->session->flashdata('PhoneNumber'); ?>">
 									</div>
 								</div>
 								<div class="mt-5 mb-4">

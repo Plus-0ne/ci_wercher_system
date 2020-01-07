@@ -149,6 +149,16 @@
 						$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($Year);
 						$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
 						$data['SelectedYear'] = $Year;
+						$CountTotal = 0;
+						foreach ($this->Model_Selects->GetMonthlyTotal($CurrentYear)->result_array() as $row) {
+							$CountTotal = $CountTotal + $row['Total'];
+						}
+						$data['CurrentYearTotal'] = $CountTotal;
+						$CountTotal = 0;
+						foreach ($this->Model_Selects->GetMonthlyTotal($Year)->result_array() as $row) {
+							$CountTotal = $CountTotal + $row['Total'];
+						}
+						$data['SelectedYearTotal'] = $CountTotal;
 						$this->load->view('users/u_dashboard',$data);
 					}
 				}
@@ -157,6 +167,16 @@
 				$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($Year);
 				$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
 				$data['SelectedYear'] = $Year;
+				$CountTotal = 0;
+				foreach ($this->Model_Selects->GetMonthlyTotal($CurrentYear)->result_array() as $row) {
+					$CountTotal = $CountTotal + $row['Total'];
+				}
+				$data['CurrentYearTotal'] = $CountTotal;
+				$CountTotal = 0;
+				foreach ($this->Model_Selects->GetMonthlyTotal($Year)->result_array() as $row) {
+					$CountTotal = $CountTotal + $row['Total'];
+				}
+				$data['SelectedYearTotal'] = $CountTotal;
 				$this->load->view('users/u_dashboard',$data);
 			}
 		} else {
@@ -175,11 +195,28 @@
 						$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($CurrentYear);
 						$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
 						$data['SelectedYear'] = $CurrentYear;
+						$CountTotal = 0;
+						foreach ($this->Model_Selects->GetMonthlyTotal($CurrentYear)->result_array() as $row) {
+							$CountTotal = $CountTotal + $row['Total'];
+						}
+						$data['CurrentYearTotal'] = $CountTotal;
+						$CountTotal = 0;
+						foreach ($this->Model_Selects->GetMonthlyTotal($Year)->result_array() as $row) {
+							$CountTotal = $CountTotal + $row['Total'];
+						}
+						$data['SelectedYearTotal'] = $CountTotal;
 						$this->load->view('users/u_dashboard',$data);
 					}
 				}
 			} else {
 				$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+				$data['SelectedYear'] = $CurrentYear;
+				$CountTotal = 0;
+				foreach ($this->Model_Selects->GetMonthlyTotal($CurrentYear)->result_array() as $row) {
+					$CountTotal = $CountTotal + $row['Total'];
+				}
+				$data['CurrentYearTotal'] = $CountTotal;
+				$data['SelectedYearTotal'] = $CountTotal;
 				$this->load->view('users/u_dashboard',$data);
 			}
 		}

@@ -72,6 +72,7 @@
 				<div class="row rcontent p-5">
 					<div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
+							<a href="Applicants">
 							<div class="card-headers clearfix bcolor3BB515">
 								<span class="float-left head-text">
 									Applicant
@@ -85,10 +86,12 @@
 							<div class="card-bodys clearfix">
 								<a class="dc-links float-left" href="<?=base_url()?>Applicants"><i class="fas fa-angle-right fa-fw"></i> View </a>
 							</div>
+							</a>
 						</div>
 					</div>
 					<div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
+							<a href="Employee">
 							<div class="card-headers clearfix bcolorD9B319">
 								<span class="float-left head-text">
 									Employee 
@@ -106,6 +109,7 @@
 					</div>
 					<div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
+							<a href="Clients">
 							<div class="card-headers clearfix bcolor199EC4">
 								<span class="float-left head-text">
 									Client 
@@ -123,6 +127,7 @@
 					</div>
 					<div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
+							<a href="Admin_List">
 							<div class="card-headers clearfix bcolorE75858">
 								<span class="float-left head-text">
 									Admin
@@ -271,7 +276,7 @@
 			$GraphMonthData = $GraphMonthData . $row['Total'] . '", "';
 		endforeach;
 		$GraphMonthData = str_replace('"', "", $GraphMonthData);
-		echo $GraphMonthData;
+		// echo $GraphMonthData;
 	}
 	// GRAPH CHART COUNTER FOR SELECTED YEAR
 	$GraphMonthDataCurrent = '';
@@ -291,12 +296,12 @@
 			$(this).parents('form').submit();
 		});
 		$('.load-div').hide();
-		$('#PieChartButton').on('click', function () {
-			$('#PieChartModal').modal('show');
-		});
-		$('#BarChartButton').on('click', function () {
-			$('#BarChartModal').modal('show');
-		});
+		// $('#PieChartButton').on('click', function () {
+		// 	$('#PieChartModal').modal('show');
+		// });
+		// $('#BarChartButton').on('click', function () {
+		// 	$('#BarChartModal').modal('show');
+		// });
 		$('#GraphChartButton').on('click', function () {
 			$('#GraphChartModal').modal('show');
 		});
@@ -386,13 +391,14 @@
 					yAxes: [{
 
 						ticks: {
+							stepValue: 1,
 							beginAtZero: true
 						}
 					}]
 				},
 				title: {
 					display: true,
-					text: 'Total Applicant this year'
+					text: '<?php echo $CurrentYearTotal; ?> Applicants Total'
 				},
 				legend: {
 					display: false
@@ -432,13 +438,14 @@
 					yAxes: [{
 
 						ticks: {
+                            stepValue: 1,
 							beginAtZero: true
 						}
 					}]
 				},
 				title: {
 					display: true,
-					text: 'Total Applicants for <?php if (isset($_GET['Year'])) { echo $SelectedYear; } else { echo $CurrentYear; } ?>'
+					text: '<?php if (isset($_GET['Year'])) { echo $SelectedYearTotal; } else { echo $CurrentYearTotal; } ?> Total Applicants for <?php if (isset($_GET['Year'])) { echo $SelectedYear; } else { echo $CurrentYear; } ?>'
 				},
 				legend: {
 					display: false
