@@ -261,5 +261,11 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL,$ClientID);
 		return $result;
 	}
-	
+	public function GetApplicantsByMonth($Year, $Month)
+	{
+		$SQL = "SELECT * FROM applicants WHERE AppliedOn LIKE '%$Year-$Month%'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+
 }

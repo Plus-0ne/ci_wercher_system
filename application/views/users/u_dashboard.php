@@ -92,7 +92,7 @@
 					<div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
 							<a href="Employee">
-							<div class="card-headers clearfix bcolorD9B319">
+							<div class="card-headers clearfix" style="background-color: rgba(153, 102, 255, 1);">
 								<span class="float-left head-text">
 									Employee 
 								</span>
