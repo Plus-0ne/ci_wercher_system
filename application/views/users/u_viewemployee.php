@@ -41,9 +41,9 @@
 								<?php endif; ?>
 							<?php endif; ?>
 							<button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<i class="fas fa-cog"></i>
+							<i class="fas fa-cog px-1" style="margin-right: -1px;"></i>
 							</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<div class="dropdown-menu w-50" aria-labelledby="dropdownMenuButton">
 								<a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" class="dropdown-item"><i class="fas fa-edit"></i> Edit</a>
 								<?php if ($Status == 'Employed'): ?> 
 									<button id="<?php echo $ApplicantID; ?>" class="dropdown-item ReminderButton" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-stopwatch"></i> Set a Reminder</button>
@@ -230,15 +230,15 @@
 						<div class="col-sm-12 col-md-4 e-det">
 							<p>
 								<?php if ($Status == 'Employed') { ?>
-									<i class="fas fa-circle PrintExclude" style="color: #1BDB07;"></i> Employed
+									<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Employed
 								<?php } elseif ($Status == 'Applicant') { ?>
-									<i class="fas fa-circle PrintExclude" style="color: #DB3E07;"></i> Applicant
+									<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Applicant
 								<?php } elseif ($Status == 'Expired') { ?>
-									<i class="fas fa-circle PrintExclude" style="color: #DB3E07;"></i> Applicant (Expired)
+									<i class="fas fa-square PrintExclude" style="color: #0721DB;"></i> Applicant (Expired)
 								<?php } elseif ($Status == 'Blacklisted') { ?>
-									<i class="fas fa-circle PrintExclude" style="color: #000000;"></i> Blacklisted
+									<i class="fas fa-square PrintExclude" style="color: #000000;"></i> Blacklisted
 								<?php } else { ?>
-									<i class="fas fa-circle PrintExclude" style="color: #DB3E07;"></i> Unknown
+									<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Unknown
 								<?php } ?>
 							</p>
 						</div>

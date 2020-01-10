@@ -7,7 +7,8 @@ html,body
 	margin: 0px;
 	height: 100%;
 	padding: 0px !important;
-	background-color: #F7F7F7;
+	/*background-color: #F7F7F7;*/
+	background-color: #ebebeb;
 }
 .wrapper {
 	display: flex;
@@ -291,9 +292,9 @@ a[data-toggle="collapse"] {
 {
 	border-radius: 3px 3px 0px 0px;
 	padding-top: 10px;
-	padding-bottom: 20px;
-	padding-right: 20px;
-	padding-left: 20px;
+	padding-bottom: 10px;
+	padding-right: 10px;
+	padding-left: 10px;
 	color: #FFFFFF;
 }
 .card-bodys-lite
@@ -311,13 +312,28 @@ a[data-toggle="collapse"] {
 }
 .card-month-text
 {
-	font-size: 1.5em;
+	font-size: 1.25em;
 }
 .card-headers-primary {
 	background-color: rgba(0, 125, 225, 1.0);
 }
 .card-headers-info {
-	background-color: rgba(0, 85, 85, 1.0);
+	/*background-color: rgba(0, 85, 85, 1.0);*/
+	background-color: rgba(55, 55, 55, 0.33);
+	color: rgba(255, 255, 255, 0.45);
+}
+.line-through-text {
+   width: 100%; 
+   text-align: center; 
+   border-bottom: 2px solid rgba(0, 0, 0, 0.16); 
+   line-height: 0.1em;
+   margin: 20px 0 50px; 
+} 
+
+.line-through-text span { 
+    background:#fff; 
+    margin-top: 10px;
+    padding:0 10px; 
 }
 /*
 .sidebar-button-active {

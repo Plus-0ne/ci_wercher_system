@@ -4,7 +4,7 @@
 
 		<!-- Modal Header -->
 		<div class="modal-header">
-			<h4 class="modal-title"><i class="fas fa-calendar-week fa-fw"></i> <?php echo $SelectedYear; ?> Applicants</h4>
+			<h4 class="modal-title"><i class="fas fa-user-tie fa-fw"></i> Positions Desired</h4>
 			<div class="text-right">
 				<button type="button" class="close d-none d-sm-block" data-dismiss="modal">&times;</button>
 			</div>
@@ -12,50 +12,28 @@
 
 		<!-- Modal body -->
 		<div class="modal-body">
-			<div class="row rcontent export-button w-85 ml-auto mr-auto mt-2" id="ExportPrint">
-				<div class="col-sm-12 col-md-4 text-center mt-2">
-					<i class="fas fa-print" style="font-size: 48px;"></i>
-					<p class="export-title"><b>Print</b></p>
+			<div class="row">
+				<div class="col-sm-12 col-md-6">
+					<div class="chart-title text-center">
+						<h5 class="titless">
+							<i class="fas fa-user fa-fw"></i> Current Pool
+						</h5>
+					</div>
+					<!-- <div class="col-1 ml-auto chart-hover-settings" style="margin-top: -30px; display: none;">
+						<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog" style="margin-right: -1px;"></i></button>
+					</div> -->
+					<canvas id="GM_pie-chart" width="800" height="450"></canvas>
 				</div>
-				<div class="col-sm-12 col-md-8 mt-4">
-					<p class="export-tooltip">Prints the entire table.</p>
-				</div>
-			</div>
-			<div class="row rcontent export-button w-85 ml-auto mr-auto mt-2" id="ExportCopy">
-				<div class="col-sm-12 col-md-4 text-center mt-2">
-					<i class="fas fa-clipboard-list" style="font-size: 48px;"></i>
-					<p class="export-title"><b>Copy to Clipboard</b></p>
-				</div>
-				<div class="col-sm-12 col-md-8 mt-4">
-					<p class="export-tooltip">Copies the entire table as text to the clipboard. Paste it down via normal means to reveal.</p>
-				</div>
-			</div>
-			<div class="row rcontent export-button w-85 ml-auto mr-auto mt-2" id="ExportExcel">
-				<div class="col-sm-12 col-md-4 text-center mt-2">
-					<i class="fas fa-file-excel" style="font-size: 48px;"></i>
-					<p class="export-title"><b>Excel File (.xlsx)</b></p>
-				</div>
-				<div class="col-sm-12 col-md-8 mt-4">
-					<p class="export-tooltip">Export as a Microsoft Excel Open XML Spreadsheet file. Best viewed on a spreadsheet program.</p>
-				</div>
-			</div>
-			<div class="row rcontent export-button w-85 ml-auto mr-auto mt-2" id="ExportCSV">
-				<div class="col-sm-12 col-md-4 text-center mt-2">
-					<i class="fas fa-file-csv" style="font-size: 48px;"></i>
-					<p class="export-title"><b>CSV File (.csv)</b></p>
-				</div>
-				<div class="col-sm-12 col-md-8 mt-4">
-					<p class="export-tooltip">Export as a Comma-seperated values file. Best viewed on a spreadsheet program.</p>
-				</div>
-			</div>
-			<div class="row rcontent export-button w-85 ml-auto mr-auto mt-2 export-disabled" id="ExportPDF">
-				<div class="col-sm-12 col-md-4 text-center mt-2">
-					<i class="fas fa-file-pdf" style="font-size: 48px;"></i>
-					<p class="export-title"><b><del>PDF File (.pdf)</del></b></p>
-				</div>
-				<div class="col-sm-12 col-md-8 mt-4">
-					<p class="export-tooltip"><b>WORK IN PROGRESS!</b></p>
-					<p class="export-tooltip"><del>Export as a Portable Document Format file. Best viewed on a PDF viewer.</del></p>
+				<div class="col-sm-12 col-md-6">
+					<div class="chart-title text-center">
+						<h5 class="titless">
+							<i class="fas fa-user-edit fa-fw"></i> Expired Applicants
+						</h5>
+					</div>
+					<!-- <div class="col-1 ml-auto chart-hover-settings" style="margin-top: -30px; display: none;">
+						<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog" style="margin-right: -1px;"></i></button>
+					</div> -->
+					<canvas id="GM_pie-chart-expired" width="800" height="450"></canvas>
 				</div>
 			</div>
 		</div>

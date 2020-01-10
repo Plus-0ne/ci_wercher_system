@@ -83,7 +83,12 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetApplicantSkills()
 	{
-		$result =  $this->db->query("SELECT PositionGroup, COUNT(*) as count FROM applicants WHERE Status = 'Applicant' OR Status = 'Expired' AND PositionGroup IS NOT NULL GROUP BY PositionGroup");
+		$result =  $this->db->query("SELECT PositionGroup, COUNT(*) as count FROM applicants WHERE Status = 'Applicant' AND PositionGroup IS NOT NULL GROUP BY PositionGroup");
+		return $result;
+	}
+	public function GetApplicantSkillsExpired()
+	{
+		$result =  $this->db->query("SELECT PositionGroup, COUNT(*) as count FROM applicants WHERE Status = 'Expired' AND PositionGroup IS NOT NULL GROUP BY PositionGroup");
 		return $result;
 	}
 	public function CheckApplicant($ApplicantID)

@@ -9,7 +9,7 @@
 		<nav class="navbar navbar-expand-lg">
 			<button type="button" id="sidebarCollapse" class="btn btn-primary"><i class="fas fa-bars" style="margin-right: -1px;"></i></button>
 			<div class="dropdown ml-auto">
-				<a class="btn btn-light ddToggle" data-toggle="dropdown"><i class="fas fa-bell"></i></a>
+				<a class="btn btn-light ddToggle" data-toggle="dropdown"><i class="fas fa-bell" style="margin-right: -1px;"></i></a>
 				<ul class="dropdown-menu dropdown-menu-right">
 					<?php foreach ($this->Model_Selects->GetLogbookWithLimit(5)->result_array() as $row): ?>
 						<li class="notif-li 

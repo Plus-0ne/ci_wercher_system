@@ -52,9 +52,8 @@
 								<thead>
 									<tr>
 										<th> Applicant </th>
-										<th> Applicant ID </th>
-										<th> Position Desired </th>
 										<th> Full Name </th>
+										<th> Position Desired </th>
 										<th> Gender </th>
 										<th> Applied On </th>
 										<th class="PrintExclude"> Action </th>
@@ -64,16 +63,18 @@
 									<?php foreach ($get_employee->result_array() as $row): ?>
 										<tr>
 											<td class="text-center">
-												<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70">
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['ApplicantID']; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['PositionDesired']; ?>
+												<div class="col-sm-12">
+													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70">
+												</div>
+												<div class="col-sm-12 align-middle">
+													<?php echo $row['ApplicantID']; ?>
+												</div>
 											</td>
 											<td class="text-center align-middle">
 												<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+											</td>
+											<td class="text-center align-middle">
+												<?php echo $row['PositionDesired']; ?>
 											</td>
 											<td class="text-center align-middle">
 												<?php echo $row['Gender']; ?>

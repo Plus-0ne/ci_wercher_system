@@ -289,16 +289,20 @@
 ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('[data-toggle="tooltip"]').tooltip();
 		<?php if (isset($_GET['Year'])): ?>
 			$('#GraphChartModal').modal('show');
+		<?php endif; ?>
+		<?php if (isset($_GET['Year']) && isset($_GET['Month'])): ?>
+			location.href = "#ByMonth";
 		<?php endif; ?>
 		$("#GraphYear").change(function() {
 			$(this).parents('form').submit();
 		});
 		$('.load-div').hide();
-		// $('#PieChartButton').on('click', function () {
-		// 	$('#PieChartModal').modal('show');
-		// });
+		$('#PieChartButton').on('click', function () {
+			$('#PieChartModal').modal('show');
+		});
 		// $('#BarChartButton').on('click', function () {
 		// 	$('#BarChartModal').modal('show');
 		// });
@@ -507,6 +511,96 @@
 		$('#MoreOptions').on('click', function () {
 			$('#MoreOptions').hide();
 			$('.modal-fade').fadeIn();
+		});
+		var	MonthlyGraph = $('#MonthlyTable').DataTable( {
+        	"order": [[ 0, "desc" ]],
+        	columnDefs: [{ targets: [0], type: 'date'}],
+        	buttons: [
+	            {
+		            extend: 'print',
+		            exportOptions: {
+		                columns: [ 0, 1, 2, 3, 4 ]
+		            }
+		        },
+		        {
+		            extend: 'copyHtml5',
+		            exportOptions: {
+		                columns: [ 0, 1, 2, 3, 4 ]
+		            }
+		        },
+		        {
+		            extend: 'excelHtml5',
+		            exportOptions: {
+		                columns: [ 0, 1, 2, 3, 4 ]
+		            }
+		        },
+		        {
+		            extend: 'csvHtml5',
+		            exportOptions: {
+		                columns: [ 0, 1, 2, 3, 4 ]
+		            }
+		        },
+		        {
+		            extend: 'pdfHtml5',
+		            exportOptions: {
+		                columns: [ 0, 1, 2, 3, 4 ]
+		            }
+		        }
+	        ]
+   		});
+		$('#MG_ExportPrint').on('click', function () {
+	       	MonthlyGraph.button('0').trigger();
+	    });
+	    $('#MG_ExportCopy').on('click', function () {
+	       	MonthlyGraph.button('1').trigger();
+	    });
+	    $('#MG_ExportExcel').on('click', function () {
+	       	MonthlyGraph.button('2').trigger();
+	    });
+	    $('#MG_ExportCSV').on('click', function () {
+	       	MonthlyGraph.button('3').trigger();
+	    });
+	    $('#MG_ExportPDF').on('click', function () {
+	       	MonthlyGraph.button('4').trigger();
+    	});
+		$('#MoreOptions').on('click', function () {
+			$('#MoreOptions').hide();
+			$('.modal-fade').fadeIn();
+		});
+		new Chart(document.getElementById("GM_pie-chart"), {
+			type: 'pie',
+			data: {
+				labels: cData.label,
+				datasets: [{
+					label: cData.label,
+					backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+					data: cData.data,
+				}]
+			},
+			options: {
+				legend:
+				{
+					display: true,
+				},
+			}
+		});
+		var cDataExpired = JSON.parse(`<?php echo $chart_data_expired; ?>`);
+		new Chart(document.getElementById("GM_pie-chart-expired"), {
+			type: 'pie',
+			data: {
+				labels: cDataExpired.label,
+				datasets: [{
+					label: cDataExpired.label,
+					backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+					data: cDataExpired.data,
+				}]
+			},
+			options: {
+				legend:
+				{
+					display: true,
+				},
+			}
 		});
 	});
 </script>

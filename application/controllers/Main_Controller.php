@@ -118,6 +118,13 @@
 			$data['data'][] = (int) $row->count;
 		}
 		$data['chart_data'] = json_encode($data);
+		$edata = [];
+		$GetApplicantSkillsExpired = $this->Model_Selects->GetApplicantSkillsExpired();
+		$edata['data'][] = $GetApplicantSkillsExpired->num_rows();
+		foreach($GetApplicantSkillsExpired->result_array() as $row) {
+			$edata['label'][] = $row['PositionGroup'];
+		}
+		$data['chart_data_expired'] = json_encode($edata);
 		// COUNT ADMIN
 		$data['result_cadmin'] =  $this->Model_Selects->GetAdmin();
 		// COUNT APPLICANTS
