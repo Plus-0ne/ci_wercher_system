@@ -335,6 +335,41 @@ a[data-toggle="collapse"] {
     margin-top: 10px;
     padding:0 10px; 
 }
+.input-icon, .input-icon-sm {
+	position: relative;
+}
+
+.input-icon > i {
+	position: absolute;
+	display: block;
+	transform: translate(0, -50%);
+	top: 50%;
+	pointer-events: none;
+	width: 33px;
+	text-align: center;
+	font-style: normal;
+}
+
+.input-icon > input {
+	padding-left: 33px;
+	padding-right: 0;
+}
+
+.input-icon-sm > i {
+	position: absolute;
+	display: block;
+	transform: translate(0, -50%);
+	top: 50%;
+	pointer-events: none;
+	width: 20px;
+	text-align: center;
+	font-style: normal;
+}
+
+.input-icon-sm > input {
+	padding-left: 20px;
+	padding-right: 0;
+}
 /*
 .sidebar-button-active {
 	width: 40px;

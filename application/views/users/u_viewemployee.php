@@ -615,6 +615,7 @@
 							<div class="table-responsive">
 								<table class="table table-condensed">
 									<thead>
+										<th>Preview</th>
 										<th>File</th>
 										<th>Subject</th>
 										<th>Description</th>
@@ -625,8 +626,28 @@
 										<?php if ($GetDocuments->num_rows() > 0) { ?>
 											<?php foreach ($GetDocuments->result_array() as $row): ?>
 												<?php if ($ApplicantID == $row['ApplicantID']) { ?>
-													<tr>
-														<td><a id="<?php echo $row['Doc_Image'];?>" class="a_eImage" href="#" data-toggle="modal" data-target="#docModals"><img class="small_docimage" src="<?php echo $row['Doc_Image'];?>" width="200"></a></td>
+													<tr class="text-center align-middle">
+														<td>
+															<?php if(isset($row['Doc_Image'])): ?>
+																<a id="<?php echo $row['Doc_Image'];?>" class="a_eImage" href="#" data-toggle="modal" data-target="#docModals"><img class="small_docimage" src="<?php echo $row['Doc_Image'];?>" width="125"></a>
+															<?php else: ?>
+																<span class="btn-sm" style="background-color: rgba(55, 55, 55, 0.33); color: rgba(255, 255, 255, 0.45);" href="<?php echo $row['Doc_File'];?>" target="_blank"><i class="fas fa-camera"></i> No preview available</span>
+															<?php endif; ?>
+														</td>
+														<td>
+															<?php if(isset($row['Doc_File'])): ?>
+																<div class="col-sm-12">
+																	<a href="<?php echo $row['Doc_File'];?>" target="_blank"><?php echo substr($row['Doc_FileName'], 0, 15) . '...'; ?></a>
+																</div>
+																<div class="col-sm-12">
+																	<a class="btn btn-primary btn-sm" href="<?php echo $row['Doc_File'];?>" target="_blank"><i class="fas fa-external-link-alt"></i> View PDF</a>
+																</div>
+															<?php else: ?>
+																<div class="col-sm-12">
+																<span class="btn-sm" style="background-color: rgba(55, 55, 55, 0.33); color: rgba(255, 255, 255, 0.45);" href="<?php echo $row['Doc_File'];?>" target="_blank"><i class="fas fa-file-pdf"></i> No file attached</span>
+																</div>
+															<?php endif; ?>
+														</td>
 														<td><?php echo $row['Subject'];?></td>
 														<td><?php echo $row['Description'];?></td>
 														<td><?php echo $row['Remarks'];?></td>

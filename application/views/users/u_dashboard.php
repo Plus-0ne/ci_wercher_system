@@ -298,6 +298,7 @@
 		<?php endif; ?>
 		$("#GraphYear").change(function() {
 			$(this).parents('form').submit();
+			$('#LoadingIcon').fadeIn();
 		});
 		$('.load-div').hide();
 		$('#PieChartButton').on('click', function () {

@@ -50,11 +50,11 @@
 						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
 							<table id="emp" class="table table-striped table-bordered PrintOut" style="width: 100%;">
 								<thead>
-									<tr>
+									<tr class="text-center">
 										<th> Applicant </th>
 										<th> Full Name </th>
 										<th> Position Desired </th>
-										<th> Gender </th>
+										<th> Sex </th>
 										<th> Applied On </th>
 										<th class="PrintExclude"> Action </th>
 									</tr>

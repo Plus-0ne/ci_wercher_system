@@ -4,9 +4,12 @@
 
 		<!-- Modal Header -->
 		<div class="modal-header">
-			<form method="GET">
-				<h4 class="modal-title"><i class="fas fa-calendar-week fa-fw"></i> Year <input type="number" id="GraphYear" name="Year" class="form-group px-2" value="<?php if (isset($_GET['Year'])) { echo $SelectedYear; } else { echo $CurrentYear; } ?>" style="border-radius: 6px; width: 100px;"></h4>
-			</form>
+			<div class="row">
+				<form method="GET">
+					<h4 class="modal-title"><i class="fas fa-calendar-week fa-fw"></i> Year <input type="number" id="GraphYear" name="Year" class="form-group px-2" value="<?php if (isset($_GET['Year'])) { echo $SelectedYear; } else { echo $CurrentYear; } ?>" style="border-radius: 6px; width: 100px;"></h4>
+				</form>
+				<div id="LoadingIcon" class="spinner-border ml-2" role="status" style="display: none; margin-top: 5px;"></div>
+			</div>
 			<div class="text-right">
 				<button type="button" class="close d-none d-sm-block" data-dismiss="modal">&times;</button>
 			</div>
@@ -72,7 +75,7 @@
 					<button id="MG_ExportPrint" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Print"><i class="fas fa-print" style="margin-right: -1px;"></i></button>
 					<button id="MG_ExportCopy" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard"><i class="fas fa-clipboard-list" style="margin-right: -1px;"></i></button>
 					<button id="MG_ExportExcel" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Export as an Excel file (.xlsx)"><i class="fas fa-file-excel" style="margin-right: -1px;"></i></button>
-					<button id="MG_ExportCSV" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Export as a CSV file"><i class="fas fa-file-csv" style="margin-right: -1px;"></i></button>
+					<button id="MG_ExportCSV" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Export as a CSV file (.csv)"><i class="fas fa-file-csv" style="margin-right: -1px;"></i></button>
 					<button id="MG_ExportPDF" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Export as a PDF file (.pdf)"><i class="fas fa-file-pdf" style="margin-right: -1px;"></i></button>
 				</div>
 				<div class="table-responsive pt-5 pb-5 pl-2 pr-2">

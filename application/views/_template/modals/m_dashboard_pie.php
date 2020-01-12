@@ -4,7 +4,7 @@
 
 		<!-- Modal Header -->
 		<div class="modal-header">
-			<h4 class="modal-title"><i class="fas fa-user-tie fa-fw"></i> Positions Desired</h4>
+			<h4 class="modal-title"><i class="fas fa-user-tie fa-fw"></i> Positions Desired - Work in progress <?php // TODO: ¯\_(ツ)_/¯ ?></h4>
 			<div class="text-right">
 				<button type="button" class="close d-none d-sm-block" data-dismiss="modal">&times;</button>
 			</div>
@@ -34,6 +34,13 @@
 						<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog" style="margin-right: -1px;"></i></button>
 					</div> -->
 					<canvas id="GM_pie-chart-expired" width="800" height="450"></canvas>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 text-center">
+					<form name="PositionForm" method="GET">
+						Find all people with the Position <input type="text" class="form-group" name="PositionSearch"><i class="fas fa-search"></i>
+					</form>
 				</div>
 			</div>
 		</div>

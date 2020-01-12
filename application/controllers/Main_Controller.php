@@ -100,6 +100,7 @@
 	}
 	public function Dashboard()
 	{
+		$this->load->model('Model_Deletes');
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
@@ -141,50 +142,84 @@
 		$data['CurrentYear'] = $CurrentYear;
 		if (isset($_GET['Year'])) {
 			$Year = $this->input->get('Year');
-			$YearChecker =  $this->Model_Selects->GetMonthlyTotal($Year);
-			if ($YearChecker->num_rows() < 12) { // Loads faster if already on cache (Database)
+			$CountMonthlyTotal =  $this->Model_Selects->CountMonthlyTotal();
+			if ($CountMonthlyTotal->num_rows() > 144) { // Truncates cache (Database) after 12 years of history
+				$this->Model_Deletes->CleanDashboardMonths($CurrentYear);
 				for ($i = 0; $i < 12; $i++) {
-					$MonthAdd = date('m', strtotime('+' . $i . ' month', strtotime($Month)));
-					$sql = array(
-						'Year' => $Year,
-						'Month' => $MonthAdd,
-						'Total' => '0'
-					);
-					$this->Model_Inserts->InsertDashboardMonths($sql);
-					$this->Model_Inserts->InsertToGraph();
-					if ($i == 11) {
-						$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($Year);
-						$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
-						$data['SelectedYear'] = $Year;
-						$CountTotal = 0;
-						foreach ($this->Model_Selects->GetMonthlyTotal($CurrentYear)->result_array() as $row) {
-							$CountTotal = $CountTotal + $row['Total'];
+						$MonthAdd = date('m', strtotime('+' . $i . ' month', strtotime($Month)));
+						$sql = array(
+							'Year' => $Year,
+							'Month' => $MonthAdd,
+							'Total' => '0'
+						);
+						$this->Model_Inserts->InsertDashboardMonths($sql);
+						$this->Model_Inserts->InsertToGraph();
+						if ($i == 11) {
+							$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($Year);
+							$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+							$data['SelectedYear'] = $Year;
+							$CountTotal = 0;
+							foreach ($this->Model_Selects->GetMonthlyTotal($CurrentYear)->result_array() as $row) {
+								$CountTotal = $CountTotal + $row['Total'];
+							}
+							$data['CurrentYearTotal'] = $CountTotal;
+							$CountTotal = 0;
+							foreach ($this->Model_Selects->GetMonthlyTotal($Year)->result_array() as $row) {
+								$CountTotal = $CountTotal + $row['Total'];
+							}
+							$data['SelectedYearTotal'] = $CountTotal;
+							$this->load->view('users/u_dashboard',$data);
 						}
-						$data['CurrentYearTotal'] = $CountTotal;
-						$CountTotal = 0;
-						foreach ($this->Model_Selects->GetMonthlyTotal($Year)->result_array() as $row) {
-							$CountTotal = $CountTotal + $row['Total'];
-						}
-						$data['SelectedYearTotal'] = $CountTotal;
-						$this->load->view('users/u_dashboard',$data);
 					}
-				}
 			} else {
-				$this->Model_Inserts->InsertToGraph();
-				$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($Year);
-				$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
-				$data['SelectedYear'] = $Year;
-				$CountTotal = 0;
-				foreach ($this->Model_Selects->GetMonthlyTotal($CurrentYear)->result_array() as $row) {
-					$CountTotal = $CountTotal + $row['Total'];
+				$YearChecker =  $this->Model_Selects->GetMonthlyTotal($Year);
+				if ($YearChecker->num_rows() < 12) { // Loads faster if already on cache (Database)
+					for ($i = 0; $i < 12; $i++) {
+						$MonthAdd = date('m', strtotime('+' . $i . ' month', strtotime($Month)));
+						$sql = array(
+							'Year' => $Year,
+							'Month' => $MonthAdd,
+							'Total' => '0'
+						);
+						$this->Model_Inserts->InsertDashboardMonths($sql);
+						$this->Model_Inserts->InsertToGraph();
+						if ($i == 11) {
+							$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($Year);
+							$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+							$data['SelectedYear'] = $Year;
+							$CountTotal = 0;
+							foreach ($this->Model_Selects->GetMonthlyTotal($CurrentYear)->result_array() as $row) {
+								$CountTotal = $CountTotal + $row['Total'];
+							}
+							$data['CurrentYearTotal'] = $CountTotal;
+							$CountTotal = 0;
+							foreach ($this->Model_Selects->GetMonthlyTotal($Year)->result_array() as $row) {
+								$CountTotal = $CountTotal + $row['Total'];
+							}
+							$data['SelectedYearTotal'] = $CountTotal;
+							$this->load->view('users/u_dashboard',$data);
+						}
+					}
+				} else {
+					if ($CountMonthlyTotal->num_rows() > 144) {
+						$this->Model_Deletes->CleanDashboardMonths();
+					}
+					$this->Model_Inserts->InsertToGraph();
+					$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($Year);
+					$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+					$data['SelectedYear'] = $Year;
+					$CountTotal = 0;
+					foreach ($this->Model_Selects->GetMonthlyTotal($CurrentYear)->result_array() as $row) {
+						$CountTotal = $CountTotal + $row['Total'];
+					}
+					$data['CurrentYearTotal'] = $CountTotal;
+					$CountTotal = 0;
+					foreach ($this->Model_Selects->GetMonthlyTotal($Year)->result_array() as $row) {
+						$CountTotal = $CountTotal + $row['Total'];
+					}
+					$data['SelectedYearTotal'] = $CountTotal;
+					$this->load->view('users/u_dashboard',$data);
 				}
-				$data['CurrentYearTotal'] = $CountTotal;
-				$CountTotal = 0;
-				foreach ($this->Model_Selects->GetMonthlyTotal($Year)->result_array() as $row) {
-					$CountTotal = $CountTotal + $row['Total'];
-				}
-				$data['SelectedYearTotal'] = $CountTotal;
-				$this->load->view('users/u_dashboard',$data);
 			}
 		} else {
 			$YearChecker =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);

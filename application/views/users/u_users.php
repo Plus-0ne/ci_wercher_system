@@ -29,11 +29,10 @@
 						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
 							<table id="emp" class="table table-striped table-bordered PrintOut" style="width: 100%;">
 								<thead>
-									<tr>
+									<tr class="text-center">
 										<th> Applicant </th>
-										<th> Applicant ID </th>
-										<th> Position </th>
 										<th> Full Name </th>
+										<th> Position </th>
 										<th> Client </th>
 										<th> Date Hired </th>
 										<th> End of Contract </th>
@@ -44,16 +43,18 @@
 									<?php foreach ($get_employee->result_array() as $row): ?>
 										<tr>
 											<td class="text-center">
-												<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70">
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['ApplicantID']; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['PositionDesired']; ?>
+												<div class="col-sm-12">
+													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70">
+												</div>
+												<div class="col-sm-12 align-middle">
+													<?php echo $row['ApplicantID']; ?>
+												</div>
 											</td>
 											<td class="text-center align-middle">
 												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+											</td>
+											<td class="text-center align-middle">
+												<?php echo $row['PositionDesired']; ?>
 											</td>
 											<?php foreach ($getClientOption->result_array() as $nrow): ?>
 												<?php if ($row['ClientEmployed'] == $nrow['ClientID']) {
@@ -91,25 +92,46 @@
 			
 			<div class="modal-content">
 				<?php echo form_open_multipart(base_url().'AddSupDoc','method="post"'); ?>
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Add Documents</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<input id="Pass_ID" type="hidden" name="ApplicantID">
-					<div class="form-group col-sm-12 text-center">
-						<input type='file' id="imgInp" name="pImage" style="display: none;">
-						<?php if(!$this->agent->is_mobile()): ?>
-							<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/wercher_attach_image.png" width="120" height="120">
-							<?php else: ?>
-								<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/wercher_attach_image_mobile.png" width="120" height="120">
-							<?php endif; ?>
+					<input id="pImageChecker" type="hidden" name="pImageChecker">
+					<input id="pFileChecker" type="hidden" name="pFileChecker">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Add Documents</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input id="Pass_ID" type="hidden" name="ApplicantID">
+						<div class="form-row">
+							<div class="form-group col-sm-8 mt-5">
+								<div class="input-icon-sm">
+									<input id="pFile" type="file" name="pFile" placeholder="Choose PDF file to upload" style="padding-left: 45px;" value="">
+									<i class="fas fa-file-pdf" style="width: 45px;"></i>
+								</div>
+							</div>
+							<div class="form-group col-sm-4 text-center">
+								<input type='file' id="imgInp" name="pImage" style="display: none;" value="">
+								<?php if(!$this->agent->is_mobile()): ?>
+									<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/wercher_attach_image.png" width="120" height="120">
+								<?php else: ?>
+									<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/wercher_attach_image_mobile.png" width="120" height="120">
+								<?php endif; ?>
+							</div>
 						</div>
-						<div class="form-group col-sm-12 text-center">
-							<label>Subject</label>
-							<input class="form-control" type="text" name="Subject">
+						<hr>
+						<div class="form-row" style="margin-left: 10px; margin-right: 10px;">
+							<div class="form-group col-sm-4 text-center">
+								<label>Type</label>
+								<select class="form-control" name="Type">
+									<option value="Document">Document</option>
+									<option value="Violation">Violation</option>
+									<option value="Blacklist">Blacklist</option>
+								</select>
+							</div>
+							<div class="form-group col-sm-8 text-center">
+								<label>Subject</label>
+								<input class="form-control" type="text" name="Subject">
+							</div>
 						</div>
 						<div class="form-group col-sm-12 text-center">
 							<label>Description</label>
@@ -119,10 +141,10 @@
 							<label>Remarks</label>
 							<textarea class="form-control" name="Remarks" rows="6"></textarea>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Add</button>
-					</div>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Add</button>
+						</div>
 					<?php echo form_close(); ?>
 				</div>
 				
@@ -238,6 +260,10 @@
 			}
 			$("#imgInp").change(function() {
 				readURL(this);
+				$('#pImageChecker').val('123');
+			});
+			$("#pFile").change(function() {
+				$('#pFileChecker').val('123');
 			});
 		});
 	</script>

@@ -45,9 +45,9 @@ class Model_Deletes extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function CleanDashboardMonths($Year, $CurrentYear)
+	public function CleanDashboardMonths($CurrentYear)
 	{
-		$SQL = "DELETE FROM dashboard_months WHERE Total = '0' AND Year <> '$Year' AND Year <> '$CurrentYear'";
+		$SQL = "DELETE FROM dashboard_months WHERE Year <> '$CurrentYear'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

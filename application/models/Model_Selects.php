@@ -176,6 +176,13 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function CountMonthlyTotal()
+	{
+		// $SQL = "SELECT DATE_FORMAT(AppliedOn, '%Y') as 'Year', DATE_FORMAT(AppliedOn, '%m') as 'Month', COUNT(ApplicantID) as 'Total' FROM applicants GROUP BY DATE_FORMAT(AppliedOn, '%Y%m')";
+		$SQL = "SELECT * FROM dashboard_months";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function GetViolations($ApplicantID)
 	{
 		$SQL = "SELECT * FROM violations WHERE ApplicantID = '$ApplicantID'";
