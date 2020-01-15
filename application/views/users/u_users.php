@@ -5,21 +5,11 @@
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
-				<div class="row">
-					<div class="col-sm-12 pt-3 pb-3">
-						<nav aria-label="breadcrumb">
-							<ol class="breadcrumb" style="background-color: transparent;">
-								<li class="breadcrumb-item"><a href="">Home</a></li>
-								<li class="breadcrumb-item active" aria-current="page">Employee</li>
-							</ol>
-						</nav>
-					</div>
-				</div>
-				<div class="row rcontent">
+				<div class="row p-5">
 					<?php echo $this->session->flashdata('prompts'); ?>
 					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
-						<h4>
-							<i class="fas fa-user-tie fa-fw"></i> Employees (<?php echo $get_employee->num_rows() ?>)
+						<h4 class="tabs-icon">
+							<i class="fas fa-user-tie fa-fw"></i> Employees x <?php echo $get_employee->num_rows() ?>
 						</h4>
 					</div>
 					<div class="col-8 col-sm-8 col-md-8 text-right">
@@ -27,7 +17,7 @@
 					</div>
 					<div class="col-sm-12">
 						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
-							<table id="emp" class="table table-striped table-bordered PrintOut" style="width: 100%;">
+							<table id="emp" class="table table-bordered PrintOut" style="width: 100%;">
 								<thead>
 									<tr class="text-center">
 										<th> Applicant </th>
@@ -44,7 +34,7 @@
 										<tr>
 											<td class="text-center">
 												<div class="col-sm-12">
-													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70">
+													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
 												</div>
 												<div class="col-sm-12 align-middle">
 													<?php echo $row['ApplicantID']; ?>
@@ -74,7 +64,7 @@
 												<button id="<?php echo $row['ApplicantID']; ?>" type="button" class="btn btn-info btn-sm w-100 mb-1 doc_btn" data-toggle="modal" data-target="#AddSuppDoc"><i class="fas fa-file-upload"></i> Documents</button>
 												<!-- <button type="button" class="btn btn-info btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-clock"></i> Work</button> -->
 												<!-- <a class="btn btn-secondary btn-sm w-100 mb-1" href="#"onclick=" return confirm('Update Employee?')"><i class="fas fa-user-edit"></i> Update</a> -->
-												<a href="<?=base_url()?>RemoveEmployee?id=<?php echo $row['ApplicantID']; ?>" class="btn btn-danger btn-sm w-100 mb-1" href="#" onclick="return confirm('Remove Employee?')"><i class="fas fa-lock"></i> Archive</a>
+												<!-- <a href="<?=base_url()?>RemoveEmployee?id=<?php echo $row['ApplicantID']; ?>" class="btn btn-danger btn-sm w-100 mb-1" href="#" onclick="return confirm('Remove Employee?')"><i class="fas fa-lock"></i> Archive</a> -->
 											</td>
 										</tr>
 									<?php endforeach ?>
@@ -93,7 +83,6 @@
 			<div class="modal-content">
 				<?php echo form_open_multipart(base_url().'AddSupDoc','method="post"'); ?>
 					<input id="pImageChecker" type="hidden" name="pImageChecker">
-					<input id="pFileChecker" type="hidden" name="pFileChecker">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLabel">Add Documents</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -119,10 +108,30 @@
 							</div>
 						</div>
 						<hr>
+						<div id="ViolationNotice" class="row ml-auto mr-auto pb-1 w-100" style="display: none;">
+							<div class="col-sm-12 col-mb-12 w-100 text-center document-notice-violation py-2">
+								<div class="col-sm-12 pb-2">
+									<i class="fas fa-exclamation-triangle" style="font-size: 24px;"></i>
+								</div>
+								<div class="col-sm-12">
+									You are marking this document as a violation. It will be marked as a violation on this individual's documents panel.
+								</div>
+							</div>
+						</div>
+						<div id="BlacklistNotice" class="row ml-auto mr-auto pb-1 w-100" style="display: none;">
+							<div class="col-sm-12 col-mb-12 w-100 text-center document-notice-blacklist py-2">
+								<div class="col-sm-12 pb-2">
+									<i class="fas fa-exclamation-triangle" style="font-size: 24px;"></i>
+								</div>
+								<div class="col-sm-12">
+									You are marking this document as a blacklist. This individual will be removed from the pool and be blacklisted with this attached document as reason.
+								</div>
+							</div>
+						</div>
 						<div class="form-row" style="margin-left: 10px; margin-right: 10px;">
 							<div class="form-group col-sm-4 text-center">
 								<label>Type</label>
-								<select class="form-control" name="Type">
+								<select id="Type" class="form-control" name="Type">
 									<option value="Document">Document</option>
 									<option value="Violation">Violation</option>
 									<option value="Blacklist">Blacklist</option>
@@ -156,6 +165,16 @@
 	<?php $this->load->view('_template/users/u_scripts'); ?>
 	<script type="text/javascript">
 		$(document).ready(function () {
+			$("#Type").change(function(){
+				$('#ViolationNotice').hide();
+				$('#BlacklistNotice').hide();
+				if ( $(this).val() == "Violation" ) { 
+					$("#ViolationNotice").fadeIn();
+			    }
+			    if ( $(this).val() == "Blacklist" ) { 
+					$("#BlacklistNotice").fadeIn();
+			    }
+			});
 			$('#sidebarCollapse').on('click', function () {
 				$('#sidebar').toggleClass('active');
 				$('.ncontent').toggleClass('shContent');

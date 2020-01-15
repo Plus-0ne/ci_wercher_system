@@ -18,6 +18,9 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12 rcontent">
+						<div class="col-sm-12 text-right">
+							<button id="DebugFill" type="button" class="btn btn-primary"><i class="fas fa-vial"></i> Debug Fill</button>
+						</div>
 						<div class="p-5">
 							<?php echo $this->session->flashdata('prompts'); ?>
 							<div class="mb-3">
@@ -27,6 +30,7 @@
 							</div>
 							<!-- Start form -->
 							<form action="<?=base_url()?>addNewEmployee" method="POST" enctype="multipart/form-data">
+								<input id="pImageChecker" type="hidden" name="pImageChecker">
 								<div class="form-row mb-2">
 									<div class="form-group col-sm-12">
 										<input type='file' id="imgInp" name="pImage" style="display: none;">
@@ -290,7 +294,7 @@
 								
 								<div class="form-row pt-5 pb-4">
 									<div class="form-group mr-auto">
-										<button class="btn btn-primary" type="submit" onclick="return confirm('Do you want to save ?')"><i class="fas fa-save"></i> Save</button>
+										<button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Save</button>
 									</div>
 									<div class="form-group ml-auto">
 										<a href="<?=base_url()?>Applicants" class="btn btn-secondary"><i class="fas fa-chevron-left"></i> Back</a>
@@ -542,6 +546,11 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('#DebugFill').on('click', function () {
+			$('input[type="number"]').val(Math.floor(Math.random() * Math.floor(99)));
+			$('input[type="text"]').val('TEST-' + Math.floor(Math.random() * Math.floor(9999999)));
+			$('input[type="date"]').val(moment().format('YYYY-MM-DD'));
+		});
 		$('#sidebarCollapse').on('click', function () {
 			$('#sidebar').toggleClass('active');
 			$('.ncontent').toggleClass('shContent');
@@ -558,6 +567,7 @@
 		}
 		$("#imgInp").change(function() {
 			readURL(this);
+			$('#pImageChecker').val('Has Image')
 		});
 		// Cart Academic History
 		$('#add_sssscc').click(function(){

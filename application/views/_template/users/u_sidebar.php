@@ -1,7 +1,12 @@
 <nav id="sidebar" style="position: fixed;">
+	<div class="sidebar-banner text-center">
+		<b>
+			<span style="color: gold;">W</span>ercher <span style="color: gold;">C</span>oop
+		</b>
+	</div>
 	<div class="sidebar-header text-center">
 		<div class="text-center" style="width: 100%;">
-			<img class="m-auto PrintOut PrintOutModal PrintOutModalExpired PrintOutHistory" src="<?=base_url()?>assets/img/13240629_242086709504627_6587238279405995147_n.png" width="100">
+			<img class="m-auto PrintOut PrintOutModal PrintOutModalExpired PrintOutHistory" src="<?=base_url()?>assets/img/wercher_logo.png" width="100">
 		</div>
 	</div>
 	<ul class="list-unstyled components">
@@ -53,7 +58,7 @@
 			</ul>
 		</li> -->
 		<li>
-			<a class="link-s" href="#pageSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-cog fa-fw"></i> User Settings </a>
+			<a class="link-s" href="#pageSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-cog fa-fw"></i> User Settings <i class="fas fa-caret-down fa-fw" style="margin-left: 65px;"></i> </a>
 			<ul class="collapse list-unstyled collapseSettings animated fadeIn" id="pageSettings">
 				<li>
 					<a class="link-s" class="sublink" href="<?=base_url()?>Experimental"><span class="fas fa-flask"></span> Experimental <span style="color: rgba(255, 50, 50, 1.0);">(Dev Area)</span></a>

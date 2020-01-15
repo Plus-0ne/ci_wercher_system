@@ -5,24 +5,7 @@
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
-				<div class="row">
-					<div class="col-sm-12 pt-3 pb-3">
-						<nav aria-label="breadcrumb">
-							<ol class="breadcrumb" style="background-color: transparent;">
-								<li class="breadcrumb-item"><a href="<?=base_url()?>Dashboard">Home</a></li>
-								<li class="breadcrumb-item">
-									<?php if ($Status == 'Employed') { 
-										echo '<a href="'. base_url() . 'Employee">Employee</a>';
-									} else { 
-										echo '<a href="'. base_url() . 'Applicants">Applicants</a>';
-									} ?>
-								</li>
-								<li class="breadcrumb-item active" aria-current="page">Details</li>
-							</ol>
-						</nav>
-					</div>
-				</div>
-				<div class="row rcontent p-5 PrintOut">
+				<div class="row p-5 PrintOut">
 					<?php echo $this->session->flashdata('prompts'); ?>
 					<div class="col-6 col-sm-6 col-md-6 mb-5 PrintExclude">
 						<a href="
@@ -627,24 +610,35 @@
 											<?php foreach ($GetDocuments->result_array() as $row): ?>
 												<?php if ($ApplicantID == $row['ApplicantID']) { ?>
 													<tr class="text-center align-middle">
-														<td>
+														<td class="<?php if($row['Type'] == 'Violation') { echo 'document-violation'; } elseif ($row['Type'] == 'Blacklist') { echo 'document-blacklist'; } ?>">
 															<?php if(isset($row['Doc_Image'])): ?>
 																<a id="<?php echo $row['Doc_Image'];?>" class="a_eImage" href="#" data-toggle="modal" data-target="#docModals"><img class="small_docimage" src="<?php echo $row['Doc_Image'];?>" width="125"></a>
 															<?php else: ?>
-																<span class="btn-sm" style="background-color: rgba(55, 55, 55, 0.33); color: rgba(255, 255, 255, 0.45);" href="<?php echo $row['Doc_File'];?>" target="_blank"><i class="fas fa-camera"></i> No preview available</span>
+															<div class="col-sm-12 pt-3 pb-2" style="background-color: rgba(55, 55, 55, 0.12); color: rgba(0, 0, 0, 0.66);">
+																<i class="fas fa-camera" style="font-size: 24px;"></i>
+																<p>No preview available</p>
+															</div>
 															<?php endif; ?>
 														</td>
 														<td>
 															<?php if(isset($row['Doc_File'])): ?>
-																<div class="col-sm-12">
-																	<a href="<?php echo $row['Doc_File'];?>" target="_blank"><?php echo substr($row['Doc_FileName'], 0, 15) . '...'; ?></a>
+																<div class="col-sm-12 mt-2">
+																	<?php 
+																		$Doc_FileName = $row['Doc_FileName'];
+																		if (strlen($Doc_FileName) > 25) {
+																			$Doc_FileName = substr($row['Doc_FileName'], 0, 25);
+																			$Doc_FileName = $Doc_FileName . '...';
+																		}
+																	?>
+																	<a href="<?php echo $row['Doc_File'];?>" target="_blank"><?php echo $Doc_FileName; ?></a>
 																</div>
-																<div class="col-sm-12">
+																<div class="col-sm-12 mt-4">
 																	<a class="btn btn-primary btn-sm" href="<?php echo $row['Doc_File'];?>" target="_blank"><i class="fas fa-external-link-alt"></i> View PDF</a>
 																</div>
 															<?php else: ?>
-																<div class="col-sm-12">
-																<span class="btn-sm" style="background-color: rgba(55, 55, 55, 0.33); color: rgba(255, 255, 255, 0.45);" href="<?php echo $row['Doc_File'];?>" target="_blank"><i class="fas fa-file-pdf"></i> No file attached</span>
+																<div class="col-sm-12 pt-3 pb-2" style="background-color: rgba(55, 55, 55, 0.12); color: rgba(0, 0, 0, 0.66);">
+																	<i class="fas fa-file-pdf" style="font-size: 24px;"></i>
+																	<p>No file attached</p>
 																</div>
 															<?php endif; ?>
 														</td>

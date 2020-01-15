@@ -126,6 +126,12 @@
 			$edata['label'][] = $row['PositionGroup'];
 		}
 		$data['chart_data_expired'] = json_encode($edata);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+				<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Dashboard">Dashboard</a></li>
+			</ol>
+		</nav>';
 		// COUNT ADMIN
 		$data['result_cadmin'] =  $this->Model_Selects->GetAdmin();
 		// COUNT APPLICANTS
@@ -273,6 +279,12 @@
 
 		$header['title'] = 'Applicants | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+				<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Applicants">Applicants</a></li>
+			</ol>
+		</nav>';
 		$data['get_employee'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['getClientOption'] = $this->Model_Selects->getClientOption();
@@ -287,6 +299,13 @@
 
 		$header['title'] = 'Expired Contracts | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+				<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+				<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ApplicantsExpired">Expired</a></li>
+			</ol>
+		</nav>';
 		$data['get_employee'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['getClientOption'] = $this->Model_Selects->getClientOption();
@@ -300,6 +319,13 @@
 
 		$header['title'] = 'Archived | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+				<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+				<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Blacklisted">Blacklisted</a></li>
+			</ol>
+		</nav>';
 		$data['get_employee'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['GetArchived'] = $this->Model_Selects->GetApplicantArchived();
@@ -314,6 +340,13 @@
 
 		$header['title'] = 'Blacklisted | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+				<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+				<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Archived">Archived</a></li>
+			</ol>
+		</nav>';
 		$data['get_employee'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['GetBlacklisted'] = $this->Model_Selects->GetApplicantBlacklisted();
@@ -328,6 +361,12 @@
 
 		$header['title'] = 'Employees | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+				<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Employee">Employee</a></li>
+			</ol>
+		</nav>';
 		$data['get_employee'] = $this->Model_Selects->GetEmployee();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['getClientOption'] = $this->Model_Selects->getClientOption();
@@ -416,6 +455,23 @@
 				$data['GetPreviousContract'] = $this->Model_Selects->GetPreviousContract($ApplicantID);
 				$data['GetViolations'] = $this->Model_Selects->GetViolations($ApplicantID);
 				$data['GetDocuments'] = $this->Model_Selects->GetDocuments($ApplicantID);
+				if ($data['Status'] == 'Employed') {
+					$data['Breadcrumb'] = '
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb" style="background-color: transparent;">
+							<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employee</a></li>
+							<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
+						</ol>
+					</nav>';
+				} else {
+					$data['Breadcrumb'] = '
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb" style="background-color: transparent;">
+							<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+							<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
+						</ol>
+					</nav>';
+				}
 				$this->load->view('users/u_viewemployee',$data);
 			}
 			else
@@ -506,6 +562,25 @@
 				$data['getClientOption'] = $this->Model_Selects->getClientOption();
 				$data['ShowClients'] = $this->Model_Selects->GetClients();
 				$data['GetContractHistory'] = $this->Model_Selects->GetContractHistory($ApplicantID);
+				if ($data['Status'] == 'Employed') {
+					$data['Breadcrumb'] = '
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb" style="background-color: transparent;">
+							<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employee</a></li>
+							<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
+							<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="">Edit</a></li>
+						</ol>
+					</nav>';
+				} else {
+					$data['Breadcrumb'] = '
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb" style="background-color: transparent;">
+							<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+							<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
+							<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="">Edit</a></li>
+						</ol>
+					</nav>';
+				}
 				$this->load->view('users/u_modifyemployee',$data);
 			}
 			else
@@ -526,6 +601,13 @@
 
 		$header['title'] = 'New Employee | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+				<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+				<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="NewEmployee">New</a></li>
+			</ol>
+		</nav>';
 		$this->load->view('users/u_addemployee',$data);
 	}
 	public function View_Admins()
@@ -536,6 +618,12 @@
 
 		$header['title'] = 'Administrator | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+				<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Admin_List">Admins</a></li>
+			</ol>
+		</nav>';
 		$data['ShowAdmin'] = $this->Model_Selects->GetAdmin();
 		$this->load->view('users/u_admins',$data);
 	}
@@ -547,6 +635,12 @@
 
 		$header['title'] = 'Clients | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+				<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Clients">Clients</a></li>
+			</ol>
+		</nav>';
 		$data['ShowClients'] = $this->Model_Selects->GetClients();
 		$this->load->view('users/u_clients',$data);
 	}
@@ -558,6 +652,12 @@
 
 		$header['title'] = 'Clients | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+				<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Payroll">Payroll</a></li>
+			</ol>
+		</nav>';
 		$data['ShowClients'] = $this->Model_Selects->GetClients();
 		$data['GetLogbookLatestHires'] =  $this->Model_Selects->GetLogbookLatestHires();
 		$this->load->view('payroll/p_clients',$data);
@@ -591,6 +691,13 @@
 			$data['GetWeeklyDates'] = $this->Model_Selects->GetWeeklyDates();
 			// $data['GetWeeklyDatesForEmployee'] = $this->Model_Selects->GetWeeklyDatesForEmployee($row['ApplicantID']);
 			$data['IsFromExcel'] = False;
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb" style="background-color: transparent;">
+					<li class="breadcrumb-item" aria-current="page"><a href="Payroll">Payroll</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewClient?id=' . $id . '">Details</a></li>
+				</ol>
+			</nav>';
 			$this->load->view('payroll/p_viewclient',$data);
 		}
 		else
@@ -606,6 +713,12 @@
 
 		$header['title'] = 'Experimental | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb" style="background-color: transparent;">
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Experimental">Experimental</a></li>
+				</ol>
+			</nav>';
 		$this->load->library('SimpleXLSX');
 		$this->load->view('users/u_experimental',$data);
 	}

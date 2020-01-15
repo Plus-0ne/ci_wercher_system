@@ -13,9 +13,10 @@ class Add_Controller extends CI_Controller {
 	public function addNewEmployee()
 	{
 		# PERSONAL INFORMATION
+		$pImageChecker = $this->input->post('pImageChecker');
 		$PositionDesired = $this->input->post('PositionDesired');
 		$PositionGroup = $this->input->post('PositionGroup');
-		$SalaryExpected = $this->input->post('SalaryExpected');
+		// $SalaryExpected = $this->input->post('SalaryExpected');
 		$LastName = $this->input->post('LastName');
 		$FirstName = $this->input->post('FirstName');
 		$MI = $this->input->post('MI');
@@ -58,12 +59,11 @@ class Add_Controller extends CI_Controller {
 		$Address_Provincial = $this->input->post('Address_Provincial');
 		$Address_Manila = $this->input->post('Address_Manila');
 
-		if ($PositionDesired == NULL || $PositionGroup == NULL || $SalaryExpected == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Age == NULL || $Height == NULL || $Weight == NULL || $Religion == NULL || $bDate == NULL || $bPlace == NULL || $Citizenship == NULL || $CivilStatus == NULL || $No_Children == NULL || $PhoneNumber == NULL || $SSS == NULL || $SSS_Effective == NULL || $RCN == NULL || $RCN_at == NULL || $RCN_On == NULL || $TIN == NULL || $TIN_At == NULL || $TIN_On == NULL || $HDMF == NULL || $HDMF_At == NULL || $HDMF_On == NULL || $Address_Present == NULL) {
+		if ($PositionDesired == NULL || $PositionGroup == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Age == NULL || $Height == NULL || $Weight == NULL || $Religion == NULL || $bDate == NULL || $bPlace == NULL || $Citizenship == NULL || $CivilStatus == NULL || $No_Children == NULL || $PhoneNumber == NULL || $SSS == NULL || $SSS_Effective == NULL || $RCN == NULL || $RCN_at == NULL || $RCN_On == NULL || $TIN == NULL || $TIN_At == NULL || $TIN_On == NULL || $HDMF == NULL || $HDMF_At == NULL || $HDMF_On == NULL || $Address_Present == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			$data = array(
 				'PositionDesired' => $PositionDesired,
 				'PositionGroup' => $PositionGroup,
-				'SalaryExpected' => $SalaryExpected,
 				'LastName' => $LastName,
 				'FirstName' => $FirstName,
 				'MI' => $MI,
@@ -137,153 +137,165 @@ class Add_Controller extends CI_Controller {
 					mkdir('./uploads/' . $customid, 0777, true);
 					$dir_exist = false;
 				}
-				
-				if ( ! $this->upload->do_upload('pImage'))
-				{
-					$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
-					redirect('NewEmployee');
-				}
-				else
-				{
-					$pImage = base_url().'uploads/'.$customid.'/'.$this->upload->data('file_name');
-					// INSERT EMPLOYEE
-					$data = array(
-						'ApplicantImage' => $pImage,
-						'ApplicantID' => $customid,
-						'PositionDesired' => $PositionDesired,
-						'PositionGroup' => $PositionGroup,
-						'SalaryExpected' => $SalaryExpected,
-						'LastName' => ucfirst($LastName),
-						'FirstName' => ucfirst($FirstName),
-						'MiddleInitial' => ucfirst($MI),
-						'Gender' => $Gender,
-						'Age' => $Age,
-						'Height' => $Height,
-						'Weight' => $Weight,
-						'Religion' => $Religion,
-						'BirthDate' => $bDate,
-						'BirthPlace' => $bPlace,
-						'Citizenship' => $Citizenship,
-						'CivilStatus' => $CivilStatus,
-						'No_OfChildren' => $No_Children,
-						
-						'Address_Present' => $Address_Present,
-						'Address_Provincial' => $Address_Provincial,
-						'Address_Manila' => $Address_Manila,
-
-						'Phone_No' => $PhoneNumber,
-
-						'SSS_No' => $SSS,
-						'EffectiveDateCoverage' => $SSS_Effective,
-						'ResidenceCertificateNo' => $RCN,
-						'Rcn_At' => $RCN_at,
-						'Rcn_On' => $RCN_On,
-						'TIN' => $TIN,
-						'TIN_At' => $TIN_At,
-						'TIN_On' => $TIN_On,
-						
-						'HDMF' => $HDMF,
-						'HDMF_At' => $HDMF_At,
-						'HDMF_On' => $HDMF_On,
-						'ATM_No' => $ATM_No,
-
-						'PhilHealth' => $PhilHealth,
-						'PhilHealth_At' => $PhilHealth_At,
-						'PhilHealth_On' => $PhilHealth_On,
-
-						'Status' => 'Applicant',
-						'AppliedOn' => date('Y-m-d h:i:s A'),
-					);
-					$addedEmployee = $this->Model_Inserts->AddThisEmployee($data);
-					if ($addedEmployee == TRUE) {
-						if (isset($_SESSION["acadcart"])) {
-							foreach ($_SESSION["acadcart"] as $s_da) {
-								$data = array(
-									'ApplicantID' => $customid,
-									'Level' => $s_da['acadcart']['SchoolLevel'],
-									'SchoolName' => $s_da['acadcart']['SchoolName'],
-									'SchoolAddress' => $s_da['acadcart']['SchoolAddress'],
-									'DateStarted' => $s_da['acadcart']['FromYearSchool'],
-									'DateEnds' => $s_da['acadcart']['ToYearSchool'],
-									'HighDegree' => $s_da['acadcart']['H_Attained'],
-
-								);
-								$this->Model_Inserts->InsertAcadH($data);
-							}
-						}
-						if (isset($_SESSION["emp_cart"])) {
-							foreach ($_SESSION["emp_cart"] as $s_da) {
-								$data = array(
-									'ApplicantID' => $customid,
-									'Name' => $s_da['emp_cart']['EmployeerName'],
-									'Address' => $s_da['emp_cart']['emAddress'],
-									'PeriodCovered' => $s_da['emp_cart']['PeriodCovered'],
-									'Position' => $s_da['emp_cart']['Position'],
-									'Salary' => $s_da['emp_cart']['Salary'],
-									'CauseOfSeparation' => $s_da['emp_cart']['cos'],
-
-								);
-								$this->Model_Inserts->InsertEmploymentRecord($data);
-							}
-						}
-						if (isset($_SESSION["mach_cart"])) {
-							foreach ($_SESSION["mach_cart"] as $s_da) {
-								$data = array(
-									'ApplicantID' => $customid,
-									'MachineName' => $s_da['mach_cart']['MachineName'],
-								);
-								$this->Model_Inserts->InsertMachineOperated($data);
-							}
-						}
-						// if (isset($_SESSION["rela_cart"])) {
-						// 	foreach ($_SESSION["rela_cart"] as $s_da) {
-						// 		$data = array(
-						// 			'ApplicantID' => $customid,
-						// 			'Relation' => $s_da['rela_cart']['Relation'],
-						// 			'Name' => $s_da['rela_cart']['rName'],
-						// 			'Occupation' => $s_da['rela_cart']['rOccupation'],
-						// 		);
-						// 		$this->Model_Inserts->InsertRelativesdata($data);
-						// 	}
-						// }
-						// if (isset($_SESSION["beneCart"])) {
-						// 	foreach ($_SESSION["beneCart"] as $s_da) {
-						// 		$data = array(
-						// 			'ApplicantID' => $customid,
-						// 			'Name' => $s_da['beneCart']['BeneName'],
-						// 			'Relationship' => $s_da['beneCart']['BeneRelationship'],
-						// 		);
-						// 		$this->Model_Inserts->InserBeneficia($data);
-						// 	}
-						// }
-						unset($_SESSION["acadcart"]);
-						unset($_SESSION["emp_cart"]);
-						unset($_SESSION["mach_cart"]);
-						// unset($_SESSION["rela_cart"]); 
-						// unset($_SESSION["beneCart"]);
-						
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Employee added!</h5></div>');
-						
-						// LOGBOOK
-						date_default_timezone_set('Asia/Manila');
-						$LogbookCurrentTime = date('Y-m-d h:i:s A');
-						$LogbookType = 'New';
-						$LogbookEvent = 'New Applicant added! (Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) .  '. | ID: ' . $ApplicantID . ')';
-						$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
-						$data = array(
-							'Time' => $LogbookCurrentTime,
-							'Type' => $LogbookType,
-							'Event' => $LogbookEvent,
-							'Link' => $LogbookLink,
-						);
-						$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-						redirect('Applicants');
+				if ($pImageChecker != NULL) {
+					if ( ! $this->upload->do_upload('pImage'))
+					{
+						$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
+						redirect('NewEmployee');
 					}
 					else
 					{
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
-						redirect('NewEmployee');
+						$pImage = base_url().'uploads/'.$customid.'/'.$this->upload->data('file_name');
 					}
+				} else {
+					$DiceRoll = rand(1, 3);
+					if ($DiceRoll == 1) {
+						$pImage = base_url().'assets/img/wercher_noimage_blue.png';
+					}
+					if ($DiceRoll == 2) {
+						$pImage = base_url().'assets/img/wercher_noimage_green.png';
+					}
+					if ($DiceRoll == 3) {
+						$pImage = base_url().'assets/img/wercher_noimage_purple.png';
+					}
+				}
+				// INSERT EMPLOYEE
+				$data = array(
+					'ApplicantImage' => $pImage,
+					'ApplicantID' => $customid,
+					'PositionDesired' => $PositionDesired,
+					'PositionGroup' => $PositionGroup,
+					'SalaryExpected' => $SalaryExpected,
+					'LastName' => ucfirst($LastName),
+					'FirstName' => ucfirst($FirstName),
+					'MiddleInitial' => ucfirst($MI),
+					'Gender' => $Gender,
+					'Age' => $Age,
+					'Height' => $Height,
+					'Weight' => $Weight,
+					'Religion' => $Religion,
+					'BirthDate' => $bDate,
+					'BirthPlace' => $bPlace,
+					'Citizenship' => $Citizenship,
+					'CivilStatus' => $CivilStatus,
+					'No_OfChildren' => $No_Children,
+					
+					'Address_Present' => $Address_Present,
+					'Address_Provincial' => $Address_Provincial,
+					'Address_Manila' => $Address_Manila,
+
+					'Phone_No' => $PhoneNumber,
+
+					'SSS_No' => $SSS,
+					'EffectiveDateCoverage' => $SSS_Effective,
+					'ResidenceCertificateNo' => $RCN,
+					'Rcn_At' => $RCN_at,
+					'Rcn_On' => $RCN_On,
+					'TIN' => $TIN,
+					'TIN_At' => $TIN_At,
+					'TIN_On' => $TIN_On,
+					
+					'HDMF' => $HDMF,
+					'HDMF_At' => $HDMF_At,
+					'HDMF_On' => $HDMF_On,
+					'ATM_No' => $ATM_No,
+
+					'PhilHealth' => $PhilHealth,
+					'PhilHealth_At' => $PhilHealth_At,
+					'PhilHealth_On' => $PhilHealth_On,
+
+					'Status' => 'Applicant',
+					'AppliedOn' => date('Y-m-d h:i:s A'),
+				);
+				$addedEmployee = $this->Model_Inserts->AddThisEmployee($data);
+				if ($addedEmployee == TRUE) {
+					if (isset($_SESSION["acadcart"])) {
+						foreach ($_SESSION["acadcart"] as $s_da) {
+							$data = array(
+								'ApplicantID' => $customid,
+								'Level' => $s_da['acadcart']['SchoolLevel'],
+								'SchoolName' => $s_da['acadcart']['SchoolName'],
+								'SchoolAddress' => $s_da['acadcart']['SchoolAddress'],
+								'DateStarted' => $s_da['acadcart']['FromYearSchool'],
+								'DateEnds' => $s_da['acadcart']['ToYearSchool'],
+								'HighDegree' => $s_da['acadcart']['H_Attained'],
+
+							);
+							$this->Model_Inserts->InsertAcadH($data);
+						}
+					}
+					if (isset($_SESSION["emp_cart"])) {
+						foreach ($_SESSION["emp_cart"] as $s_da) {
+							$data = array(
+								'ApplicantID' => $customid,
+								'Name' => $s_da['emp_cart']['EmployeerName'],
+								'Address' => $s_da['emp_cart']['emAddress'],
+								'PeriodCovered' => $s_da['emp_cart']['PeriodCovered'],
+								'Position' => $s_da['emp_cart']['Position'],
+								'Salary' => $s_da['emp_cart']['Salary'],
+								'CauseOfSeparation' => $s_da['emp_cart']['cos'],
+
+							);
+							$this->Model_Inserts->InsertEmploymentRecord($data);
+						}
+					}
+					if (isset($_SESSION["mach_cart"])) {
+						foreach ($_SESSION["mach_cart"] as $s_da) {
+							$data = array(
+								'ApplicantID' => $customid,
+								'MachineName' => $s_da['mach_cart']['MachineName'],
+							);
+							$this->Model_Inserts->InsertMachineOperated($data);
+						}
+					}
+					// if (isset($_SESSION["rela_cart"])) {
+					// 	foreach ($_SESSION["rela_cart"] as $s_da) {
+					// 		$data = array(
+					// 			'ApplicantID' => $customid,
+					// 			'Relation' => $s_da['rela_cart']['Relation'],
+					// 			'Name' => $s_da['rela_cart']['rName'],
+					// 			'Occupation' => $s_da['rela_cart']['rOccupation'],
+					// 		);
+					// 		$this->Model_Inserts->InsertRelativesdata($data);
+					// 	}
+					// }
+					// if (isset($_SESSION["beneCart"])) {
+					// 	foreach ($_SESSION["beneCart"] as $s_da) {
+					// 		$data = array(
+					// 			'ApplicantID' => $customid,
+					// 			'Name' => $s_da['beneCart']['BeneName'],
+					// 			'Relationship' => $s_da['beneCart']['BeneRelationship'],
+					// 		);
+					// 		$this->Model_Inserts->InserBeneficia($data);
+					// 	}
+					// }
+					unset($_SESSION["acadcart"]);
+					unset($_SESSION["emp_cart"]);
+					unset($_SESSION["mach_cart"]);
+					// unset($_SESSION["rela_cart"]); 
+					// unset($_SESSION["beneCart"]);
+					
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Employee added!</h5></div>');
+					
+					// LOGBOOK
+					date_default_timezone_set('Asia/Manila');
+					$LogbookCurrentTime = date('Y-m-d h:i:s A');
+					$LogbookType = 'New';
+					$LogbookEvent = 'New Applicant added! (Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) .  '. | ID: ' . $ApplicantID . ')';
+					$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+					$data = array(
+						'Time' => $LogbookCurrentTime,
+						'Type' => $LogbookType,
+						'Event' => $LogbookEvent,
+						'Link' => $LogbookLink,
+					);
+					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+					redirect('Applicants');
+				}
+				else
+				{
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+					redirect('NewEmployee');
 				}
 			}
 		}
@@ -459,17 +471,15 @@ class Add_Controller extends CI_Controller {
 
 			// TODO: Add restrictions to deny /uploads/ access.
 			// PDF File Upload
-			if ($pFileChecker != NULL) {
-				if ( ! $this->upload->do_upload('pFile')) {
-					$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> PDF upload: '.$this->upload->display_errors().'</h5></div>');
-					redirect('Employee');
-					exit();
-				} else {
-					$pFile = base_url().'uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
-					$pFileName = $this->upload->data('file_name');
-					$pFileName = substr($pFileName, 0, 15);
-					$pFileName = $pFileName . '...';
-				}
+			if ( ! $this->upload->do_upload('pFile')) {
+				$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> PDF upload: '.$this->upload->display_errors().'</h5></div>');
+				redirect('Employee');
+				exit();
+			} else {
+				$pFile = base_url().'uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
+				$pFileName = $this->upload->data('file_name');
+				$pFileName = substr($pFileName, 0, 15);
+				$pFileName = $pFileName . '...';
 			}
 			$data = array(
 				'ApplicantID' => $ApplicantID,
@@ -484,7 +494,7 @@ class Add_Controller extends CI_Controller {
 			);
 			$AddDocuments = $this->Model_Inserts->AddDocuments($data);
 			if ($AddDocuments == TRUE) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Document added! FILE: ' . $pimageChecker . '</h5></div>');
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Document added!</h5></div>');
 				redirect('Employee');
 				exit();
 			}

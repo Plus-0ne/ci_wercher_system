@@ -5,16 +5,6 @@
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
-				<div class="row">
-					<div class="col-sm-12 pt-3 pb-3">
-						<nav aria-label="breadcrumb">
-							<ol class="breadcrumb" style="background-color: transparent;">
-								<li class="breadcrumb-item"><a href="">Home</a></li>
-								<li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-							</ol>
-						</nav>
-					</div>
-				</div>
 				<style type="text/css">
 					.bcolor3BB515 {
 						background-color: #3BB515;
@@ -32,9 +22,8 @@
 					{
 						min-height: 100% !important;
 					}
-					.card-container
-					{
-						height: 100% !important;
+					.card-container a {
+						text-decoration: none;
 					}
 					.card-headers {
 						border-radius: 3px 3px 0px 0px;
@@ -68,85 +57,115 @@
 					{
 						font-size: 2em;
 					}
+					.card-icon {
+						font-size: 45px;
+						color: rgba(255, 255, 255, 0.33);
+					}
 				</style>
-				<div class="row rcontent p-5">
+				<div class="row p-4">
 					<div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
 							<a href="Applicants">
-							<div class="card-headers clearfix bcolor3BB515">
-								<span class="float-left head-text">
-									Applicant
-								</span>
-								<span class="ml-auto float-right head-ico-text">
-									<i class="fas fa-user-friends fa-fw"></i> <?php if ($result_capp->num_rows() > 0) {
-										echo $result_capp->num_rows();
-									} ?>
-								</span>
-							</div>
-							<div class="card-bodys clearfix">
-								<a class="dc-links float-left" href="<?=base_url()?>Applicants"><i class="fas fa-angle-right fa-fw"></i> View </a>
-							</div>
+								<div class="card-headers bcolor3BB515">
+									<div class="row ml-2">
+										<span class="head-text">
+											Applicants
+										</span>
+									</div>
+									<div class="row ml-2">
+										<span class="head-ico-text">
+											<b>
+												<?php if ($result_capp->num_rows() > 0) {
+												echo $result_capp->num_rows(); } ?>
+											</b>
+										</span>
+										<i class="fas fa-user-friends fa-fw card-icon ml-auto mr-2"></i>
+									</div>
+								</div>
 							</a>
 						</div>
 					</div>
 					<div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
 							<a href="Employee">
-							<div class="card-headers clearfix" style="background-color: rgba(153, 102, 255, 1);">
-								<span class="float-left head-text">
-									Employee 
-								</span>
-								<span class="ml-auto float-right head-ico-text">
-									<i class="fas fa-user-tie fa-fw"></i> <?php if ($result_cemployee->num_rows() > 0) {
-										echo $result_cemployee->num_rows();
-									} ?>
-								</span>
-							</div>
-							<div class="card-bodys clearfix">
-								<a class="dc-links float-left" href="<?=base_url()?>Employee"><i class="fas fa-angle-right fa-fw"></i> View </a>
-							</div>
+								<div class="card-headers" style="background-color: rgba(153, 102, 255, 1);">
+									<div class="row ml-2">
+										<span class="head-text">
+											Employees
+										</span>
+									</div>
+									<div class="row ml-2">
+										<span class="head-ico-text">
+											<b>
+												<?php if ($result_cemployee->num_rows() > 0) {
+												echo $result_cemployee->num_rows(); } ?>
+											</b>
+										</span>
+										<i class="fas fa-user-tie fa-fw card-icon ml-auto mr-2"></i>
+									</div>
+								</div>
+							</a>
 						</div>
 					</div>
 					<div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
 							<a href="Clients">
-							<div class="card-headers clearfix bcolor199EC4">
-								<span class="float-left head-text">
-									Client 
-								</span>
-								<span class="ml-auto float-right head-ico-text">
-									<i class="fas fa-user-tag fa-fw"></i> <?php if ($result_cclients->num_rows() > 0) {
-										echo $result_cclients->num_rows();
-									} ?>
-								</span>
-							</div>
-							<div class="card-bodys clearfix">
-								<a class="dc-links float-left" href="<?=base_url()?>Clients"><i class="fas fa-angle-right fa-fw"></i> View </a>
-							</div>
+								<div class="card-headers bcolor199EC4">
+									<div class="row ml-2">
+										<span class="head-text">
+											Clients
+										</span>
+									</div>
+									<div class="row ml-2">
+										<span class="head-ico-text">
+											<b>
+												<?php if ($result_cclients->num_rows() > 0) {
+												echo $result_cclients->num_rows(); } ?>
+											</b>
+										</span>
+										<i class="fas fa-user-tag fa-fw card-icon ml-auto mr-2"></i>
+									</div>
+								</div>
+							</a>
 						</div>
 					</div>
 					<div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
 							<a href="Admin_List">
-							<div class="card-headers clearfix bcolorE75858">
-								<span class="float-left head-text">
-									Admin
-								</span>
-								<span class="ml-auto float-right head-ico-text">
-									<i class="fas fa-user-secret fa-fw"></i> <?php if ($result_cadmin->num_rows() > 0) {
-										echo $result_cadmin->num_rows();
-									} ?>
-								</span>
-							</div>
-							<div class="card-bodys clearfix">
-								<a class="dc-links float-left" href="<?=base_url()?>Admin_List"><i class="fas fa-angle-right fa-fw"></i> View </a>
-							</div>
+								<div class="card-headers bcolorE75858">
+									<div class="row ml-2">
+										<span class="head-text">
+											Admins
+										</span>
+									</div>
+									<div class="row ml-2">
+										<span class="head-ico-text">
+											<b>
+												<?php if ($result_cadmin->num_rows() > 0) {
+												echo $result_cadmin->num_rows(); } ?>
+											</b>
+										</span>
+										<i class="fas fa-user-secret fa-fw card-icon ml-auto mr-2"></i>
+									</div>
+								</div>
+							</a>
 						</div>
+					</div>
+					<div id="GraphChartButton" class="col-sm-12 col-lg-12 mt-5 mb-5 chart-hover">
+						<div class="chart-title text-center">
+							<h5 class="titless">
+								<i class="fas fa-calendar-week fa-fw chart-hover-static"></i> <?php echo $CurrentYear; ?> Applicants
+							</h5>
+						</div>
+						<!-- <div class="col-1 ml-auto chart-hover-settings" style="margin-top: -30px; display: none;">
+							<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog" style="margin-right: -1px;"></i></button>
+						</div> -->
+						<canvas id="ApplicantChart" class="w-100" width="800" height="250"></canvas>
 					</div>
 					<div id="PieChartButton" class="col-sm-12 col-lg-6 mt-5 mb-5 chart-hover">
 						<div class="chart-title text-center">
 							<h5 class="titless">
-								<i class="fas fa-chart-pie fa-fw"></i> Total Applicant
+								<i class="fas fa-chart-pie fa-fw"></i> Applicants Pool
 							</h5>
 						</div>
 						<!-- <div class="col-1 ml-auto chart-hover-settings" style="margin-top: -30px; display: none;">
@@ -164,17 +183,6 @@
 							<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog" style="margin-right: -1px;"></i></button>
 						</div> -->
 						<canvas id="bar-chart-horizontal" width="800" height="450"></canvas>
-					</div>
-					<div id="GraphChartButton" class="col-sm-12 col-lg-12 mt-5 mb-5 chart-hover">
-						<div class="chart-title text-center">
-							<h5 class="titless">
-								<i class="fas fa-calendar-week fa-fw chart-hover-static"></i> <?php echo $CurrentYear; ?> Applicants
-							</h5>
-						</div>
-						<!-- <div class="col-1 ml-auto chart-hover-settings" style="margin-top: -30px; display: none;">
-							<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog" style="margin-right: -1px;"></i></button>
-						</div> -->
-						<canvas id="ApplicantChart" class="w-100" width="800" height="250"></canvas>
 					</div>
 
 					<!-- LOGBOOK -->
@@ -326,7 +334,7 @@
 				labels: cData.label,
 				datasets: [{
 					label: cData.label,
-					backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+					backgroundColor: ["#7B45E9", "#Cd45E9","#E945B3","#4561E9","#45B3E9","#7B45E9", "#Cd45E9","#E945B3","#4561E9","#45B3E9","#7B45E9", "#Cd45E9","#E945B3","#4561E9","#45B3E9","#7B45E9", "#Cd45E9","#E945B3","#4561E9","#45B3E9","#7B45E9", "#Cd45E9","#E945B3","#4561E9","#45B3E9"],
 					data: cData.data,
 				}]
 			},
@@ -337,7 +345,7 @@
 				},
 				title: {
 					display: true,
-					text: 'Total Applicant / Position by Group'
+					text: 'Position by Group'
 				}
 			}
 		});
@@ -357,10 +365,6 @@
 				legend: {
 					display: false
 				},
-				title: {
-					display: true,
-					text: 'Total / Client'
-				}
 			}
 		});
 		var ctx = document.getElementById('ApplicantChart');

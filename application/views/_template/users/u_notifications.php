@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row wercher-navbar sticky-top">
 	<div class="col-sm-12">
 		<style type="text/css">
 			.notif-link { text-decoration: none; width: 100%; color: #2262A9; }
@@ -7,9 +7,17 @@
 			.notif-li { padding-left: 21px; padding-right: 21px ; padding-top: 11px ;padding-bottom: 11px ; font-size: 12px;}
 		</style>
 		<nav class="navbar navbar-expand-lg">
-			<button type="button" id="sidebarCollapse" class="btn btn-primary"><i class="fas fa-bars" style="margin-right: -1px;"></i></button>
+			<button type="button" id="sidebarCollapse" class="btn text-light"><i class="fas fa-bars" style="margin-right: -1px;"></i></button>
+			<div class="wercher-breadcrumb text-light ml-3">
+				<!-- BREADCRUMB -->
+				<?php if (!isset($Breadcrumb) || $Breadcrumb == NULL): ?>
+					<?php echo 'Breadcrumb goes here'; ?>
+				<?php else: ?>
+					<?php echo $Breadcrumb; ?>
+				<?php endif ?>
+			</div>
 			<div class="dropdown ml-auto">
-				<a class="btn btn-light ddToggle" data-toggle="dropdown"><i class="fas fa-bell" style="margin-right: -1px;"></i></a>
+				<a class="btn text-light ddToggle" data-toggle="dropdown"><i class="fas fa-bell" style="margin-right: -1px;"></i></a>
 				<ul class="dropdown-menu dropdown-menu-right">
 					<?php foreach ($this->Model_Selects->GetLogbookWithLimit(5)->result_array() as $row): ?>
 						<li class="notif-li 
