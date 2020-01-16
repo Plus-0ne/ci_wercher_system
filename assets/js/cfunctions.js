@@ -1,3 +1,72 @@
+// output information
+function Output(msg) {
+  var m = document.getElementById("output");
+  m.innerHTML = msg;
+}
+
+// call initialization file
+if (window.File && window.FileList && window.FileReader) {
+  Init();
+}
+
+//
+// initialize
+function Init() {
+
+  var fileselect = document.getElementById("fileselect"),
+    filedrag = document.getElementById("output"),
+    submitbutton = document.getElementById("submitbutton");
+
+  // file select
+  fileselect.addEventListener("change", FileSelectHandler, false);
+
+  // is XHR2 available? TODO: Fix this. Doesn't work.
+  var xhr = new XMLHttpRequest();
+  if (xhr.upload) {
+  
+    // file drop
+    filedrag.addEventListener("dragover", FileDragHover, false);
+    filedrag.addEventListener("dragleave", FileDragHover, false);
+    filedrag.addEventListener("drop", FileSelectHandler, false);
+    filedrag.style.display = "block";
+    
+    // remove submit button
+    submitbutton.style.display = "none";
+  }
+
+}
+
+// file drag hover
+function FileDragHover(e) {
+  e.stopPropagation();
+  e.preventDefault();
+  e.target.className = (e.type == "dragover" ? "hover" : "");
+}
+
+// file selection
+function FileSelectHandler(e) {
+
+  // cancel event and hover styling
+  FileDragHover(e);
+
+  // fetch FileList object
+  var files = e.target.files || e.dataTransfer.files;
+
+  // process all File objects
+  for (var i = 0, f; f = files[i]; i++) {
+    ParseFile(f);
+  }
+
+}
+
+function ParseFile(file) {
+
+  Output(
+    file.name + "<div class='mt-2' style='opacity: 0.75'>Size: " + (file.size / 1000000).toFixed(2) + " MB</div>"
+  );
+  
+}
+
 function printContent(el){
 	var restorepage = $('body').html();
 	var printcontent = $('.' + el).clone();

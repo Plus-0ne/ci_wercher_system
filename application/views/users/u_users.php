@@ -91,13 +91,28 @@
 					</div>
 					<div class="modal-body">
 						<input id="Pass_ID" type="hidden" name="ApplicantID">
-						<div class="form-row">
+						<div class="form-row" style="margin-left: 15px; margin-right: 15px;">
+							<?php if($this->agent->is_mobile()): ?>
 							<div class="form-group col-sm-8 mt-5">
 								<div class="input-icon-sm">
 									<input id="pFile" type="file" name="pFile" placeholder="Choose PDF file to upload" style="padding-left: 45px;" value="">
 									<i class="fas fa-file-pdf" style="width: 45px;"></i>
 								</div>
 							</div>
+							<?php else: ?>
+							<input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
+
+							<div class="wercher-drop-area form-group col-sm-8 text-center">
+								<div id="output">
+									<p>
+										<i class="fas fa-download"></i>
+									</p>
+									<label for="fileselect">Choose a PDF file</label>
+									<input type="file" id="fileselect" name="pFile" />
+									or drop it here
+								</div>
+							</div>
+							<?php endif; ?>
 							<div class="form-group col-sm-4 text-center">
 								<input type='file' id="imgInp" name="pImage" style="display: none;" value="">
 								<?php if(!$this->agent->is_mobile()): ?>

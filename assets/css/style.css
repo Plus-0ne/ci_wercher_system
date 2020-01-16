@@ -445,6 +445,41 @@ a[data-toggle="collapse"] {
 .shrink {
 	margin-bottom: 5px;
 }
+.wercher-drop-area
+{ 
+	font-weight: bold;
+	padding: 1em 0;
+	margin: 1em 0;
+	color: #555;
+	border: 2px dashed #555;
+	border-radius: 7px;
+	cursor: default;
+}
+
+.wercher-drop-area.hover
+{
+	color: #f00;
+	border-color: #f00;
+	border-style: solid;
+	box-shadow: inset 0 3px 4px #888;
+}
+
+.wercher-drop-area label{
+  color: #007bff;
+  cursor: pointer;
+}
+
+.wercher-drop-area label:hover{
+  text-decoration: underline;
+}
+
+.wercher-drop-area i {
+	font-size: 32px;
+}
+
+#fileselect{
+  display:none;
+}
 
 /*
 .sidebar-button-active {
