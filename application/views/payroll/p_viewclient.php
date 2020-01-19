@@ -57,7 +57,7 @@
 											?> <td> <?php
 											if($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->num_rows() > 0) {
 												foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->result_array() as $nrow):
-													$Hours = $nrow['Hours'] + $nrow['Overtime'];
+													$Hours = $nrow['Hours'];
 													echo '<div data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: '. $nrow['Hours'] . '<br>Overtime: ' . $nrow['Overtime'] . '">' . $Hours . '</div>';
 													$TotalHours = $TotalHours + $Hours;
 												endforeach;

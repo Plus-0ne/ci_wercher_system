@@ -807,7 +807,6 @@ class Update_Controller extends CI_Controller {
 	{
 		$ClientID = $this->input->post('ExcelClientID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 		$File = $_FILES['file'];
-		var_dump($File);
 		date_default_timezone_set('Asia/Manila');
 		$this->load->library('SimpleXLSX');	
 			if ( $xlsx = SimpleXLSX::parse( $File['tmp_name'] ) ) {
@@ -842,19 +841,18 @@ class Update_Controller extends CI_Controller {
 									}
 									$data = array(
 										'Time' => $Date,
-										'Regular' => '1',
 										'Current' => 'Current',
 									);
-									if (isset($Holiday)) {
-										$data['Holiday'] = '1';
-									} else {
-										$data['Holiday'] = NULL;
-									}
-									if (isset($Special)) {
-										$data['Special'] = '1';
-									} else {
-										$data['Special'] = NULL;
-									}
+									// if (isset($Holiday)) {
+									// 	$data['Holiday'] = '1';
+									// } else {
+									// 	$data['Holiday'] = NULL;
+									// }
+									// if (isset($Special)) {
+									// 	$data['Special'] = '1';
+									// } else {
+									// 	$data['Special'] = NULL;
+									// }
 									$ClientViewTime = $this->Model_Inserts->InsertDummyHours($data);
 								}
 
@@ -878,7 +876,6 @@ class Update_Controller extends CI_Controller {
 								// endforeach;
 
 								$Split = explode('/', ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ));
-								print_r($Split);
 								if ($Split[0] == 'N') {
 									$Type = 'Normal';
 								} elseif ($Split[0] == 'R') {
@@ -896,9 +893,7 @@ class Update_Controller extends CI_Controller {
 									'ClientID' => $ClientID,
 									'Date' => $GetWeeklyDates->result_array()[$ColCount - 3]['Time'],
 									'Type' => $Type,
-									'Hours' => $Split[1],
-									'Overtime' => $Split[2],
-									'NightShift' => $Split[3],
+									'Hours' => $Split[0],
 								);
 								$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
 								// echo '------------- <br>';
@@ -918,11 +913,9 @@ class Update_Controller extends CI_Controller {
 					$ColCount = 0;
 				endforeach;
 				if ($RowCount <= $xlsx->rows()) {
-					echo '<hr><h1>HELLO</h1><hr>';
 					redirect('ViewClient?id=' . $ClientID);
 				}
 				$this->load->view('_template/users/u_redirecting');
-				echo '<br>' . $cols;
 				// echo '</table>';
 			} else {
 				$Error = SimpleXLSX::parseError();

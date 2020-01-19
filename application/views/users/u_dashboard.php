@@ -162,7 +162,7 @@
 						</div> -->
 						<canvas id="ApplicantChart" class="w-100" width="800" height="250"></canvas>
 					</div>
-					<div id="PieChartButton" class="col-sm-12 col-lg-6 mt-5 mb-5 chart-hover">
+					<div id="PieChartButton" class="col-sm-12 col-lg-6 mt-5 mb-5">
 						<div class="chart-title text-center">
 							<h5 class="titless">
 								<i class="fas fa-chart-pie fa-fw"></i> Applicants Pool
@@ -173,7 +173,7 @@
 						</div> -->
 						<canvas id="pie-chart" width="800" height="450"></canvas>
 					</div>
-					<div id="BarChartButton" class="col-sm-12 col-lg-6 mt-5 mb-5 chart-hover">
+					<div id="BarChartButton" class="col-sm-12 col-lg-6 mt-5 mb-5">
 						<div class="chart-title text-center">
 							<h5 class="titless">
 								<i class="fas fa-chart-line fa-fw"></i> Total Employed
@@ -309,12 +309,6 @@
 			$('#LoadingIcon').fadeIn();
 		});
 		$('.load-div').hide();
-		$('#PieChartButton').on('click', function () {
-			$('#PieChartModal').modal('show');
-		});
-		// $('#BarChartButton').on('click', function () {
-		// 	$('#BarChartModal').modal('show');
-		// });
 		$('#GraphChartButton').on('click', function () {
 			$('#GraphChartModal').modal('show');
 		});

@@ -144,6 +144,7 @@
 		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		// COUNT MONTHLY TOTAl
 		$CurrentYear = date('Y');
+		$Year = $CurrentYear;
 		$Month = date('01');
 		$data['CurrentYear'] = $CurrentYear;
 		if (isset($_GET['Year'])) {
