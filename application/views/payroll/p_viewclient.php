@@ -58,7 +58,8 @@
 											if($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->num_rows() > 0) {
 												foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->result_array() as $nrow):
 													$Hours = $nrow['Hours'];
-													echo '<div data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: '. $nrow['Hours'] . '<br>Overtime: ' . $nrow['Overtime'] . '">' . $Hours . '</div>';
+													$totalh =  $nrow['Hours'] + $nrow['Overtime'];
+													echo '<div data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: '. $Hours . '<br>Overtime: ' . $nrow['Overtime'] . '">' . $totalh . '</div>';
 													$TotalHours = $TotalHours + $Hours;
 												endforeach;
 											} else {

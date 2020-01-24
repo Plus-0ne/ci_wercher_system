@@ -888,12 +888,27 @@ class Update_Controller extends CI_Controller {
 									$Type = 'Unknown';
 								}
 
-
+								if ( $Split[0] > 8) {
+										$otValue = $Split[0] - 8;
+									}
+									else
+									{
+										$otValue = 0;
+									}
+									if ( $Split[0] > 8) {
+										$rHours = 8;
+									}
+									else
+									{
+										$rHours = $Split[0];
+									}
 								$data = array(
 									'ClientID' => $ClientID,
 									'Date' => $GetWeeklyDates->result_array()[$ColCount - 3]['Time'],
 									'Type' => $Type,
-									'Hours' => $Split[0],
+									
+									'Hours' => $rHours,
+									'Overtime' => $otValue,
 								);
 								$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
 								// echo '------------- <br>';
