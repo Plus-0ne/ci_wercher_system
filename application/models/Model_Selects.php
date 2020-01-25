@@ -285,5 +285,11 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetTotalHours($ApplicantID, $TimeFrom, $TimeTo)
+	{
+		$SQL = "SELECT * FROM hours_weekly WHERE ApplicantID = '$ApplicantID' AND Time = '$TimeFrom' OR WHERE Time = '$TimeFrom'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 
 }

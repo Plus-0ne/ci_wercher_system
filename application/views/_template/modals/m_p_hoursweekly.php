@@ -35,6 +35,7 @@
 									<i>₱</i>
 								</div>
 							</div>
+							
 <!-- 							<div id="SalaryOvertimeFade" class="form-group col-sm-12 col-md-2 ml-auto">
 								<label>Overtime Bonus</label>
 								<input id="SalaryOvertime" class="form-control" type="text" name="" readonly>
@@ -146,6 +147,24 @@
 										</div>
 									</div>
 									<!-- <p class="mr-auto ml-auto">Hours</p> -->
+									<div class="form-row">
+										<div class="form-group col-6 input-icon">
+											<label>HDMF</label>
+											<input id="PerDay" class="form-control" type="text" name="HDMF_<?php echo $row['Time']; ?>">
+										</div>
+										<div class="form-group col-6 input-icon">
+											<label>Philhealth</label>
+											<input id="PerHour" class="form-control" type="text" name="Philhealth_<?php echo $row['Time']; ?>">
+										</div>
+										<div class="form-group col-6 input-icon">
+											<label>SSS</label>
+											<input id="PerHour" class="form-control" type="text" name="SSS_<?php echo $row['Time']; ?>">
+										</div>
+										<div class="form-group col-6 input-icon">
+											<label>Tax</label>
+											<input id="PerHour" class="form-control" type="text" name="Tax_<?php echo $row['Time']; ?>">
+										</div>
+									</div>
 									<div class="form-row">
 										<div class="form-group col-6 input-icon">
 											<input id="PerDay" class="form-control" type="text" name="" readonly>
