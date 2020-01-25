@@ -44,11 +44,13 @@
 								<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
 									<th><?php echo $row['Time']; ?></th>
 								<?php endforeach; ?>
-								<th>Total Hours</th>
+								<th style="min-width: 75px;">Reg. Hrs</th>
+								<th style="min-width: 75px;">Total OT Hrs</th>
 							</thead>
 							<tbody>
 								<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
-									$TotalHours = 0;?>
+									$TotalRegHours = 0;
+									$TotalOTHours = 0;?>
 									<tr id="<?php echo $row['SalaryExpected']; ?>" data-clientid="<?php echo $row['ClientEmployed']; ?>" data="<?php echo $row['ApplicantID']; ?>" class='clickable-row' data-toggle="modal" data-target="#HoursWeeklyModal_<?php echo $row['ApplicantID']; ?>">
 										<td><?php echo $row['ApplicantID'];?></td>
 										<td><?php echo $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'];?></td>
@@ -58,15 +60,18 @@
 											if($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->num_rows() > 0) {
 												foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->result_array() as $nrow):
 													$Hours = $nrow['Hours'];
+													$OT = $nrow['Overtime'];
 													$totalh =  $nrow['Hours'] + $nrow['Overtime'];
 													echo '<div data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: '. $Hours . '<br>Overtime: ' . $nrow['Overtime'] . '">' . $totalh . '</div>';
-													$TotalHours = $TotalHours + $Hours;
+													$TotalRegHours = $TotalRegHours + $Hours;
+													$TotalOTHours = $TotalOTHours + $OT;
 												endforeach;
 											} else {
 												echo '0';
 											} ?> </td>
 										<?php endforeach; ?>
-										<td><?php echo $TotalHours; ?></td>
+										<td><?php echo $TotalRegHours; ?></td>
+										<td><?php echo $TotalOTHours; ?></td>
 <!-- 										<td class="text-center">
 											<button id="<?php echo $row['Salary']; ?>" data="<?php echo $row['ApplicantID']; ?>" type="button" class="btn btn-primary btn-sm HoursButton" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-clock"></i> Set</button>
 											<button type="button" class="btn btn-primary btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-list"></i> Contract</button>

@@ -743,7 +743,7 @@ class Update_Controller extends CI_Controller {
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
-	public function ViewClientEmployees()
+	public function ViewClientEmployees() // Date Range
 	{
 		$ClientID = $this->input->post('ViewClientID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 		$Mode = $this->input->post('Mode',TRUE);
@@ -770,12 +770,12 @@ class Update_Controller extends CI_Controller {
 			$date2 = new DateTime($ToDate);
 
 			$diff = $date2->diff($date1)->format("%a");
-			if ($diff > 730) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date Range for weekly must be lower than 2 years</h5></div>');
+			if ($diff > 7) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date Range for weekly must be lower than 1 week</h5></div>');
 				redirect($_SERVER['HTTP_REFERER']);
-			} elseif ($diff > 180 && $diff < 730) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #FFA500;"><h5><i class="fas fa-exclamation-triangle"></i> Note: You are viewing at a huge date range, performance may get slower than usual</h5></div>');
-			}
+			} //velseif ($diff > 180 && $diff < 730) {
+			// 	$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #FFA500;"><h5><i class="fas fa-exclamation-triangle"></i> Note: You are viewing at a huge date range, performance may get slower than usual</h5></div>');
+			// }
 			// TODO: Clean & optimize this. May cause lag on huge database.
 			$this->Model_Updates->UpdateWeeklyHoursCurrent();
 			$this->Model_Deletes->CleanWeeklyDates();

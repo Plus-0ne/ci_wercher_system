@@ -35,6 +35,7 @@
 									<i>₱</i>
 								</div>
 							</div>
+							
 <!-- 							<div id="SalaryOvertimeFade" class="form-group col-sm-12 col-md-2 ml-auto">
 								<label>Overtime Bonus</label>
 								<input id="SalaryOvertime" class="form-control" type="text" name="" readonly>
