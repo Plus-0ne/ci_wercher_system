@@ -5,25 +5,25 @@
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
-				<div class="row p-5 PrintOut">
+				<div class="row PrintOut">
 					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-6 col-sm-6 col-md-6 mb-5 PrintExclude">
+					<!-- <div class="col-6 col-sm-6 col-md-6 mb-5 PrintExclude">
 						<a href="
 						<?php if ($Status == 'Employed') {
 							echo base_url() . 'Employee';
 						} else {
 							echo base_url() . 'Applicants';
-						} ?>" class="btn btn-primary btn-sm"><i class="fas fa-chevron-left"></i> Back </a>
+						} ?>" class="btn btn-primary"><i class="fas fa-chevron-left"></i> Back </a>
 					</div>
 						<div class="col-6 col-sm-6 col-md-6 text-right PrintExclude dropdown">
 							<?php if ($Status == 'Employed'): ?> 
 								<?php if ($ReminderDate == NULL): ?> 
-									<button id="<?php echo $ApplicantID; ?>" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-exclamation"></i> No reminder set</button>
+									<button id="<?php echo $ApplicantID; ?>" class="btn btn-warning" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-exclamation"></i> No reminder set</button>
 								<?php else: ?>
-									<button id="<?php echo $ApplicantID; ?>" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-check"></i> You will be notified TEST months before expiring</button>
+									<button id="<?php echo $ApplicantID; ?>" class="btn btn-success" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-check"></i> You will be notified TEST months before expiring</button>
 								<?php endif; ?>
 							<?php endif; ?>
-							<button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<i class="fas fa-cog px-1" style="margin-right: -1px;"></i>
 							</button>
 							<div class="dropdown-menu w-50" aria-labelledby="dropdownMenuButton">
@@ -35,7 +35,7 @@
 								<div class="dropdown-divider"></div>
 								<a href="<?=base_url()?>BlacklistEmployee?id=<?=$ApplicantID?>" class="dropdown-item"><i class="fas fa-times"></i> Blacklist</a>
 							</div>
-						</div>
+						</div> -->
 						<?php if ($Status == 'Blacklisted'): ?>
 						<div class="row ml-auto mr-auto pb-5 w-100">
 							<div class="col-sm-12 col-mb-12 w-100 text-center blacklisted-notice">
@@ -57,409 +57,471 @@
 							</div>
 						</div>
 						<?php endif; ?>
-						<div class="col-sm-12 mb-5">
-							<h5>
-								<i class="fas fa-user-alt"></i> Personal Information
-							</h5>
+						<div class="row employee-container">
+							<div class="col-10 employee-tabs">
+								<ul>
+									<li class="employee-tabs-active"><a href="<?php echo base_url() ?>Applicants">Personal</a></li>
+									<li><a href="<?php echo base_url() ?>ApplicantsExpired">Contract</a></li>
+									<li><a href="<?php echo base_url() ?>Blacklisted">Documents</a></li>
+									<li><a href="<?php echo base_url() ?>Archived">Academic</a></li>
+									<li><a href="<?php echo base_url() ?>Archived">Employments</a></li>
+									<li><a href="<?php echo base_url() ?>Archived">Machine</a></li>
+									<li><a href="<?php echo base_url() ?>Archived">Notes</a></li>
+								</ul>
+							</div>
+							<div class="col-2 mb-5 employee-image">
+								<img class="rounded-circle" src="<?php echo $ApplicantImage; ?>">
+							</div>
 						</div>
-						<div class="col-sm-12 mb-5 e-title">
-							<img src="<?php echo $ApplicantImage; ?>" width="120" height="120">
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Position Desired
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $PositionDesired; ?> <?php if($PositionGroup != NULL) { echo ' (' . $PositionGroup . ')'; } ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Salary Expected
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $SalaryExpected; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Applicant ID
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $ApplicantID; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Name
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $LastName; ?> , <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Gender
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $Gender; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Age
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $Age; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Height
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $Height; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Weight
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $Weight; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Religion
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $Religion; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Birth Date
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $BirthDate; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Birth Place
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $BirthPlace; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Citizenship
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $Citizenship; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Civil Status
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $CivilStatus; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								# of Children
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $No_OfChildren; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Status
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
+						<div class="row rcontent employee-content">
+							<div class="col-2 employee-static mt-5 d-none d-sm-block">
+								<div class="col-sm-12 text-center">
+									<?php echo $LastName; ?> , <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.
+								</div>
+								<div class="col-sm-12 text-center">
+									<?php echo $ApplicantID; ?>
+								</div>
+								<hr>
+								<div class="col-sm-12 employee-static-item">
+									<i class="fas fa-phone"></i> <?php echo $Phone_No; ?>
+								</div>
+								<div class="col-sm-12 employee-static-item">
+									<i class="fas fa-map-marker-alt"></i> <?php echo $Address_Present; ?>
+								</div>
+								<hr>
+								<div class="col-sm-12 employee-static-header">
+									<b>Position</b>
+								</div>
+								<div class="col-sm-12 employee-static-item">
+									<?php echo $PositionDesired; ?>
+								</div>
+								<div class="col-sm-12">
+									(<?php echo $PositionGroup; ?>)
+								</div>
+								<hr>
+								<div class="col-sm-12 employee-static-header">
+									<b>Hire Date</b>
+								</div>
+								<div class="col-sm-12 employee-static-item">
+									<?php echo $AppliedOn; ?>
+								</div>
+								<hr>
+								<div class="col-sm-12 employee-static-header">
+									<b>Client</b>
+								</div>
+								<div class="col-sm-12 employee-static-item">
+									<?php
+									// TODO: Find a better solution than this.
+									$found = false;
+									foreach ($get_employee->result_array() as $row) {
+										foreach ($getClientOption->result_array() as $nrow) {
+											if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
+												$found = true;
+												echo $nrow['Name'];
+											}
+										}
+									}?>
+								</div>
+							</div>
+							<div class="col-10">
+								<div id="TabPersonal">
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Position Desired
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $PositionDesired; ?> <?php if($PositionGroup != NULL) { echo ' (' . $PositionGroup . ')'; } ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Salary Expected
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $SalaryExpected; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Applicant ID
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $ApplicantID; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Name
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $LastName; ?> , <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Gender
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $Gender; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Age
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $Age; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Height
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $Height; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Weight
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $Weight; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Religion
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $Religion; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Birth Date
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $BirthDate; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Birth Place
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $BirthPlace; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Citizenship
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $Citizenship; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Civil Status
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $CivilStatus; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										# of Children
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $No_OfChildren; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Status
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php if ($Status == 'Employed') { ?>
+											<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Employed
+										<?php } elseif ($Status == 'Applicant') { ?>
+											<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Applicant
+										<?php } elseif ($Status == 'Expired') { ?>
+											<i class="fas fa-square PrintExclude" style="color: #0721DB;"></i> Applicant (Expired)
+										<?php } elseif ($Status == 'Blacklisted') { ?>
+											<i class="fas fa-square PrintExclude" style="color: #000000;"></i> Blacklisted
+										<?php } else { ?>
+											<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Unknown
+										<?php } ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Applied On
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $AppliedOn; ?>
+									</p>
+								</div>
+								<!-- CONTRACT REPORT -->
 								<?php if ($Status == 'Employed') { ?>
-									<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Employed
-								<?php } elseif ($Status == 'Applicant') { ?>
-									<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Applicant
+									<div class="col-sm-12 col-md-2 e-title PrintExclude">
+										<h6>
+											Contract
+										</h6>
+									</div>
+									<div class="col-sm-12 col-md-4 e-det PrintExclude">
+										<p>
+											<button id="EmpContractButton" class="btn btn-primary btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractModal"><i class="far fa-eye"></i> View Contract</button>
+											<button class="btn btn-primary btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> History</button>
+										</p>
+									</div>
 								<?php } elseif ($Status == 'Expired') { ?>
-									<i class="fas fa-square PrintExclude" style="color: #0721DB;"></i> Applicant (Expired)
-								<?php } elseif ($Status == 'Blacklisted') { ?>
-									<i class="fas fa-square PrintExclude" style="color: #000000;"></i> Blacklisted
-								<?php } else { ?>
-									<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Unknown
+									<div class="col-sm-12 col-md-2 e-title PrintExclude">
+										<h6>
+											Last Contract
+										</h6>
+									</div>
+									<div class="col-sm-12 col-md-4 e-det PrintExclude">
+										<p>
+											<button id="EmpContractButton" class="btn btn-info btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractModal"><i class="far fa-eye"></i> View Contract</button>
+											<button class="btn btn-info btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> History</button>
+										</p>
+									</div>
+								<?php } elseif ($Status == 'Applicant') { ?>
+									<div class="col-sm-12 col-md-2 e-title PrintExclude">
+										<h6>
+											Contract
+										</h6>
+									</div>
+									<div class="col-sm-12 col-md-4 e-det PrintExclude">
+										<p>
+											No contract history.
+										</p>
+										<p>
+											<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-info btn-sm mr-auto ModalHire" data-toggle="modal" data-target="#hirthis"><i class="fas fa-user-edit"></i> Hire</button>
+										</p>
+									</div>
 								<?php } ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Applied On
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $AppliedOn; ?>
-							</p>
-						</div>
-						<!-- CONTRACT REPORT -->
-						<?php if ($Status == 'Employed') { ?>
-							<div class="col-sm-12 col-md-2 e-title PrintExclude">
-								<h6>
-									Contract
-								</h6>
+								<div class="col-sm-12 col-md-2 e-title PrintExclude">
+									<h6>
+										Violations (<?php echo $GetViolations->num_rows(); ?>)
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det PrintExclude">
+									<p>
+										<?php if ($GetViolations->num_rows() > 0): ?>
+											<button id="ViolationsButton" class="btn btn-danger btn-sm w-50 mb-1" data-toggle="modal" data-target="#ViolationsModal"><i class="far fa-eye"></i> View Violations</button>
+										<?php else: ?>
+											No violations on record.
+										<?php endif; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 mt-5 mb-3">
+									<h6>
+										<i class="fas fa-stream"></i> Address
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-title">
+									<h6>
+										Present
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-8 e-det">
+									<p>
+										<?php echo $Address_Present; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-4 e-title">
+									<h6>
+										Provincial
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-8 e-det">
+									<p>
+										<?php echo $Address_Provincial; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-4 e-title">
+									<h6>
+										Manila
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-8 e-det">
+									<p>
+										<?php echo $Address_Manila; ?>
+									</p>
+								</div>
 							</div>
-							<div class="col-sm-12 col-md-4 e-det PrintExclude">
-								<p>
-									<button id="EmpContractButton" class="btn btn-primary btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractModal"><i class="far fa-eye"></i> View Contract</button>
-									<button class="btn btn-primary btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> History</button>
-								</p>
+							<div class="row rcontent p-5 PrintOut">
+								<div class="col-sm-12 mb-5">
+									<h5>
+										<i class="fas fa-stream"></i> Documents
+									</h5>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										S.S.S. #
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $SSS_No; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Effective Date of Coverage
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $EffectiveDateCoverage; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Residence Certificate No.
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $ResidenceCertificateNo; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Issued At
+									</h6>
+									<h6>
+										Issued On
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $Rcn_At; ?>
+										<br>
+										<?php echo $Rcn_On; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Tax Identification No.
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $TIN; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Issued At
+									</h6>
+									<h6>
+										Issued On
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $TIN_At; ?>
+										<br>
+										<?php echo $TIN_On; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										HDMF
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $HDMF; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Issued At
+									</h6>
+									<h6>
+										Issued On
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $HDMF_At; ?>
+										<br>
+										<?php echo $HDMF_On; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										PHILHEALTH
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $PhilHealth; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										Issued At
+									</h6>
+									<h6>
+										Issued On
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $PhilHealth_At; ?>
+										<br>
+										<?php echo $PhilHealth_On; ?>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-2 e-title">
+									<h6>
+										ATM #
+									</h6>
+								</div>
+								<div class="col-sm-12 col-md-4 e-det">
+									<p>
+										<?php echo $ATM_No; ?>
+									</p>
+								</div>
 							</div>
-						<?php } elseif ($Status == 'Expired') { ?>
-							<div class="col-sm-12 col-md-2 e-title PrintExclude">
-								<h6>
-									Last Contract
-								</h6>
-							</div>
-							<div class="col-sm-12 col-md-4 e-det PrintExclude">
-								<p>
-									<button id="EmpContractButton" class="btn btn-info btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractModal"><i class="far fa-eye"></i> View Contract</button>
-									<button class="btn btn-info btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> History</button>
-								</p>
-							</div>
-						<?php } elseif ($Status == 'Applicant') { ?>
-							<div class="col-sm-12 col-md-2 e-title PrintExclude">
-								<h6>
-									Contract
-								</h6>
-							</div>
-							<div class="col-sm-12 col-md-4 e-det PrintExclude">
-								<p>
-									No contract history.
-								</p>
-								<p>
-									<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-info btn-sm mr-auto ModalHire" data-toggle="modal" data-target="#hirthis"><i class="fas fa-user-edit"></i> Hire</button>
-								</p>
-							</div>
-						<?php } ?>
-						<div class="col-sm-12 col-md-2 e-title PrintExclude">
-							<h6>
-								Violations (<?php echo $GetViolations->num_rows(); ?>)
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det PrintExclude">
-							<p>
-								<?php if ($GetViolations->num_rows() > 0): ?>
-									<button id="ViolationsButton" class="btn btn-danger btn-sm w-50 mb-1" data-toggle="modal" data-target="#ViolationsModal"><i class="far fa-eye"></i> View Violations</button>
-								<?php else: ?>
-									No violations on record.
-								<?php endif; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 mt-5 mb-3">
-							<h6>
-								<i class="fas fa-stream"></i> Address
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-title">
-							<h6>
-								Present
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-8 e-det">
-							<p>
-								<?php echo $Address_Present; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-4 e-title">
-							<h6>
-								Provincial
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-8 e-det">
-							<p>
-								<?php echo $Address_Provincial; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-4 e-title">
-							<h6>
-								Manila
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-8 e-det">
-							<p>
-								<?php echo $Address_Manila; ?>
-							</p>
-						</div>
-					</div>
-					<div class="row rcontent p-5 PrintOut">
-						<div class="col-sm-12 mb-5">
-							<h5>
-								<i class="fas fa-stream"></i> Documents
-							</h5>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								S.S.S. #
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $SSS_No; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Effective Date of Coverage
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $EffectiveDateCoverage; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Residence Certificate No.
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $ResidenceCertificateNo; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Issued At
-							</h6>
-							<h6>
-								Issued On
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $Rcn_At; ?>
-								<br>
-								<?php echo $Rcn_On; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Tax Identification No.
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $TIN; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Issued At
-							</h6>
-							<h6>
-								Issued On
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $TIN_At; ?>
-								<br>
-								<?php echo $TIN_On; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								HDMF
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $HDMF; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Issued At
-							</h6>
-							<h6>
-								Issued On
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $HDMF_At; ?>
-								<br>
-								<?php echo $HDMF_On; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								PHILHEALTH
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $PhilHealth; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								Issued At
-							</h6>
-							<h6>
-								Issued On
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $PhilHealth_At; ?>
-								<br>
-								<?php echo $PhilHealth_On; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-2 e-title">
-							<h6>
-								ATM #
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-4 e-det">
-							<p>
-								<?php echo $ATM_No; ?>
-							</p>
 						</div>
 					</div>
 					<div class="row rcontent p-5 PrintOut">
@@ -953,6 +1015,8 @@
 	<?php $this->load->view('_template/users/u_scripts');?>
 	<script type="text/javascript">
 		$(document).ready(function () {
+			$('#sidebar').toggleClass('active');
+			$('.ncontent').toggleClass('shContent');
 			$('#sidebarCollapse').on('click', function () {
 				$('#sidebar').toggleClass('active');
 				$('.ncontent').toggleClass('shContent');
@@ -1004,5 +1068,5 @@
 			background-color: rgba(255, 50, 50, 0.25);
 		}
 	</style>
-	<textarea id="text"></textarea>
+	<textarea id="text" style="display: none;"></textarea>
 	</html>
