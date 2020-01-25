@@ -684,6 +684,12 @@ class Update_Controller extends CI_Controller {
 				$Type = $this->input->post('Type_' . $nrow['Time'],TRUE);
 				$Hours = $this->input->post('Hours_' . $nrow['Time'],TRUE);
 				$Overtime = $this->input->post('OTHours_' . $nrow['Time'],TRUE);
+				// BENEFITS
+				$HDMF = $this->input->post('HDMF_' . $nrow['Time'],TRUE);
+				$Philhealth = $this->input->post('Philhealth_' . $nrow['Time'],TRUE);
+				$SSS = $this->input->post('SSS_' . $nrow['Time'],TRUE);
+				$Tax = $this->input->post('Tax_' . $nrow['Time'],TRUE);
+
 				$Date = $this->input->post($nrow['Time'],TRUE);
 				if($Hours == NULL) {
 					$Hours = 0;
@@ -706,6 +712,10 @@ class Update_Controller extends CI_Controller {
 						'Hours' => $Hours,
 						'Overtime' => $Overtime,
 						'Type' => $Type,
+						'HDMF' => $HDMF,
+						'Philhealth' => $Philhealth,
+						'SSS' => $SSS,
+						'Tax' => $Tax,
 					);
 					$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
 					if ($UpdateWeeklyHours == TRUE) {
