@@ -14,22 +14,12 @@
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="col-12 col-sm-12 tabs">
-					<div class="d-block d-sm-none">
-						<ul style="font-size: 12px;">
-							<li class="tabs-active"><a href="<?php echo base_url() ?>Applicants">Applicants (<?php echo $get_employee->num_rows()?>)</a></li>
-							<li><a href="<?php echo base_url() ?>ApplicantsExpired">Expired (<?php echo $get_ApplicantExpired->num_rows()?>)</a></li>
-							<li><a href="<?php echo base_url() ?>Blacklisted">Blacklisted</a></li>
-							<li><a href="<?php echo base_url() ?>Archived">Archived</a></li>
-						</ul>
-					</div>
-					<div class="d-none d-sm-block">
-						<ul>
-							<li class="tabs-active"><a href="<?php echo base_url() ?>Applicants">Applicants (<?php echo $get_employee->num_rows()?>)</a></li>
-							<li><a href="<?php echo base_url() ?>ApplicantsExpired">Expired (<?php echo $get_ApplicantExpired->num_rows()?>)</a></li>
-							<li><a href="<?php echo base_url() ?>Blacklisted">Blacklisted</a></li>
-							<li><a href="<?php echo base_url() ?>Archived">Archived</a></li>
-						</ul>
-					</div>
+					<ul>
+						<li class="tabs-active"><a href="<?php echo base_url() ?>Applicants">Applicants (<?php echo $get_employee->num_rows()?>)</a></li>
+						<li><a href="<?php echo base_url() ?>ApplicantsExpired">Expired (<?php echo $get_ApplicantExpired->num_rows()?>)</a></li>
+						<li><a href="<?php echo base_url() ?>Blacklisted">Blacklisted</a></li>
+						<li><a href="<?php echo base_url() ?>Archived">Archived</a></li>
+					</ul>
 				</div>
 				<div class="row rcontent">
 					<div class="col-5 PrintPageName PrintOut">

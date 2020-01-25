@@ -15,7 +15,7 @@
 				<input id="idToHire" type="hidden" name="ApplicantID" value="">
 				<?php endif; ?>
 				<div class="form-row">
-					<div class="form-group col-12">
+					<div class="form-group col-8">
 						<label>Choose Client</label>
 						<select class="form-control" name="ClientID">
 							<?php foreach ($getClientOption->result_array() as $row): ?>
@@ -24,6 +24,13 @@
 								</option>
 							<?php endforeach ?>
 						</select>
+					</div>
+					<div class="form-group col-4">
+						<label>Salary</label>
+						<div class="input-icon-sm">
+							<input class="form-control" type="number" name="Salary" value="">
+							<i>₱</i>
+						</div>
 					</div>
 				</div>
 				<div class="form-row ml-1 my-2">

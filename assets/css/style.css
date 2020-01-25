@@ -9,6 +9,7 @@ html,body
 	padding: 0px !important;
 	/*background-color: #F7F7F7;*/
 	background-color: #ebebeb;
+	/*background-image: url("../img/lowpoly_white.png");*/
 }
 .wrapper {
 	display: flex;
@@ -20,6 +21,7 @@ html,body
 	min-width: 250px;
 	max-width: 250px;
 	background: #1f2733;
+	/*background-image: url("../img/lowpoly_sidebar_long.png");*/
 	color: #fff;
 	transition: all 0.3s;
 	height: 100%;
@@ -48,7 +50,7 @@ html,body
 	padding-bottom: 20px;
 	padding-right: 20px;
 	padding-left: 20px;
-	background: #1f2733;
+	/*background: #1f2733;*/
 }
 .sidebar-banner {
 	font-family: 'Georgia', sans-serif;
@@ -59,7 +61,7 @@ html,body
 }
 
 #sidebar ul.components {
-	background: #1f2733;
+	/*background: #1f2733;*/
 }
 
 #sidebar ul p {
@@ -212,7 +214,7 @@ a[data-toggle="collapse"] {
 	border-radius: 4px;
 	border-bottom: 2px solid white;
 	background-color: #FFFFFF !important;
-	color: #000000 !important;
+	color: #2b5179 !important;
 	font-size: 15px;
 	font-weight: bold;
 }
@@ -230,17 +232,6 @@ a[data-toggle="collapse"] {
 	margin-right: 5px;
 }
 
-.tabs li a {
-	display: block;
-	text-align: center;
-	padding: 14px;
-	text-decoration: none;
-	border-radius: 4px;
-	border-bottom: 8px solid white;
-	color: #FFFFFF;
-	background-color: #2b5179;
-}
-
 .tabs li a:hover {
 	background-color: #007bff;
 
@@ -249,6 +240,62 @@ a[data-toggle="collapse"] {
 	font-size: 30px;
 	color: rgba(0, 0, 0, 0.75);
 }
+.employee-container {
+	margin-top: -75px;
+}
+.employee-tabs {
+	margin-left: 235px;
+	background-color: #ebebeb;
+}
+.employee-tabs-active a {
+	border-radius: 4px;
+	border-bottom: 2px solid white;
+	background-color: #FFFFFF !important;
+	color: #2b5179 !important;
+	font-size: 15px;
+	font-weight: bold;
+}
+.employee-tabs ul {
+	list-style-type: none;
+	overflow: hidden;
+	padding: 0px;
+	margin-top: 150px;
+	margin-left: -5px;
+	margin-bottom: -205px;
+}
+
+.employee-tabs li {
+	float: left;
+	margin-right: 5px;
+}
+
+.employee-tabs li a:hover {
+	background-color: #007bff;
+
+}
+.employee-tabs-icon {
+	font-size: 30px;
+	color: rgba(0, 0, 0, 0.75);
+}
+.employee-image {
+	margin-left: 60px;
+	margin-top: 100px;
+	z-index: 99;
+}
+.employee-content {
+	margin-top: -100px;
+}
+.employee-static {
+	color: rgba(0, 0, 0, 0.66)
+}
+.employee-static-item {
+	margin-top: 15px;
+}
+.employee-static-header {
+	margin-top: 10px;
+	margin-bottom: -10px;
+	color: #2b5179;
+}
 .link-s { text-decoration: none; color: #FFFFFF; }
 .link-s:hover { text-decoration: none; }
 .fa , .fas { margin-right: 5px; }
@@ -256,6 +303,7 @@ a[data-toggle="collapse"] {
 .dc-links:hover { text-decoration: none; }
 .image-hover:hover {
 	border: 2px dotted rgba(155, 155, 155, 1.0);
+	cursor: pointer;
 }
 .day-hover {
 	border-top: 2px solid rgba(0, 0, 0, 0.08);
@@ -521,12 +569,64 @@ input[type=number]::-webkit-inner-spin-button {
 @media (min-width: 1px) {
 	.e-title { text-align: center; border-left: none;  }
 	.e-det { text-align: center; }
+	.tabs li a {
+		display: block;
+		font-size: 12px;
+		text-align: center;
+		padding: 14px;
+		text-decoration: none;
+		border-radius: 4px;
+		border-bottom: 4px solid white;
+		color: #FFFFFF;
+		background-color: #2b5179;
+	}
+	.employee-tabs li a {
+		display: block;
+		font-size: 12px;
+		text-align: center;
+		padding: 14px;
+		text-decoration: none;
+		border-radius: 4px;
+		border-bottom: 4px solid white;
+		color: #FFFFFF;
+		background-color: #2b5179;
+	}
+	.employee-image img {
+		width: 75px;
+		height: 75px;
+	}
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
 	.e-title { text-align: left; border-left: 4px solid #989898; }
 	.e-det { text-align: left; }
+	.tabs li a {
+		display: block;
+		font-size: 16px;
+		text-align: center;
+		padding: 14px;
+		text-decoration: none;
+		border-radius: 4px;
+		border-bottom: 8px solid white;
+		color: #FFFFFF;
+		background-color: #2b5179;
+	}
+	.employee-tabs li a {
+		display: block;
+		font-size: 16px;
+		text-align: center;
+		padding: 14px;
+		text-decoration: none;
+		border-radius: 4px;
+		border-bottom: 8px solid white;
+		color: #FFFFFF;
+		background-color: #2b5179;
+	}
+	.employee-image img {
+		width: 150px;
+		height: 150px;
+	}
 }
 
 /* Large devices (desktops, 992px and up) */
