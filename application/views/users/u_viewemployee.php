@@ -1,5 +1,10 @@
 <?php $T_Header;?>
-<body>
+<style>
+	.rounded-circle {
+		border: 4px solid white;
+	}
+</style>
+<body background="assets/img/lowpoly.png">
 	<div class="wrapper">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
 		<div id="content" class="ncontent">
@@ -60,26 +65,23 @@
 						<div class="row employee-container">
 							<div class="col-10 employee-tabs">
 								<ul>
-									<li class="employee-tabs-active"><a href="<?php echo base_url() ?>Applicants">Personal</a></li>
-									<li><a href="<?php echo base_url() ?>ApplicantsExpired">Contract</a></li>
-									<li><a href="<?php echo base_url() ?>Blacklisted">Documents</a></li>
-									<li><a href="<?php echo base_url() ?>Archived">Academic</a></li>
-									<li><a href="<?php echo base_url() ?>Archived">Employments</a></li>
-									<li><a href="<?php echo base_url() ?>Archived">Machine</a></li>
-									<li><a href="<?php echo base_url() ?>Archived">Notes</a></li>
+									<li id="TabPersonalBtn" class="employee-tabs-select employee-tabs-active"><a href="#Personal" onclick="">Personal</a></li>
+									<li id="TabContractBtn" class="employee-tabs-select"><a href="#Contract" onclick="">Contract</a></li>
+									<li id="TabDocumentsBtn" class="employee-tabs-select"><a href="#Documents" onclick="">Documents</a></li>
+									<li id="TabAcademicBtn" class="employee-tabs-select"><a href="#Academic" onclick="">Academic</a></li>
+									<li id="TabEmploymentsBtn" class="employee-tabs-select"><a href="#Employments" onclick="">Employments</a></li>
+									<li id="TabMachineBtn" class="employee-tabs-select"><a href="#Machine" onclick="">Machine</a></li>
+									<li id="TabNotesBtn" class="employee-tabs-select"><a href="#Notes" onclick="">Notes</a></li>
 								</ul>
 							</div>
 							<div class="col-2 mb-5 employee-image">
 								<img class="rounded-circle" src="<?php echo $ApplicantImage; ?>">
 							</div>
 						</div>
-						<div class="row rcontent employee-content">
+						<div class="row w-100 rcontent employee-content" style="height: 700px;">
 							<div class="col-2 employee-static mt-5 d-none d-sm-block">
-								<div class="col-sm-12 text-center">
+								<div class="col-sm-12">
 									<?php echo $LastName; ?> , <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.
-								</div>
-								<div class="col-sm-12 text-center">
-									<?php echo $ApplicantID; ?>
 								</div>
 								<hr>
 								<div class="col-sm-12 employee-static-item">
@@ -89,639 +91,630 @@
 									<i class="fas fa-map-marker-alt"></i> <?php echo $Address_Present; ?>
 								</div>
 								<hr>
-								<div class="col-sm-12 employee-static-header">
-									<b>Position</b>
-								</div>
-								<div class="col-sm-12 employee-static-item">
-									<?php echo $PositionDesired; ?>
-								</div>
 								<div class="col-sm-12">
-									(<?php echo $PositionGroup; ?>)
+									<i class="fas fa-user-tie"></i> <?php echo $ApplicantID; ?>
 								</div>
-								<hr>
-								<div class="col-sm-12 employee-static-header">
-									<b>Hire Date</b>
-								</div>
-								<div class="col-sm-12 employee-static-item">
-									<?php echo $AppliedOn; ?>
-								</div>
-								<hr>
-								<div class="col-sm-12 employee-static-header">
-									<b>Client</b>
-								</div>
-								<div class="col-sm-12 employee-static-item">
-									<?php
-									// TODO: Find a better solution than this.
-									$found = false;
-									foreach ($get_employee->result_array() as $row) {
-										foreach ($getClientOption->result_array() as $nrow) {
-											if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-												$found = true;
-												echo $nrow['Name'];
-											}
-										}
-									}?>
+								<div class="col-sm-12 mt-2">
+									<?php if ($Status == 'Employed') { ?>
+										<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Employed (<?php echo 'EmployeeID'; ?>)
+									<?php } elseif ($Status == 'Applicant') { ?>
+										<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Applicant
+									<?php } elseif ($Status == 'Expired') { ?>
+										<i class="fas fa-square PrintExclude" style="color: #0721DB;"></i> Applicant (Expired)
+									<?php } elseif ($Status == 'Blacklisted') { ?>
+										<i class="fas fa-square PrintExclude" style="color: #000000;"></i> Blacklisted
+									<?php } else { ?>
+										<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Unknown
+									<?php } ?>
 								</div>
 							</div>
 							<div class="col-10">
 								<div id="TabPersonal">
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Position Desired
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $PositionDesired; ?> <?php if($PositionGroup != NULL) { echo ' (' . $PositionGroup . ')'; } ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Salary Expected
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $SalaryExpected; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Applicant ID
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $ApplicantID; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Name
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $LastName; ?> , <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Gender
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $Gender; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Age
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $Age; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Height
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $Height; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Weight
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $Weight; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Religion
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $Religion; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Birth Date
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $BirthDate; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Birth Place
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $BirthPlace; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Citizenship
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $Citizenship; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Civil Status
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $CivilStatus; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										# of Children
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $No_OfChildren; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Status
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php if ($Status == 'Employed') { ?>
-											<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Employed
-										<?php } elseif ($Status == 'Applicant') { ?>
-											<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Applicant
-										<?php } elseif ($Status == 'Expired') { ?>
-											<i class="fas fa-square PrintExclude" style="color: #0721DB;"></i> Applicant (Expired)
-										<?php } elseif ($Status == 'Blacklisted') { ?>
-											<i class="fas fa-square PrintExclude" style="color: #000000;"></i> Blacklisted
-										<?php } else { ?>
-											<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Unknown
-										<?php } ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Applied On
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $AppliedOn; ?>
-									</p>
-								</div>
-								<!-- CONTRACT REPORT -->
-								<?php if ($Status == 'Employed') { ?>
-									<div class="col-sm-12 col-md-2 e-title PrintExclude">
-										<h6>
-											Contract
-										</h6>
+									<div class="employee-tabs-group-content">
+										<div class="row mt-3">
+											<div class="col-sm-4 employee-dynamic-header">
+												<b>Present Address</b>
+											</div>
+											<div class="col-sm-4 employee-dynamic-header">
+												<b>Provincial Address</b>
+											</div>
+											<div class="col-sm-4 employee-dynamic-header">
+												<b>Manila</b>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-4 employee-dynamic-item">
+												<?php echo $Address_Present; ?>
+											</div>
+											<div class="col-sm-4 employee-dynamic-item">
+												<?php echo $Address_Provincial; ?>
+											</div>
+											<div class="col-sm-4 employee-dynamic-item">
+												<?php echo $Address_Manila; ?>
+											</div>
+										</div>
+										<!-- ------------------ -->
+										<div class="row mt-4">
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>Sex</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>Age</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>Height</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>Weight</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>Religion</b>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $Gender; ?>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $Age; ?>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $Height; ?>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $Weight; ?>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $Religion; ?>
+											</div>
+										</div>
+										<!-- ------------------ -->
+										<div class="row mt-3">
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>Birth Place</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>Birth Date</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>Citizenship</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>Civil Status</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>No. of Children</b>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $BirthPlace; ?>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $BirthDate; ?>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $Citizenship; ?>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $CivilStatus; ?>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $No_OfChildren; ?>
+											</div>
+										</div>
+										<hr class="mt-5 mb-3">
+										<div class="row employee-personal-row">
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>S.S.S. No.</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $SSS_No; ?>
+											</div>
+											<div class="col-sm-2 ml-5 employee-dynamic-header">
+												<b>Effective Date of Coverage</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $EffectiveDateCoverage; ?>
+											</div>
+										</div>
+										<div class="row employee-personal-row mt-4">
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>Residence Certificate No.</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $ResidenceCertificateNo; ?>
+											</div>
+											<div class="col-sm-2 ml-5 employee-dynamic-header">
+												<b>Issued At</b>
+												<br>
+												<b>Issued On</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $Rcn_At; ?>
+												<br>
+												<?php echo $Rcn_On; ?>
+											</div>
+										</div>
+										<div class="row employee-personal-row mt-4">
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>Tax Identification No.</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $TIN; ?>
+											</div>
+											<div class="col-sm-2 ml-5 employee-dynamic-header">
+												<b>Issued At</b>
+												<br>
+												<b>Issued On</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $TIN_At; ?>
+												<br>
+												<?php echo $TIN_On; ?>
+											</div>
+										</div>
+										<div class="row employee-personal-row mt-4">
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>HDMF</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $HDMF; ?>
+											</div>
+											<div class="col-sm-2 ml-5 employee-dynamic-header">
+												<b>Issued At</b>
+												<br>
+												<b>Issued On</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $HDMF_At; ?>
+												<br>
+												<?php echo $HDMF_On; ?>
+											</div>
+										</div>
+										<div class="row employee-personal-row mt-4">
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>PHILHEALTH</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $PhilHealth; ?>
+											</div>
+											<div class="col-sm-2 ml-5 employee-dynamic-header">
+												<b>Issued At</b>
+												<br>
+												<b>Issued On</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $PhilHealth_At; ?>
+												<br>
+												<?php echo $PhilHealth_On; ?>
+											</div>
+										</div>
+										<div class="row employee-personal-row mt-4">
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>ATM No.</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $ATM_No; ?>
+											</div>
+										</div>
 									</div>
-									<div class="col-sm-12 col-md-4 e-det PrintExclude">
-										<p>
-											<button id="EmpContractButton" class="btn btn-primary btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractModal"><i class="far fa-eye"></i> View Contract</button>
-											<button class="btn btn-primary btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> History</button>
-										</p>
-									</div>
-								<?php } elseif ($Status == 'Expired') { ?>
-									<div class="col-sm-12 col-md-2 e-title PrintExclude">
-										<h6>
-											Last Contract
-										</h6>
-									</div>
-									<div class="col-sm-12 col-md-4 e-det PrintExclude">
-										<p>
-											<button id="EmpContractButton" class="btn btn-info btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractModal"><i class="far fa-eye"></i> View Contract</button>
-											<button class="btn btn-info btn-sm w-50 mb-1" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> History</button>
-										</p>
-									</div>
-								<?php } elseif ($Status == 'Applicant') { ?>
-									<div class="col-sm-12 col-md-2 e-title PrintExclude">
-										<h6>
-											Contract
-										</h6>
-									</div>
-									<div class="col-sm-12 col-md-4 e-det PrintExclude">
-										<p>
-											No contract history.
-										</p>
-										<p>
-											<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-info btn-sm mr-auto ModalHire" data-toggle="modal" data-target="#hirthis"><i class="fas fa-user-edit"></i> Hire</button>
-										</p>
-									</div>
-								<?php } ?>
-								<div class="col-sm-12 col-md-2 e-title PrintExclude">
-									<h6>
-										Violations (<?php echo $GetViolations->num_rows(); ?>)
-									</h6>
 								</div>
-								<div class="col-sm-12 col-md-4 e-det PrintExclude">
-									<p>
-										<?php if ($GetViolations->num_rows() > 0): ?>
-											<button id="ViolationsButton" class="btn btn-danger btn-sm w-50 mb-1" data-toggle="modal" data-target="#ViolationsModal"><i class="far fa-eye"></i> View Violations</button>
+								<div id="TabContract">
+									<div class="employee-tabs-group-content ml-5">
+										<?php if ($Status == 'Employed'): ?>
+										<div class="employee-content-header">
+											<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary mr-auto ExtendButton" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-plus"></i> Extend Contract</button>
+											<button class="btn btn-primary" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
+										</div>
+										<hr>
+										<div class="col-sm-12 col-md-12 text-center">
+											<h6>
+												Days Remaining on Contract
+											</h6>
+										</div>
+										<div class="col-sm-12 col-md-12 text-center">
+											<p>
+												<?php
+
+													$currTime = time();
+													$strDateEnds = strtotime($DateEnds);
+													$strDateStarted = strtotime($DateStarted);
+													// PERCENTAGE
+													$rPercentage = (($strDateEnds - $currTime) * 100) / ($strDateEnds - $strDateStarted);
+													$rPercentage = round($rPercentage);
+													// DAYS REMAINING
+													$dateTimeZone = new DateTimeZone("Asia/Manila");
+													$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
+													$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
+													$interval = $datetime1->diff($datetime2);
+													if($interval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
+														echo $interval->format('%H hours, %I minutes, %S seconds');
+													} else {
+														echo $interval->format('%y years, %m months, %d days');
+													}
+												?>
+												<input type="hidden" id="TimeLeft" value="<?php echo $rPercentage;?>">
+											</p>
+										</div>
+										<div class="col-sm-12 col-md-12 PrintExclude">
+											<div class="progressBar">
+												<div class="progressBarTitle progressRemainingColor">Time Left</div>
+												<div class="progress progressRemaining"></div>
+												<div class="progress_value">45%</div>
+											</div>
+										</div>
+										<div class="row mt-4">
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>Position</b>
+											</div>
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>Salary</b>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $PositionDesired; ?>
+											</div>
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $SalaryExpected; ?>
+											</div>
+										</div>
+										<div class="col-sm-2 col-md-2">
+											<h6>
+												Client Name
+											</h6>
+										</div>
+										<div class="col-sm-4 col-md-4">
+											<p>
+												<?php
+												// TODO: Find a better solution than this.
+												$found = false;
+												foreach ($get_employee->result_array() as $row) {
+													foreach ($getClientOption->result_array() as $nrow) {
+														if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
+															$found = true;
+															echo $nrow['Name'];
+														}
+													}
+												}?>
+											</p>
+										</div>
+										<div class="col-sm-2 col-md-2">
+											<h6>
+												Violations
+											</h6>
+										</div>
+										<div class="col-sm-4 col-md-4">
+											<p>
+												<?php echo $AppliedOn; ?>
+											</p>
+										</div>
+										<div class="col-sm-2 col-md-2">
+											<h6>
+												Client Contact #
+											</h6>
+										</div>
+										<div class="col-sm-4 col-md-4">
+											<p>
+												<?php
+												// TODO: Find a better solution than this.
+												$found = false;
+												foreach ($get_employee->result_array() as $row) {
+													foreach ($getClientOption->result_array() as $nrow) {
+														if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
+															$found = true;
+															echo $nrow['ContactNumber'];
+														}
+													}
+												}?>
+											</p>
+										</div>
+										<div class="col-sm-2 col-md-2">
+											<h6>
+												Contract Started
+											</h6>
+										</div>
+										<div class="col-sm-4 col-md-4">
+											<p>
+												<?php echo $DateStarted; ?>
+											</p>
+										</div>
+										<div class="col-sm-2 col-md-2">
+											<h6>
+												Client Address
+											</h6>
+										</div>
+										<div class="col-sm-4 col-md-4">
+											<p>
+												<?php
+												// TODO: Find a better solution than this.
+												$found = false;
+												foreach ($get_employee->result_array() as $row) {
+													foreach ($getClientOption->result_array() as $nrow) {
+														if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
+															$found = true;
+															echo $nrow['Address'];
+														}
+													}
+												}?>
+											</p>
+										</div>
+										<div class="col-sm-2 col-md-2">
+											<h6>
+												Contract Ends
+											</h6>
+										</div>
+										<div class="col-sm-4 col-md-4">
+											<p>
+												<?php echo $DateEnds; ?>
+											</p>
+										</div>
 										<?php else: ?>
-											No violations on record.
+										<div class="employee-content-header">
+											<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary mr-auto ModalHire" data-toggle="modal" data-target="#hirthis"><i class="fas fa-plus"></i> New Contract</button>
+										</div>
+										<div class="col-sm-2 col-md-2">
+											<h6>
+												Previous Client
+											</h6>
+										</div>
+										<div class="col-sm-4 col-md-4">
+											<p>
+												<?php
+												foreach ($GetPreviousContract->result_array() as $row) {
+													echo $row['Client'];
+												}?>
+											</p>
+										</div>
+										<div class="col-sm-2 col-md-2">
+											<h6>
+												Applied On
+											</h6>
+										</div>
+										<div class="col-sm-4 col-md-4">
+											<p>
+												<?php echo $AppliedOn; ?>
+											</p>
+										</div>
+										<div class="col-sm-2 col-md-2">
+											<h6>
+												Client Contact #
+											</h6>
+										</div>
+										<div class="col-sm-4 col-md-4">
+											<p>
+												<?php
+												foreach ($GetPreviousContract->result_array() as $row) {
+													$ClientName = $row['Client'];
+													foreach ($this->Model_Selects->GetPreviousContractInfo($ClientName)->result_array() as $row) {
+														echo $row['ContactNumber'];
+													}
+												}?>
+											</p>
+										</div>
+										<div class="col-sm-2 col-md-2">
+											<h6>
+												Contract Started
+											</h6>
+										</div>
+										<div class="col-sm-4 col-md-4">
+											<p>
+												<?php
+												foreach ($GetPreviousContract->result_array() as $row) {
+													echo $row['PreviousDateStarted'];
+												}?>
+											</p>
+										</div>
+										<div class="col-sm-2 col-md-2">
+											<h6>
+												Client Address
+											</h6>
+										</div>
+										<div class="col-sm-4 col-md-4">
+											<p>
+												<?php
+												foreach ($GetPreviousContract->result_array() as $row) {
+													$ClientName = $row['Client'];
+													foreach ($this->Model_Selects->GetPreviousContractInfo($ClientName)->result_array() as $row) {
+														echo $row['Address'];
+													}
+												}?>
+											</p>
+										</div>
+										<div class="col-sm-2 col-md-2">
+											<h6>
+												Contract Ended
+											</h6>
+										</div>
+										<div class="col-sm-4 col-md-4">
+											<p>
+												<?php
+												foreach ($GetPreviousContract->result_array() as $row) {
+													echo $row['PreviousDateEnds'];
+												}?>
+											</p>
+										</div>
 										<?php endif; ?>
-									</p>
+									</div>
 								</div>
-								<div class="col-sm-12 mt-5 mb-3">
-									<h6>
-										<i class="fas fa-stream"></i> Address
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-title">
-									<h6>
-										Present
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-8 e-det">
-									<p>
-										<?php echo $Address_Present; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-4 e-title">
-									<h6>
-										Provincial
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-8 e-det">
-									<p>
-										<?php echo $Address_Provincial; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-4 e-title">
-									<h6>
-										Manila
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-8 e-det">
-									<p>
-										<?php echo $Address_Manila; ?>
-									</p>
-								</div>
-							</div>
-							<div class="row rcontent p-5 PrintOut">
-								<div class="col-sm-12 mb-5">
-									<h5>
-										<i class="fas fa-stream"></i> Documents
-									</h5>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										S.S.S. #
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $SSS_No; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Effective Date of Coverage
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $EffectiveDateCoverage; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Residence Certificate No.
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $ResidenceCertificateNo; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Issued At
-									</h6>
-									<h6>
-										Issued On
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $Rcn_At; ?>
-										<br>
-										<?php echo $Rcn_On; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Tax Identification No.
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $TIN; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Issued At
-									</h6>
-									<h6>
-										Issued On
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $TIN_At; ?>
-										<br>
-										<?php echo $TIN_On; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										HDMF
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $HDMF; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Issued At
-									</h6>
-									<h6>
-										Issued On
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $HDMF_At; ?>
-										<br>
-										<?php echo $HDMF_On; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										PHILHEALTH
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $PhilHealth; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										Issued At
-									</h6>
-									<h6>
-										Issued On
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $PhilHealth_At; ?>
-										<br>
-										<?php echo $PhilHealth_On; ?>
-									</p>
-								</div>
-								<div class="col-sm-12 col-md-2 e-title">
-									<h6>
-										ATM #
-									</h6>
-								</div>
-								<div class="col-sm-12 col-md-4 e-det">
-									<p>
-										<?php echo $ATM_No; ?>
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row rcontent p-5 PrintOut">
-						<div class="col-sm-12 mb-5">
-							<h5>
-								<i class="fas fa-stream"></i> Academic History
-							</h5>
-						</div>
-						<div class="col-sm-12">
-							<div class="table-responsive">
-								<table class="table table-condensed">
-									<thead>
-										<th>Level</th>
-										<th>School Name</th>
-										<th>School Address</th>
-										<th>From Year</th>
-										<th>To Year</th>
-										<th>Highest Degree / Certificate Attained</th>
-									</thead>
-									<tbody>
-										<?php if ($GetAcadHistory->num_rows() > 0) { ?>
-											<?php foreach ($GetAcadHistory->result_array() as $row): ?>
-												<?php if ($ApplicantID == $row['ApplicantID']) { ?>
-													<tr>
-														<td><?php echo $row['Level'];?></td>
-														<td><?php echo $row['SchoolName'];?></td>
-														<td><?php echo $row['SchoolAddress'];?></td>
-														<td><?php echo $row['DateStarted'];?></td>
-														<td><?php echo $row['DateEnds'];?></td>
-														<td><?php echo $row['HighDegree'];?></td>
-													</tr>
-												<?php } ?>
-											<?php endforeach ?>
-										<?php } else { ?>
-											<tr class="w-100 text-center">
-												<td colspan="6">
-													<h5>
-														No Data
-													</h5>
-												</td>
-											</tr>
-										<?php } ?>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-					<div class="row rcontent p-5 PrintOut">
-						<div class="col-sm-12 mb-5">
-							<h5>
-								<i class="fas fa-stream"></i> Employment Record
-							</h5>
-						</div>
-						<div class="col-sm-12">
-							<div class="table-responsive">
-								<table class="table table-condensed">
-									<thead>
-										<th>Name</th>
-										<th>Address</th>
-										<th>Period Covered</th>
-										<th>Position</th>
-										<th>Salary</th>
-										<th>Cause of Separation</th>
-									</thead>
-									<tbody>
-										<?php if ($employment_record->num_rows() > 0) { ?>
-											<?php foreach ($employment_record->result_array() as $row): ?>
-												<?php if ($ApplicantID == $row['ApplicantID']) { ?>
-													<tr>
-														<td><?php echo $row['Name'];?></td>
-														<td><?php echo $row['Address'];?></td>
-														<td><?php echo $row['PeriodCovered'];?></td>
-														<td><?php echo $row['Position'];?></td>
-														<td><?php echo $row['Salary'];?></td>
-														<td><?php echo $row['CauseOfSeparation'];?></td>
-													</tr>
-												<?php } ?>
-											<?php endforeach ?>
-										<?php } else { ?>
-											<tr class="w-100 text-center">
-												<td colspan="6">
-													<h5>
-														No Data
-													</h5>
-												</td>
-											</tr>
-										<?php } ?>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-					<div class="row rcontent p-5">
-						<div class="col-sm-12 mb-5">
-							<h5>
-								<i class="fas fa-stream"></i> Machine Operated
-							</h5>
-						</div>
-						<div class="col-sm-12">
-							<div class="table-responsive">
-								<table class="table table-condensed">
-									<thead>
-										<th>Machine Name</th>
-										
-									</thead>
-									<tbody>
-										<?php if ($Machine_Operatessss->num_rows() > 0) { ?>
-											<?php foreach ($Machine_Operatessss->result_array() as $row): ?>
-												<?php if ($ApplicantID == $row['ApplicantID']) { ?>
-													<tr>
-														<td><?php echo $row['MachineName'];?></td>
-													</tr>
-												<?php } ?>
-											<?php endforeach ?>
-										<?php } else { ?>
-											<tr class="w-100 text-center">
-												<td>
-													<h5>
-														No Data
-													</h5>
-												</td>
-											</tr>
-										<?php } ?>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-					<div class="row rcontent p-5">
-						<div class="col-sm-12 mb-5">
-							<h5>
-								<i class="fas fa-stream"></i> Documents
-							</h5>
-						</div>
-						<div class="col-sm-12">
-							<div class="table-responsive">
-								<table class="table table-condensed">
-									<thead>
-										<th>Preview</th>
-										<th>File</th>
-										<th>Subject</th>
-										<th>Description</th>
-										<th>Remarks</th>
-										<th>Date</th>
-									</thead>
-									<tbody>
-										<?php if ($GetDocuments->num_rows() > 0) { ?>
-											<?php foreach ($GetDocuments->result_array() as $row): ?>
-												<?php if ($ApplicantID == $row['ApplicantID']) { ?>
-													<tr class="text-center align-middle">
-														<td class="<?php if($row['Type'] == 'Violation') { echo 'document-violation'; } elseif ($row['Type'] == 'Blacklist') { echo 'document-blacklist'; } ?>">
-															<?php if(isset($row['Doc_Image'])): ?>
-																<a id="<?php echo $row['Doc_Image'];?>" class="a_eImage" href="#" data-toggle="modal" data-target="#docModals"><img class="small_docimage" src="<?php echo $row['Doc_Image'];?>" width="125"></a>
-															<?php else: ?>
-															<div class="col-sm-12 pt-3 pb-2" style="background-color: rgba(55, 55, 55, 0.12); color: rgba(0, 0, 0, 0.66);">
-																<i class="fas fa-camera" style="font-size: 24px;"></i>
-																<p>No preview available</p>
+								<div id="TabDocuments">
+									<div class="employee-tabs-group-content ml-5">
+										<div class="employee-content-header">
+											<button class="btn btn-primary"><i class="fas fa-upload"></i> Upload</button>
+										</div>
+										<hr>
+										<div class="row">
+											<div class="col-sm-12">
+												<span class="folder-button"><i class="fas fa-folder-open"></i> Documents (<?php echo $GetDocuments->num_rows(); ?>)</span>
+											</div>
+											<div class="folder-documents folder-active col-sm-12 mt-4 ml-5">
+											<?php if ($GetDocuments->num_rows() > 0) { ?>
+												<?php foreach ($GetDocuments->result_array() as $row): ?>
+														<div class="mb-3">
+															<div class="folder-documents-icon"><i class="fas fa-file-pdf"></i></div>
+															<div class="col-sm-12 ml-3">
+																<a class="ml-2" href="<?php echo $row['Doc_File'];?>" target="_blank">
+																<b><?php echo $row['Doc_FileName']; ?></b></a>
 															</div>
-															<?php endif; ?>
-														</td>
-														<td>
-															<?php if(isset($row['Doc_File'])): ?>
-																<div class="col-sm-12 mt-2">
-																	<?php 
-																		$Doc_FileName = $row['Doc_FileName'];
-																		if (strlen($Doc_FileName) > 25) {
-																			$Doc_FileName = substr($row['Doc_FileName'], 0, 25);
-																			$Doc_FileName = $Doc_FileName . '...';
-																		}
-																	?>
-																	<a href="<?php echo $row['Doc_File'];?>" target="_blank"><?php echo $Doc_FileName; ?></a>
-																</div>
-																<div class="col-sm-12 mt-4">
-																	<a class="btn btn-primary btn-sm" href="<?php echo $row['Doc_File'];?>" target="_blank"><i class="fas fa-external-link-alt"></i> View PDF</a>
-																</div>
-															<?php else: ?>
-																<div class="col-sm-12 pt-3 pb-2" style="background-color: rgba(55, 55, 55, 0.12); color: rgba(0, 0, 0, 0.66);">
-																	<i class="fas fa-file-pdf" style="font-size: 24px;"></i>
-																	<p>No file attached</p>
-																</div>
-															<?php endif; ?>
-														</td>
-														<td><?php echo $row['Subject'];?></td>
-														<td><?php echo $row['Description'];?></td>
-														<td><?php echo $row['Remarks'];?></td>
-														<td><?php echo $row['DateAdded'];?></td>
-													</tr>
-												<?php } ?>
-											<?php endforeach ?>
-										<?php } else { ?>
-											<tr class="w-100 text-center">
-												<td>
-													<h5>
-														No Data
-													</h5>
-												</td>
-											</tr>
-										<?php } ?>
-									</tbody>
-								</table>
+															<div class="folder-documents-info col-sm-12 ml-4">
+																Created by TODO (999MB)
+															</div>
+														</div>
+												<?php endforeach ?>
+											<?php } else { ?>
+												No documents available.
+											<?php } ?>
+											</div>
+										</div>
+										<div class="row mt-4">
+											<div class="col-sm-12">
+												<span class="folder-button"><i class="fas fa-folder"></i> Violations (<?php echo $GetDocumentsViolations->num_rows(); ?>)</span>
+											</div>
+											<div class="folder-documents col-sm-12 mt-4 ml-5">
+											<?php if ($GetDocumentsViolations->num_rows() > 0) { ?>
+												<?php foreach ($GetDocumentsViolations->result_array() as $row): ?>
+														<div class="mb-3">
+															<div class="folder-documents-icon"><i class="fas fa-file-pdf"></i></div>
+															<div class="col-sm-12 ml-3">
+																<a class="ml-2" href="<?php echo $row['Doc_File'];?>" target="_blank">
+																<b><?php echo $row['Doc_FileName']; ?></b></a>
+															</div>
+															<div class="folder-documents-info col-sm-12 ml-4">
+																Created by TODO (999MB)
+															</div>
+														</div>
+												<?php endforeach ?>
+											<?php } else { ?>
+												No documents available.
+											<?php } ?>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div id="TabAcademic">
+									<div class="employee-tabs-group-content" id="TabAcademic">
+										<div class="row rcontent PrintOut">
+											<div class="col-sm-12">
+												<div class="table-responsive">
+													<table class="table table-condensed">
+														<thead class="employee-table-header">
+															<th>Level</th>
+															<th>School Name</th>
+															<th>School Address</th>
+															<th>From Year</th>
+															<th>To Year</th>
+															<th>Highest Degree / Certificate Attained</th>
+														</thead>
+														<tbody>
+															<?php if ($GetAcadHistory->num_rows() > 0) { ?>
+																<?php foreach ($GetAcadHistory->result_array() as $row): ?>
+																	<?php if ($ApplicantID == $row['ApplicantID']) { ?>
+																		<tr>
+																			<td><?php echo $row['Level'];?></td>
+																			<td><?php echo $row['SchoolName'];?></td>
+																			<td><?php echo $row['SchoolAddress'];?></td>
+																			<td><?php echo $row['DateStarted'];?></td>
+																			<td><?php echo $row['DateEnds'];?></td>
+																			<td><?php echo $row['HighDegree'];?></td>
+																		</tr>
+																	<?php } ?>
+																<?php endforeach ?>
+															<?php } else { ?>
+																<tr class="w-100 text-center">
+																	<td colspan="6">
+																		<h5>
+																			No Data
+																		</h5>
+																	</td>
+																</tr>
+															<?php } ?>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div id="TabEmployments">
+									<div class="employee-tabs-group-content" id="TabEmployments">
+										<div class="row rcontent PrintOut">
+											<div class="col-sm-12">
+												<div class="table-responsive">
+													<table class="table table-condensed">
+														<thead class="employee-table-header">
+															<th>Name</th>
+															<th>Address</th>
+															<th>Period Covered</th>
+															<th>Position</th>
+															<th>Salary</th>
+															<th>Cause of Separation</th>
+														</thead>
+														<tbody>
+															<?php if ($employment_record->num_rows() > 0) { ?>
+																<?php foreach ($employment_record->result_array() as $row): ?>
+																	<?php if ($ApplicantID == $row['ApplicantID']) { ?>
+																		<tr>
+																			<td><?php echo $row['Name'];?></td>
+																			<td><?php echo $row['Address'];?></td>
+																			<td><?php echo $row['PeriodCovered'];?></td>
+																			<td><?php echo $row['Position'];?></td>
+																			<td><?php echo $row['Salary'];?></td>
+																			<td><?php echo $row['CauseOfSeparation'];?></td>
+																		</tr>
+																	<?php } ?>
+																<?php endforeach ?>
+															<?php } else { ?>
+																<tr class="w-100 text-center">
+																	<td colspan="6">
+																		<h5>
+																			No Data
+																		</h5>
+																	</td>
+																</tr>
+															<?php } ?>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div id="TabMachine">
+									<div class="employee-tabs-group-content" id="TabMachine">
+										<div class="row rcontent">
+											<div class="col-sm-12">
+												<div class="table-responsive">
+													<table class="table table-condensed">
+														<thead class="employee-table-header">
+															<th>Machine Name</th>
+															
+														</thead>
+														<tbody>
+															<?php if ($Machine_Operatessss->num_rows() > 0) { ?>
+																<?php foreach ($Machine_Operatessss->result_array() as $row): ?>
+																	<?php if ($ApplicantID == $row['ApplicantID']) { ?>
+																		<tr>
+																			<td><?php echo $row['MachineName'];?></td>
+																		</tr>
+																	<?php } ?>
+																<?php endforeach ?>
+															<?php } else { ?>
+																<tr class="w-100 text-center">
+																	<td>
+																		<h5>
+																			No Data
+																		</h5>
+																	</td>
+																</tr>
+															<?php } ?>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -746,132 +739,6 @@
 				<!-- Modal body -->
 				<div class="modal-body">
 					<div class="row rcontent PrintOut PrintOutModal">
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Client Name
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php
-								// TODO: Find a better solution than this.
-								$found = false;
-								foreach ($get_employee->result_array() as $row) {
-									foreach ($getClientOption->result_array() as $nrow) {
-										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-											$found = true;
-											echo $nrow['Name'];
-										}
-									}
-								}?>
-							</p>
-						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Violations
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php echo $AppliedOn; ?>
-							</p>
-						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Client Contact #
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php
-								// TODO: Find a better solution than this.
-								$found = false;
-								foreach ($get_employee->result_array() as $row) {
-									foreach ($getClientOption->result_array() as $nrow) {
-										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-											$found = true;
-											echo $nrow['ContactNumber'];
-										}
-									}
-								}?>
-							</p>
-						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Contract Started
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php echo $DateStarted; ?>
-							</p>
-						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Client Address
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php
-								// TODO: Find a better solution than this.
-								$found = false;
-								foreach ($get_employee->result_array() as $row) {
-									foreach ($getClientOption->result_array() as $nrow) {
-										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-											$found = true;
-											echo $nrow['Address'];
-										}
-									}
-								}?>
-							</p>
-						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Contract Ends
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php echo $DateEnds; ?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-12 mt-5 text-center">
-							<h6>
-								Days Remaining on Contract
-							</h6>
-						</div>
-						<div class="col-sm-12 col-md-12 text-center">
-							<p>
-								<?php
-
-									$currTime = time();
-									$strDateEnds = strtotime($DateEnds);
-									$strDateStarted = strtotime($DateStarted);
-									// PERCENTAGE
-									$rPercentage = (($strDateEnds - $currTime) * 100) / ($strDateEnds - $strDateStarted);
-									$rPercentage = round($rPercentage);
-									// DAYS REMAINING
-									$dateTimeZone = new DateTimeZone("Asia/Manila");
-									$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
-									$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
-									$interval = $datetime1->diff($datetime2);
-									if($interval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
-										echo $interval->format('%H hours, %I minutes, %S seconds');
-									} else {
-										echo $interval->format('%y years, %m months, %d days');
-									}
-								?>
-								<input type="hidden" id="TimeLeft" value="<?php echo $rPercentage;?>">
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-12 PrintExclude">
-							<div class="progressBar">
-								<div class="progressBarTitle progressRemainingColor">Time Left</div>
-								<div class="progress progressRemaining"></div>
-								<div class="progress_value">45%</div>
-							</div>
-						</div>
 					</div>
 				</div>
 
@@ -903,90 +770,6 @@
 				<!-- Modal body -->
 				<div class="modal-body">
 					<div class="row rcontent PrintOutModalExpired">
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Previous Client
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php
-								foreach ($GetPreviousContract->result_array() as $row) {
-									echo $row['Client'];
-								}?>
-							</p>
-						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Applied On
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php echo $AppliedOn; ?>
-							</p>
-						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Client Contact #
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php
-								foreach ($GetPreviousContract->result_array() as $row) {
-									$ClientName = $row['Client'];
-									foreach ($this->Model_Selects->GetPreviousContractInfo($ClientName)->result_array() as $row) {
-										echo $row['ContactNumber'];
-									}
-								}?>
-							</p>
-						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Contract Started
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php
-								foreach ($GetPreviousContract->result_array() as $row) {
-									echo $row['PreviousDateStarted'];
-								}?>
-							</p>
-						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Client Address
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php
-								foreach ($GetPreviousContract->result_array() as $row) {
-									$ClientName = $row['Client'];
-									foreach ($this->Model_Selects->GetPreviousContractInfo($ClientName)->result_array() as $row) {
-										echo $row['Address'];
-									}
-								}?>
-							</p>
-						</div>
-						<div class="col-sm-2 col-md-2">
-							<h6>
-								Contract Ended
-							</h6>
-						</div>
-						<div class="col-sm-4 col-md-4">
-							<p>
-								<?php
-								foreach ($GetPreviousContract->result_array() as $row) {
-									echo $row['PreviousDateEnds'];
-								}?>
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-12 mt-5 text-center PrintOutModalExpired">
-							<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary mr-auto ModalHire" data-toggle="modal" data-target="#hirthis"><i class="fas fa-plus"></i> New Contract</button>
-						</div>
 					</div>
 				</div>
 
@@ -1015,6 +798,39 @@
 	<?php $this->load->view('_template/users/u_scripts');?>
 	<script type="text/javascript">
 		$(document).ready(function () {
+			$('.employee-tabs-group-content').hide();
+			$('#TabPersonal').children('.employee-tabs-group-content').show();
+			$('.folder-button').on('click', function () {
+				$(this).children('i').toggleClass('fa-folder');
+				$(this).children('i').toggleClass('fa-folder-open');
+				$(this).closest('.row').find('.folder-documents').toggleClass('folder-active');
+			});
+			$('.employee-tabs-select').on('click', function () {
+				$('.employee-tabs-select').removeClass('employee-tabs-active');
+				$(this).addClass('employee-tabs-active');
+				$('.employee-tabs-group-content').hide();
+			});
+			$('#TabPersonalBtn').on('click', function () {
+				$('#TabPersonal').children('.employee-tabs-group-content').fadeIn(100);
+			});
+			$('#TabContractBtn').on('click', function () {
+				$('#TabContract').children('.employee-tabs-group-content').fadeIn(100);
+			});
+			$('#TabDocumentsBtn').on('click', function () {
+				$('#TabDocuments').children('.employee-tabs-group-content').fadeIn(100);
+			});
+			$('#TabAcademicBtn').on('click', function () {
+				$('#TabAcademic').children('.employee-tabs-group-content').fadeIn(100);
+			});
+			$('#TabEmploymentsBtn').on('click', function () {
+				$('#TabEmployments').children('.employee-tabs-group-content').fadeIn(100);
+			});
+			$('#TabMachineBtn').on('click', function () {
+				$('#TabMachine').children('.employee-tabs-group-content').fadeIn(100);
+			});
+			$('#TabNotesBtn').on('click', function () {
+				$('#TabNotes').children('.employee-tabs-group-content').fadeIn(100);
+			});
 			$('#sidebar').toggleClass('active');
 			$('.ncontent').toggleClass('shContent');
 			$('#sidebarCollapse').on('click', function () {
@@ -1036,7 +852,7 @@
 			});
 			$('#ListContractHistory').DataTable();
 			$('#ListViolations').DataTable();
-			$("#EmpContractButton").click(function(){
+			$("#TabContractBtn").click(function(){
 				var rPercentage = $("#TimeLeft").val();
 				// if (rPercentage > 100) {
 				// 	rPercentage = 100;

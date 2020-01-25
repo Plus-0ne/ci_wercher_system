@@ -158,7 +158,7 @@ a[data-toggle="collapse"] {
 	font-weight: bold;
 	color: #fff;
 	line-height: 2.5;
-	z-index: 10000;
+	z-index: 1;
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
 	box-shadow: 2px 0 2px #333;
@@ -171,7 +171,7 @@ a[data-toggle="collapse"] {
 	line-height: 2.5;
 	font-weight: bold;
 	color: #ffffff;
-	z-index: 10000;
+	z-index: 1;
 	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 .progress{
@@ -261,7 +261,7 @@ a[data-toggle="collapse"] {
 	padding: 0px;
 	margin-top: 150px;
 	margin-left: -5px;
-	margin-bottom: -205px;
+	margin-bottom: -206px;
 }
 
 .employee-tabs li {
@@ -295,6 +295,43 @@ a[data-toggle="collapse"] {
 	margin-top: 10px;
 	margin-bottom: -10px;
 	color: #2b5179;
+}
+.employee-dynamic-item {
+
+}
+.employee-dynamic-header {
+	color: #2b5179;
+}
+.employee-personal-row:hover {
+	border-radius: 10px;
+	background-color: rgba(75, 75, 185, 0.14);
+}
+.employee-table-header {
+	color: #2b5179;
+}
+.folder-button {
+	outline-style: none;
+	cursor: pointer;
+	font-size: 16px;
+	color: #2b5179;
+}
+.folder-button i {
+	font-size: 24px;
+}
+.folder-documents {
+	display: none;
+}
+.folder-active {
+	display: block !important;
+}
+.folder-documents-icon {
+	color: rgba(175, 25, 25);
+	font-size: 30px;
+	margin-bottom: -42px;
+}
+.folder-documents-info {
+	font-size: 14px;
+	color: rgba(0, 0, 0, 0.66);
 }
 .link-s { text-decoration: none; color: #FFFFFF; }
 .link-s:hover { text-decoration: none; }

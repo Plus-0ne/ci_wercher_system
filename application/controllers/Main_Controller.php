@@ -456,6 +456,7 @@
 				$data['GetPreviousContract'] = $this->Model_Selects->GetPreviousContract($ApplicantID);
 				$data['GetViolations'] = $this->Model_Selects->GetViolations($ApplicantID);
 				$data['GetDocuments'] = $this->Model_Selects->GetDocuments($ApplicantID);
+				$data['GetDocumentsViolations'] = $this->Model_Selects->GetDocumentsViolations($ApplicantID);
 				if ($data['Status'] == 'Employed') {
 					$data['Breadcrumb'] = '
 					<nav aria-label="breadcrumb">
