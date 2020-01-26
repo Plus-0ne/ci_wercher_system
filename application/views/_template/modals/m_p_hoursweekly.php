@@ -167,12 +167,14 @@
 									</div>
 									<div class="form-row">
 										<div class="form-group col-6 input-icon">
-											<input id="PerDay" class="form-control" type="text" name="" readonly>
-											<i>₱/d</i>
+											<label>₱/d</label>
+											<input id="PerDay" class="form-control" type="text" name="">
+											
 										</div>
 										<div class="form-group col-6 input-icon">
-											<input id="PerHour" class="form-control" type="text" name="" readonly>
-											<i>₱/h</i>
+											<label>₱/h</label>
+											<input id="PerHour" class="form-control" type="text" name="">
+											
 										</div>
 									</div>
 								</div>
