@@ -368,6 +368,14 @@
 		    SalaryPerDay = SalaryPerHour * parseFloat(HourSix);
 		    $('#SalaryDaySix').val(SalaryPerDay.toFixed(2));
 	 	});
+	 	$(".PerHour").on("change", function () {
+                // var v = $(this).closest("div.hhhh").find(".t_pay").val();
+                var perh = $(this).val();
+                var hidden_hval = $(this).closest("div.hhhh").find(".h_valueh").val();
+               
+
+                $(this).closest("div.hhhh").find(".t_pay").val(perh * hidden_hval);;
+         });
 	});
 </script>
 <style>

@@ -919,6 +919,10 @@ class Update_Controller extends CI_Controller {
 									
 									'Hours' => $rHours,
 									'Overtime' => $otValue,
+									'HDMF' => null,
+									'Philhealth' => null,
+									'SSS' => null,
+									'Tax' => null,
 								);
 								$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
 								// echo '------------- <br>';

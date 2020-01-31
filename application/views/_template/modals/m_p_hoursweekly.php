@@ -150,31 +150,62 @@
 									<div class="form-row">
 										<div class="form-group col-6 input-icon">
 											<label>HDMF</label>
-											<input id="PerDay" class="form-control" type="text" name="HDMF_<?php echo $row['Time']; ?>">
+											<input id="PerDay" class="form-control" type="text" name="HDMF_<?php echo $row['Time']; ?>" value="<?php foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
+														if($nrow['HDMF'] != NULL) {
+															echo $nrow['HDMF'];
+														}
+													endforeach;
+													?>">
 										</div>
 										<div class="form-group col-6 input-icon">
 											<label>Philhealth</label>
-											<input id="PerHour" class="form-control" type="text" name="Philhealth_<?php echo $row['Time']; ?>">
+											<input id="PerHour" class="form-control" type="text" name="Philhealth_<?php echo $row['Time']; ?>" value="<?php foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
+														if($nrow['Philhealth'] != NULL) {
+															echo $nrow['Philhealth'];
+														}
+													endforeach;
+													?>">
 										</div>
 										<div class="form-group col-6 input-icon">
 											<label>SSS</label>
-											<input id="PerHour" class="form-control" type="text" name="SSS_<?php echo $row['Time']; ?>">
+											<input id="PerHour" class="form-control" type="text" name="SSS_<?php echo $row['Time']; ?>" value="<?php foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
+														if($nrow['SSS'] != NULL) {
+															echo $nrow['SSS'];
+														}
+													endforeach;
+													?>">
 										</div>
 										<div class="form-group col-6 input-icon">
 											<label>Tax</label>
-											<input id="PerHour" class="form-control" type="text" name="Tax_<?php echo $row['Time']; ?>">
+											<input id="PerHour" class="form-control" type="text" name="Tax_<?php echo $row['Time']; ?>" value="<?php foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
+														if($nrow['Tax'] != NULL) {
+															echo $nrow['Tax'];
+														}
+													endforeach;
+													?>">
 										</div>
 									</div>
-									<div class="form-row">
+									<div class="form-row hhhh">
 										<div class="form-group col-6 input-icon">
-											<label>₱/d</label>
-											<input id="PerDay" class="form-control" type="text" name="">
-											
+											<label>₱/H</label>
+											<input class="form-control h_valueh" type="hidden" name="" value="<?php if($nrow['Hours'] != NULL) {
+												$totalho = $nrow['Hours'];
+											} else {
+												$totalho = '0';
+											}
+											if($nrow['Overtime'] != NULL) {
+												$totalover = $nrow['Overtime'];
+											} else {
+												$totalover = '0';
+											}
+											$totalhaha = $totalho + $totalover;
+											echo $totalhaha;
+											?>">
+											<input id="PerHour" class="form-control PerHour" type="text" name="dayRate">
 										</div>
 										<div class="form-group col-6 input-icon">
-											<label>₱/h</label>
-											<input id="PerHour" class="form-control" type="text" name="">
-											
+											<label>Total</label>
+											<input id="t_pay" class="form-control t_pay" type="text" name="hourRate">
 										</div>
 									</div>
 								</div>
