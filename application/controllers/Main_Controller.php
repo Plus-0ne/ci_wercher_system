@@ -98,12 +98,24 @@
 		$this->session->unset_userdata('acadcart');
 		$this->load->view('Login');
 	}
+	public function CheckUserLogin()
+	{
+		if (!isset($_SESSION['is_logged_in'])) {
+			$p_text = '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><i class="fas fa-times fa-fw"></i> User login required!</div>';
+			$this->session->set_flashdata('prompt',$p_text);
+			redirect('');
+			exit();
+		}
+	}
 	public function Dashboard()
 	{
 		$this->load->model('Model_Deletes');
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
+
+		###	CHECK SESSION
+		// $this->CheckUserLogin();
 
 		$header['title'] = 'Dashboard | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);

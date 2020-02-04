@@ -691,6 +691,11 @@ class Update_Controller extends CI_Controller {
 				$Tax = $this->input->post('Tax_' . $nrow['Time'],TRUE);
 
 				$Date = $this->input->post($nrow['Time'],TRUE);
+
+				$total_hoursperday = $this->input->post('total_hoursperday_' . $nrow['Time'],TRUE);
+				$dayRate = $this->input->post('dayRate_' . $nrow['Time'],TRUE);
+				$TdRate = $this->input->post('TdRate_' . $nrow['Time'],TRUE);
+
 				if($Hours == NULL) {
 					$Hours = 0;
 				}
@@ -704,6 +709,8 @@ class Update_Controller extends CI_Controller {
 				}
 				else
 				{
+					$GrossPay = $total_hoursperday * $dayRate;
+
 					date_default_timezone_set('Asia/Manila');
 
 					$data = array(
@@ -716,6 +723,10 @@ class Update_Controller extends CI_Controller {
 						'Philhealth' => $Philhealth,
 						'SSS' => $SSS,
 						'Tax' => $Tax,
+						'DayRate' => $dayRate,
+						'HourRate' => $TdRate,
+						'Gross_Pay' => $GrossPay,
+
 					);
 					$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
 					if ($UpdateWeeklyHours == TRUE) {
@@ -923,6 +934,9 @@ class Update_Controller extends CI_Controller {
 									'Philhealth' => null,
 									'SSS' => null,
 									'Tax' => null,
+									'DayRate' => null,
+									'HourRate' => null,
+									'Gross_Pay' => null,
 								);
 								$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
 								// echo '------------- <br>';
