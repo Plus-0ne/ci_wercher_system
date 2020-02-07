@@ -20,7 +20,7 @@
 					</div>
 					<div class="col-sm-12">
 						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
-							<table id="ListClients" class="table table-striped table-bordered PrintOut" style="width: 100%;">
+							<table id="ListClients" class="table table-bordered PrintOut" style="width: 100%;">
 								<thead>
 									<tr class="text-center align-middle">
 										<th> Name </th>

@@ -6,18 +6,7 @@
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="row">
-					<div class="col-sm-12 pt-3 pb-3">
-						<nav aria-label="breadcrumb">
-							<ol class="breadcrumb" style="background-color: transparent;">
-								<li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
-								<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
-								<li class="breadcrumb-item active" aria-current="page">Add</li>
-							</ol>
-						</nav>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-12 rcontent">
+					<div class="col-sm-12">
 						<div class="col-sm-12 text-right">
 							<button id="DebugFill" type="button" class="btn btn-primary"><i class="fas fa-vial"></i> Debug Fill</button>
 						</div>

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 26, 2020 at 10:30 AM
--- Server version: 10.1.34-MariaDB
--- PHP Version: 7.2.7
+-- Generation Time: Feb 07, 2020 at 04:43 AM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.3.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -86,7 +86,7 @@ INSERT INTO `admin` (`AdminNo`, `AdminLevel`, `Position`, `AdminID`, `Password`,
 
 CREATE TABLE `applicants` (
   `ApplicantNo` int(11) NOT NULL,
-  `ApplicantImage` blob,
+  `ApplicantImage` blob DEFAULT NULL,
   `ApplicantID` varchar(255) DEFAULT NULL,
   `PositionDesired` varchar(255) DEFAULT NULL,
   `PositionGroup` varchar(255) DEFAULT NULL,
@@ -381,12 +381,12 @@ INSERT INTO `dashboard_months` (`ID`, `Year`, `Month`, `Total`) VALUES
 (1128, '5555', '10', '0'),
 (1136, '5555', '11', '0'),
 (1144, '5555', '12', '0'),
-(1173, '2019', '09', '1'),
-(1174, '2019', '10', '2'),
-(1175, '2019', '12', '6'),
-(1176, '2020', '01', '10'),
-(1177, '2020', '03', '1'),
-(1178, '2020', '12', '1');
+(1186, '2019', '09', '1'),
+(1187, '2019', '10', '2'),
+(1188, '2019', '12', '6'),
+(1189, '2020', '01', '11'),
+(1190, '2020', '03', '1'),
+(1191, '2020', '12', '1');
 
 -- --------------------------------------------------------
 
@@ -408,12 +408,11 @@ CREATE TABLE `dummy_hours` (
 --
 
 INSERT INTO `dummy_hours` (`ID`, `Time`, `Current`, `Regular`, `NightShift`, `Holiday`) VALUES
-(1192, '2019-12-10', 'Current', 0, 0, 0),
-(1193, '2019-12-11', 'Current', 0, 0, 0),
-(1194, '2019-12-12', 'Current', 0, 0, 0),
-(1195, '2019-12-13', 'Current', 0, 0, 0),
-(1196, '2019-12-14', 'Current', 0, 0, 0),
-(1197, '2019-12-15', 'Current', 0, 0, 0);
+(1198, '2020-02-01', 'Current', 0, 0, 0),
+(1199, '2020-02-02', 'Current', 0, 0, 0),
+(1200, '2020-02-03', 'Current', 0, 0, 0),
+(1201, '2020-02-04', 'Current', 0, 0, 0),
+(1202, '2020-02-05', 'Current', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -424,7 +423,7 @@ INSERT INTO `dummy_hours` (`ID`, `Time`, `Current`, `Regular`, `NightShift`, `Ho
 CREATE TABLE `employee` (
   `Employee_No` int(11) NOT NULL,
   `Employee_ID` varchar(255) NOT NULL,
-  `EmployeeImage` blob,
+  `EmployeeImage` blob DEFAULT NULL,
   `EmploymentType` varchar(255) DEFAULT NULL,
   `LastName` varchar(255) DEFAULT NULL,
   `FirstName` varchar(255) DEFAULT NULL,
@@ -717,8 +716,8 @@ CREATE TABLE `relatives` (
 CREATE TABLE `supp_documents` (
   `ID` int(11) NOT NULL,
   `ApplicantID` varchar(255) DEFAULT NULL,
-  `Doc_Image` blob,
-  `Doc_File` blob,
+  `Doc_Image` blob DEFAULT NULL,
+  `Doc_File` blob DEFAULT NULL,
   `Doc_FileName` varchar(255) DEFAULT NULL,
   `Type` varchar(255) DEFAULT NULL,
   `Subject` varchar(255) DEFAULT NULL,
@@ -740,7 +739,14 @@ INSERT INTO `supp_documents` (`ID`, `ApplicantID`, `Doc_Image`, `Doc_File`, `Doc
 (22, '00006-C', 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f626f6e676f6361742e706e67, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f4461776e5f6f665f7468655f417370656374732e706466, 'Dawn_of_the_Asp...', 'Document', '2746cfzsze5', '56xdfg54e6', 'tgzs2356236', '2020-01-12'),
 (23, '00006-C', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f507974686f6e5f496e74657276696577732e706466, 'Python_Interviews.pdf', 'Violation', '12345', '135155', '151515', '2020-01-13'),
 (24, '00006-C', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f507974686f6e5f496e74657276696577735f434f50595f434f50595f434f50595f434f50595f434f50595f434f50595f434f50595f434f50595f434f50592e706466, 'Python_Interviews_COPY_COPY_COPY_COPY_COPY_COPY_COPY_COPY_COPY.pdf', 'Document', '567b4', 'b4', 'b76b64b574', '2020-01-13'),
-(25, '00016-A', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303031362d412f64756d6d792e706466, 'dummy.pdf...', 'Document', 'drag n drop test', 'drag n drop test', 'drag n drop test', '2020-01-16');
+(25, '00016-A', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303031362d412f64756d6d792e706466, 'dummy.pdf...', 'Document', 'drag n drop test', 'drag n drop test', 'drag n drop test', '2020-01-16'),
+(26, '00006-C', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f64756d6d792e706466, 'dummy.pdf...', 'Document', '123', '13131', '313', '2020-02-07'),
+(27, '00006-C', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f64756d6d79312e706466, 'dummy1.pdf...', 'Document', '123', '1313123', '3123123', '2020-02-07'),
+(28, '00006-C', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f64756d6d79322e706466, 'dummy2.pdf', 'Document', '1231232', '122123', '123213', '2020-02-07'),
+(29, '00006-C', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f64756d6d79332e706466, 'dummy3.pdf', 'Document', '123', '132115135', '15135', '2020-02-07'),
+(30, '00006-C', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f64756d6d79342e706466, 'dummy4.pdf', 'Document', '123', '12313123', '1323', '2020-02-07'),
+(31, '00006-C', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f64756d6d79352e706466, 'dummy5.pdf', 'Document', '54', '3563635635', '636536', '2020-02-07'),
+(32, '00006-C', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f64756d6d79362e706466, 'dummy6.pdf', 'Document', '123', '12312313', '3123', '2020-02-07');
 
 -- --------------------------------------------------------
 
@@ -891,13 +897,13 @@ ALTER TABLE `contract_history`
 -- AUTO_INCREMENT for table `dashboard_months`
 --
 ALTER TABLE `dashboard_months`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1179;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1193;
 
 --
 -- AUTO_INCREMENT for table `dummy_hours`
 --
 ALTER TABLE `dummy_hours`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1198;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1203;
 
 --
 -- AUTO_INCREMENT for table `hours_weekly`
@@ -915,7 +921,7 @@ ALTER TABLE `logbook`
 -- AUTO_INCREMENT for table `supp_documents`
 --
 ALTER TABLE `supp_documents`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

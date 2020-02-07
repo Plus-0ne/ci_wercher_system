@@ -93,7 +93,7 @@
 						<input id="Pass_ID" type="hidden" name="ApplicantID">
 						<div class="form-row" style="margin-left: 15px; margin-right: 15px;">
 							<?php if($this->agent->is_mobile()): ?>
-							<div class="form-group col-sm-8 mt-5">
+							<div class="form-group col-sm-12 mt-5">
 								<div class="input-icon-sm">
 									<input id="pFile" type="file" name="pFile" placeholder="Choose PDF file to upload" style="padding-left: 45px;" value="">
 									<i class="fas fa-file-pdf" style="width: 45px;"></i>
@@ -102,25 +102,21 @@
 							<?php else: ?>
 							<input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
 
-							<div class="wercher-drop-area form-group col-sm-8 text-center">
+							<div class="wercher-drop-area form-group col-sm-12 text-center">
 								<div id="output">
-									<p>
-										<i class="fas fa-download"></i>
-									</p>
-									<label for="fileselect">Choose a PDF file</label>
-									<input type="file" id="fileselect" name="pFile" />
-									or drop it here
+									<div class="wercher-drop-area-file">
+										<p>
+											<i class="fas fa-download"></i>
+										</p>
+										<label for="fileselect">Choose a PDF file</label>
+										<input type="file" id="fileselect" name="pFile" />
+										or drop it here
+										<div id="output-output">
+										</div>
+									</div>
 								</div>
 							</div>
 							<?php endif; ?>
-							<div class="form-group col-sm-4 text-center">
-								<input type='file' id="imgInp" name="pImage" style="display: none;" value="">
-								<?php if(!$this->agent->is_mobile()): ?>
-									<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/wercher_attach_image.png" width="120" height="120">
-								<?php else: ?>
-									<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/wercher_attach_image_mobile.png" width="120" height="120">
-								<?php endif; ?>
-							</div>
 						</div>
 						<hr>
 						<div id="ViolationNotice" class="row ml-auto mr-auto pb-1 w-100" style="display: none;">
@@ -129,7 +125,7 @@
 									<i class="fas fa-exclamation-triangle" style="font-size: 24px;"></i>
 								</div>
 								<div class="col-sm-12">
-									You are marking this document as a violation. It will be marked as a violation on this individual's documents panel.
+									You are marking this document as a violation.
 								</div>
 							</div>
 						</div>
@@ -139,7 +135,7 @@
 									<i class="fas fa-exclamation-triangle" style="font-size: 24px;"></i>
 								</div>
 								<div class="col-sm-12">
-									You are marking this document as a blacklist. This individual will be removed from the pool and be blacklisted with this attached document as reason.
+									You are blacklisting this individual.
 								</div>
 							</div>
 						</div>
@@ -296,8 +292,8 @@
 				readURL(this);
 				$('#pImageChecker').val('123');
 			});
-			$("#pFile").change(function() {
-				$('#pFileChecker').val('123');
+			$("#fileselect").change(function() {
+				$('wercher-drop-area-file').hide();
 			});
 		});
 	</script>

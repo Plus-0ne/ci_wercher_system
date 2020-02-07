@@ -9,6 +9,7 @@ class Add_Controller extends CI_Controller {
 
 		$this->load->model('Model_Selects');
 		$this->load->model('Model_Inserts');
+		$this->load->model('Model_Updates');
 	}
 	public function addNewEmployee()
 	{
@@ -427,10 +428,6 @@ class Add_Controller extends CI_Controller {
 		$Description = $this->input->post('Description',TRUE);
 		$Remarks = $this->input->post('Remarks',TRUE);
 		$Type = $this->input->post('Type',TRUE);
-		$pImageChecker = $this->input->post('pImageChecker',TRUE);
-		$pFileChecker = $this->input->post('pFileChecker',TRUE);
-		// $pImage = NULL;
-		// $pFile = NULL;
 
 		if ($ApplicantID == NULL || $Subject == NULL || $Description == NULL || $Remarks == NULL || $Type == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
@@ -442,7 +439,7 @@ class Add_Controller extends CI_Controller {
 		{
 			// Preview Image File Upload
 			$config['upload_path']          = './uploads/'.$ApplicantID;
-			$config['allowed_types']        = 'gif|jpg|png|pdf';
+			$config['allowed_types']        = 'pdf';
 			$config['max_size']             = 12800;
 			$config['max_width']            = 2000;
 			$config['max_height']           = 2000;
@@ -458,51 +455,45 @@ class Add_Controller extends CI_Controller {
 				$dir_exist = false;
 			}
 
-			// Preview Image File Upload
-			if ($pImageChecker != NULL) {
-				if ( ! $this->upload->do_upload('pImage')) {
-					$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Image upload: '.$this->upload->display_errors().'</h5></div>');
-					redirect('Employee');
-					exit();
-				} else {
-					$pImage = base_url().'uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
-				}
-			}
-
 			// TODO: Add restrictions to deny /uploads/ access.
 			// PDF File Upload
 			if ( ! $this->upload->do_upload('pFile')) {
-				$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> PDF upload: '.$this->upload->display_errors().'</h5></div>');
+				$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> ' . $pFile . ' PDF upload: '.$this->upload->display_errors().'</h5></div>');
 				redirect('Employee');
 				exit();
 			} else {
 				$pFile = base_url().'uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
 				$pFileName = $this->upload->data('file_name');
-				$pFileName = substr($pFileName, 0, 15);
-				$pFileName = $pFileName . '...';
-			}
-			$data = array(
-				'ApplicantID' => $ApplicantID,
-				'Doc_Image' => $pImage,
-				'Doc_File' => $pFile,
-				'Doc_FileName' => $pFileName,
-				'Type' => $Type,
-				'Subject' => $Subject,
-				'Description' => $Description,
-				'Remarks' => $Remarks,
-				'DateAdded' => date('Y-m-d'),
-			);
-			$AddDocuments = $this->Model_Inserts->AddDocuments($data);
-			if ($AddDocuments == TRUE) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Document added!</h5></div>');
-				redirect('Employee');
-				exit();
-			}
-			else
-			{
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
-				redirect('Employee');
-				exit();
+				if (strlen($pFileName) > 15) {
+					$pFileName = substr($pFileName, 0, 15);
+					$pFileName = $pFileName . '...';
+				}
+				$data = array(
+					'ApplicantID' => $ApplicantID,
+					'Doc_Image' => $pImage,
+					'Doc_File' => $pFile,
+					'Doc_FileName' => $pFileName,
+					'Type' => $Type,
+					'Subject' => $Subject,
+					'Description' => $Description,
+					'Remarks' => $Remarks,
+					'DateAdded' => date('Y-m-d'),
+				);
+				if ($Type == 'Blacklist') {
+					$this->Model_Updates->BlacklistEmployee($ApplicantID);
+				}
+				$AddDocuments = $this->Model_Inserts->AddDocuments($data);
+				if ($AddDocuments == TRUE) {
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Document added!</h5></div>');
+					redirect('Employee');
+					exit();
+				}
+				else
+				{
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+					redirect('Employee');
+					exit();
+				}
 			}
 		}
 	}

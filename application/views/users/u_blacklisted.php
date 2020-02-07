@@ -84,6 +84,7 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$(".nav-item a[href*='Applicants']").addClass("nactive");
 		$('#sidebarCollapse').on('click', function () {
 			$('#sidebar').toggleClass('active');
 			$('.ncontent').toggleClass('shContent');

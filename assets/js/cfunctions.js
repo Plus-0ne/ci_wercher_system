@@ -1,6 +1,6 @@
 // output information
 function Output(msg) {
-  var m = document.getElementById("output");
+  var m = document.getElementById("output-output");
   m.innerHTML = msg;
 }
 
@@ -62,7 +62,7 @@ function FileSelectHandler(e) {
 function ParseFile(file) {
 
   Output(
-    file.name + "<div class='mt-2' style='opacity: 0.75'>Size: " + (file.size / 1000000).toFixed(2) + " MB</div>"
+    "<hr>" + file.name + "<div class='mt-2' style='opacity: 0.75'>Size: " + (file.size / 1000000).toFixed(2) + " MB</div>"
   );
   
 }
