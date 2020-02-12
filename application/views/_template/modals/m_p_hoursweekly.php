@@ -6,7 +6,7 @@
 					<h5 class="modal-title" id="exampleModalLabel">Work Hours for <?php echo $erow['LastName'] . ', ' . $erow['FirstName'] . ' ' . $erow['MiddleInitial'] ?> | <span class="TotalHoursInAWeek">48</span> Hours Total</h5>
 					<!-- <div class="ml-auto" data-toggle="tooltip" data-placement="bottom" title="Autosaves to the Database with each input">
 						<label>Autosave&nbsp;<span style="color: rgba(125, 125, 125, 0.9)">(?)</span></label>
-						<button type="button" class="btn btn-success"><i class="fas fa-check"></i> On</button>
+						<button type="button" class="btn btn-success"><i class="fas fa-check"></i> On</aybutton>
 					</div> -->
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -24,14 +24,17 @@
 							<div class="form-group col-sm-12 col-md-2">
 								<label>Salary</label>
 								<div class="input-icon-sm">
-									<input id="Salary" class="form-control" type="number" name="" value="" readonly>
+									<input id="Salary" class="form-control" type="number" name="" value="<?php echo $erow['SalaryExpected']; ?>" readonly>
 									<i>₱</i>
 								</div>
 							</div>
 							<div class="form-group col-sm-12 col-md-2">
-								<label>Average&nbsp;Per&nbsp;Hour</label>
+								<label>Per&nbsp;Day</label>
 								<div class="input-icon-sm">
-									<input id="AveragePerHour" class="form-control" type="number" name="" value="" readonly>
+									<input id="AveragePerHour" class="form-control" type="number" name="" value="<?php
+									$RatePerDay = $erow['SalaryExpected'] / 26;
+									echo $RatePerDay;
+									 ?>" readonly>
 									<i>₱</i>
 								</div>
 							</div>
@@ -69,12 +72,21 @@
 										// 	}
 										// endforeach;
 										?>">
-									<b><?php echo $row['Time']; ?></b>
+									<div class="row">
+										<div class="col-sm-6">
+											<b><?php echo $row['Time']; ?></b>
+										</div>
+										<div class="col-sm-6">
+											<div class="form-group col-4">
+												<input class="NCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="Night" data-off="Night" data-onstyle="primary" data-offstyle="secondary" data-width="85" <?php if (isset($RestDay)) { echo 'checked'; } ?>>
+											</div>
+										</div>
+									</div>
 									<div class="form-row mt-2">
 										<!-- data-toggle="tooltip" data-placement="bottom" title="Regular Hours" -->
 										<div class="form-group col-8">
 											<div>Hours</div>
-											<input id="Hours_<?php echo $row['Time']; ?>" class="form-control" type="number" name="Hours_<?php echo $row['Time']; ?>" value="<?php
+											<input id="" class="form-control Hours_<?php echo $row['Time']; ?>" type="number" name="Hours_<?php echo $row['Time']; ?>" value="<?php
 													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
 														if($nrow['Hours'] != NULL) {
 															echo $nrow['Hours'];
@@ -86,7 +98,7 @@
 										</div>
 										<div class="form-group col-4">
 											<div class="">Overtime</div>
-											<input id="OTHours_<?php echo $row['Time']; ?>" class="form-control" type="number" name="OTHours_<?php echo $row['Time']; ?>" value="<?php
+											<input class="form-control OTHours_<?php echo $row['Time']; ?>" type="number" name="OTHours_<?php echo $row['Time']; ?>" value="<?php
 													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
 														if($nrow['Overtime'] != NULL) {
 															echo $nrow['Overtime'];
@@ -122,41 +134,22 @@
 										</div> -->
 									</div>
 									<div class="form-row">
-										<div class="form-group col-4">
-											<input id="REGCheck_<?php echo $row['Time']; ?>" type="checkbox" data-toggle="toggle" data-on="Regular" data-off="Regular" data-onstyle="success" data-offstyle="secondary" data-width="85" <?php if (isset($Regular)) { echo 'checked'; } ?>>
-											<!-- <select class="form-control" name="Type_<?php echo $row['Time']; ?>">
-												<option value="Normal" <?php if ($Type == 'Normal') { echo 'selected=""'; } ?>>
-													Normal
-												</option>
-												<option value="Rest Day" <?php if ($Type == 'Rest Day') { echo 'selected=""'; } ?>>
-													Rest Day
-												</option>
-												<option value="Holiday" <?php if ($Type == 'Holiday') { echo 'selected=""'; } ?>>
-													Holiday
-												</option>
-												<option value="Special" <?php if ($Type == 'Special') { echo 'selected=""'; } ?>>
-													Special (non-working)
-												</option>
-											</select> -->
+										<div class="form-group col-6">
+											<input class="REGCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="Regular" data-off="Regular" data-onstyle="success" data-offstyle="secondary" data-width="85" <?php if (isset($Regular)) { echo 'checked'; } ?>>
 										</div>
-										<div class="form-group col-4">
-											<input id="NCheck_<?php echo $row['Time']; ?>" type="checkbox" data-toggle="toggle" data-on="Night" data-off="Night" data-onstyle="primary" data-offstyle="secondary" data-width="85" <?php if (isset($RestDay)) { echo 'checked'; } ?>>
+										<div class="form-group col-6">
+											<input class="RESTCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="Rest" data-off="Rest" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($RestDay)) { echo 'checked'; } ?>>
 										</div>
-										<div class="form-group col-4">
-											<input id="HCheck_<?php echo $row['Time']; ?>" type="checkbox" data-toggle="toggle" data-on="Holiday" data-off="Holiday" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
+										<hr>
+										<div class="form-group col-6">
+											<input class="SPCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="SP" data-off="SP" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
 										</div>
-										<div class="form-group col-4">
-											<input id="HCheck_<?php echo $row['Time']; ?>" type="checkbox" data-toggle="toggle" data-on="Rest" data-off="Rest" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
-										</div>
-										<div class="form-group col-4">
-											<input id="HCheck_<?php echo $row['Time']; ?>" type="checkbox" data-toggle="toggle" data-on="Holiday" data-off="Holiday" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
-										</div>
-										<div class="form-group col-4">
-											<input id="HCheck_<?php echo $row['Time']; ?>" type="checkbox" data-toggle="toggle" data-on="Special" data-off="Special" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
+										<div class="form-group col-6">
+											<input class="NHCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="NH" data-off="NH" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
 										</div>
 									</div>
 									<!-- <p class="mr-auto ml-auto">Hours</p> -->
-									<div class="form-row">
+									<!-- <div class="form-row">
 										<div class="form-group col-6 input-icon">
 											<label>HDMF</label>
 											<input id="PerDay" class="form-control" type="text" name="HDMF_<?php echo $row['Time']; ?>" value="<?php foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
@@ -193,10 +186,10 @@
 													endforeach;
 													?>">
 										</div>
-									</div>
+									</div> -->
 									<div class="form-row hhhh">
 										<div class="form-group col-6 input-icon">
-											<label>₱/H</label>
+											<label>Per Hour</label>
 											<input class="form-control h_valueh" type="hidden" name="total_hoursperday_<?php echo $row['Time']; ?>" value="<?php if(isset($nrow['Hours'])) {
 												$totalho = $nrow['Hours'];
 											} else {
@@ -210,21 +203,15 @@
 											$totalhaha = $totalho + $totalover;
 											echo $totalhaha;
 											?>">
-											<input id="PerHour" class="form-control PerHour" type="text" name="dayRate_<?php echo $row['Time']; ?>" value="<?php foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-														if($nrow['DayRate'] != NULL) {
-															echo $nrow['DayRate'];
-														}
-													endforeach;
+											<input class="form-control PerHour" type="text" name="dayRate_<?php echo $row['Time']; ?>" value="<?php 
+											$RatePerHour = $RatePerDay / 8;
+											echo $RatePerHour;
 													?>">
+											<i>₱</i>
 										</div>
 										<div class="form-group col-6 input-icon">
-											<label>Total</label>
-											<input id="t_pay" class="form-control t_pay" type="text" name="TdRate_<?php echo $row['Time']; ?>" value="<?php foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-														if($nrow['HourRate'] != NULL) {
-															echo $nrow['HourRate'];
-														}
-													endforeach;
-													?>">
+											<label>Total Day Pay</label>
+											<input id="t_pay" class="form-control t_pay_<?php echo $row['Time']; ?>" type="text" name="TdRate_<?php echo $row['Time']; ?>" value="">
 										</div>
 									</div>
 								</div>

@@ -723,9 +723,6 @@ class Update_Controller extends CI_Controller {
 						'Philhealth' => $Philhealth,
 						'SSS' => $SSS,
 						'Tax' => $Tax,
-						'DayRate' => $dayRate,
-						'HourRate' => $TdRate,
-						'Gross_Pay' => $GrossPay,
 
 					);
 					$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
@@ -933,10 +930,7 @@ class Update_Controller extends CI_Controller {
 									'HDMF' => null,
 									'Philhealth' => null,
 									'SSS' => null,
-									'Tax' => null,
-									'DayRate' => null,
-									'HourRate' => null,
-									'Gross_Pay' => null,
+									'Tax' => null
 								);
 								$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
 								// echo '------------- <br>';

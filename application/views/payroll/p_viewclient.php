@@ -368,14 +368,54 @@
 		    SalaryPerDay = SalaryPerHour * parseFloat(HourSix);
 		    $('#SalaryDaySix').val(SalaryPerDay.toFixed(2));
 	 	});
-	 	$(".PerHour").on("change", function () {
-                // var v = $(this).closest("div.hhhh").find(".t_pay").val();
-                var perh = $(this).val();
-                var hidden_hval = $(this).closest("div.hhhh").find(".h_valueh").val();
-               
+	 	<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
+		 	$(".Hours_<?php echo $row['Time']; ?>, .OTHours_<?php echo $row['Time']; ?>, .SalaryButons").on("change", function () {
+		 			// General
+	                var PerHour = $(this).closest("#SalaryDays").find('.PerHour').val();
+		 			// Hours
+	                var Hours = $(this).closest("#SalaryDays").find('.Hours_<?php echo $row['Time']; ?>').val();
+	                // OT
+	                var OT = $(this).closest("#SalaryDays").find('.OTHours_<?php echo $row['Time']; ?>').val();
 
-                $(this).closest("div.hhhh").find(".t_pay").val(perh * hidden_hval);;
-         });
+	                var TotalPerDay;
+	                // Regular
+	                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25));
+	           		}
+	           		// Rest Day
+	           		if($(this).closest("#SalaryDays").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 1.3;
+	           		}
+	           		// Special
+	           		if($(this).closest("#SalaryDays").find('.SPCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 1.3;
+		            	}
+		                if($(this).closest("#SalaryDays").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 1.5;
+	           			}
+	           		}
+	           		// National
+	           		if($(this).closest("#SalaryDays").find('.NHCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 2.0;
+		            	}
+		                if($(this).closest("#SalaryDays").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 2.6;
+	           			}
+	           		}
+	           		// Night additional
+	                if($(this).closest("#SalaryDays").find('.NCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                TotalPerDay = TotalPerDay * 1.1;
+	           		}
+	           		$(this).closest("#SalaryDays").find('.t_pay_<?php echo $row['Time']; ?>').val(TotalPerDay.toFixed(2));
+
+	                // var v = $(this).closest("div.hhhh").find(".t_pay").val();
+	                // var perh = $(this).vl();
+	                // var hidden_hval = $(this).closest("div.hhhh").find(".h_valueh").val();
+	                // $(this).closest("div.hhhh").find(".t_pay").val(perh * hidden_hval);;
+	         });
+	 	<?php endforeach; ?>
 	});
 </script>
 <style>
