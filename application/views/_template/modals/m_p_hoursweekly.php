@@ -145,6 +145,15 @@
 										<div class="form-group col-4">
 											<input id="HCheck_<?php echo $row['Time']; ?>" type="checkbox" data-toggle="toggle" data-on="Holiday" data-off="Holiday" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
 										</div>
+										<div class="form-group col-4">
+											<input id="HCheck_<?php echo $row['Time']; ?>" type="checkbox" data-toggle="toggle" data-on="Rest" data-off="Rest" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
+										</div>
+										<div class="form-group col-4">
+											<input id="HCheck_<?php echo $row['Time']; ?>" type="checkbox" data-toggle="toggle" data-on="Holiday" data-off="Holiday" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
+										</div>
+										<div class="form-group col-4">
+											<input id="HCheck_<?php echo $row['Time']; ?>" type="checkbox" data-toggle="toggle" data-on="Special" data-off="Special" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
+										</div>
 									</div>
 									<!-- <p class="mr-auto ml-auto">Hours</p> -->
 									<div class="form-row">

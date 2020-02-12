@@ -104,43 +104,6 @@
 		</div>
 	</div>
 	<!-- MODALS -->
-	<div class="modal fade" id="addClients" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<?php echo form_open(base_url().'Add_newClient','method="post"');?>
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Add new Client</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="form-row">
-						<div class="form-group col-sm-12">
-							<label>Name</label>
-							<input class="form-control" type="text" name="ClientName" autocomplete="off">
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group col-sm-12">
-							<label>Address</label>
-							<input class="form-control" type="text" name="ClientAddress" autocomplete="off">
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group col-sm-12">
-							<label>Contact Number</label>
-							<input class="form-control" type="text" name="ClientContact" autocomplete="off">
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary">Save changes</button>
-				</div>
-				<?php echo form_close();?>
-			</div>
-		</div>
-	</div>
 	<?php $this->load->view('_template/modals/m_p_clientview'); ?>
 	<!-- LOAD MODAL -->
 	<div class="modal fade" id="LoadModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -163,6 +126,8 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('#FromDate').val(moment().subtract(7,'d').format('YYYY-MM-DD'));
+		$('#ToDate').val(moment().format('YYYY-MM-DD'));
 		$('.ImportButton').click(function(){ $('#file').trigger('click'); });
 		function readURL(input) {
 			if (input.files && input.files[0]) {
