@@ -369,9 +369,10 @@
 		    $('#SalaryDaySix').val(SalaryPerDay.toFixed(2));
 	 	});
 	 	<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
-		 	$(".Hours_<?php echo $row['Time']; ?>, .OTHours_<?php echo $row['Time']; ?>, .SalaryButons").on("change", function () {
+		 	$(".Hours_<?php echo $row['Time']; ?>, .OTHours_<?php echo $row['Time']; ?>, .SalaryButtons").on("change", function () {
 		 			// General
 	                var PerHour = $(this).closest("#SalaryDays").find('.PerHour').val();
+	                var PerDay = $(this).closest("#SalaryDays").find('.PerDay').val();
 		 			// Hours
 	                var Hours = $(this).closest("#SalaryDays").find('.Hours_<?php echo $row['Time']; ?>').val();
 	                // OT

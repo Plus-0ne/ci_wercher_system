@@ -73,7 +73,7 @@
 										// endforeach;
 										?>">
 									<div class="row">
-										<div class="col-sm-6">
+										<div class="col-sm-6 day-container-date">
 											<b><?php echo $row['Time']; ?></b>
 										</div>
 										<div class="col-sm-6">
@@ -135,7 +135,7 @@
 									</div>
 									<div class="form-row">
 										<div class="form-group col-6">
-											<input class="REGCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="Regular" data-off="Regular" data-onstyle="success" data-offstyle="secondary" data-width="85" <?php if (isset($Regular)) { echo 'checked'; } ?>>
+											<input class="REGCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="Regular" data-off="Regular" data-onstyle="success" data-offstyle="secondary" data-width="85" <?php if (isset($Regular)) { echo 'checked'; } ?> checked>
 										</div>
 										<div class="form-group col-6">
 											<input class="RESTCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="Rest" data-off="Rest" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($RestDay)) { echo 'checked'; } ?>>
@@ -190,28 +190,33 @@
 									<div class="form-row hhhh">
 										<div class="form-group col-6 input-icon">
 											<label>Per Hour</label>
-											<input class="form-control h_valueh" type="hidden" name="total_hoursperday_<?php echo $row['Time']; ?>" value="<?php if(isset($nrow['Hours'])) {
-												$totalho = $nrow['Hours'];
-											} else {
-												$totalho = '0';
-											}
-											if(isset($nrow['Overtime'])) {
-												$totalover = $nrow['Overtime'];
-											} else {
-												$totalover = '0';
-											}
-											$totalhaha = $totalho + $totalover;
-											echo $totalhaha;
-											?>">
-											<input class="form-control PerHour" type="text" name="dayRate_<?php echo $row['Time']; ?>" value="<?php 
-											$RatePerHour = $RatePerDay / 8;
-											echo $RatePerHour;
-													?>">
-											<i>₱</i>
+											<div class="input-icon-sm">
+												<input class="form-control  h_valueh" type="hidden" name="total_hoursperday_<?php echo $row['Time']; ?>" value="<?php if(isset($nrow['Hours'])) {
+													$totalho = $nrow['Hours'];
+												} else {
+													$totalho = '0';
+												}
+												if(isset($nrow['Overtime'])) {
+													$totalover = $nrow['Overtime'];
+												} else {
+													$totalover = '0';
+												}
+												$totalhaha = $totalho + $totalover;
+												echo $totalhaha;
+												?>">
+												<input class="form-control PerHour" type="text" name="dayRate_<?php echo $row['Time']; ?>" value="<?php 
+												$RatePerHour = $RatePerDay / 8;
+												echo $RatePerHour;
+														?>" readonly>
+												<i>₱</i>
+											</div>
 										</div>
 										<div class="form-group col-6 input-icon">
 											<label>Total Day Pay</label>
-											<input id="t_pay" class="form-control t_pay_<?php echo $row['Time']; ?>" type="text" name="TdRate_<?php echo $row['Time']; ?>" value="">
+											<div class="input-icon-sm">
+												<input id="t_pay" class="form-control t_pay_<?php echo $row['Time']; ?>" type="text" name="TdRate_<?php echo $row['Time']; ?>" value="" readonly>
+												<i>₱</i>
+											</div>
 										</div>
 									</div>
 								</div>
