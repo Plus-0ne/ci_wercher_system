@@ -33,7 +33,7 @@
 								<div class="input-icon-sm">
 									<input id="AveragePerHour" class="form-control" type="number" name="" value="<?php
 									$RatePerDay = $erow['SalaryExpected'] / 26;
-									echo $RatePerDay;
+									echo round($RatePerDay, 2);
 									 ?>" readonly>
 									<i>₱</i>
 								</div>
@@ -138,7 +138,7 @@
 											<input class="REGCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="Regular" data-off="Regular" data-onstyle="success" data-offstyle="secondary" data-width="85" <?php if (isset($Regular)) { echo 'checked'; } ?> checked>
 										</div>
 										<div class="form-group col-6">
-											<input class="RESTCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="Rest" data-off="Rest" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($RestDay)) { echo 'checked'; } ?>>
+											<input class="RESTCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="Rest" data-off="Rest" data-onstyle="info" data-offstyle="secondary" data-width="85" <?php if (isset($RestDay)) { echo 'checked'; } ?>>
 										</div>
 										<hr>
 										<div class="form-group col-6">
@@ -206,7 +206,7 @@
 												?>">
 												<input class="form-control PerHour" type="text" name="dayRate_<?php echo $row['Time']; ?>" value="<?php 
 												$RatePerHour = $RatePerDay / 8;
-												echo $RatePerHour;
+												echo round($RatePerHour, 2);
 														?>" readonly>
 												<i>₱</i>
 											</div>

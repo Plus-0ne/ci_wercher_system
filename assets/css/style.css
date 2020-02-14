@@ -309,6 +309,13 @@ a[data-toggle="collapse"] {
 .employee-table-header {
 	color: #2b5179;
 }
+.employee-contract-container {
+	border-radius: 6px;
+	border: 1px solid #007bff;
+}
+.employee-contract-header-title:before {
+	border-bottom: 2px solid #2b5179;
+}
 .folder-button {
 	outline-style: none;
 	cursor: pointer;
@@ -563,7 +570,7 @@ a[data-toggle="collapse"] {
 }
 
 #fileselect{
-  display:none;
+	display:none;
 }
 
 /*

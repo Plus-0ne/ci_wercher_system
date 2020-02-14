@@ -117,7 +117,7 @@
 													<?php if ($ReminderDate == NULL): ?> 
 														<button id="<?php echo $ApplicantID; ?>" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-exclamation"></i> No reminder set</button>
 													<?php else: ?>
-														<button id="<?php echo $ApplicantID; ?>" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-check"></i> You will be notified TEST months before expiring</button>
+														<button id="<?php echo $ApplicantID; ?>" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-check"></i> You will be notified 1 month before expiring</button>
 													<?php endif; ?>
 												<?php endif; ?>
 											</div>
@@ -319,10 +319,10 @@
 												<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
 											</div>
 											<hr>
-											<div class="col-sm-12 col-md-12 text-center">
-												<h6>
+											<div class="col-sm-12 col-md-12 employee-dynamic-header text-center">
+												<b>
 													Days Remaining on Contract
-												</h6>
+												</b>
 											</div>
 											<div class="col-sm-12 col-md-12 text-center">
 												<p>
@@ -355,29 +355,11 @@
 													<div class="progress_value">45%</div>
 												</div>
 											</div>
-											<div class="row mt-4">
-												<div class="col-sm-2 employee-dynamic-header">
-													<b>Position</b>
+											<!-- <div class="col-sm-6 employee-contract-container">
+												<div class="col-sm-12 employee-contract-header-title">
+													Client
 												</div>
-												<div class="col-sm-2 employee-dynamic-header">
-													<b>Salary</b>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-sm-2 employee-dynamic-item">
-													<?php echo $PositionDesired; ?>
-												</div>
-												<div class="col-sm-2 employee-dynamic-item">
-													<?php echo $SalaryExpected; ?>
-												</div>
-											</div>
-											<div class="col-sm-2 col-md-2">
-												<h6>
-													Client Name
-												</h6>
-											</div>
-											<div class="col-sm-4 col-md-4">
-												<p>
+												<div class="col-sm-12 employee-contract-header-desc">
 													<?php
 													// TODO: Find a better solution than this.
 													$found = false;
@@ -389,25 +371,50 @@
 															}
 														}
 													}?>
-												</p>
+												</div>
+											</div> -->
+											<div class="row mt-4 ml-2">
+												<div class="col-sm-4 employee-dynamic-header">
+													<b>Client</b>
+												</div>
+												<div class="col-sm-4 employee-dynamic-header">
+													<b>Position</b>
+												</div>
+												<div class="col-sm-4 employee-dynamic-header">
+													<b>Salary Expected</b>
+												</div>
 											</div>
-											<div class="col-sm-2 col-md-2">
-												<h6>
-													Violations
-												</h6>
+											<div class="row ml-2">
+												<div class="col-sm-4 employee-dynamic-item">
+													<?php
+													// TODO: Find a better solution than this.
+													$found = false;
+													foreach ($get_employee->result_array() as $row) {
+														foreach ($getClientOption->result_array() as $nrow) {
+															if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
+																$found = true;
+																echo $nrow['Name'];
+															}
+														}
+													}?>
+												</div>
+												<div class="col-sm-4 employee-dynamic-item">
+													<?php echo $PositionDesired; ?>
+												</div>
+												<div class="col-sm-4 employee-dynamic-item">
+													<?php echo '₱' . $SalaryExpected; ?>
+												</div>
 											</div>
-											<div class="col-sm-4 col-md-4">
-												<p>
-													<?php echo $AppliedOn; ?>
-												</p>
+											<div class="row mt-4 ml-2">
+												<div class="col-sm-4 employee-dynamic-header">
+													<b>Client Contact #</b>
+												</div>
+												<div class="col-sm-4 employee-dynamic-header">
+													<b>Client Address</b>
+												</div>
 											</div>
-											<div class="col-sm-2 col-md-2">
-												<h6>
-													Client Contact #
-												</h6>
-											</div>
-											<div class="col-sm-4 col-md-4">
-												<p>
+											<div class="row ml-2">
+												<div class="col-sm-4 employee-dynamic-item">
 													<?php
 													// TODO: Find a better solution than this.
 													$found = false;
@@ -419,25 +426,8 @@
 															}
 														}
 													}?>
-												</p>
-											</div>
-											<div class="col-sm-2 col-md-2">
-												<h6>
-													Contract Started
-												</h6>
-											</div>
-											<div class="col-sm-4 col-md-4">
-												<p>
-													<?php echo $DateStarted; ?>
-												</p>
-											</div>
-											<div class="col-sm-2 col-md-2">
-												<h6>
-													Client Address
-												</h6>
-											</div>
-											<div class="col-sm-4 col-md-4">
-												<p>
+												</div>
+												<div class="col-sm-4 employee-dynamic-item">
 													<?php
 													// TODO: Find a better solution than this.
 													$found = false;
@@ -449,102 +439,37 @@
 															}
 														}
 													}?>
-												</p>
+												</div>
 											</div>
-											<div class="col-sm-2 col-md-2">
-												<h6>
-													Contract Ends
-												</h6>
+											<hr>
+											<div class="row mt-4 ml-2">
+												<div class="col-sm-4 employee-dynamic-header">
+													<b>Contract Started</b>
+												</div>
+												<div class="col-sm-4 employee-dynamic-header">
+													<b>Contract Ended</b>
+												</div>
 											</div>
-											<div class="col-sm-4 col-md-4">
-												<p>
+											<div class="row ml-2">
+												<div class="col-sm-4 employee-dynamic-item">
+													<?php echo $DateStarted; ?>
+												</div>
+												<div class="col-sm-4 employee-dynamic-item">
 													<?php echo $DateEnds; ?>
-												</p>
+												</div>
+											</div>
+											<div style="height: 400px;">
 											</div>
 											<?php else: ?>
 											<div class="employee-content-header">
 												<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm mr-auto ModalHire" data-toggle="modal" data-target="#hirthis"><i class="fas fa-plus"></i> New Contract</button>
+												<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
 											</div>
-											<div class="col-sm-2 col-md-2">
-												<h6>
-													Previous Client
-												</h6>
-											</div>
-											<div class="col-sm-4 col-md-4">
-												<p>
-													<?php
-													foreach ($GetPreviousContract->result_array() as $row) {
-														echo $row['Client'];
-													}?>
-												</p>
-											</div>
-											<div class="col-sm-2 col-md-2">
-												<h6>
-													Applied On
-												</h6>
-											</div>
-											<div class="col-sm-4 col-md-4">
-												<p>
-													<?php echo $AppliedOn; ?>
-												</p>
-											</div>
-											<div class="col-sm-2 col-md-2">
-												<h6>
-													Client Contact #
-												</h6>
-											</div>
-											<div class="col-sm-4 col-md-4">
-												<p>
-													<?php
-													foreach ($GetPreviousContract->result_array() as $row) {
-														$ClientName = $row['Client'];
-														foreach ($this->Model_Selects->GetPreviousContractInfo($ClientName)->result_array() as $row) {
-															echo $row['ContactNumber'];
-														}
-													}?>
-												</p>
-											</div>
-											<div class="col-sm-2 col-md-2">
-												<h6>
-													Contract Started
-												</h6>
-											</div>
-											<div class="col-sm-4 col-md-4">
-												<p>
-													<?php
-													foreach ($GetPreviousContract->result_array() as $row) {
-														echo $row['PreviousDateStarted'];
-													}?>
-												</p>
-											</div>
-											<div class="col-sm-2 col-md-2">
-												<h6>
-													Client Address
-												</h6>
-											</div>
-											<div class="col-sm-4 col-md-4">
-												<p>
-													<?php
-													foreach ($GetPreviousContract->result_array() as $row) {
-														$ClientName = $row['Client'];
-														foreach ($this->Model_Selects->GetPreviousContractInfo($ClientName)->result_array() as $row) {
-															echo $row['Address'];
-														}
-													}?>
-												</p>
-											</div>
-											<div class="col-sm-2 col-md-2">
-												<h6>
-													Contract Ended
-												</h6>
-											</div>
-											<div class="col-sm-4 col-md-4">
-												<p>
-													<?php
-													foreach ($GetPreviousContract->result_array() as $row) {
-														echo $row['PreviousDateEnds'];
-													}?>
-												</p>
+											<hr>
+											<div class="row mt-4">
+												<div class="col-sm-12">
+													No available contract to show.
+												</div>
 											</div>
 											<?php endif; ?>
 										</div>
@@ -589,7 +514,14 @@
 																<div class="folder-documents-icon"><i class="fas fa-file-pdf"></i></div>
 																<div class="col-sm-12 ml-3">
 																	<a class="ml-2" href="<?php echo $row['Doc_File'];?>" target="_blank">
-																	<b><?php echo $row['Doc_FileName']; ?></b></a>
+																	<b>													<?php
+																			if ($row['Type'] == 'Blacklist') {
+																				echo '[BLACKLIST] - ' . $row['Doc_FileName'];
+																			} else {
+																				echo $row['Doc_FileName'];
+																			}
+																		?>		
+																	</b></a>
 																</div>
 																<div class="folder-documents-info col-sm-12 ml-4">
 																	Created by <?php echo $row['DateAdded']; ?> (0MB)

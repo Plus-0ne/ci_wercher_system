@@ -20,6 +20,7 @@ class Update_Controller extends CI_Controller {
 			$H_Days = $this->input->post('H_Days',TRUE);
 			$H_Months = $this->input->post('H_Months',TRUE);
 			$H_Years = $this->input->post('H_Years',TRUE);
+			$Salary = $this->input->post('Salary',TRUE);
 			if($H_Days == NULL) {
 				$H_Days = 0;
 			}
@@ -66,6 +67,7 @@ class Update_Controller extends CI_Controller {
 						'ClientEmployed' => $ClientID,
 						'DateStarted' => $DateStarted,
 						'DateEnds' => $DateEnds,
+						'Salary' => $Salary,
 					);
 					$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
 					$data = array(

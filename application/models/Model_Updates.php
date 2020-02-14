@@ -11,6 +11,7 @@ class Model_Updates extends CI_Model {
 			'ClientEmployed' => $ClientEmployed,
 			'DateStarted' => $DateStarted,
 			'DateEnds' => $DateEnds,
+			'SalaryExpected' => $Salary,
 			'Status' => 'Employed',
 		);
 		$this->db->where('ApplicantID', $ApplicantID);

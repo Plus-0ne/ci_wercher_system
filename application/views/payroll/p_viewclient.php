@@ -8,21 +8,8 @@
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
-				<div class="row">
-					<div class="col-sm-12 pt-3 pb-3">
-						<nav aria-label="breadcrumb">
-							<ol class="breadcrumb" style="background-color: transparent;">
-								<li class="breadcrumb-item"><a href="<?=base_url()?>Dashboard">Home</a></li>
-								<li class="breadcrumb-item"><a href="<?=base_url()?>Payroll">Payroll</a>
-								</li>
-								<li class="breadcrumb-item active" aria-current="page">Details</li>
-							</ol>
-						</nav>
-					</div>
-				</div>
 				<?php echo $this->session->flashdata('prompts'); ?>
-				<hr>
-				<div class="row">
+				<div class="row mt-5">
 					<div class="col-8 mb-2">
 						<form action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
 							<input id="ExcelClientID" type="hidden" name="ExcelClientID" value="<?php echo $ClientID; ?>">
@@ -248,43 +235,6 @@
 		});
 		$('#sidebar').toggleClass('active');
 		$('.ncontent').toggleClass('shContent');
-		$('.clickable-row').on('click', function () {
-			$('#Salary').val($(this).attr('id'));
-			$('#ApplicantID').val($(this).attr('data'));
-			$('#ClientID').val($(this).attr('data-clientid'));
-			console.log($('#Salary').val());
-			console.log($('#ApplicantID').val());
-			console.log($('#ClientID').val());
-			HourOne = $("#HoursDayOne").val();
-		    HourTwo = $("#HoursDayTwo").val();
-		    HourThree = $("#HoursDayThree").val();
-		    HourFour = $("#HoursDayFour").val();
-		    HourFive = $("#HoursDayFive").val();
-		    HourSix = $("#HoursDaySix").val();
-		    TotalHoursInAWeek = parseFloat(HourOne) + parseFloat(HourTwo) + parseFloat(HourThree) + parseFloat(HourFour) + parseFloat(HourFive) + parseFloat(HourSix);
-		    if (TotalHoursInAWeek < 0 || isNaN(TotalHoursInAWeek)) {
-		    	TotalHoursInAWeek = 0;
-		    }
-		    $('.TotalHoursInAWeek').text(TotalHoursInAWeek);
-	
-		    var SalaryWeekly = $('#Salary').val();
-		    var TotalHoursInAWeek = parseFloat(HourOne) + parseFloat(HourTwo) + parseFloat(HourThree) + parseFloat(HourFour) + parseFloat(HourFive) + parseFloat(HourSix);
-		    var SalaryPerHour = SalaryWeekly / TotalHoursInAWeek;
-		    $('#AveragePerHour').val(SalaryPerHour.toFixed(2));
-
-		    var SalaryPerDay = SalaryPerHour * parseFloat(HourOne);
-		    $('#SalaryDayOne').val(SalaryPerDay.toFixed(2));
-		    SalaryPerDay = SalaryPerHour * parseFloat(HourTwo);
-		    $('#SalaryDayTwo').val(SalaryPerDay.toFixed(2));
-		    SalaryPerDay = SalaryPerHour * parseFloat(HourThree);
-		    $('#SalaryDayThree').val(SalaryPerDay.toFixed(2));
-		    SalaryPerDay = SalaryPerHour * parseFloat(HourFour);
-		    $('#SalaryDayFour').val(SalaryPerDay.toFixed(2));
-		    SalaryPerDay = SalaryPerHour * parseFloat(HourFive);
-		    $('#SalaryDayFive').val(SalaryPerDay.toFixed(2));
-		    SalaryPerDay = SalaryPerHour * parseFloat(HourSix);
-		    $('#SalaryDaySix').val(SalaryPerDay.toFixed(2));
-		});
 		$('#sidebarCollapse').on('click', function () {
 			$('#sidebar').toggleClass('active');
 			$('.ncontent').toggleClass('shContent');
@@ -335,41 +285,55 @@
 	            }
 	        ]
 		}).container().appendTo($('#datatables-export'));
-
-		$('#HoursDayOne,#HoursDayTwo,#HoursDayThree,#HoursDayFour,#HoursDayFive,#HoursDaySix').on('input', function() {
-
-			HourOne = $("#HoursDayOne").val();
-		    HourTwo = $("#HoursDayTwo").val();
-		    HourThree = $("#HoursDayThree").val();
-		    HourFour = $("#HoursDayFour").val();
-		    HourFive = $("#HoursDayFive").val();
-		    HourSix = $("#HoursDaySix").val();
-		    TotalHoursInAWeek = parseFloat(HourOne) + parseFloat(HourTwo) + parseFloat(HourThree) + parseFloat(HourFour) + parseFloat(HourFive) + parseFloat(HourSix);
-		    if (TotalHoursInAWeek < 0 || isNaN(TotalHoursInAWeek)) {
-		    	TotalHoursInAWeek = 0;
-		    }
-		    $('.TotalHoursInAWeek').text(TotalHoursInAWeek);
-	
-		    SalaryWeekly = $('#Salary').val();
-		    TotalHoursInAWeek = parseFloat(HourOne) + parseFloat(HourTwo) + parseFloat(HourThree) + parseFloat(HourFour) + parseFloat(HourFive) + parseFloat(HourSix);
-		    SalaryPerHour = SalaryWeekly / TotalHoursInAWeek;
-		    $('#AveragePerHour').val(SalaryPerHour.toFixed(2));
-
-		    SalaryPerDay = SalaryPerHour * parseFloat(HourOne);
-		    $('#SalaryDayOne').val(SalaryPerDay.toFixed(2));
-		    SalaryPerDay = SalaryPerHour * parseFloat(HourTwo);
-		    $('#SalaryDayTwo').val(SalaryPerDay.toFixed(2));
-		    SalaryPerDay = SalaryPerHour * parseFloat(HourThree);
-		    $('#SalaryDayThree').val(SalaryPerDay.toFixed(2));
-		    SalaryPerDay = SalaryPerHour * parseFloat(HourFour);
-		    $('#SalaryDayFour').val(SalaryPerDay.toFixed(2));
-		    SalaryPerDay = SalaryPerHour * parseFloat(HourFive);
-		    $('#SalaryDayFive').val(SalaryPerDay.toFixed(2));
-		    SalaryPerDay = SalaryPerHour * parseFloat(HourSix);
-		    $('#SalaryDaySix').val(SalaryPerDay.toFixed(2));
-	 	});
 	 	<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
-		 	$(".Hours_<?php echo $row['Time']; ?>, .OTHours_<?php echo $row['Time']; ?>, .SalaryButtons").on("change", function () {
+		 	$(".Hours_<?php echo $row['Time']; ?>, .OTHours_<?php echo $row['Time']; ?>").bind("input", function () {
+		 			// General
+	                var PerHour = $(this).closest("#SalaryDays").find('.PerHour').val();
+	                var PerDay = $(this).closest("#SalaryDays").find('.PerDay').val();
+		 			// Hours
+	                var Hours = $(this).closest("#SalaryDays").find('.Hours_<?php echo $row['Time']; ?>').val();
+	                // OT
+	                var OT = $(this).closest("#SalaryDays").find('.OTHours_<?php echo $row['Time']; ?>').val();
+
+	                var TotalPerDay;
+	                // Regular
+	                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25));
+	           		}
+	           		// Rest Day
+	           		if($(this).closest("#SalaryDays").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 1.3;
+	           		}
+	           		// Special
+	           		if($(this).closest("#SalaryDays").find('.SPCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 1.3;
+		            	}
+		                if($(this).closest("#SalaryDays").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 1.5;
+	           			}
+	           		}
+	           		// National
+	           		if($(this).closest("#SalaryDays").find('.NHCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 2.0;
+		            	}
+		                if($(this).closest("#SalaryDays").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 2.6;
+	           			}
+	           		}
+	           		// Night additional
+	                if($(this).closest("#SalaryDays").find('.NCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                TotalPerDay = TotalPerDay * 1.1;
+	           		}
+	           		$(this).closest("#SalaryDays").find('.t_pay_<?php echo $row['Time']; ?>').val(TotalPerDay.toFixed(2));
+
+	                // var v = $(this).closest("div.hhhh").find(".t_pay").val();
+	                // var perh = $(this).vl();
+	                // var hidden_hval = $(this).closest("div.hhhh").find(".h_valueh").val();
+	                // $(this).closest("div.hhhh").find(".t_pay").val(perh * hidden_hval);;
+	         });
+		 	$(".SalaryButtons").on("change", function () {
 		 			// General
 	                var PerHour = $(this).closest("#SalaryDays").find('.PerHour').val();
 	                var PerDay = $(this).closest("#SalaryDays").find('.PerDay').val();
