@@ -101,4 +101,15 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function InsertDocumentsNote($ApplicantID, $Note)
+	{
+		$DateAdded = date('Y-m-d h:i:s A');
+		$data = array(
+			'ApplicantID' => $ApplicantID,
+			'Note' => $Note,
+			'DateAdded' => $DateAdded,
+		);
+		$result = $this->db->insert('tab_documents_notes', $data);
+		return $result;
+	}
 }

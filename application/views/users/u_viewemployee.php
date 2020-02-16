@@ -55,7 +55,6 @@
 										<li id="TabAcademicBtn" class="employee-tabs-select"><a href="#Academic" onclick="">Academic</a></li>
 										<li id="TabEmploymentsBtn" class="employee-tabs-select"><a href="#Employments" onclick="">Employments</a></li>
 										<li id="TabMachineBtn" class="employee-tabs-select"><a href="#Machine" onclick="">Machine</a></li>
-										<li id="TabNotesBtn" class="employee-tabs-select"><a href="#Notes" onclick="">Notes</a></li>
 									</ul>
 								</div>
 								<div class="col-2 mb-5 employee-image">
@@ -373,89 +372,116 @@
 													}?>
 												</div>
 											</div> -->
-											<div class="row mt-4 ml-2">
-												<div class="col-sm-4 employee-dynamic-header">
-													<b>Client</b>
+											<div class="row">
+												<div class="col-sm-4">
+													<div class="card mb-3" style="max-width: 18rem;">
+														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-user-tag"></i> Client</b></div>
+														<div class="card-body text-dark">
+															<h5 class="card-title text-center wercher-card-title">
+																<?php
+																// TODO: Find a better solution than this.
+																$found = false;
+																foreach ($get_employee->result_array() as $row) {
+																	foreach ($getClientOption->result_array() as $nrow) {
+																		if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
+																			$found = true;
+																			echo $nrow['Name'];
+																		}
+																	}
+																}?>
+															</h5>
+															<p class="card-text">
+																<div class="col-sm-12 employee-static-item text-center mt-3">
+																	<div class="col-sm-12 employee-dynamic-header">
+																		<b>Contact</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php
+																		// TODO: Find a better solution than this.
+																		$found = false;
+																		foreach ($get_employee->result_array() as $row) {
+																			foreach ($getClientOption->result_array() as $nrow) {
+																				if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
+																					$found = true;
+																					echo $nrow['ContactNumber'];
+																				}
+																			}
+																		}?>
+																	</div>
+																</div>
+																<div class="col-sm-12 employee-static-item text-center">
+																	<div class="col-sm-12 employee-dynamic-header">
+																		<b>Address</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php
+																		// TODO: Find a better solution than this.
+																		$found = false;
+																		foreach ($get_employee->result_array() as $row) {
+																			foreach ($getClientOption->result_array() as $nrow) {
+																				if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
+																					$found = true;
+																					echo $nrow['Address'];
+																				}
+																			}
+																		}?>
+																	</div>
+																</div>
+															</p>
+														</div>
+													</div>
 												</div>
-												<div class="col-sm-4 employee-dynamic-header">
-													<b>Position</b>
+												<div class="col-sm-4">
+													<div class="card mb-3" style="max-width: 18rem;">
+														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-user-tie"></i> Position</b></div>
+														<div class="card-body text-dark">
+															<h5 class="card-title text-center wercher-card-title"><?php echo $PositionDesired; ?></h5>
+															<p class="card-text">
+																<div class="col-sm-12 employee-static-item text-center mt-3">
+																	<div class="col-sm-12 employee-dynamic-header">
+																		<b>Contract Started</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php echo $DateStarted; ?>
+																	</div>
+																</div>
+																<div class="col-sm-12 employee-static-item text-center">
+																	<div class="col-sm-12 employee-dynamic-header">
+																		<b>Contract Ends</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php echo $DateEnds; ?>
+																	</div>
+																</div>
+															</p>
+														</div>
+													</div>
 												</div>
-												<div class="col-sm-4 employee-dynamic-header">
-													<b>Salary Expected</b>
-												</div>
-											</div>
-											<div class="row ml-2">
-												<div class="col-sm-4 employee-dynamic-item">
-													<?php
-													// TODO: Find a better solution than this.
-													$found = false;
-													foreach ($get_employee->result_array() as $row) {
-														foreach ($getClientOption->result_array() as $nrow) {
-															if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-																$found = true;
-																echo $nrow['Name'];
-															}
-														}
-													}?>
-												</div>
-												<div class="col-sm-4 employee-dynamic-item">
-													<?php echo $PositionDesired; ?>
-												</div>
-												<div class="col-sm-4 employee-dynamic-item">
-													<?php echo '₱' . $SalaryExpected; ?>
-												</div>
-											</div>
-											<div class="row mt-4 ml-2">
-												<div class="col-sm-4 employee-dynamic-header">
-													<b>Client Contact #</b>
-												</div>
-												<div class="col-sm-4 employee-dynamic-header">
-													<b>Client Address</b>
-												</div>
-											</div>
-											<div class="row ml-2">
-												<div class="col-sm-4 employee-dynamic-item">
-													<?php
-													// TODO: Find a better solution than this.
-													$found = false;
-													foreach ($get_employee->result_array() as $row) {
-														foreach ($getClientOption->result_array() as $nrow) {
-															if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-																$found = true;
-																echo $nrow['ContactNumber'];
-															}
-														}
-													}?>
-												</div>
-												<div class="col-sm-4 employee-dynamic-item">
-													<?php
-													// TODO: Find a better solution than this.
-													$found = false;
-													foreach ($get_employee->result_array() as $row) {
-														foreach ($getClientOption->result_array() as $nrow) {
-															if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-																$found = true;
-																echo $nrow['Address'];
-															}
-														}
-													}?>
-												</div>
-											</div>
-											<hr>
-											<div class="row mt-4 ml-2">
-												<div class="col-sm-4 employee-dynamic-header">
-													<b>Contract Started</b>
-												</div>
-												<div class="col-sm-4 employee-dynamic-header">
-													<b>Contract Ended</b>
-												</div>
-											</div>
-											<div class="row ml-2">
-												<div class="col-sm-4 employee-dynamic-item">
-													<?php echo $DateStarted; ?>
-												</div>
-												<div class="col-sm-4 employee-dynamic-item">
-													<?php echo $DateEnds; ?>
+												<div class="col-sm-4">
+													<div class="card mb-3" style="max-width: 18rem;">
+														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-book"></i> Salary Expected</b></div>
+														<div class="card-body text-dark">
+															<h5 class="card-title text-center wercher-card-title">₱ <?php echo $SalaryExpected; ?></h5>
+															<p class="card-text">
+																<div class="col-sm-12 employee-static-item text-center mt-3">
+																	<div class="col-sm-12 employee-dynamic-header">
+																		<b>Documents (<?php echo $GetDocuments->num_rows(); ?>)</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<button id="TabDocumentsBtnAlt" class="TabDocumentsBtnAlt employee-tabs-select btn-sm btn btn-primary"><i class="far fa-eye"></i> View</button>
+																	</div>
+																</div>
+																<div class="col-sm-12 employee-static-item text-center">
+																	<div class="col-sm-12 employee-dynamic-header">
+																		<b>Violations (<?php echo $GetDocumentsViolations->num_rows(); ?>)</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<button id="TabDocumentsBtnAlt" class="employee-tabs-select btn-sm btn btn-danger"><i class="far fa-eye"></i> View</button>
+																	</div>
+																</div>
+															</p>
+														</div>
+													</div>
 												</div>
 											</div>
 											<div style="height: 400px;">
@@ -480,64 +506,107 @@
 												<button class="btn btn-secondary btn-sm"><i class="fas fa-lock"></i> Upload (WIP)</button>
 											</div>
 											<hr>
-											<div class="row ml-3">
-												<div class="col-sm-12">
-													<span class="folder-button"><i class="fas fa-folder-open"></i> Documents (<?php echo $GetDocuments->num_rows(); ?>)</span>
+											<div class="row">
+												<div class="col-sm-8">
+													<div class="row ml-3">
+														<div class="col-sm-12">
+															<span class="folder-button"><i class="fas fa-folder-open"></i> Documents (<?php echo $GetDocuments->num_rows(); ?>)</span>
+														</div>
+														<div class="folder-documents folder-active col-sm-12 mt-4 ml-5">
+														<?php if ($GetDocuments->num_rows() > 0) { ?>
+															<?php foreach ($GetDocuments->result_array() as $row): ?>
+																	<div class="mb-3">
+																		<div class="folder-documents-icon"><i class="fas fa-file-pdf"></i></div>
+																		<div class="col-sm-12 ml-3">
+																			<a class="ml-2" href="<?php echo $row['Doc_File'];?>" target="_blank">
+																			<b><?php echo $row['Doc_FileName']; ?></b></a>
+																		</div>
+																		<div class="folder-documents-info col-sm-12 ml-4">
+																			Created by <?php echo $row['DateAdded']; ?>  (0MB)
+																		</div>
+																	</div>
+															<?php endforeach ?>
+														<?php } else { ?>
+															No documents available.
+														<?php } ?>
+														</div>
+													</div>
+													<div class="row mt-4 ml-3">
+														<div class="col-sm-12">
+															<span class="folder-button"><i class="fas fa-folder"></i> Violations (<?php echo $GetDocumentsViolations->num_rows(); ?>)</span>
+														</div>
+														<div class="folder-documents col-sm-12 mt-4 ml-5">
+														<?php if ($GetDocumentsViolations->num_rows() > 0) { ?>
+															<?php foreach ($GetDocumentsViolations->result_array() as $row): ?>
+																	<div class="mb-3">
+																		<div class="folder-documents-icon"><i class="fas fa-file-pdf"></i></div>
+																		<div class="col-sm-12 ml-3">
+																			<a class="ml-2" href="<?php echo $row['Doc_File'];?>" target="_blank">
+																			<b>													<?php
+																					if ($row['Type'] == 'Blacklist') {
+																						echo '[BLACKLIST] - ' . $row['Doc_FileName'];
+																					} else {
+																						echo $row['Doc_FileName'];
+																					}
+																				?>		
+																			</b></a>
+																		</div>
+																		<div class="folder-documents-info col-sm-12 ml-4">
+																			Created by <?php echo $row['DateAdded']; ?> (0MB)
+																		</div>
+																	</div>
+															<?php endforeach ?>
+														<?php } else { ?>
+															No documents available.
+														<?php } ?>
+														</div>
+													</div>
 												</div>
-												<div class="folder-documents folder-active col-sm-12 mt-4 ml-5">
-												<?php if ($GetDocuments->num_rows() > 0) { ?>
-													<?php foreach ($GetDocuments->result_array() as $row): ?>
-															<div class="mb-3">
-																<div class="folder-documents-icon"><i class="fas fa-file-pdf"></i></div>
-																<div class="col-sm-12 ml-3">
-																	<a class="ml-2" href="<?php echo $row['Doc_File'];?>" target="_blank">
-																	<b><?php echo $row['Doc_FileName']; ?></b></a>
-																</div>
-																<div class="folder-documents-info col-sm-12 ml-4">
-																	Created by <?php echo $row['DateAdded']; ?>  (0MB)
-																</div>
-															</div>
-													<?php endforeach ?>
-												<?php } else { ?>
-													No documents available.
-												<?php } ?>
-												</div>
-											</div>
-											<div class="row mt-4 ml-3">
-												<div class="col-sm-12">
-													<span class="folder-button"><i class="fas fa-folder"></i> Violations (<?php echo $GetDocumentsViolations->num_rows(); ?>)</span>
-												</div>
-												<div class="folder-documents col-sm-12 mt-4 ml-5">
-												<?php if ($GetDocumentsViolations->num_rows() > 0) { ?>
-													<?php foreach ($GetDocumentsViolations->result_array() as $row): ?>
-															<div class="mb-3">
-																<div class="folder-documents-icon"><i class="fas fa-file-pdf"></i></div>
-																<div class="col-sm-12 ml-3">
-																	<a class="ml-2" href="<?php echo $row['Doc_File'];?>" target="_blank">
-																	<b>													<?php
-																			if ($row['Type'] == 'Blacklist') {
-																				echo '[BLACKLIST] - ' . $row['Doc_FileName'];
-																			} else {
-																				echo $row['Doc_FileName'];
-																			}
-																		?>		
-																	</b></a>
-																</div>
-																<div class="folder-documents-info col-sm-12 ml-4">
-																	Created by <?php echo $row['DateAdded']; ?> (0MB)
-																</div>
-															</div>
-													<?php endforeach ?>
-												<?php } else { ?>
-													No documents available.
-												<?php } ?>
+												<div class="col-sm-4 employee-documents-notes">
+													<div class="row mt-3 employee-documents-title">
+														<div class="col-sm-10">
+															<i class="fas fa-list"></i> Notes
+														</div>
+														<div class="col-sm-2 text-right">
+															<button id="AddNoteBtn" applicant-id="<?php echo $ApplicantID; ?>" class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#AddNote"><i class="fas fa-plus" style="margin-right: -1px;"></i></button>
+														</div>
+													</div>
+													<div class="row mt-2">
+														<div class="col-sm-12">
+															<table id="ListNotes" class="table table-borderless PrintOut" style="width: 100%;">
+																<thead>
+																</thead>
+																<tbody>
+																	<?php
+																	$RowCount = 0;
+																	if ($GetDocumentsNotes->num_rows() > 0):
+																		foreach ($GetDocumentsNotes->result_array() as $row):
+																			$RowCount++;?>
+																			<tr>
+																				<td style="width: 8px;">
+																					<?php echo $RowCount . '.'; ?>
+																				</td>
+																				<td>
+																					<?php echo $row['Note'] ; ?>
+																				</td>
+																			</tr>
+																		<?php endforeach;
+																	else: ?>
+																		<div class="mt-2">
+																			No notes found.
+																		</div>
+																	<?php endif; ?>
+																</tbody>
+															</table>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 									<div id="TabAcademic">
 										<div class="employee-tabs-group-content" id="TabAcademic">
-											<div class="row rcontent PrintOut">
+											<div class="row PrintOut">
 												<div class="col-sm-12">
 													<div class="table-responsive">
 														<table class="table table-condensed">
@@ -581,7 +650,7 @@
 									</div>
 									<div id="TabEmployments">
 										<div class="employee-tabs-group-content" id="TabEmployments">
-											<div class="row rcontent PrintOut">
+											<div class="row PrintOut">
 												<div class="col-sm-12">
 													<div class="table-responsive">
 														<table class="table table-condensed">
@@ -625,7 +694,7 @@
 									</div>
 									<div id="TabMachine">
 										<div class="employee-tabs-group-content" id="TabMachine">
-											<div class="row rcontent">
+											<div class="row">
 												<div class="col-sm-12">
 													<div class="table-responsive">
 														<table class="table table-condensed">
@@ -742,10 +811,15 @@
 		<?php $this->load->view('_template/modals/m_violations'); ?>
 		<!-- DOCUMENT MODAL -->
 		<?php $this->load->view('_template/modals/m_documents'); ?>
+		<!-- DOCUMENTS NOTE MODAL -->
+		<?php $this->load->view('_template/modals/m_addnote_documents'); ?>
 	</body>
 	<?php $this->load->view('_template/users/u_scripts');?>
 	<script type="text/javascript">
 		$(document).ready(function () {
+			$('#AddNoteBtn').on('click', function () {
+				$('#AddNote_ApplicantID').val($(this).attr('applicant-id'));
+			});
 			$('.employee-tabs-group-content').hide();
 			$('#TabPersonal').children('.employee-tabs-group-content').show();
 			$('.folder-button').on('click', function () {

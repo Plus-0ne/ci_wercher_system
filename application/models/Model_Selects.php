@@ -291,5 +291,11 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetDocumentsNotes($ApplicantID)
+	{
+		$SQL = "SELECT * FROM tab_documents_notes WHERE ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 
 }

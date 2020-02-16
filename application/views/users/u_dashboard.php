@@ -264,8 +264,8 @@
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+<script src="<?php base_url(); ?>assets/js/Chart.bundle.js"></script>
+<script src="<?php base_url(); ?>assets/js/Chart.bundle.min.js"></script>
 <?php
 	// BAR CHART COUNTER
 	$BarClientsLabel = '';

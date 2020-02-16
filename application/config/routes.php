@@ -89,6 +89,7 @@ $route['EmployApplicant'] = 'Update_Controller/EmployApplicant';
 $route['ExtendContract'] = 'Update_Controller/ExtendContract';
 $route['UpdateEmployee'] = 'Update_Controller/UpdateEmployee';
 $route['AddNote'] = 'Update_Controller/AddNote';
+$route['AddNoteDocuments'] = 'Update_Controller/AddNoteDocuments';
 $route['SetReminder'] = 'Update_Controller/SetReminder';
 $route['BlacklistEmployee'] = 'Update_Controller/BlacklistEmployee';
 $route['SetWeeklyHours'] = 'Update_Controller/SetWeeklyHours';

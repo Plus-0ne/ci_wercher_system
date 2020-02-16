@@ -531,6 +531,26 @@ class Update_Controller extends CI_Controller {
 
 		}
 	}
+	public function AddNoteDocuments()
+	{
+		if (isset($_POST['NoteDocuments'])) {
+			$ApplicantID = $this->input->post('ApplicantID',TRUE);
+			$Note = $this->input->post('NoteDocuments',TRUE);
+			$this->Model_Inserts->InsertDocumentsNote($ApplicantID, $Note);
+			// LOGBOOK
+			date_default_timezone_set('Asia/Manila');
+			$LogbookCurrentTime = date('Y-m-d h:i:s A');
+			$LogbookType = 'Note';
+			$data = array(
+				'Time' => $LogbookCurrentTime,
+				'Type' => $LogbookType,
+				'Event' => 'Added new note for ' . $ApplicantID . '.',
+			);
+			$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+			redirect(base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Documents');
+
+		}
+	}
 	public function SetReminder()
 	{
 		if (isset($_POST['ApplicantID'])) {

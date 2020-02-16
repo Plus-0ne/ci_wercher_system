@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 07, 2020 at 04:43 AM
+-- Generation Time: Feb 17, 2020 at 12:51 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.10
 
@@ -144,17 +144,17 @@ INSERT INTO `applicants` (`ApplicantNo`, `ApplicantImage`, `ApplicantID`, `Posit
 (3, 0x68747470733a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030332d412f6d6f7274792e6a7067, '00003-A', 'Office Staff', NULL, '500', 'Smith', 'Morty', 'S', 'Male', '10', '5', '5', 'Rick', '2007-12-01', 'Earth', 'Yes', 'Single', '0', '252452524', '524524524', '5245245245245', '25425245', '24525245', '2019-12-19', '245245245', '2452525245245', '2019-12-14', '245245', '24245245245245245245', '2020-01-20', '', '', '', '', '', '', NULL, 'Expired', '', '', NULL, '2019-10-14 11:28:43 AM', NULL, NULL, NULL, NULL),
 (4, 0x68747470733a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030342d412f446169796f757365692e6a7067, '00004-B', 'Office Staff', NULL, '8888888', 'Test', 'Test', 'Test', 'Male', '35', '531', '135', '2352561', '2019-12-18', '13513513', '1354156', 'Widowed', '5135413', '31515135', '135135', '135135135135135', '4156135', '153515', '2019-12-10', '135135', '51351313', '0135-12-05', '13513531', '5135135', '2019-12-13', '', '', '', '', '', '', NULL, 'Expired', '', '', '2019-12-22 04:42:03 AM', '2019-09-14 11:28:43 AM', '', '', 'No', '00004-B'),
 (5, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030352d412f38357662733363616577333231322e6a7067, '00005-A', 'Bookeeper', 'TEST GROUP 2', '???', 'Á???', 'Á??', 'Á????', 'Female', '500', '2', '2', '?', '2019-12-04', '??', '??', 'Single', '50', '????', '????', '?????', '500000', '?', '2019-12-19', '???', '??', '2019-12-12', '???', '?', '2019-12-28', '11', '11', '2019-12-06', '22', '22', '2019-12-21', '333', 'Expired', '', '', '2018-01-13 11:33:14 PM', '2019-12-14 11:29:13 AM', 'R_ContractDuration', '2160000', 'No', NULL),
-(6, 0x68747470733a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d412f526162626974732b666f6f742b69732b737570706f7365642b746f2b62652b6c75636b792b5f36396661363033323666313237303266336135663439653766626430333239312e6a7067, '00006-C', 'Office Staff', NULL, '1111111', 'Aaa', 'Aaaaaaa', 'Aaaaaa', 'Male', '11', '11', '11', '11', '2019-12-12', '11', '12313', 'Single', '13', '123213', '32131', '32133', '1313', '123213', '2019-12-26', '1231', '1131313123', '2019-12-13', '12313', '13213123123', '2019-12-21', '', '', '', '', '', '', NULL, 'Employed', '1', '2019-12-18 04:39:43 AM', '2020-12-18 04:39:43 AM', '2019-12-02 09:09:59 AM', NULL, NULL, NULL, '00006-C'),
+(6, 0x68747470733a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d412f526162626974732b666f6f742b69732b737570706f7365642b746f2b62652b6c75636b792b5f36396661363033323666313237303266336135663439653766626430333239312e6a7067, '00006-C', 'Office Staff', NULL, '1111111', 'Aaa', 'Aaaaaaa', 'Aaaaaa', 'Male', '11', '11', '11', '11', '2019-12-12', '11', '12313', 'Single', '13', '123213', '32131', '32133', '1313', '123213', '2019-12-26', '1231', '1131313123', '2019-12-13', '12313', '13213123123', '2019-12-21', '', '', '', '', '', '', NULL, 'Employed', '1', '2019-12-18 04:39:43 AM', '2020-12-20 04:39:43 AM', '2019-12-02 09:09:59 AM', 'R_ContractDuration', '2629743', 'No', '00006-C'),
 (7, 0x68747470733a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030372d412f6368726f6d655f567737685757644b62342e6a7067, '00007-B', 'Secretary', NULL, '90000', 'Arató', 'András', 'A', 'Male', '50', '5', '80', '111111', '2019-12-03', 'Hungary', 'z315135', 'Single', '3', 'K?szeg, Hungary', 'K?szeg, Hungary', '11111', '35735723542', '2524622753', '2019-12-31', '252462624624234', 'K?szeg', '2019-12-04', '26245234226', 'K?szeg', '2019-12-14', '111', '22222', '2019-12-12', '33333', '3444444', '2019-12-27', '5555', 'Blacklisted', '1', '2019-12-18 04:34:14 AM', '2019-12-20 04:34:14 AM', '2019-12-02 09:34:26 AM', NULL, NULL, NULL, '00007-B'),
 (8, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030382d412f31363630323832305f3136313233333230343338303238385f333934343238313336383536353532393633365f6e5f2d5f436f70792e6a7067, '00008-A', 'Office Staff', NULL, '20000', 'Last Name', 'First Name', 'Middle Initial', 'Male', '1', '1', '1', 'SAMPLE', '2019-12-11', 'SAMPLE', 'SAMPLE', 'Single', '1', 'SAMPLE', 'SAMPLE', 'SAMPLE', '1', 'SAMPLE', '2019-12-11', 'SAMPLE', 'SAMPLE', '2019-12-11', 'SAMPLE', 'SAMPLE', '2019-12-11', 'SAMPLE', 'SAMPLE', '2019-12-11', 'SAMPLE', 'SAMPLE', '2019-12-17', 'SAMPLE', 'Deleted', '1', '2019-12-12 08:41:42 PM', '2020-02-12 08:41:42 PM', '2019-12-10 06:45:27 AM', NULL, NULL, NULL, NULL),
 (9, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030392d412f446973636f72645f44646c3256366f7464432e6a7067, '00009-A', 'Office Staff', NULL, '1000', 'Kojima', 'Hideo', 'D', 'Male', '56', '2', '500', 'Yes', '1963-07-24', 'Japan', 'Japanese', 'Single', '90', 'cabacbacba', 'acaccaacbacb', 'bacbacbabaaacacb', '9999999', '543577', '2019-12-01', '357357373', 'adabbcbab', '2019-12-02', '73735735', 'acbacbacbab', '2019-12-03', '737357', 'acbcabacb', '2019-12-04', '3573737', 'acbabacbabacb', '2019-12-05', '3573575375', 'Deleted', NULL, '2019-12-15 01:28:28 AM', '2021-05-17 01:28:28 AM', '2020-12-14 05:05:30 PM', NULL, NULL, NULL, NULL),
 (34, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303032322d412f77746969666163652e706e67, '00022-B', 'Office Staff', NULL, '35000', 'Langley', 'Richard', 'W', 'Male', '40', '5', '100', 'None', '2019-12-18', 'Jamaica', 'British', 'Single', '0', 'London', 'London', 'London', '000000000', '357935634', '2019-12-21', '135355346', 'abc53a', '2019-12-05', '72673478', 'abcdefghjikl;dfgzx', '2019-12-17', '437474128', 'abcde6c', '2019-12-13', '66345625', 'abcbcncj365gdh', '2019-12-28', '26235756378', 'Blacklisted', '4', '2019-12-18 05:14:04 AM', '2019-12-19 05:14:04 AM', '2020-03-17 10:12:37 PM', NULL, NULL, NULL, '00022-B'),
-(35, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303032332d412f6368726f6d655f6a4b384d4d32785652522e6a7067, '00023-A', 'AaaAAAAAAAAA', 'TEST GROUP 3', 'zdy34616', 'Elbertson', 'Jeremy', 'E', 'Male', '34', '4', '1000', 'Jerma', '2019-09-22', 'US of A', 'A', 'Single', '0', '13515', '1515', '13513513513', '1513515315135315', '135135515', '2019-12-05', '135515', '1351353', '2019-12-13', '153513', '5135353', '2019-12-20', '535135', '335135', '2020-01-04', '153515', '1351355', '2019-12-18', '13513535', 'Applicant', NULL, NULL, NULL, '2019-12-27 12:29:43 PM', NULL, NULL, NULL, NULL),
+(35, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303032332d412f6368726f6d655f6a4b384d4d32785652522e6a7067, '00023-A', 'AaaAAAAAAAAA', 'TEST GROUP 3', 'zdy34616', 'Elbertson', 'Jeremy', 'E', 'Male', '34', '4', '1000', 'Jerma', '2019-09-22', 'US of A', 'A', 'Single', '0', '13515', '1515', '13513513513', '1513515315135315', '135135515', '2019-12-05', '135515', '1351353', '2019-12-13', '153513', '5135353', '2019-12-20', '535135', '335135', '2020-01-04', '153515', '1351355', '2019-12-18', '13513535', 'Employed', '1', '2020-02-14 10:23:41 AM', '2021-02-14 10:23:41 AM', '2019-12-27 12:29:43 PM', NULL, NULL, NULL, '00023-B'),
 (36, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f626c7565, '00012-A', 'dfhhdfhfgh', 'fdhhfdhfh', NULL, 'Dfhdfh', 'Hfhdfhfdhdh', 'Dhfdhh', 'Male', '2', 'dhhdfhdf', 'dfh', 'fhghdfhdf', '2020-01-09', 'dfhhfd', 'hfdhdghgdhd', 'Married', '23456', 'dfh', 'fhdfhd', 'hdfhdfhd', 'dfhdhfdh', 'dfh', '2020-01-16', 'hfdhf', 'fdhd', '2020-01-16', 'hhh', 'hfdhfdh', '2020-01-11', 'fhfdh', 'dfhdfhh', '2020-01-29', 'dfhd', 'fdhfdhfdh', '2020-01-31', 'hfhghdh', 'Applicant', NULL, NULL, NULL, '2020-01-13 02:20:32 PM', NULL, NULL, NULL, NULL),
 (37, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303031332d412f31333234303632395f3234323038363730393530343632375f363538373233383237393430353939353134375f6e2e706e67, '00013-A', '78', 'TEST GROUP 1', '12313313', '78', '78', '78', 'Male', '78', '78', '78', '78', '2020-01-08', '78', '78', 'Married', '78', '78', '78', '78', '78', '78', '2020-01-24', '78', '78', '2020-01-09', '78', '78', '2020-01-03', '78', '78', '2020-01-17', '78', '78', '2020-01-25', '78', 'Applicant', NULL, NULL, NULL, '2020-01-13 02:33:36 PM', NULL, NULL, NULL, NULL),
-(38, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f626c75652e706e67, '00014-A', '25', '25', NULL, '25', '25', '25', 'Female', '25', '25', '25', '25', '2020-01-15', '25', '25', 'Married', '25', '25', '25', '25', '25', '25', '2020-01-10', '25', '25', '2020-01-11', '25', '25', '2020-01-25', '25', '25', '2020-01-11', '25', '25', '2020-01-22', '25', 'Applicant', NULL, NULL, NULL, '2020-01-13 02:35:37 PM', NULL, NULL, NULL, NULL),
+(38, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f626c75652e706e67, '00014-A', '25', '25', '12345', '25', '25', '25', 'Female', '25', '25', '25', '25', '2020-01-15', '25', '25', 'Married', '25', '25', '25', '25', '25', '25', '2020-01-10', '25', '25', '2020-01-11', '25', '25', '2020-01-25', '25', '25', '2020-01-11', '25', '25', '2020-01-22', '25', 'Employed', '1', '2020-02-14 10:25:57 AM', '2021-02-14 10:25:57 AM', '2020-01-13 02:35:37 PM', NULL, NULL, NULL, '00014-B'),
 (39, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f707572706c652e706e67, '00015-A', 'TEST-5438782', 'TEST-5438782', NULL, 'TEST-5438782', 'TEST-5438782', 'TEST-5438782', 'Male', '12', 'TEST-5438782', 'TEST-5438782', 'TEST-5438782', '2020-01-13', 'TEST-5438782', 'TEST-5438782', 'Single', '12', 'TEST-5438782', 'TEST-5438782', 'TEST-5438782', 'TEST-5438782', 'TEST-5438782', '2020-01-13', 'TEST-5438782', 'TEST-5438782', '2020-01-13', 'TEST-5438782', 'TEST-5438782', '2020-01-13', 'TEST-5438782', 'TEST-5438782', '2020-01-13', 'TEST-5438782', 'TEST-5438782', '2020-01-13', 'TEST-5438782', 'Applicant', NULL, NULL, NULL, '2020-01-13 02:45:03 PM', NULL, NULL, NULL, NULL),
-(40, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f677265656e2e706e67, '00016-A', 'TEST-7965240', 'TEST-7965240', NULL, 'TEST-7965240', 'TEST-7965240', 'TEST-7965240', 'Male', '36', 'TEST-7965240', 'TEST-7965240', 'TEST-7965240', '2020-01-13', 'TEST-7965240', 'TEST-7965240', 'Single', '36', 'TEST-7965240', 'TEST-7965240', 'TEST-7965240', 'TEST-7965240', 'TEST-7965240', '2020-01-13', 'TEST-7965240', 'TEST-7965240', '2020-01-13', 'TEST-7965240', 'TEST-7965240', '2020-01-13', 'TEST-7965240', 'TEST-7965240', '2020-01-13', 'TEST-7965240', 'TEST-7965240', '2020-01-13', 'TEST-7965240', 'Employed', '1', '2020-01-14 05:02:09 PM', '2020-02-08 05:02:09 PM', '2020-01-13 02:45:13 PM', 'R_ContractDuration', '2629743', 'No', '00016-B'),
+(40, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f677265656e2e706e67, '00016-A', 'TEST-7965240', 'TEST-7965240', NULL, 'TEST-7965240', 'TEST-7965240', 'TEST-7965240', 'Male', '36', 'TEST-7965240', 'TEST-7965240', 'TEST-7965240', '2020-01-13', 'TEST-7965240', 'TEST-7965240', 'Single', '36', 'TEST-7965240', 'TEST-7965240', 'TEST-7965240', 'TEST-7965240', 'TEST-7965240', '2020-01-13', 'TEST-7965240', 'TEST-7965240', '2020-01-13', 'TEST-7965240', 'TEST-7965240', '2020-01-13', 'TEST-7965240', 'TEST-7965240', '2020-01-13', 'TEST-7965240', 'TEST-7965240', '2020-01-13', 'TEST-7965240', 'Blacklisted', '1', '2020-01-14 05:02:09 PM', '2020-02-08 05:02:09 PM', '2020-01-13 02:45:13 PM', 'R_ContractDuration', '2629743', 'No', '00016-B'),
 (41, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f707572706c652e706e67, '00017-A', 'TEST-8140880', 'TEST-8140880', NULL, 'TEST-8140880', 'TEST-8140880', 'TEST-8140880', 'Male', '55', 'TEST-8140880', 'TEST-8140880', 'TEST-8140880', '2020-01-13', 'TEST-8140880', 'TEST-8140880', 'Single', '55', 'TEST-8140880', 'TEST-8140880', 'TEST-8140880', 'TEST-8140880', 'TEST-8140880', '2020-01-13', 'TEST-8140880', 'TEST-8140880', '2020-01-13', 'TEST-8140880', 'TEST-8140880', '2020-01-13', 'TEST-8140880', 'TEST-8140880', '2020-01-13', 'TEST-8140880', 'TEST-8140880', '2020-01-13', 'TEST-8140880', 'Applicant', NULL, NULL, NULL, '2020-01-13 02:45:19 PM', NULL, NULL, NULL, NULL),
 (42, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f707572706c652e706e67, '00018-A', 'TEST-9763938', 'TEST-9763938', NULL, 'TEST-9763938', 'TEST-9763938', 'TEST-9763938', 'Male', '30', 'TEST-9763938', 'TEST-9763938', 'TEST-9763938', '2020-01-13', 'TEST-9763938', 'TEST-9763938', 'Single', '30', 'TEST-9763938', 'TEST-9763938', 'TEST-9763938', 'TEST-9763938', 'TEST-9763938', '2020-01-13', 'TEST-9763938', 'TEST-9763938', '2020-01-13', 'TEST-9763938', 'TEST-9763938', '2020-01-13', 'TEST-9763938', 'TEST-9763938', '2020-01-13', 'TEST-9763938', 'TEST-9763938', '2020-01-13', 'TEST-9763938', 'Applicant', NULL, NULL, NULL, '2020-01-13 02:45:22 PM', NULL, NULL, NULL, NULL),
 (43, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f677265656e2e706e67, '00019-A', 'TEST-4765684', 'TEST-4765684', NULL, 'TEST-4765684', 'TEST-4765684', 'TEST-4765684', 'Male', '13', 'TEST-4765684', 'TEST-4765684', 'TEST-4765684', '2020-01-13', 'TEST-4765684', 'TEST-4765684', 'Single', '13', 'TEST-4765684', 'TEST-4765684', 'TEST-4765684', 'TEST-4765684', 'TEST-4765684', '2020-01-13', 'TEST-4765684', 'TEST-4765684', '2020-01-13', 'TEST-4765684', 'TEST-4765684', '2020-01-13', 'TEST-4765684', 'TEST-4765684', '2020-01-13', 'TEST-4765684', 'TEST-4765684', '2020-01-13', 'TEST-4765684', 'Applicant', NULL, NULL, NULL, '2020-01-13 02:45:35 PM', NULL, NULL, NULL, NULL),
@@ -381,12 +381,12 @@ INSERT INTO `dashboard_months` (`ID`, `Year`, `Month`, `Total`) VALUES
 (1128, '5555', '10', '0'),
 (1136, '5555', '11', '0'),
 (1144, '5555', '12', '0'),
-(1186, '2019', '09', '1'),
-(1187, '2019', '10', '2'),
-(1188, '2019', '12', '6'),
-(1189, '2020', '01', '11'),
-(1190, '2020', '03', '1'),
-(1191, '2020', '12', '1');
+(1193, '2019', '09', '1'),
+(1194, '2019', '10', '2'),
+(1195, '2019', '12', '6'),
+(1196, '2020', '01', '11'),
+(1197, '2020', '03', '1'),
+(1198, '2020', '12', '1');
 
 -- --------------------------------------------------------
 
@@ -408,11 +408,14 @@ CREATE TABLE `dummy_hours` (
 --
 
 INSERT INTO `dummy_hours` (`ID`, `Time`, `Current`, `Regular`, `NightShift`, `Holiday`) VALUES
-(1198, '2020-02-01', 'Current', 0, 0, 0),
-(1199, '2020-02-02', 'Current', 0, 0, 0),
-(1200, '2020-02-03', 'Current', 0, 0, 0),
-(1201, '2020-02-04', 'Current', 0, 0, 0),
-(1202, '2020-02-05', 'Current', 0, 0, 0);
+(1294, '2020-02-10', 'Current', 0, 0, 0),
+(1295, '2020-02-11', 'Current', 0, 0, 0),
+(1296, '2020-02-12', 'Current', 0, 0, 0),
+(1297, '2020-02-13', 'Current', 0, 0, 0),
+(1298, '2020-02-14', 'Current', 0, 0, 0),
+(1299, '2020-02-15', 'Current', 0, 0, 0),
+(1300, '2020-02-16', 'Current', 0, 0, 0),
+(1301, '2020-02-17', 'Current', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -500,30 +503,32 @@ CREATE TABLE `hours_weekly` (
 --
 
 INSERT INTO `hours_weekly` (`No`, `ClientID`, `ApplicantID`, `Name`, `Salary`, `Time`, `Hours`, `Type`, `Overtime`, `Regular`, `NightShift`, `Holiday`, `Current`, `HDMF`, `Philhealth`, `SSS`, `Tax`) VALUES
-(1, '1', '00006-C', NULL, NULL, '2019-12-10', 4, '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, '1', '00006-C', NULL, NULL, '2019-12-11', 5, '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(3, '1', '00006-C', NULL, NULL, '2019-12-12', 6, '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(4, '1', '00006-C', NULL, NULL, '2019-12-13', 7, '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5, '1', '00006-C', NULL, NULL, '2019-12-14', 8, '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(6, '1', '00006-C', NULL, NULL, '2019-12-15', 0, '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(19, '1', '00008-A', NULL, NULL, '2019-12-10', 0, '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(20, '1', '00008-A', NULL, NULL, '2019-12-11', 0, '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(21, '1', '00008-A', NULL, NULL, '2019-12-12', 0, '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(22, '1', '00008-A', NULL, NULL, '2019-12-13', 0, '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(23, '1', '00008-A', NULL, NULL, '2019-12-14', 0, '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(24, '1', '00008-A', NULL, NULL, '2019-12-15', 0, '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(31, '1', '00001-A', NULL, NULL, '2019-12-10', 0, '', 0, NULL, NULL, NULL, NULL, 'dasd', 'asdaddas', 'asd', 'asdasda'),
-(32, '1', '00001-A', NULL, NULL, '2019-12-11', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
-(33, '1', '00001-A', NULL, NULL, '2019-12-12', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
-(34, '1', '00001-A', NULL, NULL, '2019-12-13', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
-(35, '1', '00001-A', NULL, NULL, '2019-12-14', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
-(36, '1', '00001-A', NULL, NULL, '2019-12-15', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
-(43, '1', '00007-B', NULL, NULL, '2019-12-10', 10, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
-(44, '1', '00007-B', NULL, NULL, '2019-12-11', 10, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
-(45, '1', '00007-B', NULL, NULL, '2019-12-12', 10, '', 10, NULL, NULL, NULL, NULL, '', '', '', ''),
-(46, '1', '00007-B', NULL, NULL, '2019-12-13', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
-(47, '1', '00007-B', NULL, NULL, '2019-12-14', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
-(48, '1', '00007-B', NULL, NULL, '2019-12-15', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', '');
+(49, '1', '00023-B', 'Elbertson, Jeremy E.', 'zdy34616', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(50, '1', '00014-B', '25, 25 25.', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(51, '1', '00006-C', NULL, NULL, '2019-12-10', 4, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(52, '1', '00006-C', NULL, NULL, '2019-12-11', 5, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(53, '1', '00006-C', NULL, NULL, '2019-12-12', 6, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(54, '1', '00006-C', NULL, NULL, '2019-12-13', 7, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(55, '1', '00006-C', NULL, NULL, '2019-12-14', 8, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(56, '1', '00006-C', NULL, NULL, '2019-12-15', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(57, '1', '00007-B', NULL, NULL, '2019-12-10', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(58, '1', '00007-B', NULL, NULL, '2019-12-11', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(59, '1', '00007-B', NULL, NULL, '2019-12-12', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(60, '1', '00007-B', NULL, NULL, '2019-12-13', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(61, '1', '00007-B', NULL, NULL, '2019-12-14', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(62, '1', '00007-B', NULL, NULL, '2019-12-15', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(63, '1', '00001-A', NULL, NULL, '2019-12-10', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(64, '1', '00001-A', NULL, NULL, '2019-12-11', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(65, '1', '00001-A', NULL, NULL, '2019-12-12', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(66, '1', '00001-A', NULL, NULL, '2019-12-13', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(67, '1', '00001-A', NULL, NULL, '2019-12-14', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(68, '1', '00001-A', NULL, NULL, '2019-12-15', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(69, '1', '00008-A', NULL, NULL, '2019-12-10', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(70, '1', '00008-A', NULL, NULL, '2019-12-11', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(71, '1', '00008-A', NULL, NULL, '2019-12-12', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(72, '1', '00008-A', NULL, NULL, '2019-12-13', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(73, '1', '00008-A', NULL, NULL, '2019-12-14', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', ''),
+(74, '1', '00008-A', NULL, NULL, '2019-12-15', 0, '', 0, NULL, NULL, NULL, NULL, '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -666,7 +671,15 @@ INSERT INTO `logbook` (`No`, `Time`, `Type`, `Event`, `Link`) VALUES
 (354, '2020-01-25 09:57:49 PM', 'Update', 'Updated weekly hours for 00007-B.', 'http://localhost/ci_wercher_system/Clients'),
 (355, '2020-01-25 09:59:09 PM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
 (356, '2020-01-25 10:19:10 PM', 'Update', 'Updated weekly hours for 00007-B.', 'http://localhost/ci_wercher_system/Clients'),
-(357, '2020-01-26 05:26:46 PM', 'Update', 'Updated weekly hours for 00007-B.', 'http://localhost/ci_wercher_system/Clients');
+(357, '2020-01-26 05:26:46 PM', 'Update', 'Updated weekly hours for 00007-B.', 'http://localhost/ci_wercher_system/Clients'),
+(358, '2020-02-07 11:49:40 AM', 'Update', 'Applicant ID 00006-C has their contract extended by 2 days!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00006-C'),
+(359, '2020-02-07 11:51:21 AM', 'New', 'A reminder has been set for ID 00006-C, alerting after 1 month!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00006-C'),
+(360, '2020-02-14 10:23:41 AM', 'Employment', 'Applicant ID 00023-B has been employed to Client ID 1 for 1 year!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00023-B'),
+(361, '2020-02-14 10:25:57 AM', 'Employment', 'Applicant ID 00014-B has been employed to Client ID 1 for 1 year!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00014-B'),
+(362, '2020-02-17 07:35:20 AM', 'Note', 'Added new note for .', NULL),
+(363, '2020-02-17 07:43:10 AM', 'Note', 'Added new note for 00012-A.', NULL),
+(364, '2020-02-17 07:46:47 AM', 'Note', 'Added new note for 00013-A.', NULL),
+(365, '2020-02-17 07:48:15 AM', 'Note', 'Added new note for 00012-A.', NULL);
 
 -- --------------------------------------------------------
 
@@ -746,7 +759,31 @@ INSERT INTO `supp_documents` (`ID`, `ApplicantID`, `Doc_Image`, `Doc_File`, `Doc
 (29, '00006-C', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f64756d6d79332e706466, 'dummy3.pdf', 'Document', '123', '132115135', '15135', '2020-02-07'),
 (30, '00006-C', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f64756d6d79342e706466, 'dummy4.pdf', 'Document', '123', '12313123', '1323', '2020-02-07'),
 (31, '00006-C', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f64756d6d79352e706466, 'dummy5.pdf', 'Document', '54', '3563635635', '636536', '2020-02-07'),
-(32, '00006-C', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f64756d6d79362e706466, 'dummy6.pdf', 'Document', '123', '12312313', '3123', '2020-02-07');
+(32, '00006-C', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d432f64756d6d79362e706466, 'dummy6.pdf', 'Document', '123', '12312313', '3123', '2020-02-07'),
+(33, '00016-A', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303031362d412f64756d6d79312e706466, 'dummy1.pdf', 'Blacklist', 'blacklist', '12313', '12313', '2020-02-07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tab_documents_notes`
+--
+
+CREATE TABLE `tab_documents_notes` (
+  `DatabaseID` int(11) NOT NULL,
+  `ApplicantID` varchar(255) DEFAULT NULL,
+  `Note` varchar(255) DEFAULT NULL,
+  `DateAdded` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tab_documents_notes`
+--
+
+INSERT INTO `tab_documents_notes` (`DatabaseID`, `ApplicantID`, `Note`, `DateAdded`) VALUES
+(1, '', 'hello', '2020-02-17 12:35:20 AM'),
+(2, '00012-A', 'hello', '2020-02-17 12:43:10 AM'),
+(3, '00013-A', 'hellooooooooo', '2020-02-17 12:46:47 AM'),
+(4, '00012-A', 'aaa', '2020-02-17 12:48:15 AM');
 
 -- --------------------------------------------------------
 
@@ -860,6 +897,12 @@ ALTER TABLE `supp_documents`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexes for table `tab_documents_notes`
+--
+ALTER TABLE `tab_documents_notes`
+  ADD PRIMARY KEY (`DatabaseID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -897,31 +940,37 @@ ALTER TABLE `contract_history`
 -- AUTO_INCREMENT for table `dashboard_months`
 --
 ALTER TABLE `dashboard_months`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1193;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1200;
 
 --
 -- AUTO_INCREMENT for table `dummy_hours`
 --
 ALTER TABLE `dummy_hours`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1203;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1302;
 
 --
 -- AUTO_INCREMENT for table `hours_weekly`
 --
 ALTER TABLE `hours_weekly`
-  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `logbook`
 --
 ALTER TABLE `logbook`
-  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=358;
+  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=366;
 
 --
 -- AUTO_INCREMENT for table `supp_documents`
 --
 ALTER TABLE `supp_documents`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
+-- AUTO_INCREMENT for table `tab_documents_notes`
+--
+ALTER TABLE `tab_documents_notes`
+  MODIFY `DatabaseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
