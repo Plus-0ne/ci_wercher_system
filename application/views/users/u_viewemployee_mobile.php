@@ -55,10 +55,7 @@
 					</h2>
 				</div>
 				<div class="col-sm-12 pb-2">
-					This applicant has been marked as <b>Blacklisted</b> for the following reason:
-				</div>
-				<div class="col-sm-12 pb-5">
-					TEST TEST TEST TEST
+					This individual has been marked as <b>Blacklisted</b>
 				</div>
 				<div class="col-sm-12 col-mb-12 pb-2">
 					<button id="ViolationsButton" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#ViolationsModal"><i class="far fa-eye"></i> View Violations</button>

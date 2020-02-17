@@ -6,30 +6,9 @@
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="row">
-					<div class="col-sm-12 pt-3 pb-3">
-						<nav aria-label="breadcrumb">
-							<ol class="breadcrumb" style="background-color: transparent;">
-								<li class="breadcrumb-item"><a href="<?=base_url()?>Dashboard">Home</a></li>
-								<li class="breadcrumb-item">
-									<?php if ($Status == 'Employed') { 
-										echo '<a href="'. base_url() . 'Employee">Employee</a>';
-									} else { 
-										echo '<a href="'. base_url() . 'Applicants">Applicants</a>';
-									} ?>
-								</li>
-								<li class="breadcrumb-item"><a href="<?=base_url()?>ViewEmployee?id=<?=$ApplicantID?>">Details</a></li>
-								<li class="breadcrumb-item active" aria-current="page">Edit</li>
-							</ol>
-						</nav>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-12 rcontent">
+					<div class="col-sm-12">
 						<div class="p-5">
 							<?php echo $this->session->flashdata('prompts'); ?>
-							<div class="col-6 col-sm-6 col-md-6 mb-5 PrintExclude">
-								<a href="<?php echo base_url() . 'ViewEmployee?id=' . $ApplicantID; ?>" class="btn btn-primary btn-sm"><i class="fas fa-chevron-left"></i> Back </a>
-							</div>
 							<div class="mb-3">
 								<h5>
 									<i class="fas fa-user-alt"></i> Personal Information
@@ -59,33 +38,8 @@
 										<input class="form-control" type="text" name="PositionDesired" autocomplete="off" value="<?php echo $PositionDesired; ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
-										<label>Group</label>
-										<select class="form-control" name="PositionGroup">
-											<option value="TEST GROUP 1" <?php if ($PositionGroup == 'TEST GROUP 1') {
-												echo 'selected=""';
-											} ?>>
-												TEST GROUP 1
-											</option>
-											<option value="TEST GROUP 2" <?php if ($PositionGroup == 'TEST GROUP 2') {
-												echo 'selected=""';
-											} ?>>
-												TEST GROUP 2
-											</option>
-											<option value="TEST GROUP 3" <?php if ($PositionGroup == 'TEST GROUP 3') {
-												echo 'selected=""';
-											} ?>>
-												TEST GROUP 3
-											</option>
-											<option value="TEST GROUP 4" <?php if ($PositionGroup == 'TEST GROUP 4') {
-												echo 'selected=""';
-											} ?>>
-												TEST GROUP 4
-											</option>
-										</select>
-									</div>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Salary Expected</label>
-										<input class="form-control" type="text" name="SalaryExpected" autocomplete="off" value="<?php echo $SalaryExpected; ?>">
+										<label>Position Group</label>
+										<input class="form-control" type="text" name="PositionGroup" autocomplete="off" value="<?php echo $PositionGroup; ?>">
 									</div>
 								</div>
 								<div class="form-row">
@@ -124,11 +78,11 @@
 									</div>
 									<div class="form-group col-sm-12 col-md-1">
 										<label>Height</label>
-										<input class="form-control" type="number" name="Height" autocomplete="off" value="<?php echo $Height; ?>">
+										<input class="form-control" type="text" name="Height" autocomplete="off" value="<?php echo $Height; ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-1">
 										<label>Weight</label>
-										<input class="form-control" type="number" name="Weight" autocomplete="off" value="<?php echo $Weight; ?>">
+										<input class="form-control" type="text" name="Weight" autocomplete="off" value="<?php echo $Weight; ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Religion</label>
@@ -179,7 +133,7 @@
 									</div>
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Phone Number</label>
-										<input class="form-control" type="number" name="PhoneNumber" autocomplete="off" value="<?php echo $Phone_No; ?>">
+										<input class="form-control" type="text" name="PhoneNumber" autocomplete="off" value="<?php echo $Phone_No; ?>">
 									</div>
 								</div>
 								<div class="mt-5 mb-4">
@@ -417,9 +371,6 @@
 								<div class="form-row pt-5 pb-4">
 									<div class="form-group mr-auto">
 										<button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Save</button>
-									</div>
-									<div class="form-group ml-auto">
-										<a href="<?=base_url()?>Employee" class="btn btn-secondary"><i class="fas fa-chevron-left"></i> Back</a>
 									</div>
 								</div>
 							</form>
