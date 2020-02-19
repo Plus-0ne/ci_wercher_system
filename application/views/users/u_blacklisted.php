@@ -41,7 +41,7 @@
 										<tr>
 											<td class="text-center">
 												<div class="col-sm-12">
-													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70">
+													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
 												</div>
 												<div class="col-sm-12 align-middle">
 													<?php echo $row['ApplicantID']; ?>
@@ -61,7 +61,7 @@
 											</td>
 											<td class="text-center align-middle PrintExclude" width="100">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
-												<a href="<?=base_url()?>RestoreEmployee?id=<?php echo $row['ApplicantID']; ?>" class="btn btn-success btn-sm w-100 mb-1"><i class="fas fa-checkmark"></i> Whitelist</a>
+												<a href="<?=base_url()?>RestoreEmployee?id=<?php echo $row['ApplicantID']; ?>" class="btn btn-success btn-sm w-100 mb-1"><i class="fas fa-redo"></i> Restore</a>
 											</td>
 										</tr>
 									<?php endforeach ?>

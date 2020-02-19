@@ -57,7 +57,6 @@
 										<li id="TabAcademicBtn" class="employee-tabs-select"><a href="#Academic" onclick="">Academic</a></li>
 										<li id="TabEmploymentsBtn" class="employee-tabs-select"><a href="#Employments" onclick="">Employments</a></li>
 										<li id="TabMachineBtn" class="employee-tabs-select"><a href="#Machine" onclick="">Machine</a></li>
-										<li id="TabNotificationsButton"><a href="#Machine" onclick=""><i class="fas fa-cog" style="margin-right: -1px;"></i></a></li>
 										<li id="TabEditBtn"><a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" onclick="" target="_blank"><i class="fas fa-edit" style="margin-right: -1px;"></i></a></li>
 									</ul>
 								</div>
@@ -526,7 +525,7 @@
 																			<b><?php echo $row['Doc_FileName']; ?></b></a>
 																		</div>
 																		<div class="folder-documents-info col-sm-12 ml-4">
-																			Created by <?php echo $row['DateAdded']; ?>  (0MB)
+																			<?php echo $row['Subject']; ?> | Created by <?php echo $row['DateAdded']; ?>  (0MB)
 																		</div>
 																	</div>
 															<?php endforeach ?>
@@ -556,7 +555,7 @@
 																			</b></a>
 																		</div>
 																		<div class="folder-documents-info col-sm-12 ml-4">
-																			Created by <?php echo $row['DateAdded']; ?> (0MB)
+																			<?php echo $row['Subject']; ?> | Created by <?php echo $row['DateAdded']; ?> (0MB)
 																		</div>
 																	</div>
 															<?php endforeach ?>

@@ -1,20 +1,3 @@
-<div class="row">
-	<div class="col-sm-12 pt-3 pb-3">
-		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item"><a href="<?=base_url()?>Dashboard">Home</a></li>
-				<li class="breadcrumb-item">
-					<?php if ($Status == 'Employed') { 
-						echo '<a href="'. base_url() . 'Employee">Employee</a>';
-					} else { 
-						echo '<a href="'. base_url() . 'Applicants">Applicants</a>';
-					} ?>
-				</li>
-				<li class="breadcrumb-item active" aria-current="page">Details</li>
-			</ol>
-		</nav>
-	</div>
-</div>
 <div class="row rcontent p-5 PrintOut">
 	<?php echo $this->session->flashdata('prompts'); ?>
 	<div class="col-6 col-sm-6 col-md-6 mb-5 PrintExclude">

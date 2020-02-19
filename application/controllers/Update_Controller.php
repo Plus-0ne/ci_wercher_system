@@ -693,6 +693,44 @@ class Update_Controller extends CI_Controller {
 			}
 		}
 	}
+	public function RestoreEmployee()
+	{
+		$ApplicantID = $this->input->get('id');
+		if (!isset($_GET['id'])) {
+			redirect('Employee');
+		}
+		else
+		{
+			$Removethis = $this->Model_Updates->RestoreEmployee($ApplicantID);
+			if ($Removethis == TRUE) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ID ' . $ApplicantID . ' has been restored as an Applicant.</h5></div>');
+				// LOGBOOK
+				date_default_timezone_set('Asia/Manila');
+				$LogbookCurrentTime = date('Y-m-d h:i:s A');
+				$LogbookType = 'Update';
+				$LogbookEvent = 'Employee ID ' . $ApplicantID .' has been restored as an Applicant.';
+				$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+				$data = array(
+					'Time' => $LogbookCurrentTime,
+					'Type' => $LogbookType,
+					'Event' => $LogbookEvent,
+					'Link' => $LogbookLink,
+				);
+				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+				if (isset($_SERVER['HTTP_REFERER'])) {
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+				else
+				{
+					redirect('Employee');
+				}
+			}
+			else
+			{
+				redirect('Employee');
+			}
+		}
+	}
 	public function SetWeeklyHours()
 	{
 		if (isset($_POST['ApplicantID'])) {

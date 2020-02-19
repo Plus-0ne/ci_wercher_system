@@ -72,6 +72,12 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
+	public function RestoreEmployee($ApplicantID)
+	{
+		$SQL = "UPDATE applicants SET Status ='Applicant' WHERE ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL,$ApplicantID);
+		return $result;
+	}
 	public function UpdateWeeklyHours($ApplicantID,$data)
 	{
 		extract($data);

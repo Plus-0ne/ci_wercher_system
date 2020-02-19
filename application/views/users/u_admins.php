@@ -29,7 +29,7 @@
 										<th> Full Name </th>
 										<th> Gender </th>
 										<th> Date Added </th>
-										<th class="PrintExclude"> Action </th>
+										<th class="PrintExclude" style="width: 5%;"> Action </th>
 									</tr>
 								</thead>
 								<tbody>

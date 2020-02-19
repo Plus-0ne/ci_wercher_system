@@ -96,7 +96,8 @@
 	public function index()
 	{
 		$this->session->unset_userdata('acadcart');
-		$this->load->view('Login');
+		redirect('Dashboard');
+		// $this->load->view('Login');
 	}
 	public function CheckUserLogin()
 	{

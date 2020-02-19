@@ -15,12 +15,12 @@
 							<input id="ExcelClientID" type="hidden" name="ExcelClientID" value="<?php echo $ClientID; ?>">
 							<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">
 							<button id="ImportButton" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i> Import</button>
-							<button id="ImportButton" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i> Export</button>
+							<button id="ImportButton" type="button" class="btn btn-secondary"><i class="fas fa-lock"></i> Export (WIP)</button>
 						</form>
 						<!-- <div id="datatables-export"></div> -->
 					</div>
 					<div class="col-4 mb-2 text-right">
-						<button id="ImportButton" type="button" class="btn btn-primary"><i class="fas fa-file-word"></i> Generate Payslip</button>
+						<button id="ImportButton" type="button" class="btn btn-secondary"><i class="fas fa-lock"></i> Generate Payslip (WIP)</button>
 					</div>
 					<div class="col-sm-12 col-mb-12">
 						<table id="WeeklyTable" class="table table-condensed">

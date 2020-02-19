@@ -27,7 +27,7 @@
 										<th> Address </th>
 										<th> Contact </th>
 										<th> Employees </th>
-										<th class="text-center PrintExclude"> Action </th>
+										<th class="text-center PrintExclude" style="width: 5%;"> Action </th>
 									</tr>
 								</thead>
 								<tbody>

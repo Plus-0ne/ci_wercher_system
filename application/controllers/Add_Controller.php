@@ -458,7 +458,7 @@ class Add_Controller extends CI_Controller {
 			// TODO: Add restrictions to deny /uploads/ access.
 			// PDF File Upload
 			if ( ! $this->upload->do_upload('pFile')) {
-				$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> ' . $pFile . ' PDF upload: '.$this->upload->display_errors().'</h5></div>');
+				$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> ' . $pFile . ' PDF upload: '.$this->upload->display_errors().' This function is not yet implemented. Click the blue "Choose a PDF file button" instead.</h5></div>');
 				redirect('Employee');
 				exit();
 			} else {

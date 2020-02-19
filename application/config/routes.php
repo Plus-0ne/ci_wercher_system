@@ -92,6 +92,7 @@ $route['AddNote'] = 'Update_Controller/AddNote';
 $route['AddNoteDocuments'] = 'Update_Controller/AddNoteDocuments';
 $route['SetReminder'] = 'Update_Controller/SetReminder';
 $route['BlacklistEmployee'] = 'Update_Controller/BlacklistEmployee';
+$route['RestoreEmployee'] = 'Update_Controller/RestoreEmployee';
 $route['SetWeeklyHours'] = 'Update_Controller/SetWeeklyHours';
 $route['ViewClientEmployees'] = 'Update_Controller/ViewClientEmployees';
 $route['ImportExcel'] = 'Update_Controller/ImportExcel';
