@@ -1,6 +1,6 @@
 <?php $T_Header;?>
 <body>
-	<div class="wrapper">
+	<div class="wrapper wercher-background-lowpoly">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
@@ -20,12 +20,15 @@
 						</h4>
 					</div>
 					<div class="col-7 text-right">
+						<a href="<?=base_url()?>NewEmployee" class="btn btn-primary" onclick="// return confirm('Add Employee?')">
+							<i class="fas fa-user-plus"></i> New
+						</a>
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
 					<div class="col-sm-12">
 						<?php echo $this->session->flashdata('prompts'); ?>
 						<div class="table-responsive pt-2 pb-5">
-							<table id="emp" class="table table-striped table-bordered PrintOut" style="width: 100%;">
+							<table id="emp" class="table PrintOut" style="width: 100%;">
 								<thead>
 									<tr class="text-center">
 										<th> Applicant </th>
@@ -67,11 +70,6 @@
 									<?php endforeach ?>
 								</tbody>
 							</table>
-						</div>
-						<div class="p-2">
-							<a href="<?=base_url()?>NewEmployee" class="btn btn-primary" onclick="return confirm('Add Employee?')">
-								<i class="fas fa-user-plus"></i> New
-							</a>
 						</div>
 					</div>
 				</div>

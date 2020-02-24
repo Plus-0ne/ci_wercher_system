@@ -1,22 +1,17 @@
 <?php $T_Header;?>
 <body>
 <style>
-	body {
-		background-image: url("assets/img/lowpoly.png");
-		background-repeat: repeat-y;
-        background-attachment: fixed;
-	}
 	.rounded-circle {
 		border: 4px solid white;
 	}
 </style>
-	<div class="wrapper">
+	<div class="wrapper wercher-background-lowpoly">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="d-none d-sm-block">
-					<div class="row PrintOut">
+					<div class="row">
 						<!-- <div class="col-6 col-sm-6 col-md-6 mb-5 PrintExclude">
 							<a href="
 							<?php if ($Status == 'Employed') {
@@ -57,6 +52,7 @@
 										<li id="TabAcademicBtn" class="employee-tabs-select"><a href="#Academic" onclick="">Academic</a></li>
 										<li id="TabEmploymentsBtn" class="employee-tabs-select"><a href="#Employments" onclick="">Employments</a></li>
 										<li id="TabMachineBtn" class="employee-tabs-select"><a href="#Machine" onclick="">Machine</a></li>
+										<li><button onClick="printContent('PrintOut')" type="button"><i class="fas fa-print" style="margin-right: -1px;"></i> </button></li>
 										<li id="TabEditBtn"><a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" onclick="" target="_blank"><i class="fas fa-edit" style="margin-right: -1px;"></i></a></li>
 									</ul>
 								</div>
@@ -78,11 +74,15 @@
 									</div>
 									<hr>
 									<div class="col-sm-12">
-										<i class="fas fa-user-tie"></i> <?php echo $ApplicantID; ?>
+										<?php if($Status == 'Employed'): ?>
+											<i class="fas fa-user-tie"></i> <?php echo $EmployeeID; ?>
+										<?php else: ?>
+											<i class="fas fa-user"></i> <?php echo $ApplicantID; ?>
+										<?php endif; ?>
 									</div>
 									<div class="col-sm-12 mt-2">
 										<?php if ($Status == 'Employed') { ?>
-											<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Employed (<?php echo 'EmployeeID'; ?>)
+											<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Employed
 										<?php } elseif ($Status == 'Applicant') { ?>
 											<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Applicant
 										<?php } elseif ($Status == 'Expired') { ?>
@@ -105,7 +105,7 @@
 												This individual has been marked as <b>Blacklisted</b>
 											</div>
 											<div class="col-sm-12 col-mb-12 pb-2">
-												<button id="TabDocumentsBtnAlt" class="employee-tabs-select btn btn-danger"><i class="far fa-eye"></i> Documents</button>
+												<a href="#Documents" class="btn btn-danger"><i class="far fa-eye"></i> Documents</a>
 											</div>
 										</div>
 									</div>
@@ -119,7 +119,7 @@
 													<?php if ($ReminderDate == NULL): ?> 
 														<button id="<?php echo $ApplicantID; ?>" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-exclamation"></i> No reminder set</button>
 													<?php else: ?>
-														<button id="<?php echo $ApplicantID; ?>" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-check"></i> You will be notified 1 month before expiring</button>
+														<button id="<?php echo $ApplicantID; ?>" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-check"></i> You will be notified <?php echo $ReminderDateString; ?> before expiring</button>
 													<?php endif; ?>
 												<?php endif; ?>
 											</div>
@@ -317,8 +317,13 @@
 										<div class="employee-tabs-group-content">
 											<?php if ($Status == 'Employed'): ?>
 											<div class="employee-content-header">
-												<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm mr-auto ExtendButton" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-plus"></i> Extend Contract</button>
-												<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
+												<div class="row">
+													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm ExtendButton" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-plus"></i> Extend Contract</button>
+													<button class="btn btn-primary btn-sm ml-1" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
+													<div class="ml-auto">
+														<button class="btn btn-primary btn-sm" onClick="printContent('PrintOut')" type="button"><i class="fas fa-print"></i> Print</button>
+													</div>
+												</div>
 											</div>
 											<hr>
 											<div class="col-sm-12 col-md-12 employee-dynamic-header text-center">
@@ -471,7 +476,7 @@
 																		<b>Documents (<?php echo $GetDocuments->num_rows(); ?>)</b>
 																	</div>
 																	<div class="col-sm-12">
-																		<button id="TabDocumentsBtnAlt" class="TabDocumentsBtnAlt employee-tabs-select btn-sm btn btn-primary"><i class="far fa-eye"></i> View</button>
+																		<a href="#Documents" class="btn-sm btn btn-primary"><i class="far fa-eye"></i> View</a>
 																	</div>
 																</div>
 																<div class="col-sm-12 employee-static-item text-center">
@@ -479,15 +484,13 @@
 																		<b>Violations (<?php echo $GetDocumentsViolations->num_rows(); ?>)</b>
 																	</div>
 																	<div class="col-sm-12">
-																		<button id="TabDocumentsBtnAlt" class="employee-tabs-select btn-sm btn btn-danger"><i class="far fa-eye"></i> View</button>
+																		<a href="#Documents" class="btn-sm btn btn-danger"><i class="far fa-eye"></i> View</a>
 																	</div>
 																</div>
 															</p>
 														</div>
 													</div>
 												</div>
-											</div>
-											<div style="height: 400px;">
 											</div>
 											<?php else: ?>
 											<div class="employee-content-header">
@@ -506,7 +509,7 @@
 									<div id="TabDocuments">
 										<div class="employee-tabs-group-content">
 											<div class="employee-content-header">
-												<button class="btn btn-secondary btn-sm"><i class="fas fa-lock"></i> Upload (WIP)</button>
+												<button id="<?php echo $ApplicantID; ?>" class="btn btn-primary btn-sm doc_btn" data-toggle="modal" data-target="#AddSuppDoc"><i class="fas fa-file-upload"></i> Upload Documents</button>
 											</div>
 											<hr>
 											<div class="row">
@@ -515,7 +518,7 @@
 														<div class="col-sm-12">
 															<span class="folder-button"><i class="fas fa-folder-open"></i> Documents (<?php echo $GetDocuments->num_rows(); ?>)</span>
 														</div>
-														<div class="folder-documents folder-active col-sm-12 mt-4 ml-5">
+														<div id="FolderDocuments" class="folder-documents folder-active col-sm-12 mt-4 ml-5">
 														<?php if ($GetDocuments->num_rows() > 0) { ?>
 															<?php foreach ($GetDocuments->result_array() as $row): ?>
 																	<div class="mb-3">
@@ -538,7 +541,7 @@
 														<div class="col-sm-12">
 															<span class="folder-button"><i class="fas fa-folder"></i> Violations (<?php echo $GetDocumentsViolations->num_rows(); ?>)</span>
 														</div>
-														<div class="folder-documents col-sm-12 mt-4 ml-5">
+														<div id="FolderViolations" class="folder-documents col-sm-12 mt-4 ml-5">
 														<?php if ($GetDocumentsViolations->num_rows() > 0) { ?>
 															<?php foreach ($GetDocumentsViolations->result_array() as $row): ?>
 																	<div class="mb-3">
@@ -576,7 +579,7 @@
 													</div>
 													<div class="row mt-2">
 														<div class="col-sm-12">
-															<table id="ListNotes" class="table table-borderless PrintOut" style="width: 100%;">
+															<table id="ListNotes" class="table table-borderless" style="width: 100%;">
 																<thead>
 																</thead>
 																<tbody>
@@ -609,7 +612,7 @@
 									</div>
 									<div id="TabAcademic">
 										<div class="employee-tabs-group-content" id="TabAcademic">
-											<div class="row PrintOut">
+											<div class="row">
 												<div class="col-sm-12">
 													<div class="table-responsive">
 														<table class="table table-condensed">
@@ -653,7 +656,7 @@
 									</div>
 									<div id="TabEmployments">
 										<div class="employee-tabs-group-content" id="TabEmployments">
-											<div class="row PrintOut">
+											<div class="row">
 												<div class="col-sm-12">
 													<div class="table-responsive">
 														<table class="table table-condensed">
@@ -749,7 +752,7 @@
 
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title PrintOut PrintOutModal">Contract Report for <?=$LastName?>, <?=$FirstName?> <?=$MiddleInitial?>.</h4>
+					<h4 class="modal-title">Contract Report for <?=$LastName?>, <?=$FirstName?> <?=$MiddleInitial?>.</h4>
 					<div class="text-right">
 						<button onClick="printContent('PrintOutModal')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
 						<button type="button" class="close d-none d-sm-block" data-dismiss="modal">&times;</button>
@@ -758,7 +761,25 @@
 
 				<!-- Modal body -->
 				<div class="modal-body">
-					<div class="row rcontent PrintOut PrintOutModal">
+					<div class="row rcontent">
+						<?php
+							$currTime = time();
+							$strDateEnds = strtotime($DateEnds);
+							$strDateStarted = strtotime($DateStarted);
+							// PERCENTAGE
+							$rPercentage = (($strDateEnds - $currTime) * 100) / ($strDateEnds - $strDateStarted);
+							$rPercentage = round($rPercentage);
+							// DAYS REMAINING
+							$dateTimeZone = new DateTimeZone("Asia/Manila");
+							$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
+							$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
+							$interval = $datetime1->diff($datetime2);
+							if($interval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
+								echo $interval->format('%H hours, %I minutes, %S seconds');
+							} else {
+								echo $interval->format('%y years, %m months, %d days');
+							}
+						?>
 					</div>
 				</div>
 
@@ -780,7 +801,7 @@
 
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title PrintOutModalExpired">Previous Contract Report for <?=$LastName?>, <?=$FirstName?> <?=$MiddleInitial?>.</h4>
+					<h4 class="modal-title">Previous Contract Report for <?=$LastName?>, <?=$FirstName?> <?=$MiddleInitial?>.</h4>
 					<div class="text-right">
 						<button onClick="printContent('PrintOutModalExpired')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
 						<button type="button" class="close d-none d-sm-block" data-dismiss="modal">&times;</button>
@@ -789,7 +810,7 @@
 
 				<!-- Modal body -->
 				<div class="modal-body">
-					<div class="row rcontent PrintOutModalExpired">
+					<div class="row rcontent">
 					</div>
 				</div>
 
@@ -816,25 +837,100 @@
 		<?php $this->load->view('_template/modals/m_documents'); ?>
 		<!-- DOCUMENTS NOTE MODAL -->
 		<?php $this->load->view('_template/modals/m_addnote_documents'); ?>
+		<!-- ADD DOCUMENTS MODAL -->
+		<?php $this->load->view('_template/modals/m_adddocuments'); ?>
 	</body>
 	<?php $this->load->view('_template/users/u_scripts');?>
 	<script type="text/javascript">
 		$(document).ready(function () {
+			$("#Type").change(function(){
+				$('#ViolationNotice').hide();
+				$('#BlacklistNotice').hide();
+				if ( $(this).val() == "Violation" ) { 
+					$("#ViolationNotice").fadeIn();
+			    }
+			    if ( $(this).val() == "Blacklist" ) { 
+					$("#BlacklistNotice").fadeIn();
+			    }
+			});
+			$('.doc_btn').on('click', function () {
+				$('#Pass_ID').val($(this).attr('id'));
+			});
+			$('.employee-tabs-select').removeClass('employee-tabs-active');
+			$('.employee-tabs-group-content').hide();
+			var hashValue = window.location.hash.substr(1);
+			if (hashValue == 'Personal') {
+				$('#TabPersonal').children('.employee-tabs-group-content').show();
+				$('#TabPersonalBtn').addClass('employee-tabs-active');
+			}
+			else if (hashValue == 'Contract') {
+				$('#TabContract').children('.employee-tabs-group-content').show();
+				$('#TabContractBtn').addClass('employee-tabs-active');
+			}
+			else if (hashValue == 'Documents') {
+				$('#TabDocuments').children('.employee-tabs-group-content').show();
+				$('#TabDocumentsBtn').addClass('employee-tabs-active');
+			}
+			else if (hashValue == 'Academic') {
+				$('#TabAcademic').children('.employee-tabs-group-content').show();
+				$('#TabAcademicBtn').addClass('employee-tabs-active');
+			}
+			else if (hashValue == 'Employments') {
+				$('#TabEmployments').children('.employee-tabs-group-content').show();
+				$('#TabEmploymentsBtn').addClass('employee-tabs-active');
+			}
+			else if (hashValue == 'Machine') {
+				$('#TabMachine').children('.employee-tabs-group-content').show();
+				$('#TabMachineBtn').addClass('employee-tabs-active');
+			} else {
+				$('#TabPersonal').children('.employee-tabs-group-content').show();
+				$('#TabPersonalBtn').addClass('employee-tabs-active');
+			}
+			$(window).on('hashchange',function(){ 
+				$('.employee-tabs-select').removeClass('employee-tabs-active');
+				$('.employee-tabs-group-content').hide();
+				var hashValue = window.location.hash.substr(1);
+				if (hashValue == 'Personal') {
+					$('#TabPersonal').children('.employee-tabs-group-content').show();
+					$('#TabPersonalBtn').addClass('employee-tabs-active');
+				}
+				else if (hashValue == 'Contract') {
+					$('#TabContract').children('.employee-tabs-group-content').show();
+					$('#TabContractBtn').addClass('employee-tabs-active');
+				}
+				else if (hashValue == 'Documents') {
+					$('#TabDocuments').children('.employee-tabs-group-content').show();
+					$('#TabDocumentsBtn').addClass('employee-tabs-active');
+				}
+				else if (hashValue == 'Academic') {
+					$('#TabAcademic').children('.employee-tabs-group-content').show();
+					$('#TabAcademicBtn').addClass('employee-tabs-active');
+				}
+				else if (hashValue == 'Employments') {
+					$('#TabEmployments').children('.employee-tabs-group-content').show();
+					$('#TabEmploymentsBtn').addClass('employee-tabs-active');
+				}
+				else if (hashValue == 'Machine') {
+					$('#TabMachine').children('.employee-tabs-group-content').show();
+					$('#TabMachineBtn').addClass('employee-tabs-active');
+				} else {
+					$('#TabPersonal').children('.employee-tabs-group-content').show();
+					$('#TabPersonalBtn').addClass('employee-tabs-active');
+				}
+			});
 			$('#AddNoteBtn').on('click', function () {
 				$('#AddNote_ApplicantID').val($(this).attr('applicant-id'));
 			});
-			$('.employee-tabs-group-content').hide();
-			$('#TabPersonal').children('.employee-tabs-group-content').show();
 			$('.folder-button').on('click', function () {
 				$(this).children('i').toggleClass('fa-folder');
 				$(this).children('i').toggleClass('fa-folder-open');
 				$(this).closest('.row').find('.folder-documents').toggleClass('folder-active');
 			});
-			$('.employee-tabs-select').on('click', function () {
-				$('.employee-tabs-select').removeClass('employee-tabs-active');
-				$(this).addClass('employee-tabs-active');
-				$('.employee-tabs-group-content').hide();
-			});
+			// $('.employee-tabs-select').on('click', function () {
+			// 	$('.employee-tabs-select').removeClass('employee-tabs-active');
+			// 	$(this).addClass('employee-tabs-active');
+			// 	$('.employee-tabs-group-content').hide();
+			// });
 			$('#TabDocumentsBtnAlt').on('click', function () {
 				$('.employee-tabs-select').removeClass('employee-tabs-active');
 				$('#TabDocumentsBtn').addClass('employee-tabs-active');
@@ -882,14 +978,13 @@
 			});
 			$('#ListContractHistory').DataTable();
 			$('#ListViolations').DataTable();
-			$("#TabContractBtn").click(function(){
-				var rPercentage = $("#TimeLeft").val();
-				// if (rPercentage > 100) {
-				// 	rPercentage = 100;
-				// }
-				$('.progressRemaining').animate({width:rPercentage + "%"},1500);
-				$('.progress_value').text(rPercentage + "%");
-			});
+			// Contract Bar
+			var rPercentage = $("#TimeLeft").val();
+			// if (rPercentage > 100) {
+			// 	rPercentage = 100;
+			// }
+			$('.progressRemaining').animate({width:rPercentage + "%"},1500);
+			$('.progress_value').text(rPercentage + "%");
 			$('.a_eImage').on('click', function () {
 				var src1 = $(this).attr('id');
 				$("#enlargeImage_doc").attr("src", src1);

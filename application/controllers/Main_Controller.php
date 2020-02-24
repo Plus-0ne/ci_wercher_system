@@ -28,7 +28,7 @@
 					date_default_timezone_set('Asia/Manila');
 					$LogbookCurrentTime = date('Y-m-d h:i:s A');
 					$LogbookType = 'Reminder';
-					$LogbookEvent = 'Employee ' . $ApplicantID . ' is expiring in 1 month!';
+					$LogbookEvent = 'Employee ' . $ApplicantID . ' is expiring in ' . $row['ReminderDateString'] . '!';
 					$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
 					$data = array(
 						'Time' => $LogbookCurrentTime,
@@ -406,6 +406,7 @@
 				$data = array(
 					'ApplicantNo' => $ged['ApplicantNo'],
 					'ApplicantImage' => $ged['ApplicantImage'],
+					'EmployeeID' => $ged['EmployeeID'],
 					'ApplicantID' => $ged['ApplicantID'],
 					'PositionDesired' => $ged['PositionDesired'],
 					'PositionGroup' => $ged['PositionGroup'],
@@ -456,6 +457,7 @@
 					'AppliedOn' => $ged['AppliedOn'],
 
 					'ReminderDate' => $ged['ReminderDate'],
+					'ReminderDateString' => $ged['ReminderDateString'],
 
 				);
 				$ApplicantID = $ged['ApplicantID'];

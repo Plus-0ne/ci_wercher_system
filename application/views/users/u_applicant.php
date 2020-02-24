@@ -8,7 +8,7 @@
 </style>
 <?php $T_Header;?>
 <body>
-	<div class="wrapper">
+	<div class="wrapper wercher-background-lowpoly">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
@@ -36,7 +36,7 @@
 					<div class="col-sm-12">
 						<?php echo $this->session->flashdata('prompts'); ?>
 						<div class="table-responsive pt-2 pb-5">
-							<table id="emp" class="table table-striped table-bordered PrintOut" style="width: 100%;">
+							<table id="emp" class="table PrintOut" style="width: 100%;">
 								<thead>
 									<tr class="text-center">
 										<th> Applicant </th>
@@ -94,6 +94,24 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('#ClientSelect').on('change', function() {
+			<?php foreach ($getClientOption->result_array() as $row): ?>
+			<?php
+			// Count how many employees are on the client
+			$CountEmployees = $this->Model_Selects->GetClientsEmployed($row['ClientID'])->num_rows();
+			$CountEmployees++;
+			$CountEmployees = str_pad($CountEmployees,4,0,STR_PAD_LEFT);
+			// Get the current year
+			$Year = date('Y');
+			$Year = substr($Year, 2);
+			// Concatenate them all together
+			$EmployeeID = 'WC' . $row['EmployeeIDSuffix'] . '-' . $CountEmployees . '-' . $Year;
+			?>
+			if ($(this).val() == '<?php echo $row['ClientID']; ?>') {
+				$(this).closest('#ClientModal').find('#EmployeeID').val('<?php echo $EmployeeID; ?>');
+			}
+			<?php endforeach; ?>
+		});
 		$('#sidebarCollapse').on('click', function () {
 			$('#sidebar').toggleClass('active');
 			$('.ncontent').toggleClass('shContent');

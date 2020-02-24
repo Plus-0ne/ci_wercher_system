@@ -375,8 +375,9 @@ class Add_Controller extends CI_Controller {
 		$ClientName = $this->input->post('ClientName',TRUE);
 		$ClientAddress = $this->input->post('ClientAddress',TRUE);
 		$ClientContact = $this->input->post('ClientContact',TRUE);
+		$EmployeeIDSuffix = $this->input->post('EmployeeIDSuffix',TRUE);
 
-		if ( $ClientName == NULL || $ClientAddress == NULL || $ClientContact == NULL ) {
+		if ( $ClientName == NULL || $ClientAddress == NULL || $ClientContact == NULL || $EmployeeIDSuffix == NULL ) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			redirect('Clients');
 		}
@@ -393,6 +394,7 @@ class Add_Controller extends CI_Controller {
 					'Name' => $ClientName,
 					'Address' => $ClientAddress,
 					'ContactNumber' => $ClientContact,
+					'EmployeeIDSuffix' => $EmployeeIDSuffix,
 					'Status' => 'Active',
 				);
 				$InsertNewClient = $this->Model_Inserts->InsertNewClient($data);
@@ -485,7 +487,7 @@ class Add_Controller extends CI_Controller {
 				$AddDocuments = $this->Model_Inserts->AddDocuments($data);
 				if ($AddDocuments == TRUE) {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Document added!</h5></div>');
-					redirect('Employee');
+					redirect('ViewEmployee?id=' . $ApplicantID . '#Documents');
 					exit();
 				}
 				else

@@ -21,6 +21,7 @@ class Update_Controller extends CI_Controller {
 			$H_Months = $this->input->post('H_Months',TRUE);
 			$H_Years = $this->input->post('H_Years',TRUE);
 			$Salary = $this->input->post('Salary',TRUE);
+			$EmployeeID = $this->input->post('EmployeeID',TRUE);
 			if($H_Days == NULL) {
 				$H_Days = 0;
 			}
@@ -64,6 +65,7 @@ class Update_Controller extends CI_Controller {
 					}
 
 					$data = array(
+						'EmployeeID' => $EmployeeID,
 						'ClientEmployed' => $ClientID,
 						'DateStarted' => $DateStarted,
 						'DateEnds' => $DateEnds,
@@ -211,7 +213,7 @@ class Update_Controller extends CI_Controller {
 							}
 						}
 						$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
-						$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+						$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract';
 						$data = array(
 							'Time' => $LogbookCurrentTime,
 							'Type' => $LogbookType,
@@ -559,6 +561,34 @@ class Update_Controller extends CI_Controller {
 			$R_Days = $this->input->post('R_Days',TRUE);
 			$R_Months = $this->input->post('R_Months',TRUE);
 			$R_Years = $this->input->post('R_Years',TRUE);
+			$ReminderDateString = "";
+			if ($R_Years != 0) {
+				if ($R_Years == 1) {
+					$ReminderDateString = $R_Years . ' year';
+				} else {
+					$ReminderDateString = $R_Years . ' years';
+				}
+				if ($R_Months != 0 || $R_Days != 0) {
+					$ReminderDateString = $ReminderDateString . ', ';
+				}
+			}
+			if ($R_Months != 0) {
+				if ($R_Months == 1) {
+					$ReminderDateString = $ReminderDateString . $R_Months . ' month';
+				} else {
+					$ReminderDateString = $ReminderDateString . $R_Months . ' months';
+				}
+				if ($R_Days != 0) {
+					$ReminderDateString = $ReminderDateString . ', ';
+				}
+			}
+			if ($R_Days != 0) {
+				if ($R_Days == 1) {
+					$ReminderDateString = $ReminderDateString . $R_Days . ' day';
+				} else {
+					$ReminderDateString = $ReminderDateString . $R_Days . ' days';
+				}
+			}
 			$ReminderDate = 0;
 
 			if ($ApplicantID == NULL) {
@@ -591,6 +621,7 @@ class Update_Controller extends CI_Controller {
 					$data = array(
 						'ReminderType' => $R_Type,
 						'ReminderDate' => $ReminderDate,
+						'ReminderDateString' => $ReminderDateString,
 						'ReminderLocked' => 'No',
 					);
 					$SetReminder = $this->Model_Inserts->InsertReminder($ApplicantID,$data);

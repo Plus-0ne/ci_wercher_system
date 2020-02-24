@@ -1,11 +1,11 @@
 <?php $T_Header;?>
 <body>
-	<div class="wrapper">
+	<div class="wrapper wercher-background-lowpoly">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
-				<div class="row p-5">
+				<div class="row wercher-tablelist-container">
 					<?php echo $this->session->flashdata('prompts'); ?>
 					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 						<h4 class="tabs-icon">
@@ -16,7 +16,7 @@
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
 					<div class="col-sm-12">
-						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
+						<div class="table-responsive pt-2 pb-5 pl-2 pr-2">
 							<table id="emp" class="table table-bordered PrintOut" style="width: 100%;">
 								<thead>
 									<tr class="text-center">
@@ -24,8 +24,7 @@
 										<th> Full Name </th>
 										<th> Position </th>
 										<th> Client </th>
-										<th> Date Hired </th>
-										<th> End of Contract </th>
+										<th> Contract Lifespan </th>
 										<th class="PrintExclude"> Action </th>
 									</tr>
 								</thead>
@@ -37,7 +36,7 @@
 													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
 												</div>
 												<div class="col-sm-12 align-middle">
-													<?php echo $row['ApplicantID']; ?>
+													<?php echo $row['EmployeeID']; ?>
 												</div>
 											</td>
 											<td class="text-center align-middle">
@@ -53,11 +52,42 @@
 													</td>';
 												} ?>
 											<?php endforeach ?>
+											<?php
+												$currTime = time();
+												$strDateEnds = strtotime($row['DateEnds']);
+												$strDateStarted = strtotime($row['DateStarted']);
+												// PERCENTAGE
+												$rPercentage = (($strDateEnds - $currTime) * 100) / ($strDateEnds - $strDateStarted);
+												$rPercentage = round($rPercentage);
+												// DAYS REMAINING
+												$dateTimeZone = new DateTimeZone("Asia/Manila");
+												$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
+												$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
+												$interval = $datetime1->diff($datetime2);
+												$DaysRemaining = "";
+												if($interval->format('%y years') != '0 years') {
+													$DaysRemaining = $DaysRemaining . $interval->format('%y years');
+													if($interval->format('%m months') != '0 months') {
+														$DaysRemaining = $DaysRemaining . ', ';
+													}
+												}
+												if($interval->format('%m months') != '0 months') {
+													$DaysRemaining = $DaysRemaining . $interval->format('%m months');
+													if($interval->format('%d days') != '0 days') {
+														$DaysRemaining = $DaysRemaining . ', ';
+													}
+												}
+												if($interval->format('%d days') != '0 days') {
+													$DaysRemaining = $DaysRemaining . $interval->format('%d days');
+												} elseif($interval->format('%d days') != '0 days') {
+													$DaysRemaining = 'Less than 1 day';
+												}
+											?>
 											<td class="text-center align-middle">
-												<?php echo $row['DateStarted']; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['DateEnds']; ?>
+												<div class="wercher-progress-daysremaining"><?php echo $DaysRemaining; ?></div>
+												<a href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>#Contract" class="progress" style="position: relative; box-shadow: none; background-color: rgba(0, 0, 0, 0.11);"  data-toggle="tooltip" data-placement="top" data-html="true" title="Contract Started<br><?php echo $row['DateStarted']; ?><br><br>Contract Ends<br><?php echo $row['DateEnds']; ?><br><br>Salary Expected<br>₱<?php echo $row['SalaryExpected']; ?>">
+													<div class="progress-bar" role="progressbar" style="width: <?php echo $rPercentage; ?>%;" aria-valuenow="<?php echo $rPercentage; ?>" aria-valuemin="0" aria-valuemax="100"><?php echo $rPercentage; ?>%</div>
+												</a>
 											</td>
 											<td class="text-center align-middle PrintExclude" width="110">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
@@ -76,14 +106,15 @@
 			</div>
 		</div>
 	</div>
-	<!-- Modal -->
+	<!-- ADD DOCUMENTS MODAL -->
 	<?php $this->load->view('_template/modals/m_adddocuments'); ?>
-		<!-- EXPORT MODAL -->
+	<!-- EXPORT MODAL -->
 	<?php $this->load->view('_template/modals/m_export'); ?>
 	</body>
 	<?php $this->load->view('_template/users/u_scripts'); ?>
 	<script type="text/javascript">
 		$(document).ready(function () {
+			$('[data-toggle="tooltip"]').tooltip();
 			$("#Type").change(function(){
 				$('#ViolationNotice').hide();
 				$('#BlacklistNotice').hide();

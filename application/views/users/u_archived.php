@@ -1,6 +1,6 @@
 <?php $T_Header;?>
 <body>
-	<div class="wrapper">
+	<div class="wrapper wercher-background-lowpoly">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
@@ -20,12 +20,15 @@
 						</h4>
 					</div>
 					<div class="col-8 col-sm-8 col-md-8 text-right">
+						<a href="<?=base_url()?>NewEmployee" class="btn btn-primary" onclick="// return confirm('Add Employee?')">
+							<i class="fas fa-user-plus"></i> New
+						</a>
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
 					<div class="col-sm-12">
 						<?php echo $this->session->flashdata('prompts'); ?>
 						<div class="table-responsive pt-2 pb-5">
-							<table id="emp" class="table table-striped table-bordered PrintOut" style="width: 100%;">
+							<table id="emp" class="table PrintOut" style="width: 100%;">
 								<thead>
 									<tr class="text-center">
 										<th> Applicant </th>
@@ -61,17 +64,12 @@
 											</td>
 											<td class="text-center align-middle PrintExclude" width="100">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
-												<a href="<?=base_url()?>RestoreEmployee?id=<?php echo $row['ApplicantID']; ?>" class="btn btn-success btn-sm w-100 mb-1"><i class="fas fa-book"></i> Restore</a>
+												<a href="<?=base_url()?>RestoreEmployee?id=<?php echo $row['ApplicantID']; ?>" class="btn btn-success btn-sm w-100 mb-1"><i class="fas fa-redo"></i> Restore</a>
 											</td>
 										</tr>
 									<?php endforeach ?>
 								</tbody>
 							</table>
-						</div>
-						<div class="p-2">
-							<a href="<?=base_url()?>NewEmployee" class="btn btn-primary" onclick="return confirm('Add Employee?')">
-								<i class="fas fa-user-plus"></i> New
-							</a>
 						</div>
 					</div>
 				</div>

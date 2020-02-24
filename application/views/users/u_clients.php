@@ -60,7 +60,7 @@
 	</div>
 	<!-- MODALS -->
 	<div class="modal fade" id="addClients" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<?php echo form_open(base_url().'Add_newClient','method="post"');?>
 				<div class="modal-header">
@@ -88,6 +88,20 @@
 							<input class="form-control" type="text" name="ClientContact" autocomplete="off">
 						</div>
 					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-5">
+							<label>Employee ID Suffix <span style="color: rgba(0, 0, 0, 0.55);" data-toggle="tooltip" data-placement="top" data-html="true" title="Applicants who get hired to this client will be assigned the designated Employee ID with this as the suffix. See the preview for an example.<br><br>By default, all ID follows the format of WC(Suffix)-NUMBER-YEAR. You can manually change the ID of an applicant whenever they are hired."><i>(?)</i></span></label>
+							<input id="EmployeeIDSuffix" class="form-control" type="text" name="EmployeeIDSuffix" autocomplete="off">
+						</div>
+						<div class="form-group col-sm-2 text-center">
+							<p><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></p>
+							<p><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></p>
+						</div>
+						<div class="form-group col-sm-5">
+							<label>Preview</label>
+							<input id="SuffixPreview" class="form-control" type="text" autocomplete="off" readonly>
+						</div>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Add</button>
@@ -102,6 +116,10 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('#EmployeeIDSuffix').bind('input', function() {
+			$('#SuffixPreview').val('WC' + $(this).val() + '-####-20');
+		});
+		$('[data-toggle="tooltip"]').tooltip();
 		$('#sidebarCollapse').on('click', function () {
 			$('#sidebar').toggleClass('active');
 			$('.ncontent').toggleClass('shContent');

@@ -7,6 +7,7 @@ class Model_Updates extends CI_Model {
 	{
 		extract($data);
 		$data = array(
+			'EmployeeID' => $EmployeeID,
 			'Temp_ApplicantID' => $Temp_ApplicantID,
 			'ClientEmployed' => $ClientEmployed,
 			'DateStarted' => $DateStarted,

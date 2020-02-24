@@ -3,12 +3,12 @@
 		<div class="modal-content">
 			<?php echo form_open(base_url().'EmployApplicant','method="POST"');?>
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Hire applicant</h5>
+				<h5 class="modal-title" id="exampleModalLongTitle">Hire Applicant</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body">
+			<div id="ClientModal" class="modal-body">
 				<?php if (isset($_GET['id'])): ?>
 				<input id="idToHire" type="hidden" name="ApplicantID" value="<?php echo $ApplicantID; ?>">
 				<?php else: ?>
@@ -17,7 +17,7 @@
 				<div class="form-row">
 					<div class="form-group col-8">
 						<label>Choose Client</label>
-						<select class="form-control" name="ClientID">
+						<select id="ClientSelect" class="form-control" name="ClientID">
 							<?php foreach ($getClientOption->result_array() as $row): ?>
 								<option value="<?=$row['ClientID'];?>">
 									<?=$row['Name'];?>
@@ -50,6 +50,12 @@
 					<div class="form-group col-4">
 						<label>Days</label>
 						<input class="form-control" type="number" name="H_Days" value="0">
+					</div>
+				</div>
+				<div class="form-row mx-1">
+					<div class="form-group col-12">
+						<label>Employee ID</label>
+						<input id="EmployeeID" class="form-control" type="text" name="EmployeeID" value="">
 					</div>
 				</div>
 			</div>

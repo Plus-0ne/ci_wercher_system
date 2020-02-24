@@ -5,7 +5,7 @@
 </style>
 <?php $T_Header;?>
 <body>
-	<div class="wrapper">
+	<div class="wrapper wercher-background-lowpoly">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
@@ -19,18 +19,21 @@
 					</ul>
 				</div>
 				<div class="row rcontent">
-					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
+					<div class="col-5 PrintPageName PrintOut">
 						<h4 class="tabs-icon">
 							<i class="fas fa-user-friends fa-fw"></i> x <?php echo $get_ApplicantExpired->num_rows() ?>
-						</h4>
+						</h4> 
 					</div>
-					<div class="col-8 col-sm-8 col-md-8 text-right">
+					<div class="col-7 text-right">
+						<a href="<?=base_url()?>NewEmployee" class="btn btn-primary" onclick="// return confirm('Add Employee?')">
+							<i class="fas fa-user-plus"></i> New
+						</a>
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
 					<div class="col-sm-12">
 						<?php echo $this->session->flashdata('prompts'); ?>
 						<div class="table-responsive pt-2 pb-5">
-							<table id="emp" class="table table-striped table-bordered PrintOut" style="width: 100%;">
+							<table id="emp" class="table PrintOut" style="width: 100%;">
 								<thead>
 									<tr class="text-center">
 										<th> Applicant </th>
@@ -79,11 +82,6 @@
 								</tbody>
 							</table>
 						</div>
-						<div class="p-2">
-							<a href="<?=base_url()?>NewEmployee" class="btn btn-primary" onclick="return confirm('Add Employee?')">
-								<i class="fas fa-user-plus"></i> New
-							</a>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -97,6 +95,24 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('#ClientSelect').on('change', function() {
+			<?php foreach ($getClientOption->result_array() as $row): ?>
+			<?php
+			// Count how many employees are on the client
+			$CountEmployees = $this->Model_Selects->GetClientsEmployed($row['ClientID'])->num_rows();
+			$CountEmployees++;
+			$CountEmployees = str_pad($CountEmployees,4,0,STR_PAD_LEFT);
+			// Get the current year
+			$Year = date('Y');
+			$Year = substr($Year, 2);
+			// Concatenate them all together
+			$EmployeeID = 'WC' . $row['EmployeeIDSuffix'] . '-' . $CountEmployees . '-' . $Year;
+			?>
+			if ($(this).val() == '<?php echo $row['ClientID']; ?>') {
+				$(this).closest('#ClientModal').find('#EmployeeID').val('<?php echo $EmployeeID; ?>');
+			}
+			<?php endforeach; ?>
+		});
 		$(".nav-item a[href*='Applicants']").addClass("nactive");
 		$('#sidebarCollapse').on('click', function () {
 			$('#sidebar').toggleClass('active');
