@@ -1,11 +1,11 @@
 <?php $T_Header;?>
 <body>
-	<div class="wrapper">
+	<div class="wrapper wercher-background-lowpoly">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
-				<div class="row p-5">
+				<div class="row wercher-tablelist-container">
 					<?php echo $this->session->flashdata('prompts'); ?>
 					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 						<h4 class="tabs-icon">
@@ -19,7 +19,7 @@
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
 					<div class="col-sm-12">
-						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
+						<div class="table-responsive pt-2 pb-5 pl-2 pr-2">
 							<table id="ListClients" class="table table-bordered PrintOut" style="width: 100%;">
 								<thead>
 									<tr class="text-center align-middle">
@@ -113,10 +113,15 @@
 	</div>
 	<!-- EXPORT MODAL -->
 	<?php $this->load->view('_template/modals/m_export'); ?>
+	<!-- CLIENTS EMPLOYED MODAL -->
+	<?php $this->load->view('_template/modals/m_clientemployees'); ?>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		<?php if (isset($_GET['id'])): ?>
+			$('#ClientsEmployedModal').modal('show');
+		<?php endif; ?>
 		$('#EmployeeIDSuffix').bind('input', function() {
 			$('#SuffixPreview').val('WC' + $(this).val() + '-####-20');
 		});
