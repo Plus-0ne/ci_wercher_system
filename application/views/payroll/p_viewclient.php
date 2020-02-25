@@ -3,13 +3,21 @@
 	// $IsFromExcel = False;
 ?>
 <body>
-	<div class="wrapper">
+	<div class="wrapper wercher-background-lowpoly">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<?php echo $this->session->flashdata('prompts'); ?>
-				<div class="row mt-5">
+?>
+				<div class="col-12 col-sm-12 payroll-tabs">
+					<ul>
+						<li class="payroll-tabs-active"><a href="<?php echo base_url() ?>ViewClient?id=<?php echo $ClientID; ?>">Attendance</a></li>
+						<li><a href="<?php echo base_url() ?>Payroll?id=<?php echo $ClientID; ?>">Payroll</a></li>
+					</ul>
+				</div>
+				<div class="rcontent">
+				<div class="row">
 					<div class="col-8 mb-2">
 						<form action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
 							<input id="ExcelClientID" type="hidden" name="ExcelClientID" value="<?php echo $ClientID; ?>">
@@ -23,51 +31,53 @@
 						<button id="ImportButton" type="button" class="btn btn-secondary"><i class="fas fa-lock"></i> Generate Payslip (WIP)</button>
 					</div>
 					<div class="col-sm-12 col-mb-12">
-						<table id="WeeklyTable" class="table table-condensed">
-							<thead>
-								<th style="min-width: 100px;">Applicant ID</th>
-								<th style="min-width: 300px;">Name</th>
-								<th style="min-width: 75px;">Salary (₱)</th>
-								<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
-									<th><?php echo $row['Time']; ?></th>
-								<?php endforeach; ?>
-								<th style="min-width: 75px;">Reg. Hrs</th>
-								<th style="min-width: 75px;">Total OT Hrs</th>
-							</thead>
-							<tbody>
-								<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
-									$TotalRegHours = 0;
-									$TotalOTHours = 0;?>
-									<tr id="<?php echo $row['SalaryExpected']; ?>" data-clientid="<?php echo $row['ClientEmployed']; ?>" data="<?php echo $row['ApplicantID']; ?>" class='clickable-row' data-toggle="modal" data-target="#HoursWeeklyModal_<?php echo $row['ApplicantID']; ?>">
-										<td><?php echo $row['ApplicantID'];?></td>
-										<td><?php echo $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'];?></td>
-										<td><?php echo $row['SalaryExpected'];?></td>
-										<?php foreach ($GetWeeklyDates->result_array() as $brow):
-											?> <td> <?php
-											if($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->num_rows() > 0) {
-												foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->result_array() as $nrow):
-													$Hours = $nrow['Hours'];
-													$OT = $nrow['Overtime'];
-													$totalh =  $nrow['Hours'] + $nrow['Overtime'];
-													echo '<div data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: '. $Hours . '<br>Overtime: ' . $nrow['Overtime'] . '">' . $totalh . '</div>';
-													$TotalRegHours = $TotalRegHours + $Hours;
-													$TotalOTHours = $TotalOTHours + $OT;
-												endforeach;
-											} else {
-												echo '0';
-											} ?> </td>
-										<?php endforeach; ?>
-										<td><?php echo $TotalRegHours; ?></td>
-										<td><?php echo $TotalOTHours; ?></td>
-<!-- 										<td class="text-center">
-											<button id="<?php echo $row['Salary']; ?>" data="<?php echo $row['ApplicantID']; ?>" type="button" class="btn btn-primary btn-sm HoursButton" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-clock"></i> Set</button>
-											<button type="button" class="btn btn-primary btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-list"></i> Contract</button>
-											<button type="button" class="btn btn-primary btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-book"></i> History</button>
-										</td> -->
-										</tr>
-								<?php endforeach; ?>
-							</tbody>
-						</table>
+						<div class="table-responsive w-100">
+							<table id="WeeklyTable" class="table table-condensed">
+								<thead>
+									<th style="min-width: 100px;">Applicant ID</th>
+									<th style="min-width: 300px;">Name</th>
+									<th style="min-width: 75px;">Salary (₱)</th>
+									<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
+										<th><?php echo $row['Time']; ?></th>
+									<?php endforeach; ?>
+									<th style="min-width: 75px;">Reg. Hrs</th>
+									<th style="min-width: 75px;">Total OT Hrs</th>
+								</thead>
+								<tbody>
+									<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
+										$TotalRegHours = 0;
+										$TotalOTHours = 0;?>
+										<tr id="<?php echo $row['SalaryExpected']; ?>" data-clientid="<?php echo $row['ClientEmployed']; ?>" data="<?php echo $row['ApplicantID']; ?>" class='clickable-row' data-toggle="modal" data-target="#HoursWeeklyModal_<?php echo $row['ApplicantID']; ?>">
+											<td><?php echo $row['ApplicantID'];?></td>
+											<td><?php echo $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'];?></td>
+											<td><?php echo $row['SalaryExpected'];?></td>
+											<?php foreach ($GetWeeklyDates->result_array() as $brow):
+												?> <td> <?php
+												if($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->num_rows() > 0) {
+													foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->result_array() as $nrow):
+														$Hours = $nrow['Hours'];
+														$OT = $nrow['Overtime'];
+														$totalh =  $nrow['Hours'] + $nrow['Overtime'];
+														echo '<div data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: '. $Hours . '<br>Overtime: ' . $nrow['Overtime'] . '">' . $totalh . '</div>';
+														$TotalRegHours = $TotalRegHours + $Hours;
+														$TotalOTHours = $TotalOTHours + $OT;
+													endforeach;
+												} else {
+													echo '0';
+												} ?> </td>
+											<?php endforeach; ?>
+											<td><?php echo $TotalRegHours; ?></td>
+											<td><?php echo $TotalOTHours; ?></td>
+	<!-- 										<td class="text-center">
+												<button id="<?php echo $row['Salary']; ?>" data="<?php echo $row['ApplicantID']; ?>" type="button" class="btn btn-primary btn-sm HoursButton" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-clock"></i> Set</button>
+												<button type="button" class="btn btn-primary btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-list"></i> Contract</button>
+												<button type="button" class="btn btn-primary btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-book"></i> History</button>
+											</td> -->
+											</tr>
+									<?php endforeach; ?>
+								</tbody>
+							</table>
+						</div>
 					</div>
 					<!-- <div class="col-sm-8 col-md-8 ml-auto text-right PrintExclude">
 						<button id="ShowDemo" type="button" class="btn btn-primary mr-auto"><i class="fas fa-flask"></i> Demo</button>
@@ -206,13 +216,6 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
-		// $('input[type=checkbox]').bootstrapToggle()
-		// var prevVal;
-		// $(".day-indicator").on("change",function(){
-		// 	var val = $(this).find('option:selected').val();
-		// 	$(".day-container").removeClass(`day-indicator-${prevVal}`).addClass(`day-indicator-${val}`);
-		// 	prevVal = val;
-		// });
 		$('[data-toggle="tooltip"]').tooltip();
 		$('#ImportButton').click(function(){ $('#file').trigger('click'); });
 		function readURL(input) {
@@ -262,7 +265,6 @@
 		});
 		var table = $('#WeeklyTable').removeAttr('width').DataTable( {
         	"order": [[ 1, "asc" ]],
-
     	});
     	var dd_buttons = new $.fn.dataTable.Buttons(table, {
 	        buttons: [
@@ -302,7 +304,14 @@
 	        ]
 		}).container().appendTo($('#datatables-export'));
 	 	<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
-		 	$(".Hours_<?php echo $row['Time']; ?>, .OTHours_<?php echo $row['Time']; ?>").bind("input", function () {
+	 		$('.SLCheck_<?php echo $row['Time']; ?>').on('change', function() {
+	 			console.log('hello');
+	 			$('.REGCheck_<?php echo $row['Time']; ?>').prop("checked", false);
+	 		});
+	 		$('.NCheck_<?php echo $row['Time']; ?>').on('change', function() {
+	 			$(this).closest('.day-hover').find('.NightPremium').show();
+	 		});
+		 	$(".Hours_<?php echo $row['Time']; ?>, .OTHours_<?php echo $row['Time']; ?>, .NightHours_<?php echo $row['Time']; ?>, .NightOTHours_<?php echo $row['Time']; ?>").bind("input", function () {
 		 			// General
 	                var PerHour = $(this).closest("#SalaryDays").find('.PerHour').val();
 	                var PerDay = $(this).closest("#SalaryDays").find('.PerDay').val();
@@ -310,39 +319,55 @@
 	                var Hours = $(this).closest("#SalaryDays").find('.Hours_<?php echo $row['Time']; ?>').val();
 	                // OT
 	                var OT = $(this).closest("#SalaryDays").find('.OTHours_<?php echo $row['Time']; ?>').val();
+	                var NightHours = $(this).closest("#SalaryDays").find('.NightHours_<?php echo $row['Time']; ?>').val();
+	                var NightOT = $(this).closest("#SalaryDays").find('.NightOTHours_<?php echo $row['Time']; ?>').val();
 
 	                var TotalPerDay;
+	                var NightTotalPerDay;
 	                // Regular
 	                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25));
+		                NightTotalPerDay = ((PerHour  * NightHours) + ((PerHour * NightOT) * 1.25));
+		                NightTotalPerDay = NightTotalPerDay * 1.1;
 	           		}
 	           		// Rest Day
 	           		if($(this).closest("#SalaryDays").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 1.3;
+		                NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 1.3;
+		                NightTotalPerDay = NightTotalPerDay * 1.1;
 	           		}
 	           		// Special
 	           		if($(this).closest("#SalaryDays").find('.SPCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 1.3;
+		                	NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 1.3;
+		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 		            	}
 		                if($(this).closest("#SalaryDays").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 1.5;
+		                	NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 1.5;
+		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 	           			}
 	           		}
 	           		// National
 	           		if($(this).closest("#SalaryDays").find('.NHCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 2.0;
+		                	NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 2.0;
+		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 		            	}
 		                if($(this).closest("#SalaryDays").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 2.6;
+		                	NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 2.6;
+		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 	           			}
 	           		}
+	           		var Result = TotalPerDay + NightTotalPerDay;
 	           		// Night additional
-	                if($(this).closest("#SalaryDays").find('.NCheck_<?php echo $row['Time']; ?>').is(":checked")){
-		                TotalPerDay = TotalPerDay * 1.1;
-	           		}
-	           		$(this).closest("#SalaryDays").find('.t_pay_<?php echo $row['Time']; ?>').val(TotalPerDay.toFixed(2));
+	             //    if($(this).closest("#SalaryDays").find('.NCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		            //     TotalPerDay = TotalPerDay * 1.1;
+	           		// }
+	           		$(this).closest("#SalaryDays").find('.t_pay_<?php echo $row['Time']; ?>').val(Result.toFixed(2));
 
 	                // var v = $(this).closest("div.hhhh").find(".t_pay").val();
 	                // var perh = $(this).vl();
@@ -357,39 +382,55 @@
 	                var Hours = $(this).closest("#SalaryDays").find('.Hours_<?php echo $row['Time']; ?>').val();
 	                // OT
 	                var OT = $(this).closest("#SalaryDays").find('.OTHours_<?php echo $row['Time']; ?>').val();
+	                var NightHours = $(this).closest("#SalaryDays").find('.NightHours_<?php echo $row['Time']; ?>').val();
+	                var NightOT = $(this).closest("#SalaryDays").find('.NightOTHours_<?php echo $row['Time']; ?>').val();
 
 	                var TotalPerDay;
+	                var NightTotalPerDay;
 	                // Regular
 	                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25));
+		                NightTotalPerDay = ((PerHour  * NightHours) + ((PerHour * NightOT) * 1.25));
+		                NightTotalPerDay = NightTotalPerDay * 1.1;
 	           		}
 	           		// Rest Day
 	           		if($(this).closest("#SalaryDays").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 1.3;
+		                NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 1.3;
+		                NightTotalPerDay = NightTotalPerDay * 1.1;
 	           		}
 	           		// Special
 	           		if($(this).closest("#SalaryDays").find('.SPCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 1.3;
+		                	NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 1.3;
+		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 		            	}
 		                if($(this).closest("#SalaryDays").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 1.5;
+		                	NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 1.5;
+		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 	           			}
 	           		}
 	           		// National
 	           		if($(this).closest("#SalaryDays").find('.NHCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 2.0;
+		                	NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 2.0;
+		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 		            	}
 		                if($(this).closest("#SalaryDays").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 2.6;
+		                	NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 2.6;
+		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 	           			}
 	           		}
+	           		var Result = TotalPerDay + NightTotalPerDay;
 	           		// Night additional
-	                if($(this).closest("#SalaryDays").find('.NCheck_<?php echo $row['Time']; ?>').is(":checked")){
-		                TotalPerDay = TotalPerDay * 1.1;
-	           		}
-	           		$(this).closest("#SalaryDays").find('.t_pay_<?php echo $row['Time']; ?>').val(TotalPerDay.toFixed(2));
+	             //    if($(this).closest("#SalaryDays").find('.NCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		            //     TotalPerDay = TotalPerDay * 1.1;
+	           		// }
+	           		$(this).closest("#SalaryDays").find('.t_pay_<?php echo $row['Time']; ?>').val(Result.toFixed(2));
 
 	                // var v = $(this).closest("div.hhhh").find(".t_pay").val();
 	                // var perh = $(this).vl();
