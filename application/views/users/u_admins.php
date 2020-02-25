@@ -76,7 +76,7 @@
 												<?php if ($ShowAdmin->num_rows() > 1) { ?>
 													<a href="<?=base_url()?>RemoveAdmin?id=<?php echo $row['AdminNo']; ?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Admin?')"><i class="fas fa-trash"></i> Delete</a>
 												<?php } else { ?>
-													<button class="btn btn-secondary btn-sm w-100 mb-1" onclick="alert('Must have 1 admin minimum.')"><i class="fas fa-lock"></i> Delete</button>
+													<button data-toggle="tooltip" data-placement="top" data-html="true" title="Must have 1 admin minimum." class="btn btn-secondary btn-sm w-100 mb-1 wercher-hover-disabled" onclick="alert('Must have 1 admin minimum.')"><i class="fas fa-lock"></i> Delete</button>
 												<?php } ?>
 											</td>
 										</tr>
@@ -91,7 +91,7 @@
 	</div>
 	<!-- MODALS -->
 	<div class="modal fade" id="add_UserAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-dialog" role="document">
 			<?php echo form_open(base_url().'Add_NewAdmin','method="post"');?>
 			<div class="modal-content">
 				<div class="modal-header">
@@ -169,9 +169,28 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('[data-toggle="tooltip"]').tooltip();
+		if (localStorage.getItem('SidebarVisible') == 'true') {
+			$('#sidebar').addClass('active');
+			$('.ncontent').addClass('shContent');
+		} else {
+			$('#sidebar').css('transition', 'all 0.3s');
+			$('#content').css('transition', 'all 0.3s');
+		}
 		$('#sidebarCollapse').on('click', function () {
-			$('#sidebar').toggleClass('active');
-			$('.ncontent').toggleClass('shContent');
+			if (localStorage.getItem('SidebarVisible') == 'false') {
+				$('#sidebar').addClass('active');
+				$('.ncontent').addClass('shContent');
+				$('#sidebar').css('transition', 'all 0.3s');
+				$('#content').css('transition', 'all 0.3s');
+		    	localStorage.setItem('SidebarVisible', 'true');
+			} else {
+				$('#sidebar').removeClass('active');
+				$('.ncontent').removeClass('shContent');
+				$('#sidebar').css('transition', 'all 0.3s');
+				$('#content').css('transition', 'all 0.3s');
+		    	localStorage.setItem('SidebarVisible', 'false');
+			}
 		});
 		var table = $('#ListAdmins').DataTable( {
         buttons: [

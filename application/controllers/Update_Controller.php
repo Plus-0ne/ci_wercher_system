@@ -245,6 +245,7 @@ class Update_Controller extends CI_Controller {
 	public function UpdateEmployee()
 	{
 		$ApplicantID = $this->input->post('M_ApplicantID');
+		$EmployeeID = $this->input->post('EmployeeID');
 		$pImage = $this->input->post('M_ApplicantImage');
 		# PERSONAL INFORMATION
 		$PositionDesired = $this->input->post('PositionDesired');
@@ -292,6 +293,7 @@ class Update_Controller extends CI_Controller {
 		if ($PositionDesired == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			$data = array(
+				'EmployeeID' => $EmployeeID,
 				'PositionDesired' => $PositionDesired,
 				'PositionGroup' => $PositionGroup,
 				'SalaryExpected' => $SalaryExpected,
@@ -370,6 +372,7 @@ class Update_Controller extends CI_Controller {
 				$data = array(
 					'ApplicantImage' => $pImage,
 					'ApplicantID' => $ApplicantID,
+					'EmployeeID' => $EmployeeID,
 					'PositionDesired' => $PositionDesired,
 					'PositionGroup' => $PositionGroup,
 					'SalaryExpected' => $SalaryExpected,

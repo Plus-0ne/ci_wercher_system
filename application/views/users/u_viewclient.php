@@ -189,9 +189,27 @@
 				console.log($('#Salary').val());
 				console.log($('#ApplicantID').val());
 			});
+		if (localStorage.getItem('SidebarVisible') == 'true') {
+			$('#sidebar').addClass('active');
+			$('.ncontent').addClass('shContent');
+		} else {
+			$('#sidebar').css('transition', 'all 0.3s');
+			$('#content').css('transition', 'all 0.3s');
+		}
 		$('#sidebarCollapse').on('click', function () {
-			$('#sidebar').toggleClass('active');
-			$('.ncontent').toggleClass('shContent');
+			if (localStorage.getItem('SidebarVisible') == 'false') {
+				$('#sidebar').addClass('active');
+				$('.ncontent').addClass('shContent');
+				$('#sidebar').css('transition', 'all 0.3s');
+				$('#content').css('transition', 'all 0.3s');
+		    	localStorage.setItem('SidebarVisible', 'true');
+			} else {
+				$('#sidebar').removeClass('active');
+				$('.ncontent').removeClass('shContent');
+				$('#sidebar').css('transition', 'all 0.3s');
+				$('#content').css('transition', 'all 0.3s');
+		    	localStorage.setItem('SidebarVisible', 'false');
+			}
 		});
 		$('#TaxTable').hide();
 				$('#MoreOptions').on('click', function () {

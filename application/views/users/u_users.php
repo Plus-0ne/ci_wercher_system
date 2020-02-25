@@ -36,7 +36,11 @@
 													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
 												</div>
 												<div class="col-sm-12 align-middle">
-													<?php echo $row['EmployeeID']; ?>
+													<?php if($row['EmployeeID'] != NULL): ?>
+														<?php echo $row['EmployeeID']; ?>
+													<?php else: ?>
+														<?php echo 'No Employee ID'; ?>
+													<?php endif; ?>
 												</div>
 											</td>
 											<td class="text-center align-middle">
@@ -79,14 +83,18 @@
 												}
 												if($interval->format('%d days') != '0 days') {
 													$DaysRemaining = $DaysRemaining . $interval->format('%d days');
-												} elseif($interval->format('%d days') != '0 days') {
-													$DaysRemaining = 'Less than 1 day';
 												}
 											?>
 											<td class="text-center align-middle">
-												<div class="wercher-progress-daysremaining"><?php echo $DaysRemaining; ?></div>
-												<a href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>#Contract" class="progress" style="position: relative; box-shadow: none; background-color: rgba(0, 0, 0, 0.11);"  data-toggle="tooltip" data-placement="top" data-html="true" title="Contract Started<br><?php echo $row['DateStarted']; ?><br><br>Contract Ends<br><?php echo $row['DateEnds']; ?><br><br>Salary Expected<br>₱<?php echo $row['SalaryExpected']; ?>">
-													<div class="progress-bar" role="progressbar" style="width: <?php echo $rPercentage; ?>%;" aria-valuenow="<?php echo $rPercentage; ?>" aria-valuemin="0" aria-valuemax="100"><?php echo $rPercentage; ?>%</div>
+												<div class="wercher-progress-daysremaining"><?php
+												if ($DaysRemaining != NULL) {
+													echo $DaysRemaining;
+												} else {
+													echo 'Less than 1 day';
+												} ?>
+											 	</div>
+												<a href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>#Contract" class="progress" style="position: relative; box-shadow: none; background-color: rgba(0, 0, 0, 0.11);" data-toggle="tooltip" data-placement="top" data-html="true" title="Contract Started<br><?php echo $row['DateStarted']; ?><br><br>Contract Ends<br><?php echo $row['DateEnds']; ?><br><br>Salary Expected<br>₱<?php echo $row['SalaryExpected']; ?><br><br><i>Click to open the Contract tab</i>">
+													<div class="progress-bar wercher-progress-bar" role="progressbar" style="width: <?php echo $rPercentage; ?>%;" aria-valuenow="<?php echo $rPercentage; ?>" aria-valuemin="0" aria-valuemax="100"><?php echo $rPercentage; ?>%</div>
 												</a>
 											</td>
 											<td class="text-center align-middle PrintExclude" width="110">
@@ -114,6 +122,12 @@
 	<?php $this->load->view('_template/users/u_scripts'); ?>
 	<script type="text/javascript">
 		$(document).ready(function () {
+			$('.showhide').click(function(){
+			    $('.link').toggle();
+
+			    var isVisible = $('.link').is(":visible"); 
+			    localStorage.setItem('visible', isVisible);
+			});
 			$('[data-toggle="tooltip"]').tooltip();
 			$("#Type").change(function(){
 				$('#ViolationNotice').hide();
@@ -125,9 +139,27 @@
 					$("#BlacklistNotice").fadeIn();
 			    }
 			});
+			if (localStorage.getItem('SidebarVisible') == 'true') {
+				$('#sidebar').addClass('active');
+				$('.ncontent').addClass('shContent');
+			} else {
+				$('#sidebar').css('transition', 'all 0.3s');
+				$('#content').css('transition', 'all 0.3s');
+			}
 			$('#sidebarCollapse').on('click', function () {
-				$('#sidebar').toggleClass('active');
-				$('.ncontent').toggleClass('shContent');
+				if (localStorage.getItem('SidebarVisible') == 'false') {
+					$('#sidebar').addClass('active');
+					$('.ncontent').addClass('shContent');
+					$('#sidebar').css('transition', 'all 0.3s');
+					$('#content').css('transition', 'all 0.3s');
+			    	localStorage.setItem('SidebarVisible', 'true');
+				} else {
+					$('#sidebar').removeClass('active');
+					$('.ncontent').removeClass('shContent');
+					$('#sidebar').css('transition', 'all 0.3s');
+					$('#content').css('transition', 'all 0.3s');
+			    	localStorage.setItem('SidebarVisible', 'false');
+				}
 			});
 			var table = $('#emp').DataTable( {
 				"order": [[ 5, "desc" ]],

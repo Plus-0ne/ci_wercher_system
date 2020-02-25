@@ -75,7 +75,11 @@
 									<hr>
 									<div class="col-sm-12">
 										<?php if($Status == 'Employed'): ?>
-											<i class="fas fa-user-tie"></i> <?php echo $EmployeeID; ?>
+											<?php if($EmployeeID != NULL): ?>
+												<i class="fas fa-user-tie"></i> <?php echo $EmployeeID; ?>
+											<?php else: ?>
+												<i class="fas fa-user-tie"></i> <a href="<?php echo base_url() ?>ModifyEmployee?id=<?php echo $ApplicantID; ?>">Employee ID not assigned</a>
+											<?php endif; ?>
 										<?php else: ?>
 											<i class="fas fa-user"></i> <?php echo $ApplicantID; ?>
 										<?php endif; ?>
@@ -957,11 +961,27 @@
 			$('#TabNotesBtn').on('click', function () {
 				$('#TabNotes').children('.employee-tabs-group-content').fadeIn(100);
 			});
-			$('#sidebar').toggleClass('active');
-			$('.ncontent').toggleClass('shContent');
+			if (localStorage.getItem('SidebarVisible') == 'true') {
+				$('#sidebar').addClass('active');
+				$('.ncontent').addClass('shContent');
+			} else {
+				$('#sidebar').css('transition', 'all 0.3s');
+				$('#content').css('transition', 'all 0.3s');
+			}
 			$('#sidebarCollapse').on('click', function () {
-				$('#sidebar').toggleClass('active');
-				$('.ncontent').toggleClass('shContent');
+				if (localStorage.getItem('SidebarVisible') == 'false') {
+					$('#sidebar').addClass('active');
+					$('.ncontent').addClass('shContent');
+					$('#sidebar').css('transition', 'all 0.3s');
+					$('#content').css('transition', 'all 0.3s');
+			    	localStorage.setItem('SidebarVisible', 'true');
+				} else {
+					$('#sidebar').removeClass('active');
+					$('.ncontent').removeClass('shContent');
+					$('#sidebar').css('transition', 'all 0.3s');
+					$('#content').css('transition', 'all 0.3s');
+			    	localStorage.setItem('SidebarVisible', 'false');
+				}
 			});
 			$('.ModalHire').on('click', function () {
 				$('#idToHire').val($(this).attr('id'));

@@ -523,6 +523,7 @@
 					'ApplicantNo' => $ged['ApplicantNo'],
 					'ApplicantImage' => $ged['ApplicantImage'],
 					'ApplicantID' => $ged['ApplicantID'],
+					'EmployeeID' => $ged['EmployeeID'],
 					'PositionDesired' => $ged['PositionDesired'],
 					'PositionGroup' => $ged['PositionGroup'],
 					'SalaryExpected' => $ged['SalaryExpected'],
