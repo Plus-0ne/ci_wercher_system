@@ -74,33 +74,38 @@
 													endforeach;
 											?>">
 										</div>
-										<div class="NightPremium row" style="display: none;">
-											<hr>
-											<div class="form-group col-8">
-												<div>Hours</div>
-												<input id="" class="form-control NightHours_<?php echo $row['Time']; ?>" type="number" name="Hours_<?php echo $row['Time']; ?>" value="<?php
-														foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-															if($nrow['Hours'] != NULL) {
-																echo $nrow['Hours'];
-															} else {
-																echo '0';
-															}
-														endforeach;
-												?>">
-											</div>
-											<div class="form-group col-4">
-												<div class="">Overtime</div>
-												<input class="form-control NightOTHours_<?php echo $row['Time']; ?>" type="number" name="OTHours_<?php echo $row['Time']; ?>" value="<?php
-														foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-															if($nrow['Overtime'] != NULL) {
-																echo $nrow['Overtime'];
-															} else {
-																echo '0';
-															}
-														endforeach;
-												?>">
-											</div>
+										<div class="col-sm-12 text-center NightPremium">
+											<h6 class="line-through-text-lite">
+												<span>
+													Night Premium
+												</span>
+											</h6>
 										</div>
+										<div class="form-group col-8 NightPremium">
+											<div>Hours</div>
+											<input id="" class="form-control NightHours_<?php echo $row['Time']; ?>" type="number" name="NightHours_<?php echo $row['Time']; ?>" value="<?php
+													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
+														if($nrow['NightHours'] != NULL) {
+															echo $nrow['NightHours'];
+														} else {
+															echo '0';
+														}
+													endforeach;
+											?>">
+										</div>
+										<div class="form-group col-4 NightPremium">
+											<div class="">Overtime</div>
+											<input class="form-control NightOTHours_<?php echo $row['Time']; ?>" type="number" name="NightOTHours_<?php echo $row['Time']; ?>" value="<?php
+													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
+														if($nrow['NightOvertime'] != NULL) {
+															echo $nrow['NightOvertime'];
+														} else {
+															echo '0';
+														}
+													endforeach;
+											?>">
+										</div>
+										<hr class="NightPremium">
 									</div>
 									<div class="form-row">
 										<div class="form-group col-6">
@@ -116,12 +121,12 @@
 										<div class="form-group col-6">
 											<input class="NHCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="NH" data-off="NH" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
 										</div>
-										<div class="form-group col-6">
+										<!-- <div class="form-group col-6">
 											<input class="SLCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="SL" data-off="SL" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
 										</div>
 										<div class="form-group col-6">
 											<input class="VLCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="VL" data-off="VL" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
-										</div>
+										</div> -->
 									</div>
 									<div class="form-row hhhh">
 										<div class="form-group col-6 input-icon">
@@ -157,7 +162,12 @@
 										<div class="form-group col-12">
 											<label>Remarks</label>
 											<div class="input-icon-sm">
-												<input class="form-control" type="text" name="Remarks_<?php echo $row['Time']; ?>" value="">
+												<input class="form-control" type="text" name="Remarks_<?php echo $row['Time']; ?>" value="<?php
+													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
+														if($nrow['Remarks'] != NULL) {
+															echo $nrow['Remarks'];
+														}
+													endforeach; ?>">
 											</div>
 										</div>
 									</div>

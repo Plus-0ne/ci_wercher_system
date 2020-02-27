@@ -461,6 +461,19 @@ a[data-toggle="collapse"] {
     margin-top: 10px;
     padding:0 10px; 
 }
+.line-through-text-lite {
+   width: 100%; 
+   text-align: center; 
+   border-bottom: 2px solid rgba(0, 0, 0, 0.16); 
+   line-height: 0.1em;
+   margin: 20px 0 15px; 
+} 
+
+.line-through-text-lite span { 
+    background:#ebebeb; 
+    margin-top: 10px;
+    padding:0 10px; 
+}
 .input-icon, .input-icon-sm {
 	position: relative;
 }
@@ -645,6 +658,9 @@ a[data-toggle="collapse"] {
 .payroll-tabs li a:hover {
 	background-color: #007bff;
 
+}
+.NightPremium {
+	display: none;
 }
 
 /*

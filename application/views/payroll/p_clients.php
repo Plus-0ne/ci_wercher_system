@@ -16,8 +16,8 @@
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
 					<div class="col-sm-12">
-						<div class="table-responsive pt-2 pb-5 pl-2 pr-2">
-							<table id="ListClients" class="table table-striped table-bordered PrintOut" style="width: 100%;">
+						<div class="table-responsive pt-2 pl-2 pr-2">
+							<table id="ListClients" class="table PrintOut" style="width: 100%;">
 								<thead>
 									<tr class="text-center align-middle">
 										<th> Name </th>
@@ -56,38 +56,38 @@
 								</tbody>
 							</table>
 						</div>
-					</div> 
-				</div>
-				<hr>
-				<div class="row wercher-container-table pl-5">
-					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
-						<h5>
-							<i class="fas fa-user-edit fa-fw"></i> Recent Hires
-						</h5>
 					</div>
-					<div class="col-sm-12">
-						<div class="table-responsive pb-5 pl-2 pr-2">
-							<table id="ListLogbook" class="table table-condensed PrintOut" style="width: 100%;">
-								<thead>
-									<tr class="text-center align-middle">
-										<th> Time </th>
-										<th> Event </th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php foreach ($GetLogbookLatestHires->result_array() as $row): ?>
-										<tr>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['Time']; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['Event']; ?>
-											</td>
+					<hr>
+					<div class="row pt-5 pl-5">
+						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
+							<h5>
+								<i class="fas fa-user-edit fa-fw"></i> Recent Hires
+							</h5>
+						</div>
+						<div class="col-sm-12">
+							<div class="table-responsive pb-5 pl-2 pr-2">
+								<table id="ListLogbook" class="table table-condensed PrintOut" style="width: 100%;">
+									<thead>
+										<tr class="text-center align-middle">
+											<th> Time </th>
+											<th> Event </th>
 										</tr>
-									<?php endforeach; ?>
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+										<?php foreach ($GetLogbookLatestHires->result_array() as $row): ?>
+											<tr>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['Time']; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['Event']; ?>
+												</td>
+											</tr>
+										<?php endforeach; ?>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -4,36 +4,34 @@
 
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">Employees of <?=$_GET['id']?></h4>
+					<h4 class="modal-title">Employees of <?php
+					$ClientID = $_GET['id'];
+					$GetClient = $this->Model_Selects->GetClientID($ClientID);
+					foreach($GetClient->result_array() as $row):
+						echo $row['Name'];
+					endforeach;
+					?> (<?php echo $this->Model_Selects->GetClientsEmployed($ClientID)->num_rows(); ?>)</h4>
 					<div class="text-right">
-						<button onClick="printContent('PrintOutHistory')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
-						<button type="button" class="close d-none d-sm-block" data-dismiss="modal">&times;</button>
+						<button id="ClientExportPrint" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Print"><i class="fas fa-print" style="margin-right: -1px;"></i></button>
+						<button id="ClientExportCopy" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard"><i class="fas fa-clipboard-list" style="margin-right: -1px;"></i></button>
+						<button id="ClientExportExcel" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Export as an Excel file (.xlsx)"><i class="fas fa-file-excel" style="margin-right: -1px;"></i></button>
+						<button id="ClientExportCSV" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Export as a CSV file (.csv)"><i class="fas fa-file-csv" style="margin-right: -1px;"></i></button>
+						<button id="ClientExportPDF" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Export as a PDF file (.pdf)"><i class="fas fa-file-pdf" style="margin-right: -1px;"></i></button>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
 					</div>
 				</div>
 
 				<!-- Modal body -->
 				<div class="modal-body">
-					<div class="row rcontent">
+					<div class="row">
 						<div class="col-sm-12">
-							<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
+							<div class="pt-5 pb-5 pl-2 pr-2">
 								<?php if (isset($_GET['id'])): ?>
 									<div class="row">
-										<div id="ByClient" class="col-sm-12 text-center">
-											<h4 class="line-through-text">
-												<span>
-												<i class="fas fa-users"></i>
-												</span>
-											</h4>
-										</div>
-										<div class="col-12 text-right">
-											<button id="MG_ExportPrint" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Print"><i class="fas fa-print" style="margin-right: -1px;"></i></button>
-											<button id="MG_ExportCopy" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard"><i class="fas fa-clipboard-list" style="margin-right: -1px;"></i></button>
-											<button id="MG_ExportExcel" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Export as an Excel file (.xlsx)"><i class="fas fa-file-excel" style="margin-right: -1px;"></i></button>
-											<button id="MG_ExportCSV" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Export as a CSV file (.csv)"><i class="fas fa-file-csv" style="margin-right: -1px;"></i></button>
-											<button id="MG_ExportPDF" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Export as a PDF file (.pdf)"><i class="fas fa-file-pdf" style="margin-right: -1px;"></i></button>
-										</div>
-										<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
-											<table id="MonthlyTable" class="table table-striped table-bordered PrintOut" style="width: 100%;">
+										<div class="table-responsive pb-5 pl-2 pr-2">
+											<table id="ClientEmployedTable" class="table" style="width: 100%;">
 												<thead>
 													<tr class="text-center">
 														<th> Employee </th>
@@ -51,10 +49,14 @@
 														<tr>
 															<td class="text-center">
 																<div class="col-sm-12">
-																	<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70">
+																	<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
 																</div>
 																<div class="col-sm-12 align-middle">
-																	<?php echo $row['EmployeeID']; ?>
+																	<?php if($row['EmployeeID'] != NULL): ?>
+																		<?php echo $row['EmployeeID']; ?>
+																	<?php else: ?>
+																		<?php echo 'No Employee ID'; ?>
+																	<?php endif; ?>
 																</div>
 															</td>
 															<td class="text-center align-middle">
@@ -66,18 +68,46 @@
 															<td class="text-center align-middle">
 																<?php echo $row['SalaryExpected']; ?>
 															</td>
+															<?php
+																$currTime = time();
+																$strDateEnds = strtotime($row['DateEnds']);
+																$strDateStarted = strtotime($row['DateStarted']);
+																// PERCENTAGE
+																$rPercentage = (($strDateEnds - $currTime) * 100) / ($strDateEnds - $strDateStarted);
+																$rPercentage = round($rPercentage);
+																// DAYS REMAINING
+																$dateTimeZone = new DateTimeZone("Asia/Manila");
+																$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
+																$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
+																$interval = $datetime1->diff($datetime2);
+																$DaysRemaining = "";
+																if($interval->format('%y years') != '0 years') {
+																	$DaysRemaining = $DaysRemaining . $interval->format('%y years');
+																	if($interval->format('%m months') != '0 months') {
+																		$DaysRemaining = $DaysRemaining . ', ';
+																	}
+																}
+																if($interval->format('%m months') != '0 months') {
+																	$DaysRemaining = $DaysRemaining . $interval->format('%m months');
+																	if($interval->format('%d days') != '0 days') {
+																		$DaysRemaining = $DaysRemaining . ', ';
+																	}
+																}
+																if($interval->format('%d days') != '0 days') {
+																	$DaysRemaining = $DaysRemaining . $interval->format('%d days');
+																}
+															?>
 															<td class="text-center align-middle">
-																<?php if ($row['Status'] == 'Employed') { ?>
-																	<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Employed
-																<?php } elseif ($row['Status'] == 'Applicant') { ?>
-																	<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Applicant
-																<?php } elseif ($row['Status'] == 'Expired') { ?>
-																	<i class="fas fa-square PrintExclude" style="color: #0721DB;"></i> Expired
-																<?php } elseif ($row['Status'] == 'Blacklisted') { ?>
-																	<i class="fas fa-square PrintExclude" style="color: #000000;"></i> Blacklisted
-																<?php } else { ?>
-																	<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Unknown
-																<?php } ?>
+																<div class="wercher-progress-daysremaining"><?php
+																if ($DaysRemaining != NULL) {
+																	echo $DaysRemaining;
+																} else {
+																	echo 'Less than 1 day';
+																} ?>
+															 	</div>
+																<a href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>#Contract" class="progress" style="position: relative; box-shadow: none; background-color: rgba(0, 0, 0, 0.11);" data-toggle="tooltip" data-placement="top" data-html="true" title="Contract Started<br><?php echo $row['DateStarted']; ?><br><br>Contract Ends<br><?php echo $row['DateEnds']; ?><br><br>Salary Expected<br>₱<?php echo $row['SalaryExpected']; ?><br><br><i>Click to open the Contract tab</i>">
+																	<div class="progress-bar wercher-progress-bar" role="progressbar" style="width: <?php echo $rPercentage; ?>%;" aria-valuenow="<?php echo $rPercentage; ?>" aria-valuemin="0" aria-valuemax="100"><?php echo $rPercentage; ?>%</div>
+																</a>
 															</td>
 															<td class="text-center align-middle PrintExclude" width="100">
 																<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>" target="_blank"><i class="fas fa-external-link-alt"></i> View</a>

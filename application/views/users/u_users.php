@@ -44,7 +44,7 @@
 												</div>
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php if($row['MiddleInitial'] != ''): echo $row['MiddleInitial'] . '.'; endif; ?>
 											</td>
 											<td class="text-center align-middle">
 												<?php echo $row['PositionDesired']; ?>

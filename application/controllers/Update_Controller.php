@@ -290,8 +290,8 @@ class Update_Controller extends CI_Controller {
 		$Address_Provincial = $this->input->post('Address_Provincial');
 		$Address_Manila = $this->input->post('Address_Manila');
 
-		if ($PositionDesired == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+		if ($PositionDesired == NULL || $LastName == NULL || $FirstName == NULL) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Position Desired, Last Name, and First Name fields are required!</h5></div>');
 			$data = array(
 				'EmployeeID' => $EmployeeID,
 				'PositionDesired' => $PositionDesired,
@@ -778,6 +778,9 @@ class Update_Controller extends CI_Controller {
 				$Type = $this->input->post('Type_' . $nrow['Time'],TRUE);
 				$Hours = $this->input->post('Hours_' . $nrow['Time'],TRUE);
 				$Overtime = $this->input->post('OTHours_' . $nrow['Time'],TRUE);
+				$NightHours = $this->input->post('NightHours_' . $nrow['Time'],TRUE);
+				$NightOvertime = $this->input->post('NightOTHours_' . $nrow['Time'],TRUE);
+				$Remarks = $this->input->post('Remarks_' . $nrow['Time'],TRUE);
 				// BENEFITS
 				$HDMF = $this->input->post('HDMF_' . $nrow['Time'],TRUE);
 				$Philhealth = $this->input->post('Philhealth_' . $nrow['Time'],TRUE);
@@ -812,6 +815,9 @@ class Update_Controller extends CI_Controller {
 						'Date' => $Date,
 						'Hours' => $Hours,
 						'Overtime' => $Overtime,
+						'NightHours' => $NightHours,
+						'NightOvertime' => $NightOvertime,
+						'Remarks' => $Remarks,
 						'Type' => $Type,
 						'HDMF' => $HDMF,
 						'Philhealth' => $Philhealth,

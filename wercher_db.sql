@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2020 at 10:01 AM
+-- Generation Time: Feb 27, 2020 at 02:09 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.10
 
@@ -129,10 +129,11 @@ CREATE TABLE `applicants` (
 
 INSERT INTO `applicants` (`ApplicantNo`, `ApplicantImage`, `ApplicantID`, `EmployeeID`, `PositionDesired`, `PositionGroup`, `SalaryExpected`, `LastName`, `FirstName`, `MiddleInitial`, `Gender`, `Age`, `Height`, `Weight`, `Religion`, `BirthDate`, `BirthPlace`, `Citizenship`, `CivilStatus`, `No_OfChildren`, `Address_Present`, `Address_Provincial`, `Address_Manila`, `Phone_No`, `SSS_No`, `EffectiveDateCoverage`, `ResidenceCertificateNo`, `Rcn_At`, `Rcn_On`, `TIN`, `TIN_At`, `TIN_On`, `HDMF`, `HDMF_At`, `HDMF_On`, `PhilHealth`, `PhilHealth_At`, `PhilHealth_On`, `ATM_No`, `Status`, `ClientEmployed`, `DateStarted`, `DateEnds`, `AppliedOn`, `ReminderType`, `ReminderDate`, `ReminderDateString`, `ReminderLocked`, `Temp_ApplicantID`) VALUES
 (1, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030312d412f696d6167652e6a7067, '00001-A', NULL, 'Secretary', 'Office Workers', '20000', 'Tracey', 'Adey', 'K', 'Female', '42', 'TEST-879268', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', 'Single', '87', 'TEST-879268', 'TEST-879268', 'TEST-879268', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'Expired', '', '', '2020-02-23 08:27:58 AM', '2020-02-17 01:00:09 AM', '', '', '1 month, 5 days', 'No', '00001-B'),
-(2, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030322d412f696d616765322e6a7067, '00002-A', 'WCB4-0003-20', 'Manager', 'Office Workers', '25000', 'Mcvarish', 'Renelle', 'S', 'Female', '50', 'TEST-797051', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', 'Single', '18', 'TEST-797051', 'TEST-797051', 'TEST-797051', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'Employed', '0', '2020-02-24 04:53:50 PM', '2020-02-25 04:53:50 PM', '2020-02-17 01:13:00 AM', '', '', NULL, 'No', '00002-B'),
-(3, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030332d412f696d616765332e6a7067, '00003-A', NULL, 'ELE', 'Factory', '', 'Verdirosi', 'Melisenda', 'U', 'Female', '33', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', 'Single', '90', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'Employed', '0', '2020-02-21 07:23:35 PM', '2021-05-24 07:23:35 PM', '2020-02-17 01:13:51 AM', 'R_ContractDuration', '39149212', '1 year, 2 months, 27 days', 'Yes', '00003-B'),
+(2, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030322d412f696d616765322e6a7067, '00002-A', 'WCB4-0003-20', 'Manager', 'Office Workers', '25000', 'Mcvarish', 'Renelle', 'S', 'Female', '50', 'TEST-797051', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', 'Single', '18', 'TEST-797051', 'TEST-797051', 'TEST-797051', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'Expired', '', '', '2020-02-25 04:53:50 PM', '2020-02-17 01:13:00 AM', '', '', NULL, 'No', '00002-B'),
+(3, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030332d412f696d616765332e6a7067, '00003-A', 'WCB4-4334-20', 'ELE', 'Factory', '10000', 'Verdirosi', 'Melisenda', 'U', 'Female', '33', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', 'Single', '90', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'Employed', '0', '2020-02-21 07:23:35 PM', '2021-05-24 07:23:35 PM', '2020-02-17 01:13:51 AM', 'R_ContractDuration', '39149212', '1 year, 2 months, 27 days', 'Yes', '00003-B'),
 (4, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030342d412f696d616765342e6a7067, '00004-A', NULL, 'Engineering', 'Factory', '50000', 'Wegener', 'Stuart', 'V', 'Male', '20', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', 'Married', '3', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'Employed', '0', '2020-02-21 05:24:41 PM', '2020-02-28 05:24:41 PM', '2020-02-19 01:31:19 AM', 'R_ContractDuration', '2629743', '1 month', 'No', '00004-B'),
-(5, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030352d412f696d616765352e6a7067, '00005-A', NULL, 'Q.A. Specialist', 'Office Workers', NULL, 'Newman', 'Robert', 'P', 'Male', '78', 'TEST-6625858', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', 'Single', '0', 'TEST-6625858', 'TEST-6625858', 'TEST-6625858', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'Applicant', NULL, NULL, NULL, '2020-02-19 01:33:29 AM', NULL, NULL, NULL, NULL, NULL);
+(5, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030352d412f696d616765352e6a7067, '00005-A', 'WCSK&FN-0001-20', 'Q.A. Specialist', 'Office Workers', '30000', 'Newman', 'Robert', 'P', 'Male', '78', 'TEST-6625858', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', 'Single', '0', 'TEST-6625858', 'TEST-6625858', 'TEST-6625858', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'Employed', '4', '2020-02-27 08:42:10 AM', '2020-03-27 08:42:10 AM', '2020-02-19 01:33:29 AM', NULL, NULL, NULL, NULL, '00005-B'),
+(6, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d412f696d616765362e6a7067, '00006-A', NULL, 'Engineering', 'Factory', NULL, 'Wegener', 'Steve', 'V', 'Male', '', '', '', '', '', '', '', 'Single', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Applicant', NULL, NULL, NULL, '2020-02-27 01:27:16 AM', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -209,7 +210,8 @@ CREATE TABLE `contract_history` (
 
 INSERT INTO `contract_history` (`ID`, `ApplicantID`, `PreviousPosition`, `PreviousDateStarted`, `PreviousDateEnds`, `Client`) VALUES
 (1, '00001-A', NULL, '2020-02-21 05:24:41 PM', '2020-02-28 05:24:41 PM', 'Client Test'),
-(2, '00002-A', NULL, '2020-02-21 05:24:41 PM', '2020-02-28 05:24:41 PM', 'B4');
+(2, '00002-A', NULL, '2020-02-21 05:24:41 PM', '2020-02-28 05:24:41 PM', 'B4'),
+(3, '00002-A', NULL, '2020-02-21 05:24:41 PM', '2020-02-28 05:24:41 PM', 'B4');
 
 -- --------------------------------------------------------
 
@@ -252,7 +254,79 @@ INSERT INTO `dashboard_months` (`ID`, `Year`, `Month`, `Total`) VALUES
 (45, '2019', '10', '0'),
 (47, '2019', '11', '0'),
 (49, '2019', '12', '0'),
-(58, '2020', '02', '5');
+(88, '9999', '01', '0'),
+(90, '9999', '02', '0'),
+(92, '9999', '03', '0'),
+(94, '9999', '04', '0'),
+(96, '9999', '05', '0'),
+(98, '9999', '06', '0'),
+(100, '9999', '07', '0'),
+(102, '9999', '08', '0'),
+(104, '9999', '09', '0'),
+(106, '9999', '10', '0'),
+(108, '9999', '11', '0'),
+(110, '9999', '12', '0'),
+(118, '2021', '01', '0'),
+(120, '2021', '02', '0'),
+(122, '2021', '03', '0'),
+(124, '2021', '04', '0'),
+(126, '2021', '05', '0'),
+(128, '2021', '06', '0'),
+(130, '2021', '07', '0'),
+(132, '2021', '08', '0'),
+(134, '2021', '09', '0'),
+(136, '2021', '10', '0'),
+(138, '2021', '11', '0'),
+(140, '2021', '12', '0'),
+(144, '2022', '01', '0'),
+(146, '2022', '02', '0'),
+(148, '2022', '03', '0'),
+(150, '2022', '04', '0'),
+(152, '2022', '05', '0'),
+(154, '2022', '06', '0'),
+(156, '2022', '07', '0'),
+(158, '2022', '08', '0'),
+(160, '2022', '09', '0'),
+(162, '2022', '10', '0'),
+(164, '2022', '11', '0'),
+(166, '2022', '12', '0'),
+(174, '2023', '01', '0'),
+(176, '2023', '02', '0'),
+(178, '2023', '03', '0'),
+(180, '2023', '04', '0'),
+(182, '2023', '05', '0'),
+(184, '2023', '06', '0'),
+(186, '2023', '07', '0'),
+(188, '2023', '08', '0'),
+(190, '2023', '09', '0'),
+(192, '2023', '10', '0'),
+(194, '2023', '11', '0'),
+(196, '2023', '12', '0'),
+(198, '2024', '01', '0'),
+(200, '2024', '02', '0'),
+(202, '2024', '03', '0'),
+(204, '2024', '04', '0'),
+(206, '2024', '05', '0'),
+(208, '2024', '06', '0'),
+(210, '2024', '07', '0'),
+(212, '2024', '08', '0'),
+(214, '2024', '09', '0'),
+(216, '2024', '10', '0'),
+(218, '2024', '11', '0'),
+(220, '2024', '12', '0'),
+(222, '2025', '01', '0'),
+(224, '2025', '02', '0'),
+(226, '2025', '03', '0'),
+(228, '2025', '04', '0'),
+(230, '2025', '05', '0'),
+(232, '2025', '06', '0'),
+(234, '2025', '07', '0'),
+(236, '2025', '08', '0'),
+(238, '2025', '09', '0'),
+(240, '2025', '10', '0'),
+(242, '2025', '11', '0'),
+(244, '2025', '12', '0'),
+(249, '2020', '02', '6');
 
 -- --------------------------------------------------------
 
@@ -274,14 +348,14 @@ CREATE TABLE `dummy_hours` (
 --
 
 INSERT INTO `dummy_hours` (`ID`, `Time`, `Current`, `Regular`, `NightShift`, `Holiday`) VALUES
-(33, '2020-02-16', 'Current', 0, 0, 0),
-(34, '2020-02-17', 'Current', 0, 0, 0),
-(35, '2020-02-18', 'Current', 0, 0, 0),
-(36, '2020-02-19', 'Current', 0, 0, 0),
-(37, '2020-02-20', 'Current', 0, 0, 0),
-(38, '2020-02-21', 'Current', 0, 0, 0),
-(39, '2020-02-22', 'Current', 0, 0, 0),
-(40, '2020-02-23', 'Current', 0, 0, 0);
+(97, '2020-02-20', 'Current', 0, 0, 0),
+(98, '2020-02-21', 'Current', 0, 0, 0),
+(99, '2020-02-22', 'Current', 0, 0, 0),
+(100, '2020-02-23', 'Current', 0, 0, 0),
+(101, '2020-02-24', 'Current', 0, 0, 0),
+(102, '2020-02-25', 'Current', 0, 0, 0),
+(103, '2020-02-26', 'Current', 0, 0, 0),
+(104, '2020-02-27', 'Current', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -344,8 +418,11 @@ CREATE TABLE `hours_weekly` (
   `Salary` varchar(255) DEFAULT NULL,
   `Time` varchar(55) DEFAULT NULL,
   `Hours` int(255) DEFAULT NULL,
+  `NightHours` int(255) DEFAULT NULL,
   `Type` varchar(255) NOT NULL,
   `Overtime` int(11) DEFAULT NULL,
+  `NightOvertime` int(11) DEFAULT NULL,
+  `Remarks` varchar(255) DEFAULT NULL,
   `Regular` tinyint(1) DEFAULT NULL,
   `NightShift` tinyint(1) DEFAULT NULL,
   `Holiday` tinyint(1) DEFAULT NULL,
@@ -360,12 +437,21 @@ CREATE TABLE `hours_weekly` (
 -- Dumping data for table `hours_weekly`
 --
 
-INSERT INTO `hours_weekly` (`No`, `ClientID`, `ApplicantID`, `Name`, `Salary`, `Time`, `Hours`, `Type`, `Overtime`, `Regular`, `NightShift`, `Holiday`, `Current`, `HDMF`, `Philhealth`, `SSS`, `Tax`) VALUES
-(1, '1', '00001-B', 'Tracey, Adey K.', '5000', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, '0', '00004-B', 'Wegener, Stuart V.', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(3, '0', '00003-B', 'Verdirosi, Melisenda U.', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(4, '0', '00002-B', 'Mcvarish, Renelle S.', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5, '0', '00002-B', 'Mcvarish, Renelle S.', '25000', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `hours_weekly` (`No`, `ClientID`, `ApplicantID`, `Name`, `Salary`, `Time`, `Hours`, `NightHours`, `Type`, `Overtime`, `NightOvertime`, `Remarks`, `Regular`, `NightShift`, `Holiday`, `Current`, `HDMF`, `Philhealth`, `SSS`, `Tax`) VALUES
+(1, '1', '00001-B', 'Tracey, Adey K.', '5000', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, '0', '00004-B', 'Wegener, Stuart V.', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, '0', '00003-B', 'Verdirosi, Melisenda U.', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, '0', '00002-B', 'Mcvarish, Renelle S.', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, '0', '00002-B', 'Mcvarish, Renelle S.', '25000', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(78, '0', '00003-A', NULL, NULL, '2020-02-20', 10, 5, '', 0, 0, 'remarks test', NULL, NULL, NULL, NULL, '', '', '', ''),
+(79, '0', '00003-A', NULL, NULL, '2020-02-21', 5, 0, '', 0, 0, 'remarks 2', NULL, NULL, NULL, NULL, '', '', '', ''),
+(80, '0', '00003-A', NULL, NULL, '2020-02-22', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', ''),
+(81, '0', '00003-A', NULL, NULL, '2020-02-23', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', ''),
+(82, '0', '00003-A', NULL, NULL, '2020-02-24', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', ''),
+(83, '0', '00003-A', NULL, NULL, '2020-02-25', 5, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', ''),
+(84, '0', '00003-A', NULL, NULL, '2020-02-26', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', ''),
+(85, '0', '00003-A', NULL, NULL, '2020-02-27', 5, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', ''),
+(86, '4', '00005-B', 'Newman, Robert P.', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -434,7 +520,28 @@ INSERT INTO `logbook` (`No`, `Time`, `Type`, `Event`, `Link`) VALUES
 (46, '2020-02-24 04:52:19 PM', 'Employment', 'Applicant ID 00002-B has been employed to Client ID 0 for 1 day!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00002-B'),
 (47, '2020-02-24 04:53:13 PM', 'Update', 'Applicant ID 00002-A has their contract extended by -1 days!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00002-A#Contract'),
 (48, '2020-02-24 04:53:13 PM', 'Update', 'Employee 00002-A has expired!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00002-A'),
-(49, '2020-02-24 04:53:50 PM', 'Employment', 'Applicant ID 00002-B has been employed to Client ID 0 for 1 day!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00002-B');
+(49, '2020-02-24 04:53:50 PM', 'Employment', 'Applicant ID 00002-B has been employed to Client ID 0 for 1 day!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00002-B'),
+(50, '2020-02-24 09:24:57 PM', 'Update', 'Updated details on Person ID 00003-A.', 'http://localhost/ci_wercher_system/ViewEmployee?id=00003-A'),
+(51, '2020-02-24 09:26:12 PM', 'Update', 'Updated details on Person ID 00003-A.', 'http://localhost/ci_wercher_system/ViewEmployee?id=00003-A'),
+(52, '2020-02-24 09:27:55 PM', 'Update', 'Updated details on Person ID 00003-A.', 'http://localhost/ci_wercher_system/ViewEmployee?id=00003-A'),
+(53, '2020-02-24 10:10:26 PM', 'Update', 'Updated details on Person ID 00002-A.', 'http://localhost/ci_wercher_system/ViewEmployee?id=00002-A'),
+(54, '2020-02-24 10:14:38 PM', 'Update', 'Updated details on Person ID 00005-A.', 'http://localhost/ci_wercher_system/ViewEmployee?id=00005-A'),
+(55, '2020-02-25 08:33:32 PM', 'Update', 'Employee 00002-A has expired!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00002-A'),
+(56, '2020-02-27 07:32:37 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(57, '2020-02-27 07:33:03 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(58, '2020-02-27 07:39:58 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(59, '2020-02-27 07:40:23 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(60, '2020-02-27 07:42:17 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(61, '2020-02-27 07:42:24 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(62, '2020-02-27 07:42:33 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(63, '2020-02-27 07:45:47 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(64, '2020-02-27 07:47:38 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(65, '2020-02-27 07:49:15 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(66, '2020-02-27 08:27:16 AM', 'New', 'New Applicant added! (Name: Wegener, Steve . | ID: 00006-A)', 'http://localhost/ci_wercher_system/ViewEmployee?id=00006-A'),
+(67, '2020-02-27 08:34:39 AM', 'Update', 'Updated details on Person ID 00005-A.', 'http://localhost/ci_wercher_system/ViewEmployee?id=00005-A'),
+(68, '2020-02-27 08:34:50 AM', 'Update', 'Updated details on Person ID 00006-A.', 'http://localhost/ci_wercher_system/ViewEmployee?id=00006-A'),
+(69, '2020-02-27 08:35:00 AM', 'Update', 'Updated details on Person ID 00006-A.', 'http://localhost/ci_wercher_system/ViewEmployee?id=00006-A'),
+(70, '2020-02-27 08:42:10 AM', 'Employment', 'Applicant ID 00005-B has been employed to Client ID 4 for 1 month!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00005-B');
 
 -- --------------------------------------------------------
 
@@ -654,7 +761,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `applicants`
 --
 ALTER TABLE `applicants`
-  MODIFY `ApplicantNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ApplicantNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `audit_log`
@@ -666,31 +773,31 @@ ALTER TABLE `audit_log`
 -- AUTO_INCREMENT for table `contract_history`
 --
 ALTER TABLE `contract_history`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `dashboard_months`
 --
 ALTER TABLE `dashboard_months`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=250;
 
 --
 -- AUTO_INCREMENT for table `dummy_hours`
 --
 ALTER TABLE `dummy_hours`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT for table `hours_weekly`
 --
 ALTER TABLE `hours_weekly`
-  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT for table `logbook`
 --
 ALTER TABLE `logbook`
-  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `supp_documents`

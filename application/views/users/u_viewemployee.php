@@ -847,6 +847,24 @@
 	<?php $this->load->view('_template/users/u_scripts');?>
 	<script type="text/javascript">
 		$(document).ready(function () {
+			$('#ClientSelect').on('change', function() {
+				<?php foreach ($getClientOption->result_array() as $row): ?>
+				<?php
+				// Count how many employees are on the client
+				$CountEmployees = $this->Model_Selects->GetClientsEmployed($row['ClientID'])->num_rows();
+				$CountEmployees++;
+				$CountEmployees = str_pad($CountEmployees,4,0,STR_PAD_LEFT);
+				// Get the current year
+				$Year = date('Y');
+				$Year = substr($Year, 2);
+				// Concatenate them all together
+				$EmployeeID = 'WC' . $row['EmployeeIDSuffix'] . '-' . $CountEmployees . '-' . $Year;
+				?>
+				if ($(this).val() == '<?php echo $row['ClientID']; ?>') {
+					$(this).closest('#ClientModal').find('#EmployeeID').val('<?php echo $EmployeeID; ?>');
+				}
+				<?php endforeach; ?>
+			});
 			$("#Type").change(function(){
 				$('#ViolationNotice').hide();
 				$('#BlacklistNotice').hide();

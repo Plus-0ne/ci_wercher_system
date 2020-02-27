@@ -198,6 +198,56 @@
 	    $('#ExportPDF').on('click', function () {
 	        table.button('4').trigger();
     	});
+    	var ClientTable = $('#ClientEmployedTable').DataTable( {
+			"order": [[ 3, "desc" ]],
+			buttons: [
+            {
+	            extend: 'print',
+	            exportOptions: {
+	                columns: [ 1, 2, 3, 4, 5 ]
+	            }
+	        },
+	        {
+	            extend: 'copyHtml5',
+	            exportOptions: {
+	                columns: [ 1, 2, 3, 4, 5 ]
+	            }
+	        },
+	        {
+	            extend: 'excelHtml5',
+	            exportOptions: {
+	                columns: [ 1, 2, 3, 4, 5 ]
+	            }
+	        },
+	        {
+	            extend: 'csvHtml5',
+	            exportOptions: {
+	                columns: [ 1, 2, 3, 4, 5 ]
+	            }
+	        },
+	        {
+	            extend: 'pdfHtml5',
+	            exportOptions: {
+	                columns: [ 1, 2, 3, 4, 5 ]
+	            }
+	        }
+        ]
+   		});
+		$('#ClientExportPrint').on('click', function () {
+	        table.button('0').trigger();
+	    });
+	    $('#ClientExportCopy').on('click', function () {
+	        table.button('1').trigger();
+	    });
+	    $('#ClientExportExcel').on('click', function () {
+	        table.button('2').trigger();
+	    });
+	    $('#ClientExportCSV').on('click', function () {
+	        table.button('3').trigger();
+	    });
+	    $('#ClientExportPDF').on('click', function () {
+	        table.button('4').trigger();
+    	});
 	});
 </script>
 </html>
