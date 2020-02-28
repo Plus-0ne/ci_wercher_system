@@ -297,5 +297,30 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function sss_Contri()
+	{
+		$SQL = "SELECT * FROM sss_table";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function Checkkkkkk($ApplicantID)
+	{
+		$SQL = "SELECT * FROM hours_weekly WHERE ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetempGP($ApplicantID)
+	{
 
+		$this->db->select_sum('day_pay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$result = $this->db->get('hours_weekly')->row();  
+		return $result->day_pay;
+	}
+	public function getsssRa()
+	{
+		$SQL = "SELECT * FROM sss_table";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }

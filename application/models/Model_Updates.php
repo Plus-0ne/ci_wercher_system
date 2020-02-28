@@ -95,6 +95,7 @@ class Model_Updates extends CI_Model {
 			'Philhealth' => $Philhealth,
 			'SSS' => $SSS,
 			'Tax' => $Tax,
+			'day_pay' => $day_pay,
 		);
 		$SQL = "REPLACE INTO hours_weekly
 		SET ApplicantID = '$ApplicantID',
@@ -107,7 +108,8 @@ class Model_Updates extends CI_Model {
 		HDMF = '$HDMF',
 		Philhealth = '$Philhealth',
 		SSS = '$SSS',
-		Tax = '$Tax'";
+		Tax = '$Tax',
+		day_pay = '$day_pay'";
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}

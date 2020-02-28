@@ -13,7 +13,7 @@
 				<div class="col-12 col-sm-12 payroll-tabs">
 					<ul>
 						<li class="payroll-tabs-active"><a href="<?php echo base_url() ?>ViewClient?id=<?php echo $ClientID; ?>">Attendance</a></li>
-						<li><a href="<?php echo base_url() ?>Payroll?id=<?php echo $ClientID; ?>">Payroll</a></li>
+						<li><a href="<?php echo base_url() ?>Payrollsss?id=<?php echo $ClientID; ?>">Payroll</a></li>
 					</ul>
 				</div>
 				<div class="rcontent">

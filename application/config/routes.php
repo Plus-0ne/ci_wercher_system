@@ -65,9 +65,12 @@ $route['Clients'] = 'Main_Controller/Clients';
 $route['Experimental'] = 'Main_Controller/Experimental';
 $route['Archived'] = 'Main_Controller/V_Archived';
 $route['Blacklisted'] = 'Main_Controller/V_Blacklisted';
+$route['SSS_Table'] = 'Main_Controller/SSS_Table';
 
 $route['Payroll'] = 'Main_Controller/PayrollClients';
 $route['ViewClient'] = 'Main_Controller/ViewClient';
+$route['Payrollsss'] = 'Main_Controller/Payrollsss';
+
 
 // LOGIN
 $route['LoginValidation'] = 'Login_Controller/LoginValidation';
@@ -76,6 +79,8 @@ $route['addNewEmployee'] = 'Add_Controller/addNewEmployee';
 $route['Add_NewAdmin'] = 'Add_Controller/Add_NewAdmin';
 $route['Add_newClient'] = 'Add_Controller/Add_newClient';
 $route['AddSupDoc'] = 'Add_Controller/AddSupDoc';
+$route['AddthisSss'] = 'Add_Controller/AddthisSss';
+
 
 
 

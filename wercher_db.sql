@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 27, 2020 at 02:09 AM
--- Server version: 10.4.8-MariaDB
--- PHP Version: 7.3.10
+-- Generation Time: Feb 28, 2020 at 10:29 PM
+-- Server version: 10.1.34-MariaDB
+-- PHP Version: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -73,7 +73,7 @@ INSERT INTO `admin` (`AdminNo`, `AdminLevel`, `Position`, `AdminID`, `Password`,
 
 CREATE TABLE `applicants` (
   `ApplicantNo` int(11) NOT NULL,
-  `ApplicantImage` blob DEFAULT NULL,
+  `ApplicantImage` blob,
   `ApplicantID` varchar(255) DEFAULT NULL,
   `EmployeeID` varchar(255) DEFAULT NULL,
   `PositionDesired` varchar(255) DEFAULT NULL,
@@ -131,7 +131,7 @@ INSERT INTO `applicants` (`ApplicantNo`, `ApplicantImage`, `ApplicantID`, `Emplo
 (1, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030312d412f696d6167652e6a7067, '00001-A', NULL, 'Secretary', 'Office Workers', '20000', 'Tracey', 'Adey', 'K', 'Female', '42', 'TEST-879268', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', 'Single', '87', 'TEST-879268', 'TEST-879268', 'TEST-879268', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'Expired', '', '', '2020-02-23 08:27:58 AM', '2020-02-17 01:00:09 AM', '', '', '1 month, 5 days', 'No', '00001-B'),
 (2, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030322d412f696d616765322e6a7067, '00002-A', 'WCB4-0003-20', 'Manager', 'Office Workers', '25000', 'Mcvarish', 'Renelle', 'S', 'Female', '50', 'TEST-797051', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', 'Single', '18', 'TEST-797051', 'TEST-797051', 'TEST-797051', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'Expired', '', '', '2020-02-25 04:53:50 PM', '2020-02-17 01:13:00 AM', '', '', NULL, 'No', '00002-B'),
 (3, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030332d412f696d616765332e6a7067, '00003-A', 'WCB4-4334-20', 'ELE', 'Factory', '10000', 'Verdirosi', 'Melisenda', 'U', 'Female', '33', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', 'Single', '90', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'Employed', '0', '2020-02-21 07:23:35 PM', '2021-05-24 07:23:35 PM', '2020-02-17 01:13:51 AM', 'R_ContractDuration', '39149212', '1 year, 2 months, 27 days', 'Yes', '00003-B'),
-(4, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030342d412f696d616765342e6a7067, '00004-A', NULL, 'Engineering', 'Factory', '50000', 'Wegener', 'Stuart', 'V', 'Male', '20', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', 'Married', '3', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'Employed', '0', '2020-02-21 05:24:41 PM', '2020-02-28 05:24:41 PM', '2020-02-19 01:31:19 AM', 'R_ContractDuration', '2629743', '1 month', 'No', '00004-B'),
+(4, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030342d412f696d616765342e6a7067, '00004-A', NULL, 'Engineering', 'Factory', '50000', 'Wegener', 'Stuart', 'V', 'Male', '20', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', 'Married', '3', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'Expired', '', '', '2020-02-28 05:24:41 PM', '2020-02-19 01:31:19 AM', '', '', '1 month', 'No', '00004-B'),
 (5, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030352d412f696d616765352e6a7067, '00005-A', 'WCSK&FN-0001-20', 'Q.A. Specialist', 'Office Workers', '30000', 'Newman', 'Robert', 'P', 'Male', '78', 'TEST-6625858', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', 'Single', '0', 'TEST-6625858', 'TEST-6625858', 'TEST-6625858', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'Employed', '4', '2020-02-27 08:42:10 AM', '2020-03-27 08:42:10 AM', '2020-02-19 01:33:29 AM', NULL, NULL, NULL, NULL, '00005-B'),
 (6, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d412f696d616765362e6a7067, '00006-A', NULL, 'Engineering', 'Factory', NULL, 'Wegener', 'Steve', 'V', 'Male', '', '', '', '', '', '', '', 'Single', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Applicant', NULL, NULL, NULL, '2020-02-27 01:27:16 AM', NULL, NULL, NULL, NULL, NULL);
 
@@ -211,7 +211,8 @@ CREATE TABLE `contract_history` (
 INSERT INTO `contract_history` (`ID`, `ApplicantID`, `PreviousPosition`, `PreviousDateStarted`, `PreviousDateEnds`, `Client`) VALUES
 (1, '00001-A', NULL, '2020-02-21 05:24:41 PM', '2020-02-28 05:24:41 PM', 'Client Test'),
 (2, '00002-A', NULL, '2020-02-21 05:24:41 PM', '2020-02-28 05:24:41 PM', 'B4'),
-(3, '00002-A', NULL, '2020-02-21 05:24:41 PM', '2020-02-28 05:24:41 PM', 'B4');
+(3, '00002-A', NULL, '2020-02-21 05:24:41 PM', '2020-02-28 05:24:41 PM', 'B4'),
+(4, '00004-A', NULL, '2020-02-27 08:42:10 AM', '2020-03-27 08:42:10 AM', 'Shrek');
 
 -- --------------------------------------------------------
 
@@ -348,14 +349,14 @@ CREATE TABLE `dummy_hours` (
 --
 
 INSERT INTO `dummy_hours` (`ID`, `Time`, `Current`, `Regular`, `NightShift`, `Holiday`) VALUES
-(97, '2020-02-20', 'Current', 0, 0, 0),
-(98, '2020-02-21', 'Current', 0, 0, 0),
-(99, '2020-02-22', 'Current', 0, 0, 0),
-(100, '2020-02-23', 'Current', 0, 0, 0),
-(101, '2020-02-24', 'Current', 0, 0, 0),
-(102, '2020-02-25', 'Current', 0, 0, 0),
-(103, '2020-02-26', 'Current', 0, 0, 0),
-(104, '2020-02-27', 'Current', 0, 0, 0);
+(201, '2020-02-22', 'Current', 0, 0, 0),
+(202, '2020-02-23', 'Current', 0, 0, 0),
+(203, '2020-02-24', 'Current', 0, 0, 0),
+(204, '2020-02-25', 'Current', 0, 0, 0),
+(205, '2020-02-26', 'Current', 0, 0, 0),
+(206, '2020-02-27', 'Current', 0, 0, 0),
+(207, '2020-02-28', 'Current', 0, 0, 0),
+(208, '2020-02-29', 'Current', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -366,7 +367,7 @@ INSERT INTO `dummy_hours` (`ID`, `Time`, `Current`, `Regular`, `NightShift`, `Ho
 CREATE TABLE `employee` (
   `Employee_No` int(11) NOT NULL,
   `Employee_ID` varchar(255) NOT NULL,
-  `EmployeeImage` blob DEFAULT NULL,
+  `EmployeeImage` blob,
   `EmploymentType` varchar(255) DEFAULT NULL,
   `LastName` varchar(255) DEFAULT NULL,
   `FirstName` varchar(255) DEFAULT NULL,
@@ -430,28 +431,23 @@ CREATE TABLE `hours_weekly` (
   `HDMF` varchar(255) DEFAULT NULL,
   `Philhealth` varchar(255) DEFAULT NULL,
   `SSS` varchar(255) DEFAULT NULL,
-  `Tax` varchar(255) DEFAULT NULL
+  `Tax` varchar(255) DEFAULT NULL,
+  `day_pay` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `hours_weekly`
 --
 
-INSERT INTO `hours_weekly` (`No`, `ClientID`, `ApplicantID`, `Name`, `Salary`, `Time`, `Hours`, `NightHours`, `Type`, `Overtime`, `NightOvertime`, `Remarks`, `Regular`, `NightShift`, `Holiday`, `Current`, `HDMF`, `Philhealth`, `SSS`, `Tax`) VALUES
-(1, '1', '00001-B', 'Tracey, Adey K.', '5000', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, '0', '00004-B', 'Wegener, Stuart V.', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(3, '0', '00003-B', 'Verdirosi, Melisenda U.', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(4, '0', '00002-B', 'Mcvarish, Renelle S.', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5, '0', '00002-B', 'Mcvarish, Renelle S.', '25000', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(78, '0', '00003-A', NULL, NULL, '2020-02-20', 10, 5, '', 0, 0, 'remarks test', NULL, NULL, NULL, NULL, '', '', '', ''),
-(79, '0', '00003-A', NULL, NULL, '2020-02-21', 5, 0, '', 0, 0, 'remarks 2', NULL, NULL, NULL, NULL, '', '', '', ''),
-(80, '0', '00003-A', NULL, NULL, '2020-02-22', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', ''),
-(81, '0', '00003-A', NULL, NULL, '2020-02-23', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', ''),
-(82, '0', '00003-A', NULL, NULL, '2020-02-24', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', ''),
-(83, '0', '00003-A', NULL, NULL, '2020-02-25', 5, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', ''),
-(84, '0', '00003-A', NULL, NULL, '2020-02-26', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', ''),
-(85, '0', '00003-A', NULL, NULL, '2020-02-27', 5, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', ''),
-(86, '4', '00005-B', 'Newman, Robert P.', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `hours_weekly` (`No`, `ClientID`, `ApplicantID`, `Name`, `Salary`, `Time`, `Hours`, `NightHours`, `Type`, `Overtime`, `NightOvertime`, `Remarks`, `Regular`, `NightShift`, `Holiday`, `Current`, `HDMF`, `Philhealth`, `SSS`, `Tax`, `day_pay`) VALUES
+(863, '0', '00003-A', NULL, NULL, '2020-02-22', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
+(864, '0', '00003-A', NULL, NULL, '2020-02-23', 8, 0, '', 1, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '444.74'),
+(865, '0', '00003-A', NULL, NULL, '2020-02-24', 8, 0, '', 1, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '444.74'),
+(866, '0', '00003-A', NULL, NULL, '2020-02-25', 8, 0, '', 3, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '564.94'),
+(867, '0', '00003-A', NULL, NULL, '2020-02-26', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
+(868, '0', '00003-A', NULL, NULL, '2020-02-27', 5, 0, '', 3, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '420.70'),
+(869, '0', '00003-A', NULL, NULL, '2020-02-28', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
+(870, '0', '00003-A', NULL, NULL, '2020-02-29', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64');
 
 -- --------------------------------------------------------
 
@@ -541,7 +537,94 @@ INSERT INTO `logbook` (`No`, `Time`, `Type`, `Event`, `Link`) VALUES
 (67, '2020-02-27 08:34:39 AM', 'Update', 'Updated details on Person ID 00005-A.', 'http://localhost/ci_wercher_system/ViewEmployee?id=00005-A'),
 (68, '2020-02-27 08:34:50 AM', 'Update', 'Updated details on Person ID 00006-A.', 'http://localhost/ci_wercher_system/ViewEmployee?id=00006-A'),
 (69, '2020-02-27 08:35:00 AM', 'Update', 'Updated details on Person ID 00006-A.', 'http://localhost/ci_wercher_system/ViewEmployee?id=00006-A'),
-(70, '2020-02-27 08:42:10 AM', 'Employment', 'Applicant ID 00005-B has been employed to Client ID 4 for 1 month!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00005-B');
+(70, '2020-02-27 08:42:10 AM', 'Employment', 'Applicant ID 00005-B has been employed to Client ID 4 for 1 month!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00005-B'),
+(71, '2020-02-29 12:44:12 AM', 'Update', 'Employee 00004-A has expired!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00004-A'),
+(72, '2020-02-29 02:45:28 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(73, '2020-02-29 02:48:22 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(74, '2020-02-29 02:57:26 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(75, '2020-02-29 03:14:14 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(76, '2020-02-29 03:15:22 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(77, '2020-02-29 03:16:51 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(78, '2020-02-29 03:17:46 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(79, '2020-02-29 03:19:28 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(80, '2020-02-29 03:20:01 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(81, '2020-02-29 03:32:49 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(82, '2020-02-29 03:33:16 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(83, '2020-02-29 03:33:39 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(84, '2020-02-29 03:37:07 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(85, '2020-02-29 03:45:50 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(86, '2020-02-29 03:46:46 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(87, '2020-02-29 03:59:24 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(88, '2020-02-29 04:00:30 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(89, '2020-02-29 04:01:39 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(90, '2020-02-29 04:02:33 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(91, '2020-02-29 04:02:56 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(92, '2020-02-29 04:03:48 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(93, '2020-02-29 04:07:24 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(94, '2020-02-29 04:09:26 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(95, '2020-02-29 04:09:51 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(96, '2020-02-29 04:10:00 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(97, '2020-02-29 04:10:05 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(98, '2020-02-29 04:10:19 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(99, '2020-02-29 04:10:57 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(100, '2020-02-29 04:11:09 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(101, '2020-02-29 04:11:24 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(102, '2020-02-29 04:11:56 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(103, '2020-02-29 04:12:27 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(104, '2020-02-29 04:12:36 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(105, '2020-02-29 04:15:40 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(106, '2020-02-29 04:16:04 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(107, '2020-02-29 04:16:52 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(108, '2020-02-29 04:17:11 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(109, '2020-02-29 04:19:01 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(110, '2020-02-29 04:19:30 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(111, '2020-02-29 04:19:55 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(112, '2020-02-29 04:20:27 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(113, '2020-02-29 04:20:44 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(114, '2020-02-29 04:20:58 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(115, '2020-02-29 04:21:04 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(116, '2020-02-29 04:21:19 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(117, '2020-02-29 04:21:25 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(118, '2020-02-29 04:21:35 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(119, '2020-02-29 04:21:43 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(120, '2020-02-29 04:22:05 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(121, '2020-02-29 04:22:16 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(122, '2020-02-29 04:22:21 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(123, '2020-02-29 04:22:26 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(124, '2020-02-29 04:26:35 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(125, '2020-02-29 04:28:15 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(126, '2020-02-29 04:28:27 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(127, '2020-02-29 04:28:49 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(128, '2020-02-29 04:29:02 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(129, '2020-02-29 04:29:16 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(130, '2020-02-29 04:29:47 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(131, '2020-02-29 04:29:51 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(132, '2020-02-29 04:30:25 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(133, '2020-02-29 04:31:28 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(134, '2020-02-29 04:31:41 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(135, '2020-02-29 04:34:13 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(136, '2020-02-29 04:34:21 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(137, '2020-02-29 04:34:27 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(138, '2020-02-29 04:34:34 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(139, '2020-02-29 04:34:39 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(140, '2020-02-29 04:35:20 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(141, '2020-02-29 04:35:27 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(142, '2020-02-29 04:35:35 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(143, '2020-02-29 04:36:03 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(144, '2020-02-29 04:38:47 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(145, '2020-02-29 04:39:10 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(146, '2020-02-29 04:39:43 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(147, '2020-02-29 04:40:38 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(148, '2020-02-29 04:40:50 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(149, '2020-02-29 04:40:59 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(150, '2020-02-29 04:41:04 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(151, '2020-02-29 04:41:30 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(152, '2020-02-29 04:44:02 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(153, '2020-02-29 04:44:21 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(154, '2020-02-29 04:46:47 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(155, '2020-02-29 04:48:37 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(156, '2020-02-29 04:49:07 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(157, '2020-02-29 05:01:23 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients');
 
 -- --------------------------------------------------------
 
@@ -572,14 +655,37 @@ CREATE TABLE `relatives` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sss_table`
+--
+
+CREATE TABLE `sss_table` (
+  `id` int(11) NOT NULL,
+  `f_range` varchar(255) DEFAULT NULL,
+  `t_range` varchar(255) DEFAULT NULL,
+  `contribution` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sss_table`
+--
+
+INSERT INTO `sss_table` (`id`, `f_range`, `t_range`, `contribution`) VALUES
+(1, '0', '2250', '160'),
+(2, '2250', '2749.99', '200'),
+(3, '2750', '3249.99', '240'),
+(4, '3250', '3749.99', '280');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `supp_documents`
 --
 
 CREATE TABLE `supp_documents` (
   `ID` int(11) NOT NULL,
   `ApplicantID` varchar(255) DEFAULT NULL,
-  `Doc_Image` blob DEFAULT NULL,
-  `Doc_File` blob DEFAULT NULL,
+  `Doc_Image` blob,
+  `Doc_File` blob,
   `Doc_FileName` varchar(255) DEFAULT NULL,
   `Type` varchar(255) DEFAULT NULL,
   `Subject` varchar(255) DEFAULT NULL,
@@ -623,6 +729,37 @@ CREATE TABLE `tab_documents_notes` (
 
 INSERT INTO `tab_documents_notes` (`DatabaseID`, `ApplicantID`, `Note`, `DateAdded`) VALUES
 (1, '00001-A', 'Hello', '2020-02-19 02:00:41 AM');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tracking_table`
+--
+
+CREATE TABLE `tracking_table` (
+  `id` int(11) NOT NULL,
+  `ApplicantID` varchar(255) DEFAULT NULL,
+  `gross_pay` varchar(255) DEFAULT NULL,
+  `sss_contri` varchar(255) DEFAULT NULL,
+  `c_week` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tracking_table`
+--
+
+INSERT INTO `tracking_table` (`id`, `ApplicantID`, `gross_pay`, `sss_contri`, `c_week`) VALUES
+(1, NULL, '', NULL, NULL),
+(2, NULL, '', NULL, NULL),
+(3, NULL, 'ndayRate', NULL, NULL),
+(4, NULL, '0', NULL, NULL),
+(5, NULL, '0', NULL, NULL),
+(6, NULL, '1', NULL, NULL),
+(7, NULL, '0', NULL, NULL),
+(8, '00003-A', 'dd', NULL, NULL),
+(9, '00003-A', '3413.6799999999994', NULL, NULL),
+(10, '00003-A', '3413.68', NULL, NULL),
+(11, '00003-A', '3413.68', '280', NULL);
 
 -- --------------------------------------------------------
 
@@ -730,6 +867,12 @@ ALTER TABLE `machine_operated`
   ADD PRIMARY KEY (`No`);
 
 --
+-- Indexes for table `sss_table`
+--
+ALTER TABLE `sss_table`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `supp_documents`
 --
 ALTER TABLE `supp_documents`
@@ -740,6 +883,12 @@ ALTER TABLE `supp_documents`
 --
 ALTER TABLE `tab_documents_notes`
   ADD PRIMARY KEY (`DatabaseID`);
+
+--
+-- Indexes for table `tracking_table`
+--
+ALTER TABLE `tracking_table`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -773,7 +922,7 @@ ALTER TABLE `audit_log`
 -- AUTO_INCREMENT for table `contract_history`
 --
 ALTER TABLE `contract_history`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `dashboard_months`
@@ -785,19 +934,25 @@ ALTER TABLE `dashboard_months`
 -- AUTO_INCREMENT for table `dummy_hours`
 --
 ALTER TABLE `dummy_hours`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=209;
 
 --
 -- AUTO_INCREMENT for table `hours_weekly`
 --
 ALTER TABLE `hours_weekly`
-  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=871;
 
 --
 -- AUTO_INCREMENT for table `logbook`
 --
 ALTER TABLE `logbook`
-  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
+
+--
+-- AUTO_INCREMENT for table `sss_table`
+--
+ALTER TABLE `sss_table`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `supp_documents`
@@ -810,6 +965,12 @@ ALTER TABLE `supp_documents`
 --
 ALTER TABLE `tab_documents_notes`
   MODIFY `DatabaseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tracking_table`
+--
+ALTER TABLE `tracking_table`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

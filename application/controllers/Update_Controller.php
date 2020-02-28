@@ -773,6 +773,7 @@ class Update_Controller extends CI_Controller {
 			$GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
 			$ArrayInt = 0;
 			$ArrayLength = $GetWeeklyDates->num_rows();
+			
 			foreach ($GetWeeklyDates->result_array() as $nrow):
 				$ArrayInt++;
 				$Type = $this->input->post('Type_' . $nrow['Time'],TRUE);
@@ -823,6 +824,7 @@ class Update_Controller extends CI_Controller {
 						'Philhealth' => $Philhealth,
 						'SSS' => $SSS,
 						'Tax' => $Tax,
+						'day_pay' => $TdRate,
 
 					);
 					$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
@@ -834,7 +836,7 @@ class Update_Controller extends CI_Controller {
 							$LogbookCurrentTime = date('Y-m-d h:i:s A');
 							$LogbookType = 'Update';
 							$LogbookEvent = 'Updated weekly hours for ' . $ApplicantID . '.';
-							$LogbookLink = base_url() . 'ViewClient?id=' . $Temp_ApplicantID;
+							// $LogbookLink = base_url() . 'ViewClient?id=' . $Temp_ApplicantID;
 							$LogbookLink = base_url() . 'Clients';
 							$data = array(
 								'Time' => $LogbookCurrentTime,
@@ -843,17 +845,36 @@ class Update_Controller extends CI_Controller {
 								'Link' => $LogbookLink,
 							);
 							$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-							redirect($_SERVER['HTTP_REFERER']);
+							
 						}
 					}
 					else
 					{
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
-						redirect($_SERVER['HTTP_REFERER']);
+						
 					}
 				}
 			endforeach;
 
+			$Checkkkkkk = $this->Model_Selects->Checkkkkkk($ApplicantID);
+
+			if ($Checkkkkkk->num_rows() > 0) {
+				$gross_pay = $this->Model_Selects->GetempGP($ApplicantID);
+				
+				$getsssRa = $this->Model_Selects->getsssRa();
+				foreach ($getsssRa->result_array() as $row) {
+					if ($gross_pay > $row['f_range'] AND $gross_pay < $row['t_range']) {
+						$sss_contri = $row['contribution'];
+					}
+				}
+				$data = array(
+					'ApplicantID' => $ApplicantID,
+					'gross_pay' => round($gross_pay,2),
+					'sss_contri' => $sss_contri,
+				);
+				$this->Model_Inserts->Insertttttt($data);
+			}
+			redirect($_SERVER['HTTP_REFERER']);
 		}
 		else
 		{

@@ -502,6 +502,24 @@
 			redirect('Employee');
 		}
 	}
+	public function SSS_Table()
+	{
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		$header['title'] = 'SSS Table | Wercher Solutions and Resources Workers Cooperative';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+				<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Applicants">SSS Table</a></li>
+			</ol>
+		</nav>';
+		$data['sss_Contri'] = $this->Model_Selects->sss_Contri();
+		$this->load->view('payroll/p_sssPage',$data);
+
+	}
 	public function ModifyEmployee()
 	{
 		unset($_SESSION["acadcart"]);
@@ -680,6 +698,45 @@
 		$data['ShowClients'] = $this->Model_Selects->GetClients();
 		$data['GetLogbookLatestHires'] =  $this->Model_Selects->GetLogbookLatestHires();
 		$this->load->view('payroll/p_clients',$data);
+	}
+	public function Payrollsss()
+	{
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		$id = $_GET['id'];
+
+			$header['title'] = 'Client Information | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+
+			$GetWeeklyList = $this->Model_Selects->GetWeeklyList($id);
+
+			$row = $GetWeeklyList->row_array();
+			$data = array(
+				'ClientID' => $row['ClientID'],
+				'ApplicantID' => $row['ApplicantID'],
+
+			);
+			$ApplicantID = $row['ApplicantID'];
+			$data['GetWeeklyList'] = $this->Model_Selects->GetWeeklyList($id);
+			$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployee($id);
+
+			$data['GetClientID'] = $this->Model_Selects->GetClientID($id);
+			$data['GetWeeklyDates'] = $this->Model_Selects->GetWeeklyDates();
+
+			$data['IsFromExcel'] = False;
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb" style="background-color: transparent;">
+					<li class="breadcrumb-item" aria-current="page"><a href="Payroll">Payroll</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewClient?id=' . $id . '">Details</a></li>
+				</ol>
+			</nav>';
+
+		$data['ShowClients'] = $this->Model_Selects->GetClients();
+		$data['GetLogbookLatestHires'] =  $this->Model_Selects->GetLogbookLatestHires();
+		$this->load->view('payroll/p_payrolls',$data);
 	}
 	public function ViewClient()
 	{

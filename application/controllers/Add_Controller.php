@@ -499,4 +499,32 @@ class Add_Controller extends CI_Controller {
 			}
 		}
 	}
+	public function AddthisSss()
+	{
+		$f_range = $this->input->post('f_range',TRUE);
+		$t_range = $this->input->post('t_range',TRUE);
+		$contribution = $this->input->post('contribution',TRUE);
+		if ($f_range == NULL || $t_range == NULL || $contribution == NULL) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+			redirect('SSS_Table');
+		}
+		else
+		{
+			$data = array(
+				'f_range' => $f_range,
+				't_range' => $t_range,
+				'contribution' => $contribution,
+			);
+			$AddtoSSS = $this->Model_Inserts->AddtoSSS($data);
+			if ($AddtoSSS == TRUE) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Data added!</h5></div>');
+				redirect('SSS_Table');
+			}
+			else
+			{
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+				redirect('SSS_Table');
+			}
+		}
+	}
 }

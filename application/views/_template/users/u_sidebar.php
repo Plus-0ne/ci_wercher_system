@@ -63,6 +63,9 @@
 				<li>
 					<a class="link-s" class="sublink" href="<?=base_url()?>Experimental"><span class="fas fa-flask"></span> Experimental <span style="color: rgba(255, 50, 50, 1.0);">(Dev Area)</span></a>
 				</li>
+				<li>
+					<a class="link-s" class="sublink" href="<?=base_url()?>SSS_Table"><i class="fas fa-table fa-fw"></i> SSS Table </a>
+				</li>
 				<!-- <li>
 					<a class="link-s" class="sublink" href="#"><span class="fas fa-sign-out-alt fa-fw"></span> Profile </a>
 				</li> -->
