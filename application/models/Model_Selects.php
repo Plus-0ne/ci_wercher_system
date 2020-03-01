@@ -323,4 +323,24 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetTotalH($ApplicantID)
+	{
+		$this->db->select_sum('Hours');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$result = $this->db->get('hours_weekly')->row();  
+		return $result->Hours;
+	}
+	public function GetTotalOt($ApplicantID)
+	{
+		$this->db->select_sum('Overtime');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$result = $this->db->get('hours_weekly')->row();  
+		return $result->Overtime;
+	}
+	public function get_applicantContri($id)
+	{
+		$SQL = "SELECT * FROM tracking_table WHERE ClientID = $id";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }

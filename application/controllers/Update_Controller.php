@@ -862,15 +862,23 @@ class Update_Controller extends CI_Controller {
 				$gross_pay = $this->Model_Selects->GetempGP($ApplicantID);
 				
 				$getsssRa = $this->Model_Selects->getsssRa();
+				$GetTotalH = $this->Model_Selects->GetTotalH($ApplicantID);
+				$GetTotalOt = $this->Model_Selects->GetTotalOt($ApplicantID);
+
 				foreach ($getsssRa->result_array() as $row) {
 					if ($gross_pay > $row['f_range'] AND $gross_pay < $row['t_range']) {
 						$sss_contri = $row['contribution'];
 					}
 				}
+				$net_pay = $gross_pay - $sss_contri;
 				$data = array(
+					'ClientID' => $ClientID,
 					'ApplicantID' => $ApplicantID,
 					'gross_pay' => round($gross_pay,2),
 					'sss_contri' => $sss_contri,
+					'TotalHours' => $GetTotalH,
+					'TotaOT' => $GetTotalOt,
+					'net_pay' => $net_pay,
 				);
 				$this->Model_Inserts->Insertttttt($data);
 			}

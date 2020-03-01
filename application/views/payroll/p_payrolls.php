@@ -9,11 +9,15 @@
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<?php echo $this->session->flashdata('prompts'); ?>
-				?>
+				<br>
 				<div class="col-12 col-sm-12 payroll-tabs">
 					<ul>
-						<li class="payroll-tabs-active"><a href="<?php echo base_url() ?>ViewClient?id=<?php echo $ClientID; ?>">Attendance</a></li>
-						<li><a href="<?php echo base_url() ?>Payrollsss?id=<?php echo $ClientID; ?>">Payroll</a></li>
+						<li>
+							<a href="<?php echo base_url() ?>ViewClient?id=<?php echo $ClientID; ?>">Attendance</a>
+						</li>
+						<li class="payroll-tabs-active">
+							<a href="<?php echo base_url() ?>Payrollsss?id=<?php echo $ClientID; ?>">Payroll</a>
+						</li>
 					</ul>
 				</div>
 				<div class="rcontent">
@@ -34,41 +38,113 @@
 							<div class="table-responsive w-100">
 								<table id="WeeklyTable" class="table table-condensed">
 									<thead>
-										<th style="min-width: 100px;">Applicant ID</th>
-										<th style="min-width: 300px;">Name</th>
-										<th style="min-width: 75px;">Salary (₱)</th>
-										<th>
-											Action
-										</th>
+										<th>Applicant ID</th>
+										<th>Gross Pay</th>
+										<th>Reg. Hrs.</th>
+										<th>OT. Hrs.</th>
+										<th>SSS Contribution</th>
+										<th>TAX</th>
+										<th>Net Pay</th>
 									</thead>
 									<tbody>
-										<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
-											$TotalRegHours = 0;
-											$TotalOTHours = 0;?>
-											<tr id="<?php echo $row['SalaryExpected']; ?>" data-clientid="<?php echo $row['ClientEmployed']; ?>" data="<?php echo $row['ApplicantID']; ?>" class='clickable-row' data-toggle="modal" data-target="#HoursWeeklyModal_<?php echo $row['ApplicantID']; ?>">
+										<!-- <?php foreach ($GetWeeklyListEmployee->result_array() as $row): ?>
+											<tr id="<?php echo $row['SalaryExpected']; ?>" data-clientid="<?php echo $row['ClientEmployed']; ?>" data="<?php echo $row['ApplicantID']; ?>" class='clickable-row' data-toggle="modal" data-target="#applicantPay_<?php echo $row['ApplicantID']; ?>">
 												<td><?php echo $row['ApplicantID'];?></td>
 												<td><?php echo $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'];?></td>
 												<td><?php echo $row['SalaryExpected'];?></td>
-										</tr>
-									<?php endforeach; ?>
-								</tbody>
-							</table>
+											</tr>
+										<?php endforeach; ?> -->
+										<?php foreach ($get_applicantContri->result_array() as $row): ?>
+											<tr>
+												<td>
+													<?php echo $row['ApplicantID'];?>
+												</td>
+												<td>
+													<?php echo $row['gross_pay'];?>
+												</td>
+												<td>
+													<?php echo $row['TotalHours'];?>
+												</td>
+												<td>
+													<?php echo $row['TotaOT'];?>
+												</td>
+												<td>
+													<?php echo $row['sss_contri'];?>
+												</td>
+												<td>
+													SAMPLE
+												</td>
+												<td>
+													<?php echo $row['net_pay'];?>
+												</td>
+											</tr>
+										<?php endforeach ?>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<!-- LOAD MODAL -->
-		<div class="modal fade" id="LoadModal" tabindex="-1" role="dialog" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-body">
-						<div class="form-row">
-							<div class="text-center ml-auto mr-auto">
-								<div class="spinner-border m-5" role="status"></div>
-								<h4>Please wait warmly</h4>
-								<p>This will only take a little bit</p>
-								<p class="load-hidden-1" style="display: none;">This is taking longer than necessary...</p>
+			<!-- Modal -->
+			<!-- <?php foreach ($GetWeeklyListEmployee->result_array() as $row): ?>
+				<div class="modal fade" id="applicantPay_<?php echo $row['ApplicantID']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel"><?php echo $row['ApplicantID'];?> Contributions</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<table class="table table-condensed table-bordered">
+									<thead>
+										<th>
+											Gross Pay
+										</th>
+										<th>
+											SSS Contribution
+										</th>
+									</thead>
+									<tbody>
+										<?php foreach ($get_applicantContri->result_array() as $nrow): ?>
+									<?php if ($row['ApplicantID'] == $nrow['ApplicantID']): ?>
+										<tr>
+											<td>
+												<?php echo $nrow['gross_pay']; ?>
+											</td>
+											<td>
+												<?php echo $nrow['sss_contri']; ?>
+											</td>
+										</tr>
+									<?php endif ?>
+								<?php endforeach ?>
+									</tbody>
+								</table>
+								
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary">Save changes</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			<?php endforeach ?> -->
+			
+			<!-- LOAD MODAL -->
+			<div class="modal fade" id="LoadModal" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-body">
+							<div class="form-row">
+								<div class="text-center ml-auto mr-auto">
+									<div class="spinner-border m-5" role="status"></div>
+									<h4>Please wait warmly</h4>
+									<p>This will only take a little bit</p>
+									<p class="load-hidden-1" style="display: none;">This is taking longer than necessary...</p>
+								</div>
 							</div>
 						</div>
 					</div>
