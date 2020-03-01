@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 28, 2020 at 10:29 PM
+-- Generation Time: Mar 01, 2020 at 05:41 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -349,14 +349,14 @@ CREATE TABLE `dummy_hours` (
 --
 
 INSERT INTO `dummy_hours` (`ID`, `Time`, `Current`, `Regular`, `NightShift`, `Holiday`) VALUES
-(201, '2020-02-22', 'Current', 0, 0, 0),
-(202, '2020-02-23', 'Current', 0, 0, 0),
-(203, '2020-02-24', 'Current', 0, 0, 0),
-(204, '2020-02-25', 'Current', 0, 0, 0),
-(205, '2020-02-26', 'Current', 0, 0, 0),
-(206, '2020-02-27', 'Current', 0, 0, 0),
-(207, '2020-02-28', 'Current', 0, 0, 0),
-(208, '2020-02-29', 'Current', 0, 0, 0);
+(233, '2020-02-23', 'Current', 0, 0, 0),
+(234, '2020-02-24', 'Current', 0, 0, 0),
+(235, '2020-02-25', 'Current', 0, 0, 0),
+(236, '2020-02-26', 'Current', 0, 0, 0),
+(237, '2020-02-27', 'Current', 0, 0, 0),
+(238, '2020-02-28', 'Current', 0, 0, 0),
+(239, '2020-02-29', 'Current', 0, 0, 0),
+(240, '2020-03-01', 'Current', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -440,14 +440,23 @@ CREATE TABLE `hours_weekly` (
 --
 
 INSERT INTO `hours_weekly` (`No`, `ClientID`, `ApplicantID`, `Name`, `Salary`, `Time`, `Hours`, `NightHours`, `Type`, `Overtime`, `NightOvertime`, `Remarks`, `Regular`, `NightShift`, `Holiday`, `Current`, `HDMF`, `Philhealth`, `SSS`, `Tax`, `day_pay`) VALUES
-(863, '0', '00003-A', NULL, NULL, '2020-02-22', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
-(864, '0', '00003-A', NULL, NULL, '2020-02-23', 8, 0, '', 1, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '444.74'),
-(865, '0', '00003-A', NULL, NULL, '2020-02-24', 8, 0, '', 1, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '444.74'),
-(866, '0', '00003-A', NULL, NULL, '2020-02-25', 8, 0, '', 3, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '564.94'),
-(867, '0', '00003-A', NULL, NULL, '2020-02-26', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
-(868, '0', '00003-A', NULL, NULL, '2020-02-27', 5, 0, '', 3, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '420.70'),
-(869, '0', '00003-A', NULL, NULL, '2020-02-28', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
-(870, '0', '00003-A', NULL, NULL, '2020-02-29', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64');
+(871, '0', '00003-A', NULL, NULL, '2020-02-22', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
+(879, '4', '00005-A', NULL, NULL, '2020-02-23', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1153.84'),
+(880, '4', '00005-A', NULL, NULL, '2020-02-24', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
+(881, '4', '00005-A', NULL, NULL, '2020-02-25', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
+(882, '4', '00005-A', NULL, NULL, '2020-02-26', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
+(883, '4', '00005-A', NULL, NULL, '2020-02-27', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
+(884, '4', '00005-A', NULL, NULL, '2020-02-28', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
+(885, '4', '00005-A', NULL, NULL, '2020-02-29', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
+(886, '4', '00005-A', NULL, NULL, '2020-03-01', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
+(911, '0', '00003-A', NULL, NULL, '2020-02-23', 8, 0, '', 4, 2, '', NULL, NULL, NULL, NULL, '', '', '', '', '757.26'),
+(912, '0', '00003-A', NULL, NULL, '2020-02-24', 8, 0, '', 1, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '444.74'),
+(913, '0', '00003-A', NULL, NULL, '2020-02-25', 8, 0, '', 3, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '564.94'),
+(914, '0', '00003-A', NULL, NULL, '2020-02-26', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
+(915, '0', '00003-A', NULL, NULL, '2020-02-27', 5, 0, '', 3, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '420.70'),
+(916, '0', '00003-A', NULL, NULL, '2020-02-28', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
+(917, '0', '00003-A', NULL, NULL, '2020-02-29', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
+(918, '0', '00003-A', NULL, NULL, '2020-03-01', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00');
 
 -- --------------------------------------------------------
 
@@ -624,7 +633,13 @@ INSERT INTO `logbook` (`No`, `Time`, `Type`, `Event`, `Link`) VALUES
 (154, '2020-02-29 04:46:47 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
 (155, '2020-02-29 04:48:37 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
 (156, '2020-02-29 04:49:07 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
-(157, '2020-02-29 05:01:23 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients');
+(157, '2020-02-29 05:01:23 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(158, '2020-03-01 05:32:20 PM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(159, '2020-03-01 06:15:42 PM', 'Update', 'Updated weekly hours for 00005-A.', 'http://localhost/ci_wercher_system/Clients'),
+(160, '2020-03-01 09:27:22 PM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(161, '2020-03-01 09:28:23 PM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(162, '2020-03-01 10:22:06 PM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(163, '2020-03-01 10:22:51 PM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients');
 
 -- --------------------------------------------------------
 
@@ -739,8 +754,12 @@ INSERT INTO `tab_documents_notes` (`DatabaseID`, `ApplicantID`, `Note`, `DateAdd
 CREATE TABLE `tracking_table` (
   `id` int(11) NOT NULL,
   `ApplicantID` varchar(255) DEFAULT NULL,
+  `ClientID` varchar(255) DEFAULT NULL,
   `gross_pay` varchar(255) DEFAULT NULL,
+  `TotalHours` varchar(255) DEFAULT NULL,
+  `TotaOT` varchar(255) DEFAULT NULL,
   `sss_contri` varchar(255) DEFAULT NULL,
+  `net_pay` varchar(255) DEFAULT NULL,
   `c_week` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -748,18 +767,10 @@ CREATE TABLE `tracking_table` (
 -- Dumping data for table `tracking_table`
 --
 
-INSERT INTO `tracking_table` (`id`, `ApplicantID`, `gross_pay`, `sss_contri`, `c_week`) VALUES
-(1, NULL, '', NULL, NULL),
-(2, NULL, '', NULL, NULL),
-(3, NULL, 'ndayRate', NULL, NULL),
-(4, NULL, '0', NULL, NULL),
-(5, NULL, '0', NULL, NULL),
-(6, NULL, '1', NULL, NULL),
-(7, NULL, '0', NULL, NULL),
-(8, '00003-A', 'dd', NULL, NULL),
-(9, '00003-A', '3413.6799999999994', NULL, NULL),
-(10, '00003-A', '3413.68', NULL, NULL),
-(11, '00003-A', '3413.68', '280', NULL);
+INSERT INTO `tracking_table` (`id`, `ApplicantID`, `ClientID`, `gross_pay`, `TotalHours`, `TotaOT`, `sss_contri`, `net_pay`, `c_week`) VALUES
+(15, '00003-A', '0', '3726.2', '61', '11', '280', NULL, NULL),
+(16, '00003-A', '0', '3726.2', '61', '11', '280', '3725.2', NULL),
+(17, '00003-A', '0', '3726.2', '61', '11', '280', '3446.2', NULL);
 
 -- --------------------------------------------------------
 
@@ -904,7 +915,7 @@ ALTER TABLE `acad_history`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `AdminNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `AdminNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `applicants`
@@ -934,19 +945,19 @@ ALTER TABLE `dashboard_months`
 -- AUTO_INCREMENT for table `dummy_hours`
 --
 ALTER TABLE `dummy_hours`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=209;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=241;
 
 --
 -- AUTO_INCREMENT for table `hours_weekly`
 --
 ALTER TABLE `hours_weekly`
-  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=871;
+  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=919;
 
 --
 -- AUTO_INCREMENT for table `logbook`
 --
 ALTER TABLE `logbook`
-  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
+  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
 
 --
 -- AUTO_INCREMENT for table `sss_table`
@@ -970,7 +981,7 @@ ALTER TABLE `tab_documents_notes`
 -- AUTO_INCREMENT for table `tracking_table`
 --
 ALTER TABLE `tracking_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
