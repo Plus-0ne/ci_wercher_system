@@ -1,6 +1,40 @@
-/*@import url('https://fonts.googleapis.com/css?family=Open+Sans|Roboto&display=swap');*/
+/* Brown Color Theme
+	#563727 - Main / Buttons / Long Bars
+	#372C2E - Background / Secondary stuff
+	gold 	- Banner / Highlights / Important stuff
+	#DE9E48
+	#8e553f - Hover
+*/
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Roboto&display=swap');
 /*font-family: 'Open Sans', sans-serif;  FOR SIDEBARS */
 /* font-family: 'Roboto', sans-serif; FOR HEADINGS */
+
+/* Bootstrap Default Modifications */
+.btn-primary {
+	background-color: #563727;
+	border-color: #563727;
+}
+
+.btn-primary:hover {
+	background-color: #8e553f;
+	border-color: #8e553f;
+}
+
+.btn-info {
+	background-color: #af8039;
+	border-color: #af8039;
+}
+
+.btn-info:hover {
+	background-color: #d4983d;
+	border-color: #d4983d;
+}
+
+.page-item.active .page-link {
+	background-color: #563727;
+	border-color: #563727;
+}
 
 html,body
 {
@@ -17,7 +51,7 @@ html,body
 	align-items: stretch;
 }
 .wercher-background-lowpoly {
-	background-image: url('../img/wercher_lowpoly.png');
+	background-image: url('../img/wercher_rough_brown_background.jpg');
 	background-repeat: repeat;
     background-attachment: fixed;
 }
@@ -25,7 +59,7 @@ html,body
 #sidebar {
 	min-width: 250px;
 	max-width: 250px;
-	background: #1f2733;
+	background: #332118;
 	/*background-image: url("../img/lowpoly_sidebar_long.png");*/
 	color: #fff;
 	/*transition: all 0.3s;*/
@@ -34,7 +68,7 @@ html,body
 }
 .nactive {
 	color: #FFFFFF !important;
-	border-left: 4px solid #007bff;
+	border-left: 4px solid gold;
 	background: rgba(0, 0, 0, 0.25);
 	padding-left: 17px !important;
 }
@@ -62,7 +96,7 @@ html,body
 	padding-top: 10px;
 	padding-bottom: 10px;
 	font-size: 22px;
-	background-color: #203f5f;
+	background-color: #563727;
 }
 
 #sidebar ul.components {
@@ -84,7 +118,7 @@ html,body
 
 #sidebar ul li a:hover {
 	color: #FFFFFF;
-	border-left: 4px solid #007bff;
+	border-left: 4px solid gold;
 	background: rgba(0, 0, 0, 0.25);
 	padding-left: 17px;
 }
@@ -219,7 +253,7 @@ a[data-toggle="collapse"] {
 	border-radius: 4px;
 	border-bottom: 2px solid white;
 	background-color: #ebebeb !important;
-	color: #2b5179 !important;
+	color: #332118 !important;
 	font-size: 15px;
 	font-weight: bold;
 }
@@ -238,7 +272,7 @@ a[data-toggle="collapse"] {
 }
 
 .tabs li a:hover {
-	background-color: #007bff;
+	background-color: #8e553f;
 
 }
 .tabs-icon {
@@ -536,7 +570,7 @@ a[data-toggle="collapse"] {
 	color: rgba(0, 0, 0, 0.75);
 }
 .wercher-navbar {
-	background-color: #2b5179;
+	background-color: #332118;
 	text-decoration: none;
 	/*transition:all 0.4s ease-in-out;
 	-webkit-transition:all 0.4s ease-in-out;
@@ -662,91 +696,6 @@ a[data-toggle="collapse"] {
 .NightPremium {
 	display: none;
 }
-/*.wercher-idcard-background {
-	background-image: url('../img/wercher_id_front.png');
-	background-size: 265px 385px;
-	background-repeat: no-repeat;
-}*/
-#WercherIDFront {
-	margin-left: 100px;
-	height: 770px;
-}
-
-#WercherIDBack {
-	height: 770px;
-}
-
-.wercher-idcard-photo {
-	margin-top: -950px;
-	margin-left: 165px;
-	border-radius: 4px;
-	border: 4px solid black;
-}
-
-.wercher-idcard-fields {
-	margin-top: -375px;
-	margin-left: 75px;
-}
-
-.wercher-idcard-name {
-	margin-bottom: 75px;
-	margin-left: 33px;
-	font-size: 32px;
-	position: absolute;
-}
-
-.wercher-idcard-designation {
-	margin-left: -33px;
-	margin-top: 100px;
-	font-size: 22px;
-}
-
-.wercher-idcard-dateissued {
-	margin-left: 230px;
-	margin-top: 100px;
-	font-size: 22px;
-	position: absolute;
-}
-
-.wercher-idcard-employeeid {
-	color: #ffde00;
-	margin-top: 185px;
-	margin-left: 85px;
-}
-
-.wercher-idcard-address {
-	margin-top: -695px;
-	margin-left: 5px;
-	font-size: 22px;
-}
-
-.wercher-idcard-telno {
-	margin-top: 115px;
-	margin-left: 150px;
-	font-size: 22px;
-}
-
-.wercher-idcard-numberfields {
-	margin-top: 25px;
-	margin-left: 150px;
-	font-size: 22px;
-}
-
-.wercher-idcard-frontbtn {
-	margin-top: 25px;
-	margin-left: 175px;
-	position: absolute;
-	font-size: 28px;
-	padding: 20px;
-}
-
-.wercher-idcard-backbtn {
-	margin-top: 25px;
-	margin-left: 100px;
-	position: absolute;
-	font-size: 28px;
-	padding: 20px;
-}
 
 /*
 .sidebar-button-active {
@@ -797,7 +746,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-radius: 4px;
 		border-bottom: 4px solid #ebebeb;
 		color: #ebebeb;
-		background-color: #2b5179;
+		background-color: #332118;
 	}
 	.payroll-tabs li a {
 		display: block;
@@ -808,7 +757,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-radius: 4px;
 		border-bottom: 4px solid #ebebeb;
 		color: #ebebeb;
-		background-color: #2b5179;
+		background-color: #332118;
 	}
 	.employee-tabs li a, .employee-tabs li button {
 		display: block;
@@ -819,7 +768,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-radius: 4px;
 		border-bottom: 4px solid #ebebeb;
 		color: #FFFFFF;
-		background-color: #2b5179;
+		background-color: #332118;
 	}
 	.employee-image img {
 		width: 75px;
@@ -843,7 +792,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-radius: 4px;
 		border-bottom: 8px solid #ebebeb;
 		color: #ebebeb;
-		background-color: #2b5179;
+		background-color: #332118;
 	}
 	.payroll-tabs li a {
 		display: block;
@@ -857,7 +806,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-radius: 4px;
 		border-bottom: 8px solid #ebebeb;
 		color: #ebebeb;
-		background-color: #2b5179;
+		background-color: #332118;
 	}
 	.employee-tabs li a, .employee-tabs li button {
 		display: block;
@@ -871,7 +820,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-radius: 4px;
 		border-bottom: 8px solid #ebebeb;
 		color: #FFFFFF;
-		background-color: #2b5179;
+		background-color: #332118;
 	}
 	.employee-image img {
 		width: 150px;

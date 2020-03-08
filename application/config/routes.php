@@ -71,6 +71,8 @@ $route['Payroll'] = 'Main_Controller/PayrollClients';
 $route['ViewClient'] = 'Main_Controller/ViewClient';
 $route['Payrollsss'] = 'Main_Controller/Payrollsss';
 
+$route['GenerateIDCard'] = 'Main_Controller/GenerateIDCard';
+
 
 // LOGIN
 $route['LoginValidation'] = 'Login_Controller/LoginValidation';

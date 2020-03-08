@@ -119,13 +119,18 @@
 									<div id="TabPersonal">
 										<div class="employee-tabs-group-content">
 											<div class="employee-content-header">
-												<?php if ($Status == 'Employed'): ?> 
-													<?php if ($ReminderDate == NULL): ?> 
-														<button id="<?php echo $ApplicantID; ?>" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-exclamation"></i> No reminder set</button>
-													<?php else: ?>
-														<button id="<?php echo $ApplicantID; ?>" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-check"></i> You will be notified <?php echo $ReminderDateString; ?> before expiring</button>
+												<div class="ml-1 row">
+													<?php if ($Status == 'Employed'): ?> 
+														<?php if ($ReminderDate == NULL): ?> 
+															<button id="<?php echo $ApplicantID; ?>" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-exclamation"></i> No reminder set</button>
+														<?php else: ?>
+															<button id="<?php echo $ApplicantID; ?>" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-check"></i> You will be notified <?php echo $ReminderDateString; ?> before expiring</button>
+														<?php endif; ?>
+														<div class="ml-auto">
+															<a href="GenerateIDCard?id=<?php echo $ApplicantID; ?>" class="btn btn-primary btn-sm" target="_blank"><i class="fas fa-id-card"></i> Generate ID Card</a>
+														</div>
 													<?php endif; ?>
-												<?php endif; ?>
+												</div>
 											</div>
 											<hr>
 											<div class="row mt-3">
@@ -321,7 +326,7 @@
 										<div class="employee-tabs-group-content">
 											<?php if ($Status == 'Employed'): ?>
 											<div class="employee-content-header">
-												<div class="row">
+												<div class="ml-1 row">
 													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm ExtendButton" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-plus"></i> Extend Contract</button>
 													<button class="btn btn-primary btn-sm ml-1" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
 													<div class="ml-auto">
@@ -843,6 +848,8 @@
 		<?php $this->load->view('_template/modals/m_addnote_documents'); ?>
 		<!-- ADD DOCUMENTS MODAL -->
 		<?php $this->load->view('_template/modals/m_adddocuments'); ?>
+		<!-- GENERATE ID CARD MODAL -->
+		<?php $this->load->view('_template/modals/m_generateid'); ?>
 	</body>
 	<?php $this->load->view('_template/users/u_scripts');?>
 	<script type="text/javascript">
