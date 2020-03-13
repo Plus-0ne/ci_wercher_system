@@ -74,6 +74,8 @@ $route['Payrollsss'] = 'Main_Controller/Payrollsss';
 $route['GenerateIDCard'] = 'Main_Controller/GenerateIDCard';
 $route['PrintEmployee'] = 'Main_Controller/PrintEmployee';
 
+$route['Search'] = 'Main_Controller/Search';
+
 
 // LOGIN
 $route['LoginValidation'] = 'Login_Controller/LoginValidation';
@@ -104,3 +106,4 @@ $route['RestoreEmployee'] = 'Update_Controller/RestoreEmployee';
 $route['SetWeeklyHours'] = 'Update_Controller/SetWeeklyHours';
 $route['ViewClientEmployees'] = 'Update_Controller/ViewClientEmployees';
 $route['ImportExcel'] = 'Update_Controller/ImportExcel';
+$route['UpdateSSSField'] = 'Update_Controller/UpdateSSSField';

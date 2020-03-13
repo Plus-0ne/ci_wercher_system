@@ -396,16 +396,10 @@
 														<div class="card-body text-dark">
 															<h5 class="card-title text-center wercher-card-title">
 																<?php
-																// TODO: Find a better solution than this.
-																$found = false;
-																foreach ($get_employee->result_array() as $row) {
-																	foreach ($getClientOption->result_array() as $nrow) {
-																		if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-																			$found = true;
-																			echo $nrow['Name'];
-																		}
-																	}
-																}?>
+																	foreach($GetEmployeeMatchingClient->result_array() as $row) {
+																		echo $row['Name'];
+																	};
+																?>
 															</h5>
 															<p class="card-text">
 																<div class="col-sm-12 employee-static-item text-center mt-3">
@@ -414,16 +408,10 @@
 																	</div>
 																	<div class="col-sm-12">
 																		<?php
-																		// TODO: Find a better solution than this.
-																		$found = false;
-																		foreach ($get_employee->result_array() as $row) {
-																			foreach ($getClientOption->result_array() as $nrow) {
-																				if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-																					$found = true;
-																					echo $nrow['ContactNumber'];
-																				}
-																			}
-																		}?>
+																			foreach($GetEmployeeMatchingClient->result_array() as $row) {
+																				echo $row['ContactNumber'];
+																			};
+																		?>
 																	</div>
 																</div>
 																<div class="col-sm-12 employee-static-item text-center">
@@ -432,16 +420,10 @@
 																	</div>
 																	<div class="col-sm-12">
 																		<?php
-																		// TODO: Find a better solution than this.
-																		$found = false;
-																		foreach ($get_employee->result_array() as $row) {
-																			foreach ($getClientOption->result_array() as $nrow) {
-																				if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-																					$found = true;
-																					echo $nrow['Address'];
-																				}
-																			}
-																		}?>
+																			foreach($GetEmployeeMatchingClient->result_array() as $row) {
+																				echo $row['Address'];
+																			};
+																		?>
 																	</div>
 																</div>
 															</p>

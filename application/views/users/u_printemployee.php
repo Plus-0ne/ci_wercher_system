@@ -67,7 +67,7 @@
 					</div>
 				</div>
 				<div class="row px-5 PrintOut">
-					<div class="col-sm-12 col-md-6">
+					<div class="col-md-6">
 						<img class="eprint-logo" src="<?=base_url()?>assets/img/wercher_logo.png">
 						<div class="col-sm-12 eprint-logo-text">
 							<b>WERCHER SOLUTIONS AND RESOURCES<br>LABOR SERVICE COOPERATIVE</b>
@@ -79,40 +79,40 @@
 							<b>Employee's Information</b>
 						</div>
 					</div>
-					<div class="col-sm-12 col-md-6 mb-5 eprint-photo">
+					<div class="col-md-6 mb-5 eprint-photo">
 						<img id="EPrintPhoto" src="<?php echo $ApplicantImage; ?>" width="192" height="192">
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Position Desired
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $PositionDesired; ?> <?php if($PositionGroup != NULL) { echo ' (' . $PositionGroup . ')'; } ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Name
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $LastName; ?> , <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Salary Expected
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $SalaryExpected; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							<?php if($Status == 'Employed'): ?>
 								Employee ID
@@ -121,7 +121,7 @@
 							<?php endif; ?>
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php if($Status == 'Employed'): ?>
 								<?php echo $EmployeeID; ?>
@@ -130,224 +130,224 @@
 							<?php endif; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Status
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $Status; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Gender
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $Gender; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Age
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $Age; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Height
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $Height; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Weight
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $Weight; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Religion
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $Religion; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Birth Date
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $BirthDate; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Birth Place
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $BirthPlace; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Citizenship
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $Citizenship; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Civil Status
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $CivilStatus; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							# of Children
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $No_OfChildren; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Applied On
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $AppliedOn; ?>
 						</p>
 					</div>
 				</div>
 				<div class="row px-5 pt-5 PrintOut">
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							S.S.S. #
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $SSS_No; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Effective Date of Coverage
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $EffectiveDateCoverage; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Residence Certificate No.
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $ResidenceCertificateNo; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Address Present
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $Address_Present; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Tax Identification No.
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $TIN; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Address Provincial
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $Address_Provincial; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							HDMF
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $HDMF; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							Address Manila
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $Address_Manila; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							PHILHEALTH
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $PhilHealth; ?>
 						</p>
 					</div>
-					<div class="col-sm-12 col-md-2 e-title">
+					<div class="col-md-2 eprint-field-title">
 						<h6>
 							ATM #
 						</h6>
 					</div>
-					<div class="col-sm-12 col-md-4 e-det">
+					<div class="col-md-4 eprint-field-det">
 						<p>
 							<?php echo $ATM_No; ?>
 						</p>

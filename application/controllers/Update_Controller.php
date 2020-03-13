@@ -1119,4 +1119,41 @@ class Update_Controller extends CI_Controller {
 			// 	}
 			// }
 	}
+	public function UpdateSSSField()
+	{
+		if (isset($_POST['id'])) {
+			$id = $this->input->post('id',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
+			$f_range = $this->input->post('f_range',TRUE);
+			$t_range = $this->input->post('t_range',TRUE);
+			$contribution = $this->input->post('contribution',TRUE);
+			if ($f_range == NULL || $t_range == NULL) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Field/s)</h5></div>');
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+			else
+			{
+				$data = array(
+					'f_range' => $f_range,
+					't_range' => $t_range,
+					'contribution' => $contribution,
+					'last_update' => $contribution,
+				);
+				$UpdateSSSField = $this->Model_Updates->UpdateSSSField($id, $data);
+				if ($UpdateSSSField == TRUE) {
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Field updated!</h5></div>');
+					redirect('SSS_Table');
+				}
+				else
+				{
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+			}
+		}
+		else
+		{
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+	}
 }

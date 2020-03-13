@@ -473,6 +473,7 @@
 				$data['GetDocuments'] = $this->Model_Selects->GetDocuments($ApplicantID);
 				$data['GetDocumentsViolations'] = $this->Model_Selects->GetDocumentsViolations($ApplicantID);
 				$data['GetDocumentsNotes'] = $this->Model_Selects->GetDocumentsNotes($ApplicantID);
+				$data['GetEmployeeMatchingClient'] = $this->Model_Selects->GetEmployeeMatchingClient($ApplicantID);
 				if ($data['Status'] == 'Employed') {
 					$data['Breadcrumb'] = '
 					<nav aria-label="breadcrumb">
@@ -1274,6 +1275,33 @@
 					unset($_SESSION["mach_cart"]);
 			}
 		}
+	}
+	public function Search()
+	{
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		$header['title'] = 'Search | Wercher Solutions and Resources Workers Cooperative';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Search">Search</a></li>
+		</ol>
+		</nav>';
+		if(isset($_GET['query'])) {
+			$query = $_GET['query'];
+			$data['query'] = $query;
+			$data['SearchApplicantID'] = $this->Model_Selects->SearchApplicantID($query);
+			$data['SearchEmployeeID'] = $this->Model_Selects->SearchEmployeeID($query);
+			$data['SearchPeople'] = $this->Model_Selects->SearchPeople($query);
+			$data['SearchClients'] = $this->Model_Selects->SearchClients($query);
+			$data['SearchPositionGroups'] = $this->Model_Selects->SearchPositionGroups($query);
+			$data['SearchPositionSpecific'] = $this->Model_Selects->SearchPositionSpecific($query);
+			$data['SearchAdmins'] = $this->Model_Selects->SearchAdmins($query);
+		}
+		$this->load->view('users/u_search',$data);
 	}
 	// // Relatives
 	// public function ShowRelatives()

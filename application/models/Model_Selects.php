@@ -343,4 +343,53 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	// Search queries, possible duplicates
+	public function SearchApplicantID($query)
+	{
+		$SQL = "SELECT * FROM applicants WHERE ApplicantID LIKE '%$query%'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function SearchEmployeeID($query)
+	{
+		$SQL = "SELECT * FROM applicants WHERE EmployeeID LIKE '%$query%'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function SearchPeople($query)
+	{
+		$SQL = "SELECT * FROM applicants WHERE LastName LIKE '%$query%' OR FirstName LIKE '%$query%' OR MiddleInitial LIKE '%$query%'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function SearchClients($query)
+	{
+		$SQL = "SELECT * FROM clients WHERE Name LIKE '%$query%'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function SearchPositionGroups($query)
+	{
+		$SQL = "SELECT * FROM applicants WHERE PositionGroup LIKE '%$query%'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function SearchPositionSpecific($query)
+	{
+		$SQL = "SELECT * FROM applicants WHERE PositionDesired LIKE '%$query%'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function SearchAdmins($query)
+	{
+		$SQL = "SELECT * FROM admin WHERE LastName LIKE '%$query%' OR FirstName LIKE '%$query%' OR MiddleInitial LIKE '%$query%'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetEmployeeMatchingClient($ApplicantID)
+	{
+		$SQL = "SELECT * FROM applicants, clients WHERE ApplicantID = '$ApplicantID' AND (applicants.ClientEmployed = clients.ClientID)";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }
