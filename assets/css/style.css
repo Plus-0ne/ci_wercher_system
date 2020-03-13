@@ -263,7 +263,7 @@ a[data-toggle="collapse"] {
 }
 
 .tabs li a:hover {
-	background-color: #007bff;
+	background-color: #c5ad00;
 
 }
 .tabs-icon {
@@ -341,7 +341,7 @@ a[data-toggle="collapse"] {
 }
 .employee-contract-container {
 	border-radius: 6px;
-	border: 1px solid #007bff;
+	border: 1px solid #c5ad00;
 }
 .employee-contract-header-title:before {
 	border-bottom: 2px solid #2b5179;
@@ -681,7 +681,7 @@ a[data-toggle="collapse"] {
 }
 
 .payroll-tabs li a:hover {
-	background-color: #007bff;
+	background-color: #c5ad00;
 
 }
 .NightPremium {
@@ -810,6 +810,24 @@ a[data-toggle="collapse"] {
 .eprint-print-btn {
 	font-size: 24px;
 }
+
+.eprint-field-title { 
+	text-align: left;
+	border-left: 4px solid #989898; 
+}
+.eprint-field-det { 
+	text-align: left; 
+}
+
+.sss-datecreated {
+	font-size: 16px;
+	color: rgba(0, 0, 0, 0.45);
+}
+
+.sss-updated {
+	color: rgba(0, 0, 0, 0.45);
+}
+
 
 /*
 .sidebar-button-active {
