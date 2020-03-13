@@ -6,7 +6,7 @@
 	</div>
 	<div class="sidebar-header text-center">
 		<div class="text-center" style="width: 100%;">
-			<img class="m-auto PrintOut PrintOutModal PrintOutModalExpired PrintOutHistory" src="<?=base_url()?>assets/img/wercher_logo.png">
+			<img class="m-auto PrintOutModal PrintOutModalExpired PrintOutHistory" src="<?=base_url()?>assets/img/wercher_logo.png">
 		</div>
 	</div>
 	<ul class="list-unstyled components">

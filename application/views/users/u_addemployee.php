@@ -77,7 +77,7 @@
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Middle Initial</label>
-										<input class="form-control" type="text" name="MI" autocomplete="off" value="<?php echo $this->session->flashdata('MI'); ?>">
+										<input class="form-control" type="text" name="MI" autocomplete="off" value="<?php echo $this->session->flashdata('MI'); ?>" maxlength="1">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Sex</label>
@@ -180,27 +180,11 @@
 										<label>Residence Certificate No.</label>
 										<input class="form-control" type="text" name="RCN" autocomplete="off" value="<?php echo $this->session->flashdata('RCN'); ?>">
 									</div>
-									<div class="form-group col-sm-12 col-lg-7">
-										<label>Issued At</label>
-										<input class="form-control" type="text" name="RCN_at" autocomplete="off" value="<?php echo $this->session->flashdata('RCN_at'); ?>">
-									</div>
-									<div class="form-group col-sm-12 col-lg-2">
-										<label>On</label>
-										<input class="form-control" type="date" name="RCN_On" value="<?php echo $this->session->flashdata('RCN_On'); ?>">
-									</div>
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-lg-3">
 										<label>Tax Identification No.</label>
 										<input class="form-control" type="text" name="TIN" autocomplete="off" value="<?php echo $this->session->flashdata('TIN'); ?>">
-									</div>
-									<div class="form-group col-sm-12 col-lg-7">
-										<label>Issued At</label>
-										<input class="form-control" type="text" name="TIN_At" autocomplete="off" value="<?php echo $this->session->flashdata('TIN_At'); ?>">
-									</div>
-									<div class="form-group col-sm-12 col-lg-2">
-										<label>On</label>
-										<input class="form-control" type="date" name="TIN_On" value="<?php echo $this->session->flashdata('TIN_On'); ?>">
 									</div>
 								</div>
 								<div class="form-row">
@@ -208,27 +192,11 @@
 										<label>HDMF</label>
 										<input class="form-control" type="text" name="HDMF" autocomplete="off" value="<?php echo $this->session->flashdata('HDMF'); ?>">
 									</div>
-									<div class="form-group col-sm-12 col-lg-7">
-										<label>Issued At</label>
-										<input class="form-control" type="text" name="HDMF_At" autocomplete="off" value="<?php echo $this->session->flashdata('HDMF_At'); ?>">
-									</div>
-									<div class="form-group col-sm-12 col-lg-2">
-										<label>On</label>
-										<input class="form-control" type="date" name="HDMF_On" value="<?php echo $this->session->flashdata('HDMF_On'); ?>">
-									</div>
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-lg-3">
 										<label>PHILHEALTH</label>
 										<input class="form-control" type="text" name="PhilHealth" autocomplete="off" value="<?php echo $this->session->flashdata('PhilHealth'); ?>">
-									</div>
-									<div class="form-group col-sm-12 col-lg-7">
-										<label>Issued At</label>
-										<input class="form-control" type="text" name="PhilHealth_At" autocomplete="off" value="<?php echo $this->session->flashdata('PhilHealth_At'); ?>">
-									</div>
-									<div class="form-group col-sm-12 col-lg-2">
-										<label>On</label>
-										<input class="form-control" type="date" name="PhilHealth_On" value="<?php echo $this->session->flashdata('PhilHealth_On'); ?>">
 									</div>
 								</div>
 								<div class="form-row">

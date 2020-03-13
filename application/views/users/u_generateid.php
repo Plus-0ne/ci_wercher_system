@@ -1,86 +1,82 @@
 <?php $T_Header;?>
 <body style="background-color: rgba(55, 55, 55, 1.0)">
-	<div class="">
-		<div id="" class="">
-			<div class="container-fluid">
-				<div class="row">
-					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
-					</div>
-					<div class="col-8 col-sm-8 col-md-8 text-right">
-					</div>
-					<div class="col-sm-6">
-						<div id="WercherIDFront">
-							<img src="<?php echo base_url(); ?>assets/img/wercher_id_front.png">
-							<img class="wercher-idcard-photo" src="<?php echo $ApplicantImage; ?>" width="200" height="200">
-							<div class="wercher-idcard-fields">
-								<div class="wercher-idcard-name">
-									<div class="col-sm-12">
-										<?php echo $LastName . ', ' . $FirstName . ' ' . $MiddleInitial . '.'; ?>
-									</div>
+	<div class="container-fluid">
+		<div class="row">
+			<?php echo $this->session->flashdata('prompts'); ?>
+			<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
+			</div>
+			<div class="col-8 col-sm-8 col-md-8 text-right">
+			</div>
+			<div class="col-sm-6">
+				<div id="WercherIDFront">
+					<img src="<?php echo base_url(); ?>assets/img/wercher_id_front.png">
+					<img class="wercher-idcard-photo" src="<?php echo $ApplicantImage; ?>" width="200" height="200">
+					<div class="wercher-idcard-fields">
+						<div class="wercher-idcard-name">
+							<div class="col-sm-12">
+								<?php echo $LastName . ', ' . $FirstName . ' ' . $MiddleInitial . '.'; ?>
+							</div>
+						</div>
+						<div class="row">
+							<div class="wercher-idcard-designation">
+								<div class="col-sm-12">
+									<?php echo $PositionDesired; ?>
 								</div>
-								<div class="row">
-									<div class="wercher-idcard-designation">
-										<div class="col-sm-12">
-											<?php echo $PositionDesired; ?>
-										</div>
-									</div>
-									<div class="wercher-idcard-dateissued">
-										<div class="col-sm-12">
-											<?php echo date("Y-m-d"); ?>
-										</div>
-									</div>
-								</div>
-								<div class="wercher-idcard-employeeid">
-									<div class="col-sm-12">
-										<?php if($Status == 'Employed'): ?>
-											<?php echo $EmployeeID; ?>
-										<?php else: ?>
-											<?php echo 'NO EMPLOYEE ID ASSIGNED'; ?>
-										<?php endif; ?>
-									</div>
+							</div>
+							<div class="wercher-idcard-dateissued">
+								<div class="col-sm-12">
+									<?php echo date("Y-m-d"); ?>
 								</div>
 							</div>
 						</div>
-						<button id="FrontSaveBtn" type="button" class="btn btn-primary wercher-idcard-frontbtn"><i class="fas fa-download"></i> Save Front to Computer</button>
-					</div>
-					<div class="col-sm-6">
-						<div id="WercherIDBack" class="w-100">
-							<img src="<?php echo base_url(); ?>assets/img/wercher_id_back.png">
-							<div class="wercher-idcard-address">
-								<div class="col-sm-12">
-									<?php echo $Address_Present; ?>
-								</div>
-							</div>
-							<div class="wercher-idcard-telno">
-								<div class="col-sm-12">
-									<?php echo $Phone_No; ?>
-								</div>
-							</div>
-							<div class="wercher-idcard-numberfields">
-								<div class="col-sm-12">
-									<?php echo $SSS_No; ?>
-								</div>
-							</div>
-							<div class="wercher-idcard-numberfields">
-								<div class="col-sm-12">
-									<?php echo $TIN; ?>
-								</div>
-							</div>
-							<div class="wercher-idcard-numberfields">
-								<div class="col-sm-12">
-									<?php echo $SSS_No; ?>
-								</div>
-							</div>
-							<div class="wercher-idcard-numberfields">
-								<div class="col-sm-12">
-									<?php echo $PhilHealth; ?>
-								</div>
+						<div class="wercher-idcard-employeeid">
+							<div class="col-sm-12">
+								<?php if($Status == 'Employed'): ?>
+									<?php echo $EmployeeID; ?>
+								<?php else: ?>
+									<?php echo 'NO EMPLOYEE ID ASSIGNED'; ?>
+								<?php endif; ?>
 							</div>
 						</div>
-						<button id="BackSaveBtn" type="button" class="btn btn-primary wercher-idcard-backbtn"><i class="fas fa-download"></i> Save Back to Computer</button>
 					</div>
 				</div>
+				<button id="FrontSaveBtn" type="button" class="btn btn-primary wercher-idcard-frontbtn"><i class="fas fa-download"></i> Save Front to Computer</button>
+			</div>
+			<div class="col-sm-6">
+				<div id="WercherIDBack" class="w-100">
+					<img src="<?php echo base_url(); ?>assets/img/wercher_id_back.png">
+					<div class="wercher-idcard-address">
+						<div class="col-sm-12">
+							<?php echo $Address_Present; ?>
+						</div>
+					</div>
+					<div class="wercher-idcard-telno">
+						<div class="col-sm-12">
+							<?php echo $Phone_No; ?>
+						</div>
+					</div>
+					<div class="wercher-idcard-numberfields">
+						<div class="col-sm-12">
+							<?php echo $SSS_No; ?>
+						</div>
+					</div>
+					<div class="wercher-idcard-numberfields">
+						<div class="col-sm-12">
+							<?php echo $TIN; ?>
+						</div>
+					</div>
+					<div class="wercher-idcard-numberfields">
+						<div class="col-sm-12">
+							<?php echo $SSS_No; ?>
+						</div>
+					</div>
+					<div class="wercher-idcard-numberfields">
+						<div class="col-sm-12">
+							<?php echo $PhilHealth; ?>
+						</div>
+					</div>
+				</div>
+				<button id="BackSaveBtn" type="button" class="btn btn-primary wercher-idcard-backbtn"><i class="fas fa-download"></i> Save Back to Computer</button>
 			</div>
 		</div>
 	</div>

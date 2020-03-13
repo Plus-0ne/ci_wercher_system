@@ -141,9 +141,7 @@
 							<div class="form-row">
 								<div class="text-center ml-auto mr-auto">
 									<div class="spinner-border m-5" role="status"></div>
-									<h4>Please wait warmly</h4>
-									<p>This will only take a little bit</p>
-									<p class="load-hidden-1" style="display: none;">This is taking longer than necessary...</p>
+									<h4>Fetching the table, just for you...</h4>
 								</div>
 							</div>
 						</div>

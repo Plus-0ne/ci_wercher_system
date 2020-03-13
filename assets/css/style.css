@@ -2,6 +2,31 @@
 /*font-family: 'Open Sans', sans-serif;  FOR SIDEBARS */
 /* font-family: 'Roboto', sans-serif; FOR HEADINGS */
 
+.btn-primary {
+	background-color: #c5ad00;
+	border-color: #c5ad00;
+}
+
+.btn-info {
+	background-color: #966800;
+	border-color: #966800;
+}
+
+.page-item.active .page-link {
+	background-color: #c5ad00;
+	border-color: #c5ad00;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    background-color: #756700;
+    border-color: #756700;
+}
+
+.btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open>.dropdown-toggle.btn-info {
+    background-color: #694900;
+    border-color: #694900;
+}
+
 html,body
 {
 	margin: 0px;
@@ -17,7 +42,7 @@ html,body
 	align-items: stretch;
 }
 .wercher-background-lowpoly {
-	background-image: url('../img/wercher_lowpoly.png');
+	background-image: url('../img/wercher_lowpoly_gold.png');
 	background-repeat: repeat;
     background-attachment: fixed;
 }
@@ -25,7 +50,7 @@ html,body
 #sidebar {
 	min-width: 250px;
 	max-width: 250px;
-	background: #1f2733;
+	background: #4a3a15;
 	/*background-image: url("../img/lowpoly_sidebar_long.png");*/
 	color: #fff;
 	/*transition: all 0.3s;*/
@@ -34,7 +59,7 @@ html,body
 }
 .nactive {
 	color: #FFFFFF !important;
-	border-left: 4px solid #007bff;
+	border-left: 4px solid gold;
 	background: rgba(0, 0, 0, 0.25);
 	padding-left: 17px !important;
 }
@@ -62,7 +87,7 @@ html,body
 	padding-top: 10px;
 	padding-bottom: 10px;
 	font-size: 22px;
-	background-color: #203f5f;
+	background-color: #735600;
 }
 
 #sidebar ul.components {
@@ -84,7 +109,7 @@ html,body
 
 #sidebar ul li a:hover {
 	color: #FFFFFF;
-	border-left: 4px solid #007bff;
+	border-left: 4px solid gold;
 	background: rgba(0, 0, 0, 0.25);
 	padding-left: 17px;
 }
@@ -186,10 +211,10 @@ a[data-toggle="collapse"] {
 	box-shadow: 2px 0 2px #555;
 }
 .progressRemainingColor {
-	background: #1a237e;
+	background: #c5ad00;
 }
 .progressRemaining {
-	background: #5c6bc0;
+	background: #966800;
 }
 .logbook-success {
 	background: linear-gradient(90deg, rgba(148,240,146,1) 28%, rgba(216,255,216,1) 100%);
@@ -219,7 +244,7 @@ a[data-toggle="collapse"] {
 	border-radius: 4px;
 	border-bottom: 2px solid white;
 	background-color: #ebebeb !important;
-	color: #2b5179 !important;
+	color: rgba(25, 25, 25) !important;
 	font-size: 15px;
 	font-weight: bold;
 }
@@ -256,7 +281,7 @@ a[data-toggle="collapse"] {
 	border-radius: 4px;
 	border-bottom: 2px solid white;
 	background-color: #ebebeb !important;
-	color: #2b5179 !important;
+	color: #000000 !important;
 	font-size: 15px;
 	font-weight: bold;
 }
@@ -275,7 +300,7 @@ a[data-toggle="collapse"] {
 }
 
 .employee-tabs li a:hover, .employee-tabs li button:hover {
-	background-color: #007bff;
+	background-color: #c5ad00;
 
 }
 .employee-tabs-icon {
@@ -299,20 +324,20 @@ a[data-toggle="collapse"] {
 .employee-static-header {
 	margin-top: 10px;
 	margin-bottom: -10px;
-	color: #2b5179;
+	color: #000000;
 }
 .employee-dynamic-item {
 
 }
 .employee-dynamic-header {
-	color: #2b5179;
+	color: #000000;
 }
 .employee-personal-row:hover {
 	border-radius: 10px;
 	background-color: rgba(75, 75, 185, 0.14);
 }
 .employee-table-header {
-	color: #2b5179;
+	color: #000000;
 }
 .employee-contract-container {
 	border-radius: 6px;
@@ -327,13 +352,13 @@ a[data-toggle="collapse"] {
 }
 .employee-documents-title {
 	font-size: 18px;
-	color: #2b5179;
+	color: #000000;
 }
 .folder-button {
 	outline-style: none;
 	cursor: pointer;
 	font-size: 16px;
-	color: #2b5179;
+	color: #000000;
 }
 .folder-button i {
 	font-size: 24px;
@@ -536,7 +561,7 @@ a[data-toggle="collapse"] {
 	color: rgba(0, 0, 0, 0.75);
 }
 .wercher-navbar {
-	background-color: #2b5179;
+	background-color: #4a3a15;
 	text-decoration: none;
 	/*transition:all 0.4s ease-in-out;
 	-webkit-transition:all 0.4s ease-in-out;
@@ -622,7 +647,7 @@ a[data-toggle="collapse"] {
 	cursor: not-allowed !important;
 }
 .wercher-progress-bar {
-	background-color: #2b5179 !important;
+	background-color: #966800 !important;
 }
 .wercher-search {
 	border-radius: 6px;
@@ -748,6 +773,44 @@ a[data-toggle="collapse"] {
 	padding: 20px;
 }
 
+.eprint-logo {
+	margin-left: -40px;
+}
+
+.eprint-logo-text {
+	margin-top: -105px;
+	margin-left: 95px;
+}
+
+.eprint-logo-subtext {
+	margin-left: 95px;
+}
+
+.eprint-logo-info {
+	margin-top: 55px;
+	margin-left: 95px;
+	font-size: 24px;
+}
+
+.eprint-commandcard {
+	border-radius: 6px;
+	border: 4px dashed rgba(255, 185, 0, 0.75);
+}
+
+.eprint-commandcard b {
+	font-size: 14px;
+}
+
+.eprint-photo img {
+	margin-left: -15px;
+	border-radius: 4px;
+	border: 2px solid black;
+}
+
+.eprint-print-btn {
+	font-size: 24px;
+}
+
 /*
 .sidebar-button-active {
 	width: 40px;
@@ -797,7 +860,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-radius: 4px;
 		border-bottom: 4px solid #ebebeb;
 		color: #ebebeb;
-		background-color: #2b5179;
+		background-color: #966800;
 	}
 	.payroll-tabs li a {
 		display: block;
@@ -808,7 +871,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-radius: 4px;
 		border-bottom: 4px solid #ebebeb;
 		color: #ebebeb;
-		background-color: #2b5179;
+		background-color: #966800;
 	}
 	.employee-tabs li a, .employee-tabs li button {
 		display: block;
@@ -819,7 +882,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-radius: 4px;
 		border-bottom: 4px solid #ebebeb;
 		color: #FFFFFF;
-		background-color: #2b5179;
+		background-color: #966800;
 	}
 	.employee-image img {
 		width: 75px;
@@ -843,7 +906,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-radius: 4px;
 		border-bottom: 8px solid #ebebeb;
 		color: #ebebeb;
-		background-color: #2b5179;
+		background-color: #966800;
 	}
 	.payroll-tabs li a {
 		display: block;
@@ -857,7 +920,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-radius: 4px;
 		border-bottom: 8px solid #ebebeb;
 		color: #ebebeb;
-		background-color: #2b5179;
+		background-color: #966800;
 	}
 	.employee-tabs li a, .employee-tabs li button {
 		display: block;
@@ -871,7 +934,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-radius: 4px;
 		border-bottom: 8px solid #ebebeb;
 		color: #FFFFFF;
-		background-color: #2b5179;
+		background-color: #966800;
 	}
 	.employee-image img {
 		width: 150px;

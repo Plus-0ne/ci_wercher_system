@@ -5,8 +5,7 @@
 				<div class="form-row">
 					<div class="text-center ml-auto mr-auto">
 						<div class="spinner-border m-5" role="status"></div>
-						<h4>Please wait momentarily</h4>
-						<p>Preparing the table...</p>
+						<h4>Fetching the table, just for you...</h4>
 					</div>
 				</div>
 			</div>

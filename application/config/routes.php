@@ -72,6 +72,7 @@ $route['ViewClient'] = 'Main_Controller/ViewClient';
 $route['Payrollsss'] = 'Main_Controller/Payrollsss';
 
 $route['GenerateIDCard'] = 'Main_Controller/GenerateIDCard';
+$route['PrintEmployee'] = 'Main_Controller/PrintEmployee';
 
 
 // LOGIN

@@ -13,10 +13,10 @@
 						background-color: #D9B319;
 					}
 					.bcolor199EC4 {
-						background-color: #199EC4;
+						background-color: #4a3a15;
 					}
 					.bcolorE75858 {
-						background-color: #E75858;
+						background-color: #f5a7b7;
 					}
 					.hei-100
 					{

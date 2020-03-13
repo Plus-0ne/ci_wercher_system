@@ -478,7 +478,7 @@
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employee</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
 					</ol>
 					</nav>';
 				} else {
@@ -486,11 +486,129 @@
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
 					</ol>
 					</nav>';
 				}
 				$this->load->view('users/u_viewemployee',$data);
+			}
+			else
+			{
+				redirect('Employee');
+			}
+		}
+		else
+		{
+			redirect('Employee');
+		}
+	}
+	public function PrintEmployee()
+	{
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		if (isset($_GET['id'])) {
+
+			$id = $_GET['id'];
+
+			$header['title'] = 'Print Employee | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+
+			$GetEmployeeDetails = $this->Model_Selects->GetEmployeeDetails($id);
+
+			if ($GetEmployeeDetails->num_rows() > 0) {
+				$ged = $GetEmployeeDetails->row_array();
+				$data = array(
+					'ApplicantNo' => $ged['ApplicantNo'],
+					'ApplicantImage' => $ged['ApplicantImage'],
+					'EmployeeID' => $ged['EmployeeID'],
+					'ApplicantID' => $ged['ApplicantID'],
+					'PositionDesired' => $ged['PositionDesired'],
+					'PositionGroup' => $ged['PositionGroup'],
+					'SalaryExpected' => $ged['SalaryExpected'],
+					'LastName' => $ged['LastName'],
+					'FirstName' => $ged['FirstName'],
+					'MiddleInitial' => $ged['MiddleInitial'],
+					'Gender' => $ged['Gender'],
+					'Age' => $ged['Age'],
+					'Height' => $ged['Height'],
+					'Weight' => $ged['Weight'],
+					'Religion' => $ged['Religion'],
+					'BirthDate' => $ged['BirthDate'],
+					'BirthPlace' => $ged['BirthPlace'],
+					'Citizenship' => $ged['Citizenship'],
+					'CivilStatus' => $ged['CivilStatus'],
+					'No_OfChildren' => $ged['No_OfChildren'],
+					'Phone_No' => $ged['Phone_No'],
+					'Address_Present' => $ged['Address_Present'],
+					'Address_Provincial' => $ged['Address_Provincial'],
+					'Address_Manila' => $ged['Address_Manila'],
+
+					'SSS_No' => $ged['SSS_No'],
+					'EffectiveDateCoverage' => $ged['EffectiveDateCoverage'],
+					'ResidenceCertificateNo' => $ged['ResidenceCertificateNo'],
+					'Rcn_At' => $ged['Rcn_At'],
+					'Rcn_On' => $ged['Rcn_On'],
+					'TIN' => $ged['TIN'],
+					'TIN_At' => $ged['TIN_At'],
+					'TIN_On' => $ged['TIN_On'],
+
+					'HDMF' => $ged['HDMF'],
+					'HDMF_At' => $ged['HDMF_At'],
+					'HDMF_On' => $ged['HDMF_On'],
+
+					'PhilHealth' => $ged['PhilHealth'],
+					'PhilHealth_At' => $ged['PhilHealth_At'],
+					'PhilHealth_On' => $ged['PhilHealth_On'],
+
+					'ATM_No' => $ged['ATM_No'],
+
+					'Status' => $ged['Status'],
+
+
+					'ClientEmployed' => $ged['ClientEmployed'],
+					'DateStarted' => $ged['DateStarted'],
+					'DateEnds' => $ged['DateEnds'],
+					'AppliedOn' => $ged['AppliedOn'],
+
+					'ReminderDate' => $ged['ReminderDate'],
+					'ReminderDateString' => $ged['ReminderDateString'],
+
+				);
+				$ApplicantID = $ged['ApplicantID'];
+				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);
+				$data['employment_record'] = $this->Model_Selects->GetEmploymentDetails($ApplicantID);
+				$data['Machine_Operatessss'] = $this->Model_Selects->Machine_Operatessss($ApplicantID);
+				$data['get_employee'] = $this->Model_Selects->GetEmployee();
+				$data['getClientOption'] = $this->Model_Selects->getClientOption();
+				$data['ShowClients'] = $this->Model_Selects->GetClients();
+				$data['GetContractHistory'] = $this->Model_Selects->GetContractHistory($ApplicantID);
+				$data['GetPreviousContract'] = $this->Model_Selects->GetPreviousContract($ApplicantID);
+				$data['GetViolations'] = $this->Model_Selects->GetViolations($ApplicantID);
+				$data['GetDocuments'] = $this->Model_Selects->GetDocuments($ApplicantID);
+				$data['GetDocumentsViolations'] = $this->Model_Selects->GetDocumentsViolations($ApplicantID);
+				$data['GetDocumentsNotes'] = $this->Model_Selects->GetDocumentsNotes($ApplicantID);
+				if ($data['Status'] == 'Employed') {
+					$data['Breadcrumb'] = '
+					<nav aria-label="breadcrumb">
+					<ol class="breadcrumb" style="background-color: transparent;">
+					<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employee</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="PrintEmployee?id=' . $ApplicantID .'">Print</a></li>
+					</ol>
+					</nav>';
+				} else {
+					$data['Breadcrumb'] = '
+					<nav aria-label="breadcrumb">
+					<ol class="breadcrumb" style="background-color: transparent;">
+					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="PrintEmployee?id=' . $ApplicantID .'">Print</a></li>
+					</ol>
+					</nav>';
+				}
+				$this->load->view('users/u_printemployee',$data);
 			}
 			else
 			{
@@ -706,25 +824,10 @@
 				);
 				$ApplicantID = $ged['ApplicantID'];
 				if ($data['Status'] == 'Employed') {
-					$data['Breadcrumb'] = '
-					<nav aria-label="breadcrumb">
-					<ol class="breadcrumb" style="background-color: transparent;">
-					<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employee</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="GenerateIDCard?id=' . $ApplicantID .'">Generate ID Card</a></li>
-					</ol>
-					</nav>';
+					$this->load->view('users/u_generateid',$data);
 				} else {
-					$data['Breadcrumb'] = '
-					<nav aria-label="breadcrumb">
-					<ol class="breadcrumb" style="background-color: transparent;">
-					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="GenerateIDCard?id=' . $ApplicantID .'">Generate ID Card</a></li>
-					</ol>
-					</nav>';
+					redirect('Employee');
 				}
-				$this->load->view('users/u_generateid',$data);
 			}
 			else
 			{
