@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 01, 2020 at 05:41 PM
--- Server version: 10.1.34-MariaDB
--- PHP Version: 7.2.7
+-- Generation Time: Mar 13, 2020 at 10:01 AM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -73,7 +73,7 @@ INSERT INTO `admin` (`AdminNo`, `AdminLevel`, `Position`, `AdminID`, `Password`,
 
 CREATE TABLE `applicants` (
   `ApplicantNo` int(11) NOT NULL,
-  `ApplicantImage` blob,
+  `ApplicantImage` blob DEFAULT NULL,
   `ApplicantID` varchar(255) DEFAULT NULL,
   `EmployeeID` varchar(255) DEFAULT NULL,
   `PositionDesired` varchar(255) DEFAULT NULL,
@@ -128,12 +128,12 @@ CREATE TABLE `applicants` (
 --
 
 INSERT INTO `applicants` (`ApplicantNo`, `ApplicantImage`, `ApplicantID`, `EmployeeID`, `PositionDesired`, `PositionGroup`, `SalaryExpected`, `LastName`, `FirstName`, `MiddleInitial`, `Gender`, `Age`, `Height`, `Weight`, `Religion`, `BirthDate`, `BirthPlace`, `Citizenship`, `CivilStatus`, `No_OfChildren`, `Address_Present`, `Address_Provincial`, `Address_Manila`, `Phone_No`, `SSS_No`, `EffectiveDateCoverage`, `ResidenceCertificateNo`, `Rcn_At`, `Rcn_On`, `TIN`, `TIN_At`, `TIN_On`, `HDMF`, `HDMF_At`, `HDMF_On`, `PhilHealth`, `PhilHealth_At`, `PhilHealth_On`, `ATM_No`, `Status`, `ClientEmployed`, `DateStarted`, `DateEnds`, `AppliedOn`, `ReminderType`, `ReminderDate`, `ReminderDateString`, `ReminderLocked`, `Temp_ApplicantID`) VALUES
-(1, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030312d412f696d6167652e6a7067, '00001-A', NULL, 'Secretary', 'Office Workers', '20000', 'Tracey', 'Adey', 'K', 'Female', '42', 'TEST-879268', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', 'Single', '87', 'TEST-879268', 'TEST-879268', 'TEST-879268', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'Expired', '', '', '2020-02-23 08:27:58 AM', '2020-02-17 01:00:09 AM', '', '', '1 month, 5 days', 'No', '00001-B'),
-(2, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030322d412f696d616765322e6a7067, '00002-A', 'WCB4-0003-20', 'Manager', 'Office Workers', '25000', 'Mcvarish', 'Renelle', 'S', 'Female', '50', 'TEST-797051', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', 'Single', '18', 'TEST-797051', 'TEST-797051', 'TEST-797051', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'Expired', '', '', '2020-02-25 04:53:50 PM', '2020-02-17 01:13:00 AM', '', '', NULL, 'No', '00002-B'),
-(3, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030332d412f696d616765332e6a7067, '00003-A', 'WCB4-4334-20', 'ELE', 'Factory', '10000', 'Verdirosi', 'Melisenda', 'U', 'Female', '33', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', 'Single', '90', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'Employed', '0', '2020-02-21 07:23:35 PM', '2021-05-24 07:23:35 PM', '2020-02-17 01:13:51 AM', 'R_ContractDuration', '39149212', '1 year, 2 months, 27 days', 'Yes', '00003-B'),
-(4, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030342d412f696d616765342e6a7067, '00004-A', NULL, 'Engineering', 'Factory', '50000', 'Wegener', 'Stuart', 'V', 'Male', '20', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', 'Married', '3', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'Expired', '', '', '2020-02-28 05:24:41 PM', '2020-02-19 01:31:19 AM', '', '', '1 month', 'No', '00004-B'),
+(1, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030312d412f696d6167652e6a7067, '00001-A', 'WCHI-0003-20', 'Secretary', 'Office Workers', '20000', 'Tracey', 'Adey', 'K', 'Female', '42', 'TEST-879268', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', 'Single', '87', 'TEST-879268', 'TEST-879268', 'TEST-879268', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'TEST-879268', '2020-02-17', 'TEST-879268', 'Employed', '2', '2020-03-02 11:25:20 AM', '2020-10-02 11:25:20 AM', '2020-02-17 01:00:09 AM', '', '', '1 month, 5 days', 'No', '00001-B'),
+(2, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030322d412f696d616765322e6a7067, '00002-A', 'WCHI-0002-20', 'Manager', 'Office Workers', '2000', 'Mcvarish', 'Renelle', 'S', 'Female', '50', 'TEST-797051', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', 'Single', '18', 'TEST-797051', 'TEST-797051', 'TEST-797051', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'TEST-797051', '2020-02-17', 'TEST-797051', 'Employed', '2', '2020-03-02 11:25:12 AM', '2020-11-02 11:25:12 AM', '2020-02-17 01:13:00 AM', '', '', NULL, 'No', '00002-B'),
+(3, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030332d412f696d616765332e6a7067, '00003-A', 'WCB4-4334-20', 'ELE', 'Factory', '10000', 'Verdirosi', 'Melisenda', 'U', 'Female', '33', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', 'Single', '90', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'TEST-5516017', '2020-02-17', 'TEST-5516017', 'Blacklisted', '0', '2020-02-21 07:23:35 PM', '2021-05-24 07:23:35 PM', '2020-02-17 01:13:51 AM', 'R_ContractDuration', '39149212', '1 year, 2 months, 27 days', 'Yes', '00003-B'),
+(4, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030342d412f696d616765342e6a7067, '00004-A', 'WCHI-0001-20', 'Engineering', 'Factory', '10000', 'Wegener', 'Stuart', 'V', 'Male', '20', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', 'Married', '3', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'TEST-1064818', '2020-02-19', 'TEST-1064818', 'Employed', '2', '2020-03-02 11:25:00 AM', '2021-03-02 11:25:00 AM', '2020-02-19 01:31:19 AM', 'R_ContractDuration', '604800', '7 days', 'No', '00004-B'),
 (5, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030352d412f696d616765352e6a7067, '00005-A', 'WCSK&FN-0001-20', 'Q.A. Specialist', 'Office Workers', '30000', 'Newman', 'Robert', 'P', 'Male', '78', 'TEST-6625858', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', 'Single', '0', 'TEST-6625858', 'TEST-6625858', 'TEST-6625858', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'TEST-6625858', '2020-02-19', 'TEST-6625858', 'Employed', '4', '2020-02-27 08:42:10 AM', '2020-03-27 08:42:10 AM', '2020-02-19 01:33:29 AM', NULL, NULL, NULL, NULL, '00005-B'),
-(6, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d412f696d616765362e6a7067, '00006-A', NULL, 'Engineering', 'Factory', NULL, 'Wegener', 'Steve', 'V', 'Male', '', '', '', '', '', '', '', 'Single', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Applicant', NULL, NULL, NULL, '2020-02-27 01:27:16 AM', NULL, NULL, NULL, NULL, NULL);
+(6, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d412f696d616765362e6a7067, '00006-A', 'WCB4-0002-20', 'Engineering', 'Factory', '10000', 'Wegener', 'Steve', 'V', 'Male', '', '', '', '', '', '', '', 'Single', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Applicant', '0', '2020-03-02 10:29:47 AM', '2021-03-02 10:29:47 AM', '2020-02-27 01:27:16 AM', NULL, NULL, NULL, NULL, '00006-B');
 
 -- --------------------------------------------------------
 
@@ -183,11 +183,11 @@ CREATE TABLE `clients` (
 --
 
 INSERT INTO `clients` (`ClientID`, `Name`, `Address`, `ContactNumber`, `EmployeeIDSuffix`, `Status`) VALUES
-(0, 'B4', 'test', 'test', 'B4', 'Active'),
 (1, 'Some Guy', '123456789', '11111111111', 'SG', 'Active'),
 (2, 'HELLO', '1', '1', 'HI', 'Active'),
 (3, '5', '5', '5', '%', 'Deleted'),
-(4, 'Shrek', 'Swamp', '0000000', 'SK&FN', 'Active');
+(4, 'Shrek', 'Swamp', '0000000', 'SK&FN', 'Active'),
+(5, 'B4', 'test', 'test', 'B4', 'Active');
 
 -- --------------------------------------------------------
 
@@ -349,14 +349,14 @@ CREATE TABLE `dummy_hours` (
 --
 
 INSERT INTO `dummy_hours` (`ID`, `Time`, `Current`, `Regular`, `NightShift`, `Holiday`) VALUES
-(233, '2020-02-23', 'Current', 0, 0, 0),
-(234, '2020-02-24', 'Current', 0, 0, 0),
-(235, '2020-02-25', 'Current', 0, 0, 0),
-(236, '2020-02-26', 'Current', 0, 0, 0),
-(237, '2020-02-27', 'Current', 0, 0, 0),
-(238, '2020-02-28', 'Current', 0, 0, 0),
-(239, '2020-02-29', 'Current', 0, 0, 0),
-(240, '2020-03-01', 'Current', 0, 0, 0);
+(340, '2020-03-06', 'Current', 0, 0, 0),
+(341, '2020-03-07', 'Current', 0, 0, 0),
+(342, '2020-03-08', 'Current', 0, 0, 0),
+(343, '2020-03-09', 'Current', 0, 0, 0),
+(344, '2020-03-10', 'Current', 0, 0, 0),
+(345, '2020-03-11', 'Current', 0, 0, 0),
+(346, '2020-03-12', 'Current', 0, 0, 0),
+(347, '2020-03-13', 'Current', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -367,7 +367,7 @@ INSERT INTO `dummy_hours` (`ID`, `Time`, `Current`, `Regular`, `NightShift`, `Ho
 CREATE TABLE `employee` (
   `Employee_No` int(11) NOT NULL,
   `Employee_ID` varchar(255) NOT NULL,
-  `EmployeeImage` blob,
+  `EmployeeImage` blob DEFAULT NULL,
   `EmploymentType` varchar(255) DEFAULT NULL,
   `LastName` varchar(255) DEFAULT NULL,
   `FirstName` varchar(255) DEFAULT NULL,
@@ -456,7 +456,57 @@ INSERT INTO `hours_weekly` (`No`, `ClientID`, `ApplicantID`, `Name`, `Salary`, `
 (915, '0', '00003-A', NULL, NULL, '2020-02-27', 5, 0, '', 3, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '420.70'),
 (916, '0', '00003-A', NULL, NULL, '2020-02-28', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
 (917, '0', '00003-A', NULL, NULL, '2020-02-29', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
-(918, '0', '00003-A', NULL, NULL, '2020-03-01', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00');
+(919, '0', '00006-B', 'Wegener, Steve V.', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(920, '0', '00006-A', NULL, NULL, '2020-02-24', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
+(921, '0', '00006-A', NULL, NULL, '2020-02-25', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
+(922, '0', '00006-A', NULL, NULL, '2020-02-26', 4, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '192.32'),
+(923, '0', '00006-A', NULL, NULL, '2020-02-27', 1, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '48.08'),
+(924, '0', '00006-A', NULL, NULL, '2020-02-28', 2, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '96.16'),
+(925, '0', '00006-A', NULL, NULL, '2020-02-29', 3, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '144.24'),
+(926, '0', '00006-A', NULL, NULL, '2020-03-01', 5, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '240.40'),
+(927, '0', '00006-A', NULL, NULL, '2020-03-02', 5, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '240.40'),
+(928, '0', '00003-A', NULL, NULL, '2020-03-01', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
+(929, '0', '00003-A', NULL, NULL, '2020-03-02', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
+(930, '0', '00003-A', NULL, NULL, '2020-03-03', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
+(931, '0', '00003-A', NULL, NULL, '2020-03-04', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(932, '0', '00003-A', NULL, NULL, '2020-03-05', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(933, '0', '00003-A', NULL, NULL, '2020-03-06', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(934, '0', '00003-A', NULL, NULL, '2020-03-07', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(935, '2', '00004-B', 'Wegener, Stuart V.', '50000', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(936, '2', '00002-B', 'Mcvarish, Renelle S.', '25000', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(937, '2', '00001-B', 'Tracey, Adey K.', '20000', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(962, '1', '00006-C', NULL, NULL, '2019-12-10', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(963, '1', '00006-C', NULL, NULL, '2019-12-11', 7, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(964, '1', '00006-C', NULL, NULL, '2019-12-12', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(965, '1', '00006-C', NULL, NULL, '2019-12-13', 7, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(966, '1', '00006-C', NULL, NULL, '2019-12-14', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(967, '1', '00006-C', NULL, NULL, '2019-12-15', 8, 0, '', 12, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(968, '1', '00007-B', NULL, NULL, '2019-12-10', 8, 0, '', 2, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(969, '1', '00007-B', NULL, NULL, '2019-12-11', 8, 0, '', 1, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(970, '1', '00007-B', NULL, NULL, '2019-12-12', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(971, '1', '00007-B', NULL, NULL, '2019-12-13', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(972, '1', '00007-B', NULL, NULL, '2019-12-14', 8, 0, '', 1, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(973, '1', '00007-B', NULL, NULL, '2019-12-15', 8, 0, '', 12, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(974, '1', '00001-A', NULL, NULL, '2019-12-10', 8, 0, '', 2, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(975, '1', '00001-A', NULL, NULL, '2019-12-11', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(976, '1', '00001-A', NULL, NULL, '2019-12-12', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(977, '1', '00001-A', NULL, NULL, '2019-12-13', 8, 0, '', 1, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(978, '1', '00001-A', NULL, NULL, '2019-12-14', 8, 0, '', 2, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(979, '1', '00001-A', NULL, NULL, '2019-12-15', 8, 0, '', 12, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(980, '1', '00008-A', NULL, NULL, '2019-12-10', 8, 0, '', 2, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(981, '1', '00008-A', NULL, NULL, '2019-12-11', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(982, '1', '00008-A', NULL, NULL, '2019-12-12', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(983, '1', '00008-A', NULL, NULL, '2019-12-13', 8, 0, '', 2, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(984, '1', '00008-A', NULL, NULL, '2019-12-14', 8, 0, '', 3, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(985, '1', '00008-A', NULL, NULL, '2019-12-15', 8, 0, '', 12, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(986, '2', '00002-A', NULL, NULL, '2020-03-06', 8, 0, '', 2, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '101.01'),
+(987, '2', '00002-A', NULL, NULL, '2020-03-07', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
+(988, '2', '00002-A', NULL, NULL, '2020-03-08', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
+(989, '2', '00002-A', NULL, NULL, '2020-03-09', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
+(990, '2', '00002-A', NULL, NULL, '2020-03-10', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
+(991, '2', '00002-A', NULL, NULL, '2020-03-11', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
+(992, '2', '00002-A', NULL, NULL, '2020-03-12', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
+(993, '2', '00002-A', NULL, NULL, '2020-03-13', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00');
 
 -- --------------------------------------------------------
 
@@ -639,7 +689,20 @@ INSERT INTO `logbook` (`No`, `Time`, `Type`, `Event`, `Link`) VALUES
 (160, '2020-03-01 09:27:22 PM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
 (161, '2020-03-01 09:28:23 PM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
 (162, '2020-03-01 10:22:06 PM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
-(163, '2020-03-01 10:22:51 PM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients');
+(163, '2020-03-01 10:22:51 PM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(164, '2020-03-02 10:29:47 AM', 'Employment', 'Applicant ID 00006-B has been employed to Client ID 0 for 1 year!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00006-B'),
+(165, '2020-03-02 10:30:59 AM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost/ci_wercher_system/Clients'),
+(166, '2020-03-02 10:55:22 AM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost/ci_wercher_system/Clients'),
+(167, '2020-03-02 11:18:48 AM', 'Note', 'Added new note for 00001-A.', NULL),
+(168, '2020-03-02 11:22:17 AM', 'New', 'New Client added! (Name: 123213 | Contact: 12332)', 'http://localhost/ci_wercher_system/Clients'),
+(169, '2020-03-02 11:23:19 AM', 'New', 'New Client added! (Name: Test Client | Contact: 123213213123)', 'http://localhost/ci_wercher_system/Clients'),
+(170, '2020-03-02 11:25:01 AM', 'Employment', 'Applicant ID 00004-B has been employed to Client ID 2 for 1 year!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00004-B'),
+(171, '2020-03-02 11:25:12 AM', 'Employment', 'Applicant ID 00002-B has been employed to Client ID 2 for 1 year!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00002-B'),
+(172, '2020-03-02 11:25:20 AM', 'Employment', 'Applicant ID 00001-B has been employed to Client ID 2 for 1 year!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00001-B'),
+(173, '2020-03-02 11:25:30 AM', 'Update', 'Applicant ID 00001-A has their contract extended by -5 months!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00001-A#Contract'),
+(174, '2020-03-02 11:25:43 AM', 'Update', 'Applicant ID 00002-A has their contract extended by -4 months!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00002-A#Contract'),
+(175, '2020-03-02 11:26:56 AM', 'New', 'A reminder has been set for ID 00004-A, alerting after 7 days!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00004-A'),
+(176, '2020-03-13 01:55:49 PM', 'Update', 'Updated weekly hours for 00002-A.', 'http://localhost/ci_wercher_system/Clients');
 
 -- --------------------------------------------------------
 
@@ -677,18 +740,20 @@ CREATE TABLE `sss_table` (
   `id` int(11) NOT NULL,
   `f_range` varchar(255) DEFAULT NULL,
   `t_range` varchar(255) DEFAULT NULL,
-  `contribution` varchar(255) DEFAULT NULL
+  `contribution` varchar(255) DEFAULT NULL,
+  `last_update` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sss_table`
 --
 
-INSERT INTO `sss_table` (`id`, `f_range`, `t_range`, `contribution`) VALUES
-(1, '0', '2250', '160'),
-(2, '2250', '2749.99', '200'),
-(3, '2750', '3249.99', '240'),
-(4, '3250', '3749.99', '280');
+INSERT INTO `sss_table` (`id`, `f_range`, `t_range`, `contribution`, `last_update`) VALUES
+(1, '0', '2250', '160', NULL),
+(2, '2250', '2749.99', '200', NULL),
+(3, '2750', '3249.99', '240', NULL),
+(4, '3250', '3749.99', '280', NULL),
+(5, '333333', '3333333', '500', NULL);
 
 -- --------------------------------------------------------
 
@@ -699,8 +764,8 @@ INSERT INTO `sss_table` (`id`, `f_range`, `t_range`, `contribution`) VALUES
 CREATE TABLE `supp_documents` (
   `ID` int(11) NOT NULL,
   `ApplicantID` varchar(255) DEFAULT NULL,
-  `Doc_Image` blob,
-  `Doc_File` blob,
+  `Doc_Image` blob DEFAULT NULL,
+  `Doc_File` blob DEFAULT NULL,
   `Doc_FileName` varchar(255) DEFAULT NULL,
   `Type` varchar(255) DEFAULT NULL,
   `Subject` varchar(255) DEFAULT NULL,
@@ -723,7 +788,8 @@ INSERT INTO `supp_documents` (`ID`, `ApplicantID`, `Doc_Image`, `Doc_File`, `Doc
 (7, '00003-A', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030332d412f64756d6d79352e706466, 'dummy5.pdf', 'Document', '123', '12321312', '3123123123', '2020-02-19'),
 (8, '00003-A', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030332d412f64756d6d79362e706466, 'dummy6.pdf', 'Blacklist', '2nd blacklist test', 'hellooo', '12345', '2020-02-19'),
 (9, '00004-A', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030342d412f64756d6d792e706466, 'dummy.pdf', 'Document', 'testtest', '123131312', '3123213', '2020-02-23'),
-(10, '00003-A', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030332d412f64756d6d79372e706466, 'dummy7.pdf', 'Document', 'testtest', '1231313', '123213131', '2020-02-23');
+(10, '00003-A', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030332d412f64756d6d79372e706466, 'dummy7.pdf', 'Document', 'testtest', '1231313', '123213131', '2020-02-23'),
+(11, '00003-A', NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030332d412f64756d6d79382e706466, 'dummy8.pdf', 'Blacklist', '123133132', '1231313', '13213132', '2020-03-02');
 
 -- --------------------------------------------------------
 
@@ -743,7 +809,8 @@ CREATE TABLE `tab_documents_notes` (
 --
 
 INSERT INTO `tab_documents_notes` (`DatabaseID`, `ApplicantID`, `Note`, `DateAdded`) VALUES
-(1, '00001-A', 'Hello', '2020-02-19 02:00:41 AM');
+(1, '00001-A', 'Hello', '2020-02-19 02:00:41 AM'),
+(2, '00001-A', 'hekllo', '2020-03-02 04:18:48 AM');
 
 -- --------------------------------------------------------
 
@@ -770,7 +837,10 @@ CREATE TABLE `tracking_table` (
 INSERT INTO `tracking_table` (`id`, `ApplicantID`, `ClientID`, `gross_pay`, `TotalHours`, `TotaOT`, `sss_contri`, `net_pay`, `c_week`) VALUES
 (15, '00003-A', '0', '3726.2', '61', '11', '280', NULL, NULL),
 (16, '00003-A', '0', '3726.2', '61', '11', '280', '3725.2', NULL),
-(17, '00003-A', '0', '3726.2', '61', '11', '280', '3446.2', NULL);
+(17, '00003-A', '0', '3726.2', '61', '11', '280', '3446.2', NULL),
+(18, '00006-A', '0', '1730.88', '36', '0', '160', '1570.88', NULL),
+(19, '00003-A', '0', '4880.12', '85', '11', NULL, '4880.12', NULL),
+(20, '00002-A', '2', '101.01', '8', '2', '160', '-58.99', NULL);
 
 -- --------------------------------------------------------
 
@@ -930,6 +1000,12 @@ ALTER TABLE `audit_log`
   MODIFY `LogID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `clients`
+--
+ALTER TABLE `clients`
+  MODIFY `ClientID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT for table `contract_history`
 --
 ALTER TABLE `contract_history`
@@ -945,43 +1021,43 @@ ALTER TABLE `dashboard_months`
 -- AUTO_INCREMENT for table `dummy_hours`
 --
 ALTER TABLE `dummy_hours`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=241;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=348;
 
 --
 -- AUTO_INCREMENT for table `hours_weekly`
 --
 ALTER TABLE `hours_weekly`
-  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=919;
+  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=994;
 
 --
 -- AUTO_INCREMENT for table `logbook`
 --
 ALTER TABLE `logbook`
-  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
+  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
 
 --
 -- AUTO_INCREMENT for table `sss_table`
 --
 ALTER TABLE `sss_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `supp_documents`
 --
 ALTER TABLE `supp_documents`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tab_documents_notes`
 --
 ALTER TABLE `tab_documents_notes`
-  MODIFY `DatabaseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `DatabaseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tracking_table`
 --
 ALTER TABLE `tracking_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
