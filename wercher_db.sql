@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 13, 2020 at 10:01 AM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.3.9
+-- Generation Time: Mar 15, 2020 at 09:37 PM
+-- Server version: 10.1.34-MariaDB
+-- PHP Version: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -73,7 +73,7 @@ INSERT INTO `admin` (`AdminNo`, `AdminLevel`, `Position`, `AdminID`, `Password`,
 
 CREATE TABLE `applicants` (
   `ApplicantNo` int(11) NOT NULL,
-  `ApplicantImage` blob DEFAULT NULL,
+  `ApplicantImage` blob,
   `ApplicantID` varchar(255) DEFAULT NULL,
   `EmployeeID` varchar(255) DEFAULT NULL,
   `PositionDesired` varchar(255) DEFAULT NULL,
@@ -349,14 +349,14 @@ CREATE TABLE `dummy_hours` (
 --
 
 INSERT INTO `dummy_hours` (`ID`, `Time`, `Current`, `Regular`, `NightShift`, `Holiday`) VALUES
-(340, '2020-03-06', 'Current', 0, 0, 0),
-(341, '2020-03-07', 'Current', 0, 0, 0),
-(342, '2020-03-08', 'Current', 0, 0, 0),
-(343, '2020-03-09', 'Current', 0, 0, 0),
-(344, '2020-03-10', 'Current', 0, 0, 0),
-(345, '2020-03-11', 'Current', 0, 0, 0),
-(346, '2020-03-12', 'Current', 0, 0, 0),
-(347, '2020-03-13', 'Current', 0, 0, 0);
+(464, '2020-03-09', 'Current', 0, 0, 0),
+(465, '2020-03-10', 'Current', 0, 0, 0),
+(466, '2020-03-11', 'Current', 0, 0, 0),
+(467, '2020-03-12', 'Current', 0, 0, 0),
+(468, '2020-03-13', 'Current', 0, 0, 0),
+(469, '2020-03-14', 'Current', 0, 0, 0),
+(470, '2020-03-15', 'Current', 0, 0, 0),
+(471, '2020-03-16', 'Current', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -367,7 +367,7 @@ INSERT INTO `dummy_hours` (`ID`, `Time`, `Current`, `Regular`, `NightShift`, `Ho
 CREATE TABLE `employee` (
   `Employee_No` int(11) NOT NULL,
   `Employee_ID` varchar(255) NOT NULL,
-  `EmployeeImage` blob DEFAULT NULL,
+  `EmployeeImage` blob,
   `EmploymentType` varchar(255) DEFAULT NULL,
   `LastName` varchar(255) DEFAULT NULL,
   `FirstName` varchar(255) DEFAULT NULL,
@@ -440,73 +440,30 @@ CREATE TABLE `hours_weekly` (
 --
 
 INSERT INTO `hours_weekly` (`No`, `ClientID`, `ApplicantID`, `Name`, `Salary`, `Time`, `Hours`, `NightHours`, `Type`, `Overtime`, `NightOvertime`, `Remarks`, `Regular`, `NightShift`, `Holiday`, `Current`, `HDMF`, `Philhealth`, `SSS`, `Tax`, `day_pay`) VALUES
-(871, '0', '00003-A', NULL, NULL, '2020-02-22', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
-(879, '4', '00005-A', NULL, NULL, '2020-02-23', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1153.84'),
-(880, '4', '00005-A', NULL, NULL, '2020-02-24', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(881, '4', '00005-A', NULL, NULL, '2020-02-25', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(882, '4', '00005-A', NULL, NULL, '2020-02-26', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(883, '4', '00005-A', NULL, NULL, '2020-02-27', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(884, '4', '00005-A', NULL, NULL, '2020-02-28', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(885, '4', '00005-A', NULL, NULL, '2020-02-29', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(886, '4', '00005-A', NULL, NULL, '2020-03-01', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(911, '0', '00003-A', NULL, NULL, '2020-02-23', 8, 0, '', 4, 2, '', NULL, NULL, NULL, NULL, '', '', '', '', '757.26'),
-(912, '0', '00003-A', NULL, NULL, '2020-02-24', 8, 0, '', 1, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '444.74'),
-(913, '0', '00003-A', NULL, NULL, '2020-02-25', 8, 0, '', 3, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '564.94'),
-(914, '0', '00003-A', NULL, NULL, '2020-02-26', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
-(915, '0', '00003-A', NULL, NULL, '2020-02-27', 5, 0, '', 3, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '420.70'),
-(916, '0', '00003-A', NULL, NULL, '2020-02-28', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
-(917, '0', '00003-A', NULL, NULL, '2020-02-29', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
-(919, '0', '00006-B', 'Wegener, Steve V.', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(920, '0', '00006-A', NULL, NULL, '2020-02-24', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
-(921, '0', '00006-A', NULL, NULL, '2020-02-25', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
-(922, '0', '00006-A', NULL, NULL, '2020-02-26', 4, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '192.32'),
-(923, '0', '00006-A', NULL, NULL, '2020-02-27', 1, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '48.08'),
-(924, '0', '00006-A', NULL, NULL, '2020-02-28', 2, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '96.16'),
-(925, '0', '00006-A', NULL, NULL, '2020-02-29', 3, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '144.24'),
-(926, '0', '00006-A', NULL, NULL, '2020-03-01', 5, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '240.40'),
-(927, '0', '00006-A', NULL, NULL, '2020-03-02', 5, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '240.40'),
-(928, '0', '00003-A', NULL, NULL, '2020-03-01', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
-(929, '0', '00003-A', NULL, NULL, '2020-03-02', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
-(930, '0', '00003-A', NULL, NULL, '2020-03-03', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
-(931, '0', '00003-A', NULL, NULL, '2020-03-04', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(932, '0', '00003-A', NULL, NULL, '2020-03-05', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(933, '0', '00003-A', NULL, NULL, '2020-03-06', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(934, '0', '00003-A', NULL, NULL, '2020-03-07', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(935, '2', '00004-B', 'Wegener, Stuart V.', '50000', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(936, '2', '00002-B', 'Mcvarish, Renelle S.', '25000', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(937, '2', '00001-B', 'Tracey, Adey K.', '20000', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(962, '1', '00006-C', NULL, NULL, '2019-12-10', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(963, '1', '00006-C', NULL, NULL, '2019-12-11', 7, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(964, '1', '00006-C', NULL, NULL, '2019-12-12', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(965, '1', '00006-C', NULL, NULL, '2019-12-13', 7, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(966, '1', '00006-C', NULL, NULL, '2019-12-14', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(967, '1', '00006-C', NULL, NULL, '2019-12-15', 8, 0, '', 12, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(968, '1', '00007-B', NULL, NULL, '2019-12-10', 8, 0, '', 2, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(969, '1', '00007-B', NULL, NULL, '2019-12-11', 8, 0, '', 1, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(970, '1', '00007-B', NULL, NULL, '2019-12-12', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(971, '1', '00007-B', NULL, NULL, '2019-12-13', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(972, '1', '00007-B', NULL, NULL, '2019-12-14', 8, 0, '', 1, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(973, '1', '00007-B', NULL, NULL, '2019-12-15', 8, 0, '', 12, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(974, '1', '00001-A', NULL, NULL, '2019-12-10', 8, 0, '', 2, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(975, '1', '00001-A', NULL, NULL, '2019-12-11', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(976, '1', '00001-A', NULL, NULL, '2019-12-12', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(977, '1', '00001-A', NULL, NULL, '2019-12-13', 8, 0, '', 1, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(978, '1', '00001-A', NULL, NULL, '2019-12-14', 8, 0, '', 2, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(979, '1', '00001-A', NULL, NULL, '2019-12-15', 8, 0, '', 12, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(980, '1', '00008-A', NULL, NULL, '2019-12-10', 8, 0, '', 2, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(981, '1', '00008-A', NULL, NULL, '2019-12-11', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(982, '1', '00008-A', NULL, NULL, '2019-12-12', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(983, '1', '00008-A', NULL, NULL, '2019-12-13', 8, 0, '', 2, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(984, '1', '00008-A', NULL, NULL, '2019-12-14', 8, 0, '', 3, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(985, '1', '00008-A', NULL, NULL, '2019-12-15', 8, 0, '', 12, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(986, '2', '00002-A', NULL, NULL, '2020-03-06', 8, 0, '', 2, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '101.01'),
-(987, '2', '00002-A', NULL, NULL, '2020-03-07', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(988, '2', '00002-A', NULL, NULL, '2020-03-08', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(989, '2', '00002-A', NULL, NULL, '2020-03-09', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(990, '2', '00002-A', NULL, NULL, '2020-03-10', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(991, '2', '00002-A', NULL, NULL, '2020-03-11', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(992, '2', '00002-A', NULL, NULL, '2020-03-12', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(993, '2', '00002-A', NULL, NULL, '2020-03-13', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00');
+(65, '2', '00002-A', NULL, NULL, '2020-03-09', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '76.96'),
+(66, '2', '00002-A', NULL, NULL, '2020-03-10', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '76.96'),
+(67, '2', '00002-A', NULL, NULL, '2020-03-11', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '76.96'),
+(68, '2', '00002-A', NULL, NULL, '2020-03-12', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '76.96'),
+(69, '2', '00002-A', NULL, NULL, '2020-03-13', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '76.96'),
+(70, '2', '00002-A', NULL, NULL, '2020-03-14', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '76.96'),
+(71, '2', '00002-A', NULL, NULL, '2020-03-15', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '76.96'),
+(72, '2', '00002-A', NULL, NULL, '2020-03-16', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '76.96'),
+(169, '2', '00004-A', NULL, NULL, '2020-03-09', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
+(170, '2', '00004-A', NULL, NULL, '2020-03-10', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
+(171, '2', '00004-A', NULL, NULL, '2020-03-11', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
+(172, '2', '00004-A', NULL, NULL, '2020-03-12', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
+(173, '2', '00004-A', NULL, NULL, '2020-03-13', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
+(174, '2', '00004-A', NULL, NULL, '2020-03-14', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
+(175, '2', '00004-A', NULL, NULL, '2020-03-15', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
+(176, '2', '00004-A', NULL, NULL, '2020-03-16', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
+(209, '2', '00001-A', NULL, NULL, '2020-03-09', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '769.20'),
+(210, '2', '00001-A', NULL, NULL, '2020-03-10', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
+(211, '2', '00001-A', NULL, NULL, '2020-03-11', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
+(212, '2', '00001-A', NULL, NULL, '2020-03-12', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '769.20'),
+(213, '2', '00001-A', NULL, NULL, '2020-03-13', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '769.20'),
+(214, '2', '00001-A', NULL, NULL, '2020-03-14', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '769.20'),
+(215, '2', '00001-A', NULL, NULL, '2020-03-15', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '769.20'),
+(216, '2', '00001-A', NULL, NULL, '2020-03-16', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '769.20');
 
 -- --------------------------------------------------------
 
@@ -702,7 +659,51 @@ INSERT INTO `logbook` (`No`, `Time`, `Type`, `Event`, `Link`) VALUES
 (173, '2020-03-02 11:25:30 AM', 'Update', 'Applicant ID 00001-A has their contract extended by -5 months!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00001-A#Contract'),
 (174, '2020-03-02 11:25:43 AM', 'Update', 'Applicant ID 00002-A has their contract extended by -4 months!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00002-A#Contract'),
 (175, '2020-03-02 11:26:56 AM', 'New', 'A reminder has been set for ID 00004-A, alerting after 7 days!', 'http://localhost/ci_wercher_system/ViewEmployee?id=00004-A'),
-(176, '2020-03-13 01:55:49 PM', 'Update', 'Updated weekly hours for 00002-A.', 'http://localhost/ci_wercher_system/Clients');
+(176, '2020-03-13 01:55:49 PM', 'Update', 'Updated weekly hours for 00002-A.', 'http://localhost/ci_wercher_system/Clients'),
+(177, '2020-03-15 01:14:46 PM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(178, '2020-03-15 01:15:25 PM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(179, '2020-03-15 01:16:39 PM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(180, '2020-03-15 01:16:58 PM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(181, '2020-03-15 01:46:57 PM', 'Update', 'Updated weekly hours for 00004-A.', 'http://localhost/ci_wercher_system/Clients'),
+(182, '2020-03-15 01:50:07 PM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(183, '2020-03-15 01:55:31 PM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(184, '2020-03-15 01:57:17 PM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(185, '2020-03-16 03:17:43 AM', 'Update', 'Updated weekly hours for 00002-A.', 'http://localhost/ci_wercher_system/Clients'),
+(186, '2020-03-16 03:18:08 AM', 'Update', 'Updated weekly hours for 00002-A.', 'http://localhost/ci_wercher_system/Clients'),
+(187, '2020-03-16 03:20:32 AM', 'Update', 'Updated weekly hours for 00002-A.', 'http://localhost/ci_wercher_system/Clients'),
+(188, '2020-03-16 03:21:00 AM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(189, '2020-03-16 03:22:29 AM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(190, '2020-03-16 03:25:53 AM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(191, '2020-03-16 03:27:08 AM', 'Update', 'Updated weekly hours for 00002-A.', 'http://localhost/ci_wercher_system/Clients'),
+(192, '2020-03-16 03:27:40 AM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(193, '2020-03-16 03:32:10 AM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(194, '2020-03-16 03:35:24 AM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(195, '2020-03-16 03:37:39 AM', 'Update', 'Updated weekly hours for 00002-A.', 'http://localhost/ci_wercher_system/Clients'),
+(196, '2020-03-16 03:38:33 AM', 'Update', 'Updated weekly hours for 00004-A.', 'http://localhost/ci_wercher_system/Clients'),
+(197, '2020-03-16 03:44:36 AM', 'Update', 'Updated weekly hours for 00002-A.', 'http://localhost/ci_wercher_system/Clients'),
+(198, '2020-03-16 03:46:37 AM', 'Update', 'Updated weekly hours for 00002-A.', 'http://localhost/ci_wercher_system/Clients'),
+(199, '2020-03-16 03:46:48 AM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(200, '2020-03-16 03:47:15 AM', 'Update', 'Updated weekly hours for 00004-A.', 'http://localhost/ci_wercher_system/Clients'),
+(201, '2020-03-16 03:47:37 AM', 'Update', 'Updated weekly hours for 00004-A.', 'http://localhost/ci_wercher_system/Clients'),
+(202, '2020-03-16 03:53:49 AM', 'Update', 'Updated weekly hours for 00002-A.', 'http://localhost/ci_wercher_system/Clients'),
+(203, '2020-03-16 03:54:01 AM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(204, '2020-03-16 03:54:16 AM', 'Update', 'Updated weekly hours for 00004-A.', 'http://localhost/ci_wercher_system/Clients'),
+(205, '2020-03-16 04:04:36 AM', 'Update', 'Updated weekly hours for 00004-A.', 'http://localhost/ci_wercher_system/Clients'),
+(206, '2020-03-16 04:06:50 AM', 'Update', 'Updated weekly hours for 00004-A.', 'http://localhost/ci_wercher_system/Clients'),
+(207, '2020-03-16 04:07:25 AM', 'Update', 'Updated weekly hours for 00004-A.', 'http://localhost/ci_wercher_system/Clients'),
+(208, '2020-03-16 04:13:35 AM', 'Update', 'Updated weekly hours for 00004-A.', 'http://localhost/ci_wercher_system/Clients'),
+(209, '2020-03-16 04:14:38 AM', 'Update', 'Updated weekly hours for 00004-A.', 'http://localhost/ci_wercher_system/Clients'),
+(210, '2020-03-16 04:15:51 AM', 'Update', 'Updated weekly hours for 00004-A.', 'http://localhost/ci_wercher_system/Clients'),
+(211, '2020-03-16 04:17:22 AM', 'Update', 'Updated weekly hours for 00004-A.', 'http://localhost/ci_wercher_system/Clients'),
+(212, '2020-03-16 04:18:51 AM', 'Update', 'Updated weekly hours for 00004-A.', 'http://localhost/ci_wercher_system/Clients'),
+(213, '2020-03-16 04:19:46 AM', 'Update', 'Updated weekly hours for 00004-A.', 'http://localhost/ci_wercher_system/Clients'),
+(214, '2020-03-16 04:21:16 AM', 'Update', 'Updated weekly hours for 00004-A.', 'http://localhost/ci_wercher_system/Clients'),
+(215, '2020-03-16 04:33:31 AM', 'Update', 'Updated weekly hours for 00004-A.', 'http://localhost/ci_wercher_system/Clients'),
+(216, '2020-03-16 04:33:42 AM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(217, '2020-03-16 04:33:52 AM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(218, '2020-03-16 04:34:04 AM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(219, '2020-03-16 04:34:23 AM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients'),
+(220, '2020-03-16 04:37:15 AM', 'Update', 'Updated weekly hours for 00001-A.', 'http://localhost/ci_wercher_system/Clients');
 
 -- --------------------------------------------------------
 
@@ -750,10 +751,11 @@ CREATE TABLE `sss_table` (
 
 INSERT INTO `sss_table` (`id`, `f_range`, `t_range`, `contribution`, `last_update`) VALUES
 (1, '0', '2250', '160', NULL),
-(2, '2250', '2749.99', '200', NULL),
+(2, '2250', '2750', '200', NULL),
 (3, '2750', '3249.99', '240', NULL),
 (4, '3250', '3749.99', '280', NULL),
-(5, '333333', '3333333', '500', NULL);
+(5, '333333', '3333333', '500', NULL),
+(6, '4334', '55444', '380', NULL);
 
 -- --------------------------------------------------------
 
@@ -764,8 +766,8 @@ INSERT INTO `sss_table` (`id`, `f_range`, `t_range`, `contribution`, `last_updat
 CREATE TABLE `supp_documents` (
   `ID` int(11) NOT NULL,
   `ApplicantID` varchar(255) DEFAULT NULL,
-  `Doc_Image` blob DEFAULT NULL,
-  `Doc_File` blob DEFAULT NULL,
+  `Doc_Image` blob,
+  `Doc_File` blob,
   `Doc_FileName` varchar(255) DEFAULT NULL,
   `Type` varchar(255) DEFAULT NULL,
   `Subject` varchar(255) DEFAULT NULL,
@@ -827,20 +829,16 @@ CREATE TABLE `tracking_table` (
   `TotaOT` varchar(255) DEFAULT NULL,
   `sss_contri` varchar(255) DEFAULT NULL,
   `net_pay` varchar(255) DEFAULT NULL,
-  `c_week` int(11) DEFAULT NULL
+  `c_week` int(11) DEFAULT NULL,
+  `c_month` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tracking_table`
 --
 
-INSERT INTO `tracking_table` (`id`, `ApplicantID`, `ClientID`, `gross_pay`, `TotalHours`, `TotaOT`, `sss_contri`, `net_pay`, `c_week`) VALUES
-(15, '00003-A', '0', '3726.2', '61', '11', '280', NULL, NULL),
-(16, '00003-A', '0', '3726.2', '61', '11', '280', '3725.2', NULL),
-(17, '00003-A', '0', '3726.2', '61', '11', '280', '3446.2', NULL),
-(18, '00006-A', '0', '1730.88', '36', '0', '160', '1570.88', NULL),
-(19, '00003-A', '0', '4880.12', '85', '11', NULL, '4880.12', NULL),
-(20, '00002-A', '2', '101.01', '8', '2', '160', '-58.99', NULL);
+INSERT INTO `tracking_table` (`id`, `ApplicantID`, `ClientID`, `gross_pay`, `TotalHours`, `TotaOT`, `sss_contri`, `net_pay`, `c_week`, `c_month`) VALUES
+(1, '00001-A', '2', '4615.2', '48', '0', '380', '4235.2', 1, '2020/03/16');
 
 -- --------------------------------------------------------
 
@@ -1021,25 +1019,25 @@ ALTER TABLE `dashboard_months`
 -- AUTO_INCREMENT for table `dummy_hours`
 --
 ALTER TABLE `dummy_hours`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=348;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=472;
 
 --
 -- AUTO_INCREMENT for table `hours_weekly`
 --
 ALTER TABLE `hours_weekly`
-  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=994;
+  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=217;
 
 --
 -- AUTO_INCREMENT for table `logbook`
 --
 ALTER TABLE `logbook`
-  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
+  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=221;
 
 --
 -- AUTO_INCREMENT for table `sss_table`
 --
 ALTER TABLE `sss_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `supp_documents`
@@ -1057,7 +1055,7 @@ ALTER TABLE `tab_documents_notes`
 -- AUTO_INCREMENT for table `tracking_table`
 --
 ALTER TABLE `tracking_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

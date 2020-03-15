@@ -45,6 +45,8 @@
 										<th>SSS Contribution</th>
 										<th>TAX</th>
 										<th>Net Pay</th>
+										<th>Mode</th>
+										<th>Date</th>
 									</thead>
 									<tbody>
 										<!-- <?php foreach ($GetWeeklyListEmployee->result_array() as $row): ?>
@@ -76,6 +78,25 @@
 												</td>
 												<td>
 													<?php echo $row['net_pay'];?>
+												</td>
+												<td>
+													<?php switch ($row['c_week']) {
+														case '1':
+															echo "Weekly";
+															break;
+														case '2':
+															echo "Semi-Weekly";
+															break;
+														case '4':
+															echo "Monthly";
+															break;
+														default:
+															echo "NULL";
+															break;
+													} ?>
+												</td>
+												<td>
+													<?php echo $row['c_month'];?>
 												</td>
 											</tr>
 										<?php endforeach ?>

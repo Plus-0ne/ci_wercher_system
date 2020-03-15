@@ -866,11 +866,17 @@ class Update_Controller extends CI_Controller {
 				$GetTotalOt = $this->Model_Selects->GetTotalOt($ApplicantID);
 
 				foreach ($getsssRa->result_array() as $row) {
-					if ($gross_pay > $row['f_range'] AND $gross_pay < $row['t_range']) {
+					if ($gross_pay >= $row['f_range'] && $gross_pay <= $row['t_range']) {
 						$sss_contri = $row['contribution'];
+					}
+					else
+					{
+						$sss_contri = 0;
 					}
 				}
 				$net_pay = $gross_pay - $sss_contri;
+				date_timezone_set('Asia/Manila');
+				$c_month = date('Y/m/d');
 				$data = array(
 					'ClientID' => $ClientID,
 					'ApplicantID' => $ApplicantID,
@@ -878,7 +884,9 @@ class Update_Controller extends CI_Controller {
 					'sss_contri' => $sss_contri,
 					'TotalHours' => $GetTotalH,
 					'TotaOT' => $GetTotalOt,
-					'net_pay' => $net_pay,
+					'net_pay' => round($net_pay,2),
+					'c_week' => $_SESSION['Modeeee'],
+					'c_month' => $c_month,
 				);
 				$this->Model_Inserts->Insertttttt($data);
 			}
@@ -896,6 +904,21 @@ class Update_Controller extends CI_Controller {
 		$Mode = $this->input->post('Mode',TRUE);
 		$FromDate = $this->input->post('FromDate',TRUE);
 		$ToDate = $this->input->post('ToDate',TRUE);
+		switch ($Mode) {
+			case 'Weekly':
+				$_SESSION['Modeeee'] = 1;
+				break;
+			case 'Semi-Monthly':
+				$_SESSION['Modeeee'] = 2;
+				break;
+			case 'Monthly':
+				$_SESSION['Modeeee'] = 4;
+				break;
+
+			default:
+				# code...
+				break;
+		}
 		// $Year = substr($FromDate, 0, 4);
 		// $Month = substr($FromDate, 5);
 		// $Month = substr($Month, 0, 2);
