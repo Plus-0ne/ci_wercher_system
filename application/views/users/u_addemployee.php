@@ -98,7 +98,7 @@
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-1">
 										<label>Age</label>
-										<input class="form-control" type="number" name="Age" autocomplete="off" value="<?php echo $this->session->flashdata('Age'); ?>">
+										<input id="Age" class="form-control" type="text" value="<?php echo $this->session->flashdata('Age'); ?>" readonly>
 									</div>
 									<div class="form-group col-sm-12 col-md-1">
 										<label>Height</label>
@@ -114,7 +114,7 @@
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Birth Date</label>
-										<input class="form-control" type="date" name="bDate" value="<?php echo $this->session->flashdata('bDate'); ?>">
+										<input id="BirthDate" class="form-control" type="date" name="bDate" value="<?php echo $this->session->flashdata('bDate'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-5">
 										<label>Birth Place</label>
@@ -503,6 +503,17 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		var today = new Date();
+		$("#BirthDate").change(function(){
+
+		    var birthDate = new Date($('#BirthDate').val());
+		    var age = today.getFullYear() - birthDate.getFullYear();
+		    var m = today.getMonth() - birthDate.getMonth();
+		    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+		        age--;
+		    }
+		   $('#Age').val(age);
+		});
 		$('#DebugFill').on('click', function () {
 			$('input[type="number"]').val(Math.floor(Math.random() * Math.floor(99)));
 			$('input[type="text"]').val('TEST-' + Math.floor(Math.random() * Math.floor(9999999)));

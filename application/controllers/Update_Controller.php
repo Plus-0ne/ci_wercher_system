@@ -242,6 +242,65 @@ class Update_Controller extends CI_Controller {
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
+	public function Suspend()
+	{
+		if (isset($_POST['SuspendID'])) {
+			$ApplicantID = $this->input->post('SuspendID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
+			$S_Days = $this->input->post('S_Days',TRUE);
+			$S_Months = $this->input->post('S_Months',TRUE);
+			$S_Years = $this->input->post('S_Years',TRUE);
+			$S_Remarks = $this->input->post('S_Remarks',TRUE);
+
+			if ($ApplicantID == NULL) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Suspend) A:' . $ApplicantID . ' D:' . $S_Days . ' H:' . $S_Months . ' Y:' . $S_Years . ' </h5></div>');
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+			else
+			{
+				date_default_timezone_set('Asia/Manila');
+
+				$DateStarted = date('Y-m-d h:i:s A');
+
+				if ($S_Months == NULL) {
+					$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 months', strtotime($DateStarted)));
+				} else {
+					$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$S_Months.' months', strtotime($DateStarted)));
+				}
+				if ($S_Days == NULL) {
+					$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 days', strtotime($DateEnds)));
+				} else {
+					$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$S_Days.' days', strtotime($DateEnds)));
+				}
+				if ($S_Years == NULL) {
+					$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 days', strtotime($DateEnds)));
+				} else {
+					$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$S_Years.' years', strtotime($DateEnds)));
+				}
+
+				$data = array(
+					'SuspensionStarted' => $DateStarted,
+					'SuspensionEnds' => $DateEnds,
+					'SuspensionRemarks' => $S_Remarks,
+					'Suspended' => 'Yes',
+				);
+				$Suspend = $this->Model_Updates->Suspend($ApplicantID,$data);
+				if ($Suspend == TRUE) {
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Suspension has been applied successfully!</h5></div>');
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+				else
+				{
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+			}
+		}
+		else
+		{
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+	}
 	public function UpdateEmployee()
 	{
 		$ApplicantID = $this->input->post('M_ApplicantID');

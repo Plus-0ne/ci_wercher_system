@@ -52,8 +52,8 @@
 										<li id="TabAcademicBtn" class="employee-tabs-select"><a href="#Academic" onclick="">Academic</a></li>
 										<li id="TabEmploymentsBtn" class="employee-tabs-select"><a href="#Employments" onclick="">Employments</a></li>
 										<li id="TabMachineBtn" class="employee-tabs-select"><a href="#Machine" onclick="">Machine</a></li>
-										<li><a href="<?=base_url()?>PrintEmployee?id=<?=$ApplicantID?>" target="_blank" type="button"><i class="fas fa-print" style="margin-right: -1px;"></i> </a></li>
-										<li id="TabEditBtn"><a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" onclick="" target="_blank"><i class="fas fa-edit" style="margin-right: -1px;"></i></a></li>
+										<li><a href="<?=base_url()?>PrintEmployee?id=<?=$ApplicantID?>" target="_blank" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Print Employee"><i class="fas fa-print" style="margin-right: -1px;"></i> </a></li>
+										<li id="TabEditBtn"><a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" onclick="" target="_blank" target="_blank" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Edit"><i class="fas fa-edit" style="margin-right: -1px;"></i></a></li>
 									</ul>
 								</div>
 								<div class="col-2 mb-5 employee-image">
@@ -330,11 +330,112 @@
 													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm ExtendButton" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-plus"></i> Extend Contract</button>
 													<button class="btn btn-primary btn-sm ml-1" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
 													<div class="ml-auto">
-														<button class="btn btn-primary btn-sm" onClick="printContent('PrintOut')" type="button"><i class="fas fa-print"></i> Print</button>
+														<button id="<?php echo $ApplicantID; ?>" class="btn btn-danger btn-sm SuspendButton" data-toggle="modal" data-target="#SuspendModal" type="button"><i class="fas fa-exclamation-triangle"></i> Suspend</button>
 													</div>
 												</div>
 											</div>
 											<hr>
+											<?php if($Suspended == 'Yes'): ?>
+												<div class="employee-suspension-container">
+													<div class="col-sm-12 col-md-12 mt-2 employee-dynamic-header text-center">
+														<b>
+															<span style="color: #dc3545"><i class="fas fa-exclamation-triangle"></i> Suspended For</span>
+														</b>
+													</div>
+													<div class="col-sm-12 col-md-12 text-center">
+														<p>
+															<?php
+
+																$scurrTime = time();
+																$SuspendedString = "";
+																$sstrDateEnds = strtotime($SuspensionEnds);
+																$sstrDateStarted = strtotime($SuspensionStarted);
+																// PERCENTAGE
+																$SuspensionPercentage = (($sstrDateEnds - $scurrTime) * 100) / ($sstrDateEnds - $sstrDateStarted);
+																$SuspensionPercentage = round($SuspensionPercentage);
+																// DAYS REMAINING
+																$sdateTimeZone = new DateTimeZone("Asia/Manila");
+																$sdatetime1 = new DateTime('@' . $scurrTime, $sdateTimeZone);
+																$sdatetime2 = new DateTime('@' . $sstrDateEnds, $sdateTimeZone);
+																$sinterval = $sdatetime1->diff($sdatetime2);
+																if($sinterval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
+																	if($sinterval->format('%H') == '1') {
+																		$SuspendedString = $sinterval->format('%H hour');
+																		if($sinterval->format('%I') != NULL || $sinterval->format('%S') != NULL) {
+																			$SuspendedString = $SuspendedString . ', ';
+																		}
+																	} else {
+																		$SuspendedString = $sinterval->format('%H hours');
+																		if($sinterval->format('%I') != NULL || $sinterval->format('%S') != NULL) {
+																			$SuspendedString = $SuspendedString . ', ';
+																		}
+																	}
+																	if($sinterval->format('%I') == '1') {
+																		$SuspendedString = $SuspendedString . $sinterval->format('%I minute');
+																		if($sinterval->format('%S') != NULL) {
+																			$SuspendedString = $SuspendedString . ', ';
+																		}
+																	} else {
+																		$SuspendedString = $SuspendedString . $sinterval->format('%I minutes');
+																		if($sinterval->format('%S') != NULL) {
+																			$SuspendedString = $SuspendedString . ', ';
+																		}
+																	}
+																	if($sinterval->format('%S') == '1') {
+																		$SuspendedString = $SuspendedString . $sinterval->format('%S second');
+																	} else {
+																		$SuspendedString = $SuspendedString . $sinterval->format('%S seconds');
+																	}
+																	echo $SuspendedString;
+																} else {
+																	if($sinterval->format('%y') == '1') {
+																		$SuspendedString = $sinterval->format('%y year');
+																		if($sinterval->format('%m') != NULL || $sinterval->format('%d') != NULL) {
+																			$SuspendedString = $SuspendedString . ', ';
+																		}
+																	} else {
+																		$SuspendedString = $sinterval->format('%y years');
+																		if($sinterval->format('%m') != NULL || $sinterval->format('%d') != NULL) {
+																			$SuspendedString = $SuspendedString . ', ';
+																		}
+																	}
+																	if($sinterval->format('%m') == '1') {
+																		$SuspendedString = $SuspendedString . $sinterval->format('%m month');
+																		if($sinterval->format('%d') != NULL) {
+																			$SuspendedString = $SuspendedString . ', ';
+																		}
+																	} else {
+																		$SuspendedString = $SuspendedString . $sinterval->format('%m months');
+																		if($sinterval->format('%d') != NULL) {
+																			$SuspendedString = $SuspendedString . ', ';
+																		}
+																	}
+																	if($sinterval->format('%d') == '1') {
+																		$SuspendedString = $SuspendedString . $sinterval->format('%d day');
+																	} else {
+																		$SuspendedString = $SuspendedString . $sinterval->format('%d days');
+																	}
+																	echo $SuspendedString;
+																}
+															?>
+															<input type="hidden" id="SuspensionTimeLeft" value="<?php echo $SuspensionPercentage;?>">
+														</p>
+													</div>
+													<div class="col-sm-12 col-md-12 PrintExclude">
+														<div class="progressBar">
+															<div class="progressBarTitle SuspensionRemainingTitle">Time Left</div>
+															<div class="progress SuspensionRemaining"></div>
+															<div class="SuspensionValue">45%</div>
+														</div>
+													</div>
+													<div class="col-sm-12 col-md-12 text-center PrintExclude">
+														<span style="color: #dc3545"><b>Remarks:</b></span>
+													</div>
+													<div class="col-sm-12 col-md-12 text-center mb-5 PrintExclude">
+														<?php echo $SuspensionRemarks; ?>
+													</div>
+												</div>
+											<?php endif; ?>
 											<div class="col-sm-12 col-md-12 employee-dynamic-header text-center">
 												<b>
 													Days Remaining on Contract
@@ -345,6 +446,7 @@
 													<?php
 
 														$currTime = time();
+														$TimeString = "";
 														$strDateEnds = strtotime($DateEnds);
 														$strDateStarted = strtotime($DateStarted);
 														// PERCENTAGE
@@ -356,9 +458,63 @@
 														$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
 														$interval = $datetime1->diff($datetime2);
 														if($interval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
-															echo $interval->format('%H hours, %I minutes, %S seconds');
+															if($interval->format('%H') == '1') {
+																$TimeString = $interval->format('%H hour');
+																if($interval->format('%I') != NULL || $interval->format('%S') != NULL) {
+																	$TimeString = $TimeString . ', ';
+																}
+															} else {
+																$TimeString = $interval->format('%H hours');
+																if($interval->format('%I') != NULL || $interval->format('%S') != NULL) {
+																	$TimeString = $TimeString . ', ';
+																}
+															}
+															if($interval->format('%I') == '1') {
+																$TimeString = $TimeString . $interval->format('%I minute');
+																if($interval->format('%S') != NULL) {
+																	$TimeString = $TimeString . ', ';
+																}
+															} else {
+																$TimeString = $TimeString . $interval->format('%I minutes');
+																if($interval->format('%S') != NULL) {
+																	$TimeString = $TimeString . ', ';
+																}
+															}
+															if($interval->format('%S') == '1') {
+																$TimeString = $TimeString . $interval->format('%S second');
+															} else {
+																$TimeString = $TimeString . $interval->format('%S seconds');
+															}
+															echo $TimeString;
 														} else {
-															echo $interval->format('%y years, %m months, %d days');
+															if($interval->format('%y') == '1') {
+																$TimeString = $interval->format('%y year');
+																if($interval->format('%m') != NULL || $interval->format('%d') != NULL) {
+																	$TimeString = $TimeString . ', ';
+																}
+															} else {
+																$TimeString = $interval->format('%y years');
+																if($interval->format('%m') != NULL || $interval->format('%d') != NULL) {
+																	$TimeString = $TimeString . ', ';
+																}
+															}
+															if($interval->format('%m') == '1') {
+																$TimeString = $TimeString . $interval->format('%m month');
+																if($interval->format('%d') != NULL) {
+																	$TimeString = $TimeString . ', ';
+																}
+															} else {
+																$TimeString = $TimeString . $interval->format('%m months');
+																if($interval->format('%d') != NULL) {
+																	$TimeString = $TimeString . ', ';
+																}
+															}
+															if($interval->format('%d') == '1') {
+																$TimeString = $TimeString . $interval->format('%d day');
+															} else {
+																$TimeString = $TimeString . $interval->format('%d days');
+															}
+															echo $TimeString;
 														}
 													?>
 													<input type="hidden" id="TimeLeft" value="<?php echo $rPercentage;?>">
@@ -822,8 +978,6 @@
 		<?php $this->load->view('_template/modals/m_extendcontract'); ?>
 		<!-- SET A REMINDER MODAL -->
 		<?php $this->load->view('_template/modals/m_setreminder'); ?>
-		<!-- VIOLATIONS MODAL -->
-		<?php $this->load->view('_template/modals/m_violations'); ?>
 		<!-- DOCUMENT MODAL -->
 		<?php $this->load->view('_template/modals/m_documents'); ?>
 		<!-- DOCUMENTS NOTE MODAL -->
@@ -832,10 +986,13 @@
 		<?php $this->load->view('_template/modals/m_adddocuments'); ?>
 		<!-- GENERATE ID CARD MODAL -->
 		<?php $this->load->view('_template/modals/m_generateid'); ?>
+		<!-- SUSPEND MODAL -->
+		<?php $this->load->view('_template/modals/m_suspend'); ?>
 	</body>
 	<?php $this->load->view('_template/users/u_scripts');?>
 	<script type="text/javascript">
 		$(document).ready(function () {
+			$('[data-toggle="tooltip"]').tooltip();
 			$('#ClientSelect').on('change', function() {
 				<?php foreach ($getClientOption->result_array() as $row): ?>
 				<?php
@@ -999,6 +1156,10 @@
 				console.log($('#ExtendID').val());
 				console.log($('#ExtendDate').val());
 			});
+			$('.SuspendButton').on('click', function () {
+				$('#SuspendID').val($(this).attr('id'));
+				console.log($('#SuspendID').val());
+			});
 			$('.ReminderButton').on('click', function () {
 				$('#ReminderID').val($(this).attr('id'));
 				console.log($('#ReminderID').val());
@@ -1007,11 +1168,14 @@
 			$('#ListViolations').DataTable();
 			// Contract Bar
 			var rPercentage = $("#TimeLeft").val();
+			var SuspensionPercentage = $("#SuspensionTimeLeft").val();
 			// if (rPercentage > 100) {
 			// 	rPercentage = 100;
 			// }
 			$('.progressRemaining').animate({width:rPercentage + "%"},1500);
+			$('.SuspensionRemaining').animate({width:SuspensionPercentage + "%"},1500);
 			$('.progress_value').text(rPercentage + "%");
+			$('.SuspensionValue').text(SuspensionPercentage + "%");
 			$('.a_eImage').on('click', function () {
 				var src1 = $(this).attr('id');
 				$("#enlargeImage_doc").attr("src", src1);

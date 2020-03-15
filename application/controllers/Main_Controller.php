@@ -456,6 +456,11 @@
 					'DateEnds' => $ged['DateEnds'],
 					'AppliedOn' => $ged['AppliedOn'],
 
+					'SuspensionStarted' => $ged['SuspensionStarted'],
+					'SuspensionEnds' => $ged['SuspensionEnds'],
+					'SuspensionRemarks' => $ged['SuspensionRemarks'],
+					'Suspended' => $ged['Suspended'],
+
 					'ReminderDate' => $ged['ReminderDate'],
 					'ReminderDateString' => $ged['ReminderDateString'],
 
@@ -590,6 +595,7 @@
 				$data['GetDocuments'] = $this->Model_Selects->GetDocuments($ApplicantID);
 				$data['GetDocumentsViolations'] = $this->Model_Selects->GetDocumentsViolations($ApplicantID);
 				$data['GetDocumentsNotes'] = $this->Model_Selects->GetDocumentsNotes($ApplicantID);
+				$data['GetEmployeeMatchingClient'] = $this->Model_Selects->GetEmployeeMatchingClient($ApplicantID);
 				if ($data['Status'] == 'Employed') {
 					$data['Breadcrumb'] = '
 					<nav aria-label="breadcrumb">

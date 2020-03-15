@@ -43,6 +43,12 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->update('applicants', $data);
 		return $result;
 	}
+	public function Suspend($ApplicantID,$data)
+	{
+		$this->db->where('ApplicantID', $ApplicantID);
+		$result = $this->db->update('applicants', $data);
+		return $result;
+	}
 	public function UpdateEmployee($ApplicantID,$data)
 	{
 		$this->db->where('ApplicantID', $ApplicantID);
