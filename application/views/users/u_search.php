@@ -5,401 +5,408 @@
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
-
-				<!-- APPLICANT ID -->
-				<?php if($SearchApplicantID->num_rows() > 0): ?>
-				<div class="row wercher-tablelist-container">
-					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
-						<h4 class="tabs-icon">
-							<i class="fas fa-card fa-fw"></i> Applicant ID x <?php echo $SearchApplicantID->num_rows() ?>
-						</h4>
+				<?php if(!isset($_GET['query']) || ($SearchApplicantID->num_rows() < 1 AND $SearchEmployeeID->num_rows < 1 AND $SearchPeople->num_rows() < 1 AND $SearchClients->num_rows() < 1 AND $SearchPositionGroups->num_rows() < 1 AND $SearchPositionSpecific->num_rows() < 1 AND $SearchAdmins->num_rows() < 1 )): ?>
+					<div class="row wercher-tablelist-container">
+						<div class="col-sm-12">
+							<i class="fas fa-exclamation-triangle"></i> No data found. Please recheck your spelling.
+						</div>
 					</div>
-					<div class="col-sm-12">
+				<?php else: ?>
+					<!-- APPLICANT ID -->
+					<?php if($SearchApplicantID->num_rows() > 0): ?>
+					<div class="row wercher-tablelist-container">
 						<?php echo $this->session->flashdata('prompts'); ?>
-						<div class="table-responsive pt-2 pb-5">
-							<table id="emp" class="table PrintOut" style="width: 100%;">
-								<thead>
-									<tr class="text-center">
-										<th> Applicant </th>
-										<th> Full Name </th>
-										<th> Position Desired </th>
-										<th> Sex </th>
-										<th> Applied On </th>
-										<th class="PrintExclude"> Action </th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php foreach ($SearchApplicantID->result_array() as $row): ?>
-										<tr>
-											<td class="text-center">
-												<div class="col-sm-12">
-													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
-												</div>
-												<div class="col-sm-12 align-middle">
-													<?php echo $row['ApplicantID']; ?>
-												</div>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['PositionDesired']; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['Gender']; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['AppliedOn']; ?>
-											</td>
-											<td class="text-center align-middle PrintExclude" width="100">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
-											</td>
+						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
+							<h4 class="tabs-icon">
+								<i class="fas fa-card fa-fw"></i> Applicant ID x <?php echo $SearchApplicantID->num_rows() ?>
+							</h4>
+						</div>
+						<div class="col-sm-12">
+							<?php echo $this->session->flashdata('prompts'); ?>
+							<div class="table-responsive pt-2 pb-5">
+								<table id="emp" class="table PrintOut" style="width: 100%;">
+									<thead>
+										<tr class="text-center">
+											<th> Applicant </th>
+											<th> Full Name </th>
+											<th> Position Desired </th>
+											<th> Sex </th>
+											<th> Applied On </th>
+											<th class="PrintExclude"> Action </th>
 										</tr>
-									<?php endforeach ?>
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+										<?php foreach ($SearchApplicantID->result_array() as $row): ?>
+											<tr>
+												<td class="text-center">
+													<div class="col-sm-12">
+														<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
+													</div>
+													<div class="col-sm-12 align-middle">
+														<?php echo $row['ApplicantID']; ?>
+													</div>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['PositionDesired']; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['Gender']; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['AppliedOn']; ?>
+												</td>
+												<td class="text-center align-middle PrintExclude" width="100">
+													<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
+												</td>
+											</tr>
+										<?php endforeach ?>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
-				</div>
-				<?php endif; ?>
-				<?php if($SearchEmployeeID->num_rows() > 0): ?>
-				<!-- EMPLOYEE ID -->
-				<div class="row wercher-tablelist-container">
-					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
-						<h4 class="tabs-icon">
-							<i class="fas fa-user-secret fa-fw"></i> Employee ID x <?php echo $SearchEmployeeID->num_rows() ?>
-						</h4>
-					</div>
-					<div class="col-sm-12">
-						<div class="table-responsive pt-2 pb-5 pl-2 pr-2">
-							<table id="emp" class="table table-bordered PrintOut" style="width: 100%;">
-								<thead>
-									<tr class="text-center">
-										<th style="width: 25%"> Employee </th>
-										<th> Full Name </th>
-										<th> Position </th>
-										<th class="PrintExclude"> Action </th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php foreach ($SearchEmployeeID->result_array() as $row): ?>
-										<tr>
-											<td class="text-center">
-												<div class="col-sm-12">
-													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
-												</div>
-												<div class="col-sm-12 align-middle">
-													<?php if($row['EmployeeID'] != NULL): ?>
-														<?php echo $row['EmployeeID']; ?>
-													<?php else: ?>
-														<?php echo 'No Employee ID'; ?>
-													<?php endif; ?>
-												</div>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php if($row['MiddleInitial'] != ''): echo $row['MiddleInitial'] . '.'; endif; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['PositionDesired']; ?>
-											</td>
-											<td class="text-center align-middle PrintExclude" width="110">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
-											</td>
-										</tr>
-									<?php endforeach ?>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<?php endif; ?>
-				<?php if($SearchPeople->num_rows() > 0): ?>
-				<!-- PEOPLE (NAMES) -->
-				<div class="row wercher-tablelist-container">
-					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
-						<h4 class="tabs-icon">
-							<i class="fas fa-users fa-fw"></i> People x <?php echo $SearchPeople->num_rows() ?>
-						</h4>
-					</div>
-					<div class="col-sm-12">
+					<?php endif; ?>
+					<?php if($SearchEmployeeID->num_rows() > 0): ?>
+					<!-- EMPLOYEE ID -->
+					<div class="row wercher-tablelist-container">
 						<?php echo $this->session->flashdata('prompts'); ?>
-						<div class="table-responsive pt-2 pb-5">
-							<table id="emp" class="table PrintOut" style="width: 100%;">
-								<thead>
-									<tr class="text-center">
-										<th> Applicant </th>
-										<th> Full Name </th>
-										<th> Position Desired </th>
-										<th> Sex </th>
-										<th> Applied On </th>
-										<th class="PrintExclude"> Action </th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php foreach ($SearchPeople->result_array() as $row): ?>
-										<tr>
-											<td class="text-center">
-												<div class="col-sm-12">
-													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
-												</div>
-												<div class="col-sm-12 align-middle">
-													<?php echo $row['ApplicantID']; ?>
-												</div>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['PositionDesired']; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['Gender']; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['AppliedOn']; ?>
-											</td>
-											<td class="text-center align-middle PrintExclude" width="100">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
-											</td>
+						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
+							<h4 class="tabs-icon">
+								<i class="fas fa-user-secret fa-fw"></i> Employee ID x <?php echo $SearchEmployeeID->num_rows() ?>
+							</h4>
+						</div>
+						<div class="col-sm-12">
+							<div class="table-responsive pt-2 pb-5 pl-2 pr-2">
+								<table id="emp" class="table table-bordered PrintOut" style="width: 100%;">
+									<thead>
+										<tr class="text-center">
+											<th style="width: 25%"> Employee </th>
+											<th> Full Name </th>
+											<th> Position </th>
+											<th class="PrintExclude"> Action </th>
 										</tr>
-									<?php endforeach ?>
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+										<?php foreach ($SearchEmployeeID->result_array() as $row): ?>
+											<tr>
+												<td class="text-center">
+													<div class="col-sm-12">
+														<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
+													</div>
+													<div class="col-sm-12 align-middle">
+														<?php if($row['EmployeeID'] != NULL): ?>
+															<?php echo $row['EmployeeID']; ?>
+														<?php else: ?>
+															<?php echo 'No Employee ID'; ?>
+														<?php endif; ?>
+													</div>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php if($row['MiddleInitial'] != ''): echo $row['MiddleInitial'] . '.'; endif; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['PositionDesired']; ?>
+												</td>
+												<td class="text-center align-middle PrintExclude" width="110">
+													<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
+												</td>
+											</tr>
+										<?php endforeach ?>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
-				</div>
-				<?php endif; ?>
-				<?php if($SearchClients->num_rows() > 0): ?>
-				<!-- CLIENTS (NAMES) -->
-				<div class="row wercher-tablelist-container">
-					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
-						<h4 class="tabs-icon">
-							<i class="fas fa-users fa-fw"></i> Clients x <?php echo $SearchClients->num_rows() ?>
-						</h4>
+					<?php endif; ?>
+					<?php if($SearchPeople->num_rows() > 0): ?>
+					<!-- PEOPLE (NAMES) -->
+					<div class="row wercher-tablelist-container">
+						<?php echo $this->session->flashdata('prompts'); ?>
+						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
+							<h4 class="tabs-icon">
+								<i class="fas fa-users fa-fw"></i> People x <?php echo $SearchPeople->num_rows() ?>
+							</h4>
+						</div>
+						<div class="col-sm-12">
+							<?php echo $this->session->flashdata('prompts'); ?>
+							<div class="table-responsive pt-2 pb-5">
+								<table id="emp" class="table PrintOut" style="width: 100%;">
+									<thead>
+										<tr class="text-center">
+											<th> Applicant </th>
+											<th> Full Name </th>
+											<th> Position Desired </th>
+											<th> Sex </th>
+											<th> Applied On </th>
+											<th class="PrintExclude"> Action </th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach ($SearchPeople->result_array() as $row): ?>
+											<tr>
+												<td class="text-center">
+													<div class="col-sm-12">
+														<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
+													</div>
+													<div class="col-sm-12 align-middle">
+														<?php echo $row['ApplicantID']; ?>
+													</div>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['PositionDesired']; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['Gender']; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['AppliedOn']; ?>
+												</td>
+												<td class="text-center align-middle PrintExclude" width="100">
+													<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
+												</td>
+											</tr>
+										<?php endforeach ?>
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</div>
-					<div class="col-sm-12">
-						<div class="table-responsive pt-2 pb-5 pl-2 pr-2">
-							<table id="ListClients" class="table PrintOut" style="width: 100%;">
-								<thead>
-									<tr class="text-center align-middle">
-										<th> Name </th>
-										<th> Address </th>
-										<th> Contact </th>
-										<th> Employees </th>
-										<th class="text-center PrintExclude" style="width: 5%;"> Action </th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php foreach ($SearchClients->result_array() as $row): ?>
+					<?php endif; ?>
+					<?php if($SearchClients->num_rows() > 0): ?>
+					<!-- CLIENTS (NAMES) -->
+					<div class="row wercher-tablelist-container">
+						<?php echo $this->session->flashdata('prompts'); ?>
+						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
+							<h4 class="tabs-icon">
+								<i class="fas fa-users fa-fw"></i> Clients x <?php echo $SearchClients->num_rows() ?>
+							</h4>
+						</div>
+						<div class="col-sm-12">
+							<div class="table-responsive pt-2 pb-5 pl-2 pr-2">
+								<table id="ListClients" class="table PrintOut" style="width: 100%;">
+									<thead>
 										<tr class="text-center align-middle">
-											<td>
-												<?php echo $row['Name']; ?>
-											</td>
-											<td>
-												<?php echo $row['Address']; ?>
-											</td>
-											<td>
-												<?php echo $row['ContactNumber']; ?>
-											</td>
-											<td>
-												<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['ClientID'])->num_rows(); ?>
-											</td>
-											<td class="text-center align-middle PrintExclude">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>Clients?id=<?php echo $row['ClientID']; ?>"><i class="fas fa-users"></i> Employees</a>
-											</td>
+											<th> Name </th>
+											<th> Address </th>
+											<th> Contact </th>
+											<th> Employees </th>
+											<th class="text-center PrintExclude" style="width: 5%;"> Action </th>
 										</tr>
-									<?php endforeach ?>
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+										<?php foreach ($SearchClients->result_array() as $row): ?>
+											<tr class="text-center align-middle">
+												<td>
+													<?php echo $row['Name']; ?>
+												</td>
+												<td>
+													<?php echo $row['Address']; ?>
+												</td>
+												<td>
+													<?php echo $row['ContactNumber']; ?>
+												</td>
+												<td>
+													<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['ClientID'])->num_rows(); ?>
+												</td>
+												<td class="text-center align-middle PrintExclude">
+													<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>Clients?id=<?php echo $row['ClientID']; ?>"><i class="fas fa-users"></i> Employees</a>
+												</td>
+											</tr>
+										<?php endforeach ?>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
-				</div>
-				<?php endif; ?>
-				<?php if($SearchPositionGroups->num_rows() > 0): ?>
-				<!-- POSITION GROUPS -->
-				<div class="row wercher-tablelist-container">
-					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
-						<h4 class="tabs-icon">
-							<i class="fas fa-user-secret fa-fw"></i> Position Groups x <?php echo $SearchPositionGroups->num_rows() ?>
-						</h4>
+					<?php endif; ?>
+					<?php if($SearchPositionGroups->num_rows() > 0): ?>
+					<!-- POSITION GROUPS -->
+					<div class="row wercher-tablelist-container">
+						<?php echo $this->session->flashdata('prompts'); ?>
+						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
+							<h4 class="tabs-icon">
+								<i class="fas fa-user-secret fa-fw"></i> Position Groups x <?php echo $SearchPositionGroups->num_rows() ?>
+							</h4>
+						</div>
+						<div class="col-sm-12">
+							<div class="table-responsive pt-2 pb-5 pl-2 pr-2">
+								<table id="emp" class="table table-bordered PrintOut" style="width: 100%;">
+									<thead>
+										<tr class="text-center">
+											<th style="width: 25%"> Employee </th>
+											<th> Full Name </th>
+											<th> Position Desired </th>
+											<th> Position Group </th>
+											<th class="PrintExclude"> Action </th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach ($SearchPositionGroups->result_array() as $row): ?>
+											<tr>
+												<td class="text-center">
+													<div class="col-sm-12">
+														<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
+													</div>
+													<div class="col-sm-12 align-middle">
+														<?php if($row['EmployeeID'] != NULL): ?>
+															<?php echo $row['EmployeeID']; ?>
+														<?php else: ?>
+															<?php echo 'No Employee ID'; ?>
+														<?php endif; ?>
+													</div>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php if($row['MiddleInitial'] != ''): echo $row['MiddleInitial'] . '.'; endif; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['PositionDesired']; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['PositionGroup']; ?>
+												</td>
+												<td class="text-center align-middle PrintExclude" width="110">
+													<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
+												</td>
+											</tr>
+										<?php endforeach ?>
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</div>
-					<div class="col-sm-12">
-						<div class="table-responsive pt-2 pb-5 pl-2 pr-2">
-							<table id="emp" class="table table-bordered PrintOut" style="width: 100%;">
-								<thead>
-									<tr class="text-center">
-										<th style="width: 25%"> Employee </th>
-										<th> Full Name </th>
-										<th> Position Desired </th>
-										<th> Position Group </th>
-										<th class="PrintExclude"> Action </th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php foreach ($SearchPositionGroups->result_array() as $row): ?>
+					<?php endif; ?>
+					<?php if($SearchPositionSpecific->num_rows() > 0): ?>
+					<!-- POSITION Specific -->
+					<div class="row wercher-tablelist-container">
+						<?php echo $this->session->flashdata('prompts'); ?>
+						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
+							<h4 class="tabs-icon">
+								<i class="fas fa-user-secret fa-fw"></i> Position Desired x <?php echo $SearchPositionSpecific->num_rows() ?>
+							</h4>
+						</div>
+						<div class="col-sm-12">
+							<div class="table-responsive pt-2 pb-5 pl-2 pr-2">
+								<table id="emp" class="table table-bordered PrintOut" style="width: 100%;">
+									<thead>
+										<tr class="text-center">
+											<th style="width: 25%"> Employee </th>
+											<th> Full Name </th>
+											<th> Position Desired </th>
+											<th> Position Group </th>
+											<th class="PrintExclude"> Action </th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach ($SearchPositionSpecific->result_array() as $row): ?>
+											<tr>
+												<td class="text-center">
+													<div class="col-sm-12">
+														<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
+													</div>
+													<div class="col-sm-12 align-middle">
+														<?php if($row['EmployeeID'] != NULL): ?>
+															<?php echo $row['EmployeeID']; ?>
+														<?php else: ?>
+															<?php echo 'No Employee ID'; ?>
+														<?php endif; ?>
+													</div>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php if($row['MiddleInitial'] != ''): echo $row['MiddleInitial'] . '.'; endif; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['PositionDesired']; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['PositionGroup']; ?>
+												</td>
+												<td class="text-center align-middle PrintExclude" width="110">
+													<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
+												</td>
+											</tr>
+										<?php endforeach ?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<?php endif; ?>
+					<?php if($SearchAdmins->num_rows() > 0): ?>
+					<!-- POSITION Specific -->
+					<div class="row wercher-tablelist-container">
+						<?php echo $this->session->flashdata('prompts'); ?>
+						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
+							<h4 class="tabs-icon">
+								<i class="fas fa-user-secret fa-fw"></i> Admins x <?php echo $SearchAdmins->num_rows() ?>
+							</h4>
+						</div>
+						<div class="col-sm-12">
+							<div class="table-responsive pt-2 pb-5 pl-2 pr-2">
+								<table id="ListAdmins" class="table table-bordered PrintOut" style="width: 100%;">
+									<thead>
 										<tr>
-											<td class="text-center">
-												<div class="col-sm-12">
-													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
-												</div>
-												<div class="col-sm-12 align-middle">
-													<?php if($row['EmployeeID'] != NULL): ?>
-														<?php echo $row['EmployeeID']; ?>
-													<?php else: ?>
-														<?php echo 'No Employee ID'; ?>
-													<?php endif; ?>
-												</div>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php if($row['MiddleInitial'] != ''): echo $row['MiddleInitial'] . '.'; endif; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['PositionDesired']; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['PositionGroup']; ?>
-											</td>
-											<td class="text-center align-middle PrintExclude" width="110">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
-											</td>
+											<th> Level </th>
+											<th> Position </th>
+											<th> Employee ID </th>
+											<th> Full Name </th>
+											<th> Gender </th>
+											<th> Date Added </th>
 										</tr>
-									<?php endforeach ?>
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+										<?php foreach ($SearchAdmins->result_array() as $row): ?>
+											<tr>
+												<td class="text-center align-middle">
+													<?php
+													switch ($row['AdminLevel']) {
+														case 'Level_1':
+															echo "Level 1";
+															break;
+														case 'Level_2':
+															echo "Level 2";
+															break;
+														case 'Level_3':
+															echo "Level 3";
+															break;
+														
+														default:
+															echo "ERROR";
+															break;
+													}
+													?>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['Position'] ; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['AdminID'] ; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['FirstName'] ; ?> <?php echo $row['MiddleInitial'] ; ?>. <?php echo $row['LastName'] ; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['Gender'] ; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php
+													date_default_timezone_set('Asia/Manila');
+													echo date('m/d/Y H:i:s a',$row['DateAdded']);
+													?>
+												</td>
+											</tr>
+										<?php endforeach ?>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
-				</div>
-				<?php endif; ?>
-				<?php if($SearchPositionSpecific->num_rows() > 0): ?>
-				<!-- POSITION Specific -->
-				<div class="row wercher-tablelist-container">
-					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
-						<h4 class="tabs-icon">
-							<i class="fas fa-user-secret fa-fw"></i> Position Desired x <?php echo $SearchPositionSpecific->num_rows() ?>
-						</h4>
-					</div>
-					<div class="col-sm-12">
-						<div class="table-responsive pt-2 pb-5 pl-2 pr-2">
-							<table id="emp" class="table table-bordered PrintOut" style="width: 100%;">
-								<thead>
-									<tr class="text-center">
-										<th style="width: 25%"> Employee </th>
-										<th> Full Name </th>
-										<th> Position Desired </th>
-										<th> Position Group </th>
-										<th class="PrintExclude"> Action </th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php foreach ($SearchPositionSpecific->result_array() as $row): ?>
-										<tr>
-											<td class="text-center">
-												<div class="col-sm-12">
-													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
-												</div>
-												<div class="col-sm-12 align-middle">
-													<?php if($row['EmployeeID'] != NULL): ?>
-														<?php echo $row['EmployeeID']; ?>
-													<?php else: ?>
-														<?php echo 'No Employee ID'; ?>
-													<?php endif; ?>
-												</div>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php if($row['MiddleInitial'] != ''): echo $row['MiddleInitial'] . '.'; endif; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['PositionDesired']; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['PositionGroup']; ?>
-											</td>
-											<td class="text-center align-middle PrintExclude" width="110">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
-											</td>
-										</tr>
-									<?php endforeach ?>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<?php endif; ?>
-				<?php if($SearchAdmins->num_rows() > 0): ?>
-				<!-- POSITION Specific -->
-				<div class="row wercher-tablelist-container">
-					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
-						<h4 class="tabs-icon">
-							<i class="fas fa-user-secret fa-fw"></i> Admins x <?php echo $SearchAdmins->num_rows() ?>
-						</h4>
-					</div>
-					<div class="col-sm-12">
-						<div class="table-responsive pt-2 pb-5 pl-2 pr-2">
-							<table id="ListAdmins" class="table table-bordered PrintOut" style="width: 100%;">
-								<thead>
-									<tr>
-										<th> Level </th>
-										<th> Position </th>
-										<th> Employee ID </th>
-										<th> Full Name </th>
-										<th> Gender </th>
-										<th> Date Added </th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php foreach ($SearchAdmins->result_array() as $row): ?>
-										<tr>
-											<td class="text-center align-middle">
-												<?php
-												switch ($row['AdminLevel']) {
-													case 'Level_1':
-														echo "Level 1";
-														break;
-													case 'Level_2':
-														echo "Level 2";
-														break;
-													case 'Level_3':
-														echo "Level 3";
-														break;
-													
-													default:
-														echo "ERROR";
-														break;
-												}
-												?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['Position'] ; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['AdminID'] ; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['FirstName'] ; ?> <?php echo $row['MiddleInitial'] ; ?>. <?php echo $row['LastName'] ; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['Gender'] ; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php
-												date_default_timezone_set('Asia/Manila');
-												echo date('m/d/Y H:i:s a',$row['DateAdded']);
-												?>
-											</td>
-										</tr>
-									<?php endforeach ?>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
+					<?php endif; ?>
 				<?php endif; ?>
 			</div>
 		</div>

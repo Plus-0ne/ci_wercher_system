@@ -17,16 +17,16 @@
 				<input id="ExtendDate" type="hidden" name="E_CurrentDate" value="<?php echo $DateEnds; ?>">
 				<div class="form-row mx-1">
 					<div class="form-group col-4">
-						<label>Days</label>
-						<input class="form-control" type="number" name="E_Days">
+						<label>Years</label>
+						<input class="form-control" type="number" name="E_Years">
 					</div>
 					<div class="form-group col-4">
 						<label>Months</label>
 						<input class="form-control" type="number" name="E_Months">
 					</div>
 					<div class="form-group col-4">
-						<label>Years</label>
-						<input class="form-control" type="number" name="E_Years">
+						<label>Days</label>
+						<input class="form-control" type="number" name="E_Days">
 					</div>
 				</div>
 			</div>

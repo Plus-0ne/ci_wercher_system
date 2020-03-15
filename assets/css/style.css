@@ -17,14 +17,32 @@
 	border-color: #c5ad00;
 }
 
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
-    background-color: #756700;
-    border-color: #756700;
+.page-link {
+	color: #000000;
 }
 
-.btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open>.dropdown-toggle.btn-info {
-    background-color: #694900;
-    border-color: #694900;
+.page-link:hover {
+	color: #c5ad00;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:focus, .btn-primary .active, .open>.dropdown-toggle.btn-primary {
+    background-color: #756700 !important;
+    border-color: #756700 !important;
+    outline: gold !important;
+    box-shadow: 0 0 0 0.2rem gold !important;
+}
+
+.btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info:active:focus, .btn-info .active, .open>.dropdown-toggle.btn-info {
+    background-color: #694900 !important;
+    border-color: #694900 !important;
+    outline: gold !important;
+    box-shadow: 0 0 0 0.2rem gold !important;
+}
+
+input[type]:focus {
+	border-color: gold !important;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px gold !important;
+	outline: 0 none !important;
 }
 
 html,body
@@ -194,7 +212,7 @@ a[data-toggle="collapse"] {
 	box-shadow: 2px 0 2px #333;
 	text-shadow: 1px 1px 1px #000;
 }
-.progress_value{
+.progress_value, .SuspensionValue{
 	position: relative;
 	float: right;
 	padding-right: 10px;
@@ -215,6 +233,12 @@ a[data-toggle="collapse"] {
 }
 .progressRemaining {
 	background: #966800;
+}
+.SuspensionRemainingTitle {
+	background: #ff7777;
+}
+.SuspensionRemaining {
+	background: #dc3545;
 }
 .logbook-success {
 	background: linear-gradient(90deg, rgba(148,240,146,1) 28%, rgba(216,255,216,1) 100%);
@@ -426,7 +450,7 @@ a[data-toggle="collapse"] {
 }
 .chart-hover:hover {
 	border-radius: 6px;
-	box-shadow: 0px 0px 10px 3px rgba(0, 25, 255, 0.16);
+	box-shadow: 0px 0px 10px 3px rgba(255, 125, 0, 0.33);
 	color: #007bff;
 	cursor: pointer;
 }
@@ -789,7 +813,7 @@ a[data-toggle="collapse"] {
 .eprint-logo-info {
 	margin-top: 55px;
 	margin-left: 95px;
-	font-size: 24px;
+	font-size: 28px;
 }
 
 .eprint-commandcard {
@@ -802,7 +826,7 @@ a[data-toggle="collapse"] {
 }
 
 .eprint-photo img {
-	margin-left: -15px;
+	margin-left: 225px;
 	border-radius: 4px;
 	border: 2px solid black;
 }
@@ -826,6 +850,26 @@ a[data-toggle="collapse"] {
 
 .sss-updated {
 	color: rgba(0, 0, 0, 0.45);
+}
+
+.wercher-transparent {
+	opacity: 0;
+}
+
+.wercher-visible {
+	opacity: 1;
+}
+
+.suspend-background {
+	background-color: rgba(200, 65, 65, 1);
+	color: gold;
+}
+
+.employee-suspension-container {
+	border-radius: 6px;
+	background-color: rgba(255, 75, 75, 0.16);
+	border-left: 4px solid #dc3545;
+	margin-bottom: 50px;
 }
 
 

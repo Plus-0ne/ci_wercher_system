@@ -8,7 +8,7 @@
 		</style>
 		<nav class="navbar navbar-expand-lg">
 			<button type="button" id="sidebarCollapse" class="btn text-light"><i class="fas fa-bars" style="margin-right: -1px;"></i></button>
-			<div class="wercher-breadcrumb text-light ml-3">
+			<div class="d-none d-sm-block wercher-breadcrumb text-light ml-3">
 				<!-- BREADCRUMB -->
 				<?php if (!isset($Breadcrumb) || $Breadcrumb == NULL): ?>
 					<?php echo 'Breadcrumb goes here'; ?>
@@ -19,7 +19,7 @@
 			<div class="dropdown ml-auto">
 				<div class="row">
 					<?php echo form_open_multipart(base_url().'Search','method="get"'); ?>
-					<input class="wercher-search" type="text" name="query" placeholder="Search All">
+					<input class="wercher-search" type="text" name="query" placeholder="Search All" <?php if(isset($_GET['query'])) { echo 'value=' . $_GET['query']; } ?>>
 					<button type="submit" class="btn text-light mr-5"><i class="fas fa-search" style="margin-right: -1px;"></i> </button>
 					<?php echo form_close(); ?>
 					<a class="btn text-light ddToggle" data-toggle="dropdown"><i class="fas fa-bell" style="margin-right: -1px;"></i></a>
