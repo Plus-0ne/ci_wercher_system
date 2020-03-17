@@ -464,6 +464,11 @@
 					'ReminderDate' => $ged['ReminderDate'],
 					'ReminderDateString' => $ged['ReminderDateString'],
 
+					'NameExtension' => $ged['NameExtension'],
+					'EmergencyPerson' => $ged['EmergencyPerson'],
+					'EmergencyContact' => $ged['EmergencyContact'],
+					'Referral' => $ged['Referral'],
+
 				);
 				$ApplicantID = $ged['ApplicantID'];
 				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);
@@ -580,6 +585,11 @@
 
 					'ReminderDate' => $ged['ReminderDate'],
 					'ReminderDateString' => $ged['ReminderDateString'],
+
+					'NameExtension' => $ged['NameExtension'],
+					'EmergencyPerson' => $ged['EmergencyPerson'],
+					'EmergencyContact' => $ged['EmergencyContact'],
+					'Referral' => $ged['Referral'],
 
 				);
 				$ApplicantID = $ged['ApplicantID'];
@@ -715,6 +725,11 @@
 					'DateEnds' => $ged['DateEnds'],
 					'AppliedOn' => $ged['AppliedOn'],
 
+					'NameExtension' => $ged['NameExtension'],
+					'EmergencyPerson' => $ged['EmergencyPerson'],
+					'EmergencyContact' => $ged['EmergencyContact'],
+					'Referral' => $ged['Referral'],
+
 				);
 				$ApplicantID = $ged['ApplicantID'];
 				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);
@@ -827,6 +842,11 @@
 
 					'ReminderDate' => $ged['ReminderDate'],
 					'ReminderDateString' => $ged['ReminderDateString'],
+
+					'NameExtension' => $ged['NameExtension'],
+					'EmergencyPerson' => $ged['EmergencyPerson'],
+					'EmergencyContact' => $ged['EmergencyContact'],
+					'Referral' => $ged['Referral'],
 
 				);
 				$ApplicantID = $ged['ApplicantID'];

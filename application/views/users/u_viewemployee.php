@@ -227,97 +227,62 @@
 											</div>
 											<hr class="mt-5 mb-3">
 											<div class="row employee-personal-row">
-												<div class="col-sm-2 employee-dynamic-header">
+												<div class="col-sm-3 employee-dynamic-header">
 													<b>S.S.S. No.</b>
 												</div>
-												<div class="col-sm-2 employee-dynamic-item">
+												<div class="col-sm-3 employee-dynamic-item">
 													<?php echo $SSS_No; ?>
 												</div>
-												<div class="col-sm-2 ml-5 employee-dynamic-header">
-													<b>Effective Date of Coverage</b>
-												</div>
-												<div class="col-sm-2 employee-dynamic-item">
-													<?php echo $EffectiveDateCoverage; ?>
-												</div>
-											</div>
-											<div class="row employee-personal-row mt-4">
-												<div class="col-sm-2 employee-dynamic-header">
-													<b>Residence Certificate No.</b>
-												</div>
-												<div class="col-sm-2 employee-dynamic-item">
-													<?php echo $ResidenceCertificateNo; ?>
-												</div>
-												<div class="col-sm-2 ml-5 employee-dynamic-header">
-													<b>Issued At</b>
-													<br>
-													<b>Issued On</b>
-												</div>
-												<div class="col-sm-2 employee-dynamic-item">
-													<?php echo $Rcn_At; ?>
-													<br>
-													<?php echo $Rcn_On; ?>
-												</div>
-											</div>
-											<div class="row employee-personal-row mt-4">
-												<div class="col-sm-2 employee-dynamic-header">
-													<b>Tax Identification No.</b>
-												</div>
-												<div class="col-sm-2 employee-dynamic-item">
-													<?php echo $TIN; ?>
-												</div>
-												<div class="col-sm-2 ml-5 employee-dynamic-header">
-													<b>Issued At</b>
-													<br>
-													<b>Issued On</b>
-												</div>
-												<div class="col-sm-2 employee-dynamic-item">
-													<?php echo $TIN_At; ?>
-													<br>
-													<?php echo $TIN_On; ?>
-												</div>
-											</div>
-											<div class="row employee-personal-row mt-4">
-												<div class="col-sm-2 employee-dynamic-header">
+												<div class="col-sm-3 employee-dynamic-header">
 													<b>HDMF</b>
 												</div>
-												<div class="col-sm-2 employee-dynamic-item">
+												<div class="col-sm-3 employee-dynamic-item">
 													<?php echo $HDMF; ?>
 												</div>
-												<div class="col-sm-2 ml-5 employee-dynamic-header">
-													<b>Issued At</b>
-													<br>
-													<b>Issued On</b>
-												</div>
-												<div class="col-sm-2 employee-dynamic-item">
-													<?php echo $HDMF_At; ?>
-													<br>
-													<?php echo $HDMF_On; ?>
-												</div>
 											</div>
 											<div class="row employee-personal-row mt-4">
-												<div class="col-sm-2 employee-dynamic-header">
+												<div class="col-sm-3 employee-dynamic-header">
+													<b>Residence Certificate No.</b>
+												</div>
+												<div class="col-sm-3 employee-dynamic-item">
+													<?php echo $ResidenceCertificateNo; ?>
+												</div>
+												<div class="col-sm-3 employee-dynamic-header">
 													<b>PHILHEALTH</b>
 												</div>
-												<div class="col-sm-2 employee-dynamic-item">
+												<div class="col-sm-3 employee-dynamic-item">
 													<?php echo $PhilHealth; ?>
-												</div>
-												<div class="col-sm-2 ml-5 employee-dynamic-header">
-													<b>Issued At</b>
-													<br>
-													<b>Issued On</b>
-												</div>
-												<div class="col-sm-2 employee-dynamic-item">
-													<?php echo $PhilHealth_At; ?>
-													<br>
-													<?php echo $PhilHealth_On; ?>
 												</div>
 											</div>
 											<div class="row employee-personal-row mt-4">
-												<div class="col-sm-2 employee-dynamic-header">
+												<div class="col-sm-3 employee-dynamic-header">
+													<b>Tax Identification No.</b>
+												</div>
+												<div class="col-sm-3 employee-dynamic-item">
+													<?php echo $TIN; ?>
+												</div>
+												<div class="col-sm-3 employee-dynamic-header">
 													<b>ATM No.</b>
 												</div>
-												<div class="col-sm-2 employee-dynamic-item">
+												<div class="col-sm-3 employee-dynamic-item">
 													<?php echo $ATM_No; ?>
+												</div>
+											</div>
+											<hr>
+											<div class="row mt-3">
+												<div class="col-sm-6 employee-dynamic-header">
+													<b>Person to notify in case of emergency</b>
+												</div>
+												<div class="col-sm-4 employee-dynamic-header">
+													<b>Their Contact Number</b>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-6 employee-dynamic-item">
+													<?php echo $EmergencyPerson; ?>
+												</div>
+												<div class="col-sm-4 employee-dynamic-item">
+													<?php echo $EmergencyContact; ?>
 												</div>
 											</div>
 										</div>

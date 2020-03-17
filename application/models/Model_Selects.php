@@ -392,6 +392,7 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+<<<<<<< HEAD
 	public function getPayslip($id)
 	{
 		$SQL = "SELECT * FROM tracking_table WHERE id = '$id'";
@@ -411,3 +412,54 @@ class Model_Selects extends CI_Model {
 		return $result;
 	}
 }
+=======
+	public function CheckSSS($number)
+	{
+		$SQL = "SELECT * FROM applicants WHERE SSS_No = ?";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function CheckRCN($number)
+	{
+		$SQL = "SELECT * FROM applicants WHERE ResidenceCertificateNo = ?";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function CheckTIN($number)
+	{
+		$SQL = "SELECT * FROM applicants WHERE TIN = ?";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function CheckHDMF($number)
+	{
+		$SQL = "SELECT * FROM applicants WHERE HDMF = ?";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function CheckPhilHealth($number)
+	{
+		$SQL = "SELECT * FROM applicants WHERE PhilHealth = ?";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function CheckATM($number)
+	{
+		$SQL = "SELECT * FROM applicants WHERE ATM_No = ?";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function CheckLFName($LastName, $FirstName)
+	{
+		$SQL = "SELECT * FROM applicants WHERE LastName = '$LastName' AND FirstName = '$FirstName'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetAllApplicants()
+	{
+		$SQL = "SELECT * FROM applicants";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+}
+>>>>>>> 743e08eec100d714684a609a5c2cadea186e3aa3

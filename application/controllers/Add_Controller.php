@@ -52,13 +52,17 @@ class Add_Controller extends CI_Controller {
 		$PhilHealth_On = $this->input->post('PhilHealth_On');
 		$ATM_No = $this->input->post('ATM_No');
 
-		
-		
+		$EmergencyPerson = $this->input->post('EmergencyPerson');
+		$EmergencyContact = $this->input->post('EmergencyContact');
+		$Referral = $this->input->post('Referral');
+		$NameExtension = $this->input->post('NameExtension');
 
 		# ADDRESSES
 		$Address_Present = $this->input->post('Address_Present');
 		$Address_Provincial = $this->input->post('Address_Provincial');
 		$Address_Manila = $this->input->post('Address_Manila');
+
+		$CreateADuplicate = $this->input->post('CreateADuplicate');
 
 		if ($PositionDesired == NULL || $LastName == NULL || $FirstName == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Position Desired, Last Name, and First Name fields are required!</h5></div>');
@@ -96,18 +100,73 @@ class Add_Controller extends CI_Controller {
 				'PhilHealth' => $PhilHealth,
 				'PhilHealth_At' => $PhilHealth_At,
 				'PhilHealth_On' => $PhilHealth_On,
-				
 
+				'EmergencyPerson' => $EmergencyPerson,
+				'EmergencyContact' => $EmergencyContact,
+				'Referral' => $Referral,
+				'NameExtension' => $NameExtension,
 
 				'Address_Present' => $Address_Present,
 				'Address_Provincial' => $Address_Provincial,
 				'Address_Manila' => $Address_Manila,
 			);
 			$this->session->set_flashdata($data);
-			redirect('NewEmployee');
+			redirect($_SERVER['HTTP_REFERER']);
 		}
 		else
 		{
+			$CheckLFName = $this->Model_Selects->CheckLFName($LastName, $FirstName);
+			if ($CheckLFName->num_rows() > 0 && $CreateADuplicate != 'Yes') {
+				$data = array(
+					'PositionDesired' => $PositionDesired,
+					'PositionGroup' => $PositionGroup,
+					'LastName' => $LastName,
+					'FirstName' => $FirstName,
+					'MI' => $MI,
+					'Gender' => $Gender,
+					'Age' => $Age,
+					'Height' => $Height,
+					'Weight' => $Weight,
+					'Religion' => $Religion,
+					'bDate' => $bDate,
+					'bPlace' => $bPlace,
+					'Citizenship' => $Citizenship,
+					'CivilStatus' => $CivilStatus,
+					'No_Children' => $No_Children,
+					'PhoneNumber' => $PhoneNumber,
+					'SSS' => $SSS,
+					'SSS_Effective' => $SSS_Effective,
+					'RCN' => $RCN,
+					'RCN_at' => $RCN_at,
+					'RCN_On' => $RCN_On,
+					'TIN' => $TIN,
+					'TIN_At' => $TIN_At,
+					'TIN_On' => $TIN_On,
+
+					'HDMF' => $HDMF,
+					'HDMF_At' => $HDMF_At,
+					'HDMF_On' => $HDMF_On,
+					'ATM_No' => $ATM_No,
+
+					'PhilHealth' => $PhilHealth,
+					'PhilHealth_At' => $PhilHealth_At,
+					'PhilHealth_On' => $PhilHealth_On,
+
+					'EmergencyPerson' => $EmergencyPerson,
+					'EmergencyContact' => $EmergencyContact,
+					'Referral' => $Referral,
+					'NameExtension' => $NameExtension,
+
+					'Address_Present' => $Address_Present,
+					'Address_Provincial' => $Address_Provincial,
+					'Address_Manila' => $Address_Manila,
+
+					'Notice' => 'Duplicate Name'
+				);
+				$this->session->set_flashdata('data',$data);
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+
 			$cc = $this->db->count_all('applicants');
 			$ccc = $cc + 1;
 			$coun = str_pad($ccc,5,0,STR_PAD_LEFT);
@@ -204,6 +263,11 @@ class Add_Controller extends CI_Controller {
 					'PhilHealth' => $PhilHealth,
 					'PhilHealth_At' => $PhilHealth_At,
 					'PhilHealth_On' => $PhilHealth_On,
+
+					'EmergencyPerson' => $EmergencyPerson,
+					'EmergencyContact' => $EmergencyContact,
+					'Referral' => $Referral,
+					'NameExtension' => $NameExtension,
 
 					'Status' => 'Applicant',
 					'AppliedOn' => date('Y-m-d h:i:s A'),
