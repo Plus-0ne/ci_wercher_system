@@ -23,7 +23,7 @@
 									<div class="col-sm-12">
 										<div class="row">
 											<div class="col-sm-4">
-												<button id="ToggleAcademic" type="button" class="general-filters-btn btn btn-success w-100"><i class="fas fa-check wercher-visible"></i></button>
+												<button id="ToggleAcademic" type="button" class="general-filters-btn btn btn-success w-100"><i class="fas fa-check wercher-visible" style="margin-right: -1px;"></i></button>
 											</div>
 											<div class="col-sm-8" style="margin-left: -15px; margin-top: 5px;">
 												Academic&nbsp;History
@@ -33,7 +33,7 @@
 									<div class="col-sm-12 mt-1">
 										<div class="row">
 											<div class="col-sm-4">
-												<button id="ToggleEmployment" type="button" class="general-filters-btn btn btn-success w-100"><i class="fas fa-check wercher-visible"></i></button>
+												<button id="ToggleEmployment" type="button" class="general-filters-btn btn btn-success w-100"><i class="fas fa-check wercher-visible" style="margin-right: -1px;"></i></button>
 											</div>
 											<div class="col-sm-8" style="margin-left: -15px; margin-top: 5px;">
 												Employment&nbsp;Records
@@ -43,7 +43,7 @@
 									<div class="col-sm-12 mt-1">
 										<div class="row">
 											<div class="col-sm-4">
-												<button id="ToggleMachine" type="button" class="general-filters-btn btn btn-success w-100"><i class="fas fa-check  wercher-visible"></i></button>
+												<button id="ToggleMachine" type="button" class="general-filters-btn btn btn-success w-100"><i class="fas fa-check  wercher-visible" style="margin-right: -1px;"></i></button>
 											</div>
 											<div class="col-sm-8" style="margin-left: -15px; margin-top: 5px;">
 												Machine&nbsp;Operated
@@ -53,7 +53,7 @@
 									<div class="col-sm-12 mt-1">
 										<div class="row">
 											<div class="col-sm-4">
-												<button id="ToggleContract" type="button" class="general-filters-btn btn btn-secondary w-100"><i class="fas fa-check wercher-transparent"></i></button>
+												<button id="ToggleContract" type="button" class="general-filters-btn btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
 											</div>
 											<div class="col-sm-8" style="margin-left: -15px; margin-top: 5px;">
 												Contract
@@ -63,7 +63,7 @@
 									<div class="col-sm-12 mt-1">
 										<div class="row">
 											<div class="col-sm-4">
-												<button id="ToggleHistory" type="button" class="general-filters-btn btn btn-secondary w-100"><i class="fas fa-check wercher-transparent"></i></button>
+												<button id="ToggleHistory" type="button" class="general-filters-btn btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
 											</div>
 											<div class="col-sm-8" style="margin-left: -15px; margin-top: 5px;">
 												Contract&nbsp;History
@@ -75,7 +75,7 @@
 									<div class="col-sm-12">
 										<div class="row">
 											<div class="col-sm-4">
-												<button id="ToggleInformation" type="button" class="general-filters-btn btn btn-success w-100"><i class="fas fa-check wercher-visible"></i></button>
+												<button id="ToggleInformation" type="button" class="general-filters-btn btn btn-success w-100"><i class="fas fa-check wercher-visible" style="margin-right: -1px;"></i></button>
 											</div>
 											<div class="col-sm-8" style="margin-left: -15px; margin-top: 5px;">
 												Employee's&nbsp;Information
@@ -85,7 +85,7 @@
 									<div class="col-sm-12 mt-1">
 										<div class="row">
 											<div class="col-sm-4">
-												<button id="TogglePhoto" type="button" class="general-filters-btn btn btn-success w-100"><i class="fas fa-check wercher-visible"></i></button>
+												<button id="TogglePhoto" type="button" class="general-filters-btn btn btn-success w-100"><i class="fas fa-check wercher-visible" style="margin-right: -1px;"></i></button>
 											</div>
 											<div class="col-sm-8" style="margin-left: -15px; margin-top: 5px;">
 												Employee's&nbsp;Photo

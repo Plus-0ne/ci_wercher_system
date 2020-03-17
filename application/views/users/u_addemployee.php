@@ -12,139 +12,193 @@
 						</div>
 						<div class="p-5">
 							<?php echo $this->session->flashdata('prompts'); ?>
+							<?php $data = $this->session->flashdata('data'); // Load the data array flashdata ?>
+							<?php if($data['Notice'] != NULL): ?>
+								<div class="row m-5 p-2 wercher-notice-banner">
+									<div class="col-sm-12">
+										<h5>
+											<i class="fas fa-exclamation-triangle"></i> <b>Notice: <?php echo $data['Notice']; ?></b>
+										</h5>
+									</div>
+									<div class="col-sm-12 mt-4">
+										A person with a similar name has been found on the database:
+									</div>
+									<div class="col-sm-12 mt-2">
+										<div class="table-responsive pt-2 pb-5 pl-2 pr-2">
+											<table id="MonthlyTable" class="table table-striped table-bordered PrintOut" style="width: 100%;">
+												<thead>
+													<tr class="text-center">
+														<th> Applicant ID </th>
+														<th> Full Name </th>
+														<th> Position Desired </th>
+														<th> Applied On </th>
+														<th> Current Status </th>
+														<th> Action </th>
+													</tr>
+												</thead>
+												<tbody>
+													<?php 
+													$CheckLFName = $this->Model_Selects->CheckLFName($data['LastName'], $data['FirstName']);
+													foreach ($CheckLFName->result_array() as $row): ?>
+														<tr>
+															<td class="text-center">
+																<div class="col-sm-12">
+																	<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
+																</div>
+																<div class="col-sm-12 align-middle">
+																	<?php echo $row['ApplicantID']; ?>
+																</div>
+															</td>
+															<td class="text-center align-middle">
+																<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+															</td>
+															<td class="text-center align-middle">
+																<?php echo $row['PositionDesired']; ?>
+															</td>
+															<td class="text-center align-middle">
+																<?php echo $row['AppliedOn']; ?>
+															</td>
+															<td class="text-center align-middle">
+																<?php if ($row['Status'] == 'Employed') { ?>
+																	<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Employed
+																<?php } elseif ($row['Status'] == 'Applicant') { ?>
+																	<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Applicant
+																<?php } elseif ($row['Status'] == 'Expired') { ?>
+																	<i class="fas fa-square PrintExclude" style="color: #0721DB;"></i> Expired
+																<?php } elseif ($row['Status'] == 'Blacklisted') { ?>
+																	<i class="fas fa-square PrintExclude" style="color: #000000;"></i> Blacklisted
+																<?php } else { ?>
+																	<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Unknown
+																<?php } ?>
+															</td>
+															<td class="text-center align-middle PrintExclude" width="100">
+																<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>" target="_blank"><i class="fas fa-external-link-alt"></i> View</a>
+															</td>
+														</tr>
+													<?php endforeach ?>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div class="form-row ml-2">
+										<div class="form-group col-sm-12 col-md-3">
+											<button id="CreateADuplicate" type="button" class="btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+										</div>
+										<div class="form-group col-sm-12 col-md-9" style="margin-top: 5px;">
+											Create&nbsp;a&nbsp;duplicate&nbsp;anyways
+										</div>
+									</div>
+								</div>
+							<?php endif; ?>
 							<div class="mb-3">
-								<h5>
-									<i class="fas fa-user-alt"></i> Personal Information
-								</h5>
+								<h6>
+									<i class="fas fa-square"></i> PERSONAL
+								</h6>
 							</div>
 							<!-- Start form -->
 							<form action="<?=base_url()?>addNewEmployee" method="POST" enctype="multipart/form-data">
+								<input id="CreateADuplicateField" type="hidden" name="CreateADuplicate">
 								<input id="pImageChecker" type="hidden" name="pImageChecker">
 								<div class="form-row mb-2">
-									<div class="form-group col-sm-12">
-										<input type='file' id="imgInp" name="pImage" style="display: none;">
-										<?php if(!$this->agent->is_mobile()): ?>
-											<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/wercher_default_photo.png" width="120" height="120">
-										<?php else: ?>
-											<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/wercher_default_photo_mobile.png" width="120" height="120">
-										<?php endif; ?>
-									</div>
+									
 								</div>
 								<div class="form-row">
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Position Desired</label>
-										<input class="form-control" type="text" name="PositionDesired" autocomplete="off" value="<?php echo $this->session->flashdata('PositionDesired'); ?>">
+									<div class="form-group col-sm-12 col-md-8">
+										<div class="form-row">
+											<div class="form-group col-sm-12 col-md-5">
+												<label>Last Name</label>
+												<input class="form-control" type="text" name="LastName" autocomplete="off" value="<?php echo $data['LastName']; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-5">
+												<label>First Name</label>
+												<input class="form-control" type="text" name="FirstName" autocomplete="off" value="<?php echo $data['FirstName']; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-2">
+												<label>Middle&nbsp;Initial</label>
+												<input class="form-control" type="text" name="MI" autocomplete="off" value="<?php echo $data['MI']; ?>" maxlength="1">
+											</div>
+											<div class="form-group col-sm-12 col-md-3">
+												<label>Name Extension</label>
+												<input class="form-control" type="text" name="NameExtension" autocomplete="off" value="<?php echo $data['FirstName']; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-2">
+												<label>Sex</label>
+												<select class="form-control" name="Gender">
+													<option value="Male" <?php if ($data['Gender'] == 'Male') {
+														echo 'selected=""';
+													} ?>>
+														Male
+													</option>
+													<option value="Female" <?php if ($data['Gender'] == 'Female') {
+														echo 'selected=""';
+													} ?>>
+														Female
+													</option>
+												</select>
+											</div>
+											<div class="form-group col-sm-12 col-md-2">
+												<label>Height</label>
+												<input class="form-control" type="text" name="Height" autocomplete="off" value="<?php echo $data['Height']; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-2">
+												<label>Weight</label>
+												<input class="form-control" type="text" name="Weight" autocomplete="off" value="<?php echo $data['Weight']; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-3">
+												<label>Religion</label>
+												<input class="form-control" type="text" name="Religion" autocomplete="off" value="<?php echo $data['Religion']; ?>">
+											</div>
+										</div>
 									</div>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Position Group</label>
-										<input class="form-control" type="text" name="PositionGroup" autocomplete="off" value="<?php echo $this->session->flashdata('PositionGroup'); ?>">
-										<!-- <select class="form-control" name="PositionGroup">
-											<option value="TEST GROUP 1" <?php if ($this->session->flashdata('PositionGroup') == 'TEST GROUP 1') {
-												echo 'selected=""';
-											} ?>>
-												TEST GROUP 1
-											</option>
-											<option value="TEST GROUP 2" <?php if ($this->session->flashdata('PositionGroup') == 'TEST GROUP 2') {
-												echo 'selected=""';
-											} ?>>
-												TEST GROUP 2
-											</option>
-											<option value="TEST GROUP 3" <?php if ($this->session->flashdata('PositionGroup') == 'TEST GROUP 3') {
-												echo 'selected=""';
-											} ?>>
-												TEST GROUP 3
-											</option>
-											<option value="TEST GROUP 4" <?php if ($this->session->flashdata('PositionGroup') == 'TEST GROUP 4') {
-												echo 'selected=""';
-											} ?>>
-												TEST GROUP 4
-											</option>
-										</select> -->
-									</div>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Application Date</label>
-										<input class="form-control" type="date" name="ApplicationDate" autocomplete="off" value="<?php if ($this->session->flashdata('ApplicationDate')) { echo $this->session->flashdata('ApplicationDate'); } else { echo date('Y-m-d'); } ?>">
-									</div>
-								</div>
-								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-4">
-										<label>Last Name</label>
-										<input class="form-control" type="text" name="LastName" autocomplete="off" value="<?php echo $this->session->flashdata('LastName'); ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-4">
-										<label>First Name</label>
-										<input class="form-control" type="text" name="FirstName" autocomplete="off" value="<?php echo $this->session->flashdata('FirstName'); ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Middle Initial</label>
-										<input class="form-control" type="text" name="MI" autocomplete="off" value="<?php echo $this->session->flashdata('MI'); ?>" maxlength="1">
-									</div>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Sex</label>
-										<select class="form-control" name="Gender">
-											<option value="Male" <?php if ($this->session->flashdata('Gender') == 'Male') {
-												echo 'selected=""';
-											} ?>>
-												Male
-											</option>
-											<option value="Female" <?php if ($this->session->flashdata('Gender') == 'Female') {
-												echo 'selected=""';
-											} ?>>
-												Female
-											</option>
-										</select>
+										<div class="form-group col-sm-12 text-center">
+											<input type='file' id="imgInp" name="pImage" style="display: none;">
+											<?php if(!$this->agent->is_mobile()): ?>
+												<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/wercher_default_photo.png" width="192" height="192">
+											<?php else: ?>
+												<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/wercher_default_photo_mobile.png" width="192" height="192">
+											<?php endif; ?>
+										</div>
 									</div>
 								</div>
 								<div class="form-row">
-									<div class="form-group col-sm-12 col-md-1">
-										<label>Age</label>
-										<input id="Age" class="form-control" type="text" value="<?php echo $this->session->flashdata('Age'); ?>" readonly>
-									</div>
-									<div class="form-group col-sm-12 col-md-1">
-										<label>Height</label>
-										<input class="form-control" type="text" name="Height" autocomplete="off" value="<?php echo $this->session->flashdata('Height'); ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-1">
-										<label>Weight</label>
-										<input class="form-control" type="text" name="Weight" autocomplete="off" value="<?php echo $this->session->flashdata('Weight'); ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Religion</label>
-										<input class="form-control" type="text" name="Religion" autocomplete="off" value="<?php echo $this->session->flashdata('Religion'); ?>">
-									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Birth Date</label>
-										<input id="BirthDate" class="form-control" type="date" name="bDate" value="<?php echo $this->session->flashdata('bDate'); ?>">
+										<input id="BirthDate" class="form-control" type="date" name="bDate" value="<?php echo $data['bDate']; ?>">
 									</div>
-									<div class="form-group col-sm-12 col-md-5">
+									<div class="form-group col-sm-12 col-md-1">
+										<label>Age</label>
+										<input id="Age" class="form-control" type="text" value="<?php echo $data['Age']; ?>" readonly>
+									</div>
+									<div class="form-group col-sm-12 col-md-9">
 										<label>Birth Place</label>
-										<input class="form-control" type="text" name="bPlace" autocomplete="off" value="<?php echo $this->session->flashdata('bPlace'); ?>">
+										<input class="form-control" type="text" name="bPlace" autocomplete="off" value="<?php echo $data['bPlace']; ?>">
 									</div>
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Citizenship</label>
-										<input class="form-control" type="text" name="Citizenship" autocomplete="off" value="<?php echo $this->session->flashdata('Citizenship'); ?>">
+										<input class="form-control" type="text" name="Citizenship" autocomplete="off" value="<?php echo $data['Citizenship']; ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Civil Status</label>
 										<select class="form-control" name="CivilStatus">
-											<option value="Single" <?php if ($this->session->flashdata('CivilStatus') == 'Single') {
+											<option value="Single" <?php if ($data['CivilStatus'] == 'Single') {
 												echo 'selected=""';
 											} ?>>
 												Single
 											</option>
-											<option value="Married" <?php if ($this->session->flashdata('CivilStatus') == 'Married') {
+											<option value="Married" <?php if ($data['CivilStatus'] == 'Married') {
 												echo 'selected=""';
 											} ?>>
 												Married
 											</option>
-											<option value="Widowed" <?php if ($this->session->flashdata('CivilStatus') == 'Widowed') {
+											<option value="Widowed" <?php if ($data['CivilStatus'] == 'Widowed') {
 												echo 'selected=""';
 											} ?>>
 												Widowed
 											</option>
-											<option value="Divorced" <?php if ($this->session->flashdata('CivilStatus') == 'Divorced') {
+											<option value="Divorced" <?php if ($data['CivilStatus'] == 'Divorced') {
 												echo 'selected=""';
 											} ?>>
 												Divorced
@@ -153,80 +207,143 @@
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>No. of Children</label>
-										<input class="form-control" type="number" name="No_Children" autocomplete="off" value="<?php echo $this->session->flashdata('No_Children'); ?>">
+										<input class="form-control" type="number" name="No_Children" autocomplete="off" value="<?php echo $data['No_Children']; ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Contact Number</label>
-										<input class="form-control" type="text" name="PhoneNumber" autocomplete="off" value="<?php echo $this->session->flashdata('PhoneNumber'); ?>">
+										<input class="form-control" type="text" name="PhoneNumber" autocomplete="off" value="<?php echo $data['PhoneNumber']; ?>">
 									</div>
 								</div>
 								<div class="mt-5 mb-4">
-									<h5>
-										<i class="fas fa-user-alt"></i> Documents
-									</h5>
+									<h6>
+										<i class="fas fa-square"></i> WORK
+									</h6>
 								</div>
 								<div class="form-row">
-									<div class="form-group col-sm-12 col-lg-3">
-										<label>S.S.S. #</label>
-										<input class="form-control" type="text" name="SSS" autocomplete="off" value="<?php echo $this->session->flashdata('SSS'); ?>">
+									<div class="form-group col-sm-12 col-md-8">
+										<div class="form-row">
+											<div class="form-group col-sm-12 col-md-4">
+												<label>Position Desired</label>
+												<input class="form-control" type="text" name="PositionDesired" autocomplete="off" value="<?php echo $data['PositionDesired']; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-4">
+												<label>Position Group</label>
+												<input class="form-control" type="text" name="PositionGroup" autocomplete="off" value="<?php echo $data['PositionGroup']; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-4">
+												<label>Application Date</label>
+												<input class="form-control" type="date" name="ApplicationDate" autocomplete="off" value="<?php if ($data['ApplicationDate']) { echo $data['ApplicationDate']; } else { echo date('Y-m-d'); } ?>">
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col-sm-12 col-lg-6">
+												<label id="SSS_Text">S.S.S. No.</label>
+												<input id="SSS" class="form-control" type="text" name="SSS" autocomplete="off" value="<?php echo $data['SSS']; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-lg-6">
+												<label id="HDMF_Text">HDMF</label>
+												<input id="HDMF" class="form-control" type="text" name="HDMF" autocomplete="off" value="<?php echo $data['HDMF']; ?>">
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col-sm-12 col-lg-6">
+												<label id="RCN_Text">Residence Certificate No.</label>
+												<input id="RCN" class="form-control" type="text" name="RCN" autocomplete="off" value="<?php echo $data['RCN']; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-lg-6">
+												<label id="PhilHealth_Text">PHILHEALTH</label>
+												<input id="PhilHealth" class="form-control" type="text" name="PhilHealth" autocomplete="off" value="<?php echo $data['PhilHealth']; ?>">
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col-sm-12 col-lg-6">
+												<label id="TIN_Text">Tax Identification No.</label>
+												<input id="TIN" class="form-control" type="text" name="TIN" autocomplete="off" value="<?php echo $data['TIN']; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-lg-6">
+												<label id="ATM_Text">ATM No.</label>
+												<input id="ATM" class="form-control" type="text" name="ATM_No" autocomplete="off" value="<?php echo $data['ATM_No']; ?>">
+											</div>
+										</div>
 									</div>
-									<div class="form-group col-sm-12 col-lg-3">
-										<label>Effective Date of Coverage</label>
-										<input class="form-control" type="date" name="SSS_Effective" value="<?php echo $this->session->flashdata('SSS_Effective'); ?>">
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-group col-sm-12 col-lg-3">
-										<label>Residence Certificate No.</label>
-										<input class="form-control" type="text" name="RCN" autocomplete="off" value="<?php echo $this->session->flashdata('RCN'); ?>">
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-group col-sm-12 col-lg-3">
-										<label>Tax Identification No.</label>
-										<input class="form-control" type="text" name="TIN" autocomplete="off" value="<?php echo $this->session->flashdata('TIN'); ?>">
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-group col-sm-12 col-lg-3">
-										<label>HDMF</label>
-										<input class="form-control" type="text" name="HDMF" autocomplete="off" value="<?php echo $this->session->flashdata('HDMF'); ?>">
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-group col-sm-12 col-lg-3">
-										<label>PHILHEALTH</label>
-										<input class="form-control" type="text" name="PhilHealth" autocomplete="off" value="<?php echo $this->session->flashdata('PhilHealth'); ?>">
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-group col-sm-12 col-lg-3">
-										<label>ATM #</label>
-										<input class="form-control" type="text" name="ATM_No" autocomplete="off" value="<?php echo $this->session->flashdata('ATM_No'); ?>">
+									<div class="form-group col-sm-12 col-md-4">
+										<b>Source of Application / Referral</b>
+										<input id="Referral" type="hidden" name="Referral">
+										<div class="form-row col-sm-12 mt-2">
+											<div class="form-group col-sm-12 col-md-3">
+												<button id="ReferralWalkIn" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+											</div>
+											<div class="form-group col-sm-12 col-md-9" style="margin-top: 5px;">
+												Walk In
+											</div>
+										</div>
+										<div class="form-row col-sm-12">
+											<div class="form-group col-sm-12 col-md-3">
+												<button id="ReferralJobFair" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+											</div>
+											<div class="form-group col-sm-12 col-md-9" style="margin-top: 5px;">
+												Job Fair
+											</div>
+										</div>
+										<div class="form-row col-sm-12">
+											<div class="form-group col-sm-12 col-md-3">
+												<button id="ReferralSocialMedia" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+											</div>
+											<div class="form-group col-sm-12 col-md-9" style="margin-top: 5px;">
+												Social Media
+											</div>
+										</div>
+										<div class="form-row col-sm-12">
+											<div class="form-group col-sm-12 col-md-12">
+												Or others, please specify:
+											</div>
+											<div class="form-group col-sm-12 col-md-12" style="margin-top: 5px;">
+												<input id="ReferralOthers" class="form-control" type="text" name="ReferralOthers" autocomplete="off" value="<?php echo $data['Address_Present']; ?>">
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="mt-5 mb-4">
-									<h5>
-										<i class="fas fa-user-alt"></i> Addresses
-									</h5>
+									<h6>
+										<i class="fas fa-square"></i> ADDRESS
+									</h6>
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Present</label>
-										<input class="form-control" type="text" name="Address_Present" autocomplete="off" value="<?php echo $this->session->flashdata('Address_Present'); ?>">
+										<input class="form-control" type="text" name="Address_Present" autocomplete="off" value="<?php echo $data['Address_Present']; ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Provincial</label>
-										<input class="form-control" type="text" name="Address_Provincial" autocomplete="off" value="<?php echo $this->session->flashdata('Address_Provincial'); ?>">
+										<input class="form-control" type="text" name="Address_Provincial" autocomplete="off" value="<?php echo $data['Address_Provincial']; ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Manila</label>
-										<input class="form-control" type="text" name="Address_Manila" autocomplete="off" value="<?php echo $this->session->flashdata('Address_Manila'); ?>">
+										<input class="form-control" type="text" name="Address_Manila" autocomplete="off" value="<?php echo $data['Address_Manila']; ?>">
 									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-7 col-md-7">
+										<label>Person to notify in case of emergency</label>
+										<input class="form-control" type="text" name="EmergencyPerson" autocomplete="off" value="<?php echo $data['Address_Present']; ?>">
+									</div>
+									<div class="form-group col-sm-1 col-md-1 text-center">
+										<p><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></p>
+										<p><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></p>
+									</div>
+									<div class="form-group col-sm-4 col-md-4">
+										<label>Contact Number</label>
+										<input class="form-control" type="text" name="EmergencyContact" autocomplete="off" value="<?php echo $data['Address_Provincial']; ?>">
+									</div>
+								</div>
+								<div class="mt-5">
+									<h6>
+										<i class="fas fa-square"></i> RECORDS
+									</h6>
 								</div>
 								<div class="form-row pb-5 pt-5">
 									<div class="pb-3">
-										<h5><i class="fas fa-stream"></i> Academic History</h5>
+										<h5>Academic History</h5>
 									</div>
 									<div id="AcadHsssistory" class="" style="width: 100%;">
 										
@@ -234,7 +351,7 @@
 								</div>
 								<div class="form-row pb-5">
 									<div class="pb-3">
-										<h5><i class="fas fa-stream"></i> Employment Record </h5>
+										<h5>Employment Record </h5>
 									</div>
 									<div id="empskills" class="" style="width: 100%;">
 										
@@ -242,7 +359,7 @@
 								</div>
 								<div class="form-row pb-5">
 									<div class="pb-3">
-										<h5><i class="fas fa-stream"></i> Machine Operated </h5>
+										<h5>Machine Operated </h5>
 									</div>
 									<div id="mach_Op" class="" style="width: 100%;">
 										
@@ -503,6 +620,108 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		var SSS_List = [];
+		var HDMF_List = [];
+		var RCN_List = [];
+		var PhilHealth_List = [];
+		var TIN_List = [];
+		var ATM_List = [];
+		<?php foreach($this->Model_Selects->GetAllApplicants()->result_array() as $row): ?>
+			SSS_List.push("<?php echo $row['SSS_No']; ?>");
+			HDMF_List.push("<?php echo $row['HDMF']; ?>");
+			RCN_List.push("<?php echo $row['ResidenceCertificateNo']; ?>");
+			PhilHealth_List.push("<?php echo $row['PhilHealth']; ?>");
+			TIN_List.push("<?php echo $row['TIN']; ?>");
+			ATM_List.push("<?php echo $row['ATM_No']; ?>");
+		<?php endforeach; ?>
+		$('#SSS').bind("input", function () {
+			if(SSS_List.includes($('#SSS').val())) {
+				$('#SSS_Text').html('S.S.S. No. <i class="fas fa-times" style="color: red;"></i>')
+			} else {
+				$('#SSS_Text').html('S.S.S. No. <i class="fas fa-check" style="color: green;"></i>')
+			}
+		});
+		$('#HDMF').bind("input", function () {
+			if(HDMF_List.includes($('#HDMF').val())) {
+				$('#HDMF_Text').html('HDMF <i class="fas fa-times" style="color: red;"></i>')
+			} else {
+				$('#HDMF_Text').html('HDMF <i class="fas fa-check" style="color: green;"></i>')
+			}
+		});
+		$('#RCN').bind("input", function () {
+			if(RCN_List.includes($('#RCN').val())) {
+				$('#RCN_Text').html('Residence Certificate No. <i class="fas fa-times" style="color: red;"></i>')
+			} else {
+				$('#RCN_Text').html('Residence Certificate No. <i class="fas fa-check" style="color: green;"></i>')
+			}
+		});
+		$('#PhilHealth').bind("input", function () {
+			if(PhilHealth_List.includes($('#PhilHealth').val())) {
+				$('#PhilHealth_Text').html('PHILHEALTH <i class="fas fa-times" style="color: red;"></i>')
+			} else {
+				$('#PhilHealth_Text').html('PHILHEALTH <i class="fas fa-check" style="color: green;"></i>')
+			}
+		});
+		$('#TIN').bind("input", function () {
+			if(TIN_List.includes($('#TIN').val())) {
+				$('#TIN_Text').html('Tax Identification No. <i class="fas fa-times" style="color: red;"></i>')
+			} else {
+				$('#TIN_Text').html('Tax Identification No. <i class="fas fa-check" style="color: green;"></i>')
+			}
+		});
+		$('#ATM').bind("input", function () {
+			if(ATM_List.includes($('#ATM').val())) {
+				$('#ATM_Text').html('ATM No. <i class="fas fa-times" style="color: red;"></i>')
+			} else {
+				$('#ATM_Text').html('ATM No <i class="fas fa-check" style="color: green;"></i>')
+			}
+		});
+		var CreateADuplicate = ''; // Boolean
+		$('#CreateADuplicate').on('click', function () {
+			$(this).toggleClass('btn-secondary btn-success');
+			$(this).children('i').toggleClass('wercher-visible wercher-transparent');
+			if (CreateADuplicate != 'Yes') {
+				CreateADuplicate = 'Yes';
+				$('#CreateADuplicateField').val('Yes');
+			} else {
+				CreateADuplicate = '';
+				$('#CreateADuplicateField').val('');
+			}
+		});
+		$('#TogglePhoto').on('click', function () {
+			$('#EPrintPhoto').toggleClass('PrintExclude');
+			$('#PhotoSizeBtns').find('button').toggleClass('btn-info btn-secondary');
+			$('#EPrintPhoto').toggleClass('d-none');
+		});
+		$('.referral-btns').on('click', function () {
+			$('.referral-btns').addClass('btn-secondary');
+			$('.referral-btns').removeClass('btn-success');
+			$('.referral-btns').children('i').addClass('wercher-transparent');
+			$('.referral-btns').children('i').removeClass('wercher-visible');
+			$('#ReferralOthers').val('');
+		});
+		$('#ReferralWalkIn').on('click', function () {
+			$(this).addClass('btn-success');
+			$(this).children('i').addClass('wercher-visible');
+			$('#Referral').val('Walk In');
+		});
+		$('#ReferralJobFair').on('click', function () {
+			$(this).addClass('btn-success');
+			$(this).children('i').addClass('wercher-visible');
+			$('#Referral').val('Job Fair');
+		});
+		$('#ReferralSocialMedia').on('click', function () {
+			$(this).addClass('btn-success');
+			$(this).children('i').addClass('wercher-visible');
+			$('#Referral').val('Social Media');
+		});
+		$('#ReferralOthers').on('change', function () {
+			$('.referral-btns').addClass('btn-secondary');
+			$('.referral-btns').removeClass('btn-success');
+			$('.referral-btns').children('i').addClass('wercher-transparent');
+			$('.referral-btns').children('i').removeClass('wercher-visible');
+			$('#Referral').val($('#ReferralOthers').val());
+		});
 		var today = new Date();
 		$("#BirthDate").change(function(){
 
