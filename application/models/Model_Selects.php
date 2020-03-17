@@ -392,4 +392,22 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function getPayslip($id)
+	{
+		$SQL = "SELECT * FROM tracking_table WHERE id = '$id'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetApplicantDet($ApplicantID)
+	{
+		$SQL = "SELECT * FROM applicants WHERE ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetClientDet($ClientID)
+	{
+		$SQL = "SELECT * FROM clients WHERE ClientID = '$ClientID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }
