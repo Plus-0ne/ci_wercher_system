@@ -90,6 +90,42 @@
 					}
 				}
 			}
+			if (strtotime($row['SuspensionEnds']) < strtotime($currTime)) {
+				if ($ApplicantID == NULL) {
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+				}
+				else
+				{
+					$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
+					if ($CheckEmployee->num_rows() > 0) {
+						$SuspensionExpires = $this->Model_Updates->SuspensionExpires($ApplicantID);
+						if ($SuspensionExpires == TRUE) {
+							$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ' . $ApplicantID . ' is no longer suspended.</h5></div>');
+							// LOGBOOK
+							date_default_timezone_set('Asia/Manila');
+							$LogbookCurrentTime = date('Y-m-d h:i:s A');
+							$LogbookType = 'Update';
+							$LogbookEvent = 'Employee ' . $ApplicantID . ' is no longer suspended.';
+							$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+							$data = array(
+								'Time' => $LogbookCurrentTime,
+								'Type' => $LogbookType,
+								'Event' => $LogbookEvent,
+								'Link' => $LogbookLink,
+							);
+							$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+						}
+						else
+						{
+							$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+						}
+					}
+					else
+					{
+						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
+					}
+				}
+			}
 		}
 
 	}
@@ -582,6 +618,11 @@
 					'DateStarted' => $ged['DateStarted'],
 					'DateEnds' => $ged['DateEnds'],
 					'AppliedOn' => $ged['AppliedOn'],
+
+					'SuspensionStarted' => $ged['SuspensionStarted'],
+					'SuspensionEnds' => $ged['SuspensionEnds'],
+					'SuspensionRemarks' => $ged['SuspensionRemarks'],
+					'Suspended' => $ged['Suspended'],
 
 					'ReminderDate' => $ged['ReminderDate'],
 					'ReminderDateString' => $ged['ReminderDateString'],

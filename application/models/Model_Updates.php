@@ -33,6 +33,17 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->update('applicants', $data);
 		return $result;
 	}
+	public function SuspensionExpires($ApplicantID)
+	{
+		$data = array(
+			'Suspended' => '',
+			'SuspensionStarted' => '',
+			'SuspensionEnds' => '',
+		);
+		$this->db->where('ApplicantID', $ApplicantID);
+		$result = $this->db->update('applicants', $data);
+		return $result;
+	}
 	public function ExtendContract($ApplicantID,$data)
 	{
 		extract($data);

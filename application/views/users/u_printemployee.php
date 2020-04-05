@@ -309,7 +309,7 @@
 						</div>
 						<div class="col-md-2 eprint-field-title">
 							<h6>
-								# of Children
+								No. of Children
 							</h6>
 						</div>
 						<div class="col-md-4 eprint-field-det">
@@ -341,12 +341,12 @@
 						</div>
 						<div class="col-md-2 eprint-field-title">
 							<h6>
-								Effective Date of Coverage
+								Address Present
 							</h6>
 						</div>
 						<div class="col-md-4 eprint-field-det">
 							<p>
-								<?php echo $EffectiveDateCoverage; ?>
+								<?php echo $Address_Present; ?>
 							</p>
 						</div>
 						<div class="col-md-2 eprint-field-title">
@@ -361,12 +361,12 @@
 						</div>
 						<div class="col-md-2 eprint-field-title">
 							<h6>
-								Address Present
+								Address Provincial
 							</h6>
 						</div>
 						<div class="col-md-4 eprint-field-det">
 							<p>
-								<?php echo $Address_Present; ?>
+								<?php echo $Address_Provincial; ?>
 							</p>
 						</div>
 						<div class="col-md-2 eprint-field-title">
@@ -381,12 +381,12 @@
 						</div>
 						<div class="col-md-2 eprint-field-title">
 							<h6>
-								Address Provincial
+								Address Manila
 							</h6>
 						</div>
 						<div class="col-md-4 eprint-field-det">
 							<p>
-								<?php echo $Address_Provincial; ?>
+								<?php echo $Address_Manila; ?>
 							</p>
 						</div>
 						<div class="col-md-2 eprint-field-title">
@@ -401,12 +401,12 @@
 						</div>
 						<div class="col-md-2 eprint-field-title">
 							<h6>
-								Address Manila
+								Person to notify in case of emergency
 							</h6>
 						</div>
 						<div class="col-md-4 eprint-field-det">
 							<p>
-								<?php echo $Address_Manila; ?>
+								<?php echo $EmergencyPerson; ?>
 							</p>
 						</div>
 						<div class="col-md-2 eprint-field-title">
@@ -417,6 +417,16 @@
 						<div class="col-md-4 eprint-field-det">
 							<p>
 								<?php echo $PhilHealth; ?>
+							</p>
+						</div>
+						<div class="col-md-2 eprint-field-title">
+							<h6>
+								Contact Number
+							</h6>
+						</div>
+						<div class="col-md-4 eprint-field-det">
+							<p>
+								<?php echo $EmergencyContact; ?>
 							</p>
 						</div>
 						<div class="col-md-2 eprint-field-title">
@@ -556,6 +566,98 @@
 							</div>
 						</div>
 					</div>
+					<?php if(isset($Suspended)): ?>
+					<div id="Suspension" class="row pt-5 pl-5 d-none">
+						<div class="col-sm-12">
+							<h5>
+								<i class="fas fa-user-tie"></i> Suspesion
+							</h5>
+						</div>
+						<div class="col-sm-12 col-md-12 employee-dynamic-header">
+							<b>
+								Suspended For
+							</b>
+						</div>
+						<div class="col-sm-12 col-md-12 mb-2">
+							<p>
+								<?php
+
+								$scurrTime = time();
+								$SuspendedString = "";
+								$sstrDateEnds = strtotime($SuspensionEnds);
+								$sstrDateStarted = strtotime($SuspensionStarted);
+																// PERCENTAGE
+								$SuspensionPercentage = (($sstrDateEnds - $scurrTime) * 100) / ($sstrDateEnds - $sstrDateStarted);
+								$SuspensionPercentage = round($SuspensionPercentage);
+																// DAYS REMAINING
+								$sdateTimeZone = new DateTimeZone("Asia/Manila");
+								$sdatetime1 = new DateTime('@' . $scurrTime, $sdateTimeZone);
+								$sdatetime2 = new DateTime('@' . $sstrDateEnds, $sdateTimeZone);
+								$sinterval = $sdatetime1->diff($sdatetime2);
+								if($sinterval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
+									if($sinterval->format('%H') == '1') {
+										$SuspendedString = $sinterval->format('%H hour');
+										if($sinterval->format('%I') != NULL || $sinterval->format('%S') != NULL) {
+											$SuspendedString = $SuspendedString . ', ';
+										}
+									} else {
+										$SuspendedString = $sinterval->format('%H hours');
+										if($sinterval->format('%I') != NULL || $sinterval->format('%S') != NULL) {
+											$SuspendedString = $SuspendedString . ', ';
+										}
+									}
+									if($sinterval->format('%I') == '1') {
+										$SuspendedString = $SuspendedString . $sinterval->format('%I minute');
+										if($sinterval->format('%S') != NULL) {
+											$SuspendedString = $SuspendedString . ', ';
+										}
+									} else {
+										$SuspendedString = $SuspendedString . $sinterval->format('%I minutes');
+										if($sinterval->format('%S') != NULL) {
+											$SuspendedString = $SuspendedString . ', ';
+										}
+									}
+									if($sinterval->format('%S') == '1') {
+										$SuspendedString = $SuspendedString . $sinterval->format('%S second');
+									} else {
+										$SuspendedString = $SuspendedString . $sinterval->format('%S seconds');
+									}
+									echo $SuspendedString;
+								} else {
+									if($sinterval->format('%y') == '1') {
+										$SuspendedString = $sinterval->format('%y year');
+										if($sinterval->format('%m') != NULL || $sinterval->format('%d') != NULL) {
+											$SuspendedString = $SuspendedString . ', ';
+										}
+									} else {
+										$SuspendedString = $sinterval->format('%y years');
+										if($sinterval->format('%m') != NULL || $sinterval->format('%d') != NULL) {
+											$SuspendedString = $SuspendedString . ', ';
+										}
+									}
+									if($sinterval->format('%m') == '1') {
+										$SuspendedString = $SuspendedString . $sinterval->format('%m month');
+										if($sinterval->format('%d') != NULL) {
+											$SuspendedString = $SuspendedString . ', ';
+										}
+									} else {
+										$SuspendedString = $SuspendedString . $sinterval->format('%m months');
+										if($sinterval->format('%d') != NULL) {
+											$SuspendedString = $SuspendedString . ', ';
+										}
+									}
+									if($sinterval->format('%d') == '1') {
+										$SuspendedString = $SuspendedString . $sinterval->format('%d day');
+									} else {
+										$SuspendedString = $SuspendedString . $sinterval->format('%d days');
+									}
+									echo $SuspendedString;
+								}
+								?>
+							</p>
+						</div>
+					</div>
+					<?php endif; ?>	
 					<div id="Contract" class="row pt-5 pl-5 d-none">
 						<div class="col-sm-12">
 							<h5>

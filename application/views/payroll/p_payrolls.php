@@ -47,6 +47,7 @@
 										<th>Net Pay</th>
 										<th>Mode</th>
 										<th>Date</th>
+										<th>PDF</th>
 									</thead>
 									<tbody>
 										<!-- <?php foreach ($GetWeeklyListEmployee->result_array() as $row): ?>
@@ -97,6 +98,9 @@
 												</td>
 												<td>
 													<?php echo $row['c_month'];?>
+												</td>
+												<td>
+													<a class="btn btn-primary btn-sm" href="<?=base_url()?>CreatePDF/GeneratePaySlip?id=<?php echo $row['id'];?>"><i class="fas fa-file fa-fw"></i> Print </a>
 												</td>
 											</tr>
 										<?php endforeach ?>

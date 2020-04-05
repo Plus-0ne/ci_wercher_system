@@ -9,7 +9,7 @@
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<?php echo $this->session->flashdata('prompts'); ?>
-?>
+				<br>
 				<div class="col-12 col-sm-12 payroll-tabs">
 					<ul>
 						<li class="payroll-tabs-active"><a href="<?php echo base_url() ?>ViewClient?id=<?php echo $ClientID; ?>">Attendance</a></li>

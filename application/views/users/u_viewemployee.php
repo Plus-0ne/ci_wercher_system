@@ -308,7 +308,7 @@
 														</b>
 													</div>
 													<div class="col-sm-12 col-md-12 text-center">
-														<p>
+														<p style="font-size: 18px; font-weight: bold;">
 															<?php
 
 																$scurrTime = time();
@@ -386,13 +386,13 @@
 															<input type="hidden" id="SuspensionTimeLeft" value="<?php echo $SuspensionPercentage;?>">
 														</p>
 													</div>
-													<div class="col-sm-12 col-md-12 PrintExclude">
+													<!-- <div class="col-sm-12 col-md-12 PrintExclude">
 														<div class="progressBar">
 															<div class="progressBarTitle SuspensionRemainingTitle">Time Left</div>
 															<div class="progress SuspensionRemaining"></div>
 															<div class="SuspensionValue">45%</div>
 														</div>
-													</div>
+													</div> -->
 													<div class="col-sm-12 col-md-12 text-center PrintExclude">
 														<span style="color: #dc3545"><b>Remarks:</b></span>
 													</div>

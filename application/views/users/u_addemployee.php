@@ -162,11 +162,11 @@
 									</div>
 								</div>
 								<div class="form-row">
-									<div class="form-group col-sm-12 col-md-2">
+									<div class="form-group col-sm-10 col-md-2">
 										<label>Birth Date</label>
 										<input id="BirthDate" class="form-control" type="date" name="bDate" value="<?php echo $data['bDate']; ?>">
 									</div>
-									<div class="form-group col-sm-12 col-md-1">
+									<div class="form-group col-sm-2 col-md-1">
 										<label>Age</label>
 										<input id="Age" class="form-control" type="text" value="<?php echo $data['Age']; ?>" readonly>
 									</div>
@@ -222,17 +222,13 @@
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-8">
 										<div class="form-row">
-											<div class="form-group col-sm-12 col-md-4">
+											<div class="form-group col-sm-12 col-md-6">
 												<label>Position Desired</label>
 												<input class="form-control" type="text" name="PositionDesired" autocomplete="off" value="<?php echo $data['PositionDesired']; ?>">
 											</div>
-											<div class="form-group col-sm-12 col-md-4">
+											<div class="form-group col-sm-12 col-md-6">
 												<label>Position Group</label>
 												<input class="form-control" type="text" name="PositionGroup" autocomplete="off" value="<?php echo $data['PositionGroup']; ?>">
-											</div>
-											<div class="form-group col-sm-12 col-md-4">
-												<label>Application Date</label>
-												<input class="form-control" type="date" name="ApplicationDate" autocomplete="off" value="<?php if ($data['ApplicationDate']) { echo $data['ApplicationDate']; } else { echo date('Y-m-d'); } ?>">
 											</div>
 										</div>
 										<div class="form-row">
@@ -270,26 +266,26 @@
 										<b>Source of Application / Referral</b>
 										<input id="Referral" type="hidden" name="Referral">
 										<div class="form-row col-sm-12 mt-2">
-											<div class="form-group col-sm-12 col-md-3">
+											<div class="form-group col-sm-3 col-md-3">
 												<button id="ReferralWalkIn" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
 											</div>
-											<div class="form-group col-sm-12 col-md-9" style="margin-top: 5px;">
+											<div class="form-group col-sm-9 col-md-9" style="margin-top: 5px;">
 												Walk In
 											</div>
 										</div>
 										<div class="form-row col-sm-12">
-											<div class="form-group col-sm-12 col-md-3">
+											<div class="form-group col-sm-3 col-md-3">
 												<button id="ReferralJobFair" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
 											</div>
-											<div class="form-group col-sm-12 col-md-9" style="margin-top: 5px;">
+											<div class="form-group col-sm-9 col-md-9" style="margin-top: 5px;">
 												Job Fair
 											</div>
 										</div>
 										<div class="form-row col-sm-12">
-											<div class="form-group col-sm-12 col-md-3">
+											<div class="form-group col-sm-3 col-md-3">
 												<button id="ReferralSocialMedia" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
 											</div>
-											<div class="form-group col-sm-12 col-md-9" style="margin-top: 5px;">
+											<div class="form-group col-sm-9 col-md-9" style="margin-top: 5px;">
 												Social Media
 											</div>
 										</div>

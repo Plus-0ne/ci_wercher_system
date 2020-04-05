@@ -68,27 +68,69 @@
 												$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
 												$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
 												$interval = $datetime1->diff($datetime2);
-												$DaysRemaining = "";
-												if($interval->format('%y years') != '0 years') {
-													$DaysRemaining = $DaysRemaining . $interval->format('%y years');
-													if($interval->format('%m months') != '0 months') {
-														$DaysRemaining = $DaysRemaining . ', ';
+												$TimeString = "";
+												if($interval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
+													if($interval->format('%H') == '1') {
+														$TimeString = $interval->format('%H hour');
+														if($interval->format('%I') != NULL || $interval->format('%S') != NULL) {
+															$TimeString = $TimeString . ', ';
+														}
+													} else {
+														$TimeString = $interval->format('%H hours');
+														if($interval->format('%I') != NULL || $interval->format('%S') != NULL) {
+															$TimeString = $TimeString . ', ';
+														}
 													}
-												}
-												if($interval->format('%m months') != '0 months') {
-													$DaysRemaining = $DaysRemaining . $interval->format('%m months');
-													if($interval->format('%d days') != '0 days') {
-														$DaysRemaining = $DaysRemaining . ', ';
+													if($interval->format('%I') == '1') {
+														$TimeString = $TimeString . $interval->format('%I minute');
+														if($interval->format('%S') != NULL) {
+															$TimeString = $TimeString . ', ';
+														}
+													} else {
+														$TimeString = $TimeString . $interval->format('%I minutes');
+														if($interval->format('%S') != NULL) {
+															$TimeString = $TimeString . ', ';
+														}
 													}
-												}
-												if($interval->format('%d days') != '0 days') {
-													$DaysRemaining = $DaysRemaining . $interval->format('%d days');
+													if($interval->format('%S') == '1') {
+														$TimeString = $TimeString . $interval->format('%S second');
+													} else {
+														$TimeString = $TimeString . $interval->format('%S seconds');
+													}
+												} else {
+													if($interval->format('%y') == '1') {
+														$TimeString = $interval->format('%y year');
+														if($interval->format('%m') != NULL || $interval->format('%d') != NULL) {
+															$TimeString = $TimeString . ', ';
+														}
+													} else {
+														$TimeString = $interval->format('%y years');
+														if($interval->format('%m') != NULL || $interval->format('%d') != NULL) {
+															$TimeString = $TimeString . ', ';
+														}
+													}
+													if($interval->format('%m') == '1') {
+														$TimeString = $TimeString . $interval->format('%m month');
+														if($interval->format('%d') != NULL) {
+															$TimeString = $TimeString . ', ';
+														}
+													} else {
+														$TimeString = $TimeString . $interval->format('%m months');
+														if($interval->format('%d') != NULL) {
+															$TimeString = $TimeString . ', ';
+														}
+													}
+													if($interval->format('%d') == '1') {
+														$TimeString = $TimeString . $interval->format('%d day');
+													} else {
+														$TimeString = $TimeString . $interval->format('%d days');
+													}
 												}
 											?>
 											<td class="text-center align-middle">
 												<div class="wercher-progress-daysremaining"><?php
-												if ($DaysRemaining != NULL) {
-													echo $DaysRemaining;
+												if ($TimeString != NULL) {
+													echo $TimeString;
 												} else {
 													echo 'Less than 1 day';
 												} ?>

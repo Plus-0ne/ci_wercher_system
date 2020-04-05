@@ -27,7 +27,7 @@
 						<label>Days</label>
 						<input class="form-control" type="number" name="S_Days">
 					</div>
-					<div class="form-group col-12">
+					<div class="form-group col-12 mt-2">
 						<label>Remarks</label>
 						<input class="form-control" type="text" name="S_Remarks">
 					</div>
