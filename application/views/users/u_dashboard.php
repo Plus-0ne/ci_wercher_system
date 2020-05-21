@@ -7,16 +7,16 @@
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<style type="text/css">
 					.bcolor3BB515 {
-						background-color: #3BB515;
+						background-color: rgba(235, 200, 0, 1);
 					}
 					.bcolorD9B319 {
-						background-color: #D9B319;
+						background-color: #e7af3e;
 					}
 					.bcolor199EC4 {
-						background-color: #4a3a15;
+						background-color: #b95c1a;
 					}
 					.bcolorE75858 {
-						background-color: #f5a7b7;
+						background-color: #42100d;
 					}
 					.hei-100
 					{
@@ -82,13 +82,18 @@
 										<i class="fas fa-user-friends fa-fw card-icon ml-auto mr-2"></i>
 									</div>
 								</div>
+								<div class="wercher-card-weekly-tracker-container">
+									<div class="wercher-card-weekly-tracker">
+										<i class="fas fa-caret-up"></i>0 this week (placeholder)
+									</div>
+								</div>
 							</a>
 						</div>
 					</div>
 					<div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
 							<a href="Employee">
-								<div class="card-headers" style="background-color: rgba(153, 102, 255, 1);">
+								<div class="card-headers bcolorD9B319">
 									<div class="row ml-2">
 										<span class="head-text">
 											Employees
@@ -102,6 +107,11 @@
 											</b>
 										</span>
 										<i class="fas fa-user-tie fa-fw card-icon ml-auto mr-2"></i>
+									</div>
+								</div>
+								<div class="wercher-card-weekly-tracker-container">
+									<div class="wercher-card-weekly-tracker">
+										<i class="fas fa-caret-up"></i>0 this week (placeholder)
 									</div>
 								</div>
 							</a>
@@ -126,6 +136,11 @@
 										<i class="fas fa-user-tag fa-fw card-icon ml-auto mr-2"></i>
 									</div>
 								</div>
+								<div class="wercher-card-weekly-tracker-container">
+									<div class="wercher-card-weekly-tracker">
+										<i class="fas fa-caret-up"></i>0 this week (placeholder)
+									</div>
+								</div>
 							</a>
 						</div>
 					</div>
@@ -146,6 +161,11 @@
 											</b>
 										</span>
 										<i class="fas fa-user-secret fa-fw card-icon ml-auto mr-2"></i>
+									</div>
+								</div>
+								<div class="wercher-card-weekly-tracker-container">
+									<div class="wercher-card-weekly-tracker">
+										<i class="fas fa-caret-up"></i>0 this week (placeholder)
 									</div>
 								</div>
 							</a>
@@ -388,10 +408,10 @@
 					label: '# of Applicants',
 					data: [<?php echo $GraphMonthDataCurrent; ?>],
 					backgroundColor: [
-					'rgba(255, 99, 132, 0.5)',
+					'rgba(185, 92, 26, 0.5)',
 					],
 					borderColor: [
-					'rgba(255, 99, 132, 1)',
+					'rgba(185, 92, 26, 1)',
 					'rgba(54, 162, 235, 1)',
 					'rgba(255, 206, 86, 1)',
 					'rgba(75, 192, 192, 1)',
@@ -435,7 +455,7 @@
 					label: '# of Applicants',
 					data: [<?php if (isset($_GET['Year'])) { echo $GraphMonthData; } else { echo $GraphMonthDataCurrent; } ?>],
 					backgroundColor: [
-					'rgba(255, 99, 132, 0.5)',
+					'rgba(255, 99, 132, 0.22)',
 					],
 					borderColor: [
 					'rgba(255, 99, 132, 1)',

@@ -24,6 +24,7 @@ class Model_Updates extends CI_Model {
 		$data = array(
 			'ClientEmployed' => '',
 			'DateStarted' => '',
+			'DateEnds' => '',
 			'Status' => 'Expired',
 			'ReminderType' => '',
 			'ReminderDate' => '',

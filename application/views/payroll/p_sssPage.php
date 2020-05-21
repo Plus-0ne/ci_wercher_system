@@ -30,11 +30,11 @@
 						<div class="table-responsive">
 							<table id="SalaryTable" class="table table-condensed">
 								<thead>
-									<th>From</th>
-									<th>To</th>
-									<th>Contribution</th>
-									<th style="max-width: 33px;">Updated</th>
-									<th>Action</th>
+									<th width="20%">From</th>
+									<th width="20%">To</th>
+									<th width="20%">Contribution</th>
+									<th width="15%">Updated</th>
+									<th width="15%">Action</th>
 								</thead>
 								<tbody>
 									<form method="POST" action="UpdateSSSField">
@@ -65,7 +65,6 @@
 												<?php endif; ?>
 											</td>
 											<td class="sss-updated">
-												No
 											</td>
 											<td width="140">
 												<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>

@@ -15,14 +15,12 @@
 					<!-- APPLICANT ID -->
 					<?php if($SearchApplicantID->num_rows() > 0): ?>
 					<div class="row wercher-tablelist-container">
-						<?php echo $this->session->flashdata('prompts'); ?>
 						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 							<h4 class="tabs-icon">
-								<i class="fas fa-card fa-fw"></i> Applicant ID x <?php echo $SearchApplicantID->num_rows() ?>
+								<i class="fas fa-id-card fa-fw"></i> Applicant ID x <?php echo $SearchApplicantID->num_rows() ?>
 							</h4>
 						</div>
 						<div class="col-sm-12">
-							<?php echo $this->session->flashdata('prompts'); ?>
 							<div class="table-responsive pt-2 pb-5">
 								<table id="emp" class="table PrintOut" style="width: 100%;">
 									<thead>
@@ -72,7 +70,6 @@
 					<?php if($SearchEmployeeID->num_rows() > 0): ?>
 					<!-- EMPLOYEE ID -->
 					<div class="row wercher-tablelist-container">
-						<?php echo $this->session->flashdata('prompts'); ?>
 						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 							<h4 class="tabs-icon">
 								<i class="fas fa-user-secret fa-fw"></i> Employee ID x <?php echo $SearchEmployeeID->num_rows() ?>
@@ -124,7 +121,6 @@
 					<?php if($SearchPeople->num_rows() > 0): ?>
 					<!-- PEOPLE (NAMES) -->
 					<div class="row wercher-tablelist-container">
-						<?php echo $this->session->flashdata('prompts'); ?>
 						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 							<h4 class="tabs-icon">
 								<i class="fas fa-users fa-fw"></i> People x <?php echo $SearchPeople->num_rows() ?>
@@ -181,7 +177,6 @@
 					<?php if($SearchClients->num_rows() > 0): ?>
 					<!-- CLIENTS (NAMES) -->
 					<div class="row wercher-tablelist-container">
-						<?php echo $this->session->flashdata('prompts'); ?>
 						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 							<h4 class="tabs-icon">
 								<i class="fas fa-users fa-fw"></i> Clients x <?php echo $SearchClients->num_rows() ?>
@@ -228,7 +223,6 @@
 					<?php if($SearchPositionGroups->num_rows() > 0): ?>
 					<!-- POSITION GROUPS -->
 					<div class="row wercher-tablelist-container">
-						<?php echo $this->session->flashdata('prompts'); ?>
 						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 							<h4 class="tabs-icon">
 								<i class="fas fa-user-secret fa-fw"></i> Position Groups x <?php echo $SearchPositionGroups->num_rows() ?>
@@ -284,7 +278,6 @@
 					<?php if($SearchPositionSpecific->num_rows() > 0): ?>
 					<!-- POSITION Specific -->
 					<div class="row wercher-tablelist-container">
-						<?php echo $this->session->flashdata('prompts'); ?>
 						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 							<h4 class="tabs-icon">
 								<i class="fas fa-user-secret fa-fw"></i> Position Desired x <?php echo $SearchPositionSpecific->num_rows() ?>
@@ -340,7 +333,6 @@
 					<?php if($SearchAdmins->num_rows() > 0): ?>
 					<!-- POSITION Specific -->
 					<div class="row wercher-tablelist-container">
-						<?php echo $this->session->flashdata('prompts'); ?>
 						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 							<h4 class="tabs-icon">
 								<i class="fas fa-user-secret fa-fw"></i> Admins x <?php echo $SearchAdmins->num_rows() ?>

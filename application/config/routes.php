@@ -75,7 +75,8 @@ $route['GenerateIDCard'] = 'Main_Controller/GenerateIDCard';
 $route['PrintEmployee'] = 'Main_Controller/PrintEmployee';
 
 $route['Search'] = 'Main_Controller/Search';
-
+$route['Logbook'] = 'Main_Controller/Logbook';
+$route['Calendar'] = 'Main_Controller/Calendar';
 
 // LOGIN
 $route['LoginValidation'] = 'Login_Controller/LoginValidation';

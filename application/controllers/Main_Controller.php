@@ -90,7 +90,7 @@
 					}
 				}
 			}
-			if (strtotime($row['SuspensionEnds']) < strtotime($currTime)) {
+			if ($row['Suspended'] != '' && strtotime($row['SuspensionEnds']) < strtotime($currTime)) {
 				if ($ApplicantID == NULL) {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
 				}
@@ -132,8 +132,8 @@
 	public function index()
 	{
 		$this->session->unset_userdata('acadcart');
-		redirect('Dashboard');
-		// $this->load->view('Login');
+		// redirect('Dashboard');
+		$this->load->view('Login');
 	}
 	public function CheckUserLogin()
 	{
@@ -1369,6 +1369,38 @@
 			$data['SearchAdmins'] = $this->Model_Selects->SearchAdmins($query);
 		}
 		$this->load->view('users/u_search',$data);
+	}
+	public function Logbook()
+	{
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		$header['title'] = 'Logbook | Wercher Solutions and Resources Workers Cooperative';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Logbook">Logbook</a></li>
+		</ol>
+		</nav>';
+		$this->load->view('users/u_logbook',$data);
+	}
+	public function Calendar()
+	{
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		$header['title'] = 'Calendar | Wercher Solutions and Resources Workers Cooperative';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Calendar">Calendar</a></li>
+		</ol>
+		</nav>';
+		$this->load->view('users/u_calendar',$data);
 	}
 	// // Relatives
 	// public function ShowRelatives()

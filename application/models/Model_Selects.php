@@ -458,4 +458,10 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetDailyExpires($Date)
+	{
+		$SQL = "SELECT * FROM applicants WHERE DateEnds LIKE '%$Date%'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }
