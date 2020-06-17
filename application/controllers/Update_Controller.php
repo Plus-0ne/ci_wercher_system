@@ -878,14 +878,17 @@ class Update_Controller extends CI_Controller {
 						'Date' => $Date,
 						'Hours' => $Hours,
 						'Overtime' => $Overtime,
+
 						'NightHours' => $NightHours,
 						'NightOvertime' => $NightOvertime,
 						'Remarks' => $Remarks,
+
 						'Type' => $Type,
 						'HDMF' => $HDMF,
 						'Philhealth' => $Philhealth,
 						'SSS' => $SSS,
 						'Tax' => $Tax,
+
 						'day_pay' => $TdRate,
 
 					);
@@ -1115,7 +1118,14 @@ class Update_Controller extends CI_Controller {
 									'ClientID' => $ClientID,
 									'Date' => $GetWeeklyDates->result_array()[$ColCount - 3]['Time'],
 									'Type' => $Type,
-									
+
+									// ADD VARIBLES
+									// ERROR 01
+									'NightHours' => null,
+									'NightOvertime' => null,
+									'Remarks' => null,
+									'day_pay' => null,
+
 									'Hours' => $rHours,
 									'Overtime' => $otValue,
 									'HDMF' => null,
