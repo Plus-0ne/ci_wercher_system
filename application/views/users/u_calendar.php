@@ -6,12 +6,19 @@
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="row wercher-tablelist-container">
+					<div class="col-sm-8">
 					<?php 
 						$this->load->library('Calendar');
 						$calendar = new Calendar();
  						
 						echo $calendar->show();
 					 ?>
+					</div>
+					<div class="col-sm-4">
+						<div class="calendar-tooltip">
+							Test
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

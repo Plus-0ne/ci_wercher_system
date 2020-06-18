@@ -566,7 +566,7 @@
 							</div>
 						</div>
 					</div>
-					<?php if(isset($Suspended)): ?>
+					<?php if(isset($Suspended) && $Suspended != NULL): ?>
 					<div id="Suspension" class="row pt-5 pl-5 d-none">
 						<div class="col-sm-12">
 							<h5>
@@ -673,19 +673,19 @@
 							<p>
 								<?php
 
-								$currTime = time();
-								$strDateEnds = strtotime($DateEnds);
-								$strDateStarted = strtotime($DateStarted);
-								// DAYS REMAINING
-								$dateTimeZone = new DateTimeZone("Asia/Manila");
-								$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
-								$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
-								$interval = $datetime1->diff($datetime2);
-								if($interval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
-									echo $interval->format('%H hours, %I minutes, %S seconds');
-								} else {
-									echo $interval->format('%y years, %m months, %d days');
-								}
+								// $currTime = time();
+								// $strDateEnds = strtotime($DateEnds);
+								// $strDateStarted = strtotime($DateStarted);
+								// // DAYS REMAINING
+								// $dateTimeZone = new DateTimeZone("Asia/Manila");
+								// $datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
+								// $datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
+								// $interval = $datetime1->diff($datetime2);
+								// if($interval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
+								// 	echo $interval->format('%H hours, %I minutes, %S seconds');
+								// } else {
+								// 	echo $interval->format('%y years, %m months, %d days');
+								// }
 								?>
 							</p>
 						</div>

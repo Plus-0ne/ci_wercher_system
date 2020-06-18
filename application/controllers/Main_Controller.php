@@ -163,6 +163,12 @@
 		$record = $result->result();
 		$data = [];
 
+		// WEEKLY INCREASE
+		$CurrentDay = date('Y-m-d h:i:s A');
+		$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
+		$data['WeeklyApplicants'] = $this->Model_Selects->GetApplicantsIncrease($CurrentDay, $CurrentDayScope)->num_rows();
+		$data['WeeklyEmployees'] = $this->Model_Selects->GetEmployeesIncrease($CurrentDay, $CurrentDayScope)->num_rows();
+
 		foreach($record as $row) {
 			$data['label'][] = $row->PositionGroup;
 			$data['data'][] = (int) $row->count;

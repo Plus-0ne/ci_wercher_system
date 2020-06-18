@@ -413,6 +413,7 @@ a[data-toggle="collapse"] {
 	cursor: pointer;
 }
 .image-hover:hover {
+	opacity: 0.5;
 	border: 2px dashed rgba(155, 155, 155, 1.0);
 	background-color: rgba(0, 0, 0, 0.04);
 	cursor: pointer;
@@ -891,6 +892,10 @@ a[data-toggle="collapse"] {
 .wercher-card-weekly-tracker {
 	color: rgba(0, 255, 0, 0.9);
 	margin-left: 20px;
+}
+.calendar-tooltip {
+	border-radius: 6px;
+	border: 2px dashed rgba(0, 0, 0, 0.33);
 }
 
 /*

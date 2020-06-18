@@ -82,11 +82,13 @@
 										<i class="fas fa-user-friends fa-fw card-icon ml-auto mr-2"></i>
 									</div>
 								</div>
+								<?php if($WeeklyApplicants>0): ?>
 								<div class="wercher-card-weekly-tracker-container">
 									<div class="wercher-card-weekly-tracker">
-										<i class="fas fa-caret-up"></i>0 this week (placeholder)
+										<i class="fas fa-caret-up"></i><?php echo $WeeklyApplicants; ?> this week
 									</div>
 								</div>
+								<?php endif; ?>
 							</a>
 						</div>
 					</div>
@@ -109,11 +111,13 @@
 										<i class="fas fa-user-tie fa-fw card-icon ml-auto mr-2"></i>
 									</div>
 								</div>
+								<?php if($WeeklyEmployees>0): ?>
 								<div class="wercher-card-weekly-tracker-container">
 									<div class="wercher-card-weekly-tracker">
-										<i class="fas fa-caret-up"></i>0 this week (placeholder)
+										<i class="fas fa-caret-up"></i><?php echo $WeeklyEmployees; ?> this week
 									</div>
 								</div>
+								<?php endif; ?>
 							</a>
 						</div>
 					</div>
@@ -136,11 +140,11 @@
 										<i class="fas fa-user-tag fa-fw card-icon ml-auto mr-2"></i>
 									</div>
 								</div>
-								<div class="wercher-card-weekly-tracker-container">
+								<!-- <div class="wercher-card-weekly-tracker-container">
 									<div class="wercher-card-weekly-tracker">
 										<i class="fas fa-caret-up"></i>0 this week (placeholder)
 									</div>
-								</div>
+								</div> -->
 							</a>
 						</div>
 					</div>
@@ -163,11 +167,11 @@
 										<i class="fas fa-user-secret fa-fw card-icon ml-auto mr-2"></i>
 									</div>
 								</div>
-								<div class="wercher-card-weekly-tracker-container">
+								<!-- <div class="wercher-card-weekly-tracker-container">
 									<div class="wercher-card-weekly-tracker">
 										<i class="fas fa-caret-up"></i>0 this week (placeholder)
 									</div>
-								</div>
+								</div> -->
 							</a>
 						</div>
 					</div>

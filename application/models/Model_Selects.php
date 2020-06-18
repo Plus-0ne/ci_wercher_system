@@ -464,4 +464,16 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetApplicantsIncrease($DateStart, $DateMax)
+	{
+		$SQL = "SELECT * FROM applicants WHERE (AppliedOn BETWEEN '$DateMax' AND '$DateStart')";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetEmployeesIncrease($DateStart, $DateMax)
+	{
+		$SQL = "SELECT * FROM applicants WHERE (DateStarted BETWEEN '$DateMax' AND '$DateStart')";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }
