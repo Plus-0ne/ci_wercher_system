@@ -476,4 +476,38 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+
+
+
+	public function GetAllSSSTable()
+	{
+		$SQL = "SELECT * FROM sss_table";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetAllHDMFTable()
+	{
+		$SQL = "SELECT * FROM hdmf_table";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetAllPhilHealthTable()
+	{
+		$SQL = "SELECT * FROM philhealth_table";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetAllTaxTable()
+	{
+		$SQL = "SELECT * FROM tax_table";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+
+	public function GetEmployeeDeductions($eid)
+	{
+		$SQL = "SELECT * FROM employee_deductions where employee_id=$eid";
+		$result = $this->db->query($SQL,$eid);
+		return $result;
+	}
 }

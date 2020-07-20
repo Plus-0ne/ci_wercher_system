@@ -152,4 +152,10 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->update('sss_table', $data);
 		return $result;
 	}
+
+	public function PayDeferredDeductions($id)
+	{
+		$SQL = "update deferred_deduction set is_paid=1 where id=$id";
+        $result = $this->db->query($SQL,$id);
+	}
 }
