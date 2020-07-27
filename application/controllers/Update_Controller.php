@@ -835,6 +835,7 @@ class Update_Controller extends CI_Controller {
 			$GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
 			$ArrayInt = 0;
 			$ArrayLength = $GetWeeklyDates->num_rows();
+
 			
 			foreach ($GetWeeklyDates->result_array() as $nrow):
 				$ArrayInt++;
@@ -924,18 +925,131 @@ class Update_Controller extends CI_Controller {
 			$Checkkkkkk = $this->Model_Selects->Checkkkkkk($ApplicantID);
 
 			if ($Checkkkkkk->num_rows() > 0) {
+				$sss_contri = 0;
+				$hdmf_contri = 0;
+				$hdmf_rate=0.0;
+				$philhealth_contri = 0;
+				$philhealth_percentage = 0;
+				$tax = 0;
+				$totalDeduction=0;
+
+
 				$gross_pay = $this->Model_Selects->GetempGP($ApplicantID);
-				
-				$getsssRa = $this->Model_Selects->getsssRa();
 				$GetTotalH = $this->Model_Selects->GetTotalH($ApplicantID);
 				$GetTotalOt = $this->Model_Selects->GetTotalOt($ApplicantID);
 
-				foreach ($getsssRa->result_array() as $row) {
-					if ($gross_pay > $row['f_range'] AND $gross_pay < $row['t_range']) {
-						$sss_contri = $row['contribution'];
+				$employees = $this->Model_Selects-> CheckEmployee($ApplicantID);
+				$employee=$employees->result_array()[0];
+
+
+				$sssTable = $this->Model_Selects->GetAllSSSTable();
+				$hdmfTable = $this->Model_Selects->GetAllHDMFTable();
+				$philhealthTable = $this->Model_Selects->GetAllPhilHealthTable();
+				//$philhealthTable = $this->Model_Selects->GetAllTaxTable();
+
+
+				
+
+				$employeeSalary = $employee["SalaryExpected"];
+
+				foreach ($sssTable->result_array() as $row) {
+					if ($employeeSalary >= $row['f_range'] && $employeeSalary <= $row['t_range']) {
+						$sss_contri = $row['contribution_ee'];
 					}
 				}
-				$net_pay = $gross_pay - $sss_contri;
+
+				foreach ($hdmfTable->result_array() as $row) {
+					if ($employeeSalary >= $row['f_range'] && $employeeSalary <= $row['t_range']) {
+						$hdmf_rate= $row['contribution_ee'];
+					}
+				}
+				
+
+				$philhealthArray=$philhealthTable->result_array();
+
+				if ($employeeSalary >= $philhealthArray[0]['f_range'] && $employeeSalary <= $philhealthArray[0]['t_range'])
+				{
+					$philhealth_percentage=300;
+				}
+				else if($employeeSalary >= $philhealthArray[1]['f_range'] && $employeeSalary <= $philhealthArray[1]['t_range'])
+				{
+					$philhealth_percentage=($employeeSalary * 0.03)/4;
+
+				}
+				else
+				{
+					$philhealth_percentage=1800;
+				}
+
+
+				
+
+				$sss_contri = $sss_contri/4;
+				$hdmf_contri =($employeeSalary*$hdmf_rate)/4;
+				$philhealth_contri=$philhealth_percentage/4;
+
+				//tax
+				$year=date("Y");
+				$annualSalary=$employeeSalary*12;
+				if($year<=2022)
+				{
+					if($annualSalary<=250000) //Not over P250,000 -- 0%
+					{
+						$tax=0; 
+					}
+					else if($annualSalary>=250000.01 && $annualSalary <= 400000) 	//Over P250,000 but not over P400,000 -- 20% of the excess over P250,000
+					{
+						$tax=($annualSalary-250000)*0.2;
+					} 
+					else if($annualSalary>=400000.01 && $annualSalary <= 800000) 	//Over P400,000 but not over P800,000 -- P30,000 + 25% of the excess over P400,000
+					{
+						$tax=((30000+(($annualSalary-400000)*0.25))/12)/4; 		 	//divided into 12 for monthly, then divided by 4 for weekly
+					}
+					else if($annualSalary>=800000.01 && $annualSalary <= 2000000) 	//Over P800,000 but not over P2,000,000 -- P130,000 + 30% of the excess over P800,000
+					{
+						$tax=((130000+(($annualSalary-800000)*0.3))/12)/4; 		  	//divided into 12 for monthly, then divided by 4 for weekly
+					}
+					else if($annualSalary>=2000000.01 && $annualSalary <= 8000000) 	//Over P2,000,000 but not over P8,000,000 -- P490,000 + 32% of the excess over P2,000,000
+					{
+						$tax=((490000+(($annualSalary-2000000)*0.32))/12)/4; 		//divided into 12 for monthly, then divided by 4 for weekly
+					}
+					else 															//Over P8,000,000 -- P2,410,000 + 35% of the excess over P8,000,000
+					{
+						$tax=((2410000+(($annualSalary-8000000)*0.35))/12)/4; 		//divided into 12 for monthly, then divided by 4 for weekly
+					}
+
+				}
+				else
+				{
+					if($annualSalary<=250000) //Not over P250,000 -- 0%
+					{
+						$tax=0; 
+					}
+					else if($annualSalary>=250000.01 && $annualSalary <= 400000) 	//Over P250,000 but not over P400,000 -- 15% of the excess over P250,000
+					{
+						$tax=($annualSalary-250000)*0.15;
+					} 
+					else if($annualSalary>=400000.01 && $annualSalary <= 800000) 	//Over P400,000 but not over P800,000 -- P22,500 + 20% of the excess over P400,000
+					{
+						$tax=((22500+(($annualSalary-400000)*0.20))/12)/4; 		 	//divided into 12 for monthly, then divided by 4 for weekly
+					}
+					else if($annualSalary>=800000.01 && $annualSalary <= 2000000) 	//Over P800,000 but not over P2,000,000 -- P102,500 + 25% of the excess over P800,000
+					{
+						$tax=((102500+(($annualSalary-800000)*0.25))/12)/4; 		  	//divided into 12 for monthly, then divided by 4 for weekly
+					}
+					else if($annualSalary>=2000000.01 && $annualSalary <= 8000000) 	//Over P2,000,000 but not over P8,000,000 -- P402,500 + 30% of the excess over P2,000,000
+					{
+						$tax=((402500+(($annualSalary-2000000)*0.30))/12)/4; 		//divided into 12 for monthly, then divided by 4 for weekly
+					}
+					else 															//Over P8,000,000 -- P2,202,500 + 35% of the excess over P8,000,000
+					{
+						$tax=((202500+(($annualSalary-8000000)*0.35))/12)/4; 		//divided into 12 for monthly, then divided by 4 for weekly
+					}
+				}
+
+				$totalDeduction=$sss_contri + $hdmf_contri + $philhealth_contri + $tax;
+
+				$net_pay = $gross_pay - $totalDeduction;
 				$data = array(
 					'ClientID' => $ClientID,
 					'ApplicantID' => $ApplicantID,
