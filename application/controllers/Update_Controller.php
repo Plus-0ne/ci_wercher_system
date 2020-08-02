@@ -829,18 +829,24 @@ class Update_Controller extends CI_Controller {
 	}
 	public function SetWeeklyHours()
 	{
-		if (isset($_POST['ApplicantID'])) {
+		if (isset($_POST['ApplicantID'])) 
+		{
 			$ApplicantID = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 			$ClientID = $this->input->post('ClientID',TRUE);
 			$GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
 			$ArrayInt = 0;
 			$ArrayLength = $GetWeeklyDates->num_rows();
+			$DeductionOption=$this->input->post('DeductionOption',TRUE); //0 no deduction, 1 with deduction, 2 deferred deductions 
+			$cutoffMode=$this->input->post('CutoffMode',TRUE);
+			$HoursTotal=0;
+			$gross_pay=0;
 
-			
+			//record attendance for each workday
 			foreach ($GetWeeklyDates->result_array() as $nrow):
 				$ArrayInt++;
 				$Type = $this->input->post('Type_' . $nrow['Time'],TRUE);
 				$Hours = $this->input->post('Hours_' . $nrow['Time'],TRUE);
+				$HoursTotal+=$Hours;
 				$Overtime = $this->input->post('OTHours_' . $nrow['Time'],TRUE);
 				$NightHours = $this->input->post('NightHours_' . $nrow['Time'],TRUE);
 				$NightOvertime = $this->input->post('NightOTHours_' . $nrow['Time'],TRUE);
@@ -922,9 +928,11 @@ class Update_Controller extends CI_Controller {
 				}
 			endforeach;
 
-			$Checkkkkkk = $this->Model_Selects->Checkkkkkk($ApplicantID);
+			//cutoffMode
+			//get employee hours
+			$EmployeeHoursList = $this->Model_Selects->GetEmployeeHours($ApplicantID);
 
-			if ($Checkkkkkk->num_rows() > 0) {
+			if ($EmployeeHoursList->num_rows() > 0) {
 				$sss_contri = 0;
 				$hdmf_contri = 0;
 				$hdmf_rate=0.0;
@@ -932,14 +940,58 @@ class Update_Controller extends CI_Controller {
 				$philhealth_percentage = 0;
 				$tax = 0;
 				$totalDeduction=0;
-
-
-				$gross_pay = $this->Model_Selects->GetempGP($ApplicantID);
-				$GetTotalH = $this->Model_Selects->GetTotalH($ApplicantID);
-				$GetTotalOt = $this->Model_Selects->GetTotalOt($ApplicantID);
+				$net_pay=0;
+				$cutoffTaxDivider=0;
 
 				$employees = $this->Model_Selects-> CheckEmployee($ApplicantID);
 				$employee=$employees->result_array()[0];
+				$employeeSalary = $employee["SalaryExpected"];
+
+				
+				if(cutoffMode==0)//weekly
+				{
+					$gross_pay = $this->Model_Selects->GetempGP($ApplicantID);
+				}
+				else if(cutoffMode==1)//semi monthly
+				{
+					$semiMonthlyTotalSalary=$employeeSalary/2;		   //total salary per half of month
+					$semiMonthlyHourRate= $semiMonthlyTotalSalary/96;  //including saturdays. otherwise it would just be 80
+					$semiMonthlyDeductedHours=96-$HoursTotal;		   //difference of supposed total hours of half a month (96) and total hours worked
+					$semiMonthlyDeductedHoursTotalRate=$semiMonthlyDeductedHours * $semiMonthlyHourRate; //rate to be deducted from total amount
+
+					if($semiMonthlyDeductedHoursTotalRate<=0) //no absences or cases where it has 31st day in month
+					{
+						$gross_pay=$semiMonthlyTotalSalary;
+
+					}
+					else //normal. subtract absents and leaves
+					{
+						$gross_pay=$semiMonthlyTotalSalary-$semiMonthlyDeductedHoursTotalRate;
+
+					}
+				}
+				else if(cutoffMode==2)
+				{
+					$monthlyHourRate= $employeeSalary/192;
+					$monthlyDeductedHours = 192-$HoursTotal;
+					$monthlyDeductedHoursTotalRate = $monthlyDeductedHours * $monthlyHourRate;
+
+					if($monthlyDeductedHoursTotalRate<=0) //no absences or cases where it has 31st day in month
+					{
+						$gross_pay=$employeeSalary;
+
+					}
+					else //normal. subtract absents and leaves
+					{
+						$gross_pay=$employeeSalary-$monthlyDeductedHoursTotalRate;
+
+					}
+				}
+
+				$GetTotalH = $this->Model_Selects->GetTotalH($ApplicantID);
+				$GetTotalOt = $this->Model_Selects->GetTotalOt($ApplicantID);
+
+				
 
 
 				$sssTable = $this->Model_Selects->GetAllSSSTable();
@@ -950,7 +1002,10 @@ class Update_Controller extends CI_Controller {
 
 				
 
-				$employeeSalary = $employee["SalaryExpected"];
+				
+			
+			if($DeductionOption==1 || $DeductionOption==2)//if with deductions or deferred 
+			{
 
 				foreach ($sssTable->result_array() as $row) {
 					if ($employeeSalary >= $row['f_range'] && $employeeSalary <= $row['t_range']) {
@@ -973,7 +1028,7 @@ class Update_Controller extends CI_Controller {
 				}
 				else if($employeeSalary >= $philhealthArray[1]['f_range'] && $employeeSalary <= $philhealthArray[1]['t_range'])
 				{
-					$philhealth_percentage=($employeeSalary * 0.03)/4;
+					$philhealth_percentage=($employeeSalary * 0.03);
 
 				}
 				else
@@ -983,10 +1038,27 @@ class Update_Controller extends CI_Controller {
 
 
 				
+				if($cutoffMode==0)//weekly
+				{
+					$cutoffTaxDivider=4;
+				}
+				else if($cutoffMode==1)//semi monthly
+				{
+					$cutoffTaxDivider=2;
+				}
+				else if($cutoffMode==2) //monthly
+				{
+					$cutoffTaxDivider=1;
+				}
 
-				$sss_contri = $sss_contri/4;
-				$hdmf_contri =($employeeSalary*$hdmf_rate)/4;
-				$philhealth_contri=$philhealth_percentage/4;
+				$sss_contri = $sss_contri/$cutoffTaxDivider;
+				$hdmf_contri =($employeeSalary*$hdmf_rate)/$cutoffTaxDivider;
+				$philhealth_contri=$philhealth_percentage/$cutoffTaxDivider;
+				
+
+
+				
+			
 
 				//tax
 				$year=date("Y");
@@ -999,23 +1071,23 @@ class Update_Controller extends CI_Controller {
 					}
 					else if($annualSalary>=250000.01 && $annualSalary <= 400000) 	//Over P250,000 but not over P400,000 -- 20% of the excess over P250,000
 					{
-						$tax=($annualSalary-250000)*0.2;
+						$tax=((($annualSalary-250000)*0.2)/12)/$cutoffTaxDivider;
 					} 
 					else if($annualSalary>=400000.01 && $annualSalary <= 800000) 	//Over P400,000 but not over P800,000 -- P30,000 + 25% of the excess over P400,000
 					{
-						$tax=((30000+(($annualSalary-400000)*0.25))/12)/4; 		 	//divided into 12 for monthly, then divided by 4 for weekly
+						$tax=((30000+(($annualSalary-400000)*0.25))/12)/$cutoffTaxDivider; 		 	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
 					}
 					else if($annualSalary>=800000.01 && $annualSalary <= 2000000) 	//Over P800,000 but not over P2,000,000 -- P130,000 + 30% of the excess over P800,000
 					{
-						$tax=((130000+(($annualSalary-800000)*0.3))/12)/4; 		  	//divided into 12 for monthly, then divided by 4 for weekly
+						$tax=((130000+(($annualSalary-800000)*0.3))/12)/$cutoffTaxDivider; 		  	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
 					}
 					else if($annualSalary>=2000000.01 && $annualSalary <= 8000000) 	//Over P2,000,000 but not over P8,000,000 -- P490,000 + 32% of the excess over P2,000,000
 					{
-						$tax=((490000+(($annualSalary-2000000)*0.32))/12)/4; 		//divided into 12 for monthly, then divided by 4 for weekly
+						$tax=((490000+(($annualSalary-2000000)*0.32))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
 					}
 					else 															//Over P8,000,000 -- P2,410,000 + 35% of the excess over P8,000,000
 					{
-						$tax=((2410000+(($annualSalary-8000000)*0.35))/12)/4; 		//divided into 12 for monthly, then divided by 4 for weekly
+						$tax=((2410000+(($annualSalary-8000000)*0.35))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
 					}
 
 				}
@@ -1027,29 +1099,47 @@ class Update_Controller extends CI_Controller {
 					}
 					else if($annualSalary>=250000.01 && $annualSalary <= 400000) 	//Over P250,000 but not over P400,000 -- 15% of the excess over P250,000
 					{
-						$tax=($annualSalary-250000)*0.15;
+						$tax=((($annualSalary-250000)*0.15)/12)/$cutoffTaxDivider;
 					} 
 					else if($annualSalary>=400000.01 && $annualSalary <= 800000) 	//Over P400,000 but not over P800,000 -- P22,500 + 20% of the excess over P400,000
 					{
-						$tax=((22500+(($annualSalary-400000)*0.20))/12)/4; 		 	//divided into 12 for monthly, then divided by 4 for weekly
+						$tax=((22500+(($annualSalary-400000)*0.20))/12)/$cutoffTaxDivider; 		 	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
 					}
 					else if($annualSalary>=800000.01 && $annualSalary <= 2000000) 	//Over P800,000 but not over P2,000,000 -- P102,500 + 25% of the excess over P800,000
 					{
-						$tax=((102500+(($annualSalary-800000)*0.25))/12)/4; 		  	//divided into 12 for monthly, then divided by 4 for weekly
+						$tax=((102500+(($annualSalary-800000)*0.25))/12)/$cutoffTaxDivider; 		  	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
 					}
 					else if($annualSalary>=2000000.01 && $annualSalary <= 8000000) 	//Over P2,000,000 but not over P8,000,000 -- P402,500 + 30% of the excess over P2,000,000
 					{
-						$tax=((402500+(($annualSalary-2000000)*0.30))/12)/4; 		//divided into 12 for monthly, then divided by 4 for weekly
+						$tax=((402500+(($annualSalary-2000000)*0.30))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, tthen divided by 4 for weekly, 2 for semi monthly, 1 for monthly
 					}
 					else 															//Over P8,000,000 -- P2,202,500 + 35% of the excess over P8,000,000
 					{
-						$tax=((202500+(($annualSalary-8000000)*0.35))/12)/4; 		//divided into 12 for monthly, then divided by 4 for weekly
+						$tax=((202500+(($annualSalary-8000000)*0.35))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
 					}
 				}
 
 				$totalDeduction=$sss_contri + $hdmf_contri + $philhealth_contri + $tax;
+				if($DeductionOption==1)
+				{
+					$net_pay = $gross_pay - $totalDeduction;
+				}
+				else if ($DeductionOption==2)
+				{
 
-				$net_pay = $gross_pay - $totalDeduction;
+					$deferedid= "DEF_". com_create_guid();
+					$this->Model_Inserts->AddEmployeeDeferredDeductions($deferedid,$ApplicantID,$totalDeduction,date());
+				}
+
+				
+
+			}
+			else
+			{
+				$net_pay = $gross_pay;
+			}
+
+				
 				$data = array(
 					'ClientID' => $ClientID,
 					'ApplicantID' => $ApplicantID,
@@ -1059,7 +1149,7 @@ class Update_Controller extends CI_Controller {
 					'TotaOT' => $GetTotalOt,
 					'net_pay' => $net_pay,
 				);
-				$this->Model_Inserts->Insertttttt($data);
+				$this->Model_Inserts->InsertTrackingTable($data);
 			}
 			redirect($_SERVER['HTTP_REFERER']);
 		}
@@ -1069,6 +1159,9 @@ class Update_Controller extends CI_Controller {
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
+
+
+
 	public function ViewClientEmployees() // Date Range
 	{
 		$ClientID = $this->input->post('ViewClientID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
@@ -1096,10 +1189,30 @@ class Update_Controller extends CI_Controller {
 			$date2 = new DateTime($ToDate);
 
 			$diff = $date2->diff($date1)->format("%a");
-			if ($diff > 7) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date Range for weekly must be lower than 1 week</h5></div>');
-				redirect($_SERVER['HTTP_REFERER']);
-			} //velseif ($diff > 180 && $diff < 730) {
+
+			if($Mode==0)
+			{
+				if ($diff > 6) {
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date Range for weekly must be lower than 1 week</h5></div>');
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+			}
+			else if($Mode ==1)
+			{
+				if ($diff > 15) {
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date Range for semi-monthly must be lower than half a month</h5></div>');
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+			}
+			else
+			{//needs cleaning up. needs differentiating between months number of days
+				if ($diff > 31) {
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date Range for semi-monthly must be lower than half a month</h5></div>');
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+			}
+			
+			//velseif ($diff > 180 && $diff < 730) {
 			// 	$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #FFA500;"><h5><i class="fas fa-exclamation-triangle"></i> Note: You are viewing at a huge date range, performance may get slower than usual</h5></div>');
 			// }
 			// TODO: Clean & optimize this. May cause lag on huge database.
@@ -1124,7 +1237,7 @@ class Update_Controller extends CI_Controller {
 				);
 				$ClientViewTime = $this->Model_Inserts->InsertDummyHours($data);
 				if ($ClientViewTime && $i == $diff) {
-					redirect('ViewClient?id=' . $ClientID);
+					redirect('ViewClient?id=' . $ClientID . "&mode=" . $Mode );
 				}
 			}
 		}

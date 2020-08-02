@@ -1019,6 +1019,7 @@
 
 		// $data['ShowClients'] = $this->Model_Selects->GetClients();
 		$data['GetLogbookLatestHires'] =  $this->Model_Selects->GetLogbookLatestHires();
+		$data["Mode"]=$_GET['mode'];
 		$this->load->view('payroll/p_payrolls',$data);
 	}
 	public function ViewClient()
@@ -1057,6 +1058,7 @@
 			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewClient?id=' . $id . '">Details</a></li>
 			</ol>
 			</nav>';
+			$data["Mode"]=$_GET['mode'];
 			$this->load->view('payroll/p_viewclient',$data);
 		}
 		else

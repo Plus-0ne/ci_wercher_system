@@ -22,13 +22,13 @@
 				<div class="form-row">
 					<div class="form-group col-12">
 						<select class="form-control" name="Mode">
-							<option value="Weekly">
+							<option value="0">
 								Weekly
 							</option>
-							<option value="Semi-Monthly">
+							<option value="1">
 								Semi-Monthly
 							</option>
-							<option value="Monthly">
+							<option value="2">
 								Monthly
 							</option>
 						</select>

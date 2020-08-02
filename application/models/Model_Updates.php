@@ -158,4 +158,10 @@ class Model_Updates extends CI_Model {
 		$SQL = "update deferred_deduction set is_paid=1 where id=$id";
         $result = $this->db->query($SQL,$id);
 	}
+
+	public function MarkAsPaid($id)
+	{
+		$SQL = "update hours_weekly set is_paid=1 where No=$id";
+        $result = $this->db->query($SQL,$id);
+	}
 }
