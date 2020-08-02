@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3308
--- Generation Time: Jul 20, 2020 at 09:19 PM
+-- Generation Time: Aug 02, 2020 at 07:03 PM
 -- Server version: 8.0.18
 -- PHP Version: 7.3.12
 
@@ -158,10 +158,10 @@ INSERT INTO `applicants` (`ApplicantNo`, `ApplicantImage`, `ApplicantID`, `Emplo
 (6, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f30303030362d412f696d616765362e6a7067, '00006-A', 'WCHI-0001-20', 'Engineering', 'Factory', '50000', 'Wegener', 'Steve', 'V', NULL, 'Male', '', '', '', '', '', '', '', 'Single', '', '', '', '', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Blacklisted', '2', '2020-03-16 12:23:01 AM', '2020-03-23 12:23:01 AM', NULL, NULL, NULL, NULL, '2020-02-27 01:27:16 AM', '', '', NULL, 'No', '00006-B'),
 (7, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f707572706c652e706e67, '00007-A', NULL, 'TEST-9540507', 'TEST-9540507', NULL, 'TEST-9540507', 'TEST-9540507', 'TEST-9540507', NULL, 'Male', '57', 'TEST-9540507', 'TEST-9540507', 'TEST-9540507', '2020-03-11', 'TEST-9540507', 'TEST-9540507', 'Single', '57', 'TEST-9540507', 'TEST-9540507', 'TEST-9540507', NULL, NULL, NULL, 'TEST-9540507', 'TEST-9540507', '2020-03-11', 'TEST-9540507', 'TEST-9540507', '2020-03-11', 'TEST-9540507', 'TEST-9540507', '2020-03-11', 'TEST-9540507', 'TEST-9540507', '2020-03-11', 'TEST-9540507', 'TEST-9540507', '2020-03-11', 'TEST-9540507', 'Applicant', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-11 11:18:40 AM', NULL, NULL, NULL, NULL, NULL),
 (8, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f707572706c652e706e67, '00008-A', NULL, 'TEST-3407267', 'TEST-3407267', NULL, 'TEST-3407267', 'TEST-3407267', 'TEST-3407267', NULL, 'Male', NULL, 'TEST-3407267', 'TEST-3407267', 'TEST-3407267', '2020-03-17', 'TEST-3407267', 'TEST-3407267', 'Single', '41', 'TEST-3407267', 'TEST-3407267', 'TEST-3407267', NULL, NULL, NULL, 'TEST-3407267', 'TEST-3407267', NULL, 'TEST-3407267', NULL, NULL, 'TEST-3407267', NULL, NULL, 'TEST-3407267', NULL, NULL, 'TEST-3407267', NULL, NULL, 'TEST-3407267', 'Applicant', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-16 08:27:58 PM', NULL, NULL, NULL, NULL, NULL),
-(9, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f677265656e2e706e67, '00009-A', '', 'TEST-2302729', 'TEST-2302729', '', 'Robert', 'Newman', 'TEST-2302729', NULL, 'Male', NULL, 'TEST-2302729', 'TEST-2302729', 'TEST-2302729', '2020-03-17', 'TEST-2302729', 'TEST-2302729', 'Single', '10', 'TEST-2302729', 'TEST-2302729', 'TEST-2302729', NULL, NULL, NULL, 'TEST-2302729', 'TEST-2302729', NULL, 'TEST-2302729', NULL, NULL, 'TEST-2302729', NULL, NULL, 'TEST-2302729', NULL, NULL, 'TEST-2302729', NULL, NULL, 'TEST-2302729', 'Employed', '0', '2020-07-05 05:36:47 AM', '2021-07-05 05:36:47 AM', NULL, NULL, NULL, NULL, '2020-03-16 08:40:29 PM', NULL, NULL, NULL, NULL, '00009-B'),
-(10, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f626c75652e706e67, '00010-A', '', 'TEST-3050088', 'TEST-3050088', '', 'Newman', 'Robert', 'TEST-3050088', NULL, 'Male', NULL, 'TEST-3050088', 'TEST-3050088', 'TEST-3050088', '2020-03-17', 'TEST-3050088', 'TEST-3050088', 'Single', '96', 'TEST-3050088', 'TEST-3050088', 'TEST-3050088', NULL, NULL, NULL, 'TEST-3050088', 'TEST-3050088', NULL, 'TEST-3050088', NULL, NULL, 'TEST-3050088', NULL, NULL, 'TEST-3050088', NULL, NULL, 'TEST-3050088', NULL, NULL, 'TEST-3050088', 'Employed', '0', '2020-07-05 05:37:05 AM', '2021-07-05 05:37:05 AM', NULL, NULL, NULL, NULL, '2020-03-16 09:29:50 PM', NULL, NULL, NULL, NULL, '00010-B'),
+(9, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f677265656e2e706e67, '00009-A', '', 'TEST-2302729', 'TEST-2302729', '5000', 'Robert', 'Newman', 'TEST-2302729', NULL, 'Male', NULL, 'TEST-2302729', 'TEST-2302729', 'TEST-2302729', '2020-03-17', 'TEST-2302729', 'TEST-2302729', 'Single', '10', 'TEST-2302729', 'TEST-2302729', 'TEST-2302729', NULL, NULL, NULL, 'TEST-2302729', 'TEST-2302729', NULL, 'TEST-2302729', NULL, NULL, 'TEST-2302729', NULL, NULL, 'TEST-2302729', NULL, NULL, 'TEST-2302729', NULL, NULL, 'TEST-2302729', 'Employed', '0', '2020-07-05 05:36:47 AM', '2021-07-05 05:36:47 AM', NULL, NULL, NULL, NULL, '2020-03-16 08:40:29 PM', NULL, NULL, NULL, NULL, '00009-B'),
+(10, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f626c75652e706e67, '00010-A', '', 'TEST-3050088', 'TEST-3050088', '10000', 'Newman', 'Robert', 'TEST-3050088', NULL, 'Male', NULL, 'TEST-3050088', 'TEST-3050088', 'TEST-3050088', '2020-03-17', 'TEST-3050088', 'TEST-3050088', 'Single', '96', 'TEST-3050088', 'TEST-3050088', 'TEST-3050088', NULL, NULL, NULL, 'TEST-3050088', 'TEST-3050088', NULL, 'TEST-3050088', NULL, NULL, 'TEST-3050088', NULL, NULL, 'TEST-3050088', NULL, NULL, 'TEST-3050088', NULL, NULL, 'TEST-3050088', 'Employed', '0', '2020-07-05 05:37:05 AM', '2021-07-05 05:37:05 AM', NULL, NULL, NULL, NULL, '2020-03-16 09:29:50 PM', NULL, NULL, NULL, NULL, '00010-B'),
 (11, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f677265656e2e706e67, '00011-A', NULL, 'TEST-4934488', 'TEST-4934488', NULL, 'TEST-4934488', 'TEST-4934488', 'TEST-4934488', NULL, 'Male', NULL, 'TEST-4934488', 'TEST-4934488', 'TEST-4934488', '2020-03-17', 'TEST-4934488', 'TEST-4934488', 'Single', '34', 'TEST-4934488', 'TEST-4934488', 'TEST-4934488', NULL, NULL, NULL, 'TEST-4934488', 'TEST-4934488', NULL, 'TEST-4934488', NULL, NULL, 'TEST-4934488', NULL, NULL, 'TEST-4934488', NULL, NULL, 'TEST-4934488', NULL, NULL, 'TEST-4934488', 'Applicant', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-16 10:12:54 PM', NULL, NULL, NULL, NULL, NULL),
-(12, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f626c75652e706e67, '00012-A', NULL, 'TEST-5550853', 'TEST-5550853', NULL, 'TEST-5550853', 'TEST-5550853', 'TEST-5550853', 'TEST-5550853', 'Male', NULL, 'TEST-5550853', 'TEST-5550853', 'TEST-5550853', '2020-03-17', 'TEST-5550853', 'TEST-5550853', 'Single', '77', 'TEST-5550853', 'TEST-5550853', 'TEST-5550853', 'TEST-5550853', 'TEST-5550853', '', 'TEST-5550853', 'TEST-5550853', NULL, 'TEST-5550853', NULL, NULL, 'TEST-5550853', NULL, NULL, 'TEST-5550853', NULL, NULL, 'TEST-5550853', NULL, NULL, 'TEST-5550853', 'Applicant', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-16 10:14:30 PM', NULL, NULL, NULL, NULL, NULL);
+(12, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f626c75652e706e67, '00012-A', '73295', 'TEST-5550853', 'TEST-5550853', '47000', 'TEST-5550853', 'TEST-5550853', 'TEST-5550853', 'TEST-5550853', 'Male', NULL, 'TEST-5550853', 'TEST-5550853', 'TEST-5550853', '2020-03-17', 'TEST-5550853', 'TEST-5550853', 'Single', '77', 'TEST-5550853', 'TEST-5550853', 'TEST-5550853', 'TEST-5550853', 'TEST-5550853', '', 'TEST-5550853', 'TEST-5550853', NULL, 'TEST-5550853', NULL, NULL, 'TEST-5550853', NULL, NULL, 'TEST-5550853', NULL, NULL, 'TEST-5550853', NULL, NULL, 'TEST-5550853', 'Employed', '0', '2020-07-26 03:37:01 PM', '2021-07-26 03:37:01 PM', NULL, NULL, NULL, NULL, '2020-03-16 10:14:30 PM', NULL, NULL, NULL, NULL, '00012-B');
 
 -- --------------------------------------------------------
 
@@ -379,7 +379,7 @@ INSERT INTO `dashboard_months` (`ID`, `Year`, `Month`, `Total`) VALUES
 DROP TABLE IF EXISTS `deferred_deductions`;
 CREATE TABLE IF NOT EXISTS `deferred_deductions` (
   `id` varchar(50) NOT NULL,
-  `employee_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `applicant_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `period` varchar(250) NOT NULL,
   `is_paid` int(2) NOT NULL DEFAULT '0',
@@ -401,21 +401,20 @@ CREATE TABLE IF NOT EXISTS `dummy_hours` (
   `NightShift` tinyint(1) NOT NULL,
   `Holiday` tinyint(1) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=505 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=968 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `dummy_hours`
 --
 
 INSERT INTO `dummy_hours` (`ID`, `Time`, `Current`, `Regular`, `NightShift`, `Holiday`) VALUES
-(497, '2020-07-13', 'Current', 0, 0, 0),
-(498, '2020-07-14', 'Current', 0, 0, 0),
-(499, '2020-07-15', 'Current', 0, 0, 0),
-(500, '2020-07-16', 'Current', 0, 0, 0),
-(501, '2020-07-17', 'Current', 0, 0, 0),
-(502, '2020-07-18', 'Current', 0, 0, 0),
-(503, '2020-07-19', 'Current', 0, 0, 0),
-(504, '2020-07-20', 'Current', 0, 0, 0);
+(961, '2020-07-28', 'Current', 0, 0, 0),
+(962, '2020-07-29', 'Current', 0, 0, 0),
+(963, '2020-07-30', 'Current', 0, 0, 0),
+(964, '2020-07-31', 'Current', 0, 0, 0),
+(965, '2020-08-01', 'Current', 0, 0, 0),
+(966, '2020-08-02', 'Current', 0, 0, 0),
+(967, '2020-08-03', 'Current', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -458,7 +457,7 @@ CREATE TABLE IF NOT EXISTS `employee` (
 DROP TABLE IF EXISTS `employee_deductions`;
 CREATE TABLE IF NOT EXISTS `employee_deductions` (
   `id` varchar(50) NOT NULL,
-  `employee_id` varchar(255) NOT NULL,
+  `applicant_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `type` varchar(20) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
@@ -539,56 +538,91 @@ CREATE TABLE IF NOT EXISTS `hours_weekly` (
   `SSS` varchar(255) DEFAULT NULL,
   `Tax` varchar(255) DEFAULT NULL,
   `day_pay` varchar(255) DEFAULT NULL,
+  `ispaid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`No`),
   UNIQUE KEY `account_prod` (`ApplicantID`,`Time`)
-) ENGINE=InnoDB AUTO_INCREMENT=977 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1265 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `hours_weekly`
 --
 
-INSERT INTO `hours_weekly` (`No`, `ClientID`, `ApplicantID`, `Name`, `Salary`, `Time`, `Hours`, `NightHours`, `Type`, `Overtime`, `NightOvertime`, `Remarks`, `Regular`, `NightShift`, `Holiday`, `Current`, `HDMF`, `Philhealth`, `SSS`, `Tax`, `day_pay`) VALUES
-(871, '0', '00003-A', NULL, NULL, '2020-02-22', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
-(879, '4', '00005-A', NULL, NULL, '2020-02-23', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1153.84'),
-(880, '4', '00005-A', NULL, NULL, '2020-02-24', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(881, '4', '00005-A', NULL, NULL, '2020-02-25', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(882, '4', '00005-A', NULL, NULL, '2020-02-26', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(883, '4', '00005-A', NULL, NULL, '2020-02-27', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(884, '4', '00005-A', NULL, NULL, '2020-02-28', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(885, '4', '00005-A', NULL, NULL, '2020-02-29', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(886, '4', '00005-A', NULL, NULL, '2020-03-01', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(911, '0', '00003-A', NULL, NULL, '2020-02-23', 8, 0, '', 4, 2, '', NULL, NULL, NULL, NULL, '', '', '', '', '757.26'),
-(912, '0', '00003-A', NULL, NULL, '2020-02-24', 8, 0, '', 1, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '444.74'),
-(913, '0', '00003-A', NULL, NULL, '2020-02-25', 8, 0, '', 3, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '564.94'),
-(914, '0', '00003-A', NULL, NULL, '2020-02-26', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
-(915, '0', '00003-A', NULL, NULL, '2020-02-27', 5, 0, '', 3, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '420.70'),
-(916, '0', '00003-A', NULL, NULL, '2020-02-28', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
-(917, '0', '00003-A', NULL, NULL, '2020-02-29', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64'),
-(918, '0', '00003-A', NULL, NULL, '2020-03-01', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00'),
-(919, '2', '00006-B', 'Wegener, Steve V.', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(920, '2', '00006-B', 'Wegener, Steve V.', '', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(921, '0', '00009-B', 'Robert, Newman TEST-2302729.', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(922, '0', '00010-B', 'Newman, Robert TEST-3050088.', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(957, '2', '00006-A', NULL, NULL, '2020-06-15', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(958, '2', '00006-A', NULL, NULL, '2020-06-16', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(959, '2', '00006-A', NULL, NULL, '2020-06-17', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(960, '2', '00006-A', NULL, NULL, '2020-06-18', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(961, '2', '00006-A', NULL, NULL, '2020-06-19', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(962, '2', '00006-A', NULL, NULL, '2020-06-20', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', ''),
-(963, '2', '00006-A', NULL, NULL, '2020-07-06', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04'),
-(964, '2', '00006-A', NULL, NULL, '2020-07-07', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04'),
-(965, '2', '00006-A', NULL, NULL, '2020-07-08', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04'),
-(966, '2', '00006-A', NULL, NULL, '2020-07-09', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04'),
-(967, '2', '00006-A', NULL, NULL, '2020-07-10', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04'),
-(968, '2', '00006-A', NULL, NULL, '2020-07-11', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04'),
-(969, '2', '00006-A', NULL, NULL, '2020-07-13', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04'),
-(970, '2', '00006-A', NULL, NULL, '2020-07-14', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04'),
-(971, '2', '00006-A', NULL, NULL, '2020-07-15', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04'),
-(972, '2', '00006-A', NULL, NULL, '2020-07-16', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04'),
-(973, '2', '00006-A', NULL, NULL, '2020-07-17', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04'),
-(974, '2', '00006-A', NULL, NULL, '2020-07-18', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04'),
-(975, '2', '00006-A', NULL, NULL, '2020-07-19', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04'),
-(976, '2', '00006-A', NULL, NULL, '2020-07-20', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04');
+INSERT INTO `hours_weekly` (`No`, `ClientID`, `ApplicantID`, `Name`, `Salary`, `Time`, `Hours`, `NightHours`, `Type`, `Overtime`, `NightOvertime`, `Remarks`, `Regular`, `NightShift`, `Holiday`, `Current`, `HDMF`, `Philhealth`, `SSS`, `Tax`, `day_pay`, `ispaid`) VALUES
+(871, '0', '00003-A', NULL, NULL, '2020-02-22', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64', 0),
+(879, '4', '00005-A', NULL, NULL, '2020-02-23', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1153.84', 0),
+(880, '4', '00005-A', NULL, NULL, '2020-02-24', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00', 0),
+(881, '4', '00005-A', NULL, NULL, '2020-02-25', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00', 0),
+(882, '4', '00005-A', NULL, NULL, '2020-02-26', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00', 0),
+(883, '4', '00005-A', NULL, NULL, '2020-02-27', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00', 0),
+(884, '4', '00005-A', NULL, NULL, '2020-02-28', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00', 0),
+(885, '4', '00005-A', NULL, NULL, '2020-02-29', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00', 0),
+(886, '4', '00005-A', NULL, NULL, '2020-03-01', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00', 0),
+(911, '0', '00003-A', NULL, NULL, '2020-02-23', 8, 0, '', 4, 2, '', NULL, NULL, NULL, NULL, '', '', '', '', '757.26', 0),
+(912, '0', '00003-A', NULL, NULL, '2020-02-24', 8, 0, '', 1, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '444.74', 0),
+(913, '0', '00003-A', NULL, NULL, '2020-02-25', 8, 0, '', 3, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '564.94', 0),
+(914, '0', '00003-A', NULL, NULL, '2020-02-26', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64', 0),
+(915, '0', '00003-A', NULL, NULL, '2020-02-27', 5, 0, '', 3, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '420.70', 0),
+(916, '0', '00003-A', NULL, NULL, '2020-02-28', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64', 0),
+(917, '0', '00003-A', NULL, NULL, '2020-02-29', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64', 0),
+(918, '0', '00003-A', NULL, NULL, '2020-03-01', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00', 0),
+(919, '2', '00006-B', 'Wegener, Steve V.', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(920, '2', '00006-B', 'Wegener, Steve V.', '', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(921, '0', '00009-B', 'Robert, Newman TEST-2302729.', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(922, '0', '00010-B', 'Newman, Robert TEST-3050088.', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(957, '2', '00006-A', NULL, NULL, '2020-06-15', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(958, '2', '00006-A', NULL, NULL, '2020-06-16', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(959, '2', '00006-A', NULL, NULL, '2020-06-17', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(960, '2', '00006-A', NULL, NULL, '2020-06-18', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(961, '2', '00006-A', NULL, NULL, '2020-06-19', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(962, '2', '00006-A', NULL, NULL, '2020-06-20', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(1057, '2', '00006-A', NULL, NULL, '2020-07-16', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1058, '2', '00006-A', NULL, NULL, '2020-07-17', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1059, '2', '00006-A', NULL, NULL, '2020-07-18', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1092, '0', '00012-B', 'TEST-5550853, TEST-5550853 TEST-5550853.', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(1101, '2', '00006-A', NULL, NULL, '2020-07-19', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(1125, '2', '00006-A', NULL, NULL, '2020-07-20', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1157, '2', '00006-A', NULL, NULL, '2020-07-21', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1158, '2', '00006-A', NULL, NULL, '2020-07-22', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1191, '0', '00010-A', NULL, NULL, '2020-07-31', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(1192, '0', '00010-A', NULL, NULL, '2020-08-01', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(1223, '2', '00006-A', NULL, NULL, '2020-07-01', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1224, '2', '00006-A', NULL, NULL, '2020-07-02', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1225, '2', '00006-A', NULL, NULL, '2020-07-03', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1226, '2', '00006-A', NULL, NULL, '2020-07-04', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1227, '2', '00006-A', NULL, NULL, '2020-07-05', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(1228, '2', '00006-A', NULL, NULL, '2020-07-06', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1229, '2', '00006-A', NULL, NULL, '2020-07-07', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1230, '2', '00006-A', NULL, NULL, '2020-07-08', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1231, '2', '00006-A', NULL, NULL, '2020-07-09', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1232, '2', '00006-A', NULL, NULL, '2020-07-10', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1233, '2', '00006-A', NULL, NULL, '2020-07-11', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1234, '2', '00006-A', NULL, NULL, '2020-07-12', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(1235, '2', '00006-A', NULL, NULL, '2020-07-13', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1236, '2', '00006-A', NULL, NULL, '2020-07-14', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1237, '2', '00006-A', NULL, NULL, '2020-07-15', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1238, '0', '00009-A', NULL, NULL, '2020-07-27', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '192.32', 0),
+(1239, '0', '00009-A', NULL, NULL, '2020-07-28', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '192.32', 0),
+(1240, '0', '00009-A', NULL, NULL, '2020-07-29', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '192.32', 0),
+(1241, '0', '00009-A', NULL, NULL, '2020-07-30', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '192.32', 0),
+(1242, '0', '00009-A', NULL, NULL, '2020-07-31', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '192.32', 0),
+(1243, '0', '00009-A', NULL, NULL, '2020-08-01', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(1244, '0', '00009-A', NULL, NULL, '2020-08-02', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(1245, '2', '00006-A', NULL, NULL, '2020-07-23', 7, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1682.66', 0),
+(1246, '2', '00006-A', NULL, NULL, '2020-07-24', 7, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1682.66', 0),
+(1247, '2', '00006-A', NULL, NULL, '2020-07-25', 7, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1682.66', 0),
+(1252, '2', '00006-A', NULL, NULL, '2020-07-26', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00', 0),
+(1253, '2', '00006-A', NULL, NULL, '2020-07-27', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1254, '2', '00006-A', NULL, NULL, '2020-07-28', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1255, '2', '00006-A', NULL, NULL, '2020-07-29', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(1256, '2', '00006-A', NULL, NULL, '2020-07-30', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1257, '2', '00006-A', NULL, NULL, '2020-07-31', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1258, '2', '00006-A', NULL, NULL, '2020-08-01', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '1923.04', 0),
+(1259, '0', '00010-A', NULL, NULL, '2020-07-26', 0, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(1260, '0', '00010-A', NULL, NULL, '2020-07-27', 7, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '336.56', 0),
+(1261, '0', '00010-A', NULL, NULL, '2020-07-28', 7, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '336.56', 0),
+(1262, '0', '00010-A', NULL, NULL, '2020-07-29', 7, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '336.56', 0),
+(1263, '0', '00010-A', NULL, NULL, '2020-07-30', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64', 0),
+(1264, '0', '00003-A', NULL, NULL, '2020-07-30', 8, 0, '', 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '384.64', 0);
 
 -- --------------------------------------------------------
 
@@ -604,7 +638,7 @@ CREATE TABLE IF NOT EXISTS `logbook` (
   `Event` varchar(255) DEFAULT NULL,
   `Link` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`No`)
-) ENGINE=InnoDB AUTO_INCREMENT=188 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=227 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `logbook`
@@ -797,7 +831,46 @@ INSERT INTO `logbook` (`No`, `Time`, `Type`, `Event`, `Link`) VALUES
 (184, '2020-07-20 09:22:48 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
 (185, '2020-07-20 09:22:59 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
 (186, '2020-07-20 09:32:06 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
-(187, '2020-07-20 09:39:33 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients');
+(187, '2020-07-20 09:39:33 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(188, '2020-07-22 05:13:09 AM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(189, '2020-07-22 08:12:31 AM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(190, '2020-07-26 11:57:12 AM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(191, '2020-07-26 11:57:14 AM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(192, '2020-07-26 12:15:16 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(193, '2020-07-26 12:15:18 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(194, '2020-07-26 12:18:33 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(195, '2020-07-26 12:49:49 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(196, '2020-07-26 12:51:15 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(197, '2020-07-26 12:53:54 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(198, '2020-07-26 01:47:08 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(199, '2020-07-26 01:51:50 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(200, '2020-07-26 02:01:12 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(201, '2020-07-26 02:01:39 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(202, '2020-07-26 02:04:04 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(203, '2020-07-26 03:24:16 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(204, '2020-07-26 03:37:01 PM', 'Employment', 'Applicant ID 00012-B has been employed to Client ID 0 for 1 year!', 'http://localhost:81/ci_wercher_system/ViewEmployee?id=00012-B'),
+(205, '2020-07-26 06:57:16 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(206, '2020-07-26 06:58:10 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(207, '2020-07-27 08:27:56 AM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(208, '2020-07-27 08:33:33 AM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(209, '2020-07-27 08:34:55 AM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(210, '2020-07-28 06:58:53 AM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(211, '2020-07-28 06:59:19 AM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(212, '2020-07-28 07:02:18 AM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(213, '2020-07-28 07:02:51 AM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(214, '2020-08-02 07:39:20 PM', 'Update', 'Updated weekly hours for 00010-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(215, '2020-08-02 07:39:43 PM', 'Update', 'Updated weekly hours for 00010-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(216, '2020-08-02 07:40:19 PM', 'Update', 'Updated weekly hours for 00010-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(217, '2020-08-02 07:43:59 PM', 'Update', 'Updated weekly hours for 00010-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(218, '2020-08-02 07:53:30 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(219, '2020-08-02 08:01:52 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(220, '2020-08-02 08:02:43 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(221, '2020-08-02 10:48:28 PM', 'Update', 'Updated weekly hours for 00009-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(222, '2020-08-02 11:14:28 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(223, '2020-08-02 11:17:25 PM', 'Update', 'Updated weekly hours for 00006-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(224, '2020-08-02 11:19:04 PM', 'Update', 'Updated weekly hours for 00010-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(225, '2020-08-02 11:29:27 PM', 'Update', 'Updated weekly hours for 00010-A.', 'http://localhost:81/ci_wercher_system/Clients'),
+(226, '2020-08-02 11:32:38 PM', 'Update', 'Updated weekly hours for 00003-A.', 'http://localhost:81/ci_wercher_system/Clients');
 
 -- --------------------------------------------------------
 
@@ -816,6 +889,24 @@ CREATE TABLE IF NOT EXISTS `machine_operated` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `other_deductions`
+--
+
+DROP TABLE IF EXISTS `other_deductions`;
+CREATE TABLE IF NOT EXISTS `other_deductions` (
+  `id` varchar(50) NOT NULL,
+  `applicant_id` varchar(50) NOT NULL,
+  `description` varchar(200) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `deduction_datetime` datetime NOT NULL,
+  `ispaid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `philhealth_table`
 --
 
@@ -823,7 +914,7 @@ DROP TABLE IF EXISTS `philhealth_table`;
 CREATE TABLE IF NOT EXISTS `philhealth_table` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `f_range` decimal(10,2) NOT NULL,
-  `f_to` decimal(10,2) NOT NULL,
+  `t_range` decimal(10,2) NOT NULL,
   `contribution_rate` float NOT NULL,
   `contribution_ee` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`)
@@ -833,7 +924,7 @@ CREATE TABLE IF NOT EXISTS `philhealth_table` (
 -- Dumping data for table `philhealth_table`
 --
 
-INSERT INTO `philhealth_table` (`id`, `f_range`, `f_to`, `contribution_rate`, `contribution_ee`) VALUES
+INSERT INTO `philhealth_table` (`id`, `f_range`, `t_range`, `contribution_rate`, `contribution_ee`) VALUES
 (1, '0.00', '10000.00', 0.03, '300.00'),
 (2, '10000.01', '59999.99', 0.03, '0.00'),
 (3, '60000.00', '9999999.99', 0.03, '1800.00');
@@ -1005,30 +1096,64 @@ CREATE TABLE IF NOT EXISTS `tracking_table` (
   `gross_pay` varchar(255) DEFAULT NULL,
   `TotalHours` varchar(255) DEFAULT NULL,
   `TotaOT` varchar(255) DEFAULT NULL,
-  `sss_contri` varchar(255) DEFAULT NULL,
+  `sss_contri` decimal(10,2) DEFAULT NULL,
+  `hdmf_contri` decimal(10,2) NOT NULL,
+  `philhealth_contri` decimal(10,2) NOT NULL,
+  `tax` decimal(10,2) NOT NULL,
+  `date_period` varchar(100) NOT NULL,
   `net_pay` varchar(255) DEFAULT NULL,
   `c_week` int(11) DEFAULT NULL,
   `c_month` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tracking_table`
 --
 
-INSERT INTO `tracking_table` (`id`, `ApplicantID`, `ClientID`, `gross_pay`, `TotalHours`, `TotaOT`, `sss_contri`, `net_pay`, `c_week`, `c_month`) VALUES
-(15, '00003-A', '0', '3726.2', '61', '11', '280', NULL, NULL, NULL),
-(16, '00003-A', '0', '3726.2', '61', '11', '280', '3725.2', NULL, NULL),
-(17, '00003-A', '0', '3726.2', '61', '11', '280', '3446.2', NULL, NULL),
-(18, '00006-A', '2', '9615.2', '40', '0', NULL, '9615.2', NULL, NULL),
-(19, '00006-A', '2', '0', '40', '0', NULL, '0', NULL, NULL),
-(20, '00006-A', '2', '9615.2', '40', '0', NULL, '9615.2', NULL, NULL),
-(21, '00006-A', '2', '480.76', '42', '0', NULL, '480.76', NULL, NULL),
-(22, '00006-A', '2', '1923.04', '48', '0', NULL, '1923.04', NULL, NULL),
-(23, '00006-A', '2', '0', '48', '0', NULL, '0', NULL, NULL),
-(24, '00006-A', '2', '0', '48', '0', NULL, '0', NULL, NULL),
-(25, '00006-A', '2', '11538.24', '96', '0', NULL, '11538.24', NULL, NULL),
-(26, '00006-A', '2', '26922.56', '160', '0', NULL, '26922.56', NULL, NULL);
+INSERT INTO `tracking_table` (`id`, `ApplicantID`, `ClientID`, `gross_pay`, `TotalHours`, `TotaOT`, `sss_contri`, `hdmf_contri`, `philhealth_contri`, `tax`, `date_period`, `net_pay`, `c_week`, `c_month`) VALUES
+(15, '00003-A', '0', '3726.2', '61', '11', '280.00', '0.00', '0.00', '0.00', '', NULL, NULL, NULL),
+(16, '00003-A', '0', '3726.2', '61', '11', '280.00', '0.00', '0.00', '0.00', '', '3725.2', NULL, NULL),
+(17, '00003-A', '0', '3726.2', '61', '11', '280.00', '0.00', '0.00', '0.00', '', '3446.2', NULL, NULL),
+(18, '00006-A', '2', '9615.2', '40', '0', NULL, '0.00', '0.00', '0.00', '', '9615.2', NULL, NULL),
+(19, '00006-A', '2', '0', '40', '0', NULL, '0.00', '0.00', '0.00', '', '0', NULL, NULL),
+(20, '00006-A', '2', '9615.2', '40', '0', NULL, '0.00', '0.00', '0.00', '', '9615.2', NULL, NULL),
+(21, '00006-A', '2', '480.76', '42', '0', NULL, '0.00', '0.00', '0.00', '', '480.76', NULL, NULL),
+(22, '00006-A', '2', '1923.04', '48', '0', NULL, '0.00', '0.00', '0.00', '', '1923.04', NULL, NULL),
+(23, '00006-A', '2', '0', '48', '0', NULL, '0.00', '0.00', '0.00', '', '0', NULL, NULL),
+(24, '00006-A', '2', '0', '48', '0', NULL, '0.00', '0.00', '0.00', '', '0', NULL, NULL),
+(25, '00006-A', '2', '11538.24', '96', '0', NULL, '0.00', '0.00', '0.00', '', '11538.24', NULL, NULL),
+(26, '00006-A', '2', '26922.56', '160', '0', NULL, '0.00', '0.00', '0.00', '', '26922.56', NULL, NULL),
+(27, '00006-A', '2', '15384.32', '160', '0', NULL, '0.00', '0.00', '0.00', '', '15384.32', NULL, NULL),
+(28, '00006-A', '2', '19230.4', '160', '0', NULL, '0.00', '0.00', '0.00', '', '19230.4', NULL, NULL),
+(29, '00006-A', '2', '23076.48', '160', '0', NULL, '0.00', '0.00', '0.00', '', '23076.48', NULL, NULL),
+(30, '00006-A', '2', '23076.48', '160', '0', NULL, '0.00', '0.00', '0.00', '', '23076.48', NULL, NULL),
+(31, '00006-A', '2', '18268.88', '140', '0', NULL, '0.00', '0.00', '0.00', '', '18268.88', NULL, NULL),
+(32, '00006-A', '2', '18268.88', '140', '0', NULL, '0.00', '0.00', '0.00', '', '18268.88', NULL, NULL),
+(33, '00006-A', '2', '24999.52', '168', '0', NULL, '0.00', '0.00', '0.00', '', '24999.52', NULL, NULL),
+(34, '00006-A', '2', '21634.2', '154', '0', NULL, '0.00', '0.00', '0.00', '', '21634.2', NULL, NULL),
+(35, '00006-A', '2', '24999.52', '168', '0', NULL, '0.00', '0.00', '0.00', '', '24999.52', NULL, NULL),
+(36, '00006-A', '2', '24999.52', '168', '0', NULL, '0.00', '0.00', '0.00', '', '24999.52', NULL, NULL),
+(37, '00006-A', '2', '24999.52', '168', '0', NULL, '0.00', '0.00', '0.00', '', '24999.52', NULL, NULL),
+(38, '00006-A', '2', '26922.56', '160', '0', '800.00', '0.00', '0.00', '0.00', '', '26122.56', NULL, NULL),
+(39, '00006-A', '2', '26922.56', '160', '0', '800.00', '0.00', '0.00', '0.00', '', '26122.56', NULL, NULL),
+(40, '00006-A', '2', '23076.48', '160', '0', '800.00', '0.00', '0.00', '0.00', '', '22276.48', NULL, NULL),
+(41, '00006-A', '2', '26922.56', '160', '0', '800.00', '0.00', '0.00', '0.00', '', '26122.56', NULL, NULL),
+(42, '00006-A', '2', '28845.6', '176', '0', '800.00', '0.00', '0.00', '0.00', '', '28045.6', NULL, NULL),
+(43, '00006-A', '2', '28845.6', '176', '0', '200.00', '0.00', '0.00', '0.00', '', '27945.6', NULL, NULL),
+(44, '00006-A', '2', '34614.72', '200', '0', '200.00', '0.00', '0.00', '0.00', '', '32048.053333333', NULL, NULL),
+(45, '00006-A', '2', '34614.72', '200', '0', '200.00', '0.00', '0.00', '0.00', '', '32048.053333333', NULL, NULL),
+(46, '00010-A', '0', '2307.84', '48', '0', '100.00', '0.00', '0.00', '0.00', '', '1707.84', NULL, NULL),
+(47, '00010-A', '0', '2307.84', '48', '0', '100.00', '0.00', '0.00', '0.00', '', '1707.84', NULL, NULL),
+(48, '00010-A', '0', '384.64', '48', '0', '100.00', '0.00', '0.00', '0.00', '', '-215.36', NULL, NULL),
+(49, '00006-A', '2', '29807.12', '180', '0', '400.00', '0.00', '0.00', '0.00', '', '24823.786666667', NULL, NULL),
+(50, '00006-A', '2', '42306.88', '232', '0', '400.00', '0.00', '0.00', '0.00', '', '37323.546666667', NULL, NULL),
+(51, '00009-A', '0', '961.6', '40', '0', '50.00', '0.00', '0.00', '0.00', '', '811.6', NULL, NULL),
+(52, '00006-A', '2', '46633.72', '250', '0', '200.00', '0.00', '0.00', '0.00', '', '44142.053333333', NULL, NULL),
+(53, '00006-A', '2', '51200.94', '277', '0', '200.00', '0.00', '0.00', '0.00', '', '48709.273333333', NULL, NULL),
+(54, '00010-A', '0', '1009.68', '45', '0', '100.00', '0.00', '0.00', '0.00', '', '784.68', NULL, NULL),
+(55, '00010-A', '0', '1394.32', '45', '0', '100.00', '0.00', '0.00', '0.00', '', '1169.32', NULL, NULL),
+(56, '00003-A', '0', '4110.84', '69', '11', '100.00', '0.00', '0.00', '0.00', '', '3885.84', NULL, NULL);
 
 -- --------------------------------------------------------
 

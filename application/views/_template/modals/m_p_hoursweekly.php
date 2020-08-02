@@ -15,7 +15,7 @@
 						<div class="form-row">
 							<div class="form-group col-sm-12 col-md-2">
 								<label>Type</label>
-								<input id="SalaryType" class="form-control" type="text" name="" value="Weekly" readonly>
+								<input id="SalaryType" class="form-control" type="text" name="" value="<?php echo $Mode==0?"Weekly":($Mode==1?"Semi-monthly":"Monthly"); ?>" readonly>
 							</div>
 							<div class="form-group col-sm-12 col-md-2">
 								<label>Salary</label>
