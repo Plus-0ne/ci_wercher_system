@@ -16,7 +16,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `wercher_db`
@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `audit_log` (
   `Action` varchar(255) DEFAULT NULL,
   `Time` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`LogID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -238,7 +238,7 @@ CREATE TABLE IF NOT EXISTS `contract_history` (
   `PreviousDateEnds` varchar(255) DEFAULT NULL,
   `Client` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `contract_history`
@@ -266,7 +266,7 @@ CREATE TABLE IF NOT EXISTS `dashboard_months` (
   `Total` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `my_unique_key` (`Year`,`Month`)
-) ENGINE=InnoDB AUTO_INCREMENT=282 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=282 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `dashboard_months`
@@ -379,12 +379,12 @@ INSERT INTO `dashboard_months` (`ID`, `Year`, `Month`, `Total`) VALUES
 DROP TABLE IF EXISTS `deferred_deductions`;
 CREATE TABLE IF NOT EXISTS `deferred_deductions` (
   `id` varchar(50) NOT NULL,
-  `applicant_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `applicant_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `period` varchar(250) NOT NULL,
   `is_paid` int(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -401,7 +401,7 @@ CREATE TABLE IF NOT EXISTS `dummy_hours` (
   `NightShift` tinyint(1) NOT NULL,
   `Holiday` tinyint(1) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=968 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=968 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `dummy_hours`
@@ -457,13 +457,13 @@ CREATE TABLE IF NOT EXISTS `employee` (
 DROP TABLE IF EXISTS `employee_deductions`;
 CREATE TABLE IF NOT EXISTS `employee_deductions` (
   `id` varchar(50) NOT NULL,
-  `applicant_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `applicant_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `type` varchar(20) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `is_active` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -499,7 +499,7 @@ CREATE TABLE IF NOT EXISTS `hdmf_table` (
   `contribution_ee` float NOT NULL,
   `total` float NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `hdmf_table`
@@ -541,7 +541,7 @@ CREATE TABLE IF NOT EXISTS `hours_weekly` (
   `ispaid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`No`),
   UNIQUE KEY `account_prod` (`ApplicantID`,`Time`)
-) ENGINE=InnoDB AUTO_INCREMENT=1265 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1265 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `hours_weekly`
@@ -638,7 +638,7 @@ CREATE TABLE IF NOT EXISTS `logbook` (
   `Event` varchar(255) DEFAULT NULL,
   `Link` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`No`)
-) ENGINE=InnoDB AUTO_INCREMENT=227 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=227 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `logbook`
@@ -902,7 +902,7 @@ CREATE TABLE IF NOT EXISTS `other_deductions` (
   `deduction_datetime` datetime NOT NULL,
   `ispaid` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -918,7 +918,7 @@ CREATE TABLE IF NOT EXISTS `philhealth_table` (
   `contribution_rate` float NOT NULL,
   `contribution_ee` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `philhealth_table`
@@ -1057,7 +1057,7 @@ CREATE TABLE IF NOT EXISTS `tab_documents_notes` (
   `Note` varchar(255) DEFAULT NULL,
   `DateAdded` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`DatabaseID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tab_documents_notes`
@@ -1080,7 +1080,7 @@ CREATE TABLE IF NOT EXISTS `tax_table` (
   `t_range` decimal(10,2) NOT NULL,
   `computation` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1169,7 +1169,7 @@ CREATE TABLE IF NOT EXISTS `violations` (
   `ClientName` varchar(255) DEFAULT NULL,
   `Violation` varchar(255) DEFAULT NULL,
   `Time` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

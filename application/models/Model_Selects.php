@@ -299,7 +299,7 @@ class Model_Selects extends CI_Model {
 	}
 	public function sss_Contri()
 	{
-		$SQL = "SELECT * FROM sss_table ORDER BY contribution ASC";
+		$SQL = "SELECT * FROM sss_table ORDER BY total ASC";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
