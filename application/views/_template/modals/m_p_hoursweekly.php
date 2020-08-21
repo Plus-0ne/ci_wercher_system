@@ -15,7 +15,7 @@
 						<div class="form-row">
 							<div class="form-group col-sm-12 col-md-2">
 								<label>Type</label>
-								<input id="SalaryType" class="form-control" type="text" name="" value="Weekly" readonly>
+								<input id="SalaryType" class="form-control" type="text" name="" value="<?php echo $Mode==0?"Weekly":($Mode==1?"Semi-monthly":"Monthly"); ?>" readonly>
 							</div>
 							<div class="form-group col-sm-12 col-md-2">
 								<label>Salary</label>
@@ -41,7 +41,41 @@
 								<div class="day-hover day-container_<?php echo $row['Time']; ?> col-sm-12 col-md-3 text-center rcontent mr-4">
 									<div class="row">
 										<div class="col-sm-6 day-container-date">
-											<b><?php echo $row['Time']; ?></b>
+											<b><?php echo $row['Time']; ?></b><br/>
+											<b><?php 
+												$dow= date('w', strtotime($row['Time']));  //gets the dayof week
+												$dayOfWeek="";
+												if($dow==0)
+												{
+													$dayOfWeek="Sunday";
+												}
+												else if($dow==1)
+												{
+													$dayOfWeek="Monday";
+												}
+												else if($dow==2)
+												{
+													$dayOfWeek="Tuesday";
+												}
+												else if($dow==3)
+												{
+													$dayOfWeek="Wednesday";
+												}
+												else if($dow==4)
+												{
+													$dayOfWeek="Thursday";
+												}
+												else if($dow==5)
+												{
+													$dayOfWeek="Friday";
+												}
+												else if($dow==6)
+												{
+													$dayOfWeek="Saturday";
+												}
+
+											echo $dayOfWeek;  
+											?></b>
 										</div>
 										<div class="col-sm-6">
 											<div class="form-group col-4">
@@ -197,6 +231,13 @@
 				</div>
 				<div class="modal-footer">
 					<button id="MoreOptions" type="button" class="btn btn-primary mr-auto"><i class="fas fa-cog"></i> More Options</button>
+					<input type="hidden" name="CutoffMode" value="<?php echo $Mode ?>" />
+					<input type="radio" id="" name="DeductionOption" value="0">
+					<label for="rdNoDeductions">No Deductions</label><br>
+					<input type="radio" id="rdWithDeductions" name="DeductionOption" value="1" checked>
+					<label for="rdWithDeductions">With Deductions</label><br>
+					<input type="radio" id="rdDeferredDeductions" name="DeductionOption" value="2">
+					<label for="rdDeferredDeductions">Defer Deductions</label>
 					<button type="submit" class="btn btn-primary"><i class="fas fa-clock"></i> Set</button>
 				</div>
 				</form>

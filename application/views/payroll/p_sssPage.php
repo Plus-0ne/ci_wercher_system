@@ -61,7 +61,7 @@
 												<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
 													<input class="form-control w-25" type="number" name="contribution" min="0" value="<?php echo $row['contribution']; ?>">
 												<?php else: ?>
-													<?php print $row['contribution']; ?>
+													<?php print $row['total']; ?>
 												<?php endif; ?>
 											</td>
 											<td class="sss-updated">

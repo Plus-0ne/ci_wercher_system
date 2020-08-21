@@ -23,8 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
+#### $config['base_url'] = 'http://localhost:81/ci_wercher_system/';//'http://localhost/ci_wercher_system/'; condoriano
 $config['base_url'] = 'http://localhost/ci_wercher_system/';
-
 /*
 |--------------------------------------------------------------------------
 | Index File

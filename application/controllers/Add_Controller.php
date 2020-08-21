@@ -593,4 +593,20 @@ class Add_Controller extends CI_Controller {
 			}
 		}
 	}
+
+
+	public function AddEmployeeDeferredDeductions($id,$aid,$amt,$period)
+	{
+		$SQL = "insert into employee_deductions (id,applicant_id,amount,period,is_paid) values($id,$aid,$amt,$period)";
+		$result = $this->db->query($SQL,$id,$aid,$amt,$period);
+		return $result;
+	}
+
+	public function AddEmployeeOtherDeductions($id,$aid,$desc,$amt,$type)
+	{
+		$SQL = "insert into other_deductions (id,applicant_id,description,amount,type,deduction_datetime) values ($id,$aid,$desc,$amt,$type,NOW())";
+		$result = $this->db->query($SQL,$id,$aid,$desc,$amt,$type);
+		return $result;
+
+	}
 }
