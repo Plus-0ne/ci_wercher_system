@@ -274,7 +274,7 @@
 													<b>Person to notify in case of emergency</b>
 												</div>
 												<div class="col-sm-4 employee-dynamic-header">
-													<b>Their Contact Number</b>
+													<b>Emergency Contact Number</b>
 												</div>
 											</div>
 											<div class="row">

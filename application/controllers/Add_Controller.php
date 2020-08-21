@@ -10,6 +10,8 @@ class Add_Controller extends CI_Controller {
 		$this->load->model('Model_Selects');
 		$this->load->model('Model_Inserts');
 		$this->load->model('Model_Updates');
+
+		date_default_timezone_set('Asia/Manila');
 	}
 	public function addNewEmployee()
 	{

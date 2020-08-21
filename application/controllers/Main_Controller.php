@@ -15,6 +15,7 @@
 		date_default_timezone_set('Asia/Manila');
 		$currTime = date('Y-m-d h:i:s A');
 		// TODO: Don't call this here. Need a real time checker. Find a better solution than this.
+		print($this->session->userdata['AdminNo']);
 		foreach ($GetEmployee->result_array() as $row) {
 			// Assigns a new ID after successfully hiring
 			if ($row['Temp_ApplicantID'] != NULL && $row['Temp_ApplicantID'] == $row['ApplicantID']) {

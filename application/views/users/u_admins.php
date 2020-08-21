@@ -27,7 +27,7 @@
 										<th> Position </th>
 										<th> Employee ID </th>
 										<th> Full Name </th>
-										<th> Gender </th>
+										<th> Sex </th>
 										<th> Date Added </th>
 										<th class="PrintExclude" style="width: 5%;"> Action </th>
 									</tr>
@@ -129,7 +129,7 @@
 						</div>
 						<div class="form-group m-1 col">
 							<label>Password</label>
-							<input class="form-control" type="text" name="Password">
+							<input class="form-control" type="password" name="Password">
 						</div>
 					</div>
 					<div class="form-row">
@@ -138,7 +138,7 @@
 							<input class="form-control" type="text" name="FirstName">
 						</div>
 						<div class="form-group m-1 col">
-							<label>Middle Initial/Name</label>
+							<label>Middle Name</label>
 							<input class="form-control" type="text" name="MiddleIN">
 						</div>
 						<div class="form-group m-1 col">
@@ -148,7 +148,7 @@
 					</div>
 					<div class="form-row">
 						<div class="form-group m-1">
-							<label>Gender</label>
+							<label>Sex</label>
 							<select class="form-control" name="Gender">
 								<option>Male</option>
 								<option>Female</option>

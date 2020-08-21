@@ -6,7 +6,7 @@
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="row wercher-tablelist-container">
-					<div class="col-sm-8">
+					<div class="col-sm-8 col-md-5">
 					<?php 
 						$this->load->library('Calendar');
 						$calendar = new Calendar();
@@ -14,11 +14,19 @@
 						echo $calendar->show();
 					 ?>
 					</div>
-					<div class="col-sm-4">
+					<?php if (!empty($_GET['year']) && !empty($_GET['month']) && !empty($_GET['day'])): ?>
+					<div class="col-sm-4 col-md-4">
 						<div class="calendar-tooltip">
 							Test
 						</div>
 					</div>
+					<?php else: ?>
+					<div class="col-sm-4 col-md-4">
+						<div class="calendar-tooltip">
+							Click on a day to examine events.
+						</div>
+					</div>
+					<?php endif; ?>
 				</div>
 			</div>
 		</div>

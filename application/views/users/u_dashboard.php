@@ -213,7 +213,7 @@
 					<div id="Logbook" class="col-sm-12 col-lg-12 mt-5">
 						<div class="chart-title text-center">
 							<h5>
-								<i class="fas fa-list"></i> Logbook
+								<i class="fas fa-list"></i> Latest Logbook Entries
 							</h5>
 						</div>
 					</div>
@@ -221,6 +221,7 @@
 						<div class="text-center">
 							<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#AddNote"><i class="fas fa-plus"></i> Add Note</button>
 							<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download" style="margin-right: -1px;"></i></button>
+							<a class="btn btn-primary btn-sm" href="Logbook"><i class="fas fa-book" style="margin-right: -1px;"></i></a>
 						</div>
 					</div>
 					<div class="col-sm-12">

@@ -5,7 +5,7 @@
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
-				<div class="row rcontent PrintOutTable">
+				<div class="row wercher-tablelist-container rcontent PrintOutTable">
 					<?php echo $this->session->flashdata('prompts'); ?>
 					<div class="col-sm-12 col-md-12 mb-2">
 						<h4>
@@ -34,7 +34,7 @@
 									<th width="20%">To</th>
 									<th width="20%">Contribution</th>
 									<th width="15%">Updated</th>
-									<th width="15%">Action</th>
+									<th width="5%">Action</th>
 								</thead>
 								<tbody>
 									<form method="POST" action="UpdateSSSField">
@@ -42,7 +42,7 @@
 										<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
 											<input type="hidden" name="id" value="<?php echo $row['id']; ?>">
 										<?php endif; ?>
-										<tr>
+										<tr class="sss-row">
 											<td>
 												<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
 													<input class="form-control w-25" type="number" name="f_range" min="0" value="<?php echo $row['f_range']; ?>">

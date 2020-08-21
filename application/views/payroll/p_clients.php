@@ -13,6 +13,9 @@
 						</h4>
 					</div>
 					<div class="col-8 col-sm-8 col-md-8 text-right">
+						<a href="SSS_Table" class="btn btn-primary">
+							<i class="fas fa-table"></i> SSS Table
+						</a>
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
 					<div class="col-sm-12">

@@ -884,10 +884,10 @@ a[data-toggle="collapse"] {
 }
 .wercher-card-weekly-tracker-container {
 	margin-top: -1px;
-	border-bottom: 2px solid rgba(0, 255, 0, 0.88);
-	border-left: 2px solid rgba(0, 255, 0, 0.88);
-	border-right: 2px solid rgba(0, 255, 0, 0.88);
-	background-color: rgba(0, 255, 0, 0.08);
+	border-bottom: 2px solid rgba(0, 155, 0, 0.88);
+	border-left: 2px solid rgba(0, 155, 0, 0.88);
+	border-right: 2px solid rgba(0, 155, 0, 0.88);
+	background-color: rgba(115, 55, 5, 0.45);
 }
 .wercher-card-weekly-tracker {
 	color: rgba(0, 255, 0, 0.9);
@@ -896,6 +896,10 @@ a[data-toggle="collapse"] {
 .calendar-tooltip {
 	border-radius: 6px;
 	border: 2px dashed rgba(0, 0, 0, 0.33);
+}
+.sss-row:hover {
+	border-radius: 10px;
+	background-color: rgba(75, 75, 75, 0.14);
 }
 
 /*

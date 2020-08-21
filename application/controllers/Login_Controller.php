@@ -12,7 +12,7 @@ class Login_Controller extends CI_Controller {
 		$UserName = $this->input->post('UserName',TRUE);
 		$Password = $this->input->post('Password',TRUE);
 		if ($UserName == NULL || $Password == NULL) {
-			$p_text = '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><i class="fas fa-times fa-fw"></i> Input Username and Password!</div>';
+			$p_text = '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><i class="fas fa-times fa-fw"></i> Incorrect username or password!</div>';
 			$this->session->set_flashdata('prompt',$p_text);
 			redirect(base_url());
 		}
@@ -39,14 +39,14 @@ class Login_Controller extends CI_Controller {
 				}
 				else
 				{
-					$p_text = '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><i class="fas fa-times fa-fw"></i> Incorrect password!</div>';
+					$p_text = '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><i class="fas fa-times fa-fw"></i> Incorrect username or password!</div>';
 					$this->session->set_flashdata('prompt',$p_text);
 					redirect(base_url());
 				}
 			}
 			else
 			{
-				$p_text = '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><i class="fas fa-times fa-fw"></i> User doesn\'t exist!</div>';
+				$p_text = '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><i class="fas fa-times fa-fw"></i> Incorrect username or password!</div>';
 				$this->session->set_flashdata('prompt',$p_text);
 				redirect(base_url());
 			}
