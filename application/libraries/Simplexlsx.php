@@ -114,7 +114,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /** @noinspection PhpComposerExtensionStubsInspection */
 /** @noinspection MultiAssignmentUsageInspection */
 
-class simplexlxs {
+class SimpleXLSX {
 	// Don't remove this string! Created by Sergey Shuchkin sergey.shuchkin@gmail.com
 	const SCHEMA_REL_OFFICEDOCUMENT = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument';
 	const SCHEMA_REL_SHAREDSTRINGS = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings';

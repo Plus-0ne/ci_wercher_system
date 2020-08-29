@@ -1036,7 +1036,14 @@
 			$header['title'] = 'Client Information | Wercher Solutions and Resources Workers Cooperative';
 			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 
-			$GetWeeklyList = $this->Model_Selects->GetWeeklyList($id);
+			if ($id == 'excel') {
+				// print_r($ApplicantsArray);
+				$ApplicantsArray = $this->session->userdata('ApplicantsArray');
+				$ApplicantsArray = unserialize($ApplicantsArray);
+				$GetWeeklyList = $this->Model_Selects->GetWeeklyImports($ApplicantsArray);
+			} else {
+				$GetWeeklyList = $this->Model_Selects->GetWeeklyList($id);
+			}
 
 			$row = $GetWeeklyList->row_array();
 			$data = array(
@@ -1046,7 +1053,11 @@
 			);
 			$ApplicantID = $row['ApplicantID'];
 			$data['GetWeeklyList'] = $this->Model_Selects->GetWeeklyList($id);
-			$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployee($id);
+			if ($id == 'excel') {
+				$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployeeFromImports($ApplicantsArray);
+			} else {
+				$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployee($id);
+			}
 			// $data['GetWeeklyListEmployeeActive'] = $this->Model_Selects->GetWeeklyListEmployeeActive($id);
 			$data['GetClientID'] = $this->Model_Selects->GetClientID($id);
 			$data['GetWeeklyDates'] = $this->Model_Selects->GetWeeklyDates();

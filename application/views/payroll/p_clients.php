@@ -7,14 +7,15 @@
 				<?php $this->load->view('_template/users/u_notifications'); //TODO: Limit the bell to HR access? ?>
 				<div class="row wercher-tablelist-container">
 					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
+					<div class="col-sm-4 PrintPageName PrintOut">
 						<h4 class="tabs-icon">
 							<i class="fas fa-user-tag fa-fw"></i> Clients x <?php echo $ShowClients->num_rows() ?>
 						</h4>
 					</div>
-					<div class="col-8 col-sm-8 col-md-8 text-right">
+					<div class="col-sm-8 text-right">
+						<button type="button" class="ImportButton btn btn-success"><i class="fas fa-file-excel"></i> Import Excel</button>
 						<a href="SSS_Table" class="btn btn-primary">
-							<i class="fas fa-table"></i> SSS Table
+							<i class="fas fa-table"></i> SSS
 						</a>
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
@@ -47,12 +48,8 @@
 											</td>
 											<td class="text-center align-middle PrintExclude">
 												<button id="<?php echo $row['ClientID']; ?>" type="button" class="btn btn-primary btn-sm w-100 mb-1 ViewClientIDButton"  data-toggle="modal" data-target="#ModalClientView"><i class="fas fa-calendar-alt"></i> Date Range</button>
-												<form action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
-													<input type="hidden" name="ExcelClientID" value="<?php echo $row['ClientID']; ?>">
-													<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">
-													<button type="button" class="ImportButton btn btn-sm btn-success w-100"><i class="fas fa-file-excel"></i> Excel</button>
-												</form>
 												<!-- <a class="btn btn-success btn-sm w-100 mb-1" href="<?=base_url()?>ViewClient?id=<?php echo $row['ClientID']; ?>"><i class="fas fa-file-excel"></i> Excel</a> -->
+												<button id="<?php echo $row['ClientID']; ?>" type="button" class="excel_formatbtn btn btn-success btn-sm w-100 mb-1 mt-1"  data-toggle="modal" data-target="#DateFroto_modal" value="<?php echo $row['Name']; ?>"><i class="fas fa-file-download"></i> Download Excel</button>
 											</td>
 										</tr>
 									<?php endforeach ?>
@@ -119,11 +116,22 @@
 </body>
 <!-- EXPORT MODAL -->
 <?php $this->load->view('_template/modals/m_export'); ?>
+<!-- EXPORT EXCEL MODAL -->
+<?php $this->load->view('_template/modals/m_export_excel'); ?>
 
 <?php $this->load->view('_template/users/u_scripts'); ?>
+<!-- FORM -->
+<form action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="ExcelClientID">
+	<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">
+</form>
 <script type="text/javascript">
 	$(document).ready(function () {
-		$('#FromDate').val(moment().subtract(7,'d').format('YYYY-MM-DD'));
+		$('#ExportFromDate, #ExportToDate').on('change', function() {
+			console.log('123');
+			$('#ExportFileName').val($('#DesignatedClientName').val() + ' (' + $('#ExportFromDate').val() + ' - ' + $('#ExportToDate').val() + ')' );
+		});
+		$('#FromDate').val(moment().subtract(6,'d').format('YYYY-MM-DD'));
 		$('#ToDate').val(moment().format('YYYY-MM-DD'));
 		$('.ImportButton').click(function(){ $('#file').trigger('click'); });
 		function readURL(input) {
@@ -219,6 +227,11 @@
 		$('#LoadButton').on('click', function () {
 			$('.load-container').children().hide();
 			$('.load-div').show();
+		});
+		$('.excel_formatbtn').on('click', function () {
+			$('#idforFormatex').val($(this).attr('id'));
+			$('#DesignatedClientName').val($(this).attr('value'));
+			// $('#ExportFileName').val('');
 		});
 	});
 </script>

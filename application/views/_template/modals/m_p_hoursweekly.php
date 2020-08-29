@@ -27,9 +27,14 @@
 							<div class="form-group col-sm-12 col-md-2">
 								<label>Per&nbsp;Day</label>
 								<div class="input-icon-sm">
-									<input id="AveragePerHour" class="form-control" type="number" name="" value="<?php
-									$RatePerDay = $erow['SalaryExpected'] / 26;
-									echo round($RatePerDay, 2);
+									<input id="AveragePerHour" class="form-control" type="number" name="" value="
+									<?php
+										if(!empty($erow['SalaryExpected']) || $erow['SalaryExpected'] != NULL) {
+											$RatePerDay = $erow['SalaryExpected'] / 26;
+											echo round($RatePerDay, 2);
+										} else {
+											echo '0';
+										}
 									 ?>" readonly>
 									<i>₱</i>
 								</div>

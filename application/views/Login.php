@@ -41,7 +41,7 @@
 	<div class="content">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-12 col-md-11 col-lg-4 m-auto">
+				<div class="col-sm-12 col-md-5 col-lg-4 m-auto">
 					<div class="text-center">
 						<div style="margin-bottom: -50px;">
 							<img class="m-auto PrintOutModal PrintOutModalExpired PrintOutHistory" src="<?=base_url()?>assets/img/wercher_logo.png">
@@ -80,6 +80,25 @@
 							</div>
 						</div> -->
 						<?php echo form_close(); ?>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-5">
+					<div class="login-time-container">
+						<div class="login-time">
+							12:05:05
+						</div>
+						<div class="login-description">
+							<b>WERCHER COOP</b>
+							<br>
+							Wercher Solutions and Resources Labor Service Cooperative
+							<br>
+							Formerly Wercher Solutions and Resources Workers Cooperative
+							<br>
+							<br>
+							#82 Circumferencial Road, Brgy. San Jose
+							<br>
+							Antipolo City, Rizal, 1870
+						</div>
 					</div>
 				</div>
 			</div>
@@ -327,6 +346,33 @@
 	    height: 143px;
 	    bottom: -143px;
 	    animation-delay: 35s;
+	}
+	.login-time-container {
+		border-left: 2px solid white;
+		border-radius: 4px;
+		height: 400px;
+		margin-left: -80px;
+		margin-bottom: -40px;
+		color: white;
+	}
+	.login-time {
+		font-family: courier;
+		font-size: 65px;
+		margin-bottom: 35px;
+		margin-left: 25px;
+		text-align: center;
+		background-color: rgba(0, 0, 0, 0.22);
+	}
+	.login-description {
+		margin-top: -10px;
+		font-size: 15px;
+		padding-left: 35px;
+	}
+	.login-description b {
+		font-family: courier;
+		font-size: 55px;
+		text-align: center;
+		color: gold;
 	}
 </style>
 </html>

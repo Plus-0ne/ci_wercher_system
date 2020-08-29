@@ -309,6 +309,9 @@ a[data-toggle="collapse"] {
 	font-size: 15px;
 	font-weight: bold;
 }
+.employee-tabs-inactive a {
+	opacity: 0.5;
+}
 .employee-tabs ul {
 	list-style-type: none;
 	overflow: hidden;
@@ -397,6 +400,11 @@ a[data-toggle="collapse"] {
 	color: rgba(175, 25, 25);
 	font-size: 30px;
 	margin-bottom: -42px;
+}
+.folder-documents-tree {
+	position: absolute;
+	margin-left: -62px;
+	margin-top: -15px;
 }
 .folder-documents-info {
 	font-size: 14px;

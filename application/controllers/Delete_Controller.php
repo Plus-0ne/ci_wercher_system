@@ -125,4 +125,24 @@ class Delete_Controller extends CI_Controller {
 			}
 		}
 	}
+	public function RemoveDocumentsNote()
+	{
+		$DatabaseID = $this->input->get('id');
+		$ApplicantID = $this->input->get('user');
+		if (!isset($_GET['id'])) {
+			redirect('ViewEmployee?id=' . $ApplicantID . '#Documents');
+		}
+		else
+		{
+			$Removethis = $this->Model_Deletes->RemoveDocumentsNote($DatabaseID, $ApplicantID);
+			if ($Removethis == TRUE) {
+				redirect('ViewEmployee?id=' . $ApplicantID . '#Documents');
+			}
+			else
+			{
+				redirect('Employee');
+			}
+		}
+	}
+
 }

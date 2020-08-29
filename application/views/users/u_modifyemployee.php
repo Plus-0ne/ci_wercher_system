@@ -242,7 +242,7 @@
 										<input class="form-control" type="text" name="Address_Manila" autocomplete="off" value="<?php echo $Address_Manila; ?>">
 									</div>
 								</div>
-								<div class="form-row pb-5 pt-5">
+								<div id="Academic_History" class="form-row pb-5 pt-5">
 									<div class="pb-3">
 										<h5><i class="fas fa-stream"></i> Academic History</h5>
 									</div>
@@ -290,7 +290,7 @@
 										
 									</div>
 								</div>
-								<div class="form-row pb-5">
+								<div id="Employment_Record" class="form-row pb-5">
 									<div class="pb-3">
 										<h5><i class="fas fa-stream"></i> Employment Record</h5>
 									</div>
@@ -338,7 +338,7 @@
 										
 									</div>
 								</div>
-								<div class="form-row pb-5">
+								<div id="Machine_Operated" class="form-row pb-5">
 									<div class="pb-3">
 										<h5><i class="fas fa-stream"></i> Machine Operated</h5>
 									</div>

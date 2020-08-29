@@ -49,9 +49,9 @@
 										<?php if($Status == 'Employed' || $Status == 'Blacklisted' || $Status == 'Expired'): ?>
 											<li id="TabDocumentsBtn" class="employee-tabs-select"><a href="#Documents" onclick="">Documents</a></li>
 										<?php endif; ?>
-										<li id="TabAcademicBtn" class="employee-tabs-select"><a href="#Academic" onclick="">Academic</a></li>
-										<li id="TabEmploymentsBtn" class="employee-tabs-select"><a href="#Employments" onclick="">Employments</a></li>
-										<li id="TabMachineBtn" class="employee-tabs-select"><a href="#Machine" onclick="">Machine</a></li>
+										<li id="TabAcademicBtn" class="employee-tabs-select<?php if ($GetAcadHistory->num_rows() <= 0) { echo ' employee-tabs-inactive'; }?>"><a href="#Academic" onclick="">Academic</a></li>
+										<li id="TabEmploymentsBtn" class="employee-tabs-select<?php if ($employment_record->num_rows() <= 0) { echo ' employee-tabs-inactive'; }?>"><a href="#Employments" onclick="">Employments</a></li>
+										<li id="TabMachineBtn" class="employee-tabs-select<?php if ($Machine_Operatessss->num_rows() <= 0) { echo ' employee-tabs-inactive'; }?>"><a href="#Machine" onclick="">Machine</a></li>
 										<li><a href="<?=base_url()?>PrintEmployee?id=<?=$ApplicantID?>" target="_blank" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Print Employee"><i class="fas fa-print" style="margin-right: -1px;"></i> </a></li>
 										<li id="TabEditBtn"><a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" onclick="" target="_blank" target="_blank" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Edit"><i class="fas fa-edit" style="margin-right: -1px;"></i></a></li>
 									</ul>
@@ -632,8 +632,18 @@
 														</div>
 														<div id="FolderDocuments" class="folder-documents folder-active col-sm-12 mt-4 ml-5">
 														<?php if ($GetDocuments->num_rows() > 0) { ?>
+															<?php
+																$len = $GetDocuments->num_rows();
+																$iteration = 0;
+															 ?>
 															<?php foreach ($GetDocuments->result_array() as $row): ?>
+																<?php $iteration++; ?>
 																	<div class="mb-3">
+																		<?php if ($iteration == $len): ?>
+																			<img class="folder-documents-tree" src="assets/img/documents-folder-tree.png">
+																		<?php else: ?>
+																			<img class="folder-documents-tree" src="assets/img/documents-folder-tree-continuous.png">
+																		<?php endif; ?>
 																		<div class="folder-documents-icon"><i class="fas fa-file-pdf"></i></div>
 																		<div class="col-sm-12 ml-3">
 																			<a class="ml-2" href="<?php echo $row['Doc_File'];?>" target="_blank">
@@ -655,8 +665,18 @@
 														</div>
 														<div id="FolderViolations" class="folder-documents col-sm-12 mt-4 ml-5">
 														<?php if ($GetDocumentsViolations->num_rows() > 0) { ?>
+															<?php
+																$len = $GetDocumentsViolations->num_rows();
+																$iteration = 0;
+															 ?>
 															<?php foreach ($GetDocumentsViolations->result_array() as $row): ?>
+																<?php $iteration++; ?>
 																	<div class="mb-3">
+																		<?php if ($iteration == $len): ?>
+																			<img class="folder-documents-tree" src="assets/img/documents-folder-tree.png">
+																		<?php else: ?>
+																			<img class="folder-documents-tree" src="assets/img/documents-folder-tree-continuous.png">
+																		<?php endif; ?>
 																		<div class="folder-documents-icon"><i class="fas fa-file-pdf"></i></div>
 																		<div class="col-sm-12 ml-3">
 																			<a class="ml-2" href="<?php echo $row['Doc_File'];?>" target="_blank">
@@ -690,32 +710,29 @@
 														</div>
 													</div>
 													<div class="row mt-2">
-														<div class="col-sm-12">
-															<table id="ListNotes" class="table table-borderless" style="width: 100%;">
-																<thead>
-																</thead>
-																<tbody>
-																	<?php
-																	$RowCount = 0;
-																	if ($GetDocumentsNotes->num_rows() > 0):
-																		foreach ($GetDocumentsNotes->result_array() as $row):
-																			$RowCount++;?>
-																			<tr>
-																				<td style="width: 8px;">
-																					<?php echo $RowCount . '.'; ?>
-																				</td>
-																				<td>
-																					<?php echo $row['Note'] ; ?>
-																				</td>
-																			</tr>
-																		<?php endforeach;
-																	else: ?>
-																		<div class="mt-2">
-																			No notes found.
+														<div class="col-sm-12 mb-4">
+															<?php
+															$RowCount = 0;
+															if ($GetDocumentsNotes->num_rows() > 0):
+																foreach ($GetDocumentsNotes->result_array() as $row):
+																	$RowCount++;?>
+																	<div class="row mt-3">
+																		<div class="col-sm-1" style="margin-top: -3px;">
+																			<i class="fas fa-circle" style="font-size: 8px; margin-right: -1px;"></i>
 																		</div>
-																	<?php endif; ?>
-																</tbody>
-															</table>
+																		<div class="col-sm-8">
+																			<?php echo $row['Note'] ; ?>
+																		</div>
+																		<div class="col-sm-3 text-right employee-documents-notes-edit">
+																			<a class="btn btn-danger btn-sm" href="<?=base_url()?>RemoveDocumentsNote?id=<?php echo $row['DatabaseID']; ?>&user=<?php echo $ApplicantID; ?>"><i class="fas fa-times" style="margin-right: -1px;"></i></a>
+																		</div>
+																	</div>
+																<?php endforeach;
+															else: ?>
+																<div class="mt-2">
+																	No notes found.
+																</div>
+															<?php endif; ?>
 														</div>
 													</div>
 												</div>
@@ -754,7 +771,7 @@
 																	<tr class="w-100 text-center">
 																		<td colspan="6">
 																			<h5>
-																				No Data
+																				No data available. Click <a href="ModifyEmployee?id=<?php echo $ApplicantID; ?>#Academic_History">here</a> to add.
 																			</h5>
 																		</td>
 																	</tr>
@@ -798,7 +815,7 @@
 																	<tr class="w-100 text-center">
 																		<td colspan="6">
 																			<h5>
-																				No Data
+																				No data available. Click <a href="ModifyEmployee?id=<?php echo $ApplicantID; ?>#Employment_Record">here</a> to add.
 																			</h5>
 																		</td>
 																	</tr>
@@ -833,7 +850,7 @@
 																	<tr class="w-100 text-center">
 																		<td>
 																			<h5>
-																				No Data
+																				No data available. Click <a href="ModifyEmployee?id=<?php echo $ApplicantID; ?>#Machine_Operated">here</a> to add.
 																			</h5>
 																		</td>
 																	</tr>

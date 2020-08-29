@@ -94,6 +94,7 @@ $route['AddthisSss'] = 'Add_Controller/AddthisSss';
 $route['RemoveEmployee'] = 'Delete_Controller/RemoveEmployee';
 $route['RemoveAdmin'] = 'Delete_Controller/RemoveAdmin';
 $route['RemoveClient'] = 'Delete_Controller/RemoveClient';
+$route['RemoveDocumentsNote'] = 'Delete_Controller/RemoveDocumentsNote';
 
 // UPDATE
 $route['EmployApplicant'] = 'Update_Controller/EmployApplicant';

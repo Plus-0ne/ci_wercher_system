@@ -51,4 +51,10 @@ class Model_Deletes extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function RemoveDocumentsNote($DatabaseID, $ApplicantID)
+	{
+		$SQL = "UPDATE tab_documents_notes SET Deleted ='1' WHERE DatabaseID = '$DatabaseID' AND ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL,$ApplicantID);
+		return $result;
+	}
 }

@@ -293,7 +293,7 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetDocumentsNotes($ApplicantID)
 	{
-		$SQL = "SELECT * FROM tab_documents_notes WHERE ApplicantID = '$ApplicantID'";
+		$SQL = "SELECT * FROM tab_documents_notes WHERE ApplicantID = '$ApplicantID' AND Deleted IS NULL";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -518,6 +518,36 @@ class Model_Selects extends CI_Model {
 	{
 		$SQL = "SELECT * FROM employee_deductions where applicant_id=$eid";
 		$result = $this->db->query($SQL,$eid);
+		return $result;
+	}
+	public function GetWeeklyImports($ApplicantsArray)
+	{
+	    if (!empty($ApplicantsArray)) {
+    		$SQL = "SELECT * FROM hours_weekly WHERE";
+    		foreach($ApplicantsArray as $item) {
+    			$SQL = $SQL . " ApplicantID = '" . $item . "'" . " OR "; 
+    		}
+    		$SQL = substr($SQL, 0, -4);
+    		$result = $this->db->query($SQL);
+    		return $result;
+	    }
+	}
+	public function GetWeeklyListEmployeeFromImports($ApplicantsArray)
+	{
+	    if (!empty($ApplicantsArray)) {
+    		$SQL = "SELECT * FROM applicants WHERE";
+    		foreach($ApplicantsArray as $item) {
+    			$SQL = $SQL . " ApplicantID = '" . $item . "'" . " OR "; 
+    		}
+    		$SQL = substr($SQL, 0, -4);
+    		$result = $this->db->query($SQL);
+    		return $result;
+	    }
+	}
+	public function GetClientIDFromName($ClientName)
+	{
+		$SQL = "SELECT * FROM clients WHERE Name = '$ClientName'";
+		$result = $this->db->query($SQL);
 		return $result;
 	}
 

@@ -1244,7 +1244,7 @@ class Update_Controller extends CI_Controller {
 	}
 	public function ImportExcel()
 	{
-		$ClientID = $this->input->post('ExcelClientID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
+		// $ClientID = $this->input->post('ExcelClientID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 		$File = $_FILES['file'];
 		date_default_timezone_set('Asia/Manila');
 		$this->load->library('SimpleXLSX');	
@@ -1254,12 +1254,45 @@ class Update_Controller extends CI_Controller {
 				$cols = $dim[0];
 				$RowCount = 0;
 				$ColCount = 0;
+				$ApplicantsArray = array();
 
 				foreach ( $xlsx->rows() as $k => $r ):
-					if ($k == 0) continue; // skip first row
+					// if ($k == 0) continue; // skip first row
 					// echo '<tr class="clickable-row" data-toggle="modal" data-target="#HoursWeeklyModal">';
 					for ( $i = 0; $i < $cols; $i ++ ) {
 						if ($RowCount == 0){
+							if ($ColCount == 3) { // Client Name
+								$ClientName = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
+								$GetClientIDFromName = $this->Model_Selects->GetClientIDFromName($ClientName);
+								if ($GetClientIDFromName->num_rows() > 0) {
+									foreach($GetClientIDFromName->result_array() as $row) {
+										$ClientID = $row['ClientID'];
+									}
+								} else {
+									$ClientID = 0; // default
+									$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: No client with that name was found</h5></div>');
+								}
+							}
+							if ($ColCount == 5) { // Salary Mode
+								$SalaryMode = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
+								switch ($SalaryMode) {
+									case 'Weekly':
+										$SalaryMode = 0;
+										break;
+									case 'Semi-Monthly':
+										$SalaryMode = 1;
+										break;
+									case 'Monthly':
+										$SalaryMode = 2;
+										break;
+									default:
+										$SalaryMode = 0; // default
+										$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Invalid Salary Mode</h5></div>');
+								}
+							}
+
+						}
+						if ($RowCount == 1){
 							if ($ColCount == 3) {
 								$StartingDate = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
 
@@ -1298,9 +1331,10 @@ class Update_Controller extends CI_Controller {
 							}
 
 						}
-						if ($RowCount >= 1) {
+						if ($RowCount >= 2) {
 							if ($ColCount == 0) {
 								$ApplicantID = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
+								array_push($ApplicantsArray, $ApplicantID);
 							}
 							if ($ColCount == 1) {
 								$Name = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
@@ -1378,7 +1412,9 @@ class Update_Controller extends CI_Controller {
 					$ColCount = 0;
 				endforeach;
 				if ($RowCount <= $xlsx->rows()) {
-					redirect('ViewClient?id=' . $ClientID);
+					$ApplicantsArray = serialize($ApplicantsArray);
+					$this->session->set_userdata('ApplicantsArray', $ApplicantsArray);
+					redirect('ViewClient?id=excel&mode=' . $SalaryMode);
 				}
 				$this->load->view('_template/users/u_redirecting');
 				// echo '</table>';
