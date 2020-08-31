@@ -25,6 +25,7 @@ class PhpOffice_Controller extends CI_Controller {
 		$f_date = $this->input->post('f_date',true);
 		$t_date = $this->input->post('t_date',true);
         $filename = $this->input->post('ExportFileName',true);
+        $GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
 
         switch ($SalaryMode) {
             case 0:
@@ -76,6 +77,8 @@ class PhpOffice_Controller extends CI_Controller {
 
         ####### Fill excel with data
         $i=3;
+        $hoursColumn = 'D';
+        $hoursRow = '3';
         foreach ($GetApplicantDetails->result_array() as $row) {
 
         	$sheet->getColumnDimension('A')->setAutoSize(true);
@@ -83,7 +86,7 @@ class PhpOffice_Controller extends CI_Controller {
             $sheet->getColumnDimension('B')->setAutoSize(true);
             $sheet->setCellValue('B'.$i, $row['LastName'].' '.$row['FirstName'].', '.$row['MiddleInitial']);
             $sheet->getColumnDimension('B')->setAutoSize(true);
-            $sheet->setCellValue('C'.$i, 'SAMPLE');
+            $sheet->setCellValue('C'.$i, $row['SalaryExpected']);
 
         	$i++;
 
@@ -98,10 +101,36 @@ class PhpOffice_Controller extends CI_Controller {
         	$a = 'D';
         	foreach ($period as $dt) {
         		$sheet->getColumnDimension($a)->setAutoSize(true);
-        		$sheet->setCellValue($a.'2', $dt->format("m-d-Y"));
+        		$sheet->setCellValue($a.'2', $dt->format("Y-m-d"));
                 $sheet->getStyle($a.'2')->applyFromArray($styleBold);
         		$a++;
-        	}        
+        	}
+            $TotalRegHours = 0;
+            $TotalOTHours = 0;
+            foreach ($GetWeeklyDates->result_array() as $brow):
+                if($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->num_rows() > 0) {
+                    foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->result_array() as $nrow):
+                        $Hours = $nrow['Hours'];
+                        $OT = $nrow['Overtime'];
+                        $totalh =  $nrow['Hours'] + $nrow['Overtime'];
+                        $TotalRegHours = $TotalRegHours + $Hours;
+                        $TotalOTHours = $TotalOTHours + $OT;
+                        $sheet->getColumnDimension($hoursColumn)->setAutoSize(true);
+                        $sheet->setCellValue($hoursColumn.$hoursRow, $totalh);
+                        // $sheet->getStyle($hoursCell.'3')->applyFromArray($styleBold);
+                        $hoursColumn++;
+                    endforeach;
+                } else {
+                    // echo $nrow['Hours'];
+                    // echo '<br>';
+                    // echo $nrow['Overtime'];
+                    $sheet->getColumnDimension($hoursColumn)->setAutoSize(true);
+                    $sheet->setCellValue($hoursColumn.$hoursRow, '0');
+                    // $sheet->getStyle($hoursCell.'3')->applyFromArray($styleBold);
+                }    
+            endforeach;
+            $hoursRow++;
+            $hoursColumn = 'D';
         }
         $totaCol =  $sheet->getHighestColumn().'2';
        

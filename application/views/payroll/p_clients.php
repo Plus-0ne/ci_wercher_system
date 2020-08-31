@@ -128,7 +128,6 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 		$('#ExportFromDate, #ExportToDate').on('change', function() {
-			console.log('123');
 			$('#ExportFileName').val($('#DesignatedClientName').val() + ' (' + $('#ExportFromDate').val() + ' - ' + $('#ExportToDate').val() + ')' );
 		});
 		$('#FromDate').val(moment().subtract(6,'d').format('YYYY-MM-DD'));

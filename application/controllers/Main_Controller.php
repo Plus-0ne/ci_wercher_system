@@ -6,10 +6,8 @@
  	public function __construct() {
  		parent::__construct();
  		$this->load->model('Model_Selects');
-		$this->load->model('Model_Updates'); // TODO: Remove after fixing the call belooooow.
-		$this->load->model('Model_Inserts'); // TODO: Remove after fixing the call belooooow.
-		// echo $_SERVER['REMOTE_ADDR'] . '<br>';
-		// echo $_SERVER['HTTP_USER_AGENT'];
+		$this->load->model('Model_Updates');
+		$this->load->model('Model_Inserts');
 		$GetEmployee = $this->Model_Selects->GetEmployee();
 		$GetClient = $this->Model_Selects->getClientOption();
 		date_default_timezone_set('Asia/Manila');

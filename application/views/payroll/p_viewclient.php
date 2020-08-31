@@ -19,12 +19,26 @@
 				<div class="rcontent">
 				<div class="row">
 					<div class="col-8 mb-2">
-						<form action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
-							<input id="ExcelClientID" type="hidden" name="ExcelClientID" value="<?php echo $ClientID; ?>">
-							<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">
-							<button id="ImportButton" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i> Import</button>
-							<button id="ImportButton" type="button" class="btn btn-secondary"><i class="fas fa-lock"></i> Export (WIP)</button>
-						</form>
+						<div class="form-row">
+							<form class="form-group mr-1" action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
+								<input id="ExcelClientID" type="hidden" name="ExcelClientID" value="<?php echo $ClientID; ?>">
+								<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">
+								<button id="ImportButton" type="button" class="btn btn-success form-control"><i class="fas fa-file-excel"></i> Import</button>
+							</form>
+							<?php
+								$ClientName = $this->session->userdata('ClientName');
+								$FirstDate = $this->session->userdata('FirstDate');
+								$LastDate = $this->session->userdata('LastDate');
+							?>
+							<form class="form-group" action="<?php echo base_url().'PhpOffice_Controller/ExportFrom_To'; ?>" method="post" enctype="multipart/form-data">
+							    <input type="text" class="form-control" name="id" readonly hidden value="<?php echo $ClientID; ?>">
+							    <input type="text" class="form-control" name="Mode" readonly hidden value="<?php echo $_GET['mode']; ?>">
+							    <input type="text" class="form-control" name="f_date" readonly hidden value="<?php echo $FirstDate?>">
+							    <input type="text" class="form-control" name="t_date" readonly hidden value="<?php echo $LastDate?>">
+							    <input type="text" class="form-control" name="ExportFileName" readonly hidden value="<?php echo $ClientName . ' (' . $FirstDate . ' - ' . $LastDate . ')' ?>">
+							    <button id="ImportButton" type="submit" class="btn btn-success form-control"><i class="fas fa-file-download"></i> Download Excel</button>
+						  	</form>
+						  </div>
 						<!-- <div id="datatables-export"></div> -->
 					</div>
 					<div class="col-4 mb-2 text-right">
@@ -73,7 +87,7 @@
 												<button type="button" class="btn btn-primary btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-list"></i> Contract</button>
 												<button type="button" class="btn btn-primary btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-book"></i> History</button>
 											</td> -->
-											</tr>
+										</tr>
 									<?php endforeach; ?>
 								</tbody>
 							</table>
@@ -448,7 +462,7 @@
 
 	}
 	#WeeklyTable tbody tr:hover {
-		background-color: rgba(125, 125, 255, 0.25);
+		background-color: rgba(125, 125, 125, 0.11);
 		cursor: pointer;
 	}
 	.modal-open {

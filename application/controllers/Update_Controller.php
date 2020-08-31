@@ -1303,6 +1303,11 @@ class Update_Controller extends CI_Controller {
 
 								for ($i = 0; $i <= $cols - 5; $i++) {
 									$Date = date('Y-m-d', strtotime('+' . $i . ' day', strtotime($StartingDate)));
+									if ($i == 0) {
+										$FirstDate = $Date;
+									} elseif ($i == ($cols - 5)) {
+										$LastDate = $Date;
+									}
 									$DateChecker = new DateTime($Date);
 									if (in_array($DateChecker->format('m-d'), $HoursHolidays)) {
 										$Type = 'Holiday';
@@ -1414,6 +1419,9 @@ class Update_Controller extends CI_Controller {
 				if ($RowCount <= $xlsx->rows()) {
 					$ApplicantsArray = serialize($ApplicantsArray);
 					$this->session->set_userdata('ApplicantsArray', $ApplicantsArray);
+					$this->session->set_userdata('ClientName', $ClientName);
+					$this->session->set_userdata('FirstDate', $FirstDate);
+					$this->session->set_userdata('LastDate', $LastDate);
 					redirect('ViewClient?id=excel&mode=' . $SalaryMode);
 				}
 				$this->load->view('_template/users/u_redirecting');
