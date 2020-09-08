@@ -11,7 +11,7 @@ class Model_Deletes extends CI_Model {
 	}
 	public function RemoveAdminM($id)
 	{
-		$SQL = "DELETE FROM admin WHERE AdminNo = ?";
+		$SQL = "UPDATE admin SET Status = 'Deleted' WHERE AdminNo = ?";
 		$result = $this->db->query($SQL,$id);
 		return $result;
 	}

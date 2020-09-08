@@ -26,12 +26,19 @@
 								<button id="ImportButton" type="button" class="btn btn-success form-control"><i class="fas fa-file-excel"></i> Import</button>
 							</form>
 							<?php
-								$ClientName = $this->session->userdata('ClientName');
+								if ($GetClientID->num_rows() > 0) {
+									foreach($GetClientID->result_array() as $row) {
+										$ClientName = $row['Name'];
+									}
+								} else {
+									$ClientName = 'No Client'; // default
+									$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: No client with that name was found</h5></div>');
+								}
 								$FirstDate = $this->session->userdata('FirstDate');
 								$LastDate = $this->session->userdata('LastDate');
 							?>
 							<form class="form-group" action="<?php echo base_url().'PhpOffice_Controller/ExportFrom_To'; ?>" method="post" enctype="multipart/form-data">
-							    <input type="text" class="form-control" name="id" readonly hidden value="<?php echo $ClientID; ?>">
+							    <input type="text" class="form-control" name="id" readonly hidden value="<?php if($_GET['id'] == 'excel') { echo $ClientID; } else { echo $_GET['id']; } ?>">
 							    <input type="text" class="form-control" name="Mode" readonly hidden value="<?php echo $_GET['mode']; ?>">
 							    <input type="text" class="form-control" name="f_date" readonly hidden value="<?php echo $FirstDate?>">
 							    <input type="text" class="form-control" name="t_date" readonly hidden value="<?php echo $LastDate?>">

@@ -892,13 +892,13 @@ a[data-toggle="collapse"] {
 }
 .wercher-card-weekly-tracker-container {
 	margin-top: -1px;
-	border-bottom: 2px solid rgba(0, 155, 0, 0.88);
+	/*	border-bottom: 2px solid rgba(0, 155, 0, 0.88);
 	border-left: 2px solid rgba(0, 155, 0, 0.88);
-	border-right: 2px solid rgba(0, 155, 0, 0.88);
-	background-color: rgba(115, 55, 5, 0.45);
+	border-right: 2px solid rgba(0, 155, 0, 0.88);*/
+	background-color: rgba(115, 55, 5, 0.22);
 }
 .wercher-card-weekly-tracker {
-	color: rgba(0, 255, 0, 0.9);
+	color: rgba(75, 75, 75);
 	margin-left: 20px;
 }
 .calendar-tooltip {
@@ -908,6 +908,103 @@ a[data-toggle="collapse"] {
 .sss-row:hover {
 	border-radius: 10px;
 	background-color: rgba(75, 75, 75, 0.14);
+}
+.logbook-log-container {
+	border-radius: 4px;
+	padding-top: 5px;
+	margin-bottom: 10px;
+}
+.logbook-log {
+	background-color: rgba(74, 58, 21, 0.04);
+}
+.logbook-log-hover:hover {
+	background-color: rgba(74, 58, 21, 0.08);
+	cursor:pointer;
+}
+.logbook-log-active {
+	background-color: rgba(74, 58, 21, 0.08);
+}
+.logbook-log-active:hover {
+	cursor:pointer;
+}
+.logbook-icon {
+	font-size: 22px;
+	color: rgba(0, 0, 0, 0.75);
+}
+.logbook-tooltip-date {
+	font-size: 16px;
+	color: rgba(125, 125, 125);
+}
+.logbook-tooltip-highlight {
+	color: rgba(155, 75, 25);
+}
+.logbook-tooltip-highlight:hover {
+	color: rgba(205, 125, 75);
+	text-decoration: underline;
+}
+.logbook-tooltip-icon {
+	font-size: 22px;
+	margin-top: auto;
+	margin-bottom: auto;
+	color: rgba(0, 0, 0, 0.5);
+}
+.logbook-log-type-blue {
+	border-left: 4px solid rgba(0, 0, 155);
+	border-radius: 0px;
+}
+.logbook-log-type-red {
+	border-left: 4px solid rgba(225, 0, 0);
+	border-radius: 0px;
+}
+.logbook-log-type-green {
+	border-left: 4px solid rgba(0, 155, 0);
+	border-radius: 0px;
+}
+.logbook-log-type-yellow {
+	border-left: 4px solid rgba(197, 173, 0);
+	border-radius: 0px;
+}
+.logbook-log-type-unknown {
+	border-left: 4px solid rgba(0, 0, 0);
+	border-radius: 0px;
+}
+.logbook-log-toggle i {
+	font-size: 20px;
+	color: rgba(125, 125, 125);
+	margin-bottom: -12px;
+}
+.logbook-log-number {
+	font-style: italic;
+	font-size: 12px;
+	opacity: 0.5;
+}
+.logbook-tooltip-extended {
+	border-radius: 4px;
+	margin-top: 20px;
+	margin-left: 15%;
+	padding-bottom: 20px;
+}
+.logbook-tooltip-extended-tree {
+	position: absolute;
+	margin-left: -62px;
+	margin-top: -24px;
+}
+.logbook-log-notes {
+	margin-top: -7px;
+}
+.logbook-log-notes-button {
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.logbook-notes-admin-image {
+	margin-left: -20px;
 }
 /*form {
 	display: none;

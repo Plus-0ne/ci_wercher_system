@@ -61,6 +61,11 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('logbook', $data);
 		return $result;
 	}
+	public function InsertLogbookExtended($data)
+	{
+		$result = $this->db->insert('logbook_extended', $data);
+		return $result;
+	}
 	public function InsertReminder($ApplicantID, $data)
 	{
 		$this->db->where('ApplicantID', $ApplicantID);

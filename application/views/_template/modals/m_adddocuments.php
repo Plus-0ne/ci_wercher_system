@@ -30,7 +30,6 @@
 									</p>
 									<label for="fileselect">Choose a PDF file</label>
 									<input type="file" id="fileselect" name="pFile" />
-									or drop it here (WIP)
 								</div>
 								<div id="output-output">
 								</div>

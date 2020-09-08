@@ -18,6 +18,9 @@
 					<div class="form-group col-8">
 						<label>Choose Client</label>
 						<select id="ClientSelect" class="form-control" name="ClientID">
+							<option hidden="" disabled="" selected="">
+								Choose Client
+							</option>
 							<?php foreach ($getClientOption->result_array() as $row): ?>
 								<option value="<?=$row['ClientID'];?>">
 									<?=$row['Name'];?>

@@ -69,6 +69,12 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL,$AdminID);
 		return $result;
 	}
+	public function CheckAdminNo($AdminNo)
+	{
+		$SQL = "SELECT * FROM admin WHERE AdminNo = ?";
+		$result = $this->db->query($SQL,$AdminNo);
+		return $result;
+	}
 	public function GetApplicants() // TODO: Duplicate?
 	{
 		$SQL = "SELECT * FROM applicants WHERE Status = 'Applicant'";
@@ -124,12 +130,6 @@ class Model_Selects extends CI_Model {
 	public function GetContractHistory($id)
 	{
 		$SQL = "SELECT * FROM contract_history, applicants WHERE contract_history.ApplicantID = '$id' AND applicants.ApplicantID = '$id'";
-		$result = $this->db->query($SQL);
-		return $result;
-	}
-	public function GetLogbook()
-	{
-		$SQL = "SELECT * FROM logbook ORDER BY No DESC";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -547,6 +547,24 @@ class Model_Selects extends CI_Model {
 	public function GetClientIDFromName($ClientName)
 	{
 		$SQL = "SELECT * FROM clients WHERE Name = '$ClientName'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetLogbook($LimitStart = 1, $LimitEnd = 50)
+	{
+		$SQL = "SELECT * FROM logbook ORDER BY No DESC LIMIT $LimitStart, $LimitEnd";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetLogbookAdminImage($AdminID)
+	{
+		$SQL = "SELECT * FROM admin, logbook WHERE admin.AdminID = '$AdminID' AND logbook.AdminID = '$AdminID' LIMIT 1";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetLogbookLogExtended($HookNo)
+	{
+		$SQL = "SELECT * FROM logbook, logbook_extended WHERE logbook.No = '$HookNo' AND logbook_extended.HookNo = '$HookNo'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

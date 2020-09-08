@@ -364,10 +364,7 @@
 								
 								<div class="form-row pt-5 pb-4">
 									<div class="form-group mr-auto">
-										<button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Save</button>
-									</div>
-									<div class="form-group ml-auto">
-										<a href="<?=base_url()?>Applicants" class="btn btn-secondary"><i class="fas fa-chevron-left"></i> Back</a>
+										<button class="btn btn-success btn-lg" type="submit"><i class="fas fa-save"></i> Save</button>
 									</div>
 								</div>
 							</form>

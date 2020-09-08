@@ -122,6 +122,9 @@
 		<?php if (isset($_GET['id'])): ?>
 			$('#ClientsEmployedModal').modal('show');
 		<?php endif; ?>
+		$("#ClientsEmployedModal").on("hidden.bs.modal", function () { // Change URL on modal close
+		    history.pushState(null, null, '<?php echo base_url() . 'Clients';  ?>');
+		});
 		$('#EmployeeIDSuffix').bind('input', function() {
 			$('#SuffixPreview').val('WC' + $(this).val() + '-####-20');
 		});

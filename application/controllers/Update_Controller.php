@@ -11,6 +11,9 @@ class Update_Controller extends CI_Controller {
 		$this->load->model('Model_Inserts');
 		$this->load->model('Model_Deletes');
 		$this->load->model('Model_Updates');
+		$this->load->model('Model_Logbook');
+
+		date_default_timezone_set('Asia/Manila');
 	}
 	public function EmployApplicant()
 	{
@@ -83,43 +86,60 @@ class Update_Controller extends CI_Controller {
 					if ($EmployNewApplicant == TRUE) {
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Applicant employed!</h5></div>');
 						// LOGBOOK
-						date_default_timezone_set('Asia/Manila');
-						$LogbookCurrentTime = date('Y-m-d h:i:s A');
-						$LogbookType = 'Employment';
-						$LogbookEvent = 'Applicant ID ' . $Temp_ApplicantID .' has been employed to Client ID ' . $ClientID . ' for ';
+						$duration = '';
 						if($H_Years != 0) {
-							$LogbookEvent = $LogbookEvent . $H_Years;
+							$duration = $duration . $H_Years;
 							if($H_Years == 1) {
-								$LogbookEvent = $LogbookEvent . ' year, ';
+								$duration = $duration . ' year, ';
 							} else {
-								$LogbookEvent = $LogbookEvent . ' years, ';
+								$duration = $duration . ' years, ';
 							}
 						}
 						if($H_Months != 0) {
-							$LogbookEvent = $LogbookEvent . $H_Months;
+							$duration = $duration . $H_Months;
 							if($H_Months == 1) {
-								$LogbookEvent = $LogbookEvent . ' month, ';
+								$duration = $duration . ' month, ';
 							} else {
-								$LogbookEvent = $LogbookEvent . ' months, ';
+								$duration = $duration . ' months, ';
 							}
 						}
 						if($H_Days != 0) {
-							$LogbookEvent = $LogbookEvent . $H_Days;
+							$duration = $duration . $H_Days;
 							if($H_Days == 1) {
-								$LogbookEvent = $LogbookEvent . ' day, ';
+								$duration = $duration . ' day, ';
 							} else {
-								$LogbookEvent = $LogbookEvent . ' days, ';
+								$duration = $duration . ' days, ';
 							}
 						}
-						$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
-						$LogbookLink = base_url() . 'ViewEmployee?id=' . $Temp_ApplicantID;
-						$data = array(
-							'Time' => $LogbookCurrentTime,
-							'Type' => $LogbookType,
-							'Event' => $LogbookEvent,
-							'Link' => $LogbookLink,
-						);
-						$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+						$duration = substr($duration, 0, -2);
+						$duration = new DateTime($duration);
+						$now = (new DateTime(date('Y-m-d')))->format('F d, Y');
+						$duration = $duration->format('F d, Y');
+						$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
+						if ($CheckApplicant->num_rows() > 0) {
+							foreach($CheckApplicant->result_array() as $row) {
+								$LastName = $row['LastName'];
+								$FirstName = $row['FirstName'];
+								$MiddleInitial = $row['MiddleInitial'];
+							}
+						} else {
+							$LastName = 'N/A';
+							$FirstName = 'N/A';
+							$MiddleInitial = 'N/A';
+						}
+						$GetClientID = $this->Model_Selects->GetClientID($ClientID);
+						if ($GetClientID->num_rows() > 0) {
+							foreach($GetClientID->result_array() as $row) {
+								$ClientName = $row['Name'];
+							}
+						} else {
+							$LastName = 'N/A';
+							$FirstName = 'N/A';
+							$MiddleInitial = 'N/A';
+						}
+						$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' employed <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleInitial) . '</a> to <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $ClientID . '" target="_blank">' . $ClientName . '</a>');
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Status changed from <b>Applicant</b> to <b>Employed</b>');
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Contract Duration: <b>' . $now . '</b> to <b>' . $duration . '</b>');
 						redirect($_SERVER['HTTP_REFERER']);
 					}
 					else
@@ -184,43 +204,26 @@ class Update_Controller extends CI_Controller {
 					if ($EmployNewApplicant == TRUE) {
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Contract Extended to ' . $DateEnds . '!</h5></div>');
 						// LOGBOOK
-						date_default_timezone_set('Asia/Manila');
-						$LogbookCurrentTime = date('Y-m-d h:i:s A');
-						$LogbookType = 'Update';
-						$LogbookEvent = 'Applicant ID ' . $ApplicantID .' has their contract extended by ';
-						if($E_Years != 0) {
-							$LogbookEvent = $LogbookEvent . $E_Years;
-							if($E_Years == 1) {
-								$LogbookEvent = $LogbookEvent . ' year, ';
-							} else {
-								$LogbookEvent = $LogbookEvent . ' years, ';
+						$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
+						if ($CheckEmployee->num_rows() > 0) {
+							foreach($CheckEmployee->result_array() as $row) {
+								$LastName = $row['LastName'];
+								$FirstName = $row['FirstName'];
+								$MiddleInitial = $row['MiddleInitial'];
 							}
+						} else {
+							$LastName = 'N/A';
+							$FirstName = 'N/A';
+							$MiddleInitial = 'N/A';
 						}
-						if($E_Months != 0) {
-							$LogbookEvent = $LogbookEvent . $E_Months;
-							if($E_Months == 1) {
-								$LogbookEvent = $LogbookEvent . ' month, ';
-							} else {
-								$LogbookEvent = $LogbookEvent . ' months, ';
-							}
-						}
-						if($E_Days != 0) {
-							$LogbookEvent = $LogbookEvent . $E_Days;
-							if($E_Days == 1) {
-								$LogbookEvent = $LogbookEvent . ' day, ';
-							} else {
-								$LogbookEvent = $LogbookEvent . ' days, ';
-							}
-						}
-						$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
-						$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract';
-						$data = array(
-							'Time' => $LogbookCurrentTime,
-							'Type' => $LogbookType,
-							'Event' => $LogbookEvent,
-							'Link' => $LogbookLink,
-						);
-						$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+						$logbookBeforeDate = new DateTime($E_CurrentDate);
+						$logbookAfterDate = new DateTime($DateEnds);
+						$logbookBeforeDate = $logbookBeforeDate->format('Y-m-d');
+						$logbookAfterDate = $logbookAfterDate->format('Y-m-d');
+						$logbookBeforeDate = DateTime::createFromFormat('Y-m-d', $logbookBeforeDate)->format('F d, Y');
+						$logbookAfterDate = DateTime::createFromFormat('Y-m-d', $logbookAfterDate)->format('F d, Y');
+						$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' updated contract duration for <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleInitial) . '</a>');
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Contract changed from <b>' . $logbookBeforeDate . '</b> to <b>' . $logbookAfterDate . '</b>');
 						redirect($_SERVER['HTTP_REFERER']);
 					}
 					else
@@ -288,7 +291,27 @@ class Update_Controller extends CI_Controller {
 				);
 				$Suspend = $this->Model_Updates->Suspend($ApplicantID,$data);
 				if ($Suspend == TRUE) {
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Suspension has been applied successfully!</h5></div>');
+					// LOGBOOK
+					$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
+					if ($CheckEmployee->num_rows() > 0) {
+						foreach($CheckEmployee->result_array() as $row) {
+							$LastName = $row['LastName'];
+							$FirstName = $row['FirstName'];
+							$MiddleInitial = $row['MiddleInitial'];
+						}
+					} else {
+						$LastName = 'N/A';
+						$FirstName = 'N/A';
+						$MiddleInitial = 'N/A';
+					}
+					$logbookBeforeDate = new DateTime($DateStarted);
+					$logbookAfterDate = new DateTime($DateEnds);
+					$logbookBeforeDate = $logbookBeforeDate->format('Y-m-d');
+					$logbookAfterDate = $logbookAfterDate->format('Y-m-d');
+					$logbookBeforeDate = DateTime::createFromFormat('Y-m-d', $logbookBeforeDate)->format('F d, Y');
+					$logbookAfterDate = DateTime::createFromFormat('Y-m-d', $logbookAfterDate)->format('F d, Y');
+					$this->Model_Logbook->LogbookEntry('Red', 'Employee', ' suspended <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleInitial) . '</a>');
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Suspended for <b>' . $logbookBeforeDate . '</b> to <b>' . $logbookAfterDate . '</b>');
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 				else
@@ -402,6 +425,103 @@ class Update_Controller extends CI_Controller {
 		}
 		else
 		{
+				// Logbook Records
+				$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
+				if ($CheckEmployee->num_rows() > 0) {
+					foreach ($CheckEmployee->result_array() as $row) {
+						$prevEmployeeID = $row['EmployeeID'];
+						$prevpImage = $row['ApplicantImage'];
+						# PERSONAL INFORMATION
+						$prevPositionDesired = $row['PositionDesired'];
+						$prevPositionGroup = $row['PositionGroup'];
+						$prevSalaryExpected = $row['SalaryExpected'];
+						$prevLastName = $row['LastName'];
+						$prevFirstName = $row['FirstName'];
+						$prevMI = $row['MiddleInitial'];
+						$prevGender = $row['Gender'];
+						$prevAge = $row['Age'];
+						$prevHeight = $row['Height'];
+						$prevWeight = $row['Weight'];
+						$prevReligion = $row['Religion'];
+
+						$prevbDate = $row['BirthDate'];
+						$prevbPlace = $row['BirthPlace'];
+						$prevCitizenship = $row['Citizenship'];
+						$prevCivilStatus = $row['CivilStatus'];
+						$prevNo_Children = $row['No_OfChildren'];
+						$prevPhoneNumber = $row['Phone_No'];
+						# DOCUMENTS
+						$prevSSS = $row['SSS_No'];
+						$prevSSS_Effective = $row['EffectiveDateCoverage'];
+						$prevRCN = $row['ResidenceCertificateNo'];
+						$prevRCN_at = $row['Rcn_At'];
+						$prevRCN_On = $row['Rcn_On'];
+						$prevTIN = $row['TIN'];
+						$prevTIN_At = $row['TIN_At'];
+						$prevTIN_On = $row['TIN_On'];
+
+						$prevHDMF = $row['HDMF'];
+						$prevHDMF_At = $row['HDMF_At'];
+						$prevHDMF_On = $row['HDMF_On'];
+
+						$prevPhilHealth = $row['PhilHealth'];
+						$prevPhilHealth_At = $row['PhilHealth_At'];
+						$prevPhilHealth_On = $row['PhilHealth_On'];
+						$prevATM_No = $row['ATM_No'];
+
+						# ADDRESSES
+						$prevAddress_Present = $row['Address_Present'];
+						$prevAddress_Provincial = $row['Address_Provincial'];
+						$prevAddress_Manila = $row['Address_Manila'];
+					}
+				} else {
+					$prevEmployeeID = 'N/A';
+					$prevpImage = 'N/A';
+					# PERSONAL INFORMATION
+					$prevPositionDesired = 'N/A';
+					$prevPositionGroup = 'N/A';
+					$prevSalaryExpected = 'N/A';
+					$prevLastName = 'N/A';
+					$prevFirstName = 'N/A';
+					$prevMI = 'N/A';
+					$prevGender = 'N/A';
+					$prevAge = 'N/A';
+					$prevHeight = 'N/A';
+					$prevWeight = 'N/A';
+					$prevReligion = 'N/A';
+
+					$prevbDate = 'N/A';
+					$prevbPlace = 'N/A';
+					$prevCitizenship = 'N/A';
+					$prevCivilStatus = 'N/A';
+					$prevNo_Children = 'N/A';
+					$prevPhoneNumber = 'N/A';
+					# DOCUMENTS
+					$prevSSS = 'N/A';
+					$prevSSS_Effective = 'N/A';
+					$prevRCN = 'N/A';
+					$prevRCN_at = 'N/A';
+					$prevRCN_On = 'N/A';
+					$prevTIN = 'N/A';
+					$prevTIN_At = 'N/A';
+					$prevTIN_On = 'N/A';
+
+					$prevHDMF = 'N/A';
+					$prevHDMF_At = 'N/A';
+					$prevHDMF_On = 'N/A';
+
+					$prevPhilHealth = 'N/A';
+					$prevPhilHealth_At = 'N/A';
+					$prevPhilHealth_On = 'N/A';
+					$prevATM_No = 'N/A';
+
+					# ADDRESSES
+					$prevAddress_Present = 'N/A';
+					$prevAddress_Provincial = 'N/A';
+					$prevAddress_Manila = 'N/A';
+
+				}
+
 				$config['upload_path']          = './uploads/'.$ApplicantID;
 				$config['allowed_types']        = 'gif|jpg|png';
 				$config['max_size']             = 2000;
@@ -557,20 +677,168 @@ class Update_Controller extends CI_Controller {
 					// unset($_SESSION["rela_cart"]); 
 					// unset($_SESSION["beneCart"]);
 					
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
 					// LOGBOOK
-					date_default_timezone_set('Asia/Manila');
-					$LogbookCurrentTime = date('Y-m-d h:i:s A');
-					$LogbookType = 'Update';
-					$LogbookEvent = 'Updated details on Person ID ' . $ApplicantID . '.';
-					$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
-					$data = array(
-						'Time' => $LogbookCurrentTime,
-						'Type' => $LogbookType,
-						'Event' => $LogbookEvent,
-						'Link' => $LogbookLink,
-					);
-					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+					$changesCounter = 0;
+					if ($EmployeeID != $prevEmployeeID) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Employee ID from <b>' . $prevEmployeeID . '</b> to <b>' . $EmployeeID . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($pImage != $prevpImage) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Changed profile picture', +1);
+						$changesCounter++;
+					}
+					if ($PositionDesired != $prevPositionDesired) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Position desired changed from <b>' . $prevPositionDesired . '</b> to <b>' . $PositionDesired . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($PositionGroup != $prevPositionGroup) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Position group changed from <b>' . $prevPositionGroup . '</b> to <b>' . $PositionGroup . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($SalaryExpected != $prevSalaryExpected) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Expected salary changed from <b>₱' . $prevSalaryExpected . '</b> to <b>₱' . $SalaryExpected . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($LastName != $prevLastName) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Last Name changed from <b>' . $prevLastName . '</b> to <b>' . $LastName . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($FirstName != $prevFirstName) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'First Name changed from <b>' . $prevFirstName . '</b> to <b>' . $FirstName . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($MI != $prevMI) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Middle Initial changed from <b>' . $prevMI . '</b> to <b>' . $MI . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($Gender != $prevGender) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Sex changed from <b>' . $prevGender . '</b> to <b>' . $Gender . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($Height != $prevHeight) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Height changed from <b>' . $prevHeight . '</b> to <b>' . $Height . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($Weight != $prevWeight) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Weight changed from <b>' . $prevWeight . '</b> to <b>' . $Weight . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($Religion != $prevReligion) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Religion changed from <b>' . $prevReligion . '</b> to <b>' . $Religion . '</b>', +1);
+						$changesCounter++;
+					}
+					$bDateReadable = (new DateTime(date($bDate)))->format('F d, Y');
+					$prevbDateReadable = (new DateTime(date($prevbDate)))->format('F d, Y');
+					if ($bDate != $prevbDate) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Birthday changed from <b>' . $prevbDateReadable . '</b> to <b>' . $bDateReadable . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($bPlace != $prevbPlace) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Birthplace changed from <b>' . $prevbPlace . '</b> to <b>' . $bPlace . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($Citizenship != $prevCitizenship) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Citizenship changed from <b>' . $prevCitizenship . '</b> to <b>' . $Citizenship . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($CivilStatus != $prevCivilStatus) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Civil Status changed from <b>' . $prevCivilStatus . '</b> to <b>' . $CivilStatus . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($No_Children != $prevNo_Children) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Number of children changed from <b>' . $prevNo_Children . '</b> to <b>' . $No_Children . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($PhoneNumber != $prevPhoneNumber) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Contact number changed from <b>' . $prevPhoneNumber . '</b> to <b>' . $PhoneNumber . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($SSS != $prevSSS) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'SSS number changed from <b>' . $prevSSS . '</b> to <b>' . $SSS . '</b>', +1);
+						$changesCounter++;
+					}
+					$SSS_EffectiveReadable = (new DateTime(date($SSS_Effective)))->format('F d, Y');
+					$prevSSS_EffectiveReadable = (new DateTime(date($prevSSS_Effective)))->format('F d, Y');
+					if ($SSS_Effective != $prevSSS_Effective) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'SSS effective date of coverage changed from <b>' . $prevSSS_EffectiveReadable . '</b> to <b>' . $SSS_EffectiveReadable . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($RCN != $prevRCN) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'RCN number changed from <b>' . $prevRCN . '</b> to <b>' . $RCN . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($RCN_at != $prevRCN_at) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'RCN location changed from <b>' . $prevRCN_at . '</b> to <b>' . $RCN_at . '</b>', +1);
+						$changesCounter++;
+					}
+					$RCN_OnReadable = (new DateTime(date($RCN_On)))->format('F d, Y');
+					$prevRCN_OnReadable = (new DateTime(date($prevRCN_On)))->format('F d, Y');
+					if ($RCN_On != $prevRCN_On) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'RCN date changed from <b>' . $prevRCN_OnReadable . '</b> to <b>' . $RCN_OnReadable . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($TIN != $prevTIN) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'TIN number changed from <b>' . $prevTIN . '</b> to <b>' . $TIN . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($TIN_At != $prevTIN_At) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'TIN location changed from <b>' . $prevTIN_At . '</b> to <b>' . $TIN_At . '</b>', +1);
+						$changesCounter++;
+					}
+					$TIN_OnReadable = (new DateTime(date($TIN_On)))->format('F d, Y');
+					$prevTIN_OnReadable = (new DateTime(date($prevTIN_On)))->format('F d, Y');
+					if ($TIN_On != $prevTIN_On) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'TIN date changed from <b>' . $prevTIN_OnReadable . '</b> to <b>' . $TIN_OnReadable . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($HDMF != $prevHDMF) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'HDMF number changed from <b>' . $prevHDMF . '</b> to <b>' . $HDMF . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($HDMF_At != $prevHDMF_At) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'HDMF location changed from <b>' . $prevHDMF_At . '</b> to <b>' . $HDMF_At . '</b>', +1);
+						$changesCounter++;
+					}
+					$HDMF_OnReadable = (new DateTime(date($HDMF_On)))->format('F d, Y');
+					$prevHDMF_OnReadable = (new DateTime(date($prevHDMF_On)))->format('F d, Y');
+					if ($HDMF_On != $prevHDMF_On) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'HDMF date changed from <b>' . $prevHDMF_OnReadable . '</b> to <b>' . $HDMF_OnReadable . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($PhilHealth != $prevPhilHealth) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'PhilHealth number changed from <b>' . $prevPhilHealth . '</b> to <b>' . $PhilHealth . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($PhilHealth_At != $prevPhilHealth_At) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'PhilHealth location changed from <b>' . $prevPhilHealth_At . '</b> to <b>' . $PhilHealth_At . '</b>', +1);
+						$changesCounter++;
+					}
+					$PhilHealth_OnReadable = (new DateTime(date($PhilHealth_On)))->format('F d, Y');
+					$prevPhilHealth_OnReadable = (new DateTime(date($prevPhilHealth_On)))->format('F d, Y');
+					if ($PhilHealth_On != $prevPhilHealth_On) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'PhilHealth date changed from <b>' . $prevPhilHealth_OnReadable . '</b> to <b>' . $PhilHealth_OnReadable . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($ATM_No != $prevATM_No) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'ATM number changed from <b>' . $prevATM_No . '</b> to <b>' . $ATM_No . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($Address_Present != $prevAddress_Present) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Present address changed from <b>' . $prevAddress_Present . '</b> to <b>' . $Address_Present . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($Address_Provincial != $prevAddress_Provincial) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Provincial address changed from <b>' . $prevAddress_Provincial . '</b> to <b>' . $Address_Provincial . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($Address_Manila != $prevAddress_Manila) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Manila address changed from <b>' . $prevAddress_Manila . '</b> to <b>' . $Address_Manila . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($changesCounter > 0) {
+						$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' updated details for <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
+						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
+					}
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 				else
@@ -585,16 +853,9 @@ class Update_Controller extends CI_Controller {
 		if (isset($_POST['Note'])) {
 			$Note = $this->input->post('Note',TRUE);
 			// LOGBOOK
-			date_default_timezone_set('Asia/Manila');
-			$LogbookCurrentTime = date('Y-m-d h:i:s A');
-			$LogbookType = 'Note';
-			$data = array(
-				'Time' => $LogbookCurrentTime,
-				'Type' => $LogbookType,
-				'Event' => $Note,
-			);
-			$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-			redirect(base_url() . 'Dashboard#Logbook');
+			$this->Model_Logbook->LogbookEntry('Yellow', 'Note', ' attached a new note');
+			$this->Model_Logbook->LogbookExtendedEntry(0, $Note);
+			redirect(base_url() . 'Logbook');
 
 		}
 	}
@@ -605,15 +866,20 @@ class Update_Controller extends CI_Controller {
 			$Note = $this->input->post('NoteDocuments',TRUE);
 			$this->Model_Inserts->InsertDocumentsNote($ApplicantID, $Note);
 			// LOGBOOK
-			date_default_timezone_set('Asia/Manila');
-			$LogbookCurrentTime = date('Y-m-d h:i:s A');
-			$LogbookType = 'Note';
-			$data = array(
-				'Time' => $LogbookCurrentTime,
-				'Type' => $LogbookType,
-				'Event' => 'Added new note for ' . $ApplicantID . '.',
-			);
-			$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+			$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
+			if($CheckEmployee->num_rows() > 0) {
+				foreach($CheckEmployee->result_array() as $row) {
+					$LastName = $row['LastName'];
+					$FirstName = $row['FirstName'];
+					$MI = $row['MiddleInitial'];
+				}
+			} else {
+				$LastName = 'N/A';
+				$FirstName = 'N/A';
+				$MI = 'N/A';
+			}
+			$this->Model_Logbook->LogbookEntry('Yellow', 'Note', ' attached a new note to <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
+			$this->Model_Logbook->LogbookExtendedEntry(0, $Note);
 			redirect(base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Documents');
 
 		}
@@ -664,9 +930,6 @@ class Update_Controller extends CI_Controller {
 			{
 				$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
 				if ($CheckApplicant->num_rows() > 0) {
-
-					date_default_timezone_set('Asia/Manila');
-
 					if ($R_Months == NULL) {
 						$ReminderDate = $ReminderDate + 0;
 					} else {
@@ -693,43 +956,42 @@ class Update_Controller extends CI_Controller {
 					if ($SetReminder == TRUE) {
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Reminder set!</h5></div>');
 						// LOGBOOK
-						date_default_timezone_set('Asia/Manila');
-						$LogbookCurrentTime = date('Y-m-d h:i:s A');
-						$LogbookType = 'New';
-						$LogbookEvent = 'A reminder has been set for ID ' . $ApplicantID .', alerting after ';
+						$duration = '';
 						if($R_Years != 0) {
-							$LogbookEvent = $LogbookEvent . $R_Years;
+							$duration = $duration . $R_Years;
 							if($R_Years == 1) {
-								$LogbookEvent = $LogbookEvent . ' year, ';
+								$duration = $duration . ' year, ';
 							} else {
-								$LogbookEvent = $LogbookEvent . ' years, ';
+								$duration = $duration . ' years, ';
 							}
 						}
 						if($R_Months != 0) {
-							$LogbookEvent = $LogbookEvent . $R_Months;
+							$duration = $duration . $R_Months;
 							if($R_Months == 1) {
-								$LogbookEvent = $LogbookEvent . ' month, ';
+								$duration = $duration . ' month, ';
 							} else {
-								$LogbookEvent = $LogbookEvent . ' months, ';
+								$duration = $duration . ' months, ';
 							}
 						}
 						if($R_Days != 0) {
-							$LogbookEvent = $LogbookEvent . $R_Days;
+							$duration = $duration . $R_Days;
 							if($R_Days == 1) {
-								$LogbookEvent = $LogbookEvent . ' day, ';
+								$duration = $duration . ' day, ';
 							} else {
-								$LogbookEvent = $LogbookEvent . ' days, ';
+								$duration = $duration . ' days, ';
 							}
 						}
-						$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
-						$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
-						$data = array(
-							'Time' => $LogbookCurrentTime,
-							'Type' => $LogbookType,
-							'Event' => $LogbookEvent,
-							'Link' => $LogbookLink,
-						);
-						$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+						$duration = substr($duration, 0, -2);
+						foreach($CheckApplicant->result_array() as $row) {
+							$LastName = $row['LastName'];
+							$FirstName = $row['FirstName'];
+							$MI = $row['MiddleInitial'];
+							$ReminderDateString = $row['ReminderDateString'];
+						}
+						if ($duration != $ReminderDateString) {
+							$this->Model_Logbook->LogbookEntry('Yellow', 'Note', ' added a new contract reminder to <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
+							$this->Model_Logbook->LogbookExtendedEntry(0, 'Notifies when the date reaches ' . $duration . ' before contract expires');
+						}
 						redirect($_SERVER['HTTP_REFERER']);
 					}
 					else
@@ -763,18 +1025,13 @@ class Update_Controller extends CI_Controller {
 			if ($Removethis == TRUE) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ID ' . $ApplicantID . ' has been blacklisted.</h5></div>');
 				// LOGBOOK
-				date_default_timezone_set('Asia/Manila');
-				$LogbookCurrentTime = date('Y-m-d h:i:s A');
-				$LogbookType = 'Archival';
-				$LogbookEvent = 'Employee ID ' . $ApplicantID .' has been blacklisted.';
-				$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
-				$data = array(
-					'Time' => $LogbookCurrentTime,
-					'Type' => $LogbookType,
-					'Event' => $LogbookEvent,
-					'Link' => $LogbookLink,
-				);
-				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+				$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
+				foreach($CheckApplicant->result_array() as $row) {
+					$LastName = $row['LastName'];
+					$FirstName = $row['FirstName'];
+					$MI = $row['MiddleInitial'];
+				}
+				$this->Model_Logbook->LogbookEntry('Red', 'Employee', ' blacklisted <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
 				}
@@ -801,18 +1058,14 @@ class Update_Controller extends CI_Controller {
 			if ($Removethis == TRUE) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ID ' . $ApplicantID . ' has been restored as an Applicant.</h5></div>');
 				// LOGBOOK
-				date_default_timezone_set('Asia/Manila');
-				$LogbookCurrentTime = date('Y-m-d h:i:s A');
-				$LogbookType = 'Update';
-				$LogbookEvent = 'Employee ID ' . $ApplicantID .' has been restored as an Applicant.';
-				$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
-				$data = array(
-					'Time' => $LogbookCurrentTime,
-					'Type' => $LogbookType,
-					'Event' => $LogbookEvent,
-					'Link' => $LogbookLink,
-				);
-				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+				$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
+				foreach($CheckApplicant->result_array() as $row) {
+					$LastName = $row['LastName'];
+					$FirstName = $row['FirstName'];
+					$MI = $row['MiddleInitial'];
+				}
+				$this->Model_Logbook->LogbookEntry('Green', 'Applicant', ' restored <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
+				$this->Model_Logbook->LogbookExtendedEntry(0, 'Changed status from <b>Blacklisted</b> to <b>Applicant</b>');
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
 				}
@@ -838,6 +1091,7 @@ class Update_Controller extends CI_Controller {
 			$ArrayLength = $GetWeeklyDates->num_rows();
 			$DeductionOption=$this->input->post('DeductionOption',TRUE); //0 no deduction, 1 with deduction, 2 deferred deductions 
 			$cutoffMode=$this->input->post('CutoffMode',TRUE);
+			$Hours = 0;
 			$HoursTotal=0;
 			$gross_pay=0;
 
@@ -845,7 +1099,11 @@ class Update_Controller extends CI_Controller {
 			foreach ($GetWeeklyDates->result_array() as $nrow):
 				$ArrayInt++;
 				$Type = $this->input->post('Type_' . $nrow['Time'],TRUE);
-				$Hours = $this->input->post('Hours_' . $nrow['Time'],TRUE);
+				if ($Hours != NULL) {
+					$Hours = $this->input->post('Hours_' . $nrow['Time'],TRUE);
+				} else {
+					$Hours = 0;
+				}
 				$HoursTotal+=$Hours;
 				$Overtime = $this->input->post('OTHours_' . $nrow['Time'],TRUE);
 				$NightHours = $this->input->post('NightHours_' . $nrow['Time'],TRUE);
@@ -878,8 +1136,6 @@ class Update_Controller extends CI_Controller {
 				{
 					$GrossPay = $total_hoursperday * $dayRate;
 
-					date_default_timezone_set('Asia/Manila');
-
 					$data = array(
 						'ClientID' => $ClientID,
 						'Date' => $Date,
@@ -901,23 +1157,18 @@ class Update_Controller extends CI_Controller {
 					);
 					$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
 					if ($UpdateWeeklyHours == TRUE) {
+						// $DateReadable = (new DateTime(date($Date)))->format('F d, Y');
+						// $this->Model_Logbook->LogbookExtendedEntry(0, 'Remarks: ' . $Remarks . '<br><b>' . $DateReadable . '</b>\' total hours: ' . $total_hoursperday, +1);
 						if ($ArrayInt >= $ArrayLength) {
 							$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Updated!</h5></div>');
 							// LOGBOOK
-							date_default_timezone_set('Asia/Manila');
-							$LogbookCurrentTime = date('Y-m-d h:i:s A');
-							$LogbookType = 'Update';
-							$LogbookEvent = 'Updated weekly hours for ' . $ApplicantID . '.';
-							// $LogbookLink = base_url() . 'ViewClient?id=' . $Temp_ApplicantID;
-							$LogbookLink = base_url() . 'Clients';
-							$data = array(
-								'Time' => $LogbookCurrentTime,
-								'Type' => $LogbookType,
-								'Event' => $LogbookEvent,
-								'Link' => $LogbookLink,
-							);
-							$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-							
+							$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
+							foreach($CheckApplicant->result_array() as $row) {
+								$LastName = $row['LastName'];
+								$FirstName = $row['FirstName'];
+								$MI = $row['MiddleInitial'];
+							}
+							$this->Model_Logbook->LogbookEntry('Blue', 'Salary', ' updated the hours of <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
 						}
 					}
 					else
@@ -1168,10 +1419,8 @@ class Update_Controller extends CI_Controller {
 		$Mode = $this->input->post('Mode',TRUE);
 		$FromDate = $this->input->post('FromDate',TRUE);
 		$ToDate = $this->input->post('ToDate',TRUE);
-		// $Year = substr($FromDate, 0, 4);
-		// $Month = substr($FromDate, 5);
-		// $Month = substr($Month, 0, 2);
-		// $Day = substr($FromDate, -2);
+		$this->session->set_userdata('FirstDate', $FromDate);
+		$this->session->set_userdata('LastDate', $ToDate);
 
 		if ($Mode == NULL || $FromDate == NULL || $ToDate == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date range must be valid</h5></div>');
@@ -1184,7 +1433,6 @@ class Update_Controller extends CI_Controller {
 		}
 		else
 		{
-			date_default_timezone_set('Asia/Manila');
 			$date1 = new DateTime($FromDate);
 			$date2 = new DateTime($ToDate);
 
@@ -1288,6 +1536,7 @@ class Update_Controller extends CI_Controller {
 									default:
 										$SalaryMode = 0; // default
 										$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Invalid Salary Mode</h5></div>');
+										break;
 								}
 							}
 
@@ -1419,9 +1668,16 @@ class Update_Controller extends CI_Controller {
 				if ($RowCount <= $xlsx->rows()) {
 					$ApplicantsArray = serialize($ApplicantsArray);
 					$this->session->set_userdata('ApplicantsArray', $ApplicantsArray);
-					$this->session->set_userdata('ClientName', $ClientName);
 					$this->session->set_userdata('FirstDate', $FirstDate);
 					$this->session->set_userdata('LastDate', $LastDate);
+					// $CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
+					// foreach($CheckApplicant->result_array() as $row) {
+					// 	$LastName = $row['LastName'];
+					// 	$FirstName = $row['FirstName'];
+					// 	$MI = $row['MiddleInitial'];
+					// }
+					// $this->Model_Logbook->LogbookEntry('Blue', 'Salary', ' updated the hours of <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
+					// $this->Model_Logbook->LogbookExtendedEntry(0, 'Changed status from <b>Blacklisted</b> to <b>Applicant</b>');
 					redirect('ViewClient?id=excel&mode=' . $SalaryMode);
 				}
 				$this->load->view('_template/users/u_redirecting');
@@ -1484,6 +1740,8 @@ class Update_Controller extends CI_Controller {
 				$UpdateSSSField = $this->Model_Updates->UpdateSSSField($id, $data);
 				if ($UpdateSSSField == TRUE) {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Field updated!</h5></div>');
+					$this->Model_Logbook->LogbookEntry('Blue', 'Salary', ' updated the SSS table');
+					// $this->Model_Logbook->LogbookExtendedEntry(0, 'Suspended for <b>' . $logbookBeforeDate . '</b> to <b>' . $logbookAfterDate . '</b>');
 					redirect('SSS_Table');
 				}
 				else

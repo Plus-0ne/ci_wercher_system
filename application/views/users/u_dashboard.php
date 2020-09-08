@@ -329,6 +329,9 @@
 		<?php if (isset($_GET['Year']) && isset($_GET['Month'])): ?>
 			location.href = "#ByMonth";
 		<?php endif; ?>
+		$("#GraphChartModal").on("hidden.bs.modal", function () { // Change URL on modal close
+		    history.pushState(null, null, '<?php echo base_url() . 'Dashboard';  ?>');
+		});
 		$("#GraphYear").change(function() {
 			$(this).parents('form').submit();
 			$('#LoadingIcon').fadeIn();

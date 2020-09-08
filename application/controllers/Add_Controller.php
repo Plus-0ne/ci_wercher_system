@@ -10,6 +10,7 @@ class Add_Controller extends CI_Controller {
 		$this->load->model('Model_Selects');
 		$this->load->model('Model_Inserts');
 		$this->load->model('Model_Updates');
+		$this->load->model('Model_Logbook');
 
 		date_default_timezone_set('Asia/Manila');
 	}
@@ -66,6 +67,8 @@ class Add_Controller extends CI_Controller {
 
 		$CreateADuplicate = $this->input->post('CreateADuplicate');
 
+
+
 		if ($PositionDesired == NULL || $LastName == NULL || $FirstName == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Position Desired, Last Name, and First Name fields are required!</h5></div>');
 			$data = array(
@@ -118,7 +121,7 @@ class Add_Controller extends CI_Controller {
 		else
 		{
 			$CheckLFName = $this->Model_Selects->CheckLFName($LastName, $FirstName);
-			if ($CheckLFName->num_rows() > 0 && $CreateADuplicate != 'Yes') {
+			if ($CheckLFName->num_rows() > 0 && $CreateADuplicate !== 'Yes') {
 				$data = array(
 					'PositionDesired' => $PositionDesired,
 					'PositionGroup' => $PositionGroup,
@@ -227,7 +230,6 @@ class Add_Controller extends CI_Controller {
 					'ApplicantID' => $customid,
 					'PositionDesired' => $PositionDesired,
 					'PositionGroup' => $PositionGroup,
-					'SalaryExpected' => $SalaryExpected,
 					'LastName' => ucfirst($LastName),
 					'FirstName' => ucfirst($FirstName),
 					'MiddleInitial' => ucfirst($MI),
@@ -345,18 +347,9 @@ class Add_Controller extends CI_Controller {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Employee added!</h5></div>');
 					
 					// LOGBOOK
-					date_default_timezone_set('Asia/Manila');
-					$LogbookCurrentTime = date('Y-m-d h:i:s A');
-					$LogbookType = 'New';
-					$LogbookEvent = 'New Applicant added! (Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) .  '. | ID: ' . $ApplicantID . ')';
-					$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
-					$data = array(
-						'Time' => $LogbookCurrentTime,
-						'Type' => $LogbookType,
-						'Event' => $LogbookEvent,
-						'Link' => $LogbookLink,
-					);
-					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+					$this->Model_Logbook->LogbookEntry('Green', 'Applicant', ' added a new applicant: <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Applicant ID: ' . $ApplicantID);
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Referral: ' . $Referral);
 					redirect('Applicants');
 				}
 				else
@@ -369,6 +362,8 @@ class Add_Controller extends CI_Controller {
 	}
 	public function Add_NewAdmin()
 	{
+		// 'pImage': Do not forget the encryption.
+		$pImageChecker = $this->input->post('pImageChecker');
 		$AdminLevel = $this->input->post('AdminLevel',TRUE);
 		$Position = $this->input->post('Position',TRUE);
 		$AdminID = $this->input->post('AdminID',TRUE);
@@ -376,9 +371,8 @@ class Add_Controller extends CI_Controller {
 		$FirstName = $this->input->post('FirstName',TRUE);
 		$MiddleIN = $this->input->post('MiddleIN',TRUE);
 		$LastName = $this->input->post('LastName',TRUE);
-		$Gender = $this->input->post('Gender',TRUE);
 
-		if ($AdminLevel == NULL || $Position == NULL || $AdminID == NULL || $Password == NULL || $FirstName == NULL || $MiddleIN == NULL || $LastName == NULL || $Gender == NULL) {
+		if ($AdminLevel == NULL || $Position == NULL || $AdminID == NULL || $Password == NULL || $FirstName == NULL || $MiddleIN == NULL || $LastName == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			redirect('Admin_List');
 		}
@@ -391,13 +385,51 @@ class Add_Controller extends CI_Controller {
 			}
 			else
 			{
+				$config['upload_path']          = './uploads/'.$AdminID;
+				$config['allowed_types']        = 'gif|jpg|png';
+				$config['max_size']             = 2000;
+				$config['max_width']            = 2000;
+				$config['max_height']           = 2000;
+
+				$this->load->library('upload', $config);
+				if (!is_dir('uploads'))
+				{
+					mkdir('./uploads', 0777, true);
+				}
+				if (!is_dir('uploads/' . $AdminID))
+				{
+					mkdir('./uploads/' . $AdminID, 0777, true);
+					$dir_exist = false;
+				}
+				if ($pImageChecker != NULL) {
+					if ( ! $this->upload->do_upload('adminImage'))
+					{
+						$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
+						redirect('Admin_List');
+					}
+					else
+					{
+						$pImage = base_url().'uploads/'.$AdminID.'/'.$this->upload->data('file_name');
+					}
+				} else {
+					$DiceRoll = rand(1, 3);
+					if ($DiceRoll == 1) {
+						$pImage = base_url().'assets/img/wercher_noimage_blue.png';
+					}
+					if ($DiceRoll == 2) {
+						$pImage = base_url().'assets/img/wercher_noimage_green.png';
+					}
+					if ($DiceRoll == 3) {
+						$pImage = base_url().'assets/img/wercher_noimage_purple.png';
+					}
+				}
 				$now = new DateTime();
-				$now->setTimezone(new DateTimeZone('Asia/Manila'));
 				$DateAdded = $now->format('g:i A');
 
 				$En_Password = password_hash($Password, PASSWORD_BCRYPT);
 				$DateAdded = time();
 				$data = array(
+					'Image' => $pImage,
 					'AdminLevel' => $AdminLevel,
 					'Position' => $Position,
 					'AdminID' => $AdminID,
@@ -405,26 +437,17 @@ class Add_Controller extends CI_Controller {
 					'FirstName' => $FirstName,
 					'MiddleInitial' => $MiddleIN,
 					'LastName' => $LastName,
-					'Gender' => $Gender,
 					'DateAdded' => $DateAdded,
+					'Status' => 'Active',
 				);
 				$InsertAdmin = $this->Model_Inserts->InsertAdmin($data);
 				if ($InsertAdmin == TRUE) {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Admin added!</h5></div>');
 
 					// LOGBOOK
-					date_default_timezone_set('Asia/Manila');
-					$LogbookCurrentTime = date('Y-m-d h:i:s A');
-					$LogbookType = 'New';
-					$LogbookEvent = 'New Admin added! (Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleIN) .  '. | Position: ' . $Position . ')';
-					$LogbookLink = base_url() . 'Admin_List';
-					$data = array(
-						'Time' => $LogbookCurrentTime,
-						'Type' => $LogbookType,
-						'Event' => $LogbookEvent,
-						'Link' => $LogbookLink,
-					);
-					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+					$this->Model_Logbook->LogbookEntry('Green', 'Admin', ' added a new admin: <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewAdmin?id=' . $AdminID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleIN) . '</a>');
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Admin ID: ' . $ApplicantID);
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Position: ' . $AdminLevel . ' - ' . $Position);
 					redirect('Admin_List');
 				}
 				else
@@ -467,18 +490,17 @@ class Add_Controller extends CI_Controller {
 				if ($InsertNewClient == TRUE) {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Client added!</h5></div>');
 					// LOGBOOK
-					date_default_timezone_set('Asia/Manila');
-					$LogbookCurrentTime = date('Y-m-d h:i:s A');
-					$LogbookType = 'New';
-					$LogbookEvent = 'New Client added! (Name: ' . $ClientName . ' | Contact: ' . $ClientContact . ')';
-					$LogbookLink = base_url() . 'Clients';
-					$data = array(
-						'Time' => $LogbookCurrentTime,
-						'Type' => $LogbookType,
-						'Event' => $LogbookEvent,
-						'Link' => $LogbookLink,
-					);
-					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+					$GetClientIDFromName = $this->Model_Selects->GetClientIDFromName($ClientName);
+					if ($GetClientIDFromName->num_rows() > 0) {
+						foreach($GetClientIDFromName->result_array() as $row) {
+							$ClientID = $row['ClientID'];
+						}
+					} else {
+						$ClientID = 0; // default
+					}
+					$this->Model_Logbook->LogbookEntry('Green', 'Client', ' added a new client: <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $ClientID . '" target="_blank">' . $ClientName . '</a>');
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Address: ' . $Address);
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'ContactNumber: ' . $ClientContact);
 					redirect('Clients');
 				}
 				else

@@ -10,6 +10,9 @@ class Delete_Controller extends CI_Controller {
 		$this->load->model('Model_Selects');
 		$this->load->model('Model_Inserts');
 		$this->load->model('Model_Deletes');
+		$this->load->model('Model_Logbook');
+
+		date_default_timezone_set('Asia/Manila');
 	}
 	public function RemoveEmployee()
 	{
@@ -23,18 +26,23 @@ class Delete_Controller extends CI_Controller {
 			if ($Removethis == TRUE) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ID ' . $id . ' has been succesfully removed!</h5></div>');
 				// LOGBOOK
-				date_default_timezone_set('Asia/Manila');
-				$LogbookCurrentTime = date('Y-m-d h:i:s A');
-				$LogbookType = 'Archival';
-				$LogbookEvent = 'Employee ID ' . $id .' has been archived.';
-				$LogbookLink = base_url() . 'ViewEmployee?id=' . $id;
-				$data = array(
-					'Time' => $LogbookCurrentTime,
-					'Type' => $LogbookType,
-					'Event' => $LogbookEvent,
-					'Link' => $LogbookLink,
-				);
-				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+				$CheckEmployee = $this->Model_Selects->CheckEmployee($id);
+				if ($CheckEmployee->num_rows() > 0) {
+					foreach($CheckEmployee->result_array() as $row) {
+						$LastName = $row['LastName'];
+						$FirstName = $row['FirstName'];
+						$MiddleInitial = $row['MiddleInitial'];
+						$ContactNumber = $row['Phone_No'];
+					}
+				} else {
+					// default
+					$LastName = 'N/A';
+					$FirstName = 'N/A';
+					$MiddleInitial = 'N/A';
+				}
+				$this->Model_Logbook->LogbookEntry('Red', 'Applicant', ' archived <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $id . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleInitial) . '</a>');
+				$this->Model_Logbook->LogbookExtendedEntry(0, 'Applicant ID: ' . $id);
+				$this->Model_Logbook->LogbookExtendedEntry(0, 'ContactNumber: ' . $ContactNumber);
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
 				}
@@ -61,18 +69,31 @@ class Delete_Controller extends CI_Controller {
 			if ($Removethis == TRUE) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Admin ID ' . $id . ' has been succesfully removed!</h5></div>');
 				// LOGBOOK
-				date_default_timezone_set('Asia/Manila');
-				$LogbookCurrentTime = date('Y-m-d h:i:s A');
-				$LogbookType = 'Deletion';
-				$LogbookEvent = 'Admin ID ' . $id .' has been removed.';
-				$LogbookLink = base_url() . 'Admin_List';
-				$data = array(
-					'Time' => $LogbookCurrentTime,
-					'Type' => $LogbookType,
-					'Event' => $LogbookEvent,
-					'Link' => $LogbookLink,
-				);
-				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+				$CheckAdminNo = $this->Model_Selects->CheckAdminNo($id);
+				if ($CheckAdminNo->num_rows() > 0) {
+					foreach($CheckAdminNo->result_array() as $row) {
+						$AdminID = $row['AdminID'];
+						$LastName = $row['LastName'];
+						$FirstName = $row['FirstName'];
+						$MiddleInitial = $row['MiddleInitial'];
+						$AdminLevel = $row['AdminLevel'];
+						$Position = $row['Position'];
+						$DateAdded = $row['DateAdded'];
+					}
+				} else {
+					// default
+					$AdminID = 'N/A';
+					$LastName = 'N/A';
+					$FirstName = 'N/A';
+					$MiddleInitial = 'N/A';
+					$AdminLevel = 'N/A';
+					$Position = 'N/A';
+					$DateAdded = 'N/A';
+				}
+				$this->Model_Logbook->LogbookEntry('Red', 'Admin', ' removed admin <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewAdmin?id=' . $id . '" target="_blank">' . $AdminID . '</a>');
+				$this->Model_Logbook->LogbookExtendedEntry(0, 'Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleInitial));
+				$this->Model_Logbook->LogbookExtendedEntry(0, 'Position: ' . $AdminLevel . ' - ' . $Position);
+				$this->Model_Logbook->LogbookExtendedEntry(0, 'Date Added: ' . date('Y-m-d H:i:s A',$row['DateAdded']));
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
 				}
@@ -99,18 +120,23 @@ class Delete_Controller extends CI_Controller {
 			if ($Removethis == TRUE) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Client ID ' . $id . ' has been succesfully removed!</h5></div>');
 				// LOGBOOK
-				date_default_timezone_set('Asia/Manila');
-				$LogbookCurrentTime = date('Y-m-d h:i:s A');
-				$LogbookType = 'Deletion';
-				$LogbookEvent = 'Client ID ' . $id .' has been removed.';
-				$LogbookLink = base_url() . 'Clients';
-				$data = array(
-					'Time' => $LogbookCurrentTime,
-					'Type' => $LogbookType,
-					'Event' => $LogbookEvent,
-					'Link' => $LogbookLink,
-				);
-				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+				$CheckClient = $this->Model_Selects->CheckClient($id);
+				if ($CheckClient->num_rows() > 0) {
+					foreach($CheckClient->result_array() as $row) {
+						$Name = $row['Name'];
+						$Address = $row['Address'];
+						$ContactNumber = $row['ContactNumber'];
+					}
+				} else {
+					// default
+					$Name = 'N/A';
+					$Address = 'N/A';
+					$ContactNumber = 'N/A';
+				}
+				$this->Model_Logbook->LogbookEntry('Red', 'Client', ' archived client <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $id . '" target="_blank">' . $id . '</a>');
+				$this->Model_Logbook->LogbookExtendedEntry(0, 'Name: ' . $Name);
+				$this->Model_Logbook->LogbookExtendedEntry(0, 'Address: ' . $Address);
+				$this->Model_Logbook->LogbookExtendedEntry(0, 'Date Added: ' . date('Y-m-d H:i:s A',$row['DateAdded']));
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
 				}
