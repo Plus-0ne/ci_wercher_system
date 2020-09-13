@@ -8,7 +8,7 @@
 				<?php if(!isset($_GET['query']) || ($SearchApplicantID->num_rows() < 1 AND $SearchEmployeeID->num_rows < 1 AND $SearchPeople->num_rows() < 1 AND $SearchClients->num_rows() < 1 AND $SearchPositionGroups->num_rows() < 1 AND $SearchPositionSpecific->num_rows() < 1 AND $SearchAdmins->num_rows() < 1 )): ?>
 					<div class="row wercher-tablelist-container">
 						<div class="col-sm-12">
-							<i class="fas fa-exclamation-triangle"></i> No data found. Please recheck your spelling.
+							<i class="fas fa-exclamation-triangle"></i> We've come up empty! No data found.
 						</div>
 					</div>
 				<?php else: ?>

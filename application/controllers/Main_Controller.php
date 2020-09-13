@@ -8,6 +8,7 @@
  		$this->load->model('Model_Selects');
 		$this->load->model('Model_Updates');
 		$this->load->model('Model_Inserts');
+		$this->load->model('Model_Logbook');
 		$GetEmployee = $this->Model_Selects->GetEmployee();
 		$GetClient = $this->Model_Selects->getClientOption();
 		date_default_timezone_set('Asia/Manila');
@@ -1403,6 +1404,120 @@
 		</ol>
 		</nav>';
 		$this->load->view('users/u_logbook',$data);
+	}
+	public function AJAX_showLogbookNotes()
+	{
+		$LogbookCount = $this->db->count_all('logbook');
+
+		if (!empty($this->session->userdata['logbook_n'])) {
+			$NotesLimitStart = $this->session->userdata['logbook_n'];
+			if ($NotesLimitStart < 0) {
+				$NotesLimitStart = 0;
+			}
+		} else {
+			$NotesLimitStart = 0;
+		}
+		$NotesLimitEnd = $NotesLimitStart + 25;
+		$GetLogbookNotes = $this->Model_Selects->GetLogbookNotes($NotesLimitStart, $NotesLimitEnd);
+		$logbookIteration = 0;
+
+		foreach ($GetLogbookNotes->result_array() as $row): 
+			$logbookIteration++;
+			$GetLogbookLogExtended = $this->Model_Selects->GetLogbookLogExtended($row['No']);
+			echo '<div class="row logbook-log-container logbook-log logbook-log-toggle '; if ($GetLogbookLogExtended->num_rows() > 0): echo 'logbook-log-hover';endif; if($logbookIteration == 1) { echo ' logbook-log-notes-fade'; } echo '">';
+				echo '<div class="col-sm-1">';
+					$GetLogbookAdminImage = $this->Model_Selects->GetLogbookAdminImage($row['AdminID']);
+					if ($GetLogbookAdminImage->num_rows() > 0 || !empty($row['Image'])): 
+						foreach ($GetLogbookAdminImage->result_array() as $nrow):
+							$AdminImage = $nrow['Image'];
+						endforeach;
+						echo '
+							<div class="logbook-notes-admin-image text-center align-middle">
+								<a href="?user=' . $row['AdminID'] . '"><img src="' . $AdminImage . '" width="45px" height="45px" class="rounded-circle"></a>
+							</div>
+							';
+					else:
+						$AdminImage = base_url() . 'assets/img/wercher_logo.png';
+						echo '
+							<div class="logbook-notes-admin-image text-center align-middle">
+								<a href="?user=' . $row['AdminID'] . '"><img src="' . $AdminImage . '" width="53px" height="46px" class="rounded-circle"></a>
+							</div>
+							';
+					endif;
+				echo '</div>';
+				echo '<div class="col-sm-11">';
+					echo '<div class="row">';
+						echo '<div class="col-sm-12">';
+							echo '<a href="?user=' . $row['AdminID'] . '" class="logbook-tooltip-highlight">' . $row['AdminID'] . '</a>' . $row['Event'];
+							echo '<span class="logbook-log-number" style="float: right; display: none;" value="' . $row['No'] . '">';
+								echo '<i class="fas fa-paperclip" style="font-size: 13px;"></i>' . $row['No'];
+							echo '</span>';
+						echo '</div>';
+						echo '<div class="col-sm-12">';
+							echo '<div class="logbook-tooltip-date">';
+									$date = new DateTime($row['Time']);
+									$day = $date->format('Y-m-d');
+									$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+									$hours = $date->format('h:m:s A');
+
+									echo $day . ' at ' . $hours;
+								if ($GetLogbookLogExtended->num_rows() > 0):
+									echo '<span class="logbook-log-toggle" style="float: right;">
+										<i class="fas fa-angle-right" style="margin-right: -1px;"></i>
+									</span>';
+								endif;
+							echo '</div>
+						</div>
+					</div>
+				</div>';
+				if ($GetLogbookLogExtended->num_rows() > 0):
+					$iteration = 0;
+					foreach ($GetLogbookLogExtended->result_array() as $nrow):
+						$iteration++;
+						echo '<div class="col-sm-12">';
+							echo '<div class="logbook-tooltip-extended" style="display: none;">';
+								if ($iteration == $GetLogbookLogExtended->num_rows()):
+									echo '<img class="logbook-tooltip-extended-tree" src="assets/img/documents-folder-tree.png">';
+								else:
+									echo '<img class="logbook-tooltip-extended-tree" src="assets/img/documents-folder-tree-continuous.png">';
+								endif;
+								echo '<div class="logbook-tooltip-extended-text">';
+									if($nrow['Type'] == 1):
+										echo '<span class="logbook-tooltip-extended-note">Note:</span> ' . $nrow['EventTooltip'];
+									else:
+										echo $nrow['EventTooltip'];
+									endif;
+								echo '</div>
+							</div>
+						</div>';
+					endforeach;
+				endif;
+			echo '</div>';
+		endforeach;
+	}
+	public function AJAX_addLogbookNotes()
+	{
+		if (!empty($this->session->userdata['AdminID'])):
+			$AdminID = $this->session->userdata['AdminID'];
+		else:
+			$AdminID = 'GUEST';
+		endif;
+		$Type = 1;
+		$HookNo = $_POST['HookNo'];
+		$LimitNotes = $_POST["LimitNotes"];
+		$Event = $_POST['NotesEvent'];
+		if ($LimitNotes == NULL || $AdminID == NULL || $Event == NULL) {
+			echo "Error";
+		}
+		else
+		{
+			if (!empty($HookNo)) {
+				$this->Model_Logbook->LogbookNotesExtendedEntry($HookNo, 1, $Event);
+			} else {
+				$this->Model_Logbook->LogbookEntry('Yellow', 'Note', ': ' . $Event);
+			}
+			$this->session->set_userdata('logbook_n', $LimitNotes);
+		}
 	}
 	public function Calendar()
 	{

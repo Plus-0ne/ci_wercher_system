@@ -136,7 +136,7 @@ class Delete_Controller extends CI_Controller {
 				$this->Model_Logbook->LogbookEntry('Red', 'Client', ' archived client <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $id . '" target="_blank">' . $id . '</a>');
 				$this->Model_Logbook->LogbookExtendedEntry(0, 'Name: ' . $Name);
 				$this->Model_Logbook->LogbookExtendedEntry(0, 'Address: ' . $Address);
-				$this->Model_Logbook->LogbookExtendedEntry(0, 'Date Added: ' . date('Y-m-d H:i:s A',$row['DateAdded']));
+				$this->Model_Logbook->LogbookExtendedEntry(0, 'Contact Number: ' . date('Y-m-d H:i:s A',$row['DateAdded']));
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
 				}

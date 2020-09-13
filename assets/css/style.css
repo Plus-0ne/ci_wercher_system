@@ -1006,6 +1006,49 @@ a[data-toggle="collapse"] {
 .logbook-notes-admin-image {
 	margin-left: -20px;
 }
+.logbook-log-nodata {
+	text-align: center;
+	margin-top: 10px;
+	font-size: 22px;
+}
+.logbook-log-nodata a {
+	color: rgba(155, 75, 25);
+}
+.logbook-log-nodata a:hover {
+	color: rgba(205, 125, 75);
+	text-decoration: underline;
+}
+.logbook-log-nodata i {
+	font-size: 100px;
+	margin-top: 50px;
+	opacity: 0.12;
+}
+.logbook-log-pagecounter {
+	font-size: 18px;
+	opacity: 0.5;
+	user-select: none;
+	margin-top: 2px;
+	margin-right: 20px;
+}
+.logbook-tooltip-extended-note {
+	color: #c5ad00;
+	font-style: italic;
+	font-size: 14px;
+}
+.logbook-tooltip-extended-note-admin {
+	font-size: 16px;
+	color: rgba(125, 125, 125);
+}
+
+.logbook-tooltip-extended-note-date {
+	font-size: 14px;
+	margin-left: 10px;
+	color: rgba(125, 125, 125);
+	display: none;
+}
+#UnhookBtn {
+	display: none;
+}
 /*form {
 	display: none;
 }*/

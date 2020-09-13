@@ -33,15 +33,41 @@ class Model_Logbook extends CI_Model {
 		if (!empty($this->session->userdata['AdminID'])) {
 			$logbookAdmin = $this->session->userdata['AdminID'];
 		} else {
-			$logbookAdmin = '[SYSTEM]';
+			$logbookAdmin = 'GUEST';
 		}
+		$logbookCurrentTime = date('Y-m-d h:i:s A');
 		// ~ extended entry ~
 		// Type: 0 = normal; 1 = note; 2 = error;
 		$data = array(
+			'AdminID' => $logbookAdmin,
+			'Time' => $logbookCurrentTime,
 			'HookNo' => $logbookHookNo,
 			'Type' => $logbookExtendedType,
 			'EventTooltip' => $logbookEventTooltip,
 		);
 		$logbookExtendedInsert = $this->Model_Inserts->InsertLogbookExtended($data);
 	}
+	public function LogbookNotesExtendedEntry($HookNo = 0, $logbookExtendedType = 2, $logbookEventTooltip = '', $HookOffset = 0)
+	{
+		// ~ essentials ~
+		$logbookHookNo = $HookNo;
+		$logbookHookNo = $logbookHookNo + $HookOffset;
+		if (!empty($this->session->userdata['AdminID'])) {
+			$logbookAdmin = $this->session->userdata['AdminID'];
+		} else {
+			$logbookAdmin = 'GUEST';
+		}
+		$logbookCurrentTime = date('Y-m-d h:i:s A');
+		// ~ extended entry ~
+		// Type: 0 = normal; 1 = note; 2 = error;
+		$data = array(
+			'AdminID' => $logbookAdmin,
+			'Time' => $logbookCurrentTime,
+			'HookNo' => $logbookHookNo,
+			'Type' => $logbookExtendedType,
+			'EventTooltip' => $logbookEventTooltip,
+		);
+		$logbookExtendedInsert = $this->Model_Inserts->InsertLogbookExtended($data);
+	}
+
 }

@@ -471,6 +471,8 @@ $config['csrf_exclude_uris'] = array(
 	'Main_Controller/ShowBene',
 	'Main_Controller/Add_Bene',
 	'Main_Controller/RemoveBene',
+	'Main_Controller/AJAX_addLogbookNotes',
+	'Main_Controller/AJAX_showLogbookNotes',
 );
 
 /*

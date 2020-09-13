@@ -59,7 +59,7 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetAdmin()
 	{
-		$SQL = "SELECT * FROM admin";
+		$SQL = "SELECT * FROM admin WHERE Status <> 'Deleted'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -550,9 +550,22 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function GetLogbook($LimitStart = 1, $LimitEnd = 50)
+	public function GetLogbook($LimitEnd = 50, $AdminID = NULL, $Type = NULL, $Event = NULL, $DateStart = NULL, $DateMax = NULL)
 	{
-		$SQL = "SELECT * FROM logbook ORDER BY No DESC LIMIT $LimitStart, $LimitEnd";
+		$SQL = "SELECT * FROM logbook WHERE ";
+		if ($AdminID != NULL) {
+			$SQL = $SQL . "AdminID = '$AdminID' AND ";
+		}
+		if ($Type != NULL) {
+			$SQL = $SQL . "Icon = '$Type' AND ";
+		}
+		if ($Event != NULL) {
+			$SQL = $SQL . "Event LIKE '%$Event%' AND ";
+		}
+		if ($DateStart != NULL && $DateMax != NULL) {
+			$SQL = $SQL . "(Time BETWEEN '$DateStart' AND '$DateMax') AND ";
+		}
+		$SQL = $SQL . "Icon <> 'Note' ORDER BY No DESC LIMIT 0, $LimitEnd";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -568,6 +581,13 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetLogbookNotes($LimitStart = 0, $LimitEnd = 25)
+	{
+		$SQL = "SELECT * FROM logbook WHERE Icon = 'Note' ORDER BY No DESC LIMIT $LimitStart, $LimitEnd";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+
 
 	
 }

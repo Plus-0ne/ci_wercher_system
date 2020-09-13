@@ -76,6 +76,8 @@ $route['PrintEmployee'] = 'Main_Controller/PrintEmployee';
 
 $route['Search'] = 'Main_Controller/Search';
 $route['Logbook'] = 'Main_Controller/Logbook';
+$route['AJAX_addLogbookNotes'] = 'Main_Controller/AJAX_addLogbookNotes';
+$route['AJAX_showLogbookNotes'] = 'Main_Controller/AJAX_showLogbookNotes';
 $route['Calendar'] = 'Main_Controller/Calendar';
 
 // LOGIN
