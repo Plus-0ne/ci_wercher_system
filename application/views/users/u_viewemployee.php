@@ -102,14 +102,14 @@
 										<div class="col-sm-12 col-mb-12 w-100 text-center blacklisted-notice">
 											<div class="col-sm-12 pb-2 pt-4">
 												<h5>
-													<i class="fas fa-exclamation-triangle"></i><b> Notice </b><i class="fas fa-exclamation-triangle"></i>
+													<i class="fas fa-exclamation-triangle"></i><b>&nbsp;Notice&nbsp;</b><i class="fas fa-exclamation-triangle"></i>
 												</h5>
 											</div>
 											<div class="col-sm-12 pb-2">
 												This individual has been marked as <b>Blacklisted</b>
 											</div>
 											<div class="col-sm-12 col-mb-12 pb-2">
-												<a href="#Documents" class="btn btn-danger"><i class="far fa-eye"></i> Documents</a>
+												<a href="#Documents" class="btn btn-danger"><i class="far fa-eye"></i> Violations</a>
 											</div>
 										</div>
 									</div>
@@ -207,6 +207,9 @@
 												<div class="col-sm-2 employee-dynamic-header">
 													<b>No. of Children</b>
 												</div>
+												<div class="col-sm-2 employee-dynamic-header">
+													<b>Referral</b>
+												</div>
 											</div>
 											<div class="row">
 												<div class="col-sm-2 employee-dynamic-item">
@@ -223,6 +226,9 @@
 												</div>
 												<div class="col-sm-2 employee-dynamic-item">
 													<?php echo $No_OfChildren; ?>
+												</div>
+												<div class="col-sm-2 employee-dynamic-item">
+													<?php echo $Referral; ?>
 												</div>
 											</div>
 											<hr class="mt-5 mb-3">
@@ -596,7 +602,7 @@
 																		<b>Violations (<?php echo $GetDocumentsViolations->num_rows(); ?>)</b>
 																	</div>
 																	<div class="col-sm-12">
-																		<a href="#Documents" class="btn-sm btn btn-danger"><i class="far fa-eye"></i> View</a>
+																		<a href="#Violations" class="btn-sm btn btn-danger"><i class="far fa-eye"></i> View</a>
 																	</div>
 																</div>
 															</p>
@@ -628,7 +634,7 @@
 												<div class="col-sm-8">
 													<div class="row ml-3">
 														<div class="col-sm-12">
-															<span class="folder-button"><i class="fas fa-folder-open"></i> Documents (<?php echo $GetDocuments->num_rows(); ?>)</span>
+															<span id="FolderDocumentsIcon" class="folder-button"><i class="fas fa-folder-open"></i> Documents (<?php echo $GetDocuments->num_rows(); ?>)</span>
 														</div>
 														<div id="FolderDocuments" class="folder-documents folder-active col-sm-12 mt-4 ml-5">
 														<?php if ($GetDocuments->num_rows() > 0) { ?>
@@ -661,7 +667,7 @@
 													</div>
 													<div class="row mt-4 ml-3">
 														<div class="col-sm-12">
-															<span class="folder-button"><i class="fas fa-folder"></i> Violations (<?php echo $GetDocumentsViolations->num_rows(); ?>)</span>
+															<span id="FolderViolationsIcon" class="folder-button"><i class="fas fa-folder"></i> Violations (<?php echo $GetDocumentsViolations->num_rows(); ?>)</span>
 														</div>
 														<div id="FolderViolations" class="folder-documents col-sm-12 mt-4 ml-5">
 														<?php if ($GetDocumentsViolations->num_rows() > 0) { ?>
@@ -1021,6 +1027,16 @@
 				$('#TabDocuments').children('.employee-tabs-group-content').show();
 				$('#TabDocumentsBtn').addClass('employee-tabs-active');
 			}
+			else if (hashValue == 'Violations') {
+				$('#TabDocuments').children('.employee-tabs-group-content').show();
+				$('#TabDocumentsBtn').addClass('employee-tabs-active');
+				$('#FolderViolationsIcon').children('i').toggleClass('fa-folder');
+				$('#FolderViolationsIcon').children('i').toggleClass('fa-folder-open');
+				$('#FolderDocumentsIcon').children('i').toggleClass('fa-folder');
+				$('#FolderDocumentsIcon').children('i').toggleClass('fa-folder-open');
+				$('#FolderViolations').closest('.row').find('.folder-documents').toggleClass('folder-active');
+				$('#FolderDocuments').closest('.row').find('.folder-documents').toggleClass('folder-active');
+			}
 			else if (hashValue == 'Academic') {
 				$('#TabAcademic').children('.employee-tabs-group-content').show();
 				$('#TabAcademicBtn').addClass('employee-tabs-active');
@@ -1051,6 +1067,16 @@
 				else if (hashValue == 'Documents') {
 					$('#TabDocuments').children('.employee-tabs-group-content').show();
 					$('#TabDocumentsBtn').addClass('employee-tabs-active');
+				}
+				else if (hashValue == 'Violations') {
+					$('#TabDocuments').children('.employee-tabs-group-content').show();
+					$('#TabDocumentsBtn').addClass('employee-tabs-active');
+					$('#FolderViolationsIcon').children('i').toggleClass('fa-folder');
+					$('#FolderViolationsIcon').children('i').toggleClass('fa-folder-open');
+					$('#FolderDocumentsIcon').children('i').toggleClass('fa-folder');
+					$('#FolderDocumentsIcon').children('i').toggleClass('fa-folder-open');
+					$('#FolderViolations').closest('.row').find('.folder-documents').toggleClass('folder-active');
+					$('#FolderDocuments').closest('.row').find('.folder-documents').toggleClass('folder-active');
 				}
 				else if (hashValue == 'Academic') {
 					$('#TabAcademic').children('.employee-tabs-group-content').show();

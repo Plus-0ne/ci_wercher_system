@@ -519,6 +519,15 @@ class Add_Controller extends CI_Controller {
 		$Remarks = $this->input->post('Remarks',TRUE);
 		$Type = $this->input->post('Type',TRUE);
 
+		$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
+		if ($CheckEmployee->num_rows() > 0) {
+			foreach($CheckEmployee->result_array() as $row) {
+				$ClientID = $row['ClientEmployed'];
+			}
+		} else {
+			$ClientID = 'N/A';
+		}
+
 		if ($ApplicantID == NULL || $Subject == NULL || $Description == NULL || $Remarks == NULL || $Type == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
 			redirect('Employee');
@@ -560,6 +569,7 @@ class Add_Controller extends CI_Controller {
 				}
 				$data = array(
 					'ApplicantID' => $ApplicantID,
+					'ClientID' => $ClientID,
 					'Doc_Image' => $pImage,
 					'Doc_File' => $pFile,
 					'Doc_FileName' => $pFileName,

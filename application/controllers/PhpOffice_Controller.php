@@ -91,7 +91,7 @@ class PhpOffice_Controller extends CI_Controller {
         	$i++;
 
         	$begin = new DateTime($f_date);
-        	$end = new DateTime($t_date.'+ 2days');
+        	$end = new DateTime($t_date.'+ 1day');
 
         	$interval = DateInterval::createFromDateString('1 day');
         	$period = new DatePeriod($begin, $interval, $end);
@@ -118,7 +118,6 @@ class PhpOffice_Controller extends CI_Controller {
                         $sheet->getColumnDimension($hoursColumn)->setAutoSize(true);
                         $sheet->setCellValue($hoursColumn.$hoursRow, $totalh);
                         // $sheet->getStyle($hoursCell.'3')->applyFromArray($styleBold);
-                        $hoursColumn++;
                     endforeach;
                 } else {
                     // echo $nrow['Hours'];
@@ -128,14 +127,18 @@ class PhpOffice_Controller extends CI_Controller {
                     $sheet->setCellValue($hoursColumn.$hoursRow, '0');
                     // $sheet->getStyle($hoursCell.'3')->applyFromArray($styleBold);
                 }    
+                $hoursColumn++;
             endforeach;
             $hoursRow++;
             $hoursColumn = 'D';
         }
-        $totalHoursCol =  $sheet->getHighestColumn().'2';
-        $totalOTHoursCol = $totalHoursCol++;
+        $totalHoursCol =  $sheet->getHighestColumn();
+        $totalHoursCol++;
+        $totalOTHoursCol = $totalHoursCol;
+        $totalOTHoursCol++;
        
-        $sheet->setCellValue($totalHoursCol , 'Total');
+        $sheet->setCellValue($totalHoursCol . '2' , 'Reg Hrs');
+        $sheet->setCellValue($totalOTHoursCol . '2' , 'OT Hrs');
         ####### Instantiate Xlsx
         $writer = new Xlsx($spreadsheet);
 

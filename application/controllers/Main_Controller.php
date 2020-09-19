@@ -25,7 +25,6 @@
 				if (strtotime($row['DateEnds']) < (strtotime($currTime) + strtotime($row['ReminderDate'])) && strtotime($row['DateEnds']) > strtotime($currTime)) {
 					$LogbookInsert = $this->Model_Updates->ReminderLocked($ApplicantID);
 					// LOGBOOK
-					date_default_timezone_set('Asia/Manila');
 					$LogbookCurrentTime = date('Y-m-d h:i:s A');
 					$LogbookType = 'Reminder';
 					$LogbookEvent = 'Employee ' . $ApplicantID . ' is expiring in ' . $row['ReminderDateString'] . '!';
@@ -134,6 +133,11 @@
 		$this->session->unset_userdata('acadcart');
 		// redirect('Dashboard');
 		$this->load->view('Login');
+	}
+	public function FourOhFour()
+	{
+		// redirect('Dashboard');
+		$this->load->view('FourOhFour');
 	}
 	public function CheckUserLogin()
 	{
@@ -513,6 +517,7 @@
 
 				);
 				$ApplicantID = $ged['ApplicantID'];
+				$ClientID = $ged['ClientEmployed'];
 				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);
 				$data['employment_record'] = $this->Model_Selects->GetEmploymentDetails($ApplicantID);
 				$data['Machine_Operatessss'] = $this->Model_Selects->Machine_Operatessss($ApplicantID);
@@ -522,8 +527,8 @@
 				$data['GetContractHistory'] = $this->Model_Selects->GetContractHistory($ApplicantID);
 				$data['GetPreviousContract'] = $this->Model_Selects->GetPreviousContract($ApplicantID);
 				$data['GetViolations'] = $this->Model_Selects->GetViolations($ApplicantID);
-				$data['GetDocuments'] = $this->Model_Selects->GetDocuments($ApplicantID);
-				$data['GetDocumentsViolations'] = $this->Model_Selects->GetDocumentsViolations($ApplicantID);
+				$data['GetDocuments'] = $this->Model_Selects->GetDocuments($ApplicantID, $ClientID);
+				$data['GetDocumentsViolations'] = $this->Model_Selects->GetDocumentsViolations($ApplicantID, $ClientID);
 				$data['GetDocumentsNotes'] = $this->Model_Selects->GetDocumentsNotes($ApplicantID);
 				$data['GetEmployeeMatchingClient'] = $this->Model_Selects->GetEmployeeMatchingClient($ApplicantID);
 				if ($data['Status'] == 'Employed') {
@@ -647,11 +652,6 @@
 				$data['getClientOption'] = $this->Model_Selects->getClientOption();
 				$data['ShowClients'] = $this->Model_Selects->GetClients();
 				$data['GetContractHistory'] = $this->Model_Selects->GetContractHistory($ApplicantID);
-				$data['GetPreviousContract'] = $this->Model_Selects->GetPreviousContract($ApplicantID);
-				$data['GetViolations'] = $this->Model_Selects->GetViolations($ApplicantID);
-				$data['GetDocuments'] = $this->Model_Selects->GetDocuments($ApplicantID);
-				$data['GetDocumentsViolations'] = $this->Model_Selects->GetDocumentsViolations($ApplicantID);
-				$data['GetDocumentsNotes'] = $this->Model_Selects->GetDocumentsNotes($ApplicantID);
 				$data['GetEmployeeMatchingClient'] = $this->Model_Selects->GetEmployeeMatchingClient($ApplicantID);
 				if ($data['Status'] == 'Employed') {
 					$data['Breadcrumb'] = '

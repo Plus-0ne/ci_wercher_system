@@ -4,7 +4,7 @@
 			<?php echo form_open(base_url().'AddNoteDocuments','method="POST"');?>
 			<input id="AddNote_ApplicantID" type="hidden" name="ApplicantID">
 			<div class="modal-header">
-				<h5 class="modal-title">Add New Note (Limit: 255 characters)</h5>
+				<h5 class="modal-title">Add New Note</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>

@@ -1,6 +1,10 @@
 <?php 
 	$T_Header;
 
+	require 'vendor/autoload.php';
+
+	use Carbon\Carbon;
+
 	// ~ logbook ~
 	$loadMoreURL = '';
 	if (!empty($_GET['admin'])) {
@@ -163,8 +167,9 @@
 																$day = $date->format('Y-m-d');
 																$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
 																$hours = $date->format('h:m:s A');
+																$elapsed = Carbon::parse($row['Time']);
 
-																echo $day . ' at ' . $hours;
+																echo $elapsed->diffForHumans() . ' - ' . $day . ' at ' . $hours;
 															?>
 															<?php if ($GetLogbookLogExtended->num_rows() > 0): ?>
 																<span class="logbook-log-toggle" style="float: right;">

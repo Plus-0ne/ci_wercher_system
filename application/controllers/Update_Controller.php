@@ -179,8 +179,6 @@ class Update_Controller extends CI_Controller {
 				$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
 				if ($CheckApplicant->num_rows() > 0) {
 
-					date_default_timezone_set('Asia/Manila');
-
 					if ($E_Months == NULL) {
 						$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 months', strtotime($E_CurrentDate)));
 					} else {
@@ -263,7 +261,6 @@ class Update_Controller extends CI_Controller {
 			}
 			else
 			{
-				date_default_timezone_set('Asia/Manila');
 
 				$DateStarted = date('Y-m-d h:i:s A');
 
@@ -1099,6 +1096,7 @@ class Update_Controller extends CI_Controller {
 			foreach ($GetWeeklyDates->result_array() as $nrow):
 				$ArrayInt++;
 				$Type = $this->input->post('Type_' . $nrow['Time'],TRUE);
+				$Hours = $this->input->post('Hours_' . $nrow['Time'],TRUE);
 				if ($Hours != NULL) {
 					$Hours = $this->input->post('Hours_' . $nrow['Time'],TRUE);
 				} else {

@@ -1,3 +1,161 @@
+<?php
+if ($ApplicantNo == NULL) {
+	$ApplicantNo = '&nbsp;';
+}
+if ($ApplicantImage == NULL) {
+	$ApplicantImage = '&nbsp;';
+}
+if ($EmployeeID == NULL) {
+	$EmployeeID = '&nbsp;';
+}
+if ($ApplicantID == NULL) {
+	$ApplicantID = '&nbsp;';
+}
+if ($PositionDesired == NULL) {
+	$PositionDesired = '&nbsp;';
+}
+if ($PositionGroup == NULL) {
+	$PositionGroup = '&nbsp;';
+}
+if ($SalaryExpected == NULL) {
+	$SalaryExpected = '&nbsp;';
+}
+if ($LastName == NULL) {
+	$LastName = '&nbsp;';
+}
+if ($FirstName == NULL) {
+	$FirstName = '&nbsp;';
+}
+if ($MiddleInitial == NULL) {
+	$MiddleInitial = '&nbsp;';
+}
+if ($Gender == NULL) {
+	$Gender = '&nbsp;';
+}
+if ($Age == NULL) {
+	$Age = '&nbsp;';
+}
+if ($Height == NULL) {
+	$Height = '&nbsp;';
+}
+if ($Weight == NULL) {
+	$Weight = '&nbsp;';
+}
+if ($Religion == NULL) {
+	$Religion = '&nbsp;';
+}
+if ($BirthDate == NULL) {
+	$BirthDate = '&nbsp;';
+}
+if ($BirthPlace == NULL) {
+	$BirthPlace = '&nbsp;';
+}
+if ($Citizenship == NULL) {
+	$Citizenship = '&nbsp;';
+}
+if ($CivilStatus == NULL) {
+	$CivilStatus = '&nbsp;';
+}
+if ($No_OfChildren == NULL) {
+	$No_OfChildren = '&nbsp;';
+}
+if ($Phone_No == NULL) {
+	$Phone_No = '&nbsp;';
+}
+if ($Address_Present == NULL) {
+	$Address_Present = '&nbsp;';
+}
+if ($Address_Provincial == NULL) {
+	$Address_Provincial = '&nbsp;';
+}
+if ($Address_Manila == NULL) {
+	$Address_Manila = '&nbsp;';
+}
+if ($SSS_No == NULL) {
+	$SSS_No = '&nbsp;';
+}
+if ($EffectiveDateCoverage == NULL) {
+	$EffectiveDateCoverage = '&nbsp;';
+}
+if ($ResidenceCertificateNo == NULL) {
+	$ResidenceCertificateNo = '&nbsp;';
+}
+if ($Rcn_At == NULL) {
+	$Rcn_At = '&nbsp;';
+}
+if ($Rcn_On == NULL) {
+	$Rcn_On = '&nbsp;';
+}
+if ($TIN == NULL) {
+	$TIN = '&nbsp;';
+}
+if ($TIN_At == NULL) {
+	$TIN_At = '&nbsp;';
+}
+if ($TIN_On == NULL) {
+	$TIN_On = '&nbsp;';
+}
+if ($HDMF == NULL) {
+	$HDMF = '&nbsp;';
+}
+if ($HDMF_At == NULL) {
+	$HDMF_At = '&nbsp;';
+}
+if ($HDMF_On == NULL) {
+	$HDMF_On = '&nbsp;';
+}
+if ($PhilHealth == NULL) {
+	$PhilHealth = '&nbsp;';
+}
+if ($PhilHealth_At == NULL) {
+	$PhilHealth_At = '&nbsp;';
+}
+if ($PhilHealth_On == NULL) {
+	$PhilHealth_On = '&nbsp;';
+}
+if ($ATM_No == NULL) {
+	$ATM_No = '&nbsp;';
+}
+if ($Status == NULL) {
+	$Status = '&nbsp;';
+}
+if ($ClientEmployed == NULL) {
+	$ClientEployed = '&nbsp;';
+}
+// if ($AppliedOn == NULL) {
+// 	$AppliedOn = '&nbsp;';
+// }
+// if ($SuspensionStarted == NULL) {
+// 	$SuspensionStarted = '&nbsp;';
+// }
+// if ($SuspensionEnds == NULL) {
+// 	$SuspensionEnds = '&nbsp;';
+// }
+// if ($SuspensionRemarks == NULL) {
+// 	$SuspensionRemarks = '&nbsp;';
+// }
+// if ($Suspended == NULL) {
+// 	$Suspended = '&nbsp;';
+// }
+// if ($ReminderDate == NULL) {
+// 	$ReminderDate = '&nbsp;';
+// }
+// if ($ReminderDateString == NULL) {
+// 	$ReminderDateString = '&nbsp;';
+// }
+if ($NameExtension == NULL) {
+	$NameExtension = '&nbsp;';
+}
+if ($EmergencyPerson == NULL) {
+	$EmergencyPerson = '&nbsp;';
+}
+if ($EmergencyContact == NULL) {
+	$EmergencyContact = '&nbsp;';
+}
+if ($Referral == NULL) {
+	$Referral = '&nbsp;';
+}
+?>
 <style>
 	html,body
 	{
@@ -22,50 +180,62 @@
 								<div class="col-sm-6">
 									<div class="col-sm-12">
 										<div class="row">
-											<div class="col-sm-4">
-												<button id="ToggleAcademic" type="button" class="general-filters-btn btn btn-success w-100"><i class="fas fa-check wercher-visible" style="margin-right: -1px;"></i></button>
+											<div class="col-sm-3">
+												<?php if($GetAcadHistory->num_rows() > 0): ?>
+													<button id="ToggleAcademic" type="button" class="general-filters-btn btn btn-success"><i class="fas fa-check wercher-visible" style="margin-right: -1px;"></i></button>
+												<?php else: ?>
+													<button id="ToggleAcademic" type="button" class="general-filters-btn btn btn-secondary"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+												<?php endif; ?>
 											</div>
-											<div class="col-sm-8" style="margin-left: -15px; margin-top: 5px;">
+											<div class="col-sm-9" style="margin-left: -15px; margin-top: 5px;">
 												Academic&nbsp;History
 											</div>
 										</div>
 									</div>
 									<div class="col-sm-12 mt-1">
 										<div class="row">
-											<div class="col-sm-4">
-												<button id="ToggleEmployment" type="button" class="general-filters-btn btn btn-success w-100"><i class="fas fa-check wercher-visible" style="margin-right: -1px;"></i></button>
+											<div class="col-sm-3">
+												<?php if($employment_record->num_rows() > 0): ?>
+													<button id="ToggleEmployment" type="button" class="general-filters-btn btn btn-success"><i class="fas fa-check wercher-visible" style="margin-right: -1px;"></i></button>
+												<?php else: ?>
+													<button id="ToggleEmployment" type="button" class="general-filters-btn btn btn-secondary"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+												<?php endif; ?>
 											</div>
-											<div class="col-sm-8" style="margin-left: -15px; margin-top: 5px;">
+											<div class="col-sm-9" style="margin-left: -15px; margin-top: 5px;">
 												Employment&nbsp;Records
 											</div>
 										</div>
 									</div>
 									<div class="col-sm-12 mt-1">
 										<div class="row">
-											<div class="col-sm-4">
-												<button id="ToggleMachine" type="button" class="general-filters-btn btn btn-success w-100"><i class="fas fa-check  wercher-visible" style="margin-right: -1px;"></i></button>
+											<div class="col-sm-3">
+												<?php if($Machine_Operatessss->num_rows() > 0): ?>
+													<button id="ToggleMachine" type="button" class="general-filters-btn btn btn-success"><i class="fas fa-check wercher-visible" style="margin-right: -1px;"></i></button>
+												<?php else: ?>
+													<button id="ToggleMachine" type="button" class="general-filters-btn btn btn-secondary"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+												<?php endif; ?>
 											</div>
-											<div class="col-sm-8" style="margin-left: -15px; margin-top: 5px;">
+											<div class="col-sm-9" style="margin-left: -15px; margin-top: 5px;">
 												Machine&nbsp;Operated
 											</div>
 										</div>
 									</div>
 									<div class="col-sm-12 mt-1">
 										<div class="row">
-											<div class="col-sm-4">
-												<button id="ToggleContract" type="button" class="general-filters-btn btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+											<div class="col-sm-3">
+												<button id="ToggleContract" type="button" class="general-filters-btn btn btn-secondary"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
 											</div>
-											<div class="col-sm-8" style="margin-left: -15px; margin-top: 5px;">
+											<div class="col-sm-9" style="margin-left: -15px; margin-top: 5px;">
 												Contract
 											</div>
 										</div>
 									</div>
 									<div class="col-sm-12 mt-1">
 										<div class="row">
-											<div class="col-sm-4">
-												<button id="ToggleHistory" type="button" class="general-filters-btn btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+											<div class="col-sm-3">
+												<button id="ToggleHistory" type="button" class="general-filters-btn btn btn-secondary"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
 											</div>
-											<div class="col-sm-8" style="margin-left: -15px; margin-top: 5px;">
+											<div class="col-sm-9" style="margin-left: -15px; margin-top: 5px;">
 												Contract&nbsp;History
 											</div>
 										</div>
@@ -74,26 +244,60 @@
 								<div class="col-sm-6">
 									<div class="col-sm-12">
 										<div class="row">
-											<div class="col-sm-4">
-												<button id="ToggleInformation" type="button" class="general-filters-btn btn btn-success w-100"><i class="fas fa-check wercher-visible" style="margin-right: -1px;"></i></button>
+											<div class="col-sm-3">
+												<button id="TogglePhoto" type="button" class="general-filters-btn btn btn-success"><i class="fas fa-check wercher-visible" style="margin-right: -1px;"></i></button>
 											</div>
-											<div class="col-sm-8" style="margin-left: -15px; margin-top: 5px;">
-												Employee's&nbsp;Information
+											<div class="col-sm-9" style="margin-left: -15px; margin-top: 5px;">
+												Employee's&nbsp;Photo
 											</div>
 										</div>
 									</div>
 									<div class="col-sm-12 mt-1">
 										<div class="row">
-											<div class="col-sm-4">
-												<button id="TogglePhoto" type="button" class="general-filters-btn btn btn-success w-100"><i class="fas fa-check wercher-visible" style="margin-right: -1px;"></i></button>
+											<div class="col-sm-3">
+												<button id="TogglePersonalInformation" type="button" class="general-filters-btn btn btn-success"><i class="fas fa-check wercher-visible" style="margin-right: -1px;"></i></button>
 											</div>
-											<div class="col-sm-8" style="margin-left: -15px; margin-top: 5px;">
-												Employee's&nbsp;Photo
+											<div class="col-sm-9" style="margin-left: -15px; margin-top: 5px;">
+												Personal&nbsp;Information
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-12 mt-1">
+										<div class="row">
+											<div class="col-sm-3">
+												<button id="ToggleWorkInformation" type="button" class="general-filters-btn btn btn-success"><i class="fas fa-check wercher-visible" style="margin-right: -1px;"></i></button>
+											</div>
+											<div class="col-sm-9" style="margin-left: -15px; margin-top: 5px;">
+												Work&nbsp;Information
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<hr>
+									<div class="col-sm-12 mt-1">
+										<div class="row">
+											<div class="col-sm-3" style="margin-top: 10px;">
+												Opacity:
+											</div>
+											<div class="col-sm-9" style="margin-left: -15px; margin-top: 5px;">
+												<input id="Opacity" class="form-control" type="number" min="1" max="100" value="100" style="width: 85px;">
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-12 mt-2">
+										<div class="row">
+											<div class="col-sm-3">
+												<button id="ToggleBlackAndWhite" type="button" class="general-filters-btn btn btn-secondary"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+											</div>
+											<div class="col-sm-9" style="margin-left: -15px; margin-top: 5px;">
+												Black&nbsp;&&nbsp;White
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
+							<hr>
 							<!-- <ul>
 								<li>Academic History, Employment Records, and Machine Operated will be hidden on print if there is no data.</li>
 								<li>You can modify the size of the Employee's photo by clicking the buttons on the right.</li>
@@ -101,7 +305,8 @@
 							</ul> -->
 							<div class="row mt-2">
 								<div class="col-sm-12">
-									<button type="button" class="btn btn-success w-100 eprint-print-btn" onClick="printContent('PrintOut')"><i class="fas fa-print"></i> Print</button>
+									<button type="button" class="btn btn-success eprint-print-btn" onClick="printContent('PrintOut')" style="width: 400px;"><i class="fas fa-print"></i> Print</button>
+									<a href="<?=base_url();?>ModifyEmployee?id=<?=$ApplicantID;?>" class="btn btn-primary eprint-print-btn"><i class="fas fa-edit"></i> Edit</a>
 								</div>
 							</div>
 						</div>
@@ -110,30 +315,30 @@
 							<div class="row">
 								<div id="PhotoSizeBtns" class="col-sm-4">
 									<div class="col-sm-12">
-										<button id="ResizeHalfInch" type="button" class="btn btn-info w-100">0.5 x 0.5 inches</button>
+										<button id="ResizeHalfInch" type="button" class="btn btn-info" style="width: 150px;">0.5 x 0.5 inches</button>
 									</div>
 									<div class="col-sm-12 mt-1">
-										<button id="ResizeOneInch" type="button" class="btn btn-info w-100">1 x 1 inch</button>
+										<button id="ResizeOneInch" type="button" class="btn btn-info" style="width: 150px;">1 x 1 inch</button>
 									</div>
 									<div class="col-sm-12 mt-1">
-										<button id="ResizeOneAndAHalfInch" type="button" class="btn btn-info w-100">1.5 x 1.5 inches</button>
+										<button id="ResizeOneAndAHalfInch" type="button" class="btn btn-info" style="width: 150px;">1.5 x 1.5 inches</button>
 									</div>
 									<div class="col-sm-12 mt-1">
-										<button id="ResizeTwoInch" type="button" class="btn btn-info w-100">2 x 2 inches</button>
+										<button id="ResizeTwoInch" type="button" class="btn btn-info" style="width: 150px;">2 x 2 inches</button>
 									</div>
 								</div>
 								<div class="col-sm-3">
 									<div class="col-sm-12 mt-2">
-										- 48 pixels
+										-&nbsp;48&nbsp;pixels
 									</div>
 									<div class="col-sm-12 mt-3">
-										- 96 pixels
+										-&nbsp;96&nbsp;pixels
 									</div>
 									<div class="col-sm-12 mt-3">
-										- 144 pixels
+										-&nbsp;144&nbsp;pixels
 									</div>
 									<div class="col-sm-12 mt-3">
-										- 192 pixels
+										-&nbsp;192&nbsp;pixels
 									</div>
 								</div>
 								<div class="col-sm-5">
@@ -143,7 +348,7 @@
 							</div>
 						</div>
 					</div>
-					<div id="EmployeeInformation" class="row px-5 PrintOut">
+					<div id="PrintContainer" class="row px-5 PrintOut">
 						<div class="col-md-6">
 							<img class="eprint-logo" src="<?=base_url()?>assets/img/wercher_logo.png">
 							<div class="col-sm-12 eprint-logo-text">
@@ -152,304 +357,290 @@
 							<div class="col-sm-12 eprint-logo-subtext">
 								<i>Lower Maingate, Sitio Tagbac, Brgy. San Jose, Antipolo City</i>
 							</div>
-							<div class="col-sm-12 eprint-logo-info">
-								<b><?php echo $LastName; ?> , <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.</b>
+							<div class="col-sm-12 eprint-logo-info printemployee-tooltip">
+								<p><b><?php echo $LastName; ?>, <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.</b></p>
 							</div>
 						</div>
 						<div class="col-md-6 mb-5 eprint-photo">
-							<img id="EPrintPhoto" src="<?php echo $ApplicantImage; ?>" width="192" height="192">
+							<img id="EPrintPhoto" src="<?php echo $ApplicantImage; ?>" width="192" height="192" style="float: right;">
 						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Position Desired
-							</h6>
+						<div id="EmployeeInformation" class="row">
+							<div class="col-md-12 mb-3 printemployee-category">
+								<b>
+									PERSONAL&nbsp;INFORMATION
+								</b>
+							</div>
+
+							<div class="col-md-1">
+								<h6>
+									Address:
+								</h6>
+							</div>
+							<div class="col-md-11 printemployee-tooltip">
+								<p>
+									<?php echo $Address_Present; ?>
+								</p>
+							</div>
+							<div class="col-md-2">
+								<h6>
+									Address&nbsp;Provincial:
+								</h6>
+							</div>
+							<div class="col-md-4 printemployee-tooltip">
+								<p>
+									<?php echo $Address_Provincial; ?>
+								</p>
+							</div>
+							<div class="col-md-2">
+								<h6>
+									Address&nbsp;Manila:
+								</h6>
+							</div>
+							<div class="col-md-4 printemployee-tooltip">
+								<p>
+									<?php echo $Address_Manila; ?>
+								</p>
+							</div>
+							<div class="col-md-2">
+								<h6>
+									Contact&nbsp;Number:
+								</h6>
+							</div>
+							<div class="col-md-4 printemployee-tooltip">
+								<p>
+									<?php echo $Phone_No; ?>
+								</p>
+							</div>
+							<div class="col-md-3">
+								<h6>
+									Emergency&nbsp;Contact&nbsp;Number:
+								</h6>
+							</div>
+							<div class="col-md-3 printemployee-tooltip">
+								<p>
+									<?php echo $EmergencyContact; ?>
+								</p>
+							</div>
+							<div class="col-md-4">
+								<h6>
+									Person&nbsp;to&nbsp;notify&nbsp;in&nbsp;case&nbsp;of&nbsp;emergency:
+								</h6>
+							</div>
+							<div class="col-md-8 printemployee-tooltip">
+								<p>
+									<?php echo $EmergencyPerson; ?>
+								</p>
+							</div>
+							<div class="col-md-1">
+								<h6>
+									Birth&nbsp;Date:
+								</h6>
+							</div>
+							<div class="col-md-3 printemployee-tooltip">
+								<p>
+									<?php echo $BirthDate; ?>
+								</p>
+							</div>
+							<div class="col-md-2">
+								<h6>
+									Birth&nbsp;Place:
+								</h6>
+							</div>
+							<div class="col-md-6 printemployee-tooltip">
+								<p>
+									<?php echo $BirthPlace; ?>
+								</p>
+							</div>
+							<div class="col-md-1">
+								<h6>
+									Age:
+								</h6>
+							</div>
+							<div class="col-md-2 printemployee-tooltip">
+								<p>
+									<?php echo $Age; ?>
+								</p>
+							</div>
+							<div class="col-md-1">
+								<h6>
+									Height:
+								</h6>
+							</div>
+							<div class="col-md-2 printemployee-tooltip">
+								<p>
+									<?php echo $Height; ?>
+								</p>
+							</div>
+							<div class="col-md-1">
+								<h6>
+									Weight:
+								</h6>
+							</div>
+							<div class="col-md-2 printemployee-tooltip">
+								<p>
+									<?php echo $Weight; ?>
+								</p>
+							</div>
+							<div class="col-md-1">
+								<h6>
+									Religion:
+								</h6>
+							</div>
+							<div class="col-md-2 printemployee-tooltip">
+								<p>
+									<?php echo $Religion; ?>
+								</p>
+							</div>
+							<div class="col-md-1">
+								<h6>
+									Citizenship:
+								</h6>
+							</div>
+							<div class="col-md-5 printemployee-tooltip">
+								<p>
+									<span style="margin-left: 5px;"><?php echo $Citizenship; ?></span>
+								</p>
+							</div>
+							<div class="col-md-1">
+								<h6>
+									Sex:
+								</h6>
+							</div>
+							<div class="col-md-1 printemployee-tooltip">
+								<p>
+									<?php echo $Gender; ?>
+								</p>
+							</div>
+							<div class="col-md-1">
+								<h6>
+									Civil&nbsp;Status:
+								</h6>
+							</div>
+							<div class="col-md-1 printemployee-tooltip">
+								<p>
+									<span style="margin-left: 5px;"><?php echo $CivilStatus; ?></span>
+								</p>
+							</div>
+							<div class="col-md-1">
+								<h6>
+									No.&nbsp;of&nbsp;Children:
+								</h6>
+							</div>
+							<div class="col-md-1">
+								<p>
+									<span style="margin-left: 35px; border-bottom: 1px solid black;"><?php echo $No_OfChildren; ?></span>
+								</p>
+							</div>
 						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $PositionDesired; ?> <?php if($PositionGroup != NULL) { echo ' (' . $PositionGroup . ')'; } ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Applicant ID
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $ApplicantID; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Salary Expected
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $SalaryExpected; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								<?php if($Status == 'Employed'): ?>
-									Employee ID
-								<?php else: ?>
-									Applicant ID
-								<?php endif; ?>
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php if($Status == 'Employed'): ?>
-									<?php echo $EmployeeID; ?>
-								<?php else: ?>
-									<?php echo $ApplicantID; ?>
-								<?php endif; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Status
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $Status; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Gender
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $Gender; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Age
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $Age; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Height
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $Height; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Weight
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $Weight; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Religion
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $Religion; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Birth Date
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $BirthDate; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Birth Place
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $BirthPlace; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Citizenship
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $Citizenship; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Civil Status
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $CivilStatus; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								No. of Children
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $No_OfChildren; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Applied On
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $AppliedOn; ?>
-							</p>
-						</div>
-					</div>
-					<div id="EmployeeInformationSecondary" class="row px-5 pt-5 PrintOut">
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								S.S.S. #
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $SSS_No; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Address Present
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $Address_Present; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Residence Certificate No.
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $ResidenceCertificateNo; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Address Provincial
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $Address_Provincial; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Tax Identification No.
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $TIN; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Address Manila
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $Address_Manila; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								HDMF
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $HDMF; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Person to notify in case of emergency
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $EmergencyPerson; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								PHILHEALTH
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $PhilHealth; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Contact Number
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $EmergencyContact; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								ATM #
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $ATM_No; ?>
-							</p>
+						<div id="WorkInformation" class="row mt-3">
+							<div class="col-md-12 mb-3 printemployee-category">
+								<b>
+									WORK&nbsp;INFORMATION
+								</b>
+							</div>
+
+							<div class="col-md-2">
+								<h6>
+									Position&nbsp;Desired:
+								</h6>
+							</div>
+							<div class="col-md-2 printemployee-tooltip">
+								<p>
+									<?php echo $PositionDesired; ?>
+								</p>
+							</div>
+							<div class="col-md-2">
+								<h6>
+									Position&nbsp;Group:
+								</h6>
+							</div>
+							<div class="col-md-2 printemployee-tooltip">
+								<p>
+									<?php echo $PositionGroup; ?>
+								</p>
+							</div>
+							<div class="col-md-1">
+								<h6>
+									Applied&nbsp;On:
+								</h6>
+							</div>
+							<div class="col-md-3 printemployee-tooltip">
+								<p>
+									<span style="margin-left: 10px;"><?php echo $AppliedOn; ?></span>
+								</p>
+							</div>
+							<div class="col-md-2">
+								<h6>
+									SSS&nbsp;Number:
+								</h6>
+							</div>
+							<div class="col-md-4 printemployee-tooltip">
+								<p>
+									<?php echo $SSS_No; ?>
+								</p>
+							</div>
+							<div class="col-md-2">
+								<h6>
+									HDMF:
+								</h6>
+							</div>
+							<div class="col-md-4 printemployee-tooltip">
+								<p>
+									<?php echo $HDMF; ?>
+								</p>
+							</div>
+							<div class="col-md-2">
+								<h6>
+									RCN:
+								</h6>
+							</div>
+							<div class="col-md-4 printemployee-tooltip">
+								<p>
+									<?php echo $ResidenceCertificateNo; ?>
+								</p>
+							</div>
+							<div class="col-md-2">
+								<h6>
+									PHILHEALTH:
+								</h6>
+							</div>
+							<div class="col-md-4 printemployee-tooltip">
+								<p>
+									<?php echo $PhilHealth; ?>
+								</p>
+							</div>
+							<div class="col-md-2">
+								<h6>
+									TIN:
+								</h6>
+							</div>
+							<div class="col-md-4 printemployee-tooltip">
+								<p>
+									<?php echo $TIN; ?>
+								</p>
+							</div>
+							<div class="col-md-2">
+								<h6>
+									ATM Number:
+								</h6>
+							</div>
+							<div class="col-md-4 printemployee-tooltip">
+								<p>
+									<?php echo $ATM_No; ?>
+								</p>
+							</div>
 						</div>
 					</div>
-					<div id="AcademicHistory" class="row pl-5 pt-4 PrintOut">
-						<div class="col-sm-12">
-							<h5>
-								<i class="fas fa-book"></i> Academic History
-							</h5>
+					<div id="AcademicHistory" class="row pl-5 mt-3 <?php if($GetAcadHistory->num_rows() > 0): echo 'PrintOut'; else: echo 'd-none'; endif;?>">
+						<div class="col-md-12 mb-3 printemployee-category">
+							<b>
+								ACADEMIC&nbsp;HISTORY
+							</b>
 						</div>
 						<div class="col-sm-12">
 							<div class="table-responsive">
-								<table class="table table-condensed">
-									<thead>
+								<table class="table">
+									<thead style="font-size: 15px;">
 										<th>Level</th>
 										<th>School Name</th>
 										<th>School Address</th>
@@ -485,16 +676,16 @@
 							</div>
 						</div>
 					</div>
-					<div id="EmploymentRecords" class="row pt-2 pl-5 PrintOut">
-						<div class="col-sm-12">
-							<h5>
-								<i class="fas fa-stream"></i> Employment Record
-							</h5>
+					<div id="EmploymentRecords" class="row pt-2 pl-5 <?php if($employment_record->num_rows() > 0): echo 'PrintOut'; else: echo 'd-none'; endif;?>">
+						<div class="col-md-12 mb-3 printemployee-category">
+							<b>
+								EMPLOYMENT&nbsp;RECORDS
+							</b>
 						</div>
 						<div class="col-sm-12">
 							<div class="table-responsive">
 								<table class="table table-condensed">
-									<thead>
+									<thead style="font-size: 15px;">
 										<th>Name</th>
 										<th>Address</th>
 										<th>Period Covered</th>
@@ -530,18 +721,17 @@
 							</div>
 						</div>
 					</div>
-					<div id="MachineOperated" class="row pt-2 pl-5 PrintOut">
-						<div class="col-sm-12">
-							<h5>
-								<i class="fas fa-cog"></i> Machine Operated
-							</h5>
+					<div id="MachineOperated" class="row pt-2 pl-5 <?php if($Machine_Operatessss->num_rows() > 0): echo 'PrintOut'; else: echo 'd-none'; endif;?>">
+						<div class="col-md-12 mb-3 printemployee-category">
+							<b>
+								MACHINE&nbsp;OPERATED
+							</b>
 						</div>
 						<div class="col-sm-12">
 							<div class="table-responsive">
 								<table class="table table-condensed">
-									<thead>
+									<thead style="font-size: 15px;">
 										<th>Machine Name</th>
-										
 									</thead>
 									<tbody>
 										<?php if ($Machine_Operatessss->num_rows() > 0) { ?>
@@ -570,7 +760,7 @@
 					<div id="Suspension" class="row pt-5 pl-5 d-none">
 						<div class="col-sm-12">
 							<h5>
-								<i class="fas fa-user-tie"></i> Suspesion
+								<i class="fas fa-user-tie"></i> Suspension
 							</h5>
 						</div>
 						<div class="col-sm-12 col-md-12 employee-dynamic-header">
@@ -658,98 +848,142 @@
 						</div>
 					</div>
 					<?php endif; ?>	
-					<div id="Contract" class="row pt-5 pl-5 d-none">
-						<div class="col-sm-12">
-							<h5>
-								<i class="fas fa-user-tie"></i> Contract
-							</h5>
+					<?php if($Status == 'Employee'): ?>
+					<div id="Contract" class="row pl-5 d-none">
+						<div id="ContractInformation" class="row mt-3">
+							<div class="col-md-12 mb-3 printemployee-category">
+								<b>
+									CONTRACT
+								</b>
+							</div>
+
+							<div class="col-md-2">
+								<h6>
+									Days&nbsp;Remaining:
+								</h6>
+							</div>
+							<div class="col-md-10 printemployee-tooltip">
+								<p>
+									<?php
+										$currTime = time();
+										$strDateEnds = strtotime($DateEnds);
+										$strDateStarted = strtotime($DateStarted);
+										// DAYS REMAINING
+										$dateTimeZone = new DateTimeZone("Asia/Manila");
+										$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
+										$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
+										$interval = $datetime1->diff($datetime2);
+										if($interval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
+											echo $interval->format('%H hours, %I minutes, %S seconds');
+										} else {
+											echo $interval->format('%y years, %m months, %d days');
+										}
+									?>
+								</p>
+							</div>
+							<div class="col-md-2">
+								<h6>
+									Client&nbsp;Name:
+								</h6>
+							</div>
+							<div class="col-md-6 printemployee-tooltip">
+								<p>
+									<?php
+										foreach($GetEmployeeMatchingClient->result_array() as $row) {
+											echo $row['Name'];
+										};
+									?>
+								</p>
+							</div>
+							<div class="col-md-2">
+								<h6>
+									Contact&nbsp;Number:
+								</h6>
+							</div>
+							<div class="col-md-2 printemployee-tooltip">
+								<p>
+									<?php
+										foreach($GetEmployeeMatchingClient->result_array() as $row) {
+											echo $row['ContactNumber'];
+										};
+									?>
+								</p>
+							</div>
+							<div class="col-md-2">
+								<h6>
+									Client&nbsp;Address:
+								</h6>
+							</div>
+							<div class="col-md-10 printemployee-tooltip">
+								<p>
+									<?php
+										foreach($GetEmployeeMatchingClient->result_array() as $row) {
+											echo $row['Address'];
+										};
+									?>
+								</p>
+							</div>
+							<div class="col-md-2">
+								<h6>
+									Contract&nbsp;Started:
+								</h6>
+							</div>
+							<div class="col-md-4 printemployee-tooltip">
+								<p>
+									<?php echo $DateStarted; ?>
+								</p>
+							</div>
+							<div class="col-md-2">
+								<h6>
+									Contract&nbsp;Ends:
+								</h6>
+							</div>
+							<div class="col-md-4 printemployee-tooltip">
+								<p>
+									<?php echo $DateEnds; ?>
+								</p>
+							</div>
 						</div>
-						<div class="col-sm-12 col-md-12 employee-dynamic-header">
+					</div>
+					<?php endif; ?>
+					<div id="ContractHistory" class="row pt-2 pl-5 d-none">
+						<div class="col-md-12 mb-3 printemployee-category">
 							<b>
-								Days Remaining on Contract
+								CONTRACT&nbsp;HISTORY
 							</b>
 						</div>
-						<div class="col-sm-12 col-md-12 mb-2">
-							<p>
-								<?php
 
-								// $currTime = time();
-								// $strDateEnds = strtotime($DateEnds);
-								// $strDateStarted = strtotime($DateStarted);
-								// // DAYS REMAINING
-								// $dateTimeZone = new DateTimeZone("Asia/Manila");
-								// $datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
-								// $datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
-								// $interval = $datetime1->diff($datetime2);
-								// if($interval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
-								// 	echo $interval->format('%H hours, %I minutes, %S seconds');
-								// } else {
-								// 	echo $interval->format('%y years, %m months, %d days');
-								// }
-								?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Client Name
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php
-									foreach($GetEmployeeMatchingClient->result_array() as $row) {
-										echo $row['Name'];
-									};
-								?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Contract Started
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $DateStarted; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Client Contact
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php
-									foreach($GetEmployeeMatchingClient->result_array() as $row) {
-										echo $row['ContactNumber'];
-									};
-								?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Contract Ends
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php echo $DateEnds; ?>
-							</p>
-						</div>
-						<div class="col-md-2 eprint-field-title">
-							<h6>
-								Client Address
-							</h6>
-						</div>
-						<div class="col-md-4 eprint-field-det">
-							<p>
-								<?php
-									foreach($GetEmployeeMatchingClient->result_array() as $row) {
-										echo $row['Address'];
-									};
-								?>
-							</p>
+						<div class="col-sm-12">
+							<div class="table-responsive">
+								<table class="table PrintOutHistory" style="width: 100%;">
+									<thead>
+										<tr class="text-center align-middle">
+											<th> Client </th>
+											<th> Contract Started </th>
+											<th> Contract Ended </th>
+											<th> Position </th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach ($GetContractHistory->result_array() as $row): ?>
+											<tr>
+												<td class="text-center align-middle">
+													<?php echo $row['Client'] ; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['PreviousDateStarted'] ; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['PreviousDateEnds'] ; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['PreviousPosition'] ; ?>
+												</td>
+											</tr>
+										<?php endforeach ?>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				<?php else: ?>
@@ -764,11 +998,16 @@
 <?php $this->load->view('_template/users/u_scripts');?>
 <script type="text/javascript">
 	$(document).ready(function () {
-		var V_AcademicHistory = true;
-		var V_EmploymentRecords = true;
-		var V_MachineOperated = true;
-		var V_Contract = false;
-		var V_ContractHistory = false;
+		var BlackAndWhite = false;
+		$('#ToggleBlackAndWhite').on('click', function () {
+			if(BlackAndWhite == false) {
+				$('#PrintContainer').find('*').css('filter', 'grayscale(100%)');
+				BlackAndWhite = true;
+			} else {
+				$('#PrintContainer').find('*').css('filter', 'grayscale(0%)');
+				BlackAndWhite = false;
+			}
+		});
 		$('#ToggleAcademic').on('click', function () {
 			$('#AcademicHistory').toggleClass('PrintOut');
 			$('#AcademicHistory').toggleClass('d-none');
@@ -789,15 +1028,13 @@
 			$('#ContractHistory').toggleClass('PrintOut');
 			$('#ContractHistory').toggleClass('d-none');
 		});
-		$('#ToggleInformation').on('click', function () {
-			$('#EmployeeInformation').find('.eprint-field-title').toggleClass('PrintExclude');
-			$('#EmployeeInformation').find('.eprint-field-det').toggleClass('PrintExclude');
-			$('#EmployeeInformationSecondary').find('.eprint-field-title').toggleClass('PrintExclude');
-			$('#EmployeeInformationSecondary').find('.eprint-field-det').toggleClass('PrintExclude');
-			$('#EmployeeInformation').find('.eprint-field-title').toggleClass('d-none');
-			$('#EmployeeInformation').find('.eprint-field-det').toggleClass('d-none');
-			$('#EmployeeInformationSecondary').find('.eprint-field-title').toggleClass('d-none');
-			$('#EmployeeInformationSecondary').find('.eprint-field-det').toggleClass('d-none');
+		$('#TogglePersonalInformation').on('click', function () {
+			$('#EmployeeInformation').toggleClass('PrintExclude');
+			$('#EmployeeInformation').toggleClass('d-none');
+		});
+		$('#ToggleWorkInformation').on('click', function () {
+			$('#WorkInformation').toggleClass('PrintExclude');
+			$('#WorkInformation').toggleClass('d-none');
 		});
 		$('#TogglePhoto').on('click', function () {
 			$('#EPrintPhoto').toggleClass('PrintExclude');
@@ -829,6 +1066,11 @@
 			$('#EPrintPhoto').attr('width', $('#ResizeCustom').val());
 			$('#EPrintPhoto').attr('height', $('#ResizeCustom').val());
 		});
+		$('#Opacity').on('change', function() {
+			opacity = $('#Opacity').val();
+			opacity = opacity / 100;
+			$('#PrintContainer').not('img').find('*').css('opacity', opacity);
+		});
 		$('#ClientSelect').on('change', function() {
 			<?php foreach ($getClientOption->result_array() as $row): ?>
 			<?php
@@ -847,120 +1089,6 @@
 			}
 			<?php endforeach; ?>
 		});
-		$("#Type").change(function(){
-			$('#ViolationNotice').hide();
-			$('#BlacklistNotice').hide();
-			if ( $(this).val() == "Violation" ) { 
-				$("#ViolationNotice").fadeIn();
-		    }
-		    if ( $(this).val() == "Blacklist" ) { 
-				$("#BlacklistNotice").fadeIn();
-		    }
-		});
-		$('.doc_btn').on('click', function () {
-			$('#Pass_ID').val($(this).attr('id'));
-		});
-		$('.employee-tabs-select').removeClass('employee-tabs-active');
-		$('.employee-tabs-group-content').hide();
-		var hashValue = window.location.hash.substr(1);
-		if (hashValue == 'Personal') {
-			$('#TabPersonal').children('.employee-tabs-group-content').show();
-			$('#TabPersonalBtn').addClass('employee-tabs-active');
-		}
-		else if (hashValue == 'Contract') {
-			$('#TabContract').children('.employee-tabs-group-content').show();
-			$('#TabContractBtn').addClass('employee-tabs-active');
-		}
-		else if (hashValue == 'Documents') {
-			$('#TabDocuments').children('.employee-tabs-group-content').show();
-			$('#TabDocumentsBtn').addClass('employee-tabs-active');
-		}
-		else if (hashValue == 'Academic') {
-			$('#TabAcademic').children('.employee-tabs-group-content').show();
-			$('#TabAcademicBtn').addClass('employee-tabs-active');
-		}
-		else if (hashValue == 'Employments') {
-			$('#TabEmployments').children('.employee-tabs-group-content').show();
-			$('#TabEmploymentsBtn').addClass('employee-tabs-active');
-		}
-		else if (hashValue == 'Machine') {
-			$('#TabMachine').children('.employee-tabs-group-content').show();
-			$('#TabMachineBtn').addClass('employee-tabs-active');
-		} else {
-			$('#TabPersonal').children('.employee-tabs-group-content').show();
-			$('#TabPersonalBtn').addClass('employee-tabs-active');
-		}
-		$(window).on('hashchange',function(){ 
-			$('.employee-tabs-select').removeClass('employee-tabs-active');
-			$('.employee-tabs-group-content').hide();
-			var hashValue = window.location.hash.substr(1);
-			if (hashValue == 'Personal') {
-				$('#TabPersonal').children('.employee-tabs-group-content').show();
-				$('#TabPersonalBtn').addClass('employee-tabs-active');
-			}
-			else if (hashValue == 'Contract') {
-				$('#TabContract').children('.employee-tabs-group-content').show();
-				$('#TabContractBtn').addClass('employee-tabs-active');
-			}
-			else if (hashValue == 'Documents') {
-				$('#TabDocuments').children('.employee-tabs-group-content').show();
-				$('#TabDocumentsBtn').addClass('employee-tabs-active');
-			}
-			else if (hashValue == 'Academic') {
-				$('#TabAcademic').children('.employee-tabs-group-content').show();
-				$('#TabAcademicBtn').addClass('employee-tabs-active');
-			}
-			else if (hashValue == 'Employments') {
-				$('#TabEmployments').children('.employee-tabs-group-content').show();
-				$('#TabEmploymentsBtn').addClass('employee-tabs-active');
-			}
-			else if (hashValue == 'Machine') {
-				$('#TabMachine').children('.employee-tabs-group-content').show();
-				$('#TabMachineBtn').addClass('employee-tabs-active');
-			} else {
-				$('#TabPersonal').children('.employee-tabs-group-content').show();
-				$('#TabPersonalBtn').addClass('employee-tabs-active');
-			}
-		});
-		$('#AddNoteBtn').on('click', function () {
-			$('#AddNote_ApplicantID').val($(this).attr('applicant-id'));
-		});
-		$('.folder-button').on('click', function () {
-			$(this).children('i').toggleClass('fa-folder');
-			$(this).children('i').toggleClass('fa-folder-open');
-			$(this).closest('.row').find('.folder-documents').toggleClass('folder-active');
-		});
-		// $('.employee-tabs-select').on('click', function () {
-		// 	$('.employee-tabs-select').removeClass('employee-tabs-active');
-		// 	$(this).addClass('employee-tabs-active');
-		// 	$('.employee-tabs-group-content').hide();
-		// });
-		$('#TabDocumentsBtnAlt').on('click', function () {
-			$('.employee-tabs-select').removeClass('employee-tabs-active');
-			$('#TabDocumentsBtn').addClass('employee-tabs-active');
-			$('.employee-tabs-group-content').hide();
-		});
-		$('#TabPersonalBtn').on('click', function () {
-			$('#TabPersonal').children('.employee-tabs-group-content').fadeIn(100);
-		});
-		$('#TabContractBtn').on('click', function () {
-			$('#TabContract').children('.employee-tabs-group-content').fadeIn(100);
-		});
-		$('#TabDocumentsBtn, #TabDocumentsBtnAlt').on('click', function () {
-			$('#TabDocuments').children('.employee-tabs-group-content').fadeIn(100);
-		});
-		$('#TabAcademicBtn').on('click', function () {
-			$('#TabAcademic').children('.employee-tabs-group-content').fadeIn(100);
-		});
-		$('#TabEmploymentsBtn').on('click', function () {
-			$('#TabEmployments').children('.employee-tabs-group-content').fadeIn(100);
-		});
-		$('#TabMachineBtn').on('click', function () {
-			$('#TabMachine').children('.employee-tabs-group-content').fadeIn(100);
-		});
-		$('#TabNotesBtn').on('click', function () {
-			$('#TabNotes').children('.employee-tabs-group-content').fadeIn(100);
-		});
 		if (localStorage.getItem('SidebarVisible') == 'true') {
 			$('#sidebar').addClass('active');
 			$('.ncontent').addClass('shContent');
@@ -968,47 +1096,6 @@
 			$('#sidebar').css('transition', 'all 0.3s');
 			$('#content').css('transition', 'all 0.3s');
 		}
-		$('#sidebarCollapse').on('click', function () {
-			if (localStorage.getItem('SidebarVisible') == 'false') {
-				$('#sidebar').addClass('active');
-				$('.ncontent').addClass('shContent');
-				$('#sidebar').css('transition', 'all 0.3s');
-				$('#content').css('transition', 'all 0.3s');
-		    	localStorage.setItem('SidebarVisible', 'true');
-			} else {
-				$('#sidebar').removeClass('active');
-				$('.ncontent').removeClass('shContent');
-				$('#sidebar').css('transition', 'all 0.3s');
-				$('#content').css('transition', 'all 0.3s');
-		    	localStorage.setItem('SidebarVisible', 'false');
-			}
-		});
-		$('.ModalHire').on('click', function () {
-			$('#idToHire').val($(this).attr('id'));
-			console.log($('#idToHire').val());
-		});
-		$('.ExtendButton').on('click', function () {
-			$('#ExtendID').val($(this).attr('id'));
-			console.log($('#ExtendID').val());
-			console.log($('#ExtendDate').val());
-		});
-		$('.ReminderButton').on('click', function () {
-			$('#ReminderID').val($(this).attr('id'));
-			console.log($('#ReminderID').val());
-		});
-		$('#ListContractHistory').DataTable();
-		$('#ListViolations').DataTable();
-		// Contract Bar
-		var rPercentage = $("#TimeLeft").val();
-		// if (rPercentage > 100) {
-		// 	rPercentage = 100;
-		// }
-		$('.progressRemaining').animate({width:rPercentage + "%"},1500);
-		$('.progress_value').text(rPercentage + "%");
-		$('.a_eImage').on('click', function () {
-			var src1 = $(this).attr('id');
-			$("#enlargeImage_doc").attr("src", src1);
-		});
 
 	});
 	function hideModal() {

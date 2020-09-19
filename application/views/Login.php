@@ -1,18 +1,21 @@
+<?php 
+	date_default_timezone_set('Asia/Manila');
+	$date = new DateTime(date('Y-m-d'));
+	$day = $date->format('Y-m-d');
+	$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="robots" content="noindex" /> <!-- No search engine queries. Private website. -->
 	<title>
 		Login | Wercher Solutions and Resources Workers Cooperative
 	</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<!-- FONTAWESOME -->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/solid.css" integrity="sha384-r/k8YTFqmlOaqRkZuSiE9trsrDXkh07mRaoGBMoDcmA58OHILZPsk29i2BsFng1B" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/regular.css" integrity="sha384-IG162Tfx2WTn//TRUi9ahZHsz47lNKzYOp0b6Vv8qltVlPkub2yj9TVwzNck6GEF" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/brands.css" integrity="sha384-BKw0P+CQz9xmby+uplDwp82Py8x1xtYPK3ORn/ZSoe6Dk3ETP59WCDnX+fI1XCKK" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css" integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous">
+	<link rel="icon" href="<?=base_url()?>/favicon.ico" type="image/gif">
 </head>
-<body>
+<body onload="digi()">
 	<div class="header">
 
 	</div>
@@ -55,7 +58,7 @@
 						<?php echo $this->session->flashdata('prompt');?>
 						<div class="form-row">
 							<div class="form-group w-100 text-center">
-								<label>Username</label>
+								<label>Admin ID</label>
 								<input class="form-control text-center" type="text" name="UserName">
 							</div>
 						</div>
@@ -84,8 +87,11 @@
 				</div>
 				<div class="col-sm-12 col-md-5">
 					<div class="login-time-container">
-						<div class="login-time">
-							12:05:05
+						<div id="logInTime" class="col-sm-12 login-time">
+							00:00:00 AM
+						</div>
+						<div id="logInTimeDate" class="col-sm-12 login-time-date">
+							Loading date...
 						</div>
 						<div class="login-description">
 							<b>WERCHER COOP</b>
@@ -112,7 +118,46 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <noscript>JavaScript disabled. Enable JavaScript</noscript>
+<script>
+	function digi() {
+	var date = new Date(),
+	  hour = date.getHours(),
+	  minute = checkTime(date.getMinutes()),
+	  ss = checkTime(date.getSeconds());
+
+	  // document.getElementById("logInTimeDate").innerHTML = <?php echo $day; ?>;
+
+	function checkTime(i) {
+	if( i < 10 ) {
+	  i = "0" + i;
+	}
+	return i;
+	}
+
+	if ( hour > 12 ) {
+	hour = hour - 12;
+		if ( hour == 12 ) {
+			hour = checkTime(hour);
+			document.getElementById("logInTime").innerHTML = hour+":"+minute+":"+ss+" AM";
+		}
+		else {
+			hour = checkTime(hour);
+			document.getElementById("logInTime").innerHTML = hour+":"+minute+":"+ss+" PM";
+		}
+	}
+	else {
+		document.getElementById("logInTime").innerHTML = hour+":"+minute+":"+ss+" AM";;
+	}
+		var time = setTimeout(digi,1000);
+	}
+
+setInterval(time, 1000);
+</script>
 <style type="text/css">
+	.login-time .login-time-date {
+		font-size: 25px;
+		margin-top: -20px;
+	}
 	.btn-primary {
 		background-color: #c5ad00;
 		border-color: #c5ad00;
@@ -349,7 +394,6 @@
 	}
 	.login-time-container {
 		border-left: 2px solid white;
-		border-radius: 4px;
 		height: 400px;
 		margin-left: -80px;
 		margin-bottom: -40px;

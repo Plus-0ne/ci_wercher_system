@@ -38,26 +38,6 @@
 						<?php endif; ?>
 					</div>
 					<hr>
-					<div id="ViolationNotice" class="row ml-auto mr-auto pb-1 w-100" style="display: none;">
-						<div class="col-sm-12 col-mb-12 w-100 text-center document-notice-violation py-2">
-							<div class="col-sm-12 pb-2">
-								<i class="fas fa-exclamation-triangle" style="font-size: 24px;"></i>
-							</div>
-							<div class="col-sm-12">
-								You are marking this document as a violation.
-							</div>
-						</div>
-					</div>
-					<div id="BlacklistNotice" class="row ml-auto mr-auto pb-1 w-100" style="display: none;">
-						<div class="col-sm-12 col-mb-12 w-100 text-center document-notice-blacklist py-2">
-							<div class="col-sm-12 pb-2">
-								<i class="fas fa-exclamation-triangle" style="font-size: 24px;"></i>
-							</div>
-							<div class="col-sm-12">
-								You are blacklisting this individual.
-							</div>
-						</div>
-					</div>
 					<div class="form-row" style="margin-left: 10px; margin-right: 10px;">
 						<div class="form-group col-sm-4 text-center">
 							<label>Type</label>
@@ -82,7 +62,23 @@
 					</div>
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Add</button>
+						<div id="ViolationNotice" class="row ml-auto mr-auto w-100" style="display: none; float: left;">
+							<div class="col-sm-12 col-mb-12 w-100 text-center document-notice-violation py-2">
+								<div class="col-sm-12">
+									<i class="fas fa-exclamation-triangle" style="font-size: 24px;"></i>
+									This document will be a violation.
+								</div>
+							</div>
+						</div>
+						<div id="BlacklistNotice" class="row ml-auto mr-auto w-100" style="display: none; float: left;">
+							<div class="col-sm-12 col-mb-12 w-100 text-center document-notice-blacklist py-2">
+								<div class="col-sm-12">
+									<i class="fas fa-exclamation-triangle" style="font-size: 24px;"></i>
+									This individual will be blacklisted.
+								</div>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-success"><i class="fas fa-upload"></i> Upload</button>
 					</div>
 				</div>
 			<?php echo form_close(); ?>

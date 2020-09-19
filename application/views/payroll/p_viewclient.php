@@ -23,7 +23,7 @@
 							<form class="form-group mr-1" action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
 								<input id="ExcelClientID" type="hidden" name="ExcelClientID" value="<?php echo $ClientID; ?>">
 								<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">
-								<button id="ImportButton" type="button" class="btn btn-success form-control"><i class="fas fa-file-excel"></i> Import</button>
+								<button id="ImportButton" type="button" class="btn btn-success btn-sm form-control"><i class="fas fa-file-excel"></i> Import</button>
 							</form>
 							<?php
 								if ($GetClientID->num_rows() > 0) {
@@ -43,13 +43,13 @@
 							    <input type="text" class="form-control" name="f_date" readonly hidden value="<?php echo $FirstDate?>">
 							    <input type="text" class="form-control" name="t_date" readonly hidden value="<?php echo $LastDate?>">
 							    <input type="text" class="form-control" name="ExportFileName" readonly hidden value="<?php echo $ClientName . ' (' . $FirstDate . ' - ' . $LastDate . ')' ?>">
-							    <button id="ImportButton" type="submit" class="btn btn-success form-control"><i class="fas fa-file-download"></i> Download Excel</button>
+							    <button id="ImportButton" type="submit" class="btn btn-success btn-sm form-control"><i class="fas fa-file-download"></i> Download Excel</button>
 						  	</form>
 						  </div>
 						<!-- <div id="datatables-export"></div> -->
 					</div>
 					<div class="col-4 mb-2 text-right">
-						<button id="ImportButton" type="button" class="btn btn-secondary"><i class="fas fa-lock"></i> Generate Payslip (WIP)</button>
+						<button id="ImportButton" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-lock"></i> Generate Payslip (WIP)</button>
 					</div>
 					<div class="col-sm-12 col-mb-12">
 						<div class="table-responsive w-100">
@@ -61,8 +61,8 @@
 									<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
 										<th><?php echo $row['Time']; ?></th>
 									<?php endforeach; ?>
-									<th style="min-width: 75px;">Reg. Hrs</th>
-									<th style="min-width: 75px;">Total OT Hrs</th>
+									<th style="min-width: 50px;">Reg. Hrs</th>
+									<th style="min-width: 50px;">OT Hrs</th>
 								</thead>
 								<tbody>
 									<?php foreach ($GetWeeklyListEmployee->result_array() as $row):

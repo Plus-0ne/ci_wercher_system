@@ -261,15 +261,15 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
-	public function GetDocuments($ApplicantID)
+	public function GetDocuments($ApplicantID, $ClientID)
 	{
-		$SQL = "SELECT * FROM supp_documents WHERE ApplicantID = '$ApplicantID' AND Type = 'Document'";
+		$SQL = "SELECT * FROM supp_documents WHERE ApplicantID = '$ApplicantID' AND Type = 'Document' AND ClientID = '$ClientID'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function GetDocumentsViolations($ApplicantID) // Also includes Blacklists.
+	public function GetDocumentsViolations($ApplicantID, $ClientID) // Also includes Blacklists.
 	{
-		$SQL = "SELECT * FROM supp_documents WHERE ApplicantID = '$ApplicantID' AND (Type = 'Violation' OR Type = 'Blacklist')";
+		$SQL = "SELECT * FROM supp_documents WHERE ApplicantID = '$ApplicantID' AND (Type = 'Violation' OR Type = 'Blacklist') AND ClientID = '$ClientID'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
