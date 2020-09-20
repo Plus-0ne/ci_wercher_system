@@ -45,6 +45,10 @@
 												</td>
 												<td class="text-center align-middle PrintExclude">
 													<?php
+														$HistoryFrom = $row['PreviousDateStarted'];
+														$HistoryFrom = new DateTime($HistoryFrom);
+														$HistoryTo = $row['PreviousDateEnds'];
+														$HistoryTo = new DateTime($HistoryTo);
 														$GetClientIDFromName = $this->Model_Selects->GetClientIDFromName($row['Client']);
 														if ($GetClientIDFromName->num_rows() > 0):
 															foreach($GetClientIDFromName->result_array() as $nrow):
@@ -53,8 +57,13 @@
 														else:
 															$ClientID = '0'; // default
 														endif;
+														$GetDocumentsViolationsFromClient = $this->Model_Selects->GetDocumentsViolationsFromClient($ApplicantID, $ClientID, $HistoryFrom->format('Y-m-d'), $HistoryTo->format('Y-m-d'));
 													?>
-													<a href="<?=base_url();?>ViewEmployee?id=<?=$row['ApplicantID'];?>&v_client=<?=$ClientID?>#Contract" class="btn btn-sm btn-danger PrintExclude"><i class="far fa-eye"></i> View (<?=$GetClientIDFromName->num_rows();?>)</a>
+													<?php if($GetDocumentsViolationsFromClient->num_rows() > 0): ?>
+													<a href="<?=base_url();?>ViewEmployee?id=<?=$row['ApplicantID'];?>&v_client=<?=$ClientID?>&from=<?=$HistoryFrom->format('Y-m-d');?>&to=<?=$HistoryTo->format('Y-m-d');?>#Contract" class="btn btn-sm btn-danger PrintExclude"><i class="far fa-eye"></i> View (<?=$GetDocumentsViolationsFromClient->num_rows();?>)</a>
+													<?php else: ?>
+													<a href="<?=base_url();?>ViewEmployee?id=<?=$row['ApplicantID'];?>&v_client=<?=$ClientID?>&from=<?=$HistoryFrom->format('Y-m-d');?>&to=<?=$HistoryTo->format('Y-m-d');?>#Contract" class="PrintExclude" style="color: green;"><i class="fas fa-check"></i> None</a>
+													<?php endif; ?>
 												</td>
 											</tr>
 										<?php endforeach ?>
@@ -63,11 +72,17 @@
 							</div>
 						</div>
 					</div>
-					<?php if(!empty($_GET['v_client'])): ?>
+					<?php if(!empty($_GET['v_client']) && !empty($_GET['from']) && !empty($_GET['to'])): ?>
 					<?php
 						$ClientLookup = $_GET['v_client'];
-						$GetDocumentsViolationsFromClient = $this->Model_Selects->GetDocumentsViolations($ApplicantID, $ClientLookup);
+						$HistoryFrom = $_GET['from'];
+						$HistoryTo = $_GET['to'];
+						$GetDocumentsViolationsFromClient = $this->Model_Selects->GetDocumentsViolationsFromClient($ApplicantID, $ClientLookup, $HistoryFrom, $HistoryTo);
 						$GetClientID = $this->Model_Selects->GetClientID($ClientLookup);
+						$HistoryFrom = new DateTime($HistoryFrom);
+						$HistoryFrom = $HistoryFrom->format('F d, Y');
+						$HistoryTo = new DateTime($HistoryTo);
+						$HistoryTo = $HistoryTo->format('F d, Y');
 						if ($GetClientID->num_rows() > 0):
 							foreach($GetClientID->result_array() as $row):
 								$ClientName = $row['Name'];
@@ -79,7 +94,7 @@
 					<hr>
 					<div class="row ml-2">
 						<div class="col-sm-12">
-							<i class="fas fa-folder-open"></i> <?php echo $ClientName; ?>'s Violations (<?php echo $GetDocumentsViolationsFromClient->num_rows(); ?>)
+							<i class="fas fa-folder-open"></i> <?php echo $ClientName; ?>'s Violations (<?php echo $GetDocumentsViolationsFromClient->num_rows(); ?>) between <?php echo $HistoryFrom; ?> and <?php echo $HistoryTo; ?>
 						</div>
 						<div class="col-sm-12 mt-4 ml-5">
 						<?php if ($GetDocumentsViolationsFromClient->num_rows() > 0) { ?>

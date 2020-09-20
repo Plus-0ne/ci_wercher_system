@@ -350,22 +350,16 @@ class Update_Controller extends CI_Controller {
 		$PhoneNumber = $this->input->post('PhoneNumber');
 		# DOCUMENTS
 		$SSS = $this->input->post('SSS');
-		$SSS_Effective = $this->input->post('SSS_Effective');
 		$RCN = $this->input->post('RCN');
-		$RCN_at = $this->input->post('RCN_at');
-		$RCN_On = $this->input->post('RCN_On');
 		$TIN = $this->input->post('TIN');
-		$TIN_At = $this->input->post('TIN_At');
-		$TIN_On = $this->input->post('TIN_On');
-
 		$HDMF = $this->input->post('HDMF');
-		$HDMF_At = $this->input->post('HDMF_At');
-		$HDMF_On = $this->input->post('HDMF_On');
-
 		$PhilHealth = $this->input->post('PhilHealth');
-		$PhilHealth_At = $this->input->post('PhilHealth_At');
-		$PhilHealth_On = $this->input->post('PhilHealth_On');
 		$ATM_No = $this->input->post('ATM_No');
+
+		$EmergencyPerson = $this->input->post('EmergencyPerson');
+		$EmergencyContact = $this->input->post('EmergencyContact');
+		$Referral = $this->input->post('Referral');
+		$NameExtension = $this->input->post('NameExtension');
 
 		# ADDRESSES
 		$Address_Present = $this->input->post('Address_Present');
@@ -394,23 +388,16 @@ class Update_Controller extends CI_Controller {
 				'No_Children' => $No_Children,
 				'PhoneNumber' => $PhoneNumber,
 				'SSS' => $SSS,
-				'SSS_Effective' => $SSS_Effective,
 				'RCN' => $RCN,
-				'RCN_at' => $RCN_at,
-				'RCN_On' => $RCN_On,
 				'TIN' => $TIN,
-				'TIN_At' => $TIN_At,
-				'TIN_On' => $TIN_On,
-
 				'HDMF' => $HDMF,
-				'HDMF_At' => $HDMF_At,
-				'HDMF_On' => $HDMF_On,
 				'ATM_No' => $ATM_No,
-
 				'PhilHealth' => $PhilHealth,
-				'PhilHealth_At' => $PhilHealth_At,
-				'PhilHealth_On' => $PhilHealth_On,
-				
+
+				'EmergencyPerson' => $EmergencyPerson,
+				'EmergencyContact' => $EmergencyContact,
+				'Referral' => $Referral,
+				'NameExtension' => $NameExtension,
 
 
 				'Address_Present' => $Address_Present,
@@ -449,22 +436,16 @@ class Update_Controller extends CI_Controller {
 						$prevPhoneNumber = $row['Phone_No'];
 						# DOCUMENTS
 						$prevSSS = $row['SSS_No'];
-						$prevSSS_Effective = $row['EffectiveDateCoverage'];
 						$prevRCN = $row['ResidenceCertificateNo'];
-						$prevRCN_at = $row['Rcn_At'];
-						$prevRCN_On = $row['Rcn_On'];
 						$prevTIN = $row['TIN'];
-						$prevTIN_At = $row['TIN_At'];
-						$prevTIN_On = $row['TIN_On'];
-
 						$prevHDMF = $row['HDMF'];
-						$prevHDMF_At = $row['HDMF_At'];
-						$prevHDMF_On = $row['HDMF_On'];
-
 						$prevPhilHealth = $row['PhilHealth'];
-						$prevPhilHealth_At = $row['PhilHealth_At'];
-						$prevPhilHealth_On = $row['PhilHealth_On'];
 						$prevATM_No = $row['ATM_No'];
+
+						$prevEmergencyPerson = $row['EmergencyPerson'];
+						$prevEmergencyContact = $row['EmergencyContact'];
+						$prevReferral = $row['Referral'];
+						$prevNameExtension = $row['NameExtension'];
 
 						# ADDRESSES
 						$prevAddress_Present = $row['Address_Present'];
@@ -495,22 +476,16 @@ class Update_Controller extends CI_Controller {
 					$prevPhoneNumber = 'N/A';
 					# DOCUMENTS
 					$prevSSS = 'N/A';
-					$prevSSS_Effective = 'N/A';
 					$prevRCN = 'N/A';
-					$prevRCN_at = 'N/A';
-					$prevRCN_On = 'N/A';
 					$prevTIN = 'N/A';
-					$prevTIN_At = 'N/A';
-					$prevTIN_On = 'N/A';
-
 					$prevHDMF = 'N/A';
-					$prevHDMF_At = 'N/A';
-					$prevHDMF_On = 'N/A';
-
 					$prevPhilHealth = 'N/A';
-					$prevPhilHealth_At = 'N/A';
-					$prevPhilHealth_On = 'N/A';
 					$prevATM_No = 'N/A';
+
+					$prevEmergencyPerson = 'N/A';
+					$prevEmergencyContact = 'N/A';
+					$prevReferral = 'N/A';
+					$prevNameExtension = 'N/A';
 
 					# ADDRESSES
 					$prevAddress_Present = 'N/A';
@@ -576,22 +551,16 @@ class Update_Controller extends CI_Controller {
 					'Phone_No' => $PhoneNumber,
 
 					'SSS_No' => $SSS,
-					'EffectiveDateCoverage' => $SSS_Effective,
 					'ResidenceCertificateNo' => $RCN,
-					'Rcn_At' => $RCN_at,
-					'Rcn_On' => $RCN_On,
 					'TIN' => $TIN,
-					'TIN_At' => $TIN_At,
-					'TIN_On' => $TIN_On,
-					
 					'HDMF' => $HDMF,
-					'HDMF_At' => $HDMF_At,
-					'HDMF_On' => $HDMF_On,
 					'ATM_No' => $ATM_No,
-
 					'PhilHealth' => $PhilHealth,
-					'PhilHealth_At' => $PhilHealth_At,
-					'PhilHealth_On' => $PhilHealth_On,
+
+					'EmergencyPerson' => $EmergencyPerson,
+					'EmergencyContact' => $EmergencyContact,
+					'Referral' => $Referral,
+					'NameExtension' => $NameExtension,
 				);
 				$addedEmployee = $this->Model_Updates->UpdateEmployee($ApplicantID, $data);
 				if ($addedEmployee == TRUE) {
@@ -754,70 +723,86 @@ class Update_Controller extends CI_Controller {
 						$this->Model_Logbook->LogbookExtendedEntry(0, 'SSS number changed from <b>' . $prevSSS . '</b> to <b>' . $SSS . '</b>', +1);
 						$changesCounter++;
 					}
-					$SSS_EffectiveReadable = (new DateTime(date($SSS_Effective)))->format('F d, Y');
-					$prevSSS_EffectiveReadable = (new DateTime(date($prevSSS_Effective)))->format('F d, Y');
-					if ($SSS_Effective != $prevSSS_Effective) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'SSS effective date of coverage changed from <b>' . $prevSSS_EffectiveReadable . '</b> to <b>' . $SSS_EffectiveReadable . '</b>', +1);
-						$changesCounter++;
-					}
+					// $SSS_EffectiveReadable = (new DateTime(date($SSS_Effective)))->format('F d, Y');
+					// $prevSSS_EffectiveReadable = (new DateTime(date($prevSSS_Effective)))->format('F d, Y');
+					// if ($SSS_Effective != $prevSSS_Effective) {
+					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'SSS effective date of coverage changed from <b>' . $prevSSS_EffectiveReadable . '</b> to <b>' . $SSS_EffectiveReadable . '</b>', +1);
+					// 	$changesCounter++;
+					// }
 					if ($RCN != $prevRCN) {
 						$this->Model_Logbook->LogbookExtendedEntry(0, 'RCN number changed from <b>' . $prevRCN . '</b> to <b>' . $RCN . '</b>', +1);
 						$changesCounter++;
 					}
-					if ($RCN_at != $prevRCN_at) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'RCN location changed from <b>' . $prevRCN_at . '</b> to <b>' . $RCN_at . '</b>', +1);
-						$changesCounter++;
-					}
-					$RCN_OnReadable = (new DateTime(date($RCN_On)))->format('F d, Y');
-					$prevRCN_OnReadable = (new DateTime(date($prevRCN_On)))->format('F d, Y');
-					if ($RCN_On != $prevRCN_On) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'RCN date changed from <b>' . $prevRCN_OnReadable . '</b> to <b>' . $RCN_OnReadable . '</b>', +1);
-						$changesCounter++;
-					}
+					// if ($RCN_at != $prevRCN_at) {
+					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'RCN location changed from <b>' . $prevRCN_at . '</b> to <b>' . $RCN_at . '</b>', +1);
+					// 	$changesCounter++;
+					// }
+					// $RCN_OnReadable = (new DateTime(date($RCN_On)))->format('F d, Y');
+					// $prevRCN_OnReadable = (new DateTime(date($prevRCN_On)))->format('F d, Y');
+					// if ($RCN_On != $prevRCN_On) {
+					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'RCN date changed from <b>' . $prevRCN_OnReadable . '</b> to <b>' . $RCN_OnReadable . '</b>', +1);
+					// 	$changesCounter++;
+					// }
 					if ($TIN != $prevTIN) {
 						$this->Model_Logbook->LogbookExtendedEntry(0, 'TIN number changed from <b>' . $prevTIN . '</b> to <b>' . $TIN . '</b>', +1);
 						$changesCounter++;
 					}
-					if ($TIN_At != $prevTIN_At) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'TIN location changed from <b>' . $prevTIN_At . '</b> to <b>' . $TIN_At . '</b>', +1);
-						$changesCounter++;
-					}
-					$TIN_OnReadable = (new DateTime(date($TIN_On)))->format('F d, Y');
-					$prevTIN_OnReadable = (new DateTime(date($prevTIN_On)))->format('F d, Y');
-					if ($TIN_On != $prevTIN_On) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'TIN date changed from <b>' . $prevTIN_OnReadable . '</b> to <b>' . $TIN_OnReadable . '</b>', +1);
-						$changesCounter++;
-					}
+					// if ($TIN_At != $prevTIN_At) {
+					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'TIN location changed from <b>' . $prevTIN_At . '</b> to <b>' . $TIN_At . '</b>', +1);
+					// 	$changesCounter++;
+					// }
+					// $TIN_OnReadable = (new DateTime(date($TIN_On)))->format('F d, Y');
+					// $prevTIN_OnReadable = (new DateTime(date($prevTIN_On)))->format('F d, Y');
+					// if ($TIN_On != $prevTIN_On) {
+					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'TIN date changed from <b>' . $prevTIN_OnReadable . '</b> to <b>' . $TIN_OnReadable . '</b>', +1);
+					// 	$changesCounter++;
+					// }
 					if ($HDMF != $prevHDMF) {
 						$this->Model_Logbook->LogbookExtendedEntry(0, 'HDMF number changed from <b>' . $prevHDMF . '</b> to <b>' . $HDMF . '</b>', +1);
 						$changesCounter++;
 					}
-					if ($HDMF_At != $prevHDMF_At) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'HDMF location changed from <b>' . $prevHDMF_At . '</b> to <b>' . $HDMF_At . '</b>', +1);
-						$changesCounter++;
-					}
-					$HDMF_OnReadable = (new DateTime(date($HDMF_On)))->format('F d, Y');
-					$prevHDMF_OnReadable = (new DateTime(date($prevHDMF_On)))->format('F d, Y');
-					if ($HDMF_On != $prevHDMF_On) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'HDMF date changed from <b>' . $prevHDMF_OnReadable . '</b> to <b>' . $HDMF_OnReadable . '</b>', +1);
-						$changesCounter++;
-					}
+					// if ($HDMF_At != $prevHDMF_At) {
+					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'HDMF location changed from <b>' . $prevHDMF_At . '</b> to <b>' . $HDMF_At . '</b>', +1);
+					// 	$changesCounter++;
+					// }
+					// $HDMF_OnReadable = (new DateTime(date($HDMF_On)))->format('F d, Y');
+					// $prevHDMF_OnReadable = (new DateTime(date($prevHDMF_On)))->format('F d, Y');
+					// if ($HDMF_On != $prevHDMF_On) {
+					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'HDMF date changed from <b>' . $prevHDMF_OnReadable . '</b> to <b>' . $HDMF_OnReadable . '</b>', +1);
+					// 	$changesCounter++;
+					// }
 					if ($PhilHealth != $prevPhilHealth) {
 						$this->Model_Logbook->LogbookExtendedEntry(0, 'PhilHealth number changed from <b>' . $prevPhilHealth . '</b> to <b>' . $PhilHealth . '</b>', +1);
 						$changesCounter++;
 					}
-					if ($PhilHealth_At != $prevPhilHealth_At) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'PhilHealth location changed from <b>' . $prevPhilHealth_At . '</b> to <b>' . $PhilHealth_At . '</b>', +1);
-						$changesCounter++;
-					}
-					$PhilHealth_OnReadable = (new DateTime(date($PhilHealth_On)))->format('F d, Y');
-					$prevPhilHealth_OnReadable = (new DateTime(date($prevPhilHealth_On)))->format('F d, Y');
-					if ($PhilHealth_On != $prevPhilHealth_On) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'PhilHealth date changed from <b>' . $prevPhilHealth_OnReadable . '</b> to <b>' . $PhilHealth_OnReadable . '</b>', +1);
-						$changesCounter++;
-					}
+					// if ($PhilHealth_At != $prevPhilHealth_At) {
+					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'PhilHealth location changed from <b>' . $prevPhilHealth_At . '</b> to <b>' . $PhilHealth_At . '</b>', +1);
+					// 	$changesCounter++;
+					// }
+					// $PhilHealth_OnReadable = (new DateTime(date($PhilHealth_On)))->format('F d, Y');
+					// $prevPhilHealth_OnReadable = (new DateTime(date($prevPhilHealth_On)))->format('F d, Y');
+					// if ($PhilHealth_On != $prevPhilHealth_On) {
+					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'PhilHealth date changed from <b>' . $prevPhilHealth_OnReadable . '</b> to <b>' . $PhilHealth_OnReadable . '</b>', +1);
+					// 	$changesCounter++;
+					// }
 					if ($ATM_No != $prevATM_No) {
 						$this->Model_Logbook->LogbookExtendedEntry(0, 'ATM number changed from <b>' . $prevATM_No . '</b> to <b>' . $ATM_No . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($EmergencyPerson != $prevEmergencyPerson) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Person to notify in case of emergyency changed from <b>' . $prevEmergencyPerson . '</b> to <b>' . $EmergencyPerson . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($EmergencyContact != $EmergencyContact) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Emergency contact number changed from <b>' . $EmergencyContact . '</b> to <b>' . $EmergencyContact . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($Referral != $prevReferral) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Source of application (Referral) changed from <b>' . $prevReferral . '</b> to <b>' . $Referral . '</b>', +1);
+						$changesCounter++;
+					}
+					if ($NameExtension != $prevNameExtension) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, 'Name extension changed from <b>' . $prevNameExtension . '</b> to <b>' . $NameExtension . '</b>', +1);
 						$changesCounter++;
 					}
 					if ($Address_Present != $prevAddress_Present) {

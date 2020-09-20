@@ -273,6 +273,12 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetDocumentsViolationsFromClient($ApplicantID, $ClientID, $HistoryFrom, $HistoryTo) // Also includes Blacklists.
+	{
+		$SQL = "SELECT * FROM supp_documents WHERE ApplicantID = '$ApplicantID' AND (Type = 'Violation' OR Type = 'Blacklist') AND ClientID = '$ClientID' AND (DateAdded BETWEEN '$HistoryFrom' AND '$HistoryTo')";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function GetWeeklyHours($ClientID, $Time) // Argument is $id originally from source.
 	{
 		$SQL = "SELECT * FROM dummy_hours, hours_weekly WHERE hours_weekly.ClientID = '$ClientID' AND dummy_hours.Time = hours_weekly.Time";

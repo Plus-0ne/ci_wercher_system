@@ -10,99 +10,84 @@
 						<div class="p-5">
 							<?php echo $this->session->flashdata('prompts'); ?>
 							<div class="mb-3">
-								<h5>
-									<i class="fas fa-user-alt"></i> Personal Information
-								</h5>
+								<h6>
+									<i class="fas fa-square"></i> PERSONAL
+								</h6>
 							</div>
 							<!-- Start form -->
 							<form action="<?=base_url()?>UpdateEmployee" method="POST" enctype="multipart/form-data">
-								<input type="hidden" name="M_ApplicantID" value="<?php echo $ApplicantID; ?>"> 
-								<input type="hidden" name="M_ApplicantImage" value="<?php echo $ApplicantImage; ?>"> 
+								<input id="CreateADuplicateField" type="hidden" name="CreateADuplicate">
+								<input id="pImageChecker" type="hidden" name="pImageChecker">
 								<div class="form-row mb-2">
-									<div class="form-group col-sm-12 image-holder">
-										<?php if($this->agent->is_mobile()): ?>
-											<p>
-												Tap the image to change
-											</p>
-										<?php endif; ?>
-										<input type='file' id="imgInp" name="pImage" style="display: none;">
-										<img class="image-hover" id="blah" src="<?php echo $ApplicantImage; ?>" width="120" height="120">
-										<?php if(!$this->agent->is_mobile()): ?>
-											<img class="image-text image-hidden" src="<?php echo base_url(); ?>assets/img/wercher_change_photo.png" width="120" height="120">
-										<?php endif; ?>
-									</div>
+									
 								</div>
 								<div class="form-row">
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Position Desired</label>
-										<input class="form-control" type="text" name="PositionDesired" autocomplete="off" value="<?php echo $PositionDesired; ?>">
+									<div class="form-group col-sm-12 col-md-8">
+										<div class="form-row">
+											<div class="form-group col-sm-12 col-md-5">
+												<label>Last Name</label>
+												<input class="form-control" type="text" name="LastName" autocomplete="off" value="<?php echo $LastName; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-5">
+												<label>First Name</label>
+												<input class="form-control" type="text" name="FirstName" autocomplete="off" value="<?php echo $FirstName; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-2">
+												<label>Middle&nbsp;Initial</label>
+												<input class="form-control" type="text" name="MI" autocomplete="off" value="<?php echo $MiddleInitial; ?>" maxlength="1">
+											</div>
+											<div class="form-group col-sm-12 col-md-3">
+												<label>Name Extension</label>
+												<input class="form-control" type="text" name="NameExtension" autocomplete="off" value="<?php echo $NameExtension; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-2">
+												<label>Sex</label>
+												<select class="form-control" name="Gender">
+													<option value="Male" <?php if ($Gender == 'Male') {
+														echo 'selected=""';
+													} ?>>
+														Male
+													</option>
+													<option value="Female" <?php if ($Gender == 'Female') {
+														echo 'selected=""';
+													} ?>>
+														Female
+													</option>
+												</select>
+											</div>
+											<div class="form-group col-sm-12 col-md-2">
+												<label>Height</label>
+												<input class="form-control" type="text" name="Height" autocomplete="off" value="<?php echo $Height; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-2">
+												<label>Weight</label>
+												<input class="form-control" type="text" name="Weight" autocomplete="off" value="<?php echo $Weight; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-3">
+												<label>Religion</label>
+												<input class="form-control" type="text" name="Religion" autocomplete="off" value="<?php echo $Religion; ?>">
+											</div>
+										</div>
 									</div>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Position Group</label>
-										<input class="form-control" type="text" name="PositionGroup" autocomplete="off" value="<?php echo $PositionGroup; ?>">
-									</div>
-									<?php if($Status == 'Employed'): ?>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Salary</label>
-										<input class="form-control" type="text" name="SalaryExpected" autocomplete="off" value="<?php echo $SalaryExpected; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Employee ID</label>
-										<input class="form-control" type="text" name="EmployeeID" autocomplete="off" value="<?php echo $EmployeeID; ?>">
-									</div>
-									<?php endif; ?>
-								</div>
-								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-4">
-										<label>Last Name</label>
-										<input class="form-control" type="text" name="LastName" autocomplete="off" value="<?php echo $LastName; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-4">
-										<label>First Name</label>
-										<input class="form-control" type="text" name="FirstName" autocomplete="off" value="<?php echo $FirstName; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Middle Initial</label>
-										<input class="form-control" type="text" name="MI" autocomplete="off" value="<?php echo $MiddleInitial; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Gender</label>
-										<select class="form-control" name="Gender">
-											<option value="Male" <?php if ($Gender == 'Male') {
-												echo 'selected=""';
-											} ?>>
-												Male
-											</option>
-											<option value="Female" <?php if ($Gender == 'Female') {
-												echo 'selected=""';
-											} ?>>
-												Female
-											</option>
-										</select>
+										<div class="form-group col-sm-12 text-center image-holder">
+											<input type="hidden" name="M_ApplicantID" value="<?php echo $ApplicantID; ?>"> 
+											<input type="hidden" name="M_ApplicantImage" value="<?php echo $ApplicantImage; ?>"> 
+											<input type='file' id="imgInp" name="pImage" style="display: none;">
+											<img class="image-hover" id="blah" src="<?php echo $ApplicantImage; ?>" width="192" height="192">
+										</div>
 									</div>
 								</div>
 								<div class="form-row">
-									<div class="form-group col-sm-12 col-md-1">
-										<label>Age</label>
-										<input class="form-control" type="number" name="Age" autocomplete="off" value="<?php echo $Age; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-1">
-										<label>Height</label>
-										<input class="form-control" type="text" name="Height" autocomplete="off" value="<?php echo $Height; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-1">
-										<label>Weight</label>
-										<input class="form-control" type="text" name="Weight" autocomplete="off" value="<?php echo $Weight; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Religion</label>
-										<input class="form-control" type="text" name="Religion" autocomplete="off" value="<?php echo $Religion; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-2">
+									<div class="form-group col-sm-10 col-md-2">
 										<label>Birth Date</label>
-										<input class="form-control" type="date" name="bDate" value="<?php echo $BirthDate; ?>">
+										<input id="BirthDate" class="form-control" type="date" name="bDate" value="<?php echo $BirthDate; ?>">
 									</div>
-									<div class="form-group col-sm-12 col-md-5">
+									<div class="form-group col-sm-2 col-md-1">
+										<label>Age</label>
+										<input id="Age" class="form-control" type="text" value="<?php echo $Age; ?>" readonly>
+									</div>
+									<div class="form-group col-sm-12 col-md-9">
 										<label>Birth Place</label>
 										<input class="form-control" type="text" name="bPlace" autocomplete="off" value="<?php echo $BirthPlace; ?>">
 									</div>
@@ -142,91 +127,110 @@
 										<input class="form-control" type="number" name="No_Children" autocomplete="off" value="<?php echo $No_OfChildren; ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-4">
-										<label>Phone Number</label>
+										<label>Contact Number</label>
 										<input class="form-control" type="text" name="PhoneNumber" autocomplete="off" value="<?php echo $Phone_No; ?>">
 									</div>
 								</div>
 								<div class="mt-5 mb-4">
-									<h5>
-										<i class="fas fa-user-alt"></i> Documents
-									</h5>
+									<h6>
+										<i class="fas fa-square"></i> WORK
+									</h6>
 								</div>
 								<div class="form-row">
-									<div class="form-group col-sm-12 col-lg-3">
-										<label>S.S.S. #</label>
-										<input class="form-control" type="text" name="SSS" autocomplete="off" value="<?php echo $SSS_No; ?>">
+									<div class="form-group col-sm-12 col-md-8">
+										<div class="form-row">
+											<div class="form-group col-sm-12 col-md-6">
+												<label>Employee ID</label>
+												<input class="form-control" type="text" name="EmployeeID" autocomplete="off" value="<?php echo $EmployeeID; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-6">
+												<label>Salary Expected</label>
+												<input class="form-control" type="text" name="SalaryExpected" autocomplete="off" value="<?php echo $SalaryExpected; ?>">
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col-sm-12 col-md-6">
+												<label>Position Desired</label>
+												<input class="form-control" type="text" name="PositionDesired" autocomplete="off" value="<?php echo $PositionDesired; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-6">
+												<label>Position Group</label>
+												<input class="form-control" type="text" name="PositionGroup" autocomplete="off" value="<?php echo $PositionGroup; ?>">
+											</div>
+										</div>
+										<hr>
+										<div class="form-row">
+											<div class="form-group col-sm-12 col-lg-6">
+												<label id="SSS_Text">S.S.S. No.</label>
+												<input id="SSS" class="form-control" type="text" name="SSS" autocomplete="off" value="<?php echo $SSS_No; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-lg-6">
+												<label id="HDMF_Text">HDMF</label>
+												<input id="HDMF" class="form-control" type="text" name="HDMF" autocomplete="off" value="<?php echo $HDMF; ?>">
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col-sm-12 col-lg-6">
+												<label id="RCN_Text">Residence Certificate No.</label>
+												<input id="RCN" class="form-control" type="text" name="RCN" autocomplete="off" value="<?php echo $ResidenceCertificateNo; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-lg-6">
+												<label id="PhilHealth_Text">PHILHEALTH</label>
+												<input id="PhilHealth" class="form-control" type="text" name="PhilHealth" autocomplete="off" value="<?php echo $PhilHealth; ?>">
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col-sm-12 col-lg-6">
+												<label id="TIN_Text">Tax Identification No.</label>
+												<input id="TIN" class="form-control" type="text" name="TIN" autocomplete="off" value="<?php echo $TIN; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-lg-6">
+												<label id="ATM_Text">ATM No.</label>
+												<input id="ATM" class="form-control" type="text" name="ATM_No" autocomplete="off" value="<?php echo $ATM_No; ?>">
+											</div>
+										</div>
 									</div>
-									<div class="form-group col-sm-12 col-lg-2">
-										<label>Effective Date of Coverage</label>
-										<input class="form-control" type="date" name="SSS_Effective" value="<?php echo $EffectiveDateCoverage; ?>">
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-group col-sm-12 col-lg-3">
-										<label>Residence Certificate No.</label>
-										<input class="form-control" type="text" name="RCN" autocomplete="off" value="<?php echo $ResidenceCertificateNo; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-lg-7">
-										<label>Issued At</label>
-										<input class="form-control" type="text" name="RCN_at" autocomplete="off" value="<?php echo $Rcn_At; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-lg-2">
-										<label>On</label>
-										<input class="form-control" type="date" name="RCN_On" value="<?php echo $Rcn_On; ?>">
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-group col-sm-12 col-lg-3">
-										<label>Tax Identification No.</label>
-										<input class="form-control" type="text" name="TIN" autocomplete="off" value="<?php echo $TIN; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-lg-7">
-										<label>Issued At</label>
-										<input class="form-control" type="text" name="TIN_At" autocomplete="off" value="<?php echo $TIN_At; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-lg-2">
-										<label>On</label>
-										<input class="form-control" type="date" name="TIN_On" value="<?php echo $TIN_On; ?>">
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-group col-sm-12 col-lg-3">
-										<label>HDMF</label>
-										<input class="form-control" type="text" name="HDMF" autocomplete="off" value="<?php echo $HDMF; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-lg-7">
-										<label>Issued At</label>
-										<input class="form-control" type="text" name="HDMF_At" autocomplete="off" value="<?php echo $HDMF_At; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-lg-2">
-										<label>On</label>
-										<input class="form-control" type="date" name="HDMF_On" value="<?php echo $HDMF_On; ?>">
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-group col-sm-12 col-lg-3">
-										<label>PHILHEALTH</label>
-										<input class="form-control" type="text" name="PhilHealth" autocomplete="off" value="<?php echo $PhilHealth; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-lg-7">
-										<label>Issued At</label>
-										<input class="form-control" type="text" name="PhilHealth_At" autocomplete="off" value="<?php echo $PhilHealth_At; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-lg-2">
-										<label>On</label>
-										<input class="form-control" type="date" name="PhilHealth_On" value="<?php echo $PhilHealth_On; ?>">
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-group col-sm-12 col-lg-3">
-										<label>ATM #</label>
-										<input class="form-control" type="text" name="ATM_No" autocomplete="off" value="<?php echo $ATM_No; ?>">
+									<div class="form-group col-sm-12 col-md-4">
+										<b>Source of Application / Referral</b>
+										<input id="Referral" type="hidden" name="Referral" value="<?php echo $Referral; ?>">
+										<div class="form-row col-sm-12 mt-2">
+											<div class="form-group col-sm-3 col-md-3">
+												<button id="ReferralWalkIn" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+											</div>
+											<div class="form-group col-sm-9 col-md-9" style="margin-top: 5px;">
+												Walk In
+											</div>
+										</div>
+										<div class="form-row col-sm-12">
+											<div class="form-group col-sm-3 col-md-3">
+												<button id="ReferralJobFair" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+											</div>
+											<div class="form-group col-sm-9 col-md-9" style="margin-top: 5px;">
+												Job Fair
+											</div>
+										</div>
+										<div class="form-row col-sm-12">
+											<div class="form-group col-sm-3 col-md-3">
+												<button id="ReferralSocialMedia" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+											</div>
+											<div class="form-group col-sm-9 col-md-9" style="margin-top: 5px;">
+												Social Media
+											</div>
+										</div>
+										<div class="form-row col-sm-12">
+											<div class="form-group col-sm-12 col-md-12">
+												Or others, please specify:
+											</div>
+											<div class="form-group col-sm-12 col-md-12" style="margin-top: 5px;">
+												<input id="ReferralOthers" class="form-control" type="text" name="ReferralOthers" autocomplete="off" value="<?php echo $Referral; ?>">
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="mt-5 mb-4">
-									<h5>
-										<i class="fas fa-user-alt"></i> Addresses
-									</h5>
+									<h6>
+										<i class="fas fa-square"></i> ADDRESS
+									</h6>
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-4">
@@ -242,9 +246,28 @@
 										<input class="form-control" type="text" name="Address_Manila" autocomplete="off" value="<?php echo $Address_Manila; ?>">
 									</div>
 								</div>
-								<div id="Academic_History" class="form-row pb-5 pt-5">
+								<div class="form-row">
+									<div class="form-group col-sm-7 col-md-7">
+										<label>Person to notify in case of emergency</label>
+										<input class="form-control" type="text" name="EmergencyPerson" autocomplete="off" value="<?php echo $Address_Present; ?>">
+									</div>
+									<div class="form-group col-sm-1 col-md-1 text-center">
+										<p><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></p>
+										<p><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></p>
+									</div>
+									<div class="form-group col-sm-4 col-md-4">
+										<label>Contact Number</label>
+										<input class="form-control" type="text" name="EmergencyContact" autocomplete="off" value="<?php echo $Address_Provincial; ?>">
+									</div>
+								</div>
+								<div class="mt-5">
+									<h6>
+										<i class="fas fa-square"></i> RECORDS
+									</h6>
+								</div>
+								<div class="form-row pb-5 pt-5">
 									<div class="pb-3">
-										<h5><i class="fas fa-stream"></i> Academic History</h5>
+										<h5>Academic History</h5>
 									</div>
 									<div class="col-sm-12">
 										<div class="table-responsive">
@@ -290,9 +313,9 @@
 										
 									</div>
 								</div>
-								<div id="Employment_Record" class="form-row pb-5">
+								<div class="form-row pb-5">
 									<div class="pb-3">
-										<h5><i class="fas fa-stream"></i> Employment Record</h5>
+										<h5>Employment Record </h5>
 									</div>
 									<div class="col-sm-12">
 										<div class="table-responsive">
@@ -338,9 +361,9 @@
 										
 									</div>
 								</div>
-								<div id="Machine_Operated" class="form-row pb-5">
+								<div class="form-row pb-5">
 									<div class="pb-3">
-										<h5><i class="fas fa-stream"></i> Machine Operated</h5>
+										<h5>Machine Operated </h5>
 									</div>
 									<div class="col-sm-12">
 										<div class="table-responsive">
@@ -378,7 +401,7 @@
 									</div>
 								</div>
 								<hr>
-								<div class="form-row pt-5 pb-4">
+								<div class="form-row pt-5 pb-4 save-button-bg">
 									<div class="form-group mr-auto">
 										<button class="btn btn-success btn-lg" type="submit"><i class="fas fa-save"></i> Save</button>
 									</div>
@@ -559,6 +582,102 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		var SSS_List = [];
+		var HDMF_List = [];
+		var RCN_List = [];
+		var PhilHealth_List = [];
+		var TIN_List = [];
+		var ATM_List = [];
+		<?php foreach($this->Model_Selects->GetAllApplicants()->result_array() as $row): ?>
+			SSS_List.push("<?php echo $row['SSS_No']; ?>");
+			HDMF_List.push("<?php echo $row['HDMF']; ?>");
+			RCN_List.push("<?php echo $row['ResidenceCertificateNo']; ?>");
+			PhilHealth_List.push("<?php echo $row['PhilHealth']; ?>");
+			TIN_List.push("<?php echo $row['TIN']; ?>");
+			ATM_List.push("<?php echo $row['ATM_No']; ?>");
+		<?php endforeach; ?>
+		$('#SSS').bind("input", function () {
+			if(SSS_List.includes($('#SSS').val())) {
+				$('#SSS_Text').html('S.S.S. No. <i class="fas fa-times" style="color: red;"></i>')
+			} else {
+				$('#SSS_Text').html('S.S.S. No. <i class="fas fa-check" style="color: green;"></i>')
+			}
+		});
+		$('#HDMF').bind("input", function () {
+			if(HDMF_List.includes($('#HDMF').val())) {
+				$('#HDMF_Text').html('HDMF <i class="fas fa-times" style="color: red;"></i>')
+			} else {
+				$('#HDMF_Text').html('HDMF <i class="fas fa-check" style="color: green;"></i>')
+			}
+		});
+		$('#RCN').bind("input", function () {
+			if(RCN_List.includes($('#RCN').val())) {
+				$('#RCN_Text').html('Residence Certificate No. <i class="fas fa-times" style="color: red;"></i>')
+			} else {
+				$('#RCN_Text').html('Residence Certificate No. <i class="fas fa-check" style="color: green;"></i>')
+			}
+		});
+		$('#PhilHealth').bind("input", function () {
+			if(PhilHealth_List.includes($('#PhilHealth').val())) {
+				$('#PhilHealth_Text').html('PHILHEALTH <i class="fas fa-times" style="color: red;"></i>')
+			} else {
+				$('#PhilHealth_Text').html('PHILHEALTH <i class="fas fa-check" style="color: green;"></i>')
+			}
+		});
+		$('#TIN').bind("input", function () {
+			if(TIN_List.includes($('#TIN').val())) {
+				$('#TIN_Text').html('Tax Identification No. <i class="fas fa-times" style="color: red;"></i>')
+			} else {
+				$('#TIN_Text').html('Tax Identification No. <i class="fas fa-check" style="color: green;"></i>')
+			}
+		});
+		$('#ATM').bind("input", function () {
+			if(ATM_List.includes($('#ATM').val())) {
+				$('#ATM_Text').html('ATM No. <i class="fas fa-times" style="color: red;"></i>')
+			} else {
+				$('#ATM_Text').html('ATM No <i class="fas fa-check" style="color: green;"></i>')
+			}
+		});
+		$('.referral-btns').on('click', function () {
+			$('.referral-btns').addClass('btn-secondary');
+			$('.referral-btns').removeClass('btn-success');
+			$('.referral-btns').children('i').addClass('wercher-transparent');
+			$('.referral-btns').children('i').removeClass('wercher-visible');
+			$('#ReferralOthers').val('');
+		});
+		$('#ReferralWalkIn').on('click', function () {
+			$(this).addClass('btn-success');
+			$(this).children('i').addClass('wercher-visible');
+			$('#Referral').val('Walk In');
+		});
+		$('#ReferralJobFair').on('click', function () {
+			$(this).addClass('btn-success');
+			$(this).children('i').addClass('wercher-visible');
+			$('#Referral').val('Job Fair');
+		});
+		$('#ReferralSocialMedia').on('click', function () {
+			$(this).addClass('btn-success');
+			$(this).children('i').addClass('wercher-visible');
+			$('#Referral').val('Social Media');
+		});
+		$('#ReferralOthers').on('change', function () {
+			$('.referral-btns').addClass('btn-secondary');
+			$('.referral-btns').removeClass('btn-success');
+			$('.referral-btns').children('i').addClass('wercher-transparent');
+			$('.referral-btns').children('i').removeClass('wercher-visible');
+			$('#Referral').val($('#ReferralOthers').val());
+		});
+		var today = new Date();
+		$("#BirthDate").change(function(){
+
+		    var birthDate = new Date($('#BirthDate').val());
+		    var age = today.getFullYear() - birthDate.getFullYear();
+		    var m = today.getMonth() - birthDate.getMonth();
+		    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+		        age--;
+		    }
+		   $('#Age').val(age);
+		});
 		if (localStorage.getItem('SidebarVisible') == 'true') {
 			$('#sidebar').addClass('active');
 			$('.ncontent').addClass('shContent');

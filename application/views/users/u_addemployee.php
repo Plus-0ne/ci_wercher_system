@@ -119,7 +119,7 @@
 											</div>
 											<div class="form-group col-sm-12 col-md-3">
 												<label>Name Extension</label>
-												<input class="form-control" type="text" name="NameExtension" autocomplete="off" value="<?php echo $data['FirstName']; ?>">
+												<input class="form-control" type="text" name="NameExtension" autocomplete="off" value="<?php echo $data['NameExtension']; ?>">
 											</div>
 											<div class="form-group col-sm-12 col-md-2">
 												<label>Sex</label>
@@ -294,7 +294,7 @@
 												Or others, please specify:
 											</div>
 											<div class="form-group col-sm-12 col-md-12" style="margin-top: 5px;">
-												<input id="ReferralOthers" class="form-control" type="text" name="ReferralOthers" autocomplete="off" value="<?php echo $data['Address_Present']; ?>">
+												<input id="ReferralOthers" class="form-control" type="text" name="ReferralOthers" autocomplete="off" value="<?php echo $data['Referral']; ?>">
 											</div>
 										</div>
 									</div>
