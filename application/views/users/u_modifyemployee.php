@@ -138,9 +138,20 @@
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-8">
+										<?php if($Status == 'Employed'): ?>
+										<?php 
+											$GetClientID = $this->Model_Selects->GetClientID($ClientEmployed);
+											if ($GetClientID->num_rows() > 0):
+												foreach ($GetClientID->result_array() as $row):
+													$ClientName = $row['Name'];
+												endforeach;
+											else:
+												$ClientName = 'N/A';
+											endif;
+										?>
 										<div class="form-row">
 											<div class="form-group col-sm-12 col-md-6">
-												<label>Employee ID</label>
+												<label>Employee ID <i style="color: rgba(0, 0, 0, 0.5); font-size: 12px; margin-left: 10px;">(Employed to <?php echo $ClientName; ?>)</i></label>
 												<input class="form-control" type="text" name="EmployeeID" autocomplete="off" value="<?php echo $EmployeeID; ?>">
 											</div>
 											<div class="form-group col-sm-12 col-md-6">
@@ -148,6 +159,7 @@
 												<input class="form-control" type="text" name="SalaryExpected" autocomplete="off" value="<?php echo $SalaryExpected; ?>">
 											</div>
 										</div>
+										<?php endif; ?>
 										<div class="form-row">
 											<div class="form-group col-sm-12 col-md-6">
 												<label>Position Desired</label>
@@ -158,7 +170,7 @@
 												<input class="form-control" type="text" name="PositionGroup" autocomplete="off" value="<?php echo $PositionGroup; ?>">
 											</div>
 										</div>
-										<hr>
+										<?php if($Status == 'Employed'): echo '<hr>'; endif; ?>
 										<div class="form-row">
 											<div class="form-group col-sm-12 col-lg-6">
 												<label id="SSS_Text">S.S.S. No.</label>
@@ -195,7 +207,7 @@
 										<input id="Referral" type="hidden" name="Referral" value="<?php echo $Referral; ?>">
 										<div class="form-row col-sm-12 mt-2">
 											<div class="form-group col-sm-3 col-md-3">
-												<button id="ReferralWalkIn" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+												<button id="ReferralWalkIn" type="button" class="referral-btns btn <?php if ($Referral == 'Walk In'): echo 'btn-success'; else: echo 'btn-secondary'; endif; ?> w-100"><i class="fas fa-check <?php if ($Referral == 'Walk In'): echo 'wercher-visible'; else: echo 'wercher-transparent'; endif; ?>" style="margin-right: -1px;"></i></button>
 											</div>
 											<div class="form-group col-sm-9 col-md-9" style="margin-top: 5px;">
 												Walk In
@@ -203,7 +215,7 @@
 										</div>
 										<div class="form-row col-sm-12">
 											<div class="form-group col-sm-3 col-md-3">
-												<button id="ReferralJobFair" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+												<button id="ReferralJobFair" type="button" class="referral-btns btn <?php if ($Referral == 'Job Fair'): echo 'btn-success'; else: echo 'btn-secondary'; endif; ?> w-100"><i class="fas fa-check <?php if ($Referral == 'Job Fair'): echo 'wercher-visible'; else: echo 'wercher-transparent'; endif; ?>" style="margin-right: -1px;"></i></button>
 											</div>
 											<div class="form-group col-sm-9 col-md-9" style="margin-top: 5px;">
 												Job Fair
@@ -211,7 +223,7 @@
 										</div>
 										<div class="form-row col-sm-12">
 											<div class="form-group col-sm-3 col-md-3">
-												<button id="ReferralSocialMedia" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+												<button id="ReferralSocialMedia" type="button" class="referral-btns btn <?php if ($Referral == 'Social Media'): echo 'btn-success'; else: echo 'btn-secondary'; endif; ?> w-100"><i class="fas fa-check <?php if ($Referral == 'Social Media'): echo 'wercher-visible'; else: echo 'wercher-transparent'; endif; ?>" style="margin-right: -1px;"></i></button>
 											</div>
 											<div class="form-group col-sm-9 col-md-9" style="margin-top: 5px;">
 												Social Media
@@ -222,7 +234,7 @@
 												Or others, please specify:
 											</div>
 											<div class="form-group col-sm-12 col-md-12" style="margin-top: 5px;">
-												<input id="ReferralOthers" class="form-control" type="text" name="ReferralOthers" autocomplete="off" value="<?php echo $Referral; ?>">
+												<input id="ReferralOthers" class="form-control" type="text" name="ReferralOthers" autocomplete="off" value="<?php if ($Referral != 'Walk In' && $Referral != 'Job Fair' && $Referral != 'Social Media'): echo $Referral; endif; ?>">
 											</div>
 										</div>
 									</div>
@@ -668,6 +680,13 @@
 			$('#Referral').val($('#ReferralOthers').val());
 		});
 		var today = new Date();
+		var birthDate = new Date($('#BirthDate').val());
+	    var age = today.getFullYear() - birthDate.getFullYear();
+	    var m = today.getMonth() - birthDate.getMonth();
+	    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+	        age--;
+	    }
+	   $('#Age').val(age);
 		$("#BirthDate").change(function(){
 
 		    var birthDate = new Date($('#BirthDate').val());

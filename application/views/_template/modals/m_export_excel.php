@@ -1,8 +1,8 @@
 <!-- Modal -->
 <div class="modal fade" id="DateFroto_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <?php echo form_open(base_url().'PhpOffice_Controller/ExportFrom_To','method="post"');?>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+      <?php echo form_open(base_url().'PhpOffice_Controller/ExportFrom_To','method="post"');?>
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Select Dates:</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -52,7 +52,7 @@
             <label><b>File Name</b></label>
             <input id="ExportFileName" class="form-control" type="text" name="ExportFileName" value="">
           </div>
-          <div class="form-group col-sm-12 col-md-2" style="margin-left: -20px; padding-right: 10px;">
+          <div class="form-group col-sm-12 col-md-2" style="margin-left: -33px; padding-right: 10px;">
             <label>&nbsp;</label>
             <input class="form-control" type="text" value=".xlsx" readonly>
           </div>
@@ -63,7 +63,7 @@
           </div>
         </div>
       </div>
+      <?php echo form_close();?>
     </div>
   </div>
-  <?php echo form_close();?>
 </div>

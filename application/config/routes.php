@@ -70,6 +70,7 @@ $route['SSS_Table'] = 'Main_Controller/SSS_Table';
 $route['Payroll'] = 'Main_Controller/PayrollClients';
 $route['ViewClient'] = 'Main_Controller/ViewClient';
 $route['Payrollsss'] = 'Main_Controller/Payrollsss';
+$route['ExcelImportSuccessful'] = 'Main_Controller/ExcelImportSuccessful';
 
 $route['GenerateIDCard'] = 'Main_Controller/GenerateIDCard';
 $route['PrintEmployee'] = 'Main_Controller/PrintEmployee';

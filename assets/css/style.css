@@ -9,6 +9,13 @@ a:hover {
 	color: rgba(205, 125, 75);
 	text-decoration: underline;
 }
+.table th {
+	border: none;
+	border-color: black;
+}
+.table tbody {
+	border: none;
+}
 .btn-primary {
 	background-color: #c5ad00;
 	border-color: #c5ad00;
@@ -47,6 +54,12 @@ a:hover {
 }
 
 input[type]:focus {
+	border-color: gold !important;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px gold !important;
+	outline: 0 none !important;
+}
+
+textarea:focus {
 	border-color: gold !important;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px gold !important;
 	outline: 0 none !important;
@@ -1063,6 +1076,26 @@ a[data-toggle="collapse"] {
 }
 .printemployee-tooltip p {
 	border-bottom: 1px solid black;
+}
+
+.table-row-hover:hover {
+	background: rgba(0, 0, 0, 0.02);
+}
+
+.input-bootstrap input {
+	margin-right: 5px;
+    padding-left: 10px;
+    padding-right: 4px;
+    padding-top: 4px;
+    padding-bottom: 9px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 /*form {
 	display: none;

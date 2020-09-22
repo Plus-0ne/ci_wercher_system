@@ -23,3 +23,30 @@
 <!-- <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script> -->
 <script src="<?=base_url()?>assets/js/bootstrap4-toggle.min.js"></script>
 <script src="<?=base_url()?>assets/js/html2canvas.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		if (localStorage.getItem('SidebarVisible') == 'true') {
+			$('#sidebar').addClass('active');
+			$('.ncontent').addClass('shContent');
+		} else {
+			$('#sidebar').css('transition', 'all 0.3s');
+			$('#content').css('transition', 'all 0.3s');
+		}
+		$('#sidebarCollapse').on('click', function () {
+			if (localStorage.getItem('SidebarVisible') == 'false') {
+				$('#sidebar').addClass('active');
+				$('.ncontent').addClass('shContent');
+				$('#sidebar').css('transition', 'all 0.3s');
+				$('#content').css('transition', 'all 0.3s');
+		    	localStorage.setItem('SidebarVisible', 'true');
+			} else {
+				$('#sidebar').removeClass('active');
+				$('.ncontent').removeClass('shContent');
+				$('#sidebar').css('transition', 'all 0.3s');
+				$('#content').css('transition', 'all 0.3s');
+		    	localStorage.setItem('SidebarVisible', 'false');
+			}
+		});
+	});
+</script>

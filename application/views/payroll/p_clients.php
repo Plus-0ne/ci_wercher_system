@@ -96,23 +96,6 @@
 	</div>
 	<!-- MODALS -->
 	<?php $this->load->view('_template/modals/m_p_clientview'); ?>
-	<!-- LOAD MODAL -->
-	<div class="modal fade" id="LoadModal" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-body">
-					<div class="form-row">
-						<div class="text-center ml-auto mr-auto">
-							<div class="spinner-border m-5" role="status"></div>
-							<h4>Fetching the table, just for you...</h4>
-							<!-- <p>Preparing the table...</p> -->
-							<!-- <p class="load-hidden-1">This is taking longer than necessary...</p> -->
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 </body>
 <!-- EXPORT MODAL -->
 <?php $this->load->view('_template/modals/m_export'); ?>

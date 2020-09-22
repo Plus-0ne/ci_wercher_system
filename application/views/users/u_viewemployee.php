@@ -821,7 +821,9 @@
 																	<tr class="w-100 text-center">
 																		<td colspan="6">
 																			<h5>
-																				No data available. Click <a href="ModifyEmployee?id=<?php echo $ApplicantID; ?>#Employment_Record">here</a> to add.
+																				No data available.
+																				<br>
+																				<a href="ModifyEmployee?id=<?php echo $ApplicantID; ?>#Employment_Record" class="btn btn-sm btn-primary mt-2"><i class="fas fa-plus"></i> Add Data</a>
 																			</h5>
 																		</td>
 																	</tr>

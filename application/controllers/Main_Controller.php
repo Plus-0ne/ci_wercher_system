@@ -345,6 +345,13 @@
 		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Applicants">Applicants</a></li>
 		</ol>
 		</nav>';
+
+		// WEEKLY INCREASE
+		$CurrentDay = date('Y-m-d h:i:s A');
+		$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
+		$data['WeeklyApplicants'] = $this->Model_Selects->GetApplicantsIncrease($CurrentDay, $CurrentDayScope)->num_rows();
+
+		$data['GetAllApplicants'] = $this->Model_Selects->GetAllApplicants()->num_rows();
 		$data['get_employee'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['getClientOption'] = $this->Model_Selects->getClientOption();
@@ -427,6 +434,12 @@
 		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Employee">Employee</a></li>
 		</ol>
 		</nav>';
+
+		// WEEKLY INCREASE
+		$CurrentDay = date('Y-m-d h:i:s A');
+		$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
+		$data['WeeklyEmployees'] = $this->Model_Selects->GetEmployeesIncrease($CurrentDay, $CurrentDayScope)->num_rows();
+
 		$data['get_employee'] = $this->Model_Selects->GetEmployee();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['getClientOption'] = $this->Model_Selects->getClientOption();
@@ -1076,6 +1089,23 @@
 		{
 			redirect('Clients');
 		}
+	}
+	public function ExcelImportSuccessful()
+	{
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		$header['title'] = 'Client Information | Wercher Solutions and Resources Workers Cooperative';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a href="Payroll">Payroll</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active">Details</a></li>
+		</ol>
+		</nav>';
+		$this->load->view('payroll/p_excelimportsuccessful',$data);
 	}
 	public function Experimental()
 	{

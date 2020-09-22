@@ -716,6 +716,15 @@
 			$('#Referral').val($('#ReferralOthers').val());
 		});
 		var today = new Date();
+		<?php if(!empty($data['BirthDate'])): ?>
+		var birthDate = new Date($('#BirthDate').val());
+	    var age = today.getFullYear() - birthDate.getFullYear();
+	    var m = today.getMonth() - birthDate.getMonth();
+	    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+	        age--;
+	    }
+	    $('#Age').val(age);
+		<?php endif; ?>
 		$("#BirthDate").change(function(){
 
 		    var birthDate = new Date($('#BirthDate').val());

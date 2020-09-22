@@ -226,7 +226,7 @@
 							<div class="spinner-border m-5" role="status"></div>
 							<h4>Please wait warmly</h4>
 							<p>This will only take a little bit</p>
-							<p class="load-hidden-1" style="display: none;">This is taking longer than necessary...</p>
+							<p class="load-hidden-1" style="display: none;">Almost there...</p>
 						</div>
 					</div>
 				</div>

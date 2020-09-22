@@ -1481,10 +1481,12 @@ class Update_Controller extends CI_Controller {
 		$this->load->library('SimpleXLSX');	
 			if ( $xlsx = SimpleXLSX::parse( $File['tmp_name'] ) ) {
 
+				$this->load->view('_template/users/u_redirecting');
 				$dim = $xlsx->dimension();
 				$cols = $dim[0];
 				$RowCount = 0;
 				$ColCount = 0;
+				$DatesTotal = 0; // Count how many days there are
 				$ApplicantsArray = array();
 
 				foreach ( $xlsx->rows() as $k => $r ):
@@ -1534,6 +1536,7 @@ class Update_Controller extends CI_Controller {
 								$SpecialHolidays = array('01-25', '02-25', '04-11', '08-21', '11-01', '11-02', '12-08', '12-24', '12-31'); // MONTH - DAY
 
 								for ($i = 0; $i <= $cols - 5; $i++) {
+									$DatesTotal++;
 									$Date = date('Y-m-d', strtotime('+' . $i . ' day', strtotime($StartingDate)));
 									if ($i == 0) {
 										$FirstDate = $Date;
@@ -1653,6 +1656,8 @@ class Update_Controller extends CI_Controller {
 					$this->session->set_userdata('ApplicantsArray', $ApplicantsArray);
 					$this->session->set_userdata('FirstDate', $FirstDate);
 					$this->session->set_userdata('LastDate', $LastDate);
+					$this->session->set_userdata('DatesTotal', $DatesTotal);
+					$this->session->set_userdata('SalaryMode', $SalaryMode);
 					// $CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
 					// foreach($CheckApplicant->result_array() as $row) {
 					// 	$LastName = $row['LastName'];
@@ -1661,9 +1666,9 @@ class Update_Controller extends CI_Controller {
 					// }
 					// $this->Model_Logbook->LogbookEntry('Blue', 'Salary', ' updated the hours of <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
 					// $this->Model_Logbook->LogbookExtendedEntry(0, 'Changed status from <b>Blacklisted</b> to <b>Applicant</b>');
-					redirect('ViewClient?id=excel&mode=' . $SalaryMode);
+					redirect('ExcelImportSuccessful');
 				}
-				$this->load->view('_template/users/u_redirecting');
+				
 				// echo '</table>';
 			} else {
 				$Error = SimpleXLSX::parseError();
