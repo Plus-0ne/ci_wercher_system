@@ -777,7 +777,9 @@
 																	<tr class="w-100 text-center">
 																		<td colspan="6">
 																			<h5>
-																				No data available. Click <a href="ModifyEmployee?id=<?php echo $ApplicantID; ?>#Academic_History">here</a> to add.
+																				No data available.
+																				<br>
+																				<a href="ModifyEmployee?id=<?php echo $ApplicantID; ?>#Academic_History" class="btn btn-sm btn-primary mt-2"><i class="fas fa-plus"></i> Add Data</a>
 																			</h5>
 																		</td>
 																	</tr>
@@ -858,7 +860,9 @@
 																	<tr class="w-100 text-center">
 																		<td>
 																			<h5>
-																				No data available. Click <a href="ModifyEmployee?id=<?php echo $ApplicantID; ?>#Machine_Operated">here</a> to add.
+																				No data available.
+																				<br>
+																				<a href="ModifyEmployee?id=<?php echo $ApplicantID; ?>#Machine_Operated" class="btn btn-sm btn-primary mt-2"><i class="fas fa-plus"></i> Add Data</a>
 																			</h5>
 																		</td>
 																	</tr>
@@ -1134,28 +1138,6 @@
 			});
 			$('#TabNotesBtn').on('click', function () {
 				$('#TabNotes').children('.employee-tabs-group-content').fadeIn(100);
-			});
-			if (localStorage.getItem('SidebarVisible') == 'true') {
-				$('#sidebar').addClass('active');
-				$('.ncontent').addClass('shContent');
-			} else {
-				$('#sidebar').css('transition', 'all 0.3s');
-				$('#content').css('transition', 'all 0.3s');
-			}
-			$('#sidebarCollapse').on('click', function () {
-				if (localStorage.getItem('SidebarVisible') == 'false') {
-					$('#sidebar').addClass('active');
-					$('.ncontent').addClass('shContent');
-					$('#sidebar').css('transition', 'all 0.3s');
-					$('#content').css('transition', 'all 0.3s');
-			    	localStorage.setItem('SidebarVisible', 'true');
-				} else {
-					$('#sidebar').removeClass('active');
-					$('.ncontent').removeClass('shContent');
-					$('#sidebar').css('transition', 'all 0.3s');
-					$('#content').css('transition', 'all 0.3s');
-			    	localStorage.setItem('SidebarVisible', 'false');
-				}
 			});
 			$('.ModalHire').on('click', function () {
 				$('#idToHire').val($(this).attr('id'));

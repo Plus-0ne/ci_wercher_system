@@ -79,6 +79,9 @@ $route['Search'] = 'Main_Controller/Search';
 $route['Logbook'] = 'Main_Controller/Logbook';
 $route['AJAX_addLogbookNotes'] = 'Main_Controller/AJAX_addLogbookNotes';
 $route['AJAX_showLogbookNotes'] = 'Main_Controller/AJAX_showLogbookNotes';
+$route['AJAX_checkLogbookNotifCounter'] = 'Main_Controller/AJAX_checkLogbookNotifCounter';
+$route['AJAX_checkBellNotifCounter'] = 'Main_Controller/AJAX_checkBellNotifCounter';
+$route['AJAX_resetBellNotifCounter'] = 'Main_Controller/AJAX_resetBellNotifCounter';
 $route['Calendar'] = 'Main_Controller/Calendar';
 
 // LOGIN

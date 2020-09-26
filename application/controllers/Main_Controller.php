@@ -390,7 +390,7 @@
 		<nav aria-label="breadcrumb">
 		<ol class="breadcrumb" style="background-color: transparent;">
 		<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Blacklisted">Blacklisted</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Archived">Archived</a></li>
 		</ol>
 		</nav>';
 		$data['get_employee'] = $this->Model_Selects->getApplicant();
@@ -411,7 +411,7 @@
 		<nav aria-label="breadcrumb">
 		<ol class="breadcrumb" style="background-color: transparent;">
 		<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Archived">Archived</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Blacklisted">Blacklisted</a></li>
 		</ol>
 		</nav>';
 		$data['get_employee'] = $this->Model_Selects->getApplicant();
@@ -1433,6 +1433,8 @@
 		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Logbook">Logbook</a></li>
 		</ol>
 		</nav>';
+		$LogbookDBCount = $this->db->count_all('logbook');
+		$this->session->set_userdata('NotifCounterLogbook', $LogbookDBCount);
 		$this->load->view('users/u_logbook',$data);
 	}
 	public function AJAX_showLogbookNotes()
@@ -1548,6 +1550,34 @@
 			}
 			$this->session->set_userdata('logbook_n', $LimitNotes);
 		}
+	}
+	public function AJAX_checkLogbookNotifCounter()
+	{
+		$LogbookDBCount = $this->db->count_all('logbook');
+		$LogbookNotifCounter = $this->session->userdata('NotifCounterLogbook');
+		$Difference = $LogbookDBCount - $LogbookNotifCounter;
+		if ($Difference > 0):
+			echo '<a href="Logbook" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" data-html="true" title="Click to refresh" style="float: right;"><i class="fas fa-redo"></i> ' . $Difference . ' new entries</a>';
+		else:
+			echo '<a href="Logbook" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" data-html="true" title="Click to refresh" style="float: right;"><i class="fas fa-check"></i> Viewing latest entries</a>';
+		endif;
+	}
+	public function AJAX_checkBellNotifCounter()
+	{
+		$DBCount = $this->db->count_all('logbook');
+		$BellNotifCounter = $this->session->userdata('BellNotifCounter');
+		$Difference = $DBCount - $BellNotifCounter;
+		if ($Difference > 0):
+			echo $Difference;
+		else:
+			echo '';
+		endif;
+	}
+	public function AJAX_resetBellNotifCounter()
+	{
+		$DBCount = $this->db->count_all('logbook');
+		$BellNotifCounter = $this->session->set_userdata('BellNotifCounter', $DBCount);
+		echo ''; // Reset the bell counter
 	}
 	public function Calendar()
 	{

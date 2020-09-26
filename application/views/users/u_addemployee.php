@@ -740,28 +740,6 @@
 			$('input[type="text"]').val('TEST-' + Math.floor(Math.random() * Math.floor(9999999)));
 			$('input[type="date"]').val(moment().format('YYYY-MM-DD'));
 		});
-		if (localStorage.getItem('SidebarVisible') == 'true') {
-			$('#sidebar').addClass('active');
-			$('.ncontent').addClass('shContent');
-		} else {
-			$('#sidebar').css('transition', 'all 0.3s');
-			$('#content').css('transition', 'all 0.3s');
-		}
-		$('#sidebarCollapse').on('click', function () {
-			if (localStorage.getItem('SidebarVisible') == 'false') {
-				$('#sidebar').addClass('active');
-				$('.ncontent').addClass('shContent');
-				$('#sidebar').css('transition', 'all 0.3s');
-				$('#content').css('transition', 'all 0.3s');
-		    	localStorage.setItem('SidebarVisible', 'true');
-			} else {
-				$('#sidebar').removeClass('active');
-				$('.ncontent').removeClass('shContent');
-				$('#sidebar').css('transition', 'all 0.3s');
-				$('#content').css('transition', 'all 0.3s');
-		    	localStorage.setItem('SidebarVisible', 'false');
-			}
-		});
 		$('#blah').click(function(){ $('#imgInp').trigger('click'); });
 		function readURL(input) {
 			if (input.files && input.files[0]) {

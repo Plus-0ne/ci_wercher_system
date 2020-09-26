@@ -14,8 +14,8 @@
 						<img class="wercher-idcard-photo" src="<?php echo $ApplicantImage; ?>" width="200" height="200">
 						<div class="wercher-idcard-fields">
 							<div class="wercher-idcard-name">
-								<div class="col-sm-12">
-									<?php echo $LastName . ', ' . $FirstName . ' ' . $MiddleInitial . '.'; ?>
+								<div id="Name" style="width:350px; height:50px;" class="col-sm-12">
+									<span><?php echo $LastName . ', ' . $NameExtension . ' ' . $FirstName . ' ' . $MiddleInitial . '.'; ?></span>
 								</div>
 							</div>
 							<div class="row">
@@ -86,8 +86,11 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/html2canvas.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/canvas2image.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.textfill.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('#Name').textfill({
+		});
 		$('[data-toggle="tooltip"]').tooltip();
 		function saveAs(uri, filename) {
 			var link = document.createElement('a');

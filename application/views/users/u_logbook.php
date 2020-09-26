@@ -79,6 +79,9 @@
 						<div class="col-12 col-sm-12 col-md-12 PrintPageName PrintOut">
 							<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#LogbookFilter"><i class="fas fa-filter"></i> Filter</button>
 							<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
+							<span id="NotifContainer">
+								<a href="Logbook" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" data-html="true" title="Click to refresh" style="float: right;"><i class="fas fa-check"></i> Viewing latest entries</a>
+							</span>
 						</div>
 						<hr>
 						<div class="col-sm-12">
@@ -338,6 +341,19 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		(function update() {
+		    $.ajax({
+		        type: "GET",
+		        url: "<?php echo base_url() . 'AJAX_checkLogbookNotifCounter';?>",             
+		        dataType: "html",           
+		        success: function(response){                    
+		            $("#NotifContainer").html(response);
+		        }
+		    }).then(function() {
+		       setTimeout(update, 10000); // 10 seconds default interval
+		    });
+		})();
+		$('[data-toggle="tooltip"]').tooltip();
 		$("#FilterAdmin").on("change", function () {
 			FilterAdmin = $('#FilterAdmin').val();
 			$.ajax({
@@ -430,28 +446,6 @@
 			$(this).toggleClass('logbook-log-active');
 		});
 		$('[data-toggle="tooltip"]').tooltip();
-		if (localStorage.getItem('SidebarVisible') == 'true') {
-			$('#sidebar').addClass('active');
-			$('.ncontent').addClass('shContent');
-		} else {
-			$('#sidebar').css('transition', 'all 0.3s');
-			$('#content').css('transition', 'all 0.3s');
-		}
-		$('#sidebarCollapse').on('click', function () {
-			if (localStorage.getItem('SidebarVisible') == 'false') {
-				$('#sidebar').addClass('active');
-				$('.ncontent').addClass('shContent');
-				$('#sidebar').css('transition', 'all 0.3s');
-				$('#content').css('transition', 'all 0.3s');
-		    	localStorage.setItem('SidebarVisible', 'true');
-			} else {
-				$('#sidebar').removeClass('active');
-				$('.ncontent').removeClass('shContent');
-				$('#sidebar').css('transition', 'all 0.3s');
-				$('#content').css('transition', 'all 0.3s');
-		    	localStorage.setItem('SidebarVisible', 'false');
-			}
-		});
 		var table = $('#ListAdmins').DataTable( {
         buttons: [
             {

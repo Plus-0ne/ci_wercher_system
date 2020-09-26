@@ -22,7 +22,7 @@
 					<input class="wercher-search" type="text" name="query" placeholder="Search All" <?php if(isset($_GET['query'])) { echo 'value=' . $_GET['query']; } ?>>
 					<button type="submit" class="btn text-light mr-5"><i class="fas fa-search" style="margin-right: -1px;"></i> </button>
 					<?php echo form_close(); ?>
-					<a class="btn text-light ddToggle" data-toggle="dropdown"><i class="fas fa-bell" style="margin-right: -1px;"></i></a>
+					<a id="Bell" class="btn text-light ddToggle" data-toggle="dropdown"><i class="fas fa-bell" style="margin-right: -1px;"></i> </a>
 					<ul class="dropdown-menu dropdown-menu-right">
 						<?php foreach ($this->Model_Selects->GetLogbookWithLimit(5)->result_array() as $row): ?>
 							<li class="notif-li 

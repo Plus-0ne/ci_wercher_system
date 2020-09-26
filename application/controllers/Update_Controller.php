@@ -47,8 +47,6 @@ class Update_Controller extends CI_Controller {
 				if ($CheckApplicant->num_rows() > 0) {
 					$row = $CheckApplicant->row_array();
 
-					date_default_timezone_set('Asia/Manila');
-
 					$DateStarted = date('Y-m-d h:i:s A');
 
 					if ($H_Months == NULL) {

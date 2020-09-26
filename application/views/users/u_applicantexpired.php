@@ -20,26 +20,32 @@
 				</div>
 				<div class="row rcontent">
 					<div class="col-5 PrintPageName PrintOut">
-						<h4 class="tabs-icon">
-							<i class="fas fa-user-friends fa-fw"></i> x <?php echo $get_ApplicantExpired->num_rows() ?>
-						</h4> 
+						<i class="fas fa-info-circle"></i>
+						<i>Found <?php echo $get_ApplicantExpired->num_rows(); ?> expiree<?php if($get_ApplicantExpired->num_rows() != 1): echo 's'; endif;?> currently in the database.
+						</i>
 					</div>
 					<div class="col-7 text-right">
-						<a href="<?=base_url()?>NewEmployee" class="btn btn-primary">
+						<span class="input-bootstrap">
+							<i class="sorting-table-icon spinner-border spinner-border-sm mr-2"></i>
+							<input id="DTSearch" type="search" class="input-bootstrap" placeholder="Sorting table..." readonly>
+						</span>
+						<a href="<?=base_url()?>NewEmployee" class="btn btn-success">
 							<i class="fas fa-user-plus"></i> New
 						</a>
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
 					<div class="col-sm-12">
+						<hr>
 						<?php echo $this->session->flashdata('prompts'); ?>
 						<div class="table-responsive pt-2 pb-5">
 							<table id="emp" class="table PrintOut" style="width: 100%;">
 								<thead>
 									<tr class="text-center">
-										<th> Applicant </th>
-										<th> Full Name </th>
-										<th> Previous Position </th>
-										<th> Sex </th>
+										<th> Applicant ID </th>
+										<th> Full Name / Previous Position </th>
+										<th class="d-none"> Full Name </th>
+										<th class="d-none"> Position Desired </th>
+										<th> Contact Number </th>
 										<th> Applied On </th>
 										<th> Expired Since </th>
 										<th class="PrintExclude"> Action </th>
@@ -57,13 +63,18 @@
 												</div>
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+												<?php echo $row['NameExtension']; ?> <?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+												<br>
+												<i style="color: gray;"><?php echo $row['PositionDesired']; ?></i>
 											</td>
-											<td class="text-center align-middle">
+											<td class="text-center align-middle d-none">
+												<?php echo $row['NameExtension']; ?> <?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+											</td>
+											<td class="text-center align-middle d-none">
 												<?php echo $row['PositionDesired']; ?>
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['Gender']; ?>
+												<?php echo $row['Phone_No']; ?>
 											</td>
 											<td class="text-center align-middle">
 												<?php echo $row['AppliedOn']; ?>
@@ -95,6 +106,9 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('.sorting-table-icon').hide();
+		$('#DTSearch').attr('placeholder', 'Search table');
+		$('#DTSearch').attr('readonly', false);
 		$('#ClientSelect').on('change', function() {
 			<?php foreach ($getClientOption->result_array() as $row): ?>
 			<?php
@@ -114,59 +128,39 @@
 			<?php endforeach; ?>
 		});
 		$(".nav-item a[href*='Applicants']").addClass("nactive");
-		if (localStorage.getItem('SidebarVisible') == 'true') {
-			$('#sidebar').addClass('active');
-			$('.ncontent').addClass('shContent');
-		} else {
-			$('#sidebar').css('transition', 'all 0.3s');
-			$('#content').css('transition', 'all 0.3s');
-		}
-		$('#sidebarCollapse').on('click', function () {
-			if (localStorage.getItem('SidebarVisible') == 'false') {
-				$('#sidebar').addClass('active');
-				$('.ncontent').addClass('shContent');
-				$('#sidebar').css('transition', 'all 0.3s');
-				$('#content').css('transition', 'all 0.3s');
-		    	localStorage.setItem('SidebarVisible', 'true');
-			} else {
-				$('#sidebar').removeClass('active');
-				$('.ncontent').removeClass('shContent');
-				$('#sidebar').css('transition', 'all 0.3s');
-				$('#content').css('transition', 'all 0.3s');
-		    	localStorage.setItem('SidebarVisible', 'false');
-			}
-		});
 		var table = $('#emp').DataTable( {
-        	"order": [[ 5, "desc" ]],
+			sDom: 'lrtip',
+			"bLengthChange": false,
+        	"order": [[ 6, "desc" ]],
         	buttons: [
             {
 	            extend: 'print',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 2, 3, 4, 5, 6 ]
 	            }
 	        },
 	        {
 	            extend: 'copyHtml5',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 2, 3, 4, 5, 6 ]
 	            }
 	        },
 	        {
 	            extend: 'excelHtml5',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 2, 3, 4, 5, 6 ]
 	            }
 	        },
 	        {
 	            extend: 'csvHtml5',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 2, 3, 4, 5, 6 ]
 	            }
 	        },
 	        {
 	            extend: 'pdfHtml5',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 2, 3, 4, 5, 6 ]
 	            }
 	        }
         ]
@@ -190,7 +184,9 @@
 		$('.ModalHire').on('click', function () {
 			$('#idToHire').val($(this).attr('id'));
 		});
-
+		$('#DTSearch').on('keyup change', function(){
+			table.search($(this).val()).draw();
+		})
 		$('[data-toggle="expired_tooltip"]').tooltip();   
 		
 	});

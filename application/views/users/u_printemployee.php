@@ -277,21 +277,21 @@ if ($Referral == NULL) {
 									<hr>
 									<div class="col-sm-12 mt-1">
 										<div class="row">
-											<div class="col-sm-3" style="margin-top: 10px;">
+											<div class="col-sm-3">
 												Opacity:
 											</div>
 											<div class="col-sm-9" style="margin-left: -15px; margin-top: 5px;">
-												<input id="Opacity" class="form-control" type="number" min="1" max="100" value="100" style="width: 85px;">
+												<input id="Opacity" type="range" min="1" max="100" value="100">
 											</div>
 										</div>
 									</div>
 									<div class="col-sm-12 mt-2">
 										<div class="row">
 											<div class="col-sm-3">
-												<button id="ToggleBlackAndWhite" type="button" class="general-filters-btn btn btn-secondary"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+												Color:
 											</div>
 											<div class="col-sm-9" style="margin-left: -15px; margin-top: 5px;">
-												Black&nbsp;&&nbsp;White
+												<input id="Color" type="range" min="1" max="100" value="100">
 											</div>
 										</div>
 									</div>
@@ -358,7 +358,7 @@ if ($Referral == NULL) {
 								<i>Lower Maingate, Sitio Tagbac, Brgy. San Jose, Antipolo City</i>
 							</div>
 							<div class="col-sm-12 eprint-logo-info printemployee-tooltip">
-								<p><b><?php echo $LastName; ?>, <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.</b></p>
+								<p id="Name" width="200px" height="50px"><span><b><?php echo $LastName; ?>, <?php echo $NameExtension; ?> <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.</b></span></p>
 							</div>
 						</div>
 						<div class="col-md-6 mb-5 eprint-photo">
@@ -631,7 +631,7 @@ if ($Referral == NULL) {
 							</div>
 						</div>
 					</div>
-					<div id="AcademicHistory" class="row pl-5 mt-3 <?php if($GetAcadHistory->num_rows() > 0): echo 'PrintOut'; else: echo 'd-none'; endif;?>">
+					<div id="AcademicHistory" class="row px-5 mt-3 <?php if($GetAcadHistory->num_rows() > 0): echo 'PrintOut'; else: echo 'd-none'; endif;?>">
 						<div class="col-md-12 mb-3 printemployee-category">
 							<b>
 								ACADEMIC&nbsp;HISTORY
@@ -996,17 +996,10 @@ if ($Referral == NULL) {
 	</div>
 </body>
 <?php $this->load->view('_template/users/u_scripts');?>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.textfill.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function () {
-		var BlackAndWhite = false;
-		$('#ToggleBlackAndWhite').on('click', function () {
-			if(BlackAndWhite == false) {
-				$('#PrintContainer').find('*').css('filter', 'grayscale(100%)');
-				BlackAndWhite = true;
-			} else {
-				$('#PrintContainer').find('*').css('filter', 'grayscale(0%)');
-				BlackAndWhite = false;
-			}
+		$('#Name').textfill({
 		});
 		$('#ToggleAcademic').on('click', function () {
 			$('#AcademicHistory').toggleClass('PrintOut');
@@ -1066,10 +1059,15 @@ if ($Referral == NULL) {
 			$('#EPrintPhoto').attr('width', $('#ResizeCustom').val());
 			$('#EPrintPhoto').attr('height', $('#ResizeCustom').val());
 		});
-		$('#Opacity').on('change', function() {
+		$('#Opacity').bind('input', function() {
 			opacity = $('#Opacity').val();
 			opacity = opacity / 100;
 			$('#PrintContainer').not('img').find('*').css('opacity', opacity);
+		});
+		$('#Color').bind('input', function() {
+			color = $('#Color').val();
+			color = 100 - color; // invert the value
+			$('#PrintContainer').not('img').find('*').css('filter', 'grayscale(' + color + '%)');
 		});
 		$('#ClientSelect').on('change', function() {
 			<?php foreach ($getClientOption->result_array() as $row): ?>
@@ -1089,13 +1087,6 @@ if ($Referral == NULL) {
 			}
 			<?php endforeach; ?>
 		});
-		if (localStorage.getItem('SidebarVisible') == 'true') {
-			$('#sidebar').addClass('active');
-			$('.ncontent').addClass('shContent');
-		} else {
-			$('#sidebar').css('transition', 'all 0.3s');
-			$('#content').css('transition', 'all 0.3s');
-		}
 
 	});
 	function hideModal() {

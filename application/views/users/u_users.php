@@ -5,14 +5,23 @@
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
-				<div class="row wercher-tablelist-container">
+				<div class="col-12 col-sm-12 tabs">
+					<ul>
+						<li class="tabs-active"><a href="<?php echo base_url() ?>Employees">Employees (<?php echo $get_employee->num_rows()?>)</a></li>
+					</ul>
+				</div>
+				<div class="row rcontent">
 					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
-						<h4 class="tabs-icon">
-							<i class="fas fa-user-tie fa-fw"></i> Employees x <?php echo $get_employee->num_rows() ?>
-						</h4>
+					<div class="col-5 PrintPageName PrintOut">
+						<i class="fas fa-info-circle"></i>
+						<i>Found <?php echo $get_employee->num_rows(); ?> employee<?php if($get_employee->num_rows() != 1): echo 's'; endif;?> currently in the database.
+						</i>
 					</div>
-					<div class="col-8 col-sm-8 col-md-8 text-right">
+					<div class="col-7 text-right">
+						<span class="input-bootstrap">
+							<i class="sorting-table-icon spinner-border spinner-border-sm mr-2"></i>
+							<input id="DTSearch" type="search" class="input-bootstrap" placeholder="Sorting table..." readonly>
+						</span>
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
 					<div class="col-sm-12">
@@ -180,28 +189,6 @@
 			    if ( $(this).val() == "Blacklist" ) { 
 					$("#BlacklistNotice").fadeIn();
 			    }
-			});
-			if (localStorage.getItem('SidebarVisible') == 'true') {
-				$('#sidebar').addClass('active');
-				$('.ncontent').addClass('shContent');
-			} else {
-				$('#sidebar').css('transition', 'all 0.3s');
-				$('#content').css('transition', 'all 0.3s');
-			}
-			$('#sidebarCollapse').on('click', function () {
-				if (localStorage.getItem('SidebarVisible') == 'false') {
-					$('#sidebar').addClass('active');
-					$('.ncontent').addClass('shContent');
-					$('#sidebar').css('transition', 'all 0.3s');
-					$('#content').css('transition', 'all 0.3s');
-			    	localStorage.setItem('SidebarVisible', 'true');
-				} else {
-					$('#sidebar').removeClass('active');
-					$('.ncontent').removeClass('shContent');
-					$('#sidebar').css('transition', 'all 0.3s');
-					$('#content').css('transition', 'all 0.3s');
-			    	localStorage.setItem('SidebarVisible', 'false');
-				}
 			});
 			var table = $('#emp').DataTable( {
 				"order": [[ 5, "desc" ]],

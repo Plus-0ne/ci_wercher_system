@@ -237,6 +237,7 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$(".nav-item a[href*='Payroll']").addClass("nactive");
 		$('[data-toggle="tooltip"]').tooltip();
 		$('#ImportButton').click(function(){ $('#file').trigger('click'); });
 		function readURL(input) {
@@ -256,28 +257,6 @@
 				$('.load-hidden-1').fadeIn();
 
 			}, 2000);
-		});
-		if (localStorage.getItem('SidebarVisible') == 'true') {
-			$('#sidebar').addClass('active');
-			$('.ncontent').addClass('shContent');
-		} else {
-			$('#sidebar').css('transition', 'all 0.3s');
-			$('#content').css('transition', 'all 0.3s');
-		}
-		$('#sidebarCollapse').on('click', function () {
-			if (localStorage.getItem('SidebarVisible') == 'false') {
-				$('#sidebar').addClass('active');
-				$('.ncontent').addClass('shContent');
-				$('#sidebar').css('transition', 'all 0.3s');
-				$('#content').css('transition', 'all 0.3s');
-		    	localStorage.setItem('SidebarVisible', 'true');
-			} else {
-				$('#sidebar').removeClass('active');
-				$('.ncontent').removeClass('shContent');
-				$('#sidebar').css('transition', 'all 0.3s');
-				$('#content').css('transition', 'all 0.3s');
-		    	localStorage.setItem('SidebarVisible', 'false');
-			}
 		});
 		$('#TaxTable').hide();
 				$('#MoreOptions').on('click', function () {

@@ -277,7 +277,7 @@
 										<i class="fas fa-square"></i> RECORDS
 									</h6>
 								</div>
-								<div class="form-row pb-5 pt-5">
+								<div id="Academic_History" class="form-row pb-5 pt-5">
 									<div class="pb-3">
 										<h5>Academic History</h5>
 									</div>
@@ -325,7 +325,7 @@
 										
 									</div>
 								</div>
-								<div class="form-row pb-5">
+								<div id="Employment_Record" class="form-row pb-5">
 									<div class="pb-3">
 										<h5>Employment Record </h5>
 									</div>
@@ -373,7 +373,7 @@
 										
 									</div>
 								</div>
-								<div class="form-row pb-5">
+								<div id="Machine_Operated" class="form-row pb-5">
 									<div class="pb-3">
 										<h5>Machine Operated </h5>
 									</div>
@@ -418,7 +418,7 @@
 										<button class="btn btn-success btn-lg" type="submit"><i class="fas fa-save"></i> Save</button>
 									</div>
 									<div class="form-group ml-auto">
-										<a href="<?=base_url();?>PrintEmployee?id=<?=$ApplicantID;?>" class="btn btn-success btn-lg"><i class="fas fa-print"></i> Print</a>
+										<a href="<?=base_url();?>RemoveEmployee?id=<?=$ApplicantID;?>" class="btn btn-danger btn-lg"><i class="fas fa-times"></i> Archive <?php if($Status == 'Employed'): echo 'Employee'; else: echo 'Applicant'; endif; ?></a>
 									</div>
 								</div>
 							</form>
@@ -696,28 +696,6 @@
 		        age--;
 		    }
 		   $('#Age').val(age);
-		});
-		if (localStorage.getItem('SidebarVisible') == 'true') {
-			$('#sidebar').addClass('active');
-			$('.ncontent').addClass('shContent');
-		} else {
-			$('#sidebar').css('transition', 'all 0.3s');
-			$('#content').css('transition', 'all 0.3s');
-		}
-		$('#sidebarCollapse').on('click', function () {
-			if (localStorage.getItem('SidebarVisible') == 'false') {
-				$('#sidebar').addClass('active');
-				$('.ncontent').addClass('shContent');
-				$('#sidebar').css('transition', 'all 0.3s');
-				$('#content').css('transition', 'all 0.3s');
-		    	localStorage.setItem('SidebarVisible', 'true');
-			} else {
-				$('#sidebar').removeClass('active');
-				$('.ncontent').removeClass('shContent');
-				$('#sidebar').css('transition', 'all 0.3s');
-				$('#content').css('transition', 'all 0.3s');
-		    	localStorage.setItem('SidebarVisible', 'false');
-			}
 		});
 		$('#blah').click(function(){ $('#imgInp').trigger('click'); });
 		function readURL(input) {

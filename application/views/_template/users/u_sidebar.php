@@ -70,7 +70,7 @@
 			</ul>
 		</li> -->
 		<li>
-			<a class="link-s" href="#pageSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-cog fa-fw"></i> User Settings <i class="fas fa-caret-down fa-fw" style="float: right;"></i> </a>
+			<a class="link-s" href="#pageSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-cog fa-fw"></i> User Settings <i class="fas fa-caret-down fa-fw" style="float: right; margin-top: 4px;"></i> </a>
 			<ul class="collapse list-unstyled collapseSettings animated fadeIn" id="pageSettings">
 				<li>
 					<a class="link-s" class="sublink" href="<?=base_url()?>Experimental"><span class="fas fa-flask"></span> Experimental <span style="color: rgba(255, 50, 50, 1.0);">(Dev Area)</span></a>

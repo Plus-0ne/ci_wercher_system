@@ -128,7 +128,7 @@
 							<h4>Import successful</h4>
 							<p>Loaded <b><?php echo $this->session->userdata('DatesTotal'); ?></b> days.
 							<br>
-							Would you like to preview?
+							Preview table?
 							<br>
 							Previewing more than 7 days may cause slow performance.</p>
 						</div>
@@ -145,6 +145,7 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$(".nav-item a[href*='Payroll']").addClass("nactive");
 		$('#ExcelImportSuccessfulModal').modal('show');
 		$("#ExcelImportSuccessfulModal").on("hidden.bs.modal", function () { // Change URL on modal close
 		    window.location.href="<?php echo base_url() . 'Payroll';  ?>";

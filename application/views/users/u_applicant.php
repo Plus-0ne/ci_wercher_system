@@ -23,12 +23,14 @@
 				</div>
 				<div class="row rcontent">
 					<div class="col-5 PrintPageName PrintOut">
+						<i class="fas fa-info-circle"></i>
 						<i>Found <?php echo $get_employee->num_rows(); ?> applicant<?php if($get_employee->num_rows() != 1): echo 's'; endif;?><?php echo ', ' . $WeeklyApplicants . ' of which are new this week'; ?>.<br>A total of <?php echo $GetAllApplicants ?> applicants and employees is stored in the database.
 						</i>
 					</div>
 					<div class="col-7 text-right">
 						<span class="input-bootstrap">
-							<input id="DTSearch" type="search" class="input-bootstrap" placeholder="Search table">
+							<i class="sorting-table-icon spinner-border spinner-border-sm mr-2"></i>
+							<input id="DTSearch" type="search" class="input-bootstrap" placeholder="Sorting table..." readonly>
 						</span>
 						<a href="<?=base_url()?>NewEmployee" class="btn btn-success">
 							<i class="fas fa-user-plus"></i> New
@@ -111,8 +113,9 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
-		// $('#LoadContainer').hide();
-		// $('#TableContainer').show();
+		$('.sorting-table-icon').hide();
+		$('#DTSearch').attr('placeholder', 'Search table');
+		$('#DTSearch').attr('readonly', false);
 		$('#ClientSelect').on('change', function() {
 			<?php foreach ($getClientOption->result_array() as $row): ?>
 			<?php

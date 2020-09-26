@@ -26,6 +26,28 @@
 
 <script type="text/javascript">
 	$(document).ready(function () {
+		(function notifications() {
+		    $.ajax({
+		        type: "GET",
+		        url: "<?php echo base_url() . 'AJAX_checkBellNotifCounter';?>",             
+		        dataType: "html",           
+		        success: function(response){                    
+		            $("#BellNotifCounter").html(response);
+		        }
+		    }).then(function() {
+		       setTimeout(notifications, 60000); // 60 seconds default interval
+		    });
+		})();
+		$('#Bell').on('click', function () {
+			$.ajax({
+		        type: "GET",
+		        url: "<?php echo base_url() . 'AJAX_resetBellNotifCounter';?>",             
+		        dataType: "html",           
+		        success: function(response){                    
+		            $("#BellNotifCounter").html(response);
+		        }
+		    })
+		});
 		if (localStorage.getItem('SidebarVisible') == 'true') {
 			$('#sidebar').addClass('active');
 			$('.ncontent').addClass('shContent');
