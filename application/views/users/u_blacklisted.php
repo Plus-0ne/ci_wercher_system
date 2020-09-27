@@ -150,7 +150,9 @@
 	    $('#ExportPDF').on('click', function () {
 	        table.button('4').trigger();
     	});
-
+	    $('#DTSearch').on('keyup change', function(){
+			table.search($(this).val()).draw();
+		})
 		$('[data-toggle="expired_tooltip"]').tooltip();   
 		
 	});
