@@ -28,7 +28,6 @@ __        _______ ____   ____ _   _ _____ ____
 	</title>
 	<!-- BOOTSTRAP -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/css/dataTables.bootstrap4.min.css">
 	<!-- FONTAWESOME -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/css/all.css">

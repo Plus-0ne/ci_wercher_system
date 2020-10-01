@@ -70,7 +70,7 @@ class Add_Controller extends CI_Controller {
 
 
 		if ($PositionDesired == NULL || $LastName == NULL || $FirstName == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Position Desired, Last Name, and First Name fields are required!</h5></div>');
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Missing required fields: Position Desired, Last Name, First Name');
 			$data = array(
 				'PositionDesired' => $PositionDesired,
 				'PositionGroup' => $PositionGroup,
@@ -181,7 +181,7 @@ class Add_Controller extends CI_Controller {
 			// Check Employee if exist
 			$chkem = $this->Model_Selects->CheckEmployee($ApplicantID);
 			if ($chkem->num_rows() > 0) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Employee ID exist</h5></div>');
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Applicant ID exists');
 				redirect('NewEmployee');
 			}
 			else
@@ -205,7 +205,7 @@ class Add_Controller extends CI_Controller {
 				if ($pImageChecker != NULL) {
 					if ( ! $this->upload->do_upload('pImage'))
 					{
-						$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
+						$this->Model_Logbook->SetPrompts('error', 'none', $this->upload->display_errors());
 						redirect('NewEmployee');
 					}
 					else
@@ -344,8 +344,26 @@ class Add_Controller extends CI_Controller {
 					// unset($_SESSION["rela_cart"]); 
 					// unset($_SESSION["beneCart"]);
 					
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Employee added!</h5></div>');
-					
+					$this->Model_Logbook->SetPrompts('success', 'success', 'New employee added');
+					// Create thumbnail
+					$this->load->library('image_lib');
+					$tconfig['image_library'] = 'gd2';
+					$tconfig['source_image'] = './uploads/'.$customid.'/'.$this->upload->data('file_name');
+					$tconfig['create_thumb'] = TRUE;
+					$tconfig['maintain_ratio'] = TRUE;
+					$tconfig['width']         = 70;
+					$tconfig['height']       = 70;
+					$tconfig['new_image'] = './uploads/'.$customid.'/';
+
+					$this->load->library('image_lib', $tconfig);
+					$this->image_lib->initialize($tconfig);
+
+					$this->image_lib->resize();
+					if ( ! $this->image_lib->resize())
+					{
+					        $this->Model_Logbook->SetPrompts('error', 'error', $this->image_lib->display_errors() . $tconfig['source_image']);
+					}
+					$this->image_lib->clear();
 					// LOGBOOK
 					$this->Model_Logbook->LogbookEntry('Green', 'Applicant', ' added a new applicant: <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
 					$this->Model_Logbook->LogbookExtendedEntry(0, 'Applicant ID: ' . $ApplicantID);
@@ -354,7 +372,7 @@ class Add_Controller extends CI_Controller {
 				}
 				else
 				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 					redirect('NewEmployee');
 				}
 			}

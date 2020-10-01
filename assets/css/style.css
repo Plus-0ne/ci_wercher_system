@@ -12,6 +12,9 @@ a:hover {
 input[type="range"]::-webkit-slider-runnable-track {
 	color: #28a745;
 }
+.hover-info:hover {
+	cursor: help;
+}
 .table th {
 	border: none;
 	border-color: black;
@@ -1098,6 +1101,30 @@ a[data-toggle="collapse"] {
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.prompts-tray {
+	position: absolute;
+    top: 850px;
+    left: 25px;
+	background-color: #fcfcfc;
+	font-size: 18px;
+	user-select: none;
+	z-index: 1040;
+}
+.prompts-tray:hover {
+	cursor: pointer;
+	opacity: 0.5;
+}
+.prompts-tray-close {
+	position: absolute;
+	top: -20px;
+	right: -5px;
+	font-size: 24px;
+	width: 40px;
+	border-radius: 100px;
+	border: 2px solid rgba(200, 55, 55);
+	background-color: rgba(200, 55, 55);
+	color: rgba(255, 175, 175);
 }
 /*form {
 	display: none;

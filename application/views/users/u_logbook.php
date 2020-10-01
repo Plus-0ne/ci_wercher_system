@@ -169,7 +169,7 @@
 																$date = new DateTime($row['Time']);
 																$day = $date->format('Y-m-d');
 																$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
-																$hours = $date->format('h:m:s A');
+																$hours = $date->format('h:i:s A');
 																$elapsed = Carbon::parse($row['Time']);
 
 																echo $elapsed->diffForHumans() . ' - ' . $day . ' at ' . $hours;
@@ -200,7 +200,7 @@
 																	$date = new DateTime($nrow['Time']);
 																	$day = $date->format('Y-m-d');
 																	$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
-																	$hours = $date->format('h:m:s A');
+																	$hours = $date->format('h:i:s A');
 																	echo '<div class="col-sm-12"><span class="logbook-tooltip-extended-note"><b>Note:</b></span> ' . $nrow['EventTooltip'] . '</div><div class="col-sm-12 logbook-tooltip-extended-note-admin">- ' . $nrow['AdminID'] . ' <span class="logbook-tooltip-extended-note-date">' . $day . ' at ' . $hours . '</span></div>';
 																else:
 																	echo $nrow['EventTooltip'];
@@ -286,7 +286,7 @@
 													$date = new DateTime($row['Time']);
 													$day = $date->format('Y-m-d');
 													$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
-													$hours = $date->format('h:m:s A');
+													$hours = $date->format('h:i:s A');
 
 													echo $day . ' at ' . $hours;
 												?>

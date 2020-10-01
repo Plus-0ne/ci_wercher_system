@@ -52,8 +52,8 @@
 										<li id="TabAcademicBtn" class="employee-tabs-select<?php if ($GetAcadHistory->num_rows() <= 0) { echo ' employee-tabs-inactive'; }?>"><a href="#Academic" onclick="">Academic</a></li>
 										<li id="TabEmploymentsBtn" class="employee-tabs-select<?php if ($employment_record->num_rows() <= 0) { echo ' employee-tabs-inactive'; }?>"><a href="#Employments" onclick="">Employments</a></li>
 										<li id="TabMachineBtn" class="employee-tabs-select<?php if ($Machine_Operatessss->num_rows() <= 0) { echo ' employee-tabs-inactive'; }?>"><a href="#Machine" onclick="">Machine</a></li>
-										<li><a href="<?=base_url()?>PrintEmployee?id=<?=$ApplicantID?>" target="_blank" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Print Employee"><i class="fas fa-print" style="margin-right: -1px;"></i> </a></li>
-										<li id="TabEditBtn"><a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" onclick="" target="_blank" target="_blank" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Edit"><i class="fas fa-edit" style="margin-right: -1px;"></i></a></li>
+										<li><a href="<?=base_url()?>PrintEmployee?id=<?=$ApplicantID?>" target="_blank" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Print Employee" style="color: gold;"><i class="fas fa-print" style="margin-right: -1px;"></i> </a></li>
+										<li id="TabEditBtn"><a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" onclick="" target="_blank" target="_blank" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Edit" style="color: gold;"><i class="fas fa-edit" style="margin-right: -1px;"></i></a></li>
 									</ul>
 								</div>
 								<div class="col-2 mb-5 employee-image">
@@ -428,6 +428,7 @@
 														$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
 														$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
 														$interval = $datetime1->diff($datetime2);
+														echo $interval->format('%m');
 														if($interval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
 															if($interval->format('%H') == '1') {
 																$TimeString = $interval->format('%H hour');
@@ -517,8 +518,8 @@
 												</div>
 											</div> -->
 											<div class="row">
-												<div class="col-sm-4">
-													<div class="card mb-3" style="max-width: 18rem;">
+												<div class="col-sm-3">
+													<div class="card mb-3" style="max-width: 18rem; height: 300px;">
 														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-user-tag"></i> Client</b></div>
 														<div class="card-body text-dark">
 															<h5 class="card-title text-center wercher-card-title">
@@ -557,8 +558,8 @@
 														</div>
 													</div>
 												</div>
-												<div class="col-sm-4">
-													<div class="card mb-3" style="max-width: 18rem;">
+												<div class="col-sm-3">
+													<div class="card mb-3" style="max-width: 18rem; height: 300px;">
 														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-user-tie"></i> Position</b></div>
 														<div class="card-body text-dark">
 															<h5 class="card-title text-center wercher-card-title"><?php echo $PositionDesired; ?></h5>
@@ -583,9 +584,9 @@
 														</div>
 													</div>
 												</div>
-												<div class="col-sm-4">
-													<div class="card mb-3" style="max-width: 18rem;">
-														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-book"></i> Salary Expected</b></div>
+												<div class="col-sm-3">
+													<div class="card mb-3" style="max-width: 18rem; height: 300px;">
+														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-dollar-sign"></i> Salary Expected</b></div>
 														<div class="card-body text-dark">
 															<h5 class="card-title text-center wercher-card-title">₱ <?php echo $SalaryExpected; ?></h5>
 															<p class="card-text">
@@ -603,6 +604,23 @@
 																	</div>
 																	<div class="col-sm-12">
 																		<a href="#Violations" class="btn-sm btn btn-danger"><i class="far fa-eye"></i> View</a>
+																	</div>
+																</div>
+															</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-3">
+													<div class="card mb-3" style="max-width: 18rem; height: 300px;">
+														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-dollar-sign"></i> Additional Info</b></div>
+														<div class="card-body text-dark">
+															<p class="card-text">
+																<div class="col-sm-12 employee-static-item text-center">
+																	<div class="col-sm-12 employee-dynamic-header">
+																		<b>13th Month Pay</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php echo $DateStarted; ?>
 																	</div>
 																</div>
 															</p>

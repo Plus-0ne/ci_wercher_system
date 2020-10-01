@@ -6,7 +6,15 @@
   linear-gradient(225deg, #708090 21px, #b1bfce 22px, #b1bfce  24px, transparent 24px, transparent 67px, #b1bfce 67px, #b1bfce 69px, transparent 69px)0 64px;*/
 	}
 </style>
-<?php $T_Header;?>
+<?php
+
+$T_Header;
+
+require 'vendor/autoload.php';
+
+use Carbon\Carbon;
+
+?>
 <body>
 	<div class="wrapper wercher-background-lowpoly">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
@@ -55,15 +63,26 @@
 										<th> Contact Number </th>
 										<!-- <th> Sex </th> -->
 										<th> Applied On </th>
+										<th class="d-none"> Applied On </th>
 										<th class="PrintExclude"> Action </th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($get_employee->result_array() as $row): ?>
+									<?php foreach ($get_employee->result_array() as $row): 
+										$date = new DateTime($row['AppliedOn']);
+										$day = $date->format('Y-m-d');
+										$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+										$hours = $date->format('h:i:s A');
+										$elapsed = Carbon::parse($row['AppliedOn']);
+
+										$thumbnail = $row['ApplicantImage'];
+										$thumbnail = substr($thumbnail, 0, -4);
+										$thumbnail = $thumbnail . '_thumb.jpg';
+									?>
 										<tr class="table-row-hover">
 											<td class="text-center">
 												<div class="col-sm-12">
-													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
+													<img src="<?php echo $thumbnail; ?>" width="70" height="70" class="rounded-circle">
 												</div>
 												<div class="col-sm-12 align-middle">
 													<?php echo $row['ApplicantID']; ?>
@@ -73,6 +92,7 @@
 												<?php echo $row['NameExtension']; ?> <?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
 												<br>
 												<i style="color: gray;"><?php echo $row['PositionDesired']; ?></i>
+												<br>
 											</td>
 											<td class="text-center align-middle d-none">
 												<?php echo $row['NameExtension']; ?> <?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
@@ -86,8 +106,13 @@
 											<!-- <td class="text-center align-middle d-sm-none d-md-block">
 												<?php echo $row['Gender']; ?>
 											</td> -->
-											<td class="text-center align-middle">
-												<?php echo $row['AppliedOn']; ?>
+											<td class="text-center align-middle" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $elapsed->diffForHumans(); ?>">
+												<?php
+													echo $day . '<br>' . $hours;
+												?>
+											</td>
+											<td class="text-center align-middle d-none">
+												<?php echo $day . ' at ' . $hours; ?>
 											</td>
 											<td class="text-center align-middle PrintExclude" width="100">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
@@ -113,6 +138,7 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('[data-toggle="tooltip"]').tooltip();
 		$('.sorting-table-icon').hide();
 		$('#DTSearch').attr('placeholder', 'Search table');
 		$('#DTSearch').attr('readonly', false);
@@ -142,31 +168,31 @@
             {
 	            extend: 'print',
 	            exportOptions: {
-	                columns: [ 1, 3, 4, 5 ]
+	                columns: [ 1, 3, 4, 6 ]
 	            }
 	        },
 	        {
 	            extend: 'copyHtml5',
 	            exportOptions: {
-	                columns: [ 1, 3, 4, 5 ]
+	                columns: [ 1, 3, 4, 6 ]
 	            }
 	        },
 	        {
 	            extend: 'excelHtml5',
 	            exportOptions: {
-	                columns: [ 1, 3, 4, 5 ]
+	                columns: [ 1, 3, 4, 6 ]
 	            }
 	        },
 	        {
 	            extend: 'csvHtml5',
 	            exportOptions: {
-	                columns: [ 1, 3, 4, 5 ]
+	                columns: [ 1, 3, 4, 6 ]
 	            }
 	        },
 	        {
 	            extend: 'pdfHtml5',
 	            exportOptions: {
-	                columns: [ 1, 3, 4, 5 ]
+	                columns: [ 1, 3, 4, 6 ]
 	            }
 	        }
         ]

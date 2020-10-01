@@ -16,6 +16,13 @@
 					<?php echo $Breadcrumb; ?>
 				<?php endif ?>
 			</div>
+			<?php if(!empty($this->session->flashdata('prompts')) && !empty($this->session->flashdata('prompts-color')) && !empty($this->session->flashdata('prompts-icon'))): ?>
+			<div class="prompts-tray ml-auto mr-auto p-3">
+				<span class="prompts-tray-message ml-2 <?=$this->session->flashdata('prompts-color');?>">
+					<?php if ($this->session->flashdata('prompts-icon') != 'none'): ?><i class="<?=$this->session->flashdata('prompts-icon');?>"></i><?php endif; ?> <b><?php echo $this->session->flashdata('prompts'); ?></b>
+				</span>
+			</div>
+			<?php endif; ?>
 			<div class="dropdown ml-auto">
 				<div class="row">
 					<?php echo form_open_multipart(base_url().'Search','method="get"'); ?>

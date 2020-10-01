@@ -1490,7 +1490,7 @@
 									$date = new DateTime($row['Time']);
 									$day = $date->format('Y-m-d');
 									$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
-									$hours = $date->format('h:m:s A');
+									$hours = $date->format('h:i:s A');
 
 									echo $day . ' at ' . $hours;
 								if ($GetLogbookLogExtended->num_rows() > 0):

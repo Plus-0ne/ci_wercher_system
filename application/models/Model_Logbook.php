@@ -69,5 +69,26 @@ class Model_Logbook extends CI_Model {
 		);
 		$logbookExtendedInsert = $this->Model_Inserts->InsertLogbookExtended($data);
 	}
+	public function SetPrompts($TextColor = '', $Icon = '', $Tooltip = 'Missing prompt')
+	{
+		if ($TextColor == 'success') {
+			$TextColor = 'text-success';
+		}
+		if ($TextColor == 'error') {
+			$TextColor = 'text-danger';
+		}
+		if ($Icon == 'success') {
+			$Icon = 'fas fa-check';
+		}
+		if ($Icon == 'error') {
+			$Icon = 'fas fa-times';
+		}
+		if ($Icon == 'info') {
+			$Icon = 'fas fa-info';
+		}
+		$this->session->set_flashdata('prompts-color', $TextColor);
+		$this->session->set_flashdata('prompts-icon', $Icon);
+		$this->session->set_flashdata('prompts', $Tooltip);
+	}
 
 }

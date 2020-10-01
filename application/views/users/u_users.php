@@ -153,12 +153,12 @@
 													$dateStarts = new DateTime($row['DateStarted']);
 													$dayStarts = $dateStarts->format('Y-m-d');
 													$dayStarts = DateTime::createFromFormat('Y-m-d', $dayStarts)->format('F d, Y');
-													$hoursStarts = $dateStarts->format('h:m:s A');
+													$hoursStarts = $dateStarts->format('h:i:s A');
 
 													$dateEnds = new DateTime($row['DateEnds']);
 													$dayEnds = $dateEnds->format('Y-m-d');
 													$dayEnds = DateTime::createFromFormat('Y-m-d', $dayEnds)->format('F d, Y');
-													$hoursEnds = $dateEnds->format('h:m:s A');
+													$hoursEnds = $dateEnds->format('h:i:s A');
 
 													echo $dayStarts . ' at ' . $hoursStarts;
 												?>
@@ -168,17 +168,17 @@
 													$dateStarts = new DateTime($row['DateStarted']);
 													$dayStarts = $dateStarts->format('Y-m-d');
 													$dayStarts = DateTime::createFromFormat('Y-m-d', $dayStarts)->format('F d, Y');
-													$hoursStarts = $dateStarts->format('h:m:s A');
+													$hoursStarts = $dateStarts->format('h:i:s A');
 
 													$dateEnds = new DateTime($row['DateEnds']);
 													$dayEnds = $dateEnds->format('Y-m-d');
 													$dayEnds = DateTime::createFromFormat('Y-m-d', $dayEnds)->format('F d, Y');
-													$hoursEnds = $dateEnds->format('h:m:s A');
+													$hoursEnds = $dateEnds->format('h:i:s A');
 
 													echo $dayEnds . ' at ' . $hoursEnds;
 												?>
 											</td>
-											<td class="text-center align-middle">
+											<td class="text-center align-middle" data-toggle="tooltip" data-placement="top" data-html="true" title="<b>Contract Started</b><br><?php echo $dayStarts . '<br>' . $hoursStarts; ?><br><br><b>Contract Ends</b><br><?php echo $dayEnds . '<br>' . $hoursEnds; ?><br><br><b>Salary</b><br>₱<?php echo $row['SalaryExpected']; ?><br><br><i>Click the bar to open the Contract tab</i>">
 												<div class="d-none"> 
 													<?php echo $row['DateEnds']; // For sorting ?>
 												</div>
@@ -189,7 +189,7 @@
 													echo 'Less than 1 day';
 												} ?>
 											 	</div>
-												<a href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>#Contract" class="progress" style="position: relative; box-shadow: none; background-color: rgba(0, 0, 0, 0.11);" data-toggle="tooltip" data-placement="top" data-html="true" title="<b>Contract Started</b><br><?php echo $dayStarts . '<br>' . $hoursStarts; ?><br><br><b>Contract Ends</b><br><?php echo $dayEnds . '<br>' . $hoursEnds; ?><br><br><b>Salary</b><br>₱<?php echo $row['SalaryExpected']; ?><br><br><i>Click to open the Contract tab</i>">
+												<a href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>#Contract" class="progress" style="position: relative; box-shadow: none; background-color: rgba(0, 0, 0, 0.11);">
 													<div class="progress-bar wercher-progress-bar" role="progressbar" style="width: <?php echo $rPercentage; ?>%;" aria-valuenow="<?php echo $rPercentage; ?>" aria-valuemin="0" aria-valuemax="100"><?php echo $rPercentage; ?>%</div>
 												</a>
 											</td>
@@ -241,7 +241,7 @@
 		var table = $('#emp').DataTable( {
 			sDom: 'lrtip',
 			"bLengthChange": false,
-			"order": [[ 1, "asc" ]],
+			"order": [[ 8, "asc" ]],
 			buttons: [
             {
 	            extend: 'print',
