@@ -72,16 +72,16 @@ class Model_Logbook extends CI_Model {
 	public function SetPrompts($TextColor = '', $Icon = '', $Tooltip = 'Missing prompt')
 	{
 		if ($TextColor == 'success') {
-			$TextColor = 'text-success';
+			$TextColor = 'text-success prompts-border-success';
 		}
 		if ($TextColor == 'error') {
-			$TextColor = 'text-danger';
+			$TextColor = 'text-danger prompts-border-danger';
 		}
 		if ($Icon == 'success') {
 			$Icon = 'fas fa-check';
 		}
 		if ($Icon == 'error') {
-			$Icon = 'fas fa-times';
+			$Icon = 'fas fa-exclamation-circle';
 		}
 		if ($Icon == 'info') {
 			$Icon = 'fas fa-info';

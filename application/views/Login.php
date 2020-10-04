@@ -55,7 +55,6 @@
 						<!-- <div class="text-center mb-3">
 							<img src="https://scontent.fmnl9-1.fna.fbcdn.net/v/t1.0-9/13240629_242086709504627_6587238279405995147_n.jpg?_nc_cat=111&_nc_eui2=AeFIkegEnuFMZPmHGeqO-6uIG-rM1RZ5XD-LNf9UTUgJmn0v1GaIwczrIaQhaOx612Te_DTWS27mrMXaP9PA5cLpK8kq-b9p50v730jmKNf0AqIIRSow2qCKyf0fw6FzNHY&_nc_oc=AQkTOQ3cESjy4W8r09IC7PA9h5THnvCINqcdQc5TM6tFP_vT2ZcGHt00ZXrKc8umZbs&_nc_ht=scontent.fmnl9-1.fna&oh=2d4b6f1485ef1087abad0bdee3661e2d&oe=5E22AE3E" alt="LOGO" width="100">
 						</div> -->
-						<?php echo $this->session->flashdata('prompt');?>
 						<div class="form-row">
 							<div class="form-group w-100 text-center">
 								<label>Admin ID</label>
@@ -90,11 +89,11 @@
 						<div id="logInTime" class="col-sm-12 login-time">
 							00:00:00 AM
 						</div>
-						<div id="logInTimeDate" class="col-sm-12 login-time-date">
+						<!-- <div id="logInTimeDate" class="col-sm-12 login-time-date">
 							Loading date...
-						</div>
+						</div> -->
 						<div class="login-description">
-							<b>WERCHER COOP</b>
+							<b class="login-description-header">Wercher Coop</b>
 							<br>
 							Wercher Solutions and Resources Labor Service Cooperative
 							<br>
@@ -154,6 +153,17 @@
 setInterval(time, 1000);
 </script>
 <style type="text/css">
+	.login-description-header {
+		text-shadow:
+		    -2px -2px 0 #000,
+		     0   -2px 0 #000,
+		     2px -2px 0 #000,
+		     2px  0   0 #000,
+		     2px  2px 0 #000,
+		     0    2px 0 #000,
+		    -2px  2px 0 #000,
+		    -2px  0   0 #000;
+	}
 	.login-time .login-time-date {
 		font-size: 25px;
 		margin-top: -20px;

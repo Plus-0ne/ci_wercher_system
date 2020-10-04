@@ -7,7 +7,7 @@
 			.notif-li { padding-left: 21px; padding-right: 21px ; padding-top: 11px ;padding-bottom: 11px ; font-size: 12px;}
 		</style>
 		<nav class="navbar navbar-expand-lg">
-			<button type="button" id="sidebarCollapse" class="btn text-light"><i class="fas fa-bars" style="margin-right: -1px;"></i></button>
+			<button type="button" id="sidebarCollapse" class="btn text-light notif-button"><i class="fas fa-bars" style="margin-right: -1px;"></i></button>
 			<div class="d-none d-sm-block wercher-breadcrumb text-light ml-3">
 				<!-- BREADCRUMB -->
 				<?php if (!isset($Breadcrumb) || $Breadcrumb == NULL): ?>
@@ -17,8 +17,8 @@
 				<?php endif ?>
 			</div>
 			<?php if(!empty($this->session->flashdata('prompts')) && !empty($this->session->flashdata('prompts-color')) && !empty($this->session->flashdata('prompts-icon'))): ?>
-			<div class="prompts-tray ml-auto mr-auto p-3">
-				<span class="prompts-tray-message ml-2 <?=$this->session->flashdata('prompts-color');?>">
+			<div class="prompts-tray ml-auto mr-auto p-3 <?=$this->session->flashdata('prompts-color');?>">
+				<span class="prompts-tray-message ml-2">
 					<?php if ($this->session->flashdata('prompts-icon') != 'none'): ?><i class="<?=$this->session->flashdata('prompts-icon');?>"></i><?php endif; ?> <b><?php echo $this->session->flashdata('prompts'); ?></b>
 				</span>
 			</div>
@@ -27,9 +27,9 @@
 				<div class="row">
 					<?php echo form_open_multipart(base_url().'Search','method="get"'); ?>
 					<input class="wercher-search" type="text" name="query" placeholder="Search All" <?php if(isset($_GET['query'])) { echo 'value=' . $_GET['query']; } ?>>
-					<button type="submit" class="btn text-light mr-5"><i class="fas fa-search" style="margin-right: -1px;"></i> </button>
+					<button type="submit" class="btn text-light mr-5 notif-button"><i class="fas fa-search" style="margin-right: -1px;"></i> </button>
 					<?php echo form_close(); ?>
-					<a id="Bell" class="btn text-light ddToggle" data-toggle="dropdown"><i class="fas fa-bell" style="margin-right: -1px;"></i> </a>
+					<a id="Bell" class="btn text-light ddToggle notif-button" data-toggle="dropdown"><i class="fas fa-bell" style="margin-right: -1px;"></i> <span id="BellNotifCounter"></span> </a>
 					<ul class="dropdown-menu dropdown-menu-right">
 						<?php foreach ($this->Model_Selects->GetLogbookWithLimit(5)->result_array() as $row): ?>
 							<li class="notif-li 

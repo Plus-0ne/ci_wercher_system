@@ -552,6 +552,33 @@
 					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
 					</ol>
 					</nav>';
+				} elseif ($data['Status'] == 'Expired') {
+					$data['Breadcrumb'] = '
+					<nav aria-label="breadcrumb">
+					<ol class="breadcrumb" style="background-color: transparent;">
+					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ApplicantsExpired">Expired</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					</ol>
+					</nav>';
+				} elseif ($data['Status'] == 'Blacklisted') {
+					$data['Breadcrumb'] = '
+					<nav aria-label="breadcrumb">
+					<ol class="breadcrumb" style="background-color: transparent;">
+					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="Blacklisted">Blacklisted</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					</ol>
+					</nav>';
+				} elseif ($data['Status'] == 'Deleted') {
+					$data['Breadcrumb'] = '
+					<nav aria-label="breadcrumb">
+					<ol class="breadcrumb" style="background-color: transparent;">
+					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="Archived">Archived</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					</ol>
+					</nav>';
 				} else {
 					$data['Breadcrumb'] = '
 					<nav aria-label="breadcrumb">
@@ -671,6 +698,36 @@
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employee</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="PrintEmployee?id=' . $ApplicantID .'">Print</a></li>
+					</ol>
+					</nav>';
+				} elseif ($data['Status'] == 'Expired') {
+					$data['Breadcrumb'] = '
+					<nav aria-label="breadcrumb">
+					<ol class="breadcrumb" style="background-color: transparent;">
+					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ApplicantsExpired">Expired</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="PrintEmployee?id=' . $ApplicantID .'">Print</a></li>
+					</ol>
+					</nav>';
+				} elseif ($data['Status'] == 'Blacklisted') {
+					$data['Breadcrumb'] = '
+					<nav aria-label="breadcrumb">
+					<ol class="breadcrumb" style="background-color: transparent;">
+					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="Blacklisted">Blacklisted</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="PrintEmployee?id=' . $ApplicantID .'">Print</a></li>
+					</ol>
+					</nav>';
+				} elseif ($data['Status'] == 'Deleted') {
+					$data['Breadcrumb'] = '
+					<nav aria-label="breadcrumb">
+					<ol class="breadcrumb" style="background-color: transparent;">
+					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="Archived">Archived</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="PrintEmployee?id=' . $ApplicantID .'">Print</a></li>
 					</ol>
@@ -804,7 +861,37 @@
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employee</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="">Edit</a></li>
+					</ol>
+					</nav>';
+				} elseif ($data['Status'] == 'Expired') {
+					$data['Breadcrumb'] = '
+					<nav aria-label="breadcrumb">
+					<ol class="breadcrumb" style="background-color: transparent;">
+					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ApplicantsExpired">Expired</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="">Edit</a></li>
+					</ol>
+					</nav>';
+				} elseif ($data['Status'] == 'Blacklisted') {
+					$data['Breadcrumb'] = '
+					<nav aria-label="breadcrumb">
+					<ol class="breadcrumb" style="background-color: transparent;">
+					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="Blacklisted">Blacklisted</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="">Edit</a></li>
+					</ol>
+					</nav>';
+				} elseif ($data['Status'] == 'Deleted') {
+					$data['Breadcrumb'] = '
+					<nav aria-label="breadcrumb">
+					<ol class="breadcrumb" style="background-color: transparent;">
+					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="Archived">Archived</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="">Edit</a></li>
 					</ol>
 					</nav>';
@@ -813,7 +900,7 @@
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="">Edit</a></li>
 					</ol>
 					</nav>';
@@ -954,7 +1041,7 @@
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
 		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Admin_List">Admins</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Admins">Admins</a></li>
 		</ol>
 		</nav>';
 		$data['ShowAdmin'] = $this->Model_Selects->GetAdmin();
@@ -1435,6 +1522,7 @@
 		</nav>';
 		$LogbookDBCount = $this->db->count_all('logbook');
 		$this->session->set_userdata('NotifCounterLogbook', $LogbookDBCount);
+		$this->session->set_userdata('BellNotifCounter', $LogbookDBCount);
 		$this->load->view('users/u_logbook',$data);
 	}
 	public function AJAX_showLogbookNotes()

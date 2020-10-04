@@ -150,7 +150,7 @@
 					</div>
 					<div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
-							<a href="Admin_List">
+							<a href="Admins">
 								<div class="card-headers bcolorE75858">
 									<div class="row ml-2">
 										<span class="head-text">

@@ -1,4 +1,55 @@
-<?php $T_Header;?>
+<?php
+$T_Header;
+require 'vendor/autoload.php';
+use Carbon\Carbon;
+
+// Contract elapsed
+$cStarts = new DateTime($DateStarted);
+$cEnds = new DateTime($DateEnds);
+$currentDate = new DateTime();
+
+$cElapsed = $cStarts->diff($currentDate)->format('%a');
+$cElapsedText = $cStarts->diff($currentDate)->format('%m months, %d days');
+
+// 13th Month Pay Calculation
+// $cTotalMonths = $cEnds->diff($cStarts)->format('%m');
+$cDiff = $cEnds->diff($cStarts);
+$cTotalMonths = $cDiff->y * 12 + $cDiff->m + $cDiff->d / 30;
+$cDiffDays = $cEnds->diff($cStarts)->format('%a');
+if ($cDiffDays > 1) {
+	$isThirteenEligible = true;
+} else {
+	$isThirteenEligible = false;
+}
+if ($SalaryExpected != NULL && $cTotalMonths > 0) {
+	if ($cTotalMonths < 12) {
+		$salaryMonthly = $SalaryExpected / $cTotalMonths;
+	} else {
+		$salaryMonthly = $SalaryExpected / 12;
+	}
+} else {
+	$salaryMonthly = 0;
+}
+$thirteen = (($salaryMonthly * $cElapsed) / 30) / 12;
+
+//Calculate Age
+$pBirthdate = new DateTime($BirthDate);
+$pAge = $currentDate->diff($pBirthdate)->format('%y');
+
+//Contract Dates
+$dsdate = new DateTime($DateStarted);
+$dsday = $dsdate->format('Y-m-d');
+$dsday = DateTime::createFromFormat('Y-m-d', $dsday)->format('F d, Y');
+$dshours = $dsdate->format('h:i:s A');
+$dselapsed = Carbon::parse($DateStarted);
+
+$dedate = new DateTime($DateEnds);
+$deday = $dedate->format('Y-m-d');
+$deday = DateTime::createFromFormat('Y-m-d', $deday)->format('F d, Y');
+$dehours = $dedate->format('h:i:s A');
+$deelapsed = Carbon::parse($DateEnds);
+
+?>
 <body>
 <style>
 	.rounded-circle {
@@ -12,35 +63,6 @@
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="d-none d-sm-block">
 					<div class="row">
-						<!-- <div class="col-6 col-sm-6 col-md-6 mb-5 PrintExclude">
-							<a href="
-							<?php if ($Status == 'Employed') {
-								echo base_url() . 'Employee';
-							} else {
-								echo base_url() . 'Applicants';
-							} ?>" class="btn btn-primary"><i class="fas fa-chevron-left"></i> Back </a>
-						</div>
-							<div class="col-6 col-sm-6 col-md-6 text-right PrintExclude dropdown">
-								<?php if ($Status == 'Employed'): ?> 
-									<?php if ($ReminderDate == NULL): ?> 
-										<button id="<?php echo $ApplicantID; ?>" class="btn btn-warning" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-exclamation"></i> No reminder set</button>
-									<?php else: ?>
-										<button id="<?php echo $ApplicantID; ?>" class="btn btn-success" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-check"></i> You will be notified TEST months before expiring</button>
-									<?php endif; ?>
-								<?php endif; ?>
-								<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="fas fa-cog px-1" style="margin-right: -1px;"></i>
-								</button>
-								<div class="dropdown-menu w-50" aria-labelledby="dropdownMenuButton">
-									<a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" class="dropdown-item"><i class="fas fa-edit"></i> Edit</a>
-									<?php if ($Status == 'Employed'): ?> 
-										<button id="<?php echo $ApplicantID; ?>" class="dropdown-item ReminderButton" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-stopwatch"></i> Set a Reminder</button>
-									<?php endif; ?>
-									<button onClick="printContent('PrintOut')" type="button" class="dropdown-item"><i class="fas fa-print"></i> Print</button>
-									<div class="dropdown-divider"></div>
-									<a href="<?=base_url()?>BlacklistEmployee?id=<?=$ApplicantID?>" class="dropdown-item"><i class="fas fa-times"></i> Blacklist</a>
-								</div>
-							</div> -->
 							<div class="row employee-container">
 								<div class="col-10 employee-tabs">
 									<ul>
@@ -63,7 +85,7 @@
 							<div class="row w-100 rcontent employee-content">
 								<div class="col-2 employee-static mt-5 d-none d-sm-block">
 									<div class="col-sm-12">
-										<?php echo $LastName; ?> , <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.
+										<?php echo $LastName; ?>, <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.<?php if ($NameExtension != NULL): echo ', ' . $NameExtension; endif; ?>
 									</div>
 									<hr>
 									<div class="col-sm-12 employee-static-item">
@@ -98,18 +120,39 @@
 										<?php } ?>
 									</div>
 									<?php if ($Status == 'Blacklisted'): ?>
-									<div class="row ml-auto mr-auto pb-5 pt-5 w-100">
+									<hr>
+									<div class="row ml-auto mr-auto pb-5 w-100">
 										<div class="col-sm-12 col-mb-12 w-100 text-center blacklisted-notice">
-											<div class="col-sm-12 pb-2 pt-4">
+											<div class="col-sm-12 pb-1 pt-4">
 												<h5>
-													<i class="fas fa-exclamation-triangle"></i><b>&nbsp;Notice&nbsp;</b><i class="fas fa-exclamation-triangle"></i>
+													<i class="fas fa-exclamation-circle"></i><b>&nbsp;Notice&nbsp;</b>
 												</h5>
 											</div>
 											<div class="col-sm-12 pb-2">
-												This individual has been marked as <b>Blacklisted</b>
+												This individual is <b>Blacklisted</b>
 											</div>
 											<div class="col-sm-12 col-mb-12 pb-2">
-												<a href="#Documents" class="btn btn-danger"><i class="far fa-eye"></i> Violations</a>
+												<a href="#Violations" class="btn btn-danger"><i class="fas fa-book"></i> Violations</a>
+											</div>
+											<div class="col-sm-12 col-mb-12 pb-2" style="min-width: 125px;">
+												<a href="<?=base_url()?>RestoreEmployee?id=<?php echo $ApplicantID; ?>" class="btn btn-success"><i class="fas fa-redo"></i> Restore</a>
+											</div>
+										</div>
+									</div>
+									<?php elseif ($Status == 'Deleted'): ?>
+									<hr>
+									<div class="row ml-auto mr-auto pb-5 w-100">
+										<div class="col-sm-12 col-mb-12 w-100 text-center archived-notice">
+											<div class="col-sm-12 pb-1 pt-4">
+												<h5>
+													<i class="fas fa-exclamation-circle"></i><b>&nbsp;Notice&nbsp;</b>
+												</h5>
+											</div>
+											<div class="col-sm-12 pb-2">
+												This individual is <b>Archived</b>
+											</div>
+											<div class="col-sm-12 col-mb-12 pb-2" style="min-width: 125px;">
+												<a href="<?=base_url()?>RestoreEmployee?id=<?php echo $ApplicantID; ?>" class="btn btn-success"><i class="fas fa-redo"></i> Restore</a>
 											</div>
 										</div>
 									</div>
@@ -177,8 +220,8 @@
 												<div class="col-sm-2 employee-dynamic-item">
 													<?php echo $Gender; ?>
 												</div>
-												<div class="col-sm-2 employee-dynamic-item">
-													<?php echo $Age; ?>
+												<div class="age-container col-sm-2 employee-dynamic-item">
+													<?php echo $pAge; ?>
 												</div>
 												<div class="col-sm-2 employee-dynamic-item">
 													<?php echo $Height; ?>
@@ -216,7 +259,13 @@
 													<?php echo $BirthPlace; ?>
 												</div>
 												<div class="col-sm-2 employee-dynamic-item">
-													<?php echo $BirthDate; ?>
+													<?php 
+														$date = new DateTime($BirthDate);
+														$day = $date->format('Y-m-d');
+														$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+
+														echo $day;
+													?>
 												</div>
 												<div class="col-sm-2 employee-dynamic-item">
 													<?php echo $Citizenship; ?>
@@ -232,7 +281,7 @@
 												</div>
 											</div>
 											<hr class="mt-5 mb-3">
-											<div class="row employee-personal-row">
+											<div class="row">
 												<div class="col-sm-3 employee-dynamic-header">
 													<b>S.S.S. No.</b>
 												</div>
@@ -246,7 +295,7 @@
 													<?php echo $HDMF; ?>
 												</div>
 											</div>
-											<div class="row employee-personal-row mt-4">
+											<div class="row mt-4">
 												<div class="col-sm-3 employee-dynamic-header">
 													<b>Residence Certificate No.</b>
 												</div>
@@ -260,7 +309,7 @@
 													<?php echo $PhilHealth; ?>
 												</div>
 											</div>
-											<div class="row employee-personal-row mt-4">
+											<div class="row mt-4">
 												<div class="col-sm-3 employee-dynamic-header">
 													<b>Tax Identification No.</b>
 												</div>
@@ -428,7 +477,6 @@
 														$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
 														$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
 														$interval = $datetime1->diff($datetime2);
-														echo $interval->format('%m');
 														if($interval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
 															if($interval->format('%H') == '1') {
 																$TimeString = $interval->format('%H hour');
@@ -568,16 +616,16 @@
 																	<div class="col-sm-12 employee-dynamic-header">
 																		<b>Contract Started</b>
 																	</div>
-																	<div class="col-sm-12">
-																		<?php echo $DateStarted; ?>
+																	<div class="col-sm-12" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $dselapsed->diffForHumans(); ?>">
+																		<?php echo $dsday . '<br>' . $dshours; ?>
 																	</div>
 																</div>
 																<div class="col-sm-12 employee-static-item text-center">
 																	<div class="col-sm-12 employee-dynamic-header">
 																		<b>Contract Ends</b>
 																	</div>
-																	<div class="col-sm-12">
-																		<?php echo $DateEnds; ?>
+																	<div class="col-sm-12" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $deelapsed->diffForHumans(); ?>">
+																		<?php echo $deday . '<br>' . $dehours; ?>
 																	</div>
 																</div>
 															</p>
@@ -588,7 +636,7 @@
 													<div class="card mb-3" style="max-width: 18rem; height: 300px;">
 														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-dollar-sign"></i> Salary Expected</b></div>
 														<div class="card-body text-dark">
-															<h5 class="card-title text-center wercher-card-title">₱ <?php echo $SalaryExpected; ?></h5>
+															<h5 class="card-title text-center wercher-card-title"><span style="user-select: none;">₱ </span><?php echo $SalaryExpected; ?></h5>
 															<p class="card-text">
 																<div class="col-sm-12 employee-static-item text-center mt-3">
 																	<div class="col-sm-12 employee-dynamic-header">
@@ -620,7 +668,25 @@
 																		<b>13th Month Pay</b>
 																	</div>
 																	<div class="col-sm-12">
-																		<?php echo $DateStarted; ?>
+																		<?php
+																			if ($isThirteenEligible) {
+																				echo '<span style="user-select: none;">₱ </span>' . round($thirteen, 2);
+																			} else {
+																				echo '<span class="p-1" style="color: #735600;" data-toggle="tooltip" data-placement="top" data-html="true" title="Contract duration is lower than 1 day"><i class="fas fa-info-circle"></i> Not eligible</span>';
+																			}
+																		?>
+																	</div>
+																	<div class="col-sm-12 employee-dynamic-header mt-2">
+																		<b>Monthly Salary</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php echo '<span style="user-select: none;">₱ </span>' . round($salaryMonthly, 2); ?>
+																	</div>
+																	<div class="col-sm-12 employee-dynamic-header mt-2">
+																		<b>Contract Elapsed</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php echo $cElapsedText; ?>
 																	</div>
 																</div>
 															</p>
@@ -1004,6 +1070,18 @@
 	<?php $this->load->view('_template/users/u_scripts');?>
 	<script type="text/javascript">
 		$(document).ready(function () {
+			<?php if ($Status == 'Employed') { ?>
+				$(".nav-item a[href*='Employee']").addClass("nactive");
+			<?php } else { ?>
+				$(".nav-item a[href*='Applicants']").addClass("nactive");
+			<?php } ?>
+			<?php if (isset($_GET['v_client'])): ?>
+				$('#EmpContractHistory').modal('show');
+			<?php endif; ?>
+			$("#EmpContractHistory").on("hidden.bs.modal", function () { // Change URL on modal close
+			    history.pushState(null, null, '<?php echo base_url() . 'ViewEmployee?id=' . $ApplicantID ?>');
+			});
+			// $('.age-container').text('123');
 			$('[data-toggle="tooltip"]').tooltip();
 			$('#ClientSelect').on('change', function() {
 				<?php foreach ($getClientOption->result_array() as $row): ?>
@@ -1203,6 +1281,10 @@
 		.blacklisted-notice {
 			border-radius: 6px;
 			background-color: rgba(255, 50, 50, 0.25);
+		}
+		.archived-notice {
+			border-radius: 6px;
+			background-color: rgba(0, 0, 0, 0.08);
 		}
 	</style>
 	<textarea id="text" style="display: none;"></textarea>

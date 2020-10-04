@@ -9,9 +9,7 @@
 <?php
 
 $T_Header;
-
 require 'vendor/autoload.php';
-
 use Carbon\Carbon;
 
 ?>
@@ -47,7 +45,6 @@ use Carbon\Carbon;
 					</div>
 					<div class="col-sm-12">
 						<hr>
-						<?php echo $this->session->flashdata('prompts'); ?>
 						<!-- <div id="LoadContainer" class="text-center ml-auto mr-auto" style="height: 800px;">
 							<div class="spinner-border m-4" role="status"></div>
 							<h4>Sorting table...</h4>
@@ -78,24 +75,28 @@ use Carbon\Carbon;
 										$thumbnail = $row['ApplicantImage'];
 										$thumbnail = substr($thumbnail, 0, -4);
 										$thumbnail = $thumbnail . '_thumb.jpg';
+										// TODO: getimagesize() severely lags the server on large amount of fetches.
+										// if(!getimagesize($thumbnail)) {
+										// 	$thumbnail = $row['ApplicantImage'];
+										// }
 									?>
 										<tr class="table-row-hover">
 											<td class="text-center">
 												<div class="col-sm-12">
-													<img src="<?php echo $thumbnail; ?>" width="70" height="70" class="rounded-circle">
+													<img src="<?php echo $thumbnail; ?>" width="70" height="70" class="rounded-circle" loading="lazy">
 												</div>
 												<div class="col-sm-12 align-middle">
 													<?php echo $row['ApplicantID']; ?>
 												</div>
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['NameExtension']; ?> <?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
 												<br>
 												<i style="color: gray;"><?php echo $row['PositionDesired']; ?></i>
 												<br>
 											</td>
 											<td class="text-center align-middle d-none">
-												<?php echo $row['NameExtension']; ?> <?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
 											</td>
 											<td class="text-center align-middle d-none">
 												<?php echo $row['PositionDesired']; ?>
@@ -107,6 +108,9 @@ use Carbon\Carbon;
 												<?php echo $row['Gender']; ?>
 											</td> -->
 											<td class="text-center align-middle" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $elapsed->diffForHumans(); ?>">
+												<div class="d-none">
+													<?php echo $row['AppliedOn']; ?>
+												</div>
 												<?php
 													echo $day . '<br>' . $hours;
 												?>
@@ -169,7 +173,12 @@ use Carbon\Carbon;
 	            extend: 'print',
 	            exportOptions: {
 	                columns: [ 1, 3, 4, 6 ]
-	            }
+	            },
+	            customize: function ( doc ) {
+	            	$(doc.document.body).find('h1').prepend('<img src="<?=base_url()?>assets/img/wercher_logo.png" width="63px" height="56px" />');
+					$(doc.document.body).find('h1').css('font-size', '24px');
+					$(doc.document.body).find('h1').css('text-align', 'center'); 
+				}
 	        },
 	        {
 	            extend: 'copyHtml5',

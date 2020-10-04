@@ -211,6 +211,25 @@ class Add_Controller extends CI_Controller {
 					else
 					{
 						$pImage = base_url().'uploads/'.$customid.'/'.$this->upload->data('file_name');
+						// Create thumbnail
+						$this->load->library('image_lib');
+						$tconfig['image_library'] = 'gd2';
+						$tconfig['source_image'] = './uploads/'.$customid.'/'.$this->upload->data('file_name');
+						$tconfig['create_thumb'] = TRUE;
+						$tconfig['maintain_ratio'] = TRUE;
+						$tconfig['width']         = 70;
+						$tconfig['height']       = 70;
+						$tconfig['new_image'] = './uploads/'.$customid.'/';
+
+						$this->load->library('image_lib', $tconfig);
+						$this->image_lib->initialize($tconfig);
+
+						$this->image_lib->resize();
+						if ( ! $this->image_lib->resize())
+						{
+						        $this->Model_Logbook->SetPrompts('error', 'error', $this->image_lib->display_errors() . $tconfig['source_image']);
+						}
+						$this->image_lib->clear();
 					}
 				} else {
 					$DiceRoll = rand(1, 3);
@@ -345,29 +364,10 @@ class Add_Controller extends CI_Controller {
 					// unset($_SESSION["beneCart"]);
 					
 					$this->Model_Logbook->SetPrompts('success', 'success', 'New employee added');
-					// Create thumbnail
-					$this->load->library('image_lib');
-					$tconfig['image_library'] = 'gd2';
-					$tconfig['source_image'] = './uploads/'.$customid.'/'.$this->upload->data('file_name');
-					$tconfig['create_thumb'] = TRUE;
-					$tconfig['maintain_ratio'] = TRUE;
-					$tconfig['width']         = 70;
-					$tconfig['height']       = 70;
-					$tconfig['new_image'] = './uploads/'.$customid.'/';
-
-					$this->load->library('image_lib', $tconfig);
-					$this->image_lib->initialize($tconfig);
-
-					$this->image_lib->resize();
-					if ( ! $this->image_lib->resize())
-					{
-					        $this->Model_Logbook->SetPrompts('error', 'error', $this->image_lib->display_errors() . $tconfig['source_image']);
-					}
-					$this->image_lib->clear();
 					// LOGBOOK
 					$this->Model_Logbook->LogbookEntry('Green', 'Applicant', ' added a new applicant: <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
-					$this->Model_Logbook->LogbookExtendedEntry(0, 'Applicant ID: ' . $ApplicantID);
-					$this->Model_Logbook->LogbookExtendedEntry(0, 'Referral: ' . $Referral);
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Applicant ID: <b>' . $ApplicantID . '</b>');
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Referral: <b>' . $Referral . '</b>');
 					redirect('Applicants');
 				}
 				else
@@ -392,14 +392,14 @@ class Add_Controller extends CI_Controller {
 
 		if ($AdminLevel == NULL || $Position == NULL || $AdminID == NULL || $Password == NULL || $FirstName == NULL || $MiddleIN == NULL || $LastName == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
-			redirect('Admin_List');
+			redirect('Admins');
 		}
 		else
 		{
 			$CheckAdminID = $this->Model_Selects->CheckAdminID($AdminID);
 			if ($CheckAdminID->num_rows() > 0) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Admin exist!</h5></div>');
-				redirect('Admin_List');
+				redirect('Admins');
 			}
 			else
 			{
@@ -423,7 +423,7 @@ class Add_Controller extends CI_Controller {
 					if ( ! $this->upload->do_upload('adminImage'))
 					{
 						$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
-						redirect('Admin_List');
+						redirect('Admins');
 					}
 					else
 					{
@@ -442,10 +442,9 @@ class Add_Controller extends CI_Controller {
 					}
 				}
 				$now = new DateTime();
-				$DateAdded = $now->format('g:i A');
+				$DateAdded = $now->format('Y-m-d H:i:s');
 
 				$En_Password = password_hash($Password, PASSWORD_BCRYPT);
-				$DateAdded = time();
 				$data = array(
 					'Image' => $pImage,
 					'AdminLevel' => $AdminLevel,
@@ -466,12 +465,12 @@ class Add_Controller extends CI_Controller {
 					$this->Model_Logbook->LogbookEntry('Green', 'Admin', ' added a new admin: <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewAdmin?id=' . $AdminID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleIN) . '</a>');
 					$this->Model_Logbook->LogbookExtendedEntry(0, 'Admin ID: ' . $ApplicantID);
 					$this->Model_Logbook->LogbookExtendedEntry(0, 'Position: ' . $AdminLevel . ' - ' . $Position);
-					redirect('Admin_List');
+					redirect('Admins');
 				}
 				else
 				{
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
-					redirect('Admin_List');
+					redirect('Admins');
 				}
 			}
 		}

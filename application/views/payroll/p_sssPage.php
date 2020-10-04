@@ -6,15 +6,9 @@
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="row wercher-tablelist-container rcontent PrintOutTable">
-					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-sm-12 col-md-12 mb-2">
+					<div class="col-sm-4 col-md-4 mb-2">
 						<h4>
 							<i class="fas fa-table"></i> SSS Table
-						</h4>
-					</div>
-					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
-						<h4 class="sss-datecreated">
-							Created in 
 						</h4>
 					</div>
 					<div class="col-8 col-sm-8 col-md-8 text-right">
@@ -26,15 +20,23 @@
 						</a>
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
+					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
+						<h4 class="sss-datecreated">
+							Created in 
+						</h4>
+					</div>
 					<div class="col-sm-12 col-mb-12 mt-2">
 						<div class="table-responsive">
 							<table id="SalaryTable" class="table table-condensed">
 								<thead>
-									<th width="20%">From</th>
-									<th width="20%">To</th>
-									<th width="20%">Contribution</th>
-									<th width="15%">Updated</th>
-									<th width="5%">Action</th>
+									<th>From</th>
+									<th>To</th>
+									<th>Contribution ER</th>
+									<th>Contribution EE</th>
+									<th>Contribution EC</th>
+									<th>Total</th>
+									<th>Updated</th>
+									<th style="width: 75px;">Action</th>
 								</thead>
 								<tbody>
 									<form method="POST" action="UpdateSSSField">
@@ -45,24 +47,41 @@
 										<tr class="sss-row">
 											<td>
 												<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
-													<input class="form-control w-25" type="number" name="f_range" min="0" value="<?php echo $row['f_range']; ?>">
+													<input class="form-control w-75" type="number" name="f_range" min="0" value="<?php echo $row['f_range']; ?>">
 												<?php else: ?>
 													<?php print $row['f_range']; ?>
 												<?php endif; ?>
 											</td>
 											<td>
 												<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
-													<input class="form-control w-25" type="number" name="t_range" min="0" value="<?php echo $row['t_range']; ?>">
+													<input class="form-control w-75" type="number" name="t_range" min="0" value="<?php echo $row['t_range']; ?>">
 												<?php else: ?>
 													<?php print $row['t_range']; ?>
 												<?php endif; ?>
 											</td>
 											<td>
 												<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
-													<input class="form-control w-25" type="number" name="contribution" min="0" value="<?php echo $row['contribution']; ?>">
+													<input class="form-control w-75" type="number" name="contribution_er" min="0" value="<?php echo $row['contribution_er']; ?>">
 												<?php else: ?>
-													<?php print $row['total']; ?>
+													<?php print $row['contribution_er']; ?>
 												<?php endif; ?>
+											</td>
+											<td>
+												<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
+													<input class="form-control w-75" type="number" name="contribution_ee" min="0" value="<?php echo $row['contribution_ee']; ?>">
+												<?php else: ?>
+													<?php print $row['contribution_ee']; ?>
+												<?php endif; ?>
+											</td>
+											<td>
+												<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
+													<input class="form-control w-75" type="number" name="contribution_ec" min="0" value="<?php echo $row['contribution_ec']; ?>">
+												<?php else: ?>
+													<?php print $row['contribution_ec']; ?>
+												<?php endif; ?>
+											</td>
+											<td>
+												<?php echo $row['total']; ?>
 											</td>
 											<td class="sss-updated">
 											</td>

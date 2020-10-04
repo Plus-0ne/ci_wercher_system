@@ -259,6 +259,18 @@ a[data-toggle="collapse"] {
 	border-radius: 5px;
 	box-shadow: 2px 0 2px #555;
 }
+.employee-table-progress-bar {
+	display: flex;
+	height: 25px;
+	position: absolute;
+	border-radius: 5px;s
+	box-shadow: 2px 0 2px #555;
+	overflow: hidden;
+    font-size: .75rem;
+}
+.employee-table-progress-bar:hover {
+	text-decoration: none;
+}
 .progressRemainingColor {
 	background: #c5ad00;
 }
@@ -786,7 +798,6 @@ a[data-toggle="collapse"] {
 .wercher-idcard-name {
 	margin-bottom: 75px;
 	margin-left: 33px;
-	font-size: 32px;
 	position: absolute;
 }
 
@@ -864,6 +875,7 @@ a[data-toggle="collapse"] {
 
 .eprint-commandcard {
 	border: 1px solid rgba(0, 0, 0, 0.33);
+	background-color: #ebebeb;
 }
 
 .eprint-commandcard b {
@@ -877,7 +889,11 @@ a[data-toggle="collapse"] {
 }
 
 .eprint-print-btn {
-	font-size: 24px;
+	font-size: 18px;
+}
+
+.eprint-print-btn-glow {
+	animation: glow-green 1s infinite alternate;
 }
 
 .eprint-field-title { 
@@ -1008,6 +1024,11 @@ a[data-toggle="collapse"] {
 	font-size: 12px;
 	opacity: 0.5;
 }
+.logbook-log-number:hover {
+	text-decoration: underline;
+	font-size: 14px;
+	opacity: 1;
+}
 .logbook-tooltip-extended {
 	border-radius: 4px;
 	margin-top: 20px;
@@ -1125,6 +1146,19 @@ a[data-toggle="collapse"] {
 	border: 2px solid rgba(200, 55, 55);
 	background-color: rgba(200, 55, 55);
 	color: rgba(255, 175, 175);
+}
+.notif-button:hover {
+	background-color: rgba(0, 0, 0, 0.16);
+	border-radius: 8px;
+	cursor: pointer;
+}
+.prompts-border-success {
+	box-shadow: 0 0 2px 2px #28a745;
+	border-left: 4px solid #28a745;
+}
+.prompts-border-danger {
+	box-shadow: 0 0 2px 2px red;
+	border-left: 4px solid red;
 }
 /*form {
 	display: none;
@@ -1315,4 +1349,28 @@ input[type=number]::-webkit-inner-spin-button {
     {
         display: none !important;
     }
+}
+@keyframes glow-green {
+	from {
+		box-shadow: 0 0 10px 10px gold;
+	}
+	to {
+		box-shadow: 0 0 10px -10px gold;
+	}
+}
+@keyframes glow-red {
+	from {
+		box-shadow: 0 0 10px 10px red;
+	}
+	to {
+		box-shadow: 0 0 10px -10px red;
+	}
+}
+@keyframes hover-sidebar {
+	from {
+		background: #4a3a15;
+	}
+	to {
+		background: rgba(0, 0, 0, 0.25);
+	}
 }

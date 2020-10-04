@@ -16,7 +16,6 @@
 					</div>
 				</div>
 				<div class="row rcontent PrintOutTable">
-					<?php echo $this->session->flashdata('prompts'); ?>
 					<div class="col-sm-12 col-md-12 mb-5">
 						<h4>
 							<i class="fas fa-vial"></i> Tax Table

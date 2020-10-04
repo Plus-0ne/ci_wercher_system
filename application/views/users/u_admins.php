@@ -1,4 +1,10 @@
-<?php $T_Header;?>
+<?php 
+
+$T_Header;
+require 'vendor/autoload.php';
+use Carbon\Carbon;
+
+?>
 <body>
 	<div class="wrapper wercher-background-lowpoly">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
@@ -7,12 +13,11 @@
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="col-12 col-sm-12 tabs">
 					<ul>
-						<li class="tabs-active"><a href="<?php echo base_url() ?>Admin_List">Admins (<?php echo $ShowAdmin->num_rows()?>)</a></li>
+						<li class="tabs-active"><a href="<?php echo base_url() ?>Admins">Admins (<?php echo $ShowAdmin->num_rows()?>)</a></li>
 						<li><a href="<?php echo base_url() ?>AdminsArchived">Archived</a></li>
 					</ul>
 				</div>
 				<div class="row rcontent">
-					<?php echo $this->session->flashdata('prompts'); ?>
 					<div class="col-5 PrintPageName PrintOut">
 						<i class="fas fa-info-circle"></i>
 						<i>Found <?php echo $ShowAdmin->num_rows(); ?> admin<?php if($ShowAdmin->num_rows() != 1): echo 's'; endif;?> currently stored in the database.
@@ -30,23 +35,53 @@
 					</div>
 					<div class="col-sm-12">
 						<div class="table-responsive pt-2 pb-5 pl-2 pr-2">
-							<table id="ListAdmins" class="table table-bordered PrintOut" style="width: 100%;">
+							<table id="ListAdmins" class="table PrintOut" style="width: 100%;">
 								<thead>
 									<tr class="text-center">
 										<th> Username </th>
 										<th> Full Name </th>
-										<th> Level </th>
+										<th> Access Level </th>
 										<th> Date Added </th>
-										<th class="PrintExclude" style="width: 5%;"> Action </th>
+										<th class="d-none"> Date Added </th>
+										<th style="width: 325px;"> Latest Activity </th>
+										<th class="PrintExclude" style="width: 100px;"> Action </th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($ShowAdmin->result_array() as $row): ?>
+									<?php foreach ($ShowAdmin->result_array() as $row): 
+										$date = new DateTime($row['DateAdded']);
+										$day = $date->format('Y-m-d');
+										$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+										$hours = $date->format('h:i:s A');
+										$elapsed = Carbon::parse($date);
+
+										$thumbnail = $row['Image'];
+										$thumbnail = substr($thumbnail, 0, -4);
+										$thumbnail = $thumbnail . '_thumb.jpg';
+
+										$GetLatestAdminActivity = $this->Model_Selects->GetLatestAdminActivity($row['AdminID'], 1);
+										if ($GetLatestAdminActivity->num_rows() > 0) {
+											$isActivityNotEmpty = true;
+											foreach($GetLatestAdminActivity->result_array() as $arow) {
+												$LatestActivityEvent = $arow['Event'];
+												$LatestActivityEvent[1]= strtoupper($LatestActivityEvent[1]); // Capitalize second letter (first letter is a space)
+												$LatestActivityTime = $arow['Time'];
+												$activityDate = new DateTime($LatestActivityTime);
+												$activityDay = $activityDate->format('Y-m-d');
+												$activityDay = DateTime::createFromFormat('Y-m-d', $activityDay)->format('F d, Y');
+												$activityHours = $activityDate->format('h:i:s A');
+												$activityElapsed = Carbon::parse($activityDate);
+											}
+										} else {
+											$isActivityNotEmpty = false;
+										}
+
+										?>
 										<tr>
 											<td class="text-center">
 												<div class="col-sm-12">
 													<?php if(!empty($row['Image'])): ?>
-														<img src="<?php echo $row['Image']; ?>" width="70" height="70" class="rounded-circle">
+														<img src="<?php echo $thumbnail; ?>" width="70" height="70" class="rounded-circle">
 													<?php else: ?>
 														<img src="<?=base_url()?>assets/img/wercher_noimage_blue.png" width="70" height="70" class="rounded-circle">
 													<?php endif; ?>
@@ -81,12 +116,33 @@
 												}
 												?>
 											</td>
-											<td class="text-center align-middle">
+											<td class="text-center align-middle" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $elapsed->diffForHumans(); ?>">
+												<div class="d-none">
+													<?php echo $row['DateAdded']; ?>
+												</div>
 												<?php
-													echo date('m-d-Y H:i:s A',$row['DateAdded']);
+													echo $day . '<br>' . $hours;
 												?>
 											</td>
+											<td class="text-center align-middle d-none">
+												<?php echo $day . ' at ' . $hours; ?>
+											</td>
+											<?php if ($isActivityNotEmpty): ?>
+ 											<td class="text-center align-middle" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $activityDay . '<br>' . $activityHours; ?>">
+												<div class="d-none">
+													<?php echo $LatestActivityTime; ?>
+												</div>
+												<?php
+													echo ucfirst($LatestActivityEvent) . '<br>' . '<span style="color: rgba(0, 0, 0, 0.5);"><i>' . $activityElapsed->diffForHumans() . '</i></span>';
+												?>
+											</td>
+											<?php else: ?>
+											<td class="text-center align-middle">
+												No record.
+											</td>
+											<?php endif; ?>
 											<td class="text-center align-middle PrintExclude">
+												<a href="<?=base_url()?>Logbook?admin=<?php echo $row['AdminID']; ?>" class="btn btn-primary btn-sm w-100 mb-1"><i class="fas fa-book"></i> Logbook</a>
 												<?php if ($ShowAdmin->num_rows() > 1) { ?>
 													<a href="<?=base_url()?>RemoveAdmin?id=<?php echo $row['AdminNo']; ?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Admin?')"><i class="fas fa-trash"></i> Delete</a>
 												<?php } else { ?>
@@ -128,11 +184,11 @@
 					</div>
 					<div class="form-row">
 						<div class="form-group m-1 col">
-							<label>Admin Level</label>
+							<label>Access Level</label>
 							<select class="form-control" name="AdminLevel">
-								<option value="Level_1">Level 1 President / Developer</option>
-								<option value="Level_2">Level 2 Human Resource</option>
-								<option value="Level_3">Level 3 Accounting</option>
+								<option value="Level_1">Level 1</option>
+								<option value="Level_2">Level 2</option>
+								<option value="Level_3">Level 3</option>
 							</select>
 						</div>
 						<div class="form-group m-1 col">
@@ -210,31 +266,31 @@
 	            {
 		            extend: 'print',
 		            exportOptions: {
-		                columns: [ 1, 2, 3, 4, 5 ]
+		                columns: [ 0, 1, 2, 4 ]
 		            }
 		        },
 		        {
 		            extend: 'copyHtml5',
 		            exportOptions: {
-		                columns: [ 1, 2, 3, 4, 5 ]
+		                columns: [ 0, 1, 2, 4 ]
 		            }
 		        },
 		        {
 		            extend: 'excelHtml5',
 		            exportOptions: {
-		                columns: [ 1, 2, 3, 4, 5 ]
+		                columns: [ 0, 1, 2, 4 ]
 		            }
 		        },
 		        {
 		            extend: 'csvHtml5',
 		            exportOptions: {
-		                columns: [ 1, 2, 3, 4, 5 ]
+		                columns: [ 0, 1, 2, 4 ]
 		            }
 		        },
 		        {
 		            extend: 'pdfHtml5',
 		            exportOptions: {
-		                columns: [ 1, 2, 3, 4, 5 ]
+		                columns: [ 0, 1, 2, 4 ]
 		            }
 		        }
 	        ]

@@ -5,14 +5,22 @@
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); //TODO: Limit the bell to HR access? ?>
-				<div class="row wercher-tablelist-container">
-					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-sm-4 PrintPageName PrintOut">
-						<h4 class="tabs-icon">
-							<i class="fas fa-user-tag fa-fw"></i> Clients x <?php echo $ShowClients->num_rows() ?>
-						</h4>
+				<div class="col-12 col-sm-12 tabs">
+					<ul>
+						<li class="tabs-active"><a href="<?php echo base_url() ?>Salary">Salary (<?php echo $ShowClients->num_rows()?>)</a></li>
+					</ul>
+				</div>
+				<div class="row rcontent">
+					<div class="col-5 PrintPageName PrintOut">
+						<i class="fas fa-info-circle"></i>
+						<i>Found <?php echo $ShowClients->num_rows(); ?> client<?php if($ShowClients->num_rows() != 1): echo 's'; endif;?> currently stored in the database.
+						</i>
 					</div>
-					<div class="col-sm-8 text-right">
+					<div class="col-7 text-right">
+						<span class="input-bootstrap">
+							<i class="sorting-table-icon spinner-border spinner-border-sm mr-2"></i>
+							<input id="DTSearch" type="search" class="input-bootstrap" placeholder="Sorting table..." readonly>
+						</span>
 						<button type="button" class="ImportButton btn btn-success"><i class="fas fa-file-excel"></i> Import Excel</button>
 						<a href="SSS_Table" class="btn btn-primary">
 							<i class="fas fa-table"></i> SSS
@@ -27,8 +35,8 @@
 										<th> Name </th>
 										<th> Address </th>
 										<th> Contact </th>
-										<th> Employees </th>
-										<th class="text-center PrintExclude" style="width: 5%;"> View Hours </th>
+										<th style="width: 25px;"> Employees </th>
+										<th class="text-center PrintExclude" style="width: 125px;"> View Hours </th>
 									</tr>
 								</thead>
 								<tbody>
@@ -57,7 +65,7 @@
 							</table>
 						</div>
 					</div>
-					<hr>
+					<!-- <hr>
 					<div class="row pt-5 pl-5">
 						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 							<h5>
@@ -89,7 +97,7 @@
 								</table>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -110,6 +118,9 @@
 </form>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('.sorting-table-icon').hide();
+		$('#DTSearch').attr('placeholder', 'Search table');
+		$('#DTSearch').attr('readonly', false);
 		$('#ExportFromDate, #ExportToDate').on('change', function() {
 			$('#ExportFileName').val($('#DesignatedClientName').val() + ' (' + $('#ExportFromDate').val() + ' - ' + $('#ExportToDate').val() + ')' );
 		});
@@ -131,36 +142,38 @@
 		});
 		$('.load-div').hide();
 		var table = $('#ListClients').DataTable( {
+			sDom: 'lrtip',
+			"bLengthChange": false,
 			"order": [[ 3, "desc" ]],
 			buttons: [
             {
 	            extend: 'print',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 0, 1, 2, 3 ]
 	            }
 	        },
 	        {
 	            extend: 'copyHtml5',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 0, 1, 2, 3 ]
 	            }
 	        },
 	        {
 	            extend: 'excelHtml5',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 0, 1, 2, 3 ]
 	            }
 	        },
 	        {
 	            extend: 'csvHtml5',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 0, 1, 2, 3 ]
 	            }
 	        },
 	        {
 	            extend: 'pdfHtml5',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 0, 1, 2, 3 ]
 	            }
 	        }
         ]
@@ -180,6 +193,9 @@
 	    $('#ExportPDF').on('click', function () {
 	        table.button('4').trigger();
     	});
+    	$('#DTSearch').on('keyup change', function(){
+			table.search($(this).val()).draw();
+		});
 		$('.ViewClientIDButton').on('click', function () {
 			$('#ViewClientID').val($(this).attr('id'));
 			console.log($('#ViewClientID').val());

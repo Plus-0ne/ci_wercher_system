@@ -593,7 +593,16 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-
+	public function GetLatestEmployees($FetchNum = 1) {
+		$SQL = "SELECT * FROM applicants WHERE Status = 'Employed' ORDER BY DateStarted DESC LIMIT $FetchNum";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetLatestAdminActivity($AdminID, $FetchNum = 1) {
+		$SQL = "SELECT * FROM logbook WHERE AdminID = '$AdminID' ORDER BY Time DESC LIMIT $FetchNum";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 
 	
 }

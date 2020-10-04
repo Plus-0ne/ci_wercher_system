@@ -8,7 +8,6 @@
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
-				<?php echo $this->session->flashdata('prompts'); ?>
 				<br>
 				<div class="col-12 col-sm-12 payroll-tabs">
 					<ul>
@@ -53,11 +52,11 @@
 					</div>
 					<div class="col-sm-12 col-mb-12">
 						<div class="table-responsive w-100">
-							<table id="WeeklyTable" class="table table-condensed">
+							<table id="WeeklyTable" class="table table-condensed" style="font-size: 14px;">
 								<thead>
 									<th style="min-width: 100px;">Applicant ID</th>
-									<th style="min-width: 300px;">Name</th>
-									<th style="min-width: 75px;">Salary (₱)</th>
+									<th style="min-width: 200px;">Name</th>
+									<th style="min-width: 50px;">Salary (₱)</th>
 									<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
 										<th><?php echo $row['Time']; ?></th>
 									<?php endforeach; ?>

@@ -4,7 +4,7 @@
 
 		<!-- Modal Header -->
 		<div class="modal-header">
-			<h4 class="modal-title"><i class="fas fa-download"></i> Export as...</h4>
+			<h4 class="modal-title"><i class="fas fa-download"></i> Export table as...</h4>
 			<div class="text-right">
 				<button type="button" class="close d-none d-sm-block" data-dismiss="modal">&times;</button>
 			</div>
@@ -48,7 +48,7 @@
 					<p class="export-tooltip">Export as a Comma-seperated values file. Best viewed on a spreadsheet program.</p>
 				</div>
 			</div>
-			<div class="row rcontent export-button w-85 ml-auto mr-auto mt-2 export-disabled" id="ExportPDF">
+			<!-- <div class="row rcontent export-button w-85 ml-auto mr-auto mt-2 export-disabled" id="ExportPDF">
 				<div class="col-sm-12 col-md-4 text-center mt-2">
 					<i class="fas fa-file-pdf" style="font-size: 48px;"></i>
 					<p class="export-title"><b><del>PDF File (.pdf)</del></b></p>
@@ -57,12 +57,12 @@
 					<p class="export-tooltip"><b>WORK IN PROGRESS!</b></p>
 					<p class="export-tooltip"><del>Export as a Portable Document Format file. Best viewed on a PDF viewer.</del></p>
 				</div>
-			</div>
+			</div> -->
 		</div>
 
 		<!-- Modal footer -->
 		<div class="modal-footer">
-			<button type="button" class="btn btn-danger ml-auto" data-dismiss="modal">Close</button>
+			<button type="button" class="btn btn-danger ml-auto" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
 		</div>
 
 		</div>

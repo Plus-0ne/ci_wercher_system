@@ -3,7 +3,13 @@
 		background-color: #ebebeb;
 	}
 </style>
-<?php $T_Header;?>
+<?php 
+
+$T_Header;
+require 'vendor/autoload.php';
+use Carbon\Carbon;
+
+?>
 <body>
 	<div class="wrapper wercher-background-lowpoly">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
@@ -36,7 +42,6 @@
 					</div>
 					<div class="col-sm-12">
 						<hr>
-						<?php echo $this->session->flashdata('prompts'); ?>
 						<div class="table-responsive pt-2 pb-5">
 							<table id="emp" class="table PrintOut" style="width: 100%;">
 								<thead>
@@ -47,28 +52,49 @@
 										<th class="d-none"> Position Desired </th>
 										<th> Contact Number </th>
 										<th> Applied On </th>
+										<th class="d-none"> Applied On </th>
 										<th> Expired Since </th>
+										<th class="d-none"> Expired Since </th>
 										<th class="PrintExclude"> Action </th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($get_ApplicantExpired->result_array() as $row): ?>
+									<?php foreach ($get_ApplicantExpired->result_array() as $row): 
+										// Applied On
+										$date = new DateTime($row['AppliedOn']);
+										$day = $date->format('Y-m-d');
+										$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+										$hours = $date->format('h:i:s A');
+										$elapsed = Carbon::parse($row['AppliedOn']);
+										// Expired Since
+										if ($row['DateEnds'] != NULL) {
+											$edate = new DateTime($row['DateEnds']);
+											$eday = $edate->format('Y-m-d');
+											$eday = DateTime::createFromFormat('Y-m-d', $eday)->format('F d, Y');
+											$ehours = $edate->format('h:i:s A');
+											$eelapsed = Carbon::parse($row['DateEnds']);
+										}
+
+										$thumbnail = $row['ApplicantImage'];
+										$thumbnail = substr($thumbnail, 0, -4);
+										$thumbnail = $thumbnail . '_thumb.jpg';
+										?>
 										<tr>
 											<td class="text-center">
 												<div class="col-sm-12">
-													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
+													<img src="<?php echo $thumbnail; ?>" width="70" height="70" class="rounded-circle">
 												</div>
 												<div class="col-sm-12 align-middle">
 													<?php echo $row['ApplicantID']; ?>
 												</div>
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['NameExtension']; ?> <?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+												<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
 												<br>
 												<i style="color: gray;"><?php echo $row['PositionDesired']; ?></i>
 											</td>
 											<td class="text-center align-middle d-none">
-												<?php echo $row['NameExtension']; ?> <?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+												<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
 											</td>
 											<td class="text-center align-middle d-none">
 												<?php echo $row['PositionDesired']; ?>
@@ -76,11 +102,27 @@
 											<td class="text-center align-middle">
 												<?php echo $row['Phone_No']; ?>
 											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['AppliedOn']; ?>
+											<td class="text-center align-middle" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $elapsed->diffForHumans(); ?>">
+												<div class="d-none">
+													<?php echo $row['AppliedOn']; ?>
+												</div>
+												<?php
+													echo $day . '<br>' . $hours;
+												?>
 											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['DateEnds']; ?>
+											<td class="text-center align-middle d-none">
+												<?php echo $day . ' at ' . $hours; ?>
+											</td>
+											<td class="text-center align-middle" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php if($row['DateEnds'] != NULL) { echo $eelapsed->diffForHumans(); } ?>">
+												<div class="d-none">
+													<?php if($row['DateEnds'] != NULL) { echo $row['DateEnds']; } ?>
+												</div>
+												<?php
+													if($row['DateEnds'] != NULL) { echo $eday . '<br>' . $ehours; }
+												?>
+											</td>
+											<td class="text-center align-middle d-none">
+												<?php if($row['DateEnds'] != NULL) { echo $eday . ' at ' . $ehours; } ?>
 											</td>
 											<td class="text-center align-middle PrintExclude" width="100">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
@@ -106,6 +148,7 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('[data-toggle="tooltip"]').tooltip();
 		$('.sorting-table-icon').hide();
 		$('#DTSearch').attr('placeholder', 'Search table');
 		$('#DTSearch').attr('readonly', false);
@@ -131,36 +174,36 @@
 		var table = $('#emp').DataTable( {
 			sDom: 'lrtip',
 			"bLengthChange": false,
-        	"order": [[ 6, "desc" ]],
+        	"order": [[ 7, "desc" ]],
         	buttons: [
             {
 	            extend: 'print',
 	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 6 ]
+	                columns: [ 2, 3, 4, 6, 8 ]
 	            }
 	        },
 	        {
 	            extend: 'copyHtml5',
 	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 6 ]
+	                columns: [ 2, 3, 4, 6, 8 ]
 	            }
 	        },
 	        {
 	            extend: 'excelHtml5',
 	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 6 ]
+	                columns: [ 2, 3, 4, 6, 8 ]
 	            }
 	        },
 	        {
 	            extend: 'csvHtml5',
 	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 6 ]
+	                columns: [ 2, 3, 4, 6, 8 ]
 	            }
 	        },
 	        {
 	            extend: 'pdfHtml5',
 	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 6 ]
+	                columns: [ 2, 3, 4, 6, 8 ]
 	            }
 	        }
         ]

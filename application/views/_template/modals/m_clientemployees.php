@@ -27,19 +27,23 @@
 		<div class="modal-body">
 			<div class="row">
 				<div class="col-sm-12">
-					<div class="pt-5 pb-5 pl-2 pr-2">
+					<div class="pl-2 pr-2">
 						<?php if (isset($_GET['id'])): ?>
 							<div class="row">
 								<div class="table-responsive pb-5 pl-2 pr-2">
 									<table id="ClientEmployedTable" class="table" style="width: 100%;">
 										<thead>
 											<tr class="text-center">
-												<th> Employee </th>
-												<th> Full Name </th>
-												<th> Position </th>
-												<th> Salary </th>
+												<th> Employee ID </th>
+												<th> Full Name / Position </th>
+												<th class="d-none"> Full Name </th>
+												<th class="d-none"> Position </th>
+												<th> Contact Number </th>
+												<th> Hired On </th>
+												<th class="d-none"> Contract Started </th>
+												<th class="d-none"> Contract Ends </th>
 												<th> Contract Lifespan </th>
-												<th> Action </th>
+												<th class="PrintExclude"> Action </th>
 											</tr>
 										</thead>
 										<tbody>
@@ -49,7 +53,17 @@
 												<tr>
 													<td class="text-center">
 														<div class="col-sm-12">
-															<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
+															<?php
+															// Thumbnail
+															$thumbnail = $row['ApplicantImage'];
+															$thumbnail = substr($thumbnail, 0, -4);
+															$thumbnail = $thumbnail . '_thumb.jpg';
+															// TODO: getimagesize() severely lags the server on large amount of fetches.
+															// if(!getimagesize($thumbnail)) {
+															// 	$thumbnail = $row['ApplicantImage'];
+															// }
+															?>
+															<img src="<?php echo $thumbnail; ?>" width="70" height="70" class="rounded-circle">
 														</div>
 														<div class="col-sm-12 align-middle">
 															<?php if($row['EmployeeID'] != NULL): ?>
@@ -60,13 +74,30 @@
 														</div>
 													</td>
 													<td class="text-center align-middle">
-														<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+														<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
+														<br>
+														<i style="color: gray;"><?php echo $row['PositionDesired']; ?></i>
 													</td>
-													<td class="text-center align-middle">
+													<td class="text-center align-middle d-none">
+														<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
+													</td>
+													<td class="text-center align-middle d-none">
 														<?php echo $row['PositionDesired']; ?>
 													</td>
 													<td class="text-center align-middle">
-														<?php echo $row['SalaryExpected']; ?>
+														<?php echo $row['Phone_No']; ?>
+													</td>
+													<td class="text-center align-middle">
+														<div class="d-none"> 
+															<?php echo $row['DateStarted']; // For sorting ?>
+														</div>
+														<?php
+															$dateStarts = new DateTime($row['DateStarted']);
+															$dayStarts = $dateStarts->format('Y-m-d');
+															$dayStarts = DateTime::createFromFormat('Y-m-d', $dayStarts)->format('F d, Y');
+
+															echo $dayStarts;
+														?>
 													</td>
 													<?php
 														$currTime = time();
@@ -80,37 +111,112 @@
 														$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
 														$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
 														$interval = $datetime1->diff($datetime2);
-														$DaysRemaining = "";
-														if($interval->format('%y years') != '0 years') {
-															$DaysRemaining = $DaysRemaining . $interval->format('%y years');
-															if($interval->format('%m months') != '0 months') {
-																$DaysRemaining = $DaysRemaining . ', ';
+														$TimeString = "";
+														if($interval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
+															if($interval->format('%H') == '1') {
+																$TimeString = $interval->format('%H hour');
+																if($interval->format('%I') != NULL || $interval->format('%S') != NULL) {
+																	$TimeString = $TimeString . ', ';
+																}
+															} else {
+																$TimeString = $interval->format('%H hours');
+																if($interval->format('%I') != NULL || $interval->format('%S') != NULL) {
+																	$TimeString = $TimeString . ', ';
+																}
 															}
-														}
-														if($interval->format('%m months') != '0 months') {
-															$DaysRemaining = $DaysRemaining . $interval->format('%m months');
-															if($interval->format('%d days') != '0 days') {
-																$DaysRemaining = $DaysRemaining . ', ';
+															if($interval->format('%I') == '1') {
+																$TimeString = $TimeString . $interval->format('%I minute');
+																if($interval->format('%S') != NULL) {
+																	$TimeString = $TimeString . ', ';
+																}
+															} else {
+																$TimeString = $TimeString . $interval->format('%I minutes');
+																if($interval->format('%S') != NULL) {
+																	$TimeString = $TimeString . ', ';
+																}
 															}
-														}
-														if($interval->format('%d days') != '0 days') {
-															$DaysRemaining = $DaysRemaining . $interval->format('%d days');
+															if($interval->format('%S') == '1') {
+																$TimeString = $TimeString . $interval->format('%S second');
+															} else {
+																$TimeString = $TimeString . $interval->format('%S seconds');
+															}
+														} else {
+															if($interval->format('%y') == '1') {
+																$TimeString = $interval->format('%y year');
+																if($interval->format('%m') != NULL || $interval->format('%d') != NULL) {
+																	$TimeString = $TimeString . ', ';
+																}
+															} else {
+																$TimeString = $interval->format('%y years');
+																if($interval->format('%m') != NULL || $interval->format('%d') != NULL) {
+																	$TimeString = $TimeString . ', ';
+																}
+															}
+															if($interval->format('%m') == '1') {
+																$TimeString = $TimeString . $interval->format('%m month');
+																if($interval->format('%d') != NULL) {
+																	$TimeString = $TimeString . ', ';
+																}
+															} else {
+																$TimeString = $TimeString . $interval->format('%m months');
+																if($interval->format('%d') != NULL) {
+																	$TimeString = $TimeString . ', ';
+																}
+															}
+															if($interval->format('%d') == '1') {
+																$TimeString = $TimeString . $interval->format('%d day');
+															} else {
+																$TimeString = $TimeString . $interval->format('%d days');
+															}
 														}
 													?>
-													<td class="text-center align-middle">
+													<td class="text-center align-middle d-none">
+														<?php
+															$dateStarts = new DateTime($row['DateStarted']);
+															$dayStarts = $dateStarts->format('Y-m-d');
+															$dayStarts = DateTime::createFromFormat('Y-m-d', $dayStarts)->format('F d, Y');
+															$hoursStarts = $dateStarts->format('h:i:s A');
+
+															$dateEnds = new DateTime($row['DateEnds']);
+															$dayEnds = $dateEnds->format('Y-m-d');
+															$dayEnds = DateTime::createFromFormat('Y-m-d', $dayEnds)->format('F d, Y');
+															$hoursEnds = $dateEnds->format('h:i:s A');
+
+															echo $dayStarts . ' at ' . $hoursStarts;
+														?>
+													</td>
+													<td class="text-center align-middle d-none">
+														<?php
+															$dateStarts = new DateTime($row['DateStarted']);
+															$dayStarts = $dateStarts->format('Y-m-d');
+															$dayStarts = DateTime::createFromFormat('Y-m-d', $dayStarts)->format('F d, Y');
+															$hoursStarts = $dateStarts->format('h:i:s A');
+
+															$dateEnds = new DateTime($row['DateEnds']);
+															$dayEnds = $dateEnds->format('Y-m-d');
+															$dayEnds = DateTime::createFromFormat('Y-m-d', $dayEnds)->format('F d, Y');
+															$hoursEnds = $dateEnds->format('h:i:s A');
+
+															echo $dayEnds . ' at ' . $hoursEnds;
+														?>
+													</td>
+													<td class="text-center align-middle" data-toggle="tooltip" data-placement="top" data-html="true" title="<b>Contract Started</b><br><?php echo $dayStarts . '<br>' . $hoursStarts; ?><br><br><b>Contract Ends</b><br><?php echo $dayEnds . '<br>' . $hoursEnds; ?><br><br><b>Salary</b><br>₱<?php echo $row['SalaryExpected']; ?><br><br><i>Click the bar to open the Contract tab</i>">
+														<div class="d-none"> 
+															<?php echo $row['DateEnds']; // For sorting ?>
+														</div>
 														<div class="wercher-progress-daysremaining"><?php
-														if ($DaysRemaining != NULL) {
-															echo $DaysRemaining;
+														if ($TimeString != NULL) {
+															echo $TimeString;
 														} else {
 															echo 'Less than 1 day';
 														} ?>
 													 	</div>
-														<a href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>#Contract" class="progress" style="position: relative; box-shadow: none; background-color: rgba(0, 0, 0, 0.11);" data-toggle="tooltip" data-placement="top" data-html="true" title="Contract Started<br><?php echo $row['DateStarted']; ?><br><br>Contract Ends<br><?php echo $row['DateEnds']; ?><br><br>Salary Expected<br>₱<?php echo $row['SalaryExpected']; ?><br><br><i>Click to open the Contract tab</i>">
+														<a href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>#Contract" class="employee-table-progress-bar" style="position: relative; box-shadow: none; background-color: rgba(0, 0, 0, 0.11);">
 															<div class="progress-bar wercher-progress-bar" role="progressbar" style="width: <?php echo $rPercentage; ?>%;" aria-valuenow="<?php echo $rPercentage; ?>" aria-valuemin="0" aria-valuemax="100"><?php echo $rPercentage; ?>%</div>
 														</a>
 													</td>
-													<td class="text-center align-middle PrintExclude" width="100">
-														<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>" target="_blank"><i class="fas fa-external-link-alt"></i> View</a>
+													<td class="text-center align-middle PrintExclude" width="110">
+														<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
 													</td>
 												</tr>
 											<?php endforeach ?>

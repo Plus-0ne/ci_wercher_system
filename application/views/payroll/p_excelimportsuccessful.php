@@ -8,7 +8,6 @@
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
-				<?php echo $this->session->flashdata('prompts'); ?>
 				<br>
 				<div class="col-12 col-sm-12 payroll-tabs">
 					<ul>

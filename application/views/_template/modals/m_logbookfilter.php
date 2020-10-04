@@ -14,11 +14,17 @@ $GetAdmin = $this->Model_Selects->GetAdmin();
 			</div>
 			<div id="ClientModal" class="modal-body">
 				<div class="form-row">
-					<div class="form-group col-9">
+					<div class="form-group col-12">
 						<label>Admin</label>
 						<select id="FilterAdmin" class="form-control" name="admin">
 							<option selected="" value="">
 								No filter (all admin)
+							</option>
+							<option value="SYSTEM">
+								SYSTEM
+							</option>
+							<option value="GUEST">
+								GUEST
 							</option>
 							<?php foreach ($GetAdmin->result_array() as $row): ?>
 								<option value="<?=$row['AdminID'];?>">
@@ -27,11 +33,11 @@ $GetAdmin = $this->Model_Selects->GetAdmin();
 							<?php endforeach ?>
 						</select>
 					</div>
-					<div id="FilterAdminPosts" class="form-group col-3">
+					<!-- <div id="FilterAdminPosts" class="form-group col-3">
 						<label>No. of Posts</label>
 						<input class="form-control" type="text" readonly>
-					</div>
-					<div class="form-group col-9">
+					</div> -->
+					<div class="form-group col-12">
 						<label>Type</label>
 						<select id="FilterType" class="form-control" name="type">
 							<option selected="" value="">
@@ -60,19 +66,19 @@ $GetAdmin = $this->Model_Selects->GetAdmin();
 							</option>
 						</select>
 					</div>
-					<div id="FilterTypePosts" class="form-group col-3">
+					<!-- <div id="FilterTypePosts" class="form-group col-3">
 						<label>&nbsp;</label>
 						<input class="form-control" type="text" readonly>
-					</div>
-					<div class="form-group col-9">
+					</div> -->
+					<div class="form-group col-12">
 						<label>Event</label>
 						<input class="form-control" type="text" name="event">
 					</div>
-					<div id="FilterEventPosts" class="form-group col-3">
+					<!-- <div id="FilterEventPosts" class="form-group col-3">
 						<label>&nbsp;</label>
 						<input class="form-control" type="text" readonly>
-					</div>
-					<div class="form-row col-9">
+					</div> -->
+					<div class="form-row col-12">
 						<div class="form-group col-sm-12 col-md-6">
 							<label>Date Range</label>
 							<input id="FromDate" class="form-control" type="date" name="from">
@@ -82,14 +88,14 @@ $GetAdmin = $this->Model_Selects->GetAdmin();
 							<input id="ToDate" class="form-control" type="date" name="to">
 						</div>
 					</div>
-					<div id="TotalFilterPosts" style="margin-left: 10px;" class="form-group col-3">
+					<!-- <div id="TotalFilterPosts" style="margin-left: 10px;" class="form-group col-3">
 						<label>&nbsp;</label>
 						<input class="form-control" type="text" readonly>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<div class="modal-footer">
-				<span style="margin-right: 4px;">Total Posts:</span> <input class="form-control w-25" type="text" id="FilterTypePosts" readonly>
+				<!-- <span style="margin-right: 4px;">Total Posts:</span> <input class="form-control w-25" type="text" id="FilterTypePosts" readonly> -->
 				<button type="submit" class="btn btn-success"><i class="fas fa-filter"></i> Filter</button>
 			</div>
 			<?php echo form_close();?>

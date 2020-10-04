@@ -46,7 +46,7 @@
 		</li>
 		<!-- FOR LEVEL 1 USER -->
 		<li class="nav-item">
-			<a class="link-s" href="<?=base_url()?>Admin_List"><span class="fas fa-user-secret fa-fw"></span> Admins </a>
+			<a class="link-s" href="<?=base_url()?>Admins"><span class="fas fa-user-secret fa-fw"></span> Admins </a>
 		</li>
 		<!-- END COMMENT -->
 		<li class="nav-item">

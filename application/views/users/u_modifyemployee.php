@@ -8,7 +8,6 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="p-5">
-							<?php echo $this->session->flashdata('prompts'); ?>
 							<div class="mb-3">
 								<h6>
 									<i class="fas fa-square"></i> PERSONAL

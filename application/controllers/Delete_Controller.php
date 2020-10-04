@@ -61,7 +61,7 @@ class Delete_Controller extends CI_Controller {
 	{
 		$id = $this->input->get('id');
 		if (!isset($_GET['id'])) {
-			redirect('Admin_List');
+			redirect('Admins');
 		}
 		else
 		{
@@ -99,12 +99,12 @@ class Delete_Controller extends CI_Controller {
 				}
 				else
 				{
-					redirect('Admin_List');
+					redirect('Admins');
 				}
 			}
 			else
 			{
-				redirect('Admin_List');
+				redirect('Admins');
 			}
 		}
 	}

@@ -28,17 +28,27 @@
 									</thead>
 									<tbody>
 										<?php 
+										foreach ($GetContractHistory->result_array() as $row): 
+											$cdsdate = new DateTime($row['PreviousDateStarted']);
+											$cdsday = $cdsdate->format('Y-m-d');
+											$cdsday = DateTime::createFromFormat('Y-m-d', $cdsday)->format('F d, Y');
+											$cdshours = $cdsdate->format('h:i:s A');
 
-										foreach ($GetContractHistory->result_array() as $row): ?>
+											$cdedate = new DateTime($row['PreviousDateEnds']);
+											$cdeday = $cdedate->format('Y-m-d');
+											$cdeday = DateTime::createFromFormat('Y-m-d', $cdeday)->format('F d, Y');
+											$cdehours = $cdedate->format('h:i:s A');
+
+											?>
 											<tr>
 												<td class="text-center align-middle">
 													<?php echo $row['Client'] ; ?>
 												</td>
 												<td class="text-center align-middle">
-													<?php echo $row['PreviousDateStarted'] ; ?>
+													<?php echo $cdsday . '<br>' . $cdshours; ?>
 												</td>
 												<td class="text-center align-middle">
-													<?php echo $row['PreviousDateEnds'] ; ?>
+													<?php echo $cdeday . '<br>' . $cdehours; ?>
 												</td>
 												<td class="text-center align-middle">
 													<?php echo $row['PreviousPosition'] ; ?>
@@ -94,7 +104,7 @@
 					<hr>
 					<div class="row ml-2">
 						<div class="col-sm-12">
-							<i class="fas fa-folder-open"></i> <?php echo $ClientName; ?>'s Violations (<?php echo $GetDocumentsViolationsFromClient->num_rows(); ?>) between <?php echo $HistoryFrom; ?> and <?php echo $HistoryTo; ?>
+							<i class="fas fa-folder-open"></i> Violations to <?php echo $ClientName; ?> (<?php echo $GetDocumentsViolationsFromClient->num_rows(); ?>) between <?php echo $HistoryFrom; ?> and <?php echo $HistoryTo; ?>
 						</div>
 						<div class="col-sm-12 mt-4 ml-5">
 						<?php if ($GetDocumentsViolationsFromClient->num_rows() > 0) { ?>
@@ -128,7 +138,7 @@
 									</div>
 							<?php endforeach ?>
 						<?php } else { ?>
-							No documents available.
+							<i class="fas fa-check"></i> No violations found on record.
 						<?php } ?>
 						</div>
 					</div>

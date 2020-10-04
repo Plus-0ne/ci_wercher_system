@@ -3,19 +3,18 @@
 	<div class="wrapper">
 		<div class="container-fluid">
 			<div class="row">
-				<?php echo $this->session->flashdata('prompts'); ?>
 				<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 				</div>
 				<div class="col-8 col-sm-8 col-md-8 text-right">
 				</div>
 				<div class="col-sm-6">
 					<div id="WercherIDFront" style="width: 530px; height: 770px; user-select: none;">
-						<img src="<?php echo base_url(); ?>assets/img/wercher_id_front.png">
+						<img class="wercher-idcard-container" src="<?php echo base_url(); ?>assets/img/wercher_id_front.png">
 						<img class="wercher-idcard-photo" src="<?php echo $ApplicantImage; ?>" width="200" height="200">
 						<div class="wercher-idcard-fields">
 							<div class="wercher-idcard-name">
 								<div id="Name" style="width:350px; height:50px;" class="col-sm-12">
-									<span><?php echo $LastName . ', ' . $NameExtension . ' ' . $FirstName . ' ' . $MiddleInitial . '.'; ?></span>
+									<span style="margin-bottom: -10px;"><?php echo $LastName . ', ' . $FirstName . ' ' . $MiddleInitial . '.'; if ($NameExtension != NULL): echo ', ' . $NameExtension; endif; ?></span>
 								</div>
 							</div>
 							<div class="row">
@@ -45,7 +44,7 @@
 				</div>
 				<div class="col-sm-6">
 					<div id="WercherIDBack" style="width: 530px; height: 770px; user-select: none;">
-						<img src="<?php echo base_url(); ?>assets/img/wercher_id_back.png">
+						<img class="wercher-idcard-container" src="<?php echo base_url(); ?>assets/img/wercher_id_back.png">
 						<div class="wercher-idcard-address">
 							<div class="col-sm-12">
 								<?php echo $Address_Present; ?>
@@ -89,7 +88,18 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.textfill.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('.wercher-idcard-container').attr('draggable', false);
+		$('.wercher-idcard-photo').attr('draggable', false);
+		$('#WercherIDFront').on('contextmenu', 'img', function(e){ 
+			return false;
+		});
+		$('#WercherIDBack').on('contextmenu', 'img', function(e){ 
+			return false;
+		});
 		$('#Name').textfill({
+			debug: true,
+			minFontPixels: 16,
+			maxFontPixels: 40,
 		});
 		$('[data-toggle="tooltip"]').tooltip();
 		function saveAs(uri, filename) {

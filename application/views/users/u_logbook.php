@@ -73,7 +73,12 @@
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="row">
-					<?php echo $this->session->flashdata('prompts'); ?>
+					<!-- <div class="col-12 col-sm-12 tabs">
+						<ul>
+							<li class="tabs-active"><a href="<?php echo base_url() ?>Clients">Clients</a></li>
+							<li><a href="<?php echo base_url() ?>ClientsArchived">Archived</a></li>
+						</ul>
+					</div> -->
 					<!-- Logbook -->
 					<div class="col-md-7 wercher-tablelist-container">
 						<div class="col-12 col-sm-12 col-md-12 PrintPageName PrintOut">
@@ -354,18 +359,18 @@
 		    });
 		})();
 		$('[data-toggle="tooltip"]').tooltip();
-		$("#FilterAdmin").on("change", function () {
-			FilterAdmin = $('#FilterAdmin').val();
-			$.ajax({
-				url : "<?php echo base_url() . 'AJAX_getLogbookFilterAdmin';?>",
-				method : "POST",
-				data : {FilterAdmin: FilterAdmin},
-				success: function(data){
-					$('#FilterAdminPosts').load("<?php echo base_url() . 'AJAX_showLogbookFilterAdmin';?>");
-				}
+		// $("#FilterAdmin").on("change", function () {
+		// 	FilterAdmin = $('#FilterAdmin').val();
+		// 	$.ajax({
+		// 		url : "<?php echo base_url() . 'AJAX_getLogbookFilterAdmin';?>",
+		// 		method : "POST",
+		// 		data : {FilterAdmin: FilterAdmin},
+		// 		success: function(data){
+		// 			$('#FilterAdminPosts').load("<?php echo base_url() . 'AJAX_showLogbookFilterAdmin';?>");
+		// 		}
 
-			});
-		});
+		// 	});
+		// });
 		$('#LogbookFilterForm').submit(function () {
 	        var newurl = $(this).find(":input").filter(function () {
 	            return $.trim(this.value).length > 0

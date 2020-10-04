@@ -1,19 +1,34 @@
-<?php $T_Header;?>
+<?php 
+
+$T_Header;
+require 'vendor/autoload.php';
+use Carbon\Carbon;
+
+?>
 <body>
 	<div class="wrapper wercher-background-lowpoly">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
-				<div class="row wercher-tablelist-container">
-					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
-						<h4 class="tabs-icon">
-							<i class="fas fa-user-tag fa-fw"></i> Clients x <?php echo $ShowClients->num_rows() ?>
-						</h4>
+				<div class="col-12 col-sm-12 tabs">
+					<ul>
+						<li class="tabs-active"><a href="<?php echo base_url() ?>Clients">Clients (<?php echo $ShowClients->num_rows()?>)</a></li>
+						<li><a href="<?php echo base_url() ?>ClientsArchived">Archived</a></li>
+					</ul>
+				</div>
+				<div class="row rcontent">
+					<div class="col-5 PrintPageName PrintOut">
+						<i class="fas fa-info-circle"></i>
+						<i>Found <?php echo $ShowClients->num_rows(); ?> client<?php if($ShowClients->num_rows() != 1): echo 's'; endif;?> currently stored in the database.
+						</i>
 					</div>
-					<div class="col-8 col-sm-8 col-md-8 text-right">
-						<button class="btn btn-primary" data-toggle="modal" data-target="#addClients">
+					<div class="col-7 text-right">
+						<span class="input-bootstrap">
+							<i class="sorting-table-icon spinner-border spinner-border-sm mr-2"></i>
+							<input id="DTSearch" type="search" class="input-bootstrap" placeholder="Sorting table..." readonly>
+						</span>
+						<button class="btn btn-success" data-toggle="modal" data-target="#addClients">
 							<i class="fas fa-user-plus"></i> New
 						</button>
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
@@ -23,15 +38,25 @@
 							<table id="ListClients" class="table PrintOut" style="width: 100%;">
 								<thead>
 									<tr class="text-center align-middle">
-										<th> Name </th>
-										<th> Address </th>
+										<th style="width: 100px;"> Name </th>
+										<th style="width: 225px;"> Address </th>
 										<th> Contact </th>
-										<th> Employees </th>
-										<th class="text-center PrintExclude" style="width: 5%;"> Action </th>
+										<th> ID Suffix </th>
+										<th style="width: 25px;"> Employees </th>
+										<th> Date Added </th>
+										<th class="d-none"> Date Added </th>
+										<th class="text-center PrintExclude" style="width: 100px;"> Action </th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($ShowClients->result_array() as $row): ?>
+									<?php foreach ($ShowClients->result_array() as $row): 
+										$date = new DateTime($row['DateAdded']);
+										$day = $date->format('Y-m-d');
+										$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+										$hours = $date->format('h:i:s A');
+										$elapsed = Carbon::parse($date);
+
+										?>
 										<tr class="text-center align-middle">
 											<td>
 												<?php echo $row['Name']; ?>
@@ -43,7 +68,26 @@
 												<?php echo $row['ContactNumber']; ?>
 											</td>
 											<td>
+												<span style="color: rgba(0, 0, 0, 0.33);">WC</span><?php echo $row['EmployeeIDSuffix']; ?><span style="color: rgba(0, 0, 0, 0.5);">-####-<?php 
+													$now = new DateTime();
+													$currentYear = $now->format('Y');
+													echo $currentYear; 
+												?>		
+												</span>
+											</td>
+											<td>
 												<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['ClientID'])->num_rows(); ?>
+											</td>
+											<td class="text-center align-middle" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $elapsed->diffForHumans(); ?>">
+												<div class="d-none">
+													<?php echo $row['DateAdded']; ?>
+												</div>
+												<?php
+													echo $day . '<br>' . $hours;
+												?>
+											</td>
+											<td class="text-center align-middle d-none">
+												<?php echo $day . ' at ' . $hours; ?>
 											</td>
 											<td class="text-center align-middle PrintExclude">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>Clients?id=<?php echo $row['ClientID']; ?>"><i class="fas fa-users"></i> Employees</a>
@@ -119,6 +163,9 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('.sorting-table-icon').hide();
+		$('#DTSearch').attr('placeholder', 'Search table');
+		$('#DTSearch').attr('readonly', false);
 		<?php if (isset($_GET['id'])): ?>
 			$('#ClientsEmployedModal').modal('show');
 		<?php endif; ?>
@@ -152,36 +199,38 @@
 			}
 		});
 		var table = $('#ListClients').DataTable( {
-			"order": [[ 3, "desc" ]],
+			sDom: 'lrtip',
+			"bLengthChange": false,
+			"order": [[ 4, "desc" ]],
 			buttons: [
             {
 	            extend: 'print',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 0, 1, 2, 3, 4, 6 ]
 	            }
 	        },
 	        {
 	            extend: 'copyHtml5',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 0, 1, 2, 3, 4, 6 ]
 	            }
 	        },
 	        {
 	            extend: 'excelHtml5',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 0, 1, 2, 3, 4, 6 ]
 	            }
 	        },
 	        {
 	            extend: 'csvHtml5',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 0, 1, 2, 3, 4, 6 ]
 	            }
 	        },
 	        {
 	            extend: 'pdfHtml5',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 0, 1, 2, 3, 4, 6 ]
 	            }
 	        }
         ]
@@ -201,55 +250,58 @@
 	    $('#ExportPDF').on('click', function () {
 	        table.button('4').trigger();
     	});
+    	$('#DTSearch').on('keyup change', function(){
+			table.search($(this).val()).draw();
+		});
     	var ClientTable = $('#ClientEmployedTable').DataTable( {
-			"order": [[ 3, "desc" ]],
+			"order": [[ 8, "asc" ]],
 			buttons: [
             {
 	            extend: 'print',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 0, 2, 3, 4, 6, 7 ]
 	            }
 	        },
 	        {
 	            extend: 'copyHtml5',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 0, 2, 3, 4, 6, 7 ]
 	            }
 	        },
 	        {
 	            extend: 'excelHtml5',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 0, 2, 3, 4, 6, 7 ]
 	            }
 	        },
 	        {
 	            extend: 'csvHtml5',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 0, 2, 3, 4, 6, 7 ]
 	            }
 	        },
 	        {
 	            extend: 'pdfHtml5',
 	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
+	                columns: [ 0, 2, 3, 4, 6, 7 ]
 	            }
 	        }
         ]
    		});
 		$('#ClientExportPrint').on('click', function () {
-	        table.button('0').trigger();
+	        ClientTable.button('0').trigger();
 	    });
 	    $('#ClientExportCopy').on('click', function () {
-	        table.button('1').trigger();
+	        ClientTable.button('1').trigger();
 	    });
 	    $('#ClientExportExcel').on('click', function () {
-	        table.button('2').trigger();
+	        ClientTable.button('2').trigger();
 	    });
 	    $('#ClientExportCSV').on('click', function () {
-	        table.button('3').trigger();
+	        ClientTable.button('3').trigger();
 	    });
 	    $('#ClientExportPDF').on('click', function () {
-	        table.button('4').trigger();
+	        ClientTable.button('4').trigger();
     	});
 	});
 </script>

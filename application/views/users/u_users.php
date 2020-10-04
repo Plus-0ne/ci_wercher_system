@@ -1,4 +1,31 @@
-<?php $T_Header;?>
+<?php
+$T_Header;
+
+// Latest hiree
+$GetLatestEmployees = $this->Model_Selects->GetLatestEmployees(3);
+$LatestHireesText = '';
+$LatestHireesCount = $GetLatestEmployees->num_rows();
+$LatestHireesIteration = 0;
+if ($LatestHireesCount > 0):
+	foreach ($GetLatestEmployees->result_array() as $erow) {
+		$thumbnail = $erow['ApplicantImage'];
+		$thumbnail = substr($thumbnail, 0, -4);
+		$thumbnail = $thumbnail . '_thumb.jpg';
+		$LatestHireesIteration++;
+		$LatestHireesText = $LatestHireesText . '<a href="ViewEmployee?id=' . $erow['ApplicantID'] . '">' . '<img src="' . $thumbnail .'" height="18px; width: 18px;" class="rounded-circle"> ' . $erow['LastName'] . ', ' . $erow['FirstName'] . ' ' . $erow['MiddleInitial']  .'.';
+		if ($erow['NameExtension'] != NULL) {
+			$LatestHireesText = $LatestHireesText . ', ' . $erow['NameExtension'];
+		}
+		if ($LatestHireesIteration == $LatestHireesCount) {
+			$LatestHireesText = $LatestHireesText . '</a>';
+		} elseif ($LatestHireesIteration == ($LatestHireesCount - 1)) {
+			$LatestHireesText = $LatestHireesText . '</a>, and ';
+		} elseif ($LatestHireesIteration < $LatestHireesCount) {
+			$LatestHireesText = $LatestHireesText . '</a>, ';
+		}
+	}
+endif;
+?>
 <body>
 	<div class="wrapper wercher-background-lowpoly">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
@@ -11,13 +38,21 @@
 					</ul>
 				</div>
 				<div class="row rcontent">
-					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-5 PrintPageName PrintOut">
+					<div class="col-sm-12 col-md-9 PrintPageName PrintOut">
 						<i class="fas fa-info-circle"></i>
-						<i>Found <?php echo $get_employee->num_rows(); ?> employee<?php if($get_employee->num_rows() != 1): echo 's'; endif;?> currently in the database.
+						<i>Found <?php echo $get_employee->num_rows(); ?> employee<?php if($get_employee->num_rows() != 1): echo 's'; endif;?> currently in the database. 
+						<?php if($LatestHireesCount > 0):
+							echo '<br>Latest ';
+							if ($LatestHireesCount == 1):
+								echo 'hiree is ';
+							else:
+								echo 'hirees are ';
+							endif;
+							echo $LatestHireesText;
+						endif; ?>.
 						</i>
 					</div>
-					<div class="col-7 text-right">
+					<div class="col-sm-12 col-md-3 text-right">
 						<span class="input-bootstrap">
 							<i class="sorting-table-icon spinner-border spinner-border-sm mr-2"></i>
 							<input id="DTSearch" type="search" class="input-bootstrap" placeholder="Sorting table..." readonly>
@@ -35,6 +70,7 @@
 										<th class="d-none"> Position </th>
 										<th> Contact Number </th>
 										<th> Client </th>
+										<th> Hired On </th>
 										<th class="d-none"> Contract Started </th>
 										<th class="d-none"> Contract Ends </th>
 										<th> Contract Lifespan </th>
@@ -46,7 +82,17 @@
 										<tr>
 											<td class="text-center">
 												<div class="col-sm-12">
-													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
+													<?php
+													// Thumbnail
+													$thumbnail = $row['ApplicantImage'];
+													$thumbnail = substr($thumbnail, 0, -4);
+													$thumbnail = $thumbnail . '_thumb.jpg';
+													// TODO: getimagesize() severely lags the server on large amount of fetches.
+													// if(!getimagesize($thumbnail)) {
+													// 	$thumbnail = $row['ApplicantImage'];
+													// }
+													?>
+													<img src="<?php echo $thumbnail; ?>" width="70" height="70" class="rounded-circle">
 												</div>
 												<div class="col-sm-12 align-middle">
 													<?php if($row['EmployeeID'] != NULL): ?>
@@ -57,12 +103,12 @@
 												</div>
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['NameExtension']; ?> <?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
 												<br>
 												<i style="color: gray;"><?php echo $row['PositionDesired']; ?></i>
 											</td>
 											<td class="text-center align-middle d-none">
-												<?php echo $row['NameExtension']; ?> <?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
 											</td>
 											<td class="text-center align-middle d-none">
 												<?php echo $row['PositionDesired']; ?>
@@ -72,11 +118,23 @@
 											</td>
 											<?php foreach ($getClientOption->result_array() as $nrow): ?>
 												<?php if ($row['ClientEmployed'] == $nrow['ClientID']) {
-													echo '<td class="text-center align-middle">
-													'.$nrow['Name'].'
+													echo '<td class="text-center align-middle"><a href="Employee?client_id=' . $nrow['ClientID'] . '">
+													'.$nrow['Name'].'</a>
 													</td>';
 												} ?>
 											<?php endforeach ?>
+											<td class="text-center align-middle">
+												<div class="d-none"> 
+													<?php echo $row['DateStarted']; // For sorting ?>
+												</div>
+												<?php
+													$dateStarts = new DateTime($row['DateStarted']);
+													$dayStarts = $dateStarts->format('Y-m-d');
+													$dayStarts = DateTime::createFromFormat('Y-m-d', $dayStarts)->format('F d, Y');
+
+													echo $dayStarts;
+												?>
+											</td>
 											<?php
 												$currTime = time();
 												$strDateEnds = strtotime($row['DateEnds']);
@@ -189,7 +247,7 @@
 													echo 'Less than 1 day';
 												} ?>
 											 	</div>
-												<a href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>#Contract" class="progress" style="position: relative; box-shadow: none; background-color: rgba(0, 0, 0, 0.11);">
+												<a href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>#Contract" class="employee-table-progress-bar" style="position: relative; box-shadow: none; background-color: rgba(0, 0, 0, 0.11);">
 													<div class="progress-bar wercher-progress-bar" role="progressbar" style="width: <?php echo $rPercentage; ?>%;" aria-valuenow="<?php echo $rPercentage; ?>" aria-valuemin="0" aria-valuemax="100"><?php echo $rPercentage; ?>%</div>
 												</a>
 											</td>
@@ -241,36 +299,36 @@
 		var table = $('#emp').DataTable( {
 			sDom: 'lrtip',
 			"bLengthChange": false,
-			"order": [[ 8, "asc" ]],
+			"order": [[ 9, "asc" ]],
 			buttons: [
             {
 	            extend: 'print',
 	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 6, 7 ]
+	                columns: [ 2, 3, 4, 5, 7, 8 ]
 	            }
 	        },
 	        {
 	            extend: 'copyHtml5',
 	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 6, 7 ]
+	                columns: [ 2, 3, 4, 5, 7, 8 ]
 	            }
 	        },
 	        {
 	            extend: 'excelHtml5',
 	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 6, 7 ]
+	                columns: [ 2, 3, 4, 5, 7, 8 ]
 	            }
 	        },
 	        {
 	            extend: 'csvHtml5',
 	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 6, 7 ]
+	                columns: [ 2, 3, 4, 5, 7, 8 ]
 	            }
 	        },
 	        {
 	            extend: 'pdfHtml5',
 	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 6, 7 ]
+	                columns: [ 2, 3, 4, 5, 7, 8 ]
 	            }
 	        }
         ]

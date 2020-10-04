@@ -1,4 +1,15 @@
 <?php
+
+// Birthdate
+$date = new DateTime($BirthDate);
+$day = $date->format('Y-m-d');
+$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+// Applied On
+$appliedDate = new DateTime($AppliedOn);
+$appliedDay = $appliedDate->format('Y-m-d');
+$appliedDay = DateTime::createFromFormat('Y-m-d', $appliedDay)->format('F d, Y');
+$appliedHours = $appliedDate->format('h:i:s A');
+
 if ($ApplicantNo == NULL) {
 	$ApplicantNo = '&nbsp;';
 }
@@ -57,7 +68,7 @@ if ($CivilStatus == NULL) {
 	$CivilStatus = '&nbsp;';
 }
 if ($No_OfChildren == NULL) {
-	$No_OfChildren = '&nbsp;';
+	$No_OfChildren = '&nbsp;&nbsp;&nbsp;&nbsp;';
 }
 if ($Phone_No == NULL) {
 	$Phone_No = '&nbsp;';
@@ -155,6 +166,7 @@ if ($EmergencyContact == NULL) {
 if ($Referral == NULL) {
 	$Referral = '&nbsp;';
 }
+
 ?>
 <style>
 	html,body
@@ -173,7 +185,6 @@ if ($Referral == NULL) {
 						<div class="col-sm-12 eprint-commandcard-title">
 							<i class="fas fa-cog"></i> <b>Command Card</b>
 						</div>
-						<?php echo $this->session->flashdata('prompts'); ?>
 						<div class="col-sm-6 mt-4 eprint-commandcard-text">
 							<b>GENERAL FILTERS</b>
 							<div class="row">
@@ -220,6 +231,7 @@ if ($Referral == NULL) {
 											</div>
 										</div>
 									</div>
+									<?php if ($Status == 'Employed'): ?>
 									<div class="col-sm-12 mt-1">
 										<div class="row">
 											<div class="col-sm-3">
@@ -230,6 +242,7 @@ if ($Referral == NULL) {
 											</div>
 										</div>
 									</div>
+									<?php endif; ?>
 									<div class="col-sm-12 mt-1">
 										<div class="row">
 											<div class="col-sm-3">
@@ -305,7 +318,7 @@ if ($Referral == NULL) {
 							</ul> -->
 							<div class="row mt-2">
 								<div class="col-sm-12">
-									<button type="button" class="btn btn-success eprint-print-btn" onClick="printContent('PrintOut')" style="width: 400px;"><i class="fas fa-print"></i> Print</button>
+									<button type="button" class="btn btn-success eprint-print-btn eprint-print-btn-glow" onClick="printContent('PrintOut')" style="width: 400px;"><i class="fas fa-print"></i> Print</button>
 									<a href="<?=base_url();?>ModifyEmployee?id=<?=$ApplicantID;?>" class="btn btn-primary eprint-print-btn"><i class="fas fa-edit"></i> Edit</a>
 								</div>
 							</div>
@@ -438,7 +451,7 @@ if ($Referral == NULL) {
 							</div>
 							<div class="col-md-3 printemployee-tooltip">
 								<p>
-									<?php echo $BirthDate; ?>
+									<?php echo $day; ?>
 								</p>
 							</div>
 							<div class="col-md-2">
@@ -566,7 +579,7 @@ if ($Referral == NULL) {
 							</div>
 							<div class="col-md-3 printemployee-tooltip">
 								<p>
-									<span style="margin-left: 10px;"><?php echo $AppliedOn; ?></span>
+									<span style="margin-left: 10px;"><?php echo $appliedDay . ' at ' . $appliedHours; ?></span>
 								</p>
 							</div>
 							<div class="col-md-2">
@@ -848,7 +861,7 @@ if ($Referral == NULL) {
 						</div>
 					</div>
 					<?php endif; ?>	
-					<?php if($Status == 'Employee'): ?>
+					<?php if($Status == 'Employed'): ?>
 					<div id="Contract" class="row pl-5 d-none">
 						<div id="ContractInformation" class="row mt-3">
 							<div class="col-md-12 mb-3 printemployee-category">
