@@ -52,7 +52,9 @@
 					</div>
 				<?php endfor; ?>
 			</div>
-			<?php if (isset($_GET['Year']) && isset($_GET['Month'])): ?>
+			<?php if (isset($_GET['Year']) && isset($_GET['Month'])): 
+			require 'vendor/autoload.php';
+			?>
 			<div class="row">
 				<div id="ByMonth" class="col-sm-12 text-center">
 					<h4 class="line-through-text">
@@ -79,13 +81,16 @@
 					<button id="MG_ExportPDF" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Export as a PDF file (.pdf)"><i class="fas fa-file-pdf" style="margin-right: -1px;"></i></button>
 				</div>
 				<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
-					<table id="MonthlyTable" class="table table-striped table-bordered PrintOut" style="width: 100%;">
+					<table id="MonthlyTable" class="table PrintOut" style="width: 100%;">
 						<thead>
 							<tr class="text-center">
-								<th> Applicant </th>
+								<th> Applicant ID </th>
 								<th> Full Name </th>
-								<th> Position Desired </th>
+								<th class="d-none"> Full Name </th>
+								<th class="d-none"> Position Desired </th>
+								<th> Contact Number </th>
 								<th> Applied On </th>
+								<th class="d-none"> Applied On </th>
 								<th> Current Status </th>
 								<th> Action </th>
 							</tr>
@@ -93,24 +98,51 @@
 						<tbody>
 							<?php 
 							$GetApplicantsByMonth = $this->Model_Selects->GetApplicantsByMonth($SelectedYear, $_GET['Month']);
-							foreach ($GetApplicantsByMonth->result_array() as $row): ?>
-								<tr>
+							foreach ($GetApplicantsByMonth->result_array() as $row): 
+								$date = new DateTime($row['AppliedOn']);
+								$day = $date->format('Y-m-d');
+								$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+								$hours = $date->format('h:i:s A');
+
+								$thumbnail = $row['ApplicantImage'];
+								$thumbnail = substr($thumbnail, 0, -4);
+								$thumbnail = $thumbnail . '_thumb.jpg';
+
+								?>
+								<tr class="table-row-hover">
 									<td class="text-center">
 										<div class="col-sm-12">
-											<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
+											<img src="<?php echo $thumbnail; ?>" width="70" height="70" class="rounded-circle">
 										</div>
 										<div class="col-sm-12 align-middle">
 											<?php echo $row['ApplicantID']; ?>
 										</div>
 									</td>
 									<td class="text-center align-middle">
-										<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+										<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
+										<br>
+										<i style="color: gray;"><?php echo $row['PositionDesired']; ?></i>
+										<br>
 									</td>
-									<td class="text-center align-middle">
+									<td class="text-center align-middle d-none">
+										<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
+									</td>
+									<td class="text-center align-middle d-none">
 										<?php echo $row['PositionDesired']; ?>
 									</td>
 									<td class="text-center align-middle">
-										<?php echo $row['AppliedOn']; ?>
+										<?php echo $row['Phone_No']; ?>
+									</td>
+									<td class="text-center align-middle">
+										<div class="d-none">
+											<?php echo $row['AppliedOn']; ?>
+										</div>
+										<?php
+											echo $day . '<br>' . $hours;
+										?>
+									</td>
+									<td class="text-center align-middle d-none">
+										<?php echo $day . ' at ' . $hours; ?>
 									</td>
 									<td class="text-center align-middle">
 										<?php if ($row['Status'] == 'Employed') { ?>

@@ -24,7 +24,6 @@ class Delete_Controller extends CI_Controller {
 		{
 			$Removethis = $this->Model_Deletes->RemoveEmpl($id);
 			if ($Removethis == TRUE) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ID ' . $id . ' has been succesfully removed!</h5></div>');
 				// LOGBOOK
 				$CheckEmployee = $this->Model_Selects->CheckEmployee($id);
 				if ($CheckEmployee->num_rows() > 0) {
@@ -40,6 +39,7 @@ class Delete_Controller extends CI_Controller {
 					$FirstName = 'N/A';
 					$MiddleInitial = 'N/A';
 				}
+				$this->Model_Logbook->SetPrompts('success', 'success', 'Succesfully archived ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleInitial));
 				$this->Model_Logbook->LogbookEntry('Red', 'Applicant', ' archived <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $id . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleInitial) . '</a>');
 				$this->Model_Logbook->LogbookExtendedEntry(0, 'Applicant ID: ' . $id);
 				$this->Model_Logbook->LogbookExtendedEntry(0, 'ContactNumber: ' . $ContactNumber);
@@ -67,7 +67,6 @@ class Delete_Controller extends CI_Controller {
 		{
 			$Removethis = $this->Model_Deletes->RemoveAdminM($id);
 			if ($Removethis == TRUE) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Admin ID ' . $id . ' has been succesfully removed!</h5></div>');
 				// LOGBOOK
 				$CheckAdminNo = $this->Model_Selects->CheckAdminNo($id);
 				if ($CheckAdminNo->num_rows() > 0) {
@@ -90,6 +89,7 @@ class Delete_Controller extends CI_Controller {
 					$Position = 'N/A';
 					$DateAdded = 'N/A';
 				}
+				$this->Model_Logbook->SetPrompts('success', 'success', 'Succesfully archived admin ' . $AdminID);
 				$this->Model_Logbook->LogbookEntry('Red', 'Admin', ' removed admin <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewAdmin?id=' . $id . '" target="_blank">' . $AdminID . '</a>');
 				$this->Model_Logbook->LogbookExtendedEntry(0, 'Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleInitial));
 				$this->Model_Logbook->LogbookExtendedEntry(0, 'Position: ' . $AdminLevel . ' - ' . $Position);
@@ -118,7 +118,6 @@ class Delete_Controller extends CI_Controller {
 		{
 			$Removethis = $this->Model_Deletes->RemoveClientM($id);
 			if ($Removethis == TRUE) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Client ID ' . $id . ' has been succesfully removed!</h5></div>');
 				// LOGBOOK
 				$CheckClient = $this->Model_Selects->CheckClient($id);
 				if ($CheckClient->num_rows() > 0) {
@@ -133,6 +132,7 @@ class Delete_Controller extends CI_Controller {
 					$Address = 'N/A';
 					$ContactNumber = 'N/A';
 				}
+				$this->Model_Logbook->SetPrompts('success', 'success', 'Succesfully archived client ' . $Name);
 				$this->Model_Logbook->LogbookEntry('Red', 'Client', ' archived client <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $id . '" target="_blank">' . $id . '</a>');
 				$this->Model_Logbook->LogbookExtendedEntry(0, 'Name: ' . $Name);
 				$this->Model_Logbook->LogbookExtendedEntry(0, 'Address: ' . $Address);

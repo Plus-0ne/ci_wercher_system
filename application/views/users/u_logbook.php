@@ -49,6 +49,7 @@
 	$LimitEnd = $LimitStart + 50;
 	$GetLogbook = $this->Model_Selects->GetLogbook($LimitEnd, $FilterAdmin, $FilterType, $FilterEvent, $DateStarted, $DateMax);
 	$LogbookCount = $GetLogbook->num_rows();
+	$LogbookCountNoLimit = $this->Model_Selects->GetLogbookNoLimit($FilterAdmin, $FilterType, $FilterEvent, $DateStarted, $DateMax)->num_rows();
 	if ($LimitStart > $LogbookCount) {
 		$LimitStart = $LogbookCount;
 	}
@@ -83,7 +84,7 @@
 					<div class="col-md-7 wercher-tablelist-container">
 						<div class="col-12 col-sm-12 col-md-12 PrintPageName PrintOut">
 							<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#LogbookFilter"><i class="fas fa-filter"></i> Filter</button>
-							<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
+							<!-- <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button> -->
 							<span id="NotifContainer">
 								<a href="Logbook" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" data-html="true" title="Click to refresh" style="float: right;"><i class="fas fa-check"></i> Viewing latest entries</a>
 							</span>
@@ -220,9 +221,9 @@
 									<?php endforeach ?>
 									<a href="<?=base_url()?>Logbook?p=<?php echo $LimitEnd; echo $loadMoreURL; ?>#navigateTo_<?=$logbookIteration;?>" class="btn btn-sm btn-primary" style="float: right;">Load more...<i class="fas fa-angle-down" style="margin-left: 5px;"></i></a>
 									<?php if($LimitStart <= $LogbookCount): ?>
-										<div class="logbook-log-pagecounter" style="float: right;"><?php echo $LimitStart; ?> / <?php echo $LogbookCount; ?></div>
+										<div class="logbook-log-pagecounter" style="float: right;"><?php echo $LimitStart; ?> / <?php echo $LogbookCountNoLimit; ?></div>
 									<?php else: ?>
-										<div class="logbook-log-pagecounter" style="float: right;"><?php echo $LogbookCount; ?> / <?php echo $LogbookCount; ?></div>
+										<div class="logbook-log-pagecounter" style="float: right;"><?php echo $LogbookCount; ?> / <?php echo $LogbookCountNoLimit; ?></div>
 									<?php endif;
 								else: ?>
 									<div class="logbook-log-nodata">

@@ -38,7 +38,7 @@ class Update_Controller extends CI_Controller {
 			$Temp_ApplicantID++;
 
 			if ($ApplicantID == NULL || $ClientID == NULL) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Field/s) A:' . $ApplicantID . ' C:' . $ClientID .' D:' . $H_Days . ' H:' . $H_Months . ' Y:' . $H_Years . ' </h5></div>');
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
@@ -82,7 +82,7 @@ class Update_Controller extends CI_Controller {
 					);
 					$EmployNewApplicant = $this->Model_Inserts->InsertToClient($ClientID,$Temp_ApplicantID,$data);
 					if ($EmployNewApplicant == TRUE) {
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Applicant employed!</h5></div>');
+						$this->Model_Logbook->SetPrompts('success', 'success', 'Employed successfully');
 						// LOGBOOK
 						$duration = '';
 						if($H_Years != 0) {
@@ -142,20 +142,20 @@ class Update_Controller extends CI_Controller {
 					}
 					else
 					{
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+						$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 						redirect($_SERVER['HTTP_REFERER']);
 					}
 				}
 				else
 				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
+					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
 		}
 		else
 		{
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
@@ -169,7 +169,7 @@ class Update_Controller extends CI_Controller {
 			$E_Years = $this->input->post('E_Years',TRUE);
 
 			if ($ApplicantID == NULL) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Extend Contract) A:' . $ApplicantID . ' D:' . $E_Days . ' H:' . $E_Months . ' Y:' . $E_Years . ' </h5></div>');
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
@@ -198,7 +198,6 @@ class Update_Controller extends CI_Controller {
 					);
 					$EmployNewApplicant = $this->Model_Updates->ExtendContract($ApplicantID,$data);
 					if ($EmployNewApplicant == TRUE) {
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Contract Extended to ' . $DateEnds . '!</h5></div>');
 						// LOGBOOK
 						$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
 						if ($CheckEmployee->num_rows() > 0) {
@@ -218,26 +217,27 @@ class Update_Controller extends CI_Controller {
 						$logbookAfterDate = $logbookAfterDate->format('Y-m-d');
 						$logbookBeforeDate = DateTime::createFromFormat('Y-m-d', $logbookBeforeDate)->format('F d, Y');
 						$logbookAfterDate = DateTime::createFromFormat('Y-m-d', $logbookAfterDate)->format('F d, Y');
+						$this->Model_Logbook->SetPrompts('success', 'success', 'Contract extended to ' . $logbookAfterDate);
 						$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' updated contract duration for <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleInitial) . '</a>');
 						$this->Model_Logbook->LogbookExtendedEntry(0, 'Contract changed from <b>' . $logbookBeforeDate . '</b> to <b>' . $logbookAfterDate . '</b>');
 						redirect($_SERVER['HTTP_REFERER']);
 					}
 					else
 					{
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+						$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 						redirect($_SERVER['HTTP_REFERER']);
 					}
 				}
 				else
 				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
+					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
 		}
 		else
 		{
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
@@ -254,7 +254,7 @@ class Update_Controller extends CI_Controller {
 			$S_Remarks = $this->input->post('S_Remarks',TRUE);
 
 			if ($ApplicantID == NULL) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Suspend) A:' . $ApplicantID . ' D:' . $S_Days . ' H:' . $S_Months . ' Y:' . $S_Years . ' </h5></div>');
+				$this->Model_Logbook->SetPrompts('success', 'success', 'Contract extended to ' . $logbookAfterDate);$this->Model_Logbook->SetPrompts('success', 'success', 'Contract extended to ' . $logbookAfterDate);
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
@@ -305,20 +305,21 @@ class Update_Controller extends CI_Controller {
 					$logbookAfterDate = $logbookAfterDate->format('Y-m-d');
 					$logbookBeforeDate = DateTime::createFromFormat('Y-m-d', $logbookBeforeDate)->format('F d, Y');
 					$logbookAfterDate = DateTime::createFromFormat('Y-m-d', $logbookAfterDate)->format('F d, Y');
+					$this->Model_Logbook->SetPrompts('success', 'success', 'Added suspension until ' . $logbookAfterDate);
 					$this->Model_Logbook->LogbookEntry('Red', 'Employee', ' suspended <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleInitial) . '</a>');
 					$this->Model_Logbook->LogbookExtendedEntry(0, 'Suspended for <b>' . $logbookBeforeDate . '</b> to <b>' . $logbookAfterDate . '</b>');
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 				else
 				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
 		}
 		else
 		{
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
@@ -365,7 +366,7 @@ class Update_Controller extends CI_Controller {
 		$Address_Manila = $this->input->post('Address_Manila');
 
 		if ($PositionDesired == NULL || $LastName == NULL || $FirstName == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Position Desired, Last Name, and First Name fields are required!</h5></div>');
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Missing required fields: Position Desired, Last Name, and First Name.');
 			$data = array(
 				'EmployeeID' => $EmployeeID,
 				'PositionDesired' => $PositionDesired,
@@ -512,7 +513,7 @@ class Update_Controller extends CI_Controller {
 				if (!$_FILES['pImage']['name'] == '') {
 					if (! $this->upload->do_upload('pImage'))
 					{
-						$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
+						$this->Model_Logbook->SetPrompts('error', 'none', $this->upload->display_errors());
 						redirect($_SERVER['HTTP_REFERER']);
 					}
 					else
@@ -817,13 +818,13 @@ class Update_Controller extends CI_Controller {
 					}
 					if ($changesCounter > 0) {
 						$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' updated details for <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
+						$this->Model_Logbook->SetPrompts('success', 'success', 'Details updated');
 					}
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 				else
 				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
@@ -903,7 +904,7 @@ class Update_Controller extends CI_Controller {
 			$ReminderDate = 0;
 
 			if ($ApplicantID == NULL) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Extend Contract) A:' . $ApplicantID . ' D:' . $E_Days . ' H:' . $E_Months . ' Y:' . $E_Years . ' </h5></div>');
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
@@ -934,7 +935,7 @@ class Update_Controller extends CI_Controller {
 					);
 					$SetReminder = $this->Model_Inserts->InsertReminder($ApplicantID,$data);
 					if ($SetReminder == TRUE) {
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Reminder set!</h5></div>');
+						$this->Model_Logbook->SetPrompts('success', 'success', 'Reminder added.');
 						// LOGBOOK
 						$duration = '';
 						if($R_Years != 0) {
@@ -976,20 +977,20 @@ class Update_Controller extends CI_Controller {
 					}
 					else
 					{
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+						$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 						redirect($_SERVER['HTTP_REFERER']);
 					}
 				}
 				else
 				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
+					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
 		}
 		else
 		{
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
@@ -1011,6 +1012,7 @@ class Update_Controller extends CI_Controller {
 					$FirstName = $row['FirstName'];
 					$MI = $row['MiddleInitial'];
 				}
+				$this->Model_Logbook->SetPrompts('success', 'success', 'Successfully blacklisted ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI));
 				$this->Model_Logbook->LogbookEntry('Red', 'Employee', ' blacklisted <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
@@ -1036,7 +1038,6 @@ class Update_Controller extends CI_Controller {
 		{
 			$Removethis = $this->Model_Updates->RestoreEmployee($ApplicantID);
 			if ($Removethis == TRUE) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ID ' . $ApplicantID . ' has been restored as an Applicant.</h5></div>');
 				// LOGBOOK
 				$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
 				foreach($CheckApplicant->result_array() as $row) {
@@ -1044,6 +1045,7 @@ class Update_Controller extends CI_Controller {
 					$FirstName = $row['FirstName'];
 					$MI = $row['MiddleInitial'];
 				}
+				$this->Model_Logbook->SetPrompts('success', 'success', 'Successfully restored ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI));
 				$this->Model_Logbook->LogbookEntry('Green', 'Applicant', ' restored <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
 				$this->Model_Logbook->LogbookExtendedEntry(0, 'Changed status from <b>Blacklisted</b> to <b>Applicant</b>');
 				if (isset($_SERVER['HTTP_REFERER'])) {
@@ -1110,7 +1112,7 @@ class Update_Controller extends CI_Controller {
 				}
 
 				if ($ApplicantID == NULL) {
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Field/s)</h5></div>');
+					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 				else
@@ -1141,7 +1143,7 @@ class Update_Controller extends CI_Controller {
 						// $DateReadable = (new DateTime(date($Date)))->format('F d, Y');
 						// $this->Model_Logbook->LogbookExtendedEntry(0, 'Remarks: ' . $Remarks . '<br><b>' . $DateReadable . '</b>\' total hours: ' . $total_hoursperday, +1);
 						if ($ArrayInt >= $ArrayLength) {
-							$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Updated!</h5></div>');
+							$this->Model_Logbook->SetPrompts('success', 'success', 'Updated successfully');
 							// LOGBOOK
 							$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
 							foreach($CheckApplicant->result_array() as $row) {
@@ -1154,7 +1156,7 @@ class Update_Controller extends CI_Controller {
 					}
 					else
 					{
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+						$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 						
 					}
 				}
@@ -1387,7 +1389,7 @@ class Update_Controller extends CI_Controller {
 		}
 		else
 		{
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
@@ -1404,12 +1406,12 @@ class Update_Controller extends CI_Controller {
 		$this->session->set_userdata('LastDate', $ToDate);
 
 		if ($Mode == NULL || $FromDate == NULL || $ToDate == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date range must be valid</h5></div>');
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Error missing fields. Please try again.');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 
 		if ($ClientID == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Client ID)</h5></div>');
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 		else
@@ -1422,21 +1424,21 @@ class Update_Controller extends CI_Controller {
 			if($Mode==0)
 			{
 				if ($diff > 6) {
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date Range for weekly must be lower than 1 week</h5></div>');
+					$this->Model_Logbook->SetPrompts('error', 'error', 'Date range for weekly must be lower than 1 week.');
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
 			else if($Mode ==1)
 			{
 				if ($diff > 15) {
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date Range for semi-monthly must be lower than half a month</h5></div>');
+					$this->Model_Logbook->SetPrompts('error', 'error', 'Date range for semi-monthly must be lower than 16 days.');
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
 			else
 			{//needs cleaning up. needs differentiating between months number of days
 				if ($diff > 31) {
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date Range for semi-monthly must be lower than half a month</h5></div>');
+					$this->Model_Logbook->SetPrompts('error', 'error', 'Date range for monthly must be lower than 31 days.');
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
@@ -1501,7 +1503,7 @@ class Update_Controller extends CI_Controller {
 									}
 								} else {
 									$ClientID = 0; // default
-									$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: No client with that name was found</h5></div>');
+									$this->Model_Logbook->SetPrompts('info', 'info', 'No client with that name was found.');
 								}
 							}
 							if ($ColCount == 5) { // Salary Mode
@@ -1518,7 +1520,7 @@ class Update_Controller extends CI_Controller {
 										break;
 									default:
 										$SalaryMode = 0; // default
-										$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Invalid Salary Mode</h5></div>');
+										$this->Model_Logbook->SetPrompts('info', 'info', 'Invalid salary mode. Defaulting to weekly.');
 										break;
 								}
 							}
@@ -1670,7 +1672,7 @@ class Update_Controller extends CI_Controller {
 				// echo '</table>';
 			} else {
 				$Error = SimpleXLSX::parseError();
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: ' . $Error . '</h5></div>');
+				$this->Model_Logbook->SetPrompts('error', 'error', $Error);
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 
@@ -1725,21 +1727,21 @@ class Update_Controller extends CI_Controller {
 				);
 				$UpdateSSSField = $this->Model_Updates->UpdateSSSField($id, $data);
 				if ($UpdateSSSField == TRUE) {
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Field updated!</h5></div>');
+					$this->Model_Logbook->SetPrompts('success', 'success', 'Updated successfully.');
 					$this->Model_Logbook->LogbookEntry('Blue', 'Salary', ' updated the SSS table');
 					// $this->Model_Logbook->LogbookExtendedEntry(0, 'Suspended for <b>' . $logbookBeforeDate . '</b> to <b>' . $logbookAfterDate . '</b>');
 					redirect('SSS_Table');
 				}
 				else
 				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
 		}
 		else
 		{
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}

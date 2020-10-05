@@ -79,7 +79,7 @@ use Carbon\Carbon;
 										$thumbnail = substr($thumbnail, 0, -4);
 										$thumbnail = $thumbnail . '_thumb.jpg';
 										?>
-										<tr>
+										<tr class="table-row-hover">
 											<td class="text-center">
 												<div class="col-sm-12">
 													<img src="<?php echo $thumbnail; ?>" width="70" height="70" class="rounded-circle">
@@ -180,7 +180,12 @@ use Carbon\Carbon;
 	            extend: 'print',
 	            exportOptions: {
 	                columns: [ 2, 3, 4, 6, 8 ]
-	            }
+	            },
+	            customize: function ( doc ) {
+	            	$(doc.document.body).find('h1').prepend('<img src="<?=base_url()?>assets/img/wercher_logo.png" width="63px" height="56px" />');
+					$(doc.document.body).find('h1').css('font-size', '24px');
+					$(doc.document.body).find('h1').css('text-align', 'center'); 
+				}
 	        },
 	        {
 	            extend: 'copyHtml5',

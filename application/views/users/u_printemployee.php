@@ -9,6 +9,16 @@ $appliedDate = new DateTime($AppliedOn);
 $appliedDay = $appliedDate->format('Y-m-d');
 $appliedDay = DateTime::createFromFormat('Y-m-d', $appliedDay)->format('F d, Y');
 $appliedHours = $appliedDate->format('h:i:s A');
+// Date Started
+$dsDate = new DateTime($DateStarted);
+$dsDay = $dsDate->format('Y-m-d');
+$dsDay = DateTime::createFromFormat('Y-m-d', $dsDay)->format('F d, Y');
+$dsHours = $dsDate->format('h:i:s A');
+// Date Ends
+$deDate = new DateTime($DateEnds);
+$deDay = $deDate->format('Y-m-d');
+$deDay = DateTime::createFromFormat('Y-m-d', $deDay)->format('F d, Y');
+$deHours = $deDate->format('h:i:s A');
 
 if ($ApplicantNo == NULL) {
 	$ApplicantNo = '&nbsp;';
@@ -943,7 +953,7 @@ if ($Referral == NULL) {
 							</div>
 							<div class="col-md-4 printemployee-tooltip">
 								<p>
-									<?php echo $DateStarted; ?>
+									<?php echo $dsDay . ' at ' . $dsHours; ?>
 								</p>
 							</div>
 							<div class="col-md-2">
@@ -953,7 +963,7 @@ if ($Referral == NULL) {
 							</div>
 							<div class="col-md-4 printemployee-tooltip">
 								<p>
-									<?php echo $DateEnds; ?>
+									<?php echo $deDay . ' at ' . $deHours; ?>
 								</p>
 							</div>
 						</div>
@@ -975,22 +985,57 @@ if ($Referral == NULL) {
 											<th> Contract Started </th>
 											<th> Contract Ended </th>
 											<th> Position </th>
+											<th> Violations </th>
 										</tr>
 									</thead>
 									<tbody>
-										<?php foreach ($GetContractHistory->result_array() as $row): ?>
+										<?php foreach ($GetContractHistory->result_array() as $row): 
+											// Previous Date Started
+											$pdsDate = new DateTime($row['PreviousDateStarted']);
+											$pdsDay = $pdsDate->format('Y-m-d');
+											$pdsDay = DateTime::createFromFormat('Y-m-d', $pdsDay)->format('F d, Y');
+											$pdsHours = $pdsDate->format('h:i:s A');
+											// Previous Date Ends
+											$pdeDate = new DateTime($row['PreviousDateEnds']);
+											$pdeDay = $pdeDate->format('Y-m-d');
+											$pdeDay = DateTime::createFromFormat('Y-m-d', $pdeDay)->format('F d, Y');
+											$pdeHours = $pdeDate->format('h:i:s A');
+
+											?>
 											<tr>
 												<td class="text-center align-middle">
 													<?php echo $row['Client'] ; ?>
 												</td>
 												<td class="text-center align-middle">
-													<?php echo $row['PreviousDateStarted'] ; ?>
+													<?php echo $pdsDay . ' at ' . $pdsHours; ?>
 												</td>
 												<td class="text-center align-middle">
-													<?php echo $row['PreviousDateEnds'] ; ?>
+													<?php echo $pdeDay . ' at ' . $pdeHours; ?>
 												</td>
 												<td class="text-center align-middle">
 													<?php echo $row['PreviousPosition'] ; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php
+													$HistoryFrom = $row['PreviousDateStarted'];
+													$HistoryFrom = new DateTime($HistoryFrom);
+													$HistoryTo = $row['PreviousDateEnds'];
+													$HistoryTo = new DateTime($HistoryTo);
+													$GetClientIDFromName = $this->Model_Selects->GetClientIDFromName($row['Client']);
+													if ($GetClientIDFromName->num_rows() > 0):
+														foreach($GetClientIDFromName->result_array() as $nrow):
+															$ClientID = $nrow['ClientID'];
+														endforeach;
+													else:
+														$ClientID = '0'; // default
+													endif;
+													$GetDocumentsViolationsFromClient = $this->Model_Selects->GetDocumentsViolationsFromClient($ApplicantID, $ClientID, $HistoryFrom->format('Y-m-d'), $HistoryTo->format('Y-m-d'));
+													?>
+													<?php if($GetDocumentsViolationsFromClient->num_rows() > 0): ?>
+														<?=$GetDocumentsViolationsFromClient->num_rows();?>
+													<?php else: ?>
+														0
+													<?php endif; ?>
 												</td>
 											</tr>
 										<?php endforeach ?>

@@ -77,6 +77,9 @@ class Model_Logbook extends CI_Model {
 		if ($TextColor == 'error') {
 			$TextColor = 'text-danger prompts-border-danger';
 		}
+		if ($TextColor == 'info') {
+			$TextColor = 'prompts-border-info';
+		}
 		if ($Icon == 'success') {
 			$Icon = 'fas fa-check';
 		}

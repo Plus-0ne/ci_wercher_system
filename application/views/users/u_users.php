@@ -79,7 +79,7 @@ endif;
 								</thead>
 								<tbody>
 									<?php foreach ($get_employee->result_array() as $row): ?>
-										<tr>
+										<tr class="table-row-hover">
 											<td class="text-center">
 												<div class="col-sm-12">
 													<?php
@@ -304,31 +304,36 @@ endif;
             {
 	            extend: 'print',
 	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 7, 8 ]
-	            }
+	                columns: [ 0, 2, 3, 4, 5, 7, 8 ]
+	            },
+	            customize: function ( doc ) {
+	            	$(doc.document.body).find('h1').prepend('<img src="<?=base_url()?>assets/img/wercher_logo.png" width="63px" height="56px" />');
+					$(doc.document.body).find('h1').css('font-size', '24px');
+					$(doc.document.body).find('h1').css('text-align', 'center'); 
+				}
 	        },
 	        {
 	            extend: 'copyHtml5',
 	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 7, 8 ]
+	                columns: [ 0, 2, 3, 4, 5, 7, 8 ]
 	            }
 	        },
 	        {
 	            extend: 'excelHtml5',
 	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 7, 8 ]
+	                columns: [ 0, 2, 3, 4, 5, 7, 8 ]
 	            }
 	        },
 	        {
 	            extend: 'csvHtml5',
 	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 7, 8 ]
+	                columns: [ 0, 2, 3, 4, 5, 7, 8 ]
 	            }
 	        },
 	        {
 	            extend: 'pdfHtml5',
 	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 7, 8 ]
+	                columns: [ 0, 2, 3, 4, 5, 7, 8 ]
 	            }
 	        }
         ]

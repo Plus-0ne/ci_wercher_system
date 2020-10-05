@@ -575,6 +575,26 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetLogbookNoLimit($AdminID = NULL, $Type = NULL, $Event = NULL, $DateStart = NULL, $DateMax = NULL)
+	{
+		
+		$SQL = "SELECT * FROM logbook WHERE ";
+		if ($AdminID != NULL) {
+			$SQL = $SQL . "AdminID = '$AdminID' AND ";
+		}
+		if ($Type != NULL) {
+			$SQL = $SQL . "Icon = '$Type' AND ";
+		}
+		if ($Event != NULL) {
+			$SQL = $SQL . "Event LIKE '%$Event%' AND ";
+		}
+		if ($DateStart != NULL && $DateMax != NULL) {
+			$SQL = $SQL . "(Time BETWEEN '$DateStart' AND '$DateMax') AND ";
+		}
+		$SQL = $SQL . "Icon <> 'Note' ORDER BY No DESC";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function GetLogbookAdminImage($AdminID)
 	{
 		$SQL = "SELECT * FROM admin, logbook WHERE admin.AdminID = '$AdminID' AND logbook.AdminID = '$AdminID' LIMIT 1";

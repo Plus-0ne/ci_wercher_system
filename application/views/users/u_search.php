@@ -490,7 +490,12 @@
 	            extend: 'print',
 	            exportOptions: {
 	                columns: [ 1, 2, 3, 4, 5 ]
-	            }
+	            },
+	            customize: function ( doc ) {
+	            	$(doc.document.body).find('h1').prepend('<img src="<?=base_url()?>assets/img/wercher_logo.png" width="63px" height="56px" />');
+					$(doc.document.body).find('h1').css('font-size', '24px');
+					$(doc.document.body).find('h1').css('text-align', 'center'); 
+				}
 	        },
 	        {
 	            extend: 'copyHtml5',

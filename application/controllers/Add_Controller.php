@@ -70,7 +70,7 @@ class Add_Controller extends CI_Controller {
 
 
 		if ($PositionDesired == NULL || $LastName == NULL || $FirstName == NULL) {
-			$this->Model_Logbook->SetPrompts('error', 'error', 'Missing required fields: Position Desired, Last Name, First Name');
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Missing required fields: Position Desired, Last Name, and First Name.');
 			$data = array(
 				'PositionDesired' => $PositionDesired,
 				'PositionGroup' => $PositionGroup,
@@ -181,7 +181,7 @@ class Add_Controller extends CI_Controller {
 			// Check Employee if exist
 			$chkem = $this->Model_Selects->CheckEmployee($ApplicantID);
 			if ($chkem->num_rows() > 0) {
-				$this->Model_Logbook->SetPrompts('error', 'error', 'Applicant ID exists');
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Applicant ID exists.');
 				redirect('NewEmployee');
 			}
 			else
@@ -363,7 +363,7 @@ class Add_Controller extends CI_Controller {
 					// unset($_SESSION["rela_cart"]); 
 					// unset($_SESSION["beneCart"]);
 					
-					$this->Model_Logbook->SetPrompts('success', 'success', 'New employee added');
+					$this->Model_Logbook->SetPrompts('success', 'success', 'New employee added.');
 					// LOGBOOK
 					$this->Model_Logbook->LogbookEntry('Green', 'Applicant', ' added a new applicant: <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
 					$this->Model_Logbook->LogbookExtendedEntry(0, 'Applicant ID: <b>' . $ApplicantID . '</b>');
@@ -391,14 +391,14 @@ class Add_Controller extends CI_Controller {
 		$LastName = $this->input->post('LastName',TRUE);
 
 		if ($AdminLevel == NULL || $Position == NULL || $AdminID == NULL || $Password == NULL || $FirstName == NULL || $MiddleIN == NULL || $LastName == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$this->Model_Logbook->SetPrompts('error', 'error', 'All fields are required.');
 			redirect('Admins');
 		}
 		else
 		{
 			$CheckAdminID = $this->Model_Selects->CheckAdminID($AdminID);
 			if ($CheckAdminID->num_rows() > 0) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Admin exist!</h5></div>');
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Admin ID exists.');
 				redirect('Admins');
 			}
 			else
@@ -422,7 +422,7 @@ class Add_Controller extends CI_Controller {
 				if ($pImageChecker != NULL) {
 					if ( ! $this->upload->do_upload('adminImage'))
 					{
-						$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
+						$this->Model_Logbook->SetPrompts('error', 'error', $this->upload->display_errors());
 						redirect('Admins');
 					}
 					else
@@ -459,7 +459,7 @@ class Add_Controller extends CI_Controller {
 				);
 				$InsertAdmin = $this->Model_Inserts->InsertAdmin($data);
 				if ($InsertAdmin == TRUE) {
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Admin added!</h5></div>');
+					$this->Model_Logbook->SetPrompts('success', 'success', 'New admin added.');
 
 					// LOGBOOK
 					$this->Model_Logbook->LogbookEntry('Green', 'Admin', ' added a new admin: <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewAdmin?id=' . $AdminID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleIN) . '</a>');
@@ -469,7 +469,7 @@ class Add_Controller extends CI_Controller {
 				}
 				else
 				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 					redirect('Admins');
 				}
 			}
@@ -484,14 +484,14 @@ class Add_Controller extends CI_Controller {
 		$EmployeeIDSuffix = $this->input->post('EmployeeIDSuffix',TRUE);
 
 		if ( $ClientName == NULL || $ClientAddress == NULL || $ClientContact == NULL || $EmployeeIDSuffix == NULL ) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$this->Model_Logbook->SetPrompts('error', 'error', 'All fields are required.');
 			redirect('Clients');
 		}
 		else
 		{
 			$CheckClient = $this->Model_Selects->CheckClient($ClientName);
 			if ($CheckClient->num_rows() > 0) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Client exist!</h5></div>');
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Client exists.');
 				redirect('Clients');
 			}
 			else
@@ -505,7 +505,7 @@ class Add_Controller extends CI_Controller {
 				);
 				$InsertNewClient = $this->Model_Inserts->InsertNewClient($data);
 				if ($InsertNewClient == TRUE) {
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Client added!</h5></div>');
+					$this->Model_Logbook->SetPrompts('success', 'success', 'New client added.');
 					// LOGBOOK
 					$GetClientIDFromName = $this->Model_Selects->GetClientIDFromName($ClientName);
 					if ($GetClientIDFromName->num_rows() > 0) {
@@ -522,7 +522,7 @@ class Add_Controller extends CI_Controller {
 				}
 				else
 				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 					redirect('Clients');
 				}
 			}
@@ -546,7 +546,7 @@ class Add_Controller extends CI_Controller {
 		}
 
 		if ($ApplicantID == NULL || $Subject == NULL || $Description == NULL || $Remarks == NULL || $Type == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Missing fields. Please try again.');
 			redirect('Employee');
 			exit();
 		}
@@ -574,7 +574,7 @@ class Add_Controller extends CI_Controller {
 			// TODO: Add restrictions to deny /uploads/ access.
 			// PDF File Upload
 			if ( ! $this->upload->do_upload('pFile')) {
-				$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> ' . $pFile . ' PDF upload: '.$this->upload->display_errors().' This function is not yet implemented. Click the blue "Choose a PDF file button" instead.</h5></div>');
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 				redirect('Employee');
 				exit();
 			} else {
@@ -601,13 +601,13 @@ class Add_Controller extends CI_Controller {
 				}
 				$AddDocuments = $this->Model_Inserts->AddDocuments($data);
 				if ($AddDocuments == TRUE) {
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Document added!</h5></div>');
+					$this->Model_Logbook->SetPrompts('success', 'success', 'New document added.');
 					redirect('ViewEmployee?id=' . $ApplicantID . '#Documents');
 					exit();
 				}
 				else
 				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 					redirect('Employee');
 					exit();
 				}
@@ -620,7 +620,7 @@ class Add_Controller extends CI_Controller {
 		$t_range = $this->input->post('t_range',TRUE);
 		$contribution = $this->input->post('contribution',TRUE);
 		if ($f_range == NULL || $t_range == NULL || $contribution == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Missing fields. Please try again.');
 			redirect('SSS_Table');
 		}
 		else
@@ -632,12 +632,12 @@ class Add_Controller extends CI_Controller {
 			);
 			$AddtoSSS = $this->Model_Inserts->AddtoSSS($data);
 			if ($AddtoSSS == TRUE) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Data added!</h5></div>');
+				$this->Model_Logbook->SetPrompts('success', 'success', 'Data added.');
 				redirect('SSS_Table');
 			}
 			else
 			{
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 				redirect('SSS_Table');
 			}
 		}

@@ -14,7 +14,11 @@ $cElapsedText = $cStarts->diff($currentDate)->format('%m months, %d days');
 // 13th Month Pay Calculation
 // $cTotalMonths = $cEnds->diff($cStarts)->format('%m');
 $cDiff = $cEnds->diff($cStarts);
-$cTotalMonths = $cDiff->y * 12 + $cDiff->m + $cDiff->d / 30;
+if ($cDiff->m > 1) {
+	$cTotalMonths = $cDiff->y * 12 + $cDiff->m + $cDiff->d / 30;
+} else {
+	$cTotalMonths = $cDiff->d;
+}
 $cDiffDays = $cEnds->diff($cStarts)->format('%a');
 if ($cDiffDays > 1) {
 	$isThirteenEligible = true;

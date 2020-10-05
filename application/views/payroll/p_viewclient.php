@@ -1,4 +1,10 @@
-<?php $T_Header;?>
+<?php 
+
+$T_Header;
+require 'vendor/autoload.php';
+use Carbon\Carbon;
+
+?>
 <?php
 	// $IsFromExcel = False;
 ?>
@@ -58,7 +64,14 @@
 									<th style="min-width: 200px;">Name</th>
 									<th style="min-width: 50px;">Salary (₱)</th>
 									<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
-										<th><?php echo $row['Time']; ?></th>
+										<th><?php 
+
+										$date = new DateTime($row['Time']);
+										$day = $date->format('Y-m-d');
+										$day = DateTime::createFromFormat('Y-m-d', $day)->format('M d, Y');
+										echo $day; 
+
+										?></th>
 									<?php endforeach; ?>
 									<th style="min-width: 50px;">Reg. Hrs</th>
 									<th style="min-width: 50px;">OT Hrs</th>
@@ -308,7 +321,9 @@
 	 			$('.REGCheck_<?php echo $row['Time']; ?>').prop("checked", false);
 	 		});
 	 		$('.NCheck_<?php echo $row['Time']; ?>').on('change', function() {
-	 			$(this).closest('.day-hover').find('.NightPremium').show();
+	 			$(this).closest('.day-hover').find('.NightHours_<?php echo $row['Time']; ?>').val('');
+	 			$(this).closest('.day-hover').find('.NightOTHours_<?php echo $row['Time']; ?>').val('');
+	 			$(this).closest('.day-hover').find('.NightPremium').toggle();
 	 		});
 		 	$(".Hours_<?php echo $row['Time']; ?>, .OTHours_<?php echo $row['Time']; ?>, .NightHours_<?php echo $row['Time']; ?>, .NightOTHours_<?php echo $row['Time']; ?>").bind("input", function () {
 		 			// General

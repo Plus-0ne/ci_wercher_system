@@ -52,7 +52,12 @@
 								<div class="day-hover day-container_<?php echo $row['Time']; ?> col-sm-12 col-md-3 text-center rcontent mr-4">
 									<div class="row">
 										<div class="col-sm-6 day-container-date">
-											<b><?php echo $row['Time']; ?></b><br/>
+											<b><?php 
+											$pdate = new DateTime($row['Time']);
+											$pday = $pdate->format('Y-m-d');
+											$pday = DateTime::createFromFormat('Y-m-d', $pday)->format('M d, Y');
+											echo $pday; 
+											?></b><br/>
 											<b><?php 
 												$dow= date('w', strtotime($row['Time']));  //gets the dayof week
 												$dayOfWeek="";
@@ -90,7 +95,7 @@
 										</div>
 										<div class="col-sm-6">
 											<div class="form-group col-4">
-												<input class="NCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="Night" data-off="Night" data-onstyle="primary" data-offstyle="secondary" data-width="85" <?php if (isset($RestDay)) { echo 'checked'; } ?>>
+												<input class="NCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="Night" data-off="Night" data-onstyle="success" data-offstyle="secondary" data-width="85" <?php if (isset($RestDay)) { echo 'checked'; } ?>>
 											</div>
 										</div>
 									</div>

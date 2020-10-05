@@ -1,4 +1,8 @@
-<?php $T_Header;?>
+<?php 
+
+$T_Header;
+
+?>
 <body>
 	<div class="wrapper">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
@@ -195,7 +199,7 @@
 						<!-- <div class="col-1 ml-auto chart-hover-settings" style="margin-top: -30px; display: none;">
 							<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog" style="margin-right: -1px;"></i></button>
 						</div> -->
-						<canvas id="pie-chart" width="800" height="450"></canvas>
+						<canvas id="pie-chart" width="800" height="800"></canvas>
 					</div>
 					<div id="BarChartButton" class="col-sm-12 col-lg-6 mt-5 mb-5">
 						<div class="chart-title text-center">
@@ -374,11 +378,12 @@
 				labels: cData.label,
 				datasets: [{
 					label: cData.label,
-					backgroundColor: ["#7B45E9", "#Cd45E9","#E945B3","#4561E9","#45B3E9","#7B45E9", "#Cd45E9","#E945B3","#4561E9","#45B3E9","#7B45E9", "#Cd45E9","#E945B3","#4561E9","#45B3E9","#7B45E9", "#Cd45E9","#E945B3","#4561E9","#45B3E9","#7B45E9", "#Cd45E9","#E945B3","#4561E9","#45B3E9"],
+					backgroundColor: ["#FFDB00", "#FFA600","#FF7900","#FF5900","#FF3900","#E32B2B", "#FF004D","#FF0071","#FF009E","#FF00D3","#FF00FB", "#DB00FF","#9A00FF","#6900FF","#2C00FF","#0014FF", "#0051FF","#0086FF","#00BAFF","#00E7FF","#37C6A9", "#37C682","#37C659","#42DA00","#ACE72D", "#FFDB00", "#FFA600","#FF7900","#FF5900","#FF3900","#E32B2B", "#FF004D","#FF0071","#FF009E","#FF00D3","#FF00FB", "#DB00FF","#9A00FF","#6900FF","#2C00FF","#0014FF", "#0051FF","#0086FF","#00BAFF","#00E7FF","#37C6A9", "#37C682","#37C659","#42DA00","#ACE72D", "#FFDB00", "#FFA600","#FF7900","#FF5900","#FF3900","#E32B2B", "#FF004D","#FF0071","#FF009E","#FF00D3","#FF00FB", "#DB00FF","#9A00FF","#6900FF","#2C00FF","#0014FF", "#0051FF","#0086FF","#00BAFF","#00E7FF","#37C6A9", "#37C682","#37C659","#42DA00","#ACE72D","#FFDB00", "#FFA600","#FF7900","#FF5900","#FF3900","#E32B2B", "#FF004D","#FF0071","#FF009E","#FF00D3","#FF00FB", "#DB00FF","#9A00FF","#6900FF","#2C00FF","#0014FF", "#0051FF","#0086FF","#00BAFF","#00E7FF","#37C6A9", "#37C682","#37C659","#42DA00","#ACE72D", "#FFDB00", "#FFA600","#FF7900","#FF5900","#FF3900","#E32B2B", "#FF004D","#FF0071","#FF009E","#FF00D3","#FF00FB", "#DB00FF","#9A00FF","#6900FF","#2C00FF","#0014FF", "#0051FF","#0086FF","#00BAFF","#00E7FF","#37C6A9", "#37C682","#37C659","#42DA00","#ACE72D", "#FFDB00", "#FFA600","#FF7900","#FF5900","#FF3900","#E32B2B", "#FF004D","#FF0071","#FF009E","#FF00D3","#FF00FB", "#DB00FF","#9A00FF","#6900FF","#2C00FF","#0014FF", "#0051FF","#0086FF","#00BAFF","#00E7FF","#37C6A9", "#37C682","#37C659","#42DA00","#ACE72D"],
 					data: cData.data,
 				}]
 			},
 			options: {
+				responsive: true,
 				legend:
 				{
 					display: true,
@@ -396,7 +401,7 @@
 				datasets: [
 				{
 					label : "",
-					backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+					backgroundColor: ["#FFDB00", "#FFA600","#FF7900","#FF5900","#FF3900","#E32B2B", "#FF004D","#FF0071","#FF009E","#FF00D3","#FF00FB", "#DB00FF","#9A00FF","#6900FF","#2C00FF","#0014FF", "#0051FF","#0086FF","#00BAFF","#00E7FF","#37C6A9", "#37C682","#37C659","#42DA00","#ACE72D", "#FFDB00", "#FFA600","#FF7900","#FF5900","#FF3900","#E32B2B", "#FF004D","#FF0071","#FF009E","#FF00D3","#FF00FB", "#DB00FF","#9A00FF","#6900FF","#2C00FF","#0014FF", "#0051FF","#0086FF","#00BAFF","#00E7FF","#37C6A9", "#37C682","#37C659","#42DA00","#ACE72D", "#FFDB00", "#FFA600","#FF7900","#FF5900","#FF3900","#E32B2B", "#FF004D","#FF0071","#FF009E","#FF00D3","#FF00FB", "#DB00FF","#9A00FF","#6900FF","#2C00FF","#0014FF", "#0051FF","#0086FF","#00BAFF","#00E7FF","#37C6A9", "#37C682","#37C659","#42DA00","#ACE72D"],
 					data: [<?php echo $BarClientsData; ?>, 0]
 				}
 				]
@@ -463,10 +468,10 @@
 					label: '# of Applicants',
 					data: [<?php if (isset($_GET['Year'])) { echo $GraphMonthData; } else { echo $GraphMonthDataCurrent; } ?>],
 					backgroundColor: [
-					'rgba(255, 99, 132, 0.22)',
+					'rgba(185, 92, 26, 0.5)',
 					],
 					borderColor: [
-					'rgba(255, 99, 132, 1)',
+					'rgba(185, 92, 26, 1)',
 					'rgba(54, 162, 235, 1)',
 					'rgba(255, 206, 86, 1)',
 					'rgba(75, 192, 192, 1)',
@@ -510,7 +515,12 @@
 		            extend: 'print',
 		            exportOptions: {
 		                columns: [ 0, 1 ]
-		            }
+		            },
+		            customize: function ( doc ) {
+		            	$(doc.document.body).find('h1').prepend('<img src="<?=base_url()?>assets/img/wercher_logo.png" width="63px" height="56px" />');
+						$(doc.document.body).find('h1').css('font-size', '24px');
+						$(doc.document.body).find('h1').css('text-align', 'center'); 
+					}
 		        },
 		        {
 		            extend: 'copyHtml5',
@@ -564,31 +574,36 @@
 	            {
 		            extend: 'print',
 		            exportOptions: {
-		                columns: [ 0, 1, 2, 3, 4 ]
-		            }
+		                columns: [ 2, 3, 4, 6, 7 ]
+		            },
+		            customize: function ( doc ) {
+		            	$(doc.document.body).find('h1').prepend('<img src="<?=base_url()?>assets/img/wercher_logo.png" width="63px" height="56px" />');
+						$(doc.document.body).find('h1').css('font-size', '24px');
+						$(doc.document.body).find('h1').css('text-align', 'center'); 
+					}
 		        },
 		        {
 		            extend: 'copyHtml5',
 		            exportOptions: {
-		                columns: [ 0, 1, 2, 3, 4 ]
+		                columns: [ 2, 3, 4, 6, 7 ]
 		            }
 		        },
 		        {
 		            extend: 'excelHtml5',
 		            exportOptions: {
-		                columns: [ 0, 1, 2, 3, 4 ]
+		                columns: [ 2, 3, 4, 6, 7 ]
 		            }
 		        },
 		        {
 		            extend: 'csvHtml5',
 		            exportOptions: {
-		                columns: [ 0, 1, 2, 3, 4 ]
+		                columns: [ 2, 3, 4, 6, 7 ]
 		            }
 		        },
 		        {
 		            extend: 'pdfHtml5',
 		            exportOptions: {
-		                columns: [ 0, 1, 2, 3, 4 ]
+		                columns: [ 2, 3, 4, 6, 7 ]
 		            }
 		        }
 	        ]

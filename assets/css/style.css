@@ -548,7 +548,7 @@ a[data-toggle="collapse"] {
 	font-size: 1.25em;
 }
 .card-headers-primary {
-	background-color: rgba(0, 125, 225, 1.0);
+	background-color: #e7af3e;
 }
 .card-headers-info {
 	/*background-color: rgba(0, 85, 85, 1.0);*/
@@ -1157,8 +1157,12 @@ a[data-toggle="collapse"] {
 	border-left: 4px solid #28a745;
 }
 .prompts-border-danger {
-	box-shadow: 0 0 2px 2px red;
-	border-left: 4px solid red;
+	box-shadow: 0 0 2px 2px #dc3545;
+	border-left: 4px solid #dc3545;
+}
+.prompts-border-info {
+	box-shadow: 0 0 2px 2px #c5ad00;
+	border-left: 4px solid #c5ad00;
 }
 /*form {
 	display: none;
