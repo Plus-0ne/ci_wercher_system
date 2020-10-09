@@ -1131,6 +1131,8 @@
 		if (isset($_GET['id'])) {
 
 			$id = $_GET['id'];
+			$ClientID = $_GET['id'];
+			$mode = $_GET['mode'];
 
 			$header['title'] = 'Client Information | Wercher Solutions and Resources Workers Cooperative';
 			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
@@ -1141,7 +1143,7 @@
 				$ApplicantsArray = unserialize($ApplicantsArray);
 				$GetWeeklyList = $this->Model_Selects->GetWeeklyImports($ApplicantsArray);
 			} else {
-				$GetWeeklyList = $this->Model_Selects->GetWeeklyList($id);
+				$GetWeeklyList = $this->Model_Selects->GetWeeklyList($id,$mode);
 			}
 
 			$row = $GetWeeklyList->row_array();
@@ -1150,8 +1152,11 @@
 				'ApplicantID' => $row['ApplicantID'],
 
 			);
+
 			$ApplicantID = $row['ApplicantID'];
-			$data['GetWeeklyList'] = $this->Model_Selects->GetWeeklyList($id);
+
+			$data['GetWeeklyList'] = $this->Model_Selects->GetWeeklyList($ClientID,$mode);
+
 			if ($id == 'excel') {
 				$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployeeFromImports($ApplicantsArray);
 			} else {
@@ -1623,9 +1628,9 @@
 			$AdminID = 'GUEST';
 		endif;
 		$Type = 1;
-		$HookNo = $_POST['HookNo'];
-		$LimitNotes = $_POST["LimitNotes"];
-		$Event = $_POST['NotesEvent'];
+		$HookNo = $this->input->post('HookNo');
+		$LimitNotes = $this->input->post("LimitNotes");
+		$Event = $this->input->post('NotesEvent');
 		if ($LimitNotes == NULL || $AdminID == NULL || $Event == NULL) {
 			echo "Error";
 		}

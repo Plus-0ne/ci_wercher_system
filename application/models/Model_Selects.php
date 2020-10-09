@@ -201,10 +201,24 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function GetWeeklyList($ClientID) // Argument is $id originally from source.
+	public function GetWeeklyList($ClientID,$mode) // Argument is $id originally from source.
 	{
-		$SQL = "SELECT * FROM hours_weekly WHERE ClientID = '$ClientID'";
-		$result = $this->db->query($SQL,$ClientID);
+		switch ($mode) {
+			case 0:
+				$SQL = "SELECT * FROM hours_weekly WHERE ClientID = '$ClientID'";
+				break;
+			case 1:
+				$SQL = "SELECT * FROM hours_semimonthly WHERE ClientID = '$ClientID'";
+				break;
+			case 2:
+				$SQL = "SELECT * FROM hours_monthly WHERE ClientID = '$ClientID'";
+				break;
+			default:
+				$SQL = "SELECT * FROM hours_weekly WHERE ClientID = '$ClientID'";
+				break;
+		}
+
+		$result = $this->db->query($SQL);
 		return $result;
 	}
 	public function GetClientID($ClientID)
@@ -243,21 +257,61 @@ class Model_Selects extends CI_Model {
 	// 	$result = $this->db->query($SQL);
 	// 	return $result;
 	// }
-	public function GetMatchingDates($ApplicantID, $Time)
+	public function GetMatchingDates($ApplicantID, $Time, $Mode)
 	{
-		$SQL = "SELECT * FROM hours_weekly, dummy_hours WHERE hours_weekly.Time = '$Time' AND dummy_hours.Time = '$Time' AND hours_weekly.ApplicantID = '$ApplicantID'";
+		switch ($Mode) {
+			case '0':
+				$SQL = "SELECT * FROM hours_weekly, dummy_hours WHERE hours_weekly.Time = '$Time' AND dummy_hours.Time = '$Time' AND hours_weekly.ApplicantID = '$ApplicantID'";
+				break;
+			case '1':
+				$SQL = "SELECT * FROM hours_semimonthly, dummy_hours WHERE hours_semimonthly.Time = '$Time' AND dummy_hours.Time = '$Time' AND hours_semimonthly.ApplicantID = '$ApplicantID'";
+				break;
+			case '2':
+				$SQL = "SELECT * FROM hours_monthly, dummy_hours WHERE hours_monthly.Time = '$Time' AND dummy_hours.Time = '$Time' AND hours_monthly.ApplicantID = '$ApplicantID'";
+				break;
+			default:
+				$SQL = "SELECT * FROM hours_weekly, dummy_hours WHERE hours_weekly.Time = '$Time' AND dummy_hours.Time = '$Time' AND hours_weekly.ApplicantID = '$ApplicantID'";
+				break;
+		}
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function GetMatchingDatesType($ApplicantID, $Time)
+	public function GetMatchingDatesType($ApplicantID, $Time, $Mode)
 	{
-		$SQL = "SELECT * FROM hours_weekly, dummy_hours WHERE hours_weekly.Time = '$Time' AND dummy_hours.Time = '$Time' AND hours_weekly.ApplicantID = '$ApplicantID'";
+		switch ($Mode) {
+			case '0':
+				$SQL = "SELECT * FROM hours_weekly, dummy_hours WHERE hours_weekly.Time = '$Time' AND dummy_hours.Time = '$Time' AND hours_weekly.ApplicantID = '$ApplicantID'";
+				break;
+			case '1':
+				$SQL = "SELECT * FROM hours_semimonthly, dummy_hours WHERE hours_semimonthly.Time = '$Time' AND dummy_hours.Time = '$Time' AND hours_semimonthly.ApplicantID = '$ApplicantID'";
+				break;
+			case '2':
+				$SQL = "SELECT * FROM hours_monthly, dummy_hours WHERE hours_monthly.Time = '$Time' AND dummy_hours.Time = '$Time' AND hours_monthly.ApplicantID = '$ApplicantID'";
+				break;
+			default:
+				$SQL = "SELECT * FROM hours_weekly, dummy_hours WHERE hours_weekly.Time = '$Time' AND dummy_hours.Time = '$Time' AND hours_weekly.ApplicantID = '$ApplicantID'";
+				break;
+		}
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function GetWeeklyListEmployeeForDates($ApplicantID)
+	public function GetWeeklyListEmployeeForDates($ApplicantID, $Mode)
 	{
-		$SQL = "SELECT * FROM hours_weekly WHERE ApplicantID = '$ApplicantID'";
+		switch ($Mode) {
+			case '0':
+				$Mode = 'hours_weekly';
+				break;
+			case '1':
+				$Mode = 'hours_semimonthly';
+				break;
+			case '2':
+				$Mode = 'hours_monthly';
+				break;
+			default:
+				$Mode = 'hours_weekly';
+				break;
+		}
+		$SQL = "SELECT * FROM " . $Mode . " WHERE ApplicantID = '$ApplicantID'";
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
@@ -620,6 +674,11 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetLatestAdminActivity($AdminID, $FetchNum = 1) {
 		$SQL = "SELECT * FROM logbook WHERE AdminID = '$AdminID' ORDER BY Time DESC LIMIT $FetchNum";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetCurrentPrimaryWeek($ClientID) {
+		$SQL = "SELECT * FROM salary WHERE ClientID = '$ClientID' ORDER BY TimeAdded DESC LIMIT 1";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

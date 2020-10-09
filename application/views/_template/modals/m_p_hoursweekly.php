@@ -12,6 +12,7 @@
 					<form action="<?php echo base_url().'SetWeeklyHours'; ?>" method="post">
 						<input id="ApplicantID" type="hidden" name="ApplicantID" value="<?php echo $erow['ApplicantID']; ?>">
 						<input id="ClientID" type="hidden" name="ClientID" value="<?php echo $erow['ClientEmployed']; ?>">
+						<input id="ModeType" type="hidden" name="ModeType" value="<?php echo $_GET['mode']; ?>">
 						<div class="form-row">
 							<div class="form-group col-sm-12 col-md-2">
 								<label>Type</label>
@@ -103,7 +104,7 @@
 										<div class="form-group col-8">
 											<div>Hours</div>
 											<input id="" class="form-control Hours_<?php echo $row['Time']; ?>" type="number" name="Hours_<?php echo $row['Time']; ?>" value="<?php
-													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
+													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'], $_GET['mode'])->result_array() as $nrow):
 														if($nrow['Hours'] != NULL) {
 															echo $nrow['Hours'];
 														} else {
@@ -115,7 +116,7 @@
 										<div class="form-group col-4">
 											<div class="">Overtime</div>
 											<input class="form-control OTHours_<?php echo $row['Time']; ?>" type="number" name="OTHours_<?php echo $row['Time']; ?>" value="<?php
-													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
+													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'], $_GET['mode'])->result_array() as $nrow):
 														if($nrow['Overtime'] != NULL) {
 															echo $nrow['Overtime'];
 														} else {
@@ -134,7 +135,7 @@
 										<div class="form-group col-8 NightPremium">
 											<div>Hours</div>
 											<input id="" class="form-control NightHours_<?php echo $row['Time']; ?>" type="number" name="NightHours_<?php echo $row['Time']; ?>" value="<?php
-													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
+													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'], $_GET['mode'])->result_array() as $nrow):
 														if($nrow['NightHours'] != NULL) {
 															echo $nrow['NightHours'];
 														} else {
@@ -146,7 +147,7 @@
 										<div class="form-group col-4 NightPremium">
 											<div class="">Overtime</div>
 											<input class="form-control NightOTHours_<?php echo $row['Time']; ?>" type="number" name="NightOTHours_<?php echo $row['Time']; ?>" value="<?php
-													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
+													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'], $_GET['mode'])->result_array() as $nrow):
 														if($nrow['NightOvertime'] != NULL) {
 															echo $nrow['NightOvertime'];
 														} else {
@@ -213,7 +214,7 @@
 											<label>Remarks</label>
 											<div class="input-icon-sm">
 												<input class="form-control" type="text" name="Remarks_<?php echo $row['Time']; ?>" value="<?php
-													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
+													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'], $_GET['mode'])->result_array() as $nrow):
 														if($nrow['Remarks'] != NULL) {
 															echo $nrow['Remarks'];
 														}

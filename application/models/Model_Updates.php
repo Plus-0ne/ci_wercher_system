@@ -97,12 +97,31 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
-	public function UpdateWeeklyHours($ApplicantID,$data)
+	public function UpdateWeeklyHours($Mode, $ApplicantID,$data)
 	{
 		extract($data);
+		switch ($Mode) {
+			case '0':
+				$Mode = 'hours_weekly';
+				break;
+			case '1':
+				$Mode = 'hours_semimonthly';
+				break;
+			case '2':
+				$Mode = 'hours_monthly';
+				break;
+			default:
+				$Mode = 'hours_weekly'; // default
+				$this->Model_Logbook->SetPrompts('info', 'info', 'Invalid salary mode. Defaulting to weekly.');
+				break;
+		}
 		$data = array(
 			'ApplicantID' => $ApplicantID,
 			'ClientID' => $ClientID,
+			'Week' => $Week,
+			'Month' => $Month,
+			't_year' => $t_year,
+			
 			'Time' => $Date,
 			'Hours' => $Hours,
 			'Overtime' => $Overtime,
@@ -115,9 +134,12 @@ class Model_Updates extends CI_Model {
 			'Tax' => $Tax,
 			'day_pay' => $day_pay,
 		);
-		$SQL = "REPLACE INTO hours_weekly
+		$SQL = "REPLACE INTO " . $Mode . "
 		SET ApplicantID = '$ApplicantID',
 		ClientID = '$ClientID',
+		Week = '$Week',
+		Month = '$Month',
+		t_year = '$t_year',
 		Time = '$Date', Hours = '$Hours',
 		Overtime = '$Overtime',
 		NightHours = '$NightHours',
@@ -150,6 +172,16 @@ class Model_Updates extends CI_Model {
 		);
 		$this->db->where('id', $id);
 		$result = $this->db->update('sss_table', $data);
+		return $result;
+	}
+	public function SetPrimaryWeek($Week, $ClientID)
+	{
+		$data = array(
+			'WeekStart' => $Week,
+			'ClientID' => $ClientID,
+			'TimeAdded' => date('Y-m-d H:i:s'),
+		);
+		$result = $this->db->insert('salary', $data);
 		return $result;
 	}
 

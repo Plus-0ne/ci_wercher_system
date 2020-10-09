@@ -409,212 +409,212 @@ class Update_Controller extends CI_Controller {
 		else
 		{
 				// Logbook Records
-				$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
-				if ($CheckEmployee->num_rows() > 0) {
-					foreach ($CheckEmployee->result_array() as $row) {
-						$prevEmployeeID = $row['EmployeeID'];
-						$prevpImage = $row['ApplicantImage'];
+			$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
+			if ($CheckEmployee->num_rows() > 0) {
+				foreach ($CheckEmployee->result_array() as $row) {
+					$prevEmployeeID = $row['EmployeeID'];
+					$prevpImage = $row['ApplicantImage'];
 						# PERSONAL INFORMATION
-						$prevPositionDesired = $row['PositionDesired'];
-						$prevPositionGroup = $row['PositionGroup'];
-						$prevSalaryExpected = $row['SalaryExpected'];
-						$prevLastName = $row['LastName'];
-						$prevFirstName = $row['FirstName'];
-						$prevMI = $row['MiddleInitial'];
-						$prevGender = $row['Gender'];
-						$prevAge = $row['Age'];
-						$prevHeight = $row['Height'];
-						$prevWeight = $row['Weight'];
-						$prevReligion = $row['Religion'];
+					$prevPositionDesired = $row['PositionDesired'];
+					$prevPositionGroup = $row['PositionGroup'];
+					$prevSalaryExpected = $row['SalaryExpected'];
+					$prevLastName = $row['LastName'];
+					$prevFirstName = $row['FirstName'];
+					$prevMI = $row['MiddleInitial'];
+					$prevGender = $row['Gender'];
+					$prevAge = $row['Age'];
+					$prevHeight = $row['Height'];
+					$prevWeight = $row['Weight'];
+					$prevReligion = $row['Religion'];
 
-						$prevbDate = $row['BirthDate'];
-						$prevbPlace = $row['BirthPlace'];
-						$prevCitizenship = $row['Citizenship'];
-						$prevCivilStatus = $row['CivilStatus'];
-						$prevNo_Children = $row['No_OfChildren'];
-						$prevPhoneNumber = $row['Phone_No'];
+					$prevbDate = $row['BirthDate'];
+					$prevbPlace = $row['BirthPlace'];
+					$prevCitizenship = $row['Citizenship'];
+					$prevCivilStatus = $row['CivilStatus'];
+					$prevNo_Children = $row['No_OfChildren'];
+					$prevPhoneNumber = $row['Phone_No'];
 						# DOCUMENTS
-						$prevSSS = $row['SSS_No'];
-						$prevRCN = $row['ResidenceCertificateNo'];
-						$prevTIN = $row['TIN'];
-						$prevHDMF = $row['HDMF'];
-						$prevPhilHealth = $row['PhilHealth'];
-						$prevATM_No = $row['ATM_No'];
+					$prevSSS = $row['SSS_No'];
+					$prevRCN = $row['ResidenceCertificateNo'];
+					$prevTIN = $row['TIN'];
+					$prevHDMF = $row['HDMF'];
+					$prevPhilHealth = $row['PhilHealth'];
+					$prevATM_No = $row['ATM_No'];
 
-						$prevEmergencyPerson = $row['EmergencyPerson'];
-						$prevEmergencyContact = $row['EmergencyContact'];
-						$prevReferral = $row['Referral'];
-						$prevNameExtension = $row['NameExtension'];
+					$prevEmergencyPerson = $row['EmergencyPerson'];
+					$prevEmergencyContact = $row['EmergencyContact'];
+					$prevReferral = $row['Referral'];
+					$prevNameExtension = $row['NameExtension'];
 
 						# ADDRESSES
-						$prevAddress_Present = $row['Address_Present'];
-						$prevAddress_Provincial = $row['Address_Provincial'];
-						$prevAddress_Manila = $row['Address_Manila'];
-					}
-				} else {
-					$prevEmployeeID = 'N/A';
-					$prevpImage = 'N/A';
+					$prevAddress_Present = $row['Address_Present'];
+					$prevAddress_Provincial = $row['Address_Provincial'];
+					$prevAddress_Manila = $row['Address_Manila'];
+				}
+			} else {
+				$prevEmployeeID = 'N/A';
+				$prevpImage = 'N/A';
 					# PERSONAL INFORMATION
-					$prevPositionDesired = 'N/A';
-					$prevPositionGroup = 'N/A';
-					$prevSalaryExpected = 'N/A';
-					$prevLastName = 'N/A';
-					$prevFirstName = 'N/A';
-					$prevMI = 'N/A';
-					$prevGender = 'N/A';
-					$prevAge = 'N/A';
-					$prevHeight = 'N/A';
-					$prevWeight = 'N/A';
-					$prevReligion = 'N/A';
+				$prevPositionDesired = 'N/A';
+				$prevPositionGroup = 'N/A';
+				$prevSalaryExpected = 'N/A';
+				$prevLastName = 'N/A';
+				$prevFirstName = 'N/A';
+				$prevMI = 'N/A';
+				$prevGender = 'N/A';
+				$prevAge = 'N/A';
+				$prevHeight = 'N/A';
+				$prevWeight = 'N/A';
+				$prevReligion = 'N/A';
 
-					$prevbDate = 'N/A';
-					$prevbPlace = 'N/A';
-					$prevCitizenship = 'N/A';
-					$prevCivilStatus = 'N/A';
-					$prevNo_Children = 'N/A';
-					$prevPhoneNumber = 'N/A';
+				$prevbDate = 'N/A';
+				$prevbPlace = 'N/A';
+				$prevCitizenship = 'N/A';
+				$prevCivilStatus = 'N/A';
+				$prevNo_Children = 'N/A';
+				$prevPhoneNumber = 'N/A';
 					# DOCUMENTS
-					$prevSSS = 'N/A';
-					$prevRCN = 'N/A';
-					$prevTIN = 'N/A';
-					$prevHDMF = 'N/A';
-					$prevPhilHealth = 'N/A';
-					$prevATM_No = 'N/A';
+				$prevSSS = 'N/A';
+				$prevRCN = 'N/A';
+				$prevTIN = 'N/A';
+				$prevHDMF = 'N/A';
+				$prevPhilHealth = 'N/A';
+				$prevATM_No = 'N/A';
 
-					$prevEmergencyPerson = 'N/A';
-					$prevEmergencyContact = 'N/A';
-					$prevReferral = 'N/A';
-					$prevNameExtension = 'N/A';
+				$prevEmergencyPerson = 'N/A';
+				$prevEmergencyContact = 'N/A';
+				$prevReferral = 'N/A';
+				$prevNameExtension = 'N/A';
 
 					# ADDRESSES
-					$prevAddress_Present = 'N/A';
-					$prevAddress_Provincial = 'N/A';
-					$prevAddress_Manila = 'N/A';
+				$prevAddress_Present = 'N/A';
+				$prevAddress_Provincial = 'N/A';
+				$prevAddress_Manila = 'N/A';
 
-				}
+			}
 
-				$config['upload_path']          = './uploads/'.$ApplicantID;
-				$config['allowed_types']        = 'gif|jpg|png';
-				$config['max_size']             = 2000;
-				$config['max_width']            = 2000;
-				$config['max_height']           = 2000;
+			$config['upload_path']          = './uploads/'.$ApplicantID;
+			$config['allowed_types']        = 'gif|jpg|png';
+			$config['max_size']             = 2000;
+			$config['max_width']            = 2000;
+			$config['max_height']           = 2000;
 
-				$this->load->library('upload', $config);
-				if (!is_dir('uploads'))
+			$this->load->library('upload', $config);
+			if (!is_dir('uploads'))
+			{
+				mkdir('./uploads', 0777, true);
+			}
+			if (!is_dir('uploads/' . $ApplicantID))
+			{
+				mkdir('./uploads/' . $ApplicantID, 0777, true);
+				$dir_exist = false;
+			}
+
+			if (!$_FILES['pImage']['name'] == '') {
+				if (! $this->upload->do_upload('pImage'))
 				{
-					mkdir('./uploads', 0777, true);
+					$this->Model_Logbook->SetPrompts('error', 'none', $this->upload->display_errors());
+					redirect($_SERVER['HTTP_REFERER']);
 				}
-				if (!is_dir('uploads/' . $ApplicantID))
+				else
 				{
-					mkdir('./uploads/' . $ApplicantID, 0777, true);
-					$dir_exist = false;
+					$pImage = base_url().'uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
 				}
-
-				if (!$_FILES['pImage']['name'] == '') {
-					if (! $this->upload->do_upload('pImage'))
-					{
-						$this->Model_Logbook->SetPrompts('error', 'none', $this->upload->display_errors());
-						redirect($_SERVER['HTTP_REFERER']);
-					}
-					else
-					{
-						$pImage = base_url().'uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
-					}
-				}
+			}
 				// INSERT EMPLOYEE
-				$data = array(
-					'ApplicantImage' => $pImage,
-					'ApplicantID' => $ApplicantID,
-					'EmployeeID' => $EmployeeID,
-					'PositionDesired' => $PositionDesired,
-					'PositionGroup' => $PositionGroup,
-					'SalaryExpected' => $SalaryExpected,
-					'LastName' => ucfirst($LastName),
-					'FirstName' => ucfirst($FirstName),
-					'MiddleInitial' => ucfirst($MI),
-					'Gender' => $Gender,
-					'Age' => $Age,
-					'Height' => $Height,
-					'Weight' => $Weight,
-					'Religion' => $Religion,
-					'BirthDate' => $bDate,
-					'BirthPlace' => $bPlace,
-					'Citizenship' => $Citizenship,
-					'CivilStatus' => $CivilStatus,
-					'No_OfChildren' => $No_Children,
-					
-					'Address_Present' => $Address_Present,
-					'Address_Provincial' => $Address_Provincial,
-					'Address_Manila' => $Address_Manila,
+			$data = array(
+				'ApplicantImage' => $pImage,
+				'ApplicantID' => $ApplicantID,
+				'EmployeeID' => $EmployeeID,
+				'PositionDesired' => $PositionDesired,
+				'PositionGroup' => $PositionGroup,
+				'SalaryExpected' => $SalaryExpected,
+				'LastName' => ucfirst($LastName),
+				'FirstName' => ucfirst($FirstName),
+				'MiddleInitial' => ucfirst($MI),
+				'Gender' => $Gender,
+				'Age' => $Age,
+				'Height' => $Height,
+				'Weight' => $Weight,
+				'Religion' => $Religion,
+				'BirthDate' => $bDate,
+				'BirthPlace' => $bPlace,
+				'Citizenship' => $Citizenship,
+				'CivilStatus' => $CivilStatus,
+				'No_OfChildren' => $No_Children,
 
-					'Phone_No' => $PhoneNumber,
+				'Address_Present' => $Address_Present,
+				'Address_Provincial' => $Address_Provincial,
+				'Address_Manila' => $Address_Manila,
 
-					'SSS_No' => $SSS,
-					'ResidenceCertificateNo' => $RCN,
-					'TIN' => $TIN,
-					'HDMF' => $HDMF,
-					'ATM_No' => $ATM_No,
-					'PhilHealth' => $PhilHealth,
+				'Phone_No' => $PhoneNumber,
 
-					'EmergencyPerson' => $EmergencyPerson,
-					'EmergencyContact' => $EmergencyContact,
-					'Referral' => $Referral,
-					'NameExtension' => $NameExtension,
-				);
-				$addedEmployee = $this->Model_Updates->UpdateEmployee($ApplicantID, $data);
-				if ($addedEmployee == TRUE) {
+				'SSS_No' => $SSS,
+				'ResidenceCertificateNo' => $RCN,
+				'TIN' => $TIN,
+				'HDMF' => $HDMF,
+				'ATM_No' => $ATM_No,
+				'PhilHealth' => $PhilHealth,
 
-					$AcadHCheckbox = $this->input->post('AcadHCheckbox');
-					$listCheck = "'" . implode("','", $AcadHCheckbox) . "'";
-					$this->Model_Deletes->RemoveAcadHistory($listCheck);
+				'EmergencyPerson' => $EmergencyPerson,
+				'EmergencyContact' => $EmergencyContact,
+				'Referral' => $Referral,
+				'NameExtension' => $NameExtension,
+			);
+			$addedEmployee = $this->Model_Updates->UpdateEmployee($ApplicantID, $data);
+			if ($addedEmployee == TRUE) {
 
-					$EmpRecordCheckbox = $this->input->post('EmpRecordCheckbox');
-					$listCheck = "'" . implode("','", $EmpRecordCheckbox) . "'";
-					$this->Model_Deletes->RemoveEmpRecord($listCheck);
+				$AcadHCheckbox = $this->input->post('AcadHCheckbox');
+				$listCheck = "'" . implode("','", $AcadHCheckbox) . "'";
+				$this->Model_Deletes->RemoveAcadHistory($listCheck);
 
-					$MachOpCheckbox = $this->input->post('MachOpCheckbox');
-					$listCheck = "'" . implode("','", $MachOpCheckbox) . "'";
-					$this->Model_Deletes->RemoveMachineOperated($listCheck);
+				$EmpRecordCheckbox = $this->input->post('EmpRecordCheckbox');
+				$listCheck = "'" . implode("','", $EmpRecordCheckbox) . "'";
+				$this->Model_Deletes->RemoveEmpRecord($listCheck);
 
-					if (isset($_SESSION["acadcart"])) {
-						foreach ($_SESSION["acadcart"] as $s_da) {
-							$data = array(
-								'ApplicantID' => $ApplicantID,
-								'Level' => $s_da['acadcart']['SchoolLevel'],
-								'SchoolName' => $s_da['acadcart']['SchoolName'],
-								'SchoolAddress' => $s_da['acadcart']['SchoolAddress'],
-								'DateStarted' => $s_da['acadcart']['FromYearSchool'],
-								'DateEnds' => $s_da['acadcart']['ToYearSchool'],
-								'HighDegree' => $s_da['acadcart']['H_Attained'],
+				$MachOpCheckbox = $this->input->post('MachOpCheckbox');
+				$listCheck = "'" . implode("','", $MachOpCheckbox) . "'";
+				$this->Model_Deletes->RemoveMachineOperated($listCheck);
 
-							);
-							$this->Model_Inserts->InsertAcadH($data);
-						}
+				if (isset($_SESSION["acadcart"])) {
+					foreach ($_SESSION["acadcart"] as $s_da) {
+						$data = array(
+							'ApplicantID' => $ApplicantID,
+							'Level' => $s_da['acadcart']['SchoolLevel'],
+							'SchoolName' => $s_da['acadcart']['SchoolName'],
+							'SchoolAddress' => $s_da['acadcart']['SchoolAddress'],
+							'DateStarted' => $s_da['acadcart']['FromYearSchool'],
+							'DateEnds' => $s_da['acadcart']['ToYearSchool'],
+							'HighDegree' => $s_da['acadcart']['H_Attained'],
+
+						);
+						$this->Model_Inserts->InsertAcadH($data);
 					}
-					if (isset($_SESSION["emp_cart"])) {
-						foreach ($_SESSION["emp_cart"] as $s_da) {
-							$data = array(
-								'ApplicantID' => $ApplicantID,
-								'Name' => $s_da['emp_cart']['EmployeerName'],
-								'Address' => $s_da['emp_cart']['emAddress'],
-								'PeriodCovered' => $s_da['emp_cart']['PeriodCovered'],
-								'Position' => $s_da['emp_cart']['Position'],
-								'Salary' => $s_da['emp_cart']['Salary'],
-								'CauseOfSeparation' => $s_da['emp_cart']['cos'],
+				}
+				if (isset($_SESSION["emp_cart"])) {
+					foreach ($_SESSION["emp_cart"] as $s_da) {
+						$data = array(
+							'ApplicantID' => $ApplicantID,
+							'Name' => $s_da['emp_cart']['EmployeerName'],
+							'Address' => $s_da['emp_cart']['emAddress'],
+							'PeriodCovered' => $s_da['emp_cart']['PeriodCovered'],
+							'Position' => $s_da['emp_cart']['Position'],
+							'Salary' => $s_da['emp_cart']['Salary'],
+							'CauseOfSeparation' => $s_da['emp_cart']['cos'],
 
-							);
-							$this->Model_Inserts->InsertEmploymentRecord($data);
-						}
+						);
+						$this->Model_Inserts->InsertEmploymentRecord($data);
 					}
-					if (isset($_SESSION["mach_cart"])) {
-						foreach ($_SESSION["mach_cart"] as $s_da) {
-							$data = array(
-								'ApplicantID' => $ApplicantID,
-								'MachineName' => $s_da['mach_cart']['MachineName'],
-							);
-							$this->Model_Inserts->InsertMachineOperated($data);
-						}
+				}
+				if (isset($_SESSION["mach_cart"])) {
+					foreach ($_SESSION["mach_cart"] as $s_da) {
+						$data = array(
+							'ApplicantID' => $ApplicantID,
+							'MachineName' => $s_da['mach_cart']['MachineName'],
+						);
+						$this->Model_Inserts->InsertMachineOperated($data);
 					}
+				}
 					// if (isset($_SESSION["rela_cart"])) {
 					// 	foreach ($_SESSION["rela_cart"] as $s_da) {
 					// 		$data = array(
@@ -636,102 +636,102 @@ class Update_Controller extends CI_Controller {
 					// 		$this->Model_Inserts->InserBeneficia($data);
 					// 	}
 					// }
-					unset($_SESSION["acadcart"]);
-					unset($_SESSION["emp_cart"]);
-					unset($_SESSION["mach_cart"]);
+				unset($_SESSION["acadcart"]);
+				unset($_SESSION["emp_cart"]);
+				unset($_SESSION["mach_cart"]);
 					// unset($_SESSION["rela_cart"]); 
 					// unset($_SESSION["beneCart"]);
-					
+
 					// LOGBOOK
-					$changesCounter = 0;
-					if ($EmployeeID != $prevEmployeeID) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Employee ID from <b>' . $prevEmployeeID . '</b> to <b>' . $EmployeeID . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($pImage != $prevpImage) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Changed profile picture', +1);
-						$changesCounter++;
-					}
-					if ($PositionDesired != $prevPositionDesired) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Position desired changed from <b>' . $prevPositionDesired . '</b> to <b>' . $PositionDesired . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($PositionGroup != $prevPositionGroup) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Position group changed from <b>' . $prevPositionGroup . '</b> to <b>' . $PositionGroup . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($SalaryExpected != $prevSalaryExpected) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Expected salary changed from <b>₱' . $prevSalaryExpected . '</b> to <b>₱' . $SalaryExpected . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($LastName != $prevLastName) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Last Name changed from <b>' . $prevLastName . '</b> to <b>' . $LastName . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($FirstName != $prevFirstName) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'First Name changed from <b>' . $prevFirstName . '</b> to <b>' . $FirstName . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($MI != $prevMI) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Middle Initial changed from <b>' . $prevMI . '</b> to <b>' . $MI . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($Gender != $prevGender) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Sex changed from <b>' . $prevGender . '</b> to <b>' . $Gender . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($Height != $prevHeight) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Height changed from <b>' . $prevHeight . '</b> to <b>' . $Height . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($Weight != $prevWeight) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Weight changed from <b>' . $prevWeight . '</b> to <b>' . $Weight . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($Religion != $prevReligion) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Religion changed from <b>' . $prevReligion . '</b> to <b>' . $Religion . '</b>', +1);
-						$changesCounter++;
-					}
-					$bDateReadable = (new DateTime(date($bDate)))->format('F d, Y');
-					$prevbDateReadable = (new DateTime(date($prevbDate)))->format('F d, Y');
-					if ($bDate != $prevbDate) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Birthday changed from <b>' . $prevbDateReadable . '</b> to <b>' . $bDateReadable . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($bPlace != $prevbPlace) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Birthplace changed from <b>' . $prevbPlace . '</b> to <b>' . $bPlace . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($Citizenship != $prevCitizenship) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Citizenship changed from <b>' . $prevCitizenship . '</b> to <b>' . $Citizenship . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($CivilStatus != $prevCivilStatus) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Civil Status changed from <b>' . $prevCivilStatus . '</b> to <b>' . $CivilStatus . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($No_Children != $prevNo_Children) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Number of children changed from <b>' . $prevNo_Children . '</b> to <b>' . $No_Children . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($PhoneNumber != $prevPhoneNumber) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Contact number changed from <b>' . $prevPhoneNumber . '</b> to <b>' . $PhoneNumber . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($SSS != $prevSSS) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'SSS number changed from <b>' . $prevSSS . '</b> to <b>' . $SSS . '</b>', +1);
-						$changesCounter++;
-					}
+				$changesCounter = 0;
+				if ($EmployeeID != $prevEmployeeID) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Employee ID from <b>' . $prevEmployeeID . '</b> to <b>' . $EmployeeID . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($pImage != $prevpImage) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Changed profile picture', +1);
+					$changesCounter++;
+				}
+				if ($PositionDesired != $prevPositionDesired) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Position desired changed from <b>' . $prevPositionDesired . '</b> to <b>' . $PositionDesired . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($PositionGroup != $prevPositionGroup) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Position group changed from <b>' . $prevPositionGroup . '</b> to <b>' . $PositionGroup . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($SalaryExpected != $prevSalaryExpected) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Expected salary changed from <b>₱' . $prevSalaryExpected . '</b> to <b>₱' . $SalaryExpected . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($LastName != $prevLastName) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Last Name changed from <b>' . $prevLastName . '</b> to <b>' . $LastName . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($FirstName != $prevFirstName) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'First Name changed from <b>' . $prevFirstName . '</b> to <b>' . $FirstName . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($MI != $prevMI) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Middle Initial changed from <b>' . $prevMI . '</b> to <b>' . $MI . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($Gender != $prevGender) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Sex changed from <b>' . $prevGender . '</b> to <b>' . $Gender . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($Height != $prevHeight) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Height changed from <b>' . $prevHeight . '</b> to <b>' . $Height . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($Weight != $prevWeight) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Weight changed from <b>' . $prevWeight . '</b> to <b>' . $Weight . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($Religion != $prevReligion) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Religion changed from <b>' . $prevReligion . '</b> to <b>' . $Religion . '</b>', +1);
+					$changesCounter++;
+				}
+				$bDateReadable = (new DateTime(date($bDate)))->format('F d, Y');
+				$prevbDateReadable = (new DateTime(date($prevbDate)))->format('F d, Y');
+				if ($bDate != $prevbDate) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Birthday changed from <b>' . $prevbDateReadable . '</b> to <b>' . $bDateReadable . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($bPlace != $prevbPlace) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Birthplace changed from <b>' . $prevbPlace . '</b> to <b>' . $bPlace . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($Citizenship != $prevCitizenship) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Citizenship changed from <b>' . $prevCitizenship . '</b> to <b>' . $Citizenship . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($CivilStatus != $prevCivilStatus) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Civil Status changed from <b>' . $prevCivilStatus . '</b> to <b>' . $CivilStatus . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($No_Children != $prevNo_Children) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Number of children changed from <b>' . $prevNo_Children . '</b> to <b>' . $No_Children . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($PhoneNumber != $prevPhoneNumber) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Contact number changed from <b>' . $prevPhoneNumber . '</b> to <b>' . $PhoneNumber . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($SSS != $prevSSS) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'SSS number changed from <b>' . $prevSSS . '</b> to <b>' . $SSS . '</b>', +1);
+					$changesCounter++;
+				}
 					// $SSS_EffectiveReadable = (new DateTime(date($SSS_Effective)))->format('F d, Y');
 					// $prevSSS_EffectiveReadable = (new DateTime(date($prevSSS_Effective)))->format('F d, Y');
 					// if ($SSS_Effective != $prevSSS_Effective) {
 					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'SSS effective date of coverage changed from <b>' . $prevSSS_EffectiveReadable . '</b> to <b>' . $SSS_EffectiveReadable . '</b>', +1);
 					// 	$changesCounter++;
 					// }
-					if ($RCN != $prevRCN) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'RCN number changed from <b>' . $prevRCN . '</b> to <b>' . $RCN . '</b>', +1);
-						$changesCounter++;
-					}
+				if ($RCN != $prevRCN) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'RCN number changed from <b>' . $prevRCN . '</b> to <b>' . $RCN . '</b>', +1);
+					$changesCounter++;
+				}
 					// if ($RCN_at != $prevRCN_at) {
 					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'RCN location changed from <b>' . $prevRCN_at . '</b> to <b>' . $RCN_at . '</b>', +1);
 					// 	$changesCounter++;
@@ -742,10 +742,10 @@ class Update_Controller extends CI_Controller {
 					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'RCN date changed from <b>' . $prevRCN_OnReadable . '</b> to <b>' . $RCN_OnReadable . '</b>', +1);
 					// 	$changesCounter++;
 					// }
-					if ($TIN != $prevTIN) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'TIN number changed from <b>' . $prevTIN . '</b> to <b>' . $TIN . '</b>', +1);
-						$changesCounter++;
-					}
+				if ($TIN != $prevTIN) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'TIN number changed from <b>' . $prevTIN . '</b> to <b>' . $TIN . '</b>', +1);
+					$changesCounter++;
+				}
 					// if ($TIN_At != $prevTIN_At) {
 					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'TIN location changed from <b>' . $prevTIN_At . '</b> to <b>' . $TIN_At . '</b>', +1);
 					// 	$changesCounter++;
@@ -756,10 +756,10 @@ class Update_Controller extends CI_Controller {
 					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'TIN date changed from <b>' . $prevTIN_OnReadable . '</b> to <b>' . $TIN_OnReadable . '</b>', +1);
 					// 	$changesCounter++;
 					// }
-					if ($HDMF != $prevHDMF) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'HDMF number changed from <b>' . $prevHDMF . '</b> to <b>' . $HDMF . '</b>', +1);
-						$changesCounter++;
-					}
+				if ($HDMF != $prevHDMF) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'HDMF number changed from <b>' . $prevHDMF . '</b> to <b>' . $HDMF . '</b>', +1);
+					$changesCounter++;
+				}
 					// if ($HDMF_At != $prevHDMF_At) {
 					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'HDMF location changed from <b>' . $prevHDMF_At . '</b> to <b>' . $HDMF_At . '</b>', +1);
 					// 	$changesCounter++;
@@ -770,10 +770,10 @@ class Update_Controller extends CI_Controller {
 					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'HDMF date changed from <b>' . $prevHDMF_OnReadable . '</b> to <b>' . $HDMF_OnReadable . '</b>', +1);
 					// 	$changesCounter++;
 					// }
-					if ($PhilHealth != $prevPhilHealth) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'PhilHealth number changed from <b>' . $prevPhilHealth . '</b> to <b>' . $PhilHealth . '</b>', +1);
-						$changesCounter++;
-					}
+				if ($PhilHealth != $prevPhilHealth) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'PhilHealth number changed from <b>' . $prevPhilHealth . '</b> to <b>' . $PhilHealth . '</b>', +1);
+					$changesCounter++;
+				}
 					// if ($PhilHealth_At != $prevPhilHealth_At) {
 					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'PhilHealth location changed from <b>' . $prevPhilHealth_At . '</b> to <b>' . $PhilHealth_At . '</b>', +1);
 					// 	$changesCounter++;
@@ -784,51 +784,51 @@ class Update_Controller extends CI_Controller {
 					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'PhilHealth date changed from <b>' . $prevPhilHealth_OnReadable . '</b> to <b>' . $PhilHealth_OnReadable . '</b>', +1);
 					// 	$changesCounter++;
 					// }
-					if ($ATM_No != $prevATM_No) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'ATM number changed from <b>' . $prevATM_No . '</b> to <b>' . $ATM_No . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($EmergencyPerson != $prevEmergencyPerson) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Person to notify in case of emergyency changed from <b>' . $prevEmergencyPerson . '</b> to <b>' . $EmergencyPerson . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($EmergencyContact != $EmergencyContact) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Emergency contact number changed from <b>' . $EmergencyContact . '</b> to <b>' . $EmergencyContact . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($Referral != $prevReferral) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Source of application (Referral) changed from <b>' . $prevReferral . '</b> to <b>' . $Referral . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($NameExtension != $prevNameExtension) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Name extension changed from <b>' . $prevNameExtension . '</b> to <b>' . $NameExtension . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($Address_Present != $prevAddress_Present) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Present address changed from <b>' . $prevAddress_Present . '</b> to <b>' . $Address_Present . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($Address_Provincial != $prevAddress_Provincial) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Provincial address changed from <b>' . $prevAddress_Provincial . '</b> to <b>' . $Address_Provincial . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($Address_Manila != $prevAddress_Manila) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Manila address changed from <b>' . $prevAddress_Manila . '</b> to <b>' . $Address_Manila . '</b>', +1);
-						$changesCounter++;
-					}
-					if ($changesCounter > 0) {
-						$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' updated details for <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
-						$this->Model_Logbook->SetPrompts('success', 'success', 'Details updated');
-					}
-					redirect($_SERVER['HTTP_REFERER']);
+				if ($ATM_No != $prevATM_No) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'ATM number changed from <b>' . $prevATM_No . '</b> to <b>' . $ATM_No . '</b>', +1);
+					$changesCounter++;
 				}
-				else
-				{
-					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
-					redirect($_SERVER['HTTP_REFERER']);
+				if ($EmergencyPerson != $prevEmergencyPerson) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Person to notify in case of emergyency changed from <b>' . $prevEmergencyPerson . '</b> to <b>' . $EmergencyPerson . '</b>', +1);
+					$changesCounter++;
 				}
+				if ($EmergencyContact != $EmergencyContact) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Emergency contact number changed from <b>' . $EmergencyContact . '</b> to <b>' . $EmergencyContact . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($Referral != $prevReferral) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Source of application (Referral) changed from <b>' . $prevReferral . '</b> to <b>' . $Referral . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($NameExtension != $prevNameExtension) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Name extension changed from <b>' . $prevNameExtension . '</b> to <b>' . $NameExtension . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($Address_Present != $prevAddress_Present) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Present address changed from <b>' . $prevAddress_Present . '</b> to <b>' . $Address_Present . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($Address_Provincial != $prevAddress_Provincial) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Provincial address changed from <b>' . $prevAddress_Provincial . '</b> to <b>' . $Address_Provincial . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($Address_Manila != $prevAddress_Manila) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Manila address changed from <b>' . $prevAddress_Manila . '</b> to <b>' . $Address_Manila . '</b>', +1);
+					$changesCounter++;
+				}
+				if ($changesCounter > 0) {
+					$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' updated details for <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
+					$this->Model_Logbook->SetPrompts('success', 'success', 'Details updated');
+				}
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+			else
+			{
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+				redirect($_SERVER['HTTP_REFERER']);
 			}
 		}
+	}
 	public function AddNote()
 	{
 		if (isset($_POST['Note'])) {
@@ -1068,6 +1068,7 @@ class Update_Controller extends CI_Controller {
 		{
 			$ApplicantID = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 			$ClientID = $this->input->post('ClientID',TRUE);
+			$Mode = $this->input->post('ModeType', TRUE);
 			$GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
 			$ArrayInt = 0;
 			$ArrayLength = $GetWeeklyDates->num_rows();
@@ -1078,6 +1079,94 @@ class Update_Controller extends CI_Controller {
 			$gross_pay=0;
 
 			//record attendance for each workday
+			$GetCurrentPrimaryWeek = $this->Model_Selects->GetCurrentPrimaryWeek($ClientID);
+			if ($GetCurrentPrimaryWeek->num_rows() > 0) {
+				foreach($GetCurrentPrimaryWeek->result_array() as $prow) {
+					$CurrentPrimaryWeek = new DateTime($prow['WeekStart']);
+					$DateToday = new DateTime();
+
+					
+					switch ($Mode) {
+
+						case '0': ### WEEKLY
+
+							$diff = $DateToday->diff($CurrentPrimaryWeek)->format("%a");
+							if ($diff <= 7) {
+								$Week = 1;
+							} elseif ($diff <= 14 && $diff > 7) {
+								$Week = 2;
+							} elseif ($diff <= 21 && $diff > 14) {
+								$Week = 3;
+							} elseif ($diff <= 28 && $diff > 21) {
+								$Week = 4;
+							} else {
+								$PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P29D'));
+								$PrimaryWeek = $PrimaryWeek->format('Y-m-d');
+								$this->Model_Updates->SetPrimaryWeek($PrimaryWeek, $ClientID);
+								$Week = 1;
+							}
+
+							$Month = $CurrentPrimaryWeek->format('m');
+						break;
+
+						case '1': ### SEMI-MONTHLY
+
+							if ($diff <= 15) {
+								$Week = 1;
+							} elseif ($diff > 15 || $diff <= 30) {
+								$Week = 2;
+							}
+							else
+							{
+								$PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P31D'));
+								$PrimaryWeek = $PrimaryWeek->format('Y-m-d');
+								$this->Model_Updates->SetPrimaryWeek($PrimaryWeek, $ClientID);
+								$Week = 1;
+							}
+
+							$Month = $CurrentPrimaryWeek->format('m');
+
+						break;
+
+						case '2': ### MONTHLY
+							if ($diff < 31) {
+								$PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P31D'));
+								$PrimaryWeek = $PrimaryWeek->format('Y-m-d');
+								$this->Model_Updates->SetPrimaryWeek($PrimaryWeek, $ClientID);
+								$Week = 1;
+							}
+
+							$Month = $CurrentPrimaryWeek->format('m') - 1;
+						break;
+
+						default:
+							$diff = $DateToday->diff($CurrentPrimaryWeek)->format("%a");
+							if ($diff <= 7) {
+								$Week = 1;
+							} elseif ($diff <= 14 && $diff > 7) {
+								$Week = 2;
+							} elseif ($diff <= 21 && $diff > 14) {
+								$Week = 3;
+							} elseif ($diff <= 28 && $diff > 21) {
+								$Week = 4;
+							} else {
+								$PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P29D'));
+								$PrimaryWeek = $PrimaryWeek->format('Y-m-d');
+								$this->Model_Updates->SetPrimaryWeek($PrimaryWeek, $ClientID);
+								$Week = 1;
+							}
+
+							$Month = $CurrentPrimaryWeek->format('m');
+						break;
+					}
+					
+					
+					
+
+					
+					// $this->Model_Logbook->SetPrompts('info', 'info', $diff);
+				}
+			}
 			foreach ($GetWeeklyDates->result_array() as $nrow):
 				$ArrayInt++;
 				$Type = $this->input->post('Type_' . $nrow['Time'],TRUE);
@@ -1122,6 +1211,9 @@ class Update_Controller extends CI_Controller {
 					$data = array(
 						'ClientID' => $ClientID,
 						'Date' => $Date,
+						'Week' => $Week,
+						'Month' => $Month,
+						't_year' => $CurrentPrimaryWeek->format('Y'),
 						'Hours' => $Hours,
 						'Overtime' => $Overtime,
 
@@ -1138,12 +1230,13 @@ class Update_Controller extends CI_Controller {
 						'day_pay' => $TdRate,
 
 					);
-					$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
+					$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($Mode, $ApplicantID,$data);
 					if ($UpdateWeeklyHours == TRUE) {
 						// $DateReadable = (new DateTime(date($Date)))->format('F d, Y');
 						// $this->Model_Logbook->LogbookExtendedEntry(0, 'Remarks: ' . $Remarks . '<br><b>' . $DateReadable . '</b>\' total hours: ' . $total_hoursperday, +1);
 						if ($ArrayInt >= $ArrayLength) {
-							$this->Model_Logbook->SetPrompts('success', 'success', 'Updated successfully');
+							// $this->Model_Logbook->SetPrompts('success', 'success', 'Updated successfully');
+							// $this->Model_Logbook->SetPrompts('info', 'info', 'mode: ' . $Mode);
 							// LOGBOOK
 							$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
 							foreach($CheckApplicant->result_array() as $row) {
@@ -1156,7 +1249,7 @@ class Update_Controller extends CI_Controller {
 					}
 					else
 					{
-						$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+						// $this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 						
 					}
 				}
@@ -1237,7 +1330,7 @@ class Update_Controller extends CI_Controller {
 				
 
 				
-			
+
 			if($DeductionOption==1 || $DeductionOption==2)//if with deductions or deferred 
 			{
 
@@ -1292,7 +1385,7 @@ class Update_Controller extends CI_Controller {
 
 
 				
-			
+
 
 				//tax
 				$year=date("Y");
@@ -1373,26 +1466,26 @@ class Update_Controller extends CI_Controller {
 				$net_pay = $gross_pay;
 			}
 
-				
-				$data = array(
-					'ClientID' => $ClientID,
-					'ApplicantID' => $ApplicantID,
-					'gross_pay' => round($gross_pay,2),
-					'sss_contri' => $sss_contri,
-					'TotalHours' => $GetTotalH,
-					'TotaOT' => $GetTotalOt,
-					'net_pay' => $net_pay,
-				);
-				$this->Model_Inserts->InsertTrackingTable($data);
-			}
-			redirect($_SERVER['HTTP_REFERER']);
+
+			$data = array(
+				'ClientID' => $ClientID,
+				'ApplicantID' => $ApplicantID,
+				'gross_pay' => round($gross_pay,2),
+				'sss_contri' => $sss_contri,
+				'TotalHours' => $GetTotalH,
+				'TotaOT' => $GetTotalOt,
+				'net_pay' => $net_pay,
+			);
+			$this->Model_Inserts->InsertTrackingTable($data);
 		}
-		else
-		{
-			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
-			redirect($_SERVER['HTTP_REFERER']);
-		}
+		redirect($_SERVER['HTTP_REFERER']);
 	}
+	else
+	{
+		$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+}
 
 
 
@@ -1479,13 +1572,13 @@ class Update_Controller extends CI_Controller {
 		$File = $_FILES['file'];
 		date_default_timezone_set('Asia/Manila');
 		$this->load->library('SimpleXLSX');	
-			if ( $xlsx = SimpleXLSX::parse( $File['tmp_name'] ) ) {
+		if ( $xlsx = SimpleXLSX::parse( $File['tmp_name'] ) ) {
 
-				$this->load->view('_template/users/u_redirecting');
-				$dim = $xlsx->dimension();
-				$cols = $dim[0];
-				$RowCount = 0;
-				$ColCount = 0;
+			$this->load->view('_template/users/u_redirecting');
+			$dim = $xlsx->dimension();
+			$cols = $dim[0];
+			$RowCount = 0;
+			$ColCount = 0;
 				$DatesTotal = 0; // Count how many days there are
 				$ApplicantsArray = array();
 
@@ -1510,28 +1603,28 @@ class Update_Controller extends CI_Controller {
 								$SalaryMode = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
 								switch ($SalaryMode) {
 									case 'Weekly':
-										$SalaryMode = 0;
-										break;
+									$SalaryMode = 0;
+									break;
 									case 'Semi-Monthly':
-										$SalaryMode = 1;
-										break;
+									$SalaryMode = 1;
+									break;
 									case 'Monthly':
-										$SalaryMode = 2;
-										break;
+									$SalaryMode = 2;
+									break;
 									default:
 										$SalaryMode = 0; // default
 										$this->Model_Logbook->SetPrompts('info', 'info', 'Invalid salary mode. Defaulting to weekly.');
 										break;
+									}
 								}
+
 							}
+							if ($RowCount == 1){
+								if ($ColCount == 3) {
+									$StartingDate = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
 
-						}
-						if ($RowCount == 1){
-							if ($ColCount == 3) {
-								$StartingDate = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
-
-								$this->Model_Updates->UpdateWeeklyHoursCurrent();
-								$this->Model_Deletes->CleanWeeklyDates();
+									$this->Model_Updates->UpdateWeeklyHoursCurrent();
+									$this->Model_Deletes->CleanWeeklyDates();
 								$HoursHolidays = array('01-01', '04-09', '04-10', '05-01', '06-12', '08-31', '11-30', '12-25', '12-30'); // MONTH - DAY
 								$SpecialHolidays = array('01-25', '02-25', '04-11', '08-21', '11-01', '11-02', '12-08', '12-24', '12-31'); // MONTH - DAY
 
@@ -1602,19 +1695,19 @@ class Update_Controller extends CI_Controller {
 								}
 
 								if ( $Split[0] > 8) {
-										$otValue = $Split[0] - 8;
-									}
-									else
-									{
-										$otValue = 0;
-									}
-									if ( $Split[0] > 8) {
-										$rHours = 8;
-									}
-									else
-									{
-										$rHours = $Split[0];
-									}
+									$otValue = $Split[0] - 8;
+								}
+								else
+								{
+									$otValue = 0;
+								}
+								if ( $Split[0] > 8) {
+									$rHours = 8;
+								}
+								else
+								{
+									$rHours = $Split[0];
+								}
 								$data = array(
 									'ClientID' => $ClientID,
 									'Date' => $GetWeeklyDates->result_array()[$ColCount - 3]['Time'],
@@ -1705,10 +1798,10 @@ class Update_Controller extends CI_Controller {
 			// 		redirect('ViewClient?id=' . $ClientID);
 			// 	}
 			// }
-	}
-	public function UpdateSSSField()
-	{
-		if (isset($_POST['id'])) {
+		}
+		public function UpdateSSSField()
+		{
+			if (isset($_POST['id'])) {
 			$id = $this->input->post('id',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 			$f_range = $this->input->post('f_range',TRUE);
 			$t_range = $this->input->post('t_range',TRUE);
@@ -1743,6 +1836,29 @@ class Update_Controller extends CI_Controller {
 		{
 			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 			redirect($_SERVER['HTTP_REFERER']);
+		}
+	}
+	public function SetPrimaryWeek()
+	{
+		$Week = $this->input->post('Week',TRUE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
+		$ClientID = $this->input->post('PrimaryClientID', TRUE);
+		if ($Week == NULL) {
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+		else
+		{
+			$SetPrimaryWeek = $this->Model_Updates->SetPrimaryWeek($Week, $ClientID);
+			if ($SetPrimaryWeek == TRUE) {
+				$this->Model_Logbook->SetPrompts('success', 'success', 'New primary week set.');
+				$this->Model_Logbook->LogbookEntry('Blue', 'Salary', ' updated the primary week');
+				redirect('Payroll');
+			}
+			else
+			{
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+				redirect($_SERVER['HTTP_REFERER']);
+			}
 		}
 	}
 }

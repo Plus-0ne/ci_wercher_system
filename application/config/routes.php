@@ -116,3 +116,4 @@ $route['ViewClientEmployees'] = 'Update_Controller/ViewClientEmployees';
 $route['ImportExcel'] = 'Update_Controller/ImportExcel';
 $route['UpdateSSSField'] = 'Update_Controller/UpdateSSSField';
 $route['Suspend'] = 'Update_Controller/Suspend';
+$route['SetPrimaryWeek'] = 'Update_Controller/SetPrimaryWeek';

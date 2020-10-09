@@ -70,5 +70,8 @@
 		    	localStorage.setItem('SidebarVisible', 'false');
 			}
 		});
+		$('.prompts-tray').on('click', function() {
+			$(this).animate({left: '-1000px'});
+		})
 	});
 </script>

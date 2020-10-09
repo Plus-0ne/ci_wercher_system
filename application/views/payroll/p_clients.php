@@ -56,8 +56,9 @@
 											</td>
 											<td class="text-center align-middle PrintExclude">
 												<button id="<?php echo $row['ClientID']; ?>" type="button" class="btn btn-primary btn-sm w-100 mb-1 ViewClientIDButton"  data-toggle="modal" data-target="#ModalClientView"><i class="fas fa-calendar-alt"></i> Date Range</button>
+												<button id="<?php echo $row['ClientID']; ?>" type="button" class="btn btn-primary btn-sm w-100 mb-1 SetPrimaryClientIDButton" data-toggle="modal" data-target="#ModalSetWeek"><i class="fas fa-calendar"></i> Primary Week</button>
 												<!-- <a class="btn btn-success btn-sm w-100 mb-1" href="<?=base_url()?>ViewClient?id=<?php echo $row['ClientID']; ?>"><i class="fas fa-file-excel"></i> Excel</a> -->
-												<button id="<?php echo $row['ClientID']; ?>" type="button" class="excel_formatbtn btn btn-success btn-sm w-100 mb-1 mt-1"  data-toggle="modal" data-target="#DateFroto_modal" value="<?php echo $row['Name']; ?>"><i class="fas fa-file-download"></i> Download Excel</button>
+												<button id="<?php echo $row['ClientID']; ?>" type="button" class="excel_formatbtn btn btn-success btn-sm w-100 mb-1"  data-toggle="modal" data-target="#DateFroto_modal" value="<?php echo $row['Name']; ?>"><i class="fas fa-file-download"></i> Download Excel</button>
 											</td>
 										</tr>
 									<?php endforeach ?>
@@ -104,6 +105,7 @@
 	</div>
 	<!-- MODALS -->
 	<?php $this->load->view('_template/modals/m_p_clientview'); ?>
+	<?php $this->load->view('_template/modals/m_p_setweek'); ?>
 </body>
 <!-- EXPORT MODAL -->
 <?php $this->load->view('_template/modals/m_export'); ?>
@@ -204,6 +206,10 @@
 		$('.ViewClientIDButton').on('click', function () {
 			$('#ViewClientID').val($(this).attr('id'));
 			console.log($('#ViewClientID').val());
+		});
+		$('.SetPrimaryClientIDButton').on('click', function () {
+			$('#SetPrimaryClientID').val($(this).attr('id'));
+			console.log($('#SetPrimaryClientID').val());
 		});
 		$('#LoadButton').on('click', function () {
 			$('.load-container').children().hide();

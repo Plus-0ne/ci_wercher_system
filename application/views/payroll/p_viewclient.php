@@ -86,8 +86,8 @@ use Carbon\Carbon;
 											<td><?php echo $row['SalaryExpected'];?></td>
 											<?php foreach ($GetWeeklyDates->result_array() as $brow):
 												?> <td> <?php
-												if($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->num_rows() > 0) {
-													foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->result_array() as $nrow):
+												if($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'], $_GET['mode'])->num_rows() > 0) {
+													foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'], $_GET['mode'])->result_array() as $nrow):
 														$Hours = $nrow['Hours'];
 														$OT = $nrow['Overtime'];
 														$totalh =  $nrow['Hours'] + $nrow['Overtime'];
