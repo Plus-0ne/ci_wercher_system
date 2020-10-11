@@ -1124,9 +1124,9 @@ a[data-toggle="collapse"] {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 .prompts-tray {
-	position: absolute;
-    top: 850px;
-    left: 25px;
+	position: fixed;
+   	left: 25px;
+   	bottom: 40px;
 	background-color: #fcfcfc;
 	font-size: 18px;
 	user-select: none;

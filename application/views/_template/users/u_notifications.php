@@ -1,7 +1,7 @@
 <div class="row wercher-navbar sticky-top">
 	<div class="col-sm-12">
 		<style type="text/css">
-			.notif-link { text-decoration: none; width: 100%; color: #2262A9; }
+			.notif-link { text-decoration: none; width: 100%; }
 			.notif-link:hover { text-decoration: none; }
 			.dropdown-menu { width: 300px; }
 			.notif-li { padding-left: 21px; padding-right: 21px ; padding-top: 11px ;padding-bottom: 11px ; font-size: 12px;}
@@ -32,50 +32,52 @@
 					<a id="Bell" class="btn text-light ddToggle notif-button" data-toggle="dropdown"><i class="fas fa-bell" style="margin-right: -1px;"></i> <span id="BellNotifCounter"></span> </a>
 					<ul class="dropdown-menu dropdown-menu-right">
 						<?php foreach ($this->Model_Selects->GetLogbookWithLimit(5)->result_array() as $row): ?>
-							<li class="notif-li 
-										<?php 
-											if ($row['Type'] == 'New' || $row['Type'] == 'Employment') 
-											{ 
-												echo 'logbook-success-lite'; 
-											}
-											elseif ($row['Type'] == 'Archival') 
-											{
-												echo 'logbook-danger-lite';
-											} 
-											elseif ($row['Type'] == 'Update')
-											{
-												echo 'logbook-info-lite';
-											}
-											elseif ($row['Type'] == 'Reminder' || $row['Type'] == 'Note') 
-											{
-												echo 'logbook-warning-lite';
-											}
-										?>">
-								<a class="notif-link" href="<?php echo base_url() . 'Dashboard#Logbook' ?>">
-									<i class="
-									<?php 
-										if ($row['Type'] == 'New' || $row['Type'] == 'Employment') 
-										{ 
-											echo 'fas fa-check-square'; 
-										}
-										elseif ($row['Type'] == 'Archival') 
-										{
-											echo 'fas fa-calendar-times';
-										} 
-										elseif ($row['Type'] == 'Update')
-										{
-											echo 'fas fa-user-edit';
-										}
-										elseif ($row['Type'] == 'Reminder' || $row['Type'] == 'Note') 
-										{
-											echo 'fas fa-exclamation-triangle';
-										}
-									?>"></i> <?php echo $row['Event']; ?>
-								</a>
+							<li class="notif-li">
+								<div class="row">
+									<div class="col-sm-1">
+										<?php
+											$icon = $row['Icon'];
+											if ($icon == 'Applicant'):
+										?>
+											<i class="fas fa-user-tie" style="margin-right: -1px;"></i>
+										<?php elseif ($icon == 'Employee'): ?>
+											<i class="fas fa-users" style="margin-right: -1px;"></i>
+										<?php elseif ($icon == 'Admin'): ?>
+											<i class="fas fa-user-secret" style="margin-right: -1px;"></i>
+										<?php elseif ($icon == 'Client'): ?>
+											<i class="fas fa-user-tag" style="margin-right: -1px;"></i>
+										<?php elseif ($icon == 'Note'): ?>
+											<i class="fas fa-sticky-note" style="margin-right: -1px;"></i>
+										<?php elseif ($icon == 'Salary'): ?>
+											<i class="fas fa-dollar-sign" style="margin-right: -1px;"></i>
+										<?php else: ?>
+											<i class="fas fa-cog" style="margin-right: -1px;"></i>
+										<?php endif; ?>
+									</div>
+									<div class="col-sm-10">
+										<div class="row">
+											<div class="col-sm-12">
+												<?php echo '<a href="?admin=' . $row['AdminID'] . '" class="logbook-tooltip-highlight">' . $row['AdminID'] . '</a> ' . $row['Event']; ?>
+											</div>
+											<div class="col-sm-12">
+												<i style="color: gray;">
+													<?php 
+														$date = new DateTime($row['Time']);
+														$day = $date->format('Y-m-d');
+														$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+														$hours = $date->format('h:i:s A');
+
+														echo $day . ' at ' . $hours;
+													?>
+												</i>
+											</div>
+										</div>
+									</div>
+								</div>
 							</li>
 						<?php endforeach ?>
 						<li class="notif-li text-center">
-							<a class="notif-link" href="<?php echo base_url() . 'Dashboard#Logbook' ?>">
+							<a class="notif-link" href="<?php echo base_url() . 'Logbook' ?>">
 								<i class="fas fa-list"></i> View All
 							</a>
 						</li>
