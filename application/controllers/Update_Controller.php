@@ -1861,4 +1861,27 @@ class Update_Controller extends CI_Controller {
 			}
 		}
 	}
+	public function AJAX_updateSSSToBePaid()
+	{
+		$Input = $this->input->post('Input');
+		$ApplicantID = $this->input->post('ApplicantID');
+		$ClientID = $this->input->post('ClientID');
+		$Year = $this->input->post('Year');
+		$Month = $this->input->post('Month');
+		$Week = $this->input->post('Week');
+		$now = new DateTime();
+		$DateUpdated = $now->format('Y-m-d H:i:s');
+
+		$data = array(
+			'Input' => $Input,
+			'ApplicantID' => $ApplicantID,
+			'ClientID' => $ClientID,
+			'Month' => $Month,
+			'Year' => $Year,
+			'Week' => $Week,
+			'DateUpdated' => $DateUpdated,
+		);
+		$UpdateSSSToBePaid = $this->Model_Updates->UpdateSSSToBePaid($data);
+		echo '<a href="#">Test</a>';
+	}
 }

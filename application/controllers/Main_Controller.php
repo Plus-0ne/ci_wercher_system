@@ -1089,11 +1089,12 @@
 		unset($_SESSION["mach_cart"]);
 
 		$id = $_GET['id'];
+		$mode = $_GET['mode'];
 
 		$header['title'] = 'Client Information | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 
-		$GetWeeklyList = $this->Model_Selects->GetWeeklyList($id);
+		$GetWeeklyList = $this->Model_Selects->GetWeeklyList($id, $mode);
 
 		$row = $GetWeeklyList->row_array();
 		$data = array(

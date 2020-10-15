@@ -50,8 +50,7 @@ use Carbon\Carbon;
 							    <input type="text" class="form-control" name="ExportFileName" readonly hidden value="<?php echo $ClientName . ' (' . $FirstDate . ' - ' . $LastDate . ')' ?>">
 							    <button id="ImportButton" type="submit" class="btn btn-success btn-sm form-control"><i class="fas fa-file-download"></i> Download Excel</button>
 						  	</form>
-						  </div>
-						<!-- <div id="datatables-export"></div> -->
+						</div>
 					</div>
 					<div class="col-4 mb-2 text-right">
 						<button id="ImportButton" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-lock"></i> Generate Payslip (WIP)</button>
@@ -101,129 +100,12 @@ use Carbon\Carbon;
 											<?php endforeach; ?>
 											<td><?php echo $TotalRegHours; ?></td>
 											<td><?php echo $TotalOTHours; ?></td>
-	<!-- 										<td class="text-center">
-												<button id="<?php echo $row['Salary']; ?>" data="<?php echo $row['ApplicantID']; ?>" type="button" class="btn btn-primary btn-sm HoursButton" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-clock"></i> Set</button>
-												<button type="button" class="btn btn-primary btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-list"></i> Contract</button>
-												<button type="button" class="btn btn-primary btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-book"></i> History</button>
-											</td> -->
 										</tr>
 									<?php endforeach; ?>
 								</tbody>
 							</table>
 						</div>
 					</div>
-					<!-- <div class="col-sm-8 col-md-8 ml-auto text-right PrintExclude">
-						<button id="ShowDemo" type="button" class="btn btn-primary mr-auto"><i class="fas fa-flask"></i> Demo</button>
-						<button type="button" class="btn btn-primary mr-auto"><i class="fas fa-import-file"></i> Import Excel File</button>
-						<button onClick="printContent('PrintOutTable')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
-					</div>
-					<div id="TaxTable" class="col-sm-12"> -->
-
-						<?php
-
-						// if ( $xlsx = SimpleXLSX::parse(base_url() . 'assets/excel/Tax Calc.xlsx')) {
-
-						// 	echo '<table border="1" cellpadding="3" style="border-collapse: collapse">';
-
-						// 	$dim = $xlsx->dimension();
-						// 	$cols = $dim[0];
-
-						// 	foreach ( $xlsx->rows() as $k => $r ) {
-						// 		//		if ($k == 0) continue; // skip first row
-						// 		echo '<tr>';
-						// 		for ( $i = 0; $i < $cols; $i ++ ) {
-						// 			echo '<td class="test">' . ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ) . '</td>';
-						// 		}
-						// 		echo '</tr>';
-						// 	}
-						// 	echo '</table>';
-						// } else {
-						// 	echo SimpleXLSX::parseError();
-						// }
-						?>
-
-						<!-- <table class="table table-hover">
-							<th>Compensation Range</th>
-							<th>Withholding Tax</th>
-							<tr>
-								<td>0</td>
-								<td>0 (0%)</td>
-							</tr>
-							<tr>
-								<td>10,416 to 16,666</td>
-								<td>0 (20%)</td>
-							</tr>
-							<tr>
-								<td>16,667 to 33,333</td>
-								<td>1250 (25%)</td>
-							</tr>
-							<tr>
-								<td>33,334 to 83,333</td>
-								<td>5416.67 (30%)</td>
-							</tr>
-							<tr>
-								<td>83,334 to 333,333</td>
-								<td>20416.67 (32%)</td>
-							</tr>
-							<tr>
-								<td>333,334 to 500,000</td>
-								<td>100,416.67 (35%)</td>
-							</tr>
-						</table>
-
-
-					</div>
-
-				</div>
-				<div class="row rcontent PrintOut">
-					<div class="col-sm-12 col-md-4 mb-5">
-						<h4>
-							<i class="fas fa-vial"></i> Tax Input for ...
-						</h4>
-					</div>
-					<div class="col-sm-8 col-md-8 ml-auto text-right PrintExclude">
-						<button onClick="printContent('PrintOut')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
-					</div>
-					<div class="col-sm-12 form-group">
-						<label>Gross Income (Monthly)</label>
-						<input type="text" class="form-control" name="Gross" id="Gross" value="20000">
-					</div>
-					<div class="col-sm-12 col-md-4 form-group">
-						<label>SSS</label>
-						<input type="text" class="form-control" name="SSS" id="SSS" value="500">
-					</div>
-					<div class="col-sm-12 col-md-4 form-group">
-						<label>PhilHealth</label>
-						<input type="text" class="form-control" name="PhilHealth" id="PhilHealth" value="750">
-					</div>
-					<div class="col-sm-12 col-md-4 form-group">
-						<label>HDMF</label>
-						<input type="text" class="form-control" class="form-control" name="Gross" id="Gross" value="10%" readonly>
-					</div>
-					<div class="col-sm-12 form-group text-center PrintExclude">
-						<button class="btn btn-primary w-50" onclick="Compute()">Calculate</button>
-					</div>
-					<div class="col-sm-12 col-md-6 form-group">
-						<label>Taxable Income</label>
-						<input type="text" class="form-control" name="TaxableIncome" id="TaxableIncome" readonly>
-					</div>
-					<div class="col-sm-12 col-md-6 form-group">
-						<label>Total Tax</label>
-						<input type="text" class="form-control" name="TotalTax" id="TotalTax" readonly>
-					</div>
-					<div class="col-sm-12 col-md-6 form-group">
-						<label>Range</label>
-						<input type="text" class="form-control" name="CompRange" id="CompRange" readonly>
-					</div>
-					<div class="col-sm-12 col-md-6 form-group">
-						<label>Formula</label>
-						<input type="text" class="form-control" name="Formula" id="Formula" readonly>
-					</div>
-					<div class="col-sm-12 form-group">
-						<label>Take Home Pay</label>
-						<input type="text" class="form-control" name="TakeHomePay" id="TakeHomePay" readonly>
-					</div>
-				</div> -->
 			</div>
 		</div>
 	</div>
@@ -249,6 +131,51 @@ use Carbon\Carbon;
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('.regular-btn').on('click', function () {
+			$(this).toggleClass('btn-success btn-secondary');
+			$(this).children('i').toggleClass('text-primary');
+			if ($(this).closest('.regular-btn-group').find('input[type=checkbox]').is(':checked')) {
+				$(this).closest('.regular-btn-group').find('input[type=checkbox]').attr('checked', false);
+			} else {
+				$(this).closest('.regular-btn-group').find('input[type=checkbox]').attr('checked', true);
+			}
+		});
+		$('.rest-btn').on('click', function () {
+			$(this).toggleClass('btn-info btn-secondary');
+			$(this).children('i').toggleClass('text-primary');
+			if ($(this).closest('.rest-btn-group').find('input[type=checkbox]').is(':checked')) {
+				$(this).closest('.rest-btn-group').find('input[type=checkbox]').attr('checked', false);
+			} else {
+				$(this).closest('.rest-btn-group').find('input[type=checkbox]').attr('checked', true);
+			}
+		});
+		$('.special-btn').on('click', function () {
+			$(this).toggleClass('btn-danger btn-secondary');
+			$(this).children('i').toggleClass('text-primary');
+			if ($(this).closest('.special-btn-group').find('input[type=checkbox]').is(':checked')) {
+				$(this).closest('.special-btn-group').find('input[type=checkbox]').attr('checked', false);
+			} else {
+				$(this).closest('.special-btn-group').find('input[type=checkbox]').attr('checked', true);
+			}
+		});
+		$('.national-btn').on('click', function () {
+			$(this).toggleClass('btn-danger btn-secondary');
+			$(this).children('i').toggleClass('text-primary');
+			if ($(this).closest('.national-btn-group').find('input[type=checkbox]').is(':checked')) {
+				$(this).closest('.national-btn-group').find('input[type=checkbox]').attr('checked', false);
+			} else {
+				$(this).closest('.national-btn-group').find('input[type=checkbox]').attr('checked', true);
+			}
+		});
+		$('.night-btn').on('click', function () {
+			$(this).toggleClass('btn-night btn-secondary night-btn-extend');
+			$(this).children('i').toggleClass('text-primary');
+			if ($(this).closest('.night-btn-group').find('input[type=checkbox]').is(':checked')) {
+				$(this).closest('.night-btn-group').find('input[type=checkbox]').attr('checked', false);
+			} else {
+				$(this).closest('.night-btn-group').find('input[type=checkbox]').attr('checked', true);
+			}
+		});
 		$(".nav-item a[href*='Payroll']").addClass("nactive");
 		$('[data-toggle="tooltip"]').tooltip();
 		$('#ImportButton').click(function(){ $('#file').trigger('click'); });
@@ -320,10 +247,11 @@ use Carbon\Carbon;
 	 			console.log('hello');
 	 			$('.REGCheck_<?php echo $row['Time']; ?>').prop("checked", false);
 	 		});
-	 		$('.NCheck_<?php echo $row['Time']; ?>').on('change', function() {
-	 			$(this).closest('.day-hover').find('.NightHours_<?php echo $row['Time']; ?>').val('');
-	 			$(this).closest('.day-hover').find('.NightOTHours_<?php echo $row['Time']; ?>').val('');
-	 			$(this).closest('.day-hover').find('.NightPremium').toggle();
+	 		$('.NCheck_<?php echo $row['Time']; ?>').on('click', function() {
+	 			$(this).closest('.card').find('.NightHours_<?php echo $row['Time']; ?>').val('');
+	 			$(this).closest('.card').find('.NightOTHours_<?php echo $row['Time']; ?>').val('');
+	 			$(this).closest('.card').find('.night-premium-container').toggle();
+	 			$(this).closest('.card').find('.NightPremium').toggle();
 	 		});
 		 	$(".Hours_<?php echo $row['Time']; ?>, .OTHours_<?php echo $row['Time']; ?>, .NightHours_<?php echo $row['Time']; ?>, .NightOTHours_<?php echo $row['Time']; ?>").bind("input", function () {
 		 			// General
@@ -388,7 +316,7 @@ use Carbon\Carbon;
 	                // var hidden_hval = $(this).closest("div.hhhh").find(".h_valueh").val();
 	                // $(this).closest("div.hhhh").find(".t_pay").val(perh * hidden_hval);;
 	         });
-		 	$(".SalaryButtons").on("change", function () {
+		 	$(".SalaryButtons").on("click", function () {
 		 			// General
 	                var PerHour = $(this).closest("#SalaryDays").find('.PerHour').val();
 	                var PerDay = $(this).closest("#SalaryDays").find('.PerDay').val();
@@ -468,6 +396,21 @@ use Carbon\Carbon;
 	.modal-open {
 		overflow-y: auto !important;
 		padding-right: 0 !important;
+	}
+	input[type=checkbox] {
+		display:none;
+	}
+	.night-premium-container {
+		border-radius: 6px;
+		background-color: #003671;
+		color: gold;
+		margin-top: -25px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+	.modal-body{
+	    max-height: calc(100vh - 200px);
+	    overflow-y: auto;
 	}
 </style>
 </html>

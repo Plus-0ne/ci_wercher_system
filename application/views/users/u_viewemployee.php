@@ -25,15 +25,16 @@ if ($cDiffDays > 1) {
 } else {
 	$isThirteenEligible = false;
 }
-if ($SalaryExpected != NULL && $cTotalMonths > 0) {
-	if ($cTotalMonths < 12) {
-		$salaryMonthly = $SalaryExpected / $cTotalMonths;
-	} else {
-		$salaryMonthly = $SalaryExpected / 12;
-	}
-} else {
-	$salaryMonthly = 0;
-}
+$salaryMonthly = $SalaryExpected / $cTotalMonths;
+// if ($SalaryExpected != NULL && $cTotalMonths > 0) {
+// 	if ($cTotalMonths < 12) {
+// 		$salaryMonthly = $SalaryExpected / $cTotalMonths;
+// 	} else {
+// 		$salaryMonthly = $SalaryExpected / 12;
+// 	}
+// } else {
+// 	$salaryMonthly = 0;
+// }
 $thirteen = (($salaryMonthly * $cElapsed) / 30) / 12;
 
 //Calculate Age
@@ -78,8 +79,8 @@ $deelapsed = Carbon::parse($DateEnds);
 										<li id="TabAcademicBtn" class="employee-tabs-select<?php if ($GetAcadHistory->num_rows() <= 0) { echo ' employee-tabs-inactive'; }?>"><a href="#Academic" onclick="">Academic</a></li>
 										<li id="TabEmploymentsBtn" class="employee-tabs-select<?php if ($employment_record->num_rows() <= 0) { echo ' employee-tabs-inactive'; }?>"><a href="#Employments" onclick="">Employments</a></li>
 										<li id="TabMachineBtn" class="employee-tabs-select<?php if ($Machine_Operatessss->num_rows() <= 0) { echo ' employee-tabs-inactive'; }?>"><a href="#Machine" onclick="">Machine</a></li>
-										<li><a href="<?=base_url()?>PrintEmployee?id=<?=$ApplicantID?>" target="_blank" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Print Employee" style="color: gold;"><i class="fas fa-print" style="margin-right: -1px;"></i> </a></li>
-										<li id="TabEditBtn"><a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" onclick="" target="_blank" target="_blank" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Edit" style="color: gold;"><i class="fas fa-edit" style="margin-right: -1px;"></i></a></li>
+										<li><a href="<?=base_url()?>PrintEmployee?id=<?=$ApplicantID?>" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Print Employee" style="color: gold;"><i class="fas fa-print" style="margin-right: -1px;"></i> </a></li>
+										<li id="TabEditBtn"><a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" onclick="" target="_blank" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Edit" style="color: gold;"><i class="fas fa-edit" style="margin-right: -1px;"></i></a></li>
 									</ul>
 								</div>
 								<div class="col-2 mb-5 employee-image">
@@ -351,8 +352,9 @@ $deelapsed = Carbon::parse($DateEnds);
 											<?php if ($Status == 'Employed'): ?>
 											<div class="employee-content-header">
 												<div class="ml-1 row">
-													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm ExtendButton" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-plus"></i> Extend Contract</button>
-													<button class="btn btn-primary btn-sm ml-1" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
+													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm ExtendButton mr-1" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-edit"></i> Modify Contract</button>
+													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-info btn-sm ExtendButton mr-1" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-plus"></i> Extend Contract</button>
+													<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
 													<div class="ml-auto">
 														<button id="<?php echo $ApplicantID; ?>" class="btn btn-danger btn-sm SuspendButton" data-toggle="modal" data-target="#SuspendModal" type="button"><i class="fas fa-exclamation-triangle"></i> Suspend</button>
 													</div>
@@ -706,7 +708,7 @@ $deelapsed = Carbon::parse($DateEnds);
 											<hr>
 											<div class="row mt-4">
 												<div class="col-sm-12">
-													No available contract to show.
+													<i class="fas fa-info-circle"></i> No available contract to show.
 												</div>
 											</div>
 											<?php endif; ?>

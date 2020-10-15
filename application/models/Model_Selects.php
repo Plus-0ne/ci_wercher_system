@@ -682,6 +682,113 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetPayrollYear($Year, $Mode) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$SQL = "SELECT * FROM "  . $Mode . " WHERE t_year = '$Year' ORDER BY t_year DESC";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetPayrollMonth($Year, $Month, $Mode) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$SQL = "SELECT * FROM "  . $Mode . " WHERE t_year = '$Year' AND Month = '$Month' ORDER BY Month DESC";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetPayrollWeek($Year, $Month, $Week, $Mode) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$SQL = "SELECT * FROM "  . $Mode . " WHERE t_year = '$Year' AND Month = '$Month' AND Week = '$Week'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetPayrollWeekGrossPay($ApplicantID, $Year, $Month, $Week, $Mode) { // Does not return any other row and column except for the sum of day_pay.
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('day_pay');
+		$array = array('ApplicantID' => $ApplicantID, 't_year' => $Year, 'Month' => $Month, 'Week' => $Week);
+		$this->db->where($array);
+		$result = $this->db->get($Mode)->row();  
+		return $result->day_pay;
+	}
+	public function GetPayrollWeekHours($ApplicantID, $Year, $Month, $Week, $Mode) { // Does not return any other row and column except for the sum of day_pay.
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('Hours');
+		$array = array('ApplicantID' => $ApplicantID, 't_year' => $Year, 'Month' => $Month, 'Week' => $Week);
+		$this->db->where($array);
+		$result = $this->db->get($Mode)->row();  
+		return $result->Hours;
+	}
+	public function GetPayrollWeekOTHours($ApplicantID, $Year, $Month, $Week, $Mode) { // Does not return any other row and column except for the sum of day_pay.
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('Overtime');
+		$array = array('ApplicantID' => $ApplicantID, 't_year' => $Year, 'Month' => $Month, 'Week' => $Week);
+		$this->db->where($array);
+		$result = $this->db->get($Mode)->row();  
+		return $result->Overtime;
+	}
+	public function GetSSSToBePaid($ApplicantID, $ClientID, $Year, $Month) {
+		$SQL = "SELECT * FROM sss_tobepaid WHERE ApplicantID = '$ApplicantID' AND ClientID = '$ClientID' AND Year = '$Year' AND Month = '$Month'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 
 	
 }

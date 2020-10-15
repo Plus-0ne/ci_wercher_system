@@ -36,6 +36,8 @@
 										<th> Address </th>
 										<th> Contact </th>
 										<th style="width: 25px;"> Employees </th>
+										<th>Primary Week</th>
+										<th style="width: 25px;">Current Week</th>
 										<th class="text-center PrintExclude" style="width: 125px;"> View Hours </th>
 									</tr>
 								</thead>
@@ -50,6 +52,10 @@
 											</td>
 											<td>
 												<?php echo $row['ContactNumber']; ?>
+											</td>
+											<td>
+											</td>
+											<td>
 											</td>
 											<td>
 												<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['ClientID'])->num_rows(); ?>

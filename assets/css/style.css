@@ -52,6 +52,22 @@ input[type="range"]::-webkit-slider-runnable-track {
     box-shadow: 0 0 0 0.2rem gold !important;
 }
 
+.btn-night {
+	background-color: #003671;
+	border-color: #003671;
+}
+
+.btn-night:hover, .btn-night:focus, .btn-night:active, .btn-night:active:focus, .btn-night .active, .open>.dropdown-toggle.btn-night {
+    background-color: #003671 !important;
+    border-color: #003671 !important;
+    outline: gold !important;
+    box-shadow: 0 0 0 0.2rem gold !important;
+}
+
+.text-primary {
+	color: gold !important;
+}
+
 .btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info:active:focus, .btn-info .active, .open>.dropdown-toggle.btn-info {
     background-color: #694900 !important;
     border-color: #694900 !important;
@@ -769,6 +785,9 @@ a[data-toggle="collapse"] {
 .NightPremium {
 	display: none;
 }
+.night-btn-extend {
+	padding-bottom: 25px;
+}
 /*.wercher-idcard-background {
 	background-image: url('../img/wercher_id_front.png');
 	background-size: 265px 385px;
@@ -1164,6 +1183,15 @@ a[data-toggle="collapse"] {
 	box-shadow: 0 0 2px 2px #c5ad00;
 	border-left: 4px solid #c5ad00;
 }
+.payroll-month-container {
+
+}
+.payroll-data {
+	border-left: 2px solid gray;
+}
+.modal-payroll .modal-content {
+	background-color: #ebebeb;
+}
 /*form {
 	display: none;
 }*/
@@ -1343,6 +1371,10 @@ input[type=number]::-webkit-inner-spin-button {
 	.modal-xxl {
 		width: 90%;
 		max-width:1200px;
+	}
+	.modal-payroll {
+		width: 90%;
+		max-width:1680px;
 	}
 
 }
