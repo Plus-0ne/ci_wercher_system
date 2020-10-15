@@ -35,12 +35,13 @@ endif;
 				<div class="col-12 col-sm-12 tabs">
 					<ul>
 						<li class="tabs-active"><a href="<?php echo base_url() ?>Employee">Employees (<?php echo $get_employee->num_rows()?>)</a></li>
+						<li><a href="<?php echo base_url() ?>Employee/Permanent">Permanent (<?php echo $GetPermanentEmployees->num_rows()?>)</a></li>
 					</ul>
 				</div>
 				<div class="row rcontent">
 					<div class="col-sm-12 col-md-9 PrintPageName PrintOut">
 						<i class="fas fa-info-circle"></i>
-						<i>Found <?php echo $get_employee->num_rows(); ?> employee<?php if($get_employee->num_rows() != 1): echo 's'; endif;?> currently in the database. 
+						<i>Found <?php echo $GetTotalEmployees->num_rows(); ?> employee<?php if($GetTotalEmployees->num_rows() != 1): echo 's'; endif;?> currently in the database, <?php echo $get_employee->num_rows(); ?> of which have contract and <?php echo $GetPermanentEmployees->num_rows(); ?> permanent.
 						<?php if($LatestHireesCount > 0):
 							echo '<br>Latest ';
 							if ($LatestHireesCount == 1):

@@ -19,11 +19,12 @@
 								<table id="ListContractHistory" class="table PrintOutHistory" style="width: 100%;">
 									<thead>
 										<tr class="text-center align-middle">
-											<th> Client </th>
-											<th> Contract Started </th>
-											<th> Contract Ended </th>
-											<th> Position </th>
-											<th class="PrintExclude"> Violations </th>
+											<th>Client</th>
+											<th>Contract Started</th>
+											<th>Contract Ended</th>
+											<th>Position</th>
+											<th class="PrintExclude">Violations</th>
+											<th>Action</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -40,7 +41,7 @@
 											$cdehours = $cdedate->format('h:i:s A');
 
 											?>
-											<tr>
+											<tr class="table-row-hover">
 												<td class="text-center align-middle">
 													<?php echo $row['Client'] ; ?>
 												</td>
@@ -74,6 +75,9 @@
 													<?php else: ?>
 													<a href="<?=base_url();?>ViewEmployee?id=<?=$row['ApplicantID'];?>&v_client=<?=$ClientID?>&from=<?=$HistoryFrom->format('Y-m-d');?>&to=<?=$HistoryTo->format('Y-m-d');?>#Contract" class="PrintExclude" style="color: green;"><i class="fas fa-check"></i> None</a>
 													<?php endif; ?>
+												</td>
+												<td class="text-center align-middle">
+													<a href="<?=base_url();?>EmployUserPermanent?id=<?=$row['ApplicantID'];?>&client=<?=$ClientID?>" class="btn btn-sm btn-primary PrintExclude"><i class="fas fa-user-tie"></i> Employ</a>
 												</td>
 											</tr>
 										<?php endforeach ?>

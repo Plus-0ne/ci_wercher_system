@@ -87,6 +87,18 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetTotalEmployees()
+	{
+		$SQL = "SELECT * FROM applicants WHERE Status = 'Employed' OR Status = 'Employed (Permanent)'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetPermanentEmployees()
+	{
+		$SQL = "SELECT * FROM applicants WHERE Status = 'Employed (Permanent)'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function GetApplicantSkills()
 	{
 		$result =  $this->db->query("SELECT PositionGroup, COUNT(*) as count FROM applicants WHERE Status = 'Applicant' AND PositionGroup IS NOT NULL GROUP BY PositionGroup");

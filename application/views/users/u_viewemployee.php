@@ -3,56 +3,99 @@ $T_Header;
 require 'vendor/autoload.php';
 use Carbon\Carbon;
 
-// Contract elapsed
-$cStarts = new DateTime($DateStarted);
-$cEnds = new DateTime($DateEnds);
 $currentDate = new DateTime();
+if ($Status == 'Employed' || $Status == 'Employed (Permanent)') {
+	if ($SalaryExpected == NULL) {
+		$SalaryExpected = 0;
+	}
 
-$cElapsed = $cStarts->diff($currentDate)->format('%a');
-$cElapsedText = $cStarts->diff($currentDate)->format('%m months, %d days');
+	// Contract elapsed
+	$cStarts = new DateTime($DateStarted);
+	$cEnds = new DateTime($DateEnds);
 
-// 13th Month Pay Calculation
-// $cTotalMonths = $cEnds->diff($cStarts)->format('%m');
-$cDiff = $cEnds->diff($cStarts);
-if ($cDiff->m > 1) {
-	$cTotalMonths = $cDiff->y * 12 + $cDiff->m + $cDiff->d / 30;
-} else {
-	$cTotalMonths = $cDiff->d;
+	$cElapsed = $cStarts->diff($currentDate)->format('%a');
+	$cElapsedText = $cStarts->diff($currentDate)->format('%m months, %d days');
+
+	// 13th Month Pay Calculation
+	// $cTotalMonths = $cEnds->diff($cStarts)->format('%m');
+	$cDiff = $cEnds->diff($cStarts);
+	if ($cDiff->m > 1) {
+		$cTotalMonths = ($cDiff->y * 12) + ($cDiff->m) + ($cDiff->d / 30);
+	} else {
+		$cTotalMonths = (($cDiff->y) * 12) + ($cDiff->m);
+	}
+	$cDiffDays = $cEnds->diff($cStarts)->format('%a');
+	if ($cDiffDays > 1) {
+		$isThirteenEligible = true;
+	} else {
+		$isThirteenEligible = false;
+	}
+	// if ($cTotalMonths == 0) {
+	// 	$cTotalMonths = 1;
+	// }
+	if ($Status == 'Employed') {
+		$salaryMonthly = $SalaryExpected / $cTotalMonths;
+	} else {
+		$salaryMonthly = $SalaryExpected / 12;
+	}
+	// if ($SalaryExpected != NULL && $cTotalMonths > 0) {
+	// 	if ($cTotalMonths < 12) {
+	// 		$salaryMonthly = $SalaryExpected / $cTotalMonths;
+	// 	} else {
+	// 		$salaryMonthly = $SalaryExpected / 12;
+	// 	}
+	// } else {
+	// 	$salaryMonthly = 0;
+	// }
+	$thirteen = (($salaryMonthly * $cElapsed) / 30) / 12;
+
+	//Contract Dates
+	$dsdate = new DateTime($DateStarted);
+	$dsday = $dsdate->format('Y-m-d');
+	$dsday = DateTime::createFromFormat('Y-m-d', $dsday)->format('F d, Y');
+	$dshours = $dsdate->format('h:i:s A');
+	$dselapsed = Carbon::parse($DateStarted);
+
+	$ds = new DateTime($DateStarted);
+	$dsText = $ds->format('Y-m-d');
+	$dsH = $ds->format('H');
+	$dsi = $ds->format('i');
+	$dss = $ds->format('s');
+	$dsType = $ds->format('A');
+
+	if ($dsH > 12) {
+		$dsH = $dsH - 12;
+		if ($dsH < 10) {
+			$dsH = '0' . $dsH;
+		}
+	}
+
+	if ($Status == 'Employed') {
+		$dedate = new DateTime($DateEnds);
+		$deday = $dedate->format('Y-m-d');
+		$deday = DateTime::createFromFormat('Y-m-d', $deday)->format('F d, Y');
+		$dehours = $dedate->format('h:i:s A');
+		$deelapsed = Carbon::parse($DateEnds);
+
+		$de = new DateTime($DateEnds);
+		$deText = $de->format('Y-m-d');
+		$deH = $de->format('H');
+		$dei = $de->format('i');
+		$des = $de->format('s');
+		$deType = $de->format('A');
+
+		if ($deH > 12) {
+			$deH = $deH - 12;
+			if ($deH < 10) {
+				$deH = '0' . $deH;
+			}
+		}
+	}
+
 }
-$cDiffDays = $cEnds->diff($cStarts)->format('%a');
-if ($cDiffDays > 1) {
-	$isThirteenEligible = true;
-} else {
-	$isThirteenEligible = false;
-}
-$salaryMonthly = $SalaryExpected / $cTotalMonths;
-// if ($SalaryExpected != NULL && $cTotalMonths > 0) {
-// 	if ($cTotalMonths < 12) {
-// 		$salaryMonthly = $SalaryExpected / $cTotalMonths;
-// 	} else {
-// 		$salaryMonthly = $SalaryExpected / 12;
-// 	}
-// } else {
-// 	$salaryMonthly = 0;
-// }
-$thirteen = (($salaryMonthly * $cElapsed) / 30) / 12;
-
 //Calculate Age
 $pBirthdate = new DateTime($BirthDate);
 $pAge = $currentDate->diff($pBirthdate)->format('%y');
-
-//Contract Dates
-$dsdate = new DateTime($DateStarted);
-$dsday = $dsdate->format('Y-m-d');
-$dsday = DateTime::createFromFormat('Y-m-d', $dsday)->format('F d, Y');
-$dshours = $dsdate->format('h:i:s A');
-$dselapsed = Carbon::parse($DateStarted);
-
-$dedate = new DateTime($DateEnds);
-$deday = $dedate->format('Y-m-d');
-$deday = DateTime::createFromFormat('Y-m-d', $deday)->format('F d, Y');
-$dehours = $dedate->format('h:i:s A');
-$deelapsed = Carbon::parse($DateEnds);
 
 ?>
 <body>
@@ -73,7 +116,7 @@ $deelapsed = Carbon::parse($DateEnds);
 									<ul>
 										<li id="TabPersonalBtn" class="employee-tabs-select employee-tabs-active"><a href="#Personal" onclick="">Personal</a></li>
 										<li id="TabContractBtn" class="employee-tabs-select"><a href="#Contract" onclick="">Contract</a></li>
-										<?php if($Status == 'Employed' || $Status == 'Blacklisted' || $Status == 'Expired'): ?>
+										<?php if($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Blacklisted' || $Status == 'Expired'): ?>
 											<li id="TabDocumentsBtn" class="employee-tabs-select"><a href="#Documents" onclick="">Documents</a></li>
 										<?php endif; ?>
 										<li id="TabAcademicBtn" class="employee-tabs-select<?php if ($GetAcadHistory->num_rows() <= 0) { echo ' employee-tabs-inactive'; }?>"><a href="#Academic" onclick="">Academic</a></li>
@@ -101,7 +144,7 @@ $deelapsed = Carbon::parse($DateEnds);
 									</div>
 									<hr>
 									<div class="col-sm-12">
-										<?php if($Status == 'Employed'): ?>
+										<?php if($Status == 'Employed' || $Status == 'Employed (Permanent)'): ?>
 											<?php if($EmployeeID != NULL): ?>
 												<i class="fas fa-user-tie"></i> <?php echo $EmployeeID; ?>
 											<?php else: ?>
@@ -114,6 +157,8 @@ $deelapsed = Carbon::parse($DateEnds);
 									<div class="col-sm-12 mt-2">
 										<?php if ($Status == 'Employed') { ?>
 											<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Employed
+										<?php } elseif ($Status == 'Employed (Permanent)') { ?>
+											<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Employed (Permanent)
 										<?php } elseif ($Status == 'Applicant') { ?>
 											<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Applicant
 										<?php } elseif ($Status == 'Expired') { ?>
@@ -168,7 +213,7 @@ $deelapsed = Carbon::parse($DateEnds);
 										<div class="employee-tabs-group-content">
 											<div class="employee-content-header">
 												<div class="ml-1 row">
-													<?php if ($Status == 'Employed'): ?> 
+													<?php if ($Status == 'Employed' || $Status == 'Employed (Permanent)'): ?> 
 														<?php if ($ReminderDate == NULL): ?> 
 															<button id="<?php echo $ApplicantID; ?>" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-exclamation"></i> No reminder set</button>
 														<?php else: ?>
@@ -352,7 +397,7 @@ $deelapsed = Carbon::parse($DateEnds);
 											<?php if ($Status == 'Employed'): ?>
 											<div class="employee-content-header">
 												<div class="ml-1 row">
-													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm ExtendButton mr-1" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-edit"></i> Modify Contract</button>
+													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm ExtendButton mr-1" data-toggle="modal" data-target="#ModifyContractModal"><i class="fas fa-edit"></i> Modify Contract</button>
 													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-info btn-sm ExtendButton mr-1" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-plus"></i> Extend Contract</button>
 													<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
 													<div class="ml-auto">
@@ -553,24 +598,6 @@ $deelapsed = Carbon::parse($DateEnds);
 													<div class="progress_value">45%</div>
 												</div>
 											</div>
-											<!-- <div class="col-sm-6 employee-contract-container">
-												<div class="col-sm-12 employee-contract-header-title">
-													Client
-												</div>
-												<div class="col-sm-12 employee-contract-header-desc">
-													<?php
-													// TODO: Find a better solution than this.
-													$found = false;
-													foreach ($get_employee->result_array() as $row) {
-														foreach ($getClientOption->result_array() as $nrow) {
-															if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
-																$found = true;
-																echo $nrow['Name'];
-															}
-														}
-													}?>
-												</div>
-											</div> -->
 											<div class="row">
 												<div class="col-sm-3">
 													<div class="card mb-3" style="max-width: 18rem; height: 300px;">
@@ -693,6 +720,136 @@ $deelapsed = Carbon::parse($DateEnds);
 																	</div>
 																	<div class="col-sm-12">
 																		<?php echo $cElapsedText; ?>
+																	</div>
+																</div>
+															</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<?php elseif ($Status == 'Employed (Permanent)'): ?>
+											<div class="col-sm-12 col-md-12 employee-dynamic-header text-center">
+												<b>
+													Permanently employed since
+												</b>
+											</div>
+											<div class="col-sm-12 col-md-12 text-center">
+												<p>
+													<?php
+														echo $cElapsedText;
+													?>
+												</p>
+											</div>
+											<div class="col-sm-12 col-md-12 text-center">
+												<p>
+													<input type="hidden" id="TimeLeft" value="100">
+												</p>
+											</div>
+											<div class="col-sm-12 col-md-12 PrintExclude">
+												<div class="progressBar">
+													<div class="progressBarTitle progressRemainingColor">Permanent</div>
+													<div class="progress progressRemaining"></div>
+													<div class="progress_value">45%</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-3">
+													<div class="card mb-3" style="max-width: 18rem; height: 300px;">
+														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-user-tag"></i> Client</b></div>
+														<div class="card-body text-dark">
+															<h5 class="card-title text-center wercher-card-title">
+																<?php
+																	foreach($GetEmployeeMatchingClient->result_array() as $row) {
+																		echo $row['Name'];
+																	};
+																?>
+															</h5>
+															<p class="card-text">
+																<div class="col-sm-12 employee-static-item text-center mt-3">
+																	<div class="col-sm-12 employee-dynamic-header">
+																		<b>Contact</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php
+																			foreach($GetEmployeeMatchingClient->result_array() as $row) {
+																				echo $row['ContactNumber'];
+																			};
+																		?>
+																	</div>
+																</div>
+																<div class="col-sm-12 employee-static-item text-center">
+																	<div class="col-sm-12 employee-dynamic-header">
+																		<b>Address</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php
+																			foreach($GetEmployeeMatchingClient->result_array() as $row) {
+																				echo $row['Address'];
+																			};
+																		?>
+																	</div>
+																</div>
+															</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-3">
+													<div class="card mb-3" style="max-width: 18rem; height: 300px;">
+														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-user-tie"></i> Position</b></div>
+														<div class="card-body text-dark">
+															<h5 class="card-title text-center wercher-card-title"><?php echo $PositionDesired; ?></h5>
+															<p class="card-text">
+																<div class="col-sm-12 employee-static-item text-center mt-3">
+																	<div class="col-sm-12 employee-dynamic-header">
+																		<b>Employment Started</b>
+																	</div>
+																	<div class="col-sm-12" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $dselapsed->diffForHumans(); ?>">
+																		<?php echo $dsday . '<br>' . $dshours; ?>
+																	</div>
+																</div>
+															</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-3">
+													<div class="card mb-3" style="max-width: 18rem; height: 300px;">
+														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-dollar-sign"></i> Salary Expected</b></div>
+														<div class="card-body text-dark">
+															<h5 class="card-title text-center wercher-card-title"><span style="user-select: none;">₱ </span><?php echo $SalaryExpected; ?></h5>
+															<p class="card-text">
+																<div class="col-sm-12 employee-static-item text-center mt-3">
+																	<div class="col-sm-12 employee-dynamic-header">
+																		<b>Documents (<?php echo $GetDocuments->num_rows(); ?>)</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<a href="#Documents" class="btn-sm btn btn-primary"><i class="far fa-eye"></i> View</a>
+																	</div>
+																</div>
+																<div class="col-sm-12 employee-static-item text-center">
+																	<div class="col-sm-12 employee-dynamic-header">
+																		<b>Violations (<?php echo $GetDocumentsViolations->num_rows(); ?>)</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<a href="#Violations" class="btn-sm btn btn-danger"><i class="far fa-eye"></i> View</a>
+																	</div>
+																</div>
+															</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-3">
+													<div class="card mb-3" style="max-width: 18rem; height: 300px;">
+														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-dollar-sign"></i> Additional Info</b></div>
+														<div class="card-body text-dark">
+															<p class="card-text">
+																<div class="col-sm-12 employee-static-item text-center">
+																	<div class="col-sm-12 employee-dynamic-header">
+																		<b>13th Month Pay</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php
+																			echo '<span style="user-select: none;">₱ </span>' . round($thirteen, 2);
+																		?>
 																	</div>
 																</div>
 															</p>
@@ -1054,28 +1211,51 @@ $deelapsed = Carbon::parse($DateEnds);
 			</div>
 		</div>
 		<?php } ?>
-		<!-- CLIENT HIRE MODAL -->
-		<?php $this->load->view('_template/modals/m_clienthire'); ?>
 		<!-- CONTRACT HISTORY MODAL -->
 		<?php $this->load->view('_template/modals/m_contracthistory'); ?>
-		<!-- EXTEND CONTRACT MODAL -->
-		<?php $this->load->view('_template/modals/m_extendcontract'); ?>
-		<!-- SET A REMINDER MODAL -->
-		<?php $this->load->view('_template/modals/m_setreminder'); ?>
-		<!-- DOCUMENT MODAL -->
-		<?php $this->load->view('_template/modals/m_documents'); ?>
-		<!-- DOCUMENTS NOTE MODAL -->
-		<?php $this->load->view('_template/modals/m_addnote_documents'); ?>
-		<!-- ADD DOCUMENTS MODAL -->
-		<?php $this->load->view('_template/modals/m_adddocuments'); ?>
-		<!-- GENERATE ID CARD MODAL -->
-		<?php $this->load->view('_template/modals/m_generateid'); ?>
-		<!-- SUSPEND MODAL -->
-		<?php $this->load->view('_template/modals/m_suspend'); ?>
+		<?php if($Status == 'Employed' || $Status == 'Employed (Permanent)'): ?>
+			<!-- EXTEND CONTRACT MODAL -->
+			<?php $this->load->view('_template/modals/m_extendcontract'); ?>
+			<!-- SET A REMINDER MODAL -->
+			<?php $this->load->view('_template/modals/m_setreminder'); ?>
+			<!-- DOCUMENT MODAL -->
+			<?php $this->load->view('_template/modals/m_documents'); ?>
+			<!-- DOCUMENTS NOTE MODAL -->
+			<?php $this->load->view('_template/modals/m_addnote_documents'); ?>
+			<!-- ADD DOCUMENTS MODAL -->
+			<?php $this->load->view('_template/modals/m_adddocuments'); ?>
+			<!-- GENERATE ID CARD MODAL -->
+			<?php $this->load->view('_template/modals/m_generateid'); ?>
+			<!-- SUSPEND MODAL -->
+			<?php $this->load->view('_template/modals/m_suspend'); ?>
+			<!-- MODIFY CONTRACT MODAL -->
+			<?php $this->load->view('_template/modals/m_modifycontract'); ?>
+		<?php else: ?>
+			<!-- CLIENT HIRE MODAL -->
+			<?php $this->load->view('_template/modals/m_clienthire'); ?>
+		<?php endif; ?>
 	</body>
 	<?php $this->load->view('_template/users/u_scripts');?>
 	<script type="text/javascript">
 		$(document).ready(function () {
+			<?php if ($Status == 'Employed'): ?>
+				var defaultEmployeeID = '<?php echo $EmployeeID; ?>';
+				var defaultClientID = <?php echo $ClientEmployed; ?>;
+				var defaultSalary = <?php echo $SalaryExpected; ?>;
+				var defaultdsText = <?php echo $dsText; ?>;
+				var defaultdsH = <?php echo $dsH; ?>;
+				var defaultdsi = <?php echo $dsi; ?>;
+				var defaultdss = <?php echo $dss; ?>;
+				var defaultdsType = '<?php echo $dsType; ?>';
+				var defaultdeText = <?php echo $deText; ?>;
+				var defaultdeH = <?php echo $deH; ?>;
+				var defaultdei = <?php echo $dei; ?>;
+				var defaultdes = <?php echo $des; ?>;
+				var defaultdeType = '<?php echo $deType; ?>';
+			<?php endif; ?>
+			$('.modify-contract-reset-btn').on('click', function () {
+				$('#AddNote_ApplicantID').val($(this).attr('applicant-id'));
+			});
 			<?php if ($Status == 'Employed') { ?>
 				$(".nav-item a[href*='Employee']").addClass("nactive");
 			<?php } else { ?>
@@ -1090,8 +1270,7 @@ $deelapsed = Carbon::parse($DateEnds);
 			// $('.age-container').text('123');
 			$('[data-toggle="tooltip"]').tooltip();
 			$('#ClientSelect').on('change', function() {
-				<?php foreach ($getClientOption->result_array() as $row): ?>
-				<?php
+				<?php foreach ($getClientOption->result_array() as $row):
 				// Count how many employees are on the client
 				$CountEmployees = $this->Model_Selects->GetClientsEmployed($row['ClientID'])->num_rows();
 				$CountEmployees++;

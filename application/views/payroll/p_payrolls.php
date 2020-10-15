@@ -272,6 +272,7 @@
 																			}
 																		} else {
 																			$WeekPaid = 0;
+																			$toBePaid = $sss_contriCalc;
 																			$now = new DateTime();
 																			$DateAdded = $now->format('Y-m-d H:i:s');
 																			$data = array(

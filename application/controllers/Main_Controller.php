@@ -443,7 +443,37 @@
 		$data['get_employee'] = $this->Model_Selects->GetEmployee();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['getClientOption'] = $this->Model_Selects->getClientOption();
+		$data['GetTotalEmployees'] = $this->Model_Selects->GetTotalEmployees();
+		$data['GetPermanentEmployees'] = $this->Model_Selects->GetPermanentEmployees();
 		$this->load->view('users/u_users',$data);
+	}
+	public function EmployeePermanent()
+	{
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		$header['title'] = 'Permanent Employees | Wercher Solutions and Resources Workers Cooperative';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employee</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Employee/Permanent">Permanent</a></li>
+		</ol>
+		</nav>';
+
+		// WEEKLY INCREASE
+		$CurrentDay = date('Y-m-d h:i:s A');
+		$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
+		$data['WeeklyEmployees'] = $this->Model_Selects->GetEmployeesIncrease($CurrentDay, $CurrentDayScope)->num_rows();
+
+		$data['get_employee'] = $this->Model_Selects->GetEmployee();
+		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+		$data['getClientOption'] = $this->Model_Selects->getClientOption();
+		$data['GetTotalEmployees'] = $this->Model_Selects->GetTotalEmployees();
+		$data['GetPermanentEmployees'] = $this->Model_Selects->GetPermanentEmployees();
+		$this->load->view('users/u_userspermanent',$data);
 	}
 	public function ViewEmployee()
 	{
@@ -997,7 +1027,7 @@
 
 				);
 				$ApplicantID = $ged['ApplicantID'];
-				if ($data['Status'] == 'Employed') {
+				if ($data['Status'] == 'Employed' || $data['Status'] == 'Employed (Permanent)') {
 					$this->load->view('users/u_generateid',$data);
 				} else {
 					redirect('Employee');
@@ -1114,13 +1144,14 @@
 		<nav aria-label="breadcrumb">
 		<ol class="breadcrumb" style="background-color: transparent;">
 		<li class="breadcrumb-item" aria-current="page"><a href="Payroll">Payroll</a></li>
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewClient?id=' . $id . '">Details</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewClient?id=' . $id . '&mode=' . $mode . '">Details</a></li>
 		</ol>
 		</nav>';
 
 		// $data['ShowClients'] = $this->Model_Selects->GetClients();
 		$data['GetLogbookLatestHires'] =  $this->Model_Selects->GetLogbookLatestHires();
 		$data["Mode"]=$_GET['mode'];
+		$data["ClientID"] = $_GET['id'];
 		$this->load->view('payroll/p_payrolls',$data);
 	}
 	public function ViewClient()
@@ -1172,10 +1203,11 @@
 			<nav aria-label="breadcrumb">
 			<ol class="breadcrumb" style="background-color: transparent;">
 			<li class="breadcrumb-item" aria-current="page"><a href="Payroll">Payroll</a></li>
-			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewClient?id=' . $id . '">Details</a></li>
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewClient?id=' . $id . '&mode=' . $mode . '">Details</a></li>
 			</ol>
 			</nav>';
 			$data["Mode"]=$_GET['mode'];
+			$data["ClientID"] = $_GET['id'];
 			$this->load->view('payroll/p_viewclient',$data);
 		}
 		else

@@ -55,6 +55,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['Dashboard'] = 'Main_Controller/Dashboard';
 $route['Employee'] = 'Main_Controller/Employee';
+$route['Employee/Permanent'] = 'Main_Controller/EmployeePermanent';
 $route['ViewEmployee'] = 'Main_Controller/ViewEmployee';
 $route['ModifyEmployee'] = 'Main_Controller/ModifyEmployee';
 $route['Applicants'] = 'Main_Controller/V_Applicants';
@@ -113,6 +114,8 @@ $route['ImportExcel'] = 'Update_Controller/ImportExcel';
 $route['UpdateSSSField'] = 'Update_Controller/UpdateSSSField';
 $route['Suspend'] = 'Update_Controller/Suspend';
 $route['SetPrimaryWeek'] = 'Update_Controller/SetPrimaryWeek';
+$route['ModifyContract'] = 'Update_Controller/ModifyContract';
+$route['EmployUserPermanent'] = 'Update_Controller/EmployUserPermanent';
 
 // AJAX
 $route['AJAX_addLogbookNotes'] = 'Main_Controller/AJAX_addLogbookNotes';

@@ -87,7 +87,7 @@ class Model_Logbook extends CI_Model {
 			$Icon = 'fas fa-exclamation-circle';
 		}
 		if ($Icon == 'info') {
-			$Icon = 'fas fa-info';
+			$Icon = 'fas fa-info-circle';
 		}
 		$this->session->set_flashdata('prompts-color', $TextColor);
 		$this->session->set_flashdata('prompts-icon', $Icon);

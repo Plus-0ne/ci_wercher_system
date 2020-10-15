@@ -131,9 +131,7 @@ class Update_Controller extends CI_Controller {
 								$ClientName = $row['Name'];
 							}
 						} else {
-							$LastName = 'N/A';
-							$FirstName = 'N/A';
-							$MiddleInitial = 'N/A';
+							$ClientName = 'N/A';
 						}
 						$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' employed <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleInitial) . '</a> to <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $ClientID . '" target="_blank">' . $ClientName . '</a>');
 						$this->Model_Logbook->LogbookExtendedEntry(0, 'Status changed from <b>Applicant</b> to <b>Employed</b>');
@@ -1883,5 +1881,259 @@ class Update_Controller extends CI_Controller {
 		);
 		$UpdateSSSToBePaid = $this->Model_Updates->UpdateSSSToBePaid($data);
 		echo '<a href="#">Test</a>';
+	}
+	public function ModifyContract()
+	{
+		if (isset($_POST['M_ApplicantID'])) {
+			$ApplicantID = $this->input->post('M_ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
+			$ClientID = $this->input->post('M_ClientID',TRUE);
+			$DateStarted = $this->input->post('M_DateStarted',TRUE);
+			$DateEnds = $this->input->post('M_DateEnds',TRUE);
+			$DateStartedHour = $this->input->post('M_DateStartedHour',TRUE);
+			$DateStartedMinute = $this->input->post('M_DateStartedMinute',TRUE);
+			$DateStartedSecond = $this->input->post('M_DateStartedSecond',TRUE);
+			$DateEndsHour = $this->input->post('M_DateEndsHour',TRUE);
+			$DateEndsMinute = $this->input->post('M_DateEndsMinute',TRUE);
+			$DateEndsSecond = $this->input->post('M_DateEndsSecond',TRUE);
+			$EmployeeID = $this->input->post('M_EmployeeID',TRUE);
+			$Salary = $this->input->post('M_Salary',TRUE);
+			$DateStartedHourType = $this->input->post('M_DateStartedHourType',TRUE);
+			$DateEndsHourType = $this->input->post('M_DateEndsHourType',TRUE);
+			// Previous data for logbook
+			$GetEmployeeDetails = $this->Model_Selects->GetEmployeeDetails($ApplicantID);
+			if ($GetEmployeeDetails->num_rows() > 0) {
+				foreach($GetEmployeeDetails->result_array() as $row) {
+					$prevClientID = $row['ClientEmployed'];
+					$prevDateStarted = $row['DateStarted'];
+					$prevDateEnds = $row['DateEnds'];
+					$prevEmployeeID = $row['EmployeeID'];
+					$prevSalary = $row['SalaryExpected'];
+				}
+			} else {
+				$prevClientID = 'N/A';
+				$prevDateStarted = 'N/A';
+				$prevDateEnds = 'N/A';
+				$prevEmployeeID = 'N/A';
+				$prevSalary = 'N/A';
+			}
+			
+			// Concatenating date and hours
+			if($DateStartedHour == NULL) {
+				$DateStartedHour = 0;
+			}
+			if($DateStartedMinute == NULL) {
+				$DateStartedMinute = 0;
+			}
+			if($DateStartedSecond == NULL) {
+				$DateStartedSecond = 0;
+			}
+			if($DateEndsHour == NULL) {
+				$DateEndsHour = 0;
+			}
+			if($DateEndsMinute == NULL) {
+				$DateEndsMinute = 0;
+			}
+			if($DateEndsSecond == NULL) {
+				$DateEndsSecond = 0;
+			}
+
+			if ($DateStartedHour > 12) {
+				$DateStartedHour = 12;
+			}
+			if ($DateStartedMinute > 60) {
+				$DateStartedMinute = 0;
+			}
+			if ($DateStartedSecond > 60) {
+				$DateStartedSecond = 0;
+			}
+
+			if($DateStartedHour < 10 && $DateStartedHour != 0 && strlen($DateStartedHour) < 2) {
+				$DateStartedHour = '0' . $DateStartedHour;
+			} elseif ($DateStartedHour == 0) {
+				$DateStartedHour = '00';
+			}
+			if($DateStartedMinute < 10 && $DateStartedMinute != 0 && strlen($DateStartedMinute) < 2) {
+				$DateStartedMinute = '0' . $DateStartedMinute;
+			} elseif ($DateStartedMinute == 0) {
+				$DateStartedMinute = '00';
+			}
+			if($DateStartedSecond < 10 && $DateStartedSecond != 0 && strlen($DateStartedSecond) < 2) {
+				$DateStartedSecond = '0' . $DateStartedSecond;
+			} elseif ($DateStartedSecond == 0) {
+				$DateStartedSecond = '00';
+			}
+
+			if ($DateEndsHour > 12) {
+				$DateEndsHour = 12;
+			}
+			if ($DateEndsMinute > 60) {
+				$DateEndsMinute = 0;
+			}
+			if ($DateEndsSecond > 60) {
+				$DateEndsSecond = 0;
+			}
+
+			if($DateEndsHour < 10 && $DateEndsHour != 0 && strlen($DateEndsHour) < 2) {
+				$DateEndsHour = '0' . $DateEndsHour;
+			} elseif ($DateEndsHour == 0) {
+				$DateEndsHour = '00';
+			}
+			if($DateEndsMinute < 10 && $DateEndsMinute != 0 && strlen($DateEndsMinute) < 2) {
+				$DateEndsMinute = '0' . $DateEndsMinute;
+			} elseif ($DateEndsMinute == 0) {
+				$DateEndsMinute = '00';
+			}
+			if($DateEndsSecond < 10 && $DateEndsSecond != 0 && strlen($DateEndsSecond) < 2) {
+				$DateEndsSecond = '0' . $DateEndsSecond;
+			} elseif ($DateEndsSecond == 0) {
+				$DateEndsSecond = '00';
+			}
+
+			$DateStartedFull = $DateStarted . ' ' . $DateStartedHour . ':' . $DateStartedMinute . ':' . $DateStartedSecond . ' ' . $DateStartedHourType;
+			$DateEndsFull = $DateEnds . ' ' . $DateEndsHour . ':' . $DateEndsMinute . ':' . $DateEndsSecond . ' ' . $DateEndsHourType;
+
+			$Temp_ApplicantID = $ApplicantID;
+			$Temp_ApplicantID++;
+
+			if ($ApplicantID == NULL || $ClientID == NULL) {
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+			else
+			{
+				$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
+				if ($CheckApplicant->num_rows() > 0) {
+					$row = $CheckApplicant->row_array();
+
+					$data = array(
+						'EmployeeID' => $EmployeeID,
+						'ClientEmployed' => $ClientID,
+						'DateStarted' => $DateStartedFull,
+						'DateEnds' => $DateEndsFull,
+						'Salary' => $Salary,
+					);
+					$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
+					$data = array(
+						'ClientID' => $ClientID,
+						'FirstName' => $row['FirstName'],
+						'MiddleInitial' => $row['MiddleInitial'],
+						'LastName' => $row['LastName'],
+						'SalaryExpected' => $row['SalaryExpected'],
+					);
+					$EmployNewApplicant = $this->Model_Inserts->InsertToClient($ClientID,$Temp_ApplicantID,$data);
+					if ($EmployNewApplicant == TRUE) {
+						// LOGBOOK
+						$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
+						if ($CheckApplicant->num_rows() > 0) {
+							foreach($CheckApplicant->result_array() as $row) {
+								$LastName = $row['LastName'];
+								$FirstName = $row['FirstName'];
+								$MiddleInitial = $row['MiddleInitial'];
+							}
+						} else {
+							$LastName = 'N/A';
+							$FirstName = 'N/A';
+							$MiddleInitial = 'N/A';
+						}
+						$changeCounter = 0;
+						$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' updated <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleInitial) . '</a>\'s contract details');
+						if ($ClientID != $prevClientID) {
+							$this->Model_Logbook->LogbookExtendedEntry(0, 'Client changed from <b>' . $prevClientID . '</b> to <b>' . $ClientID . '</b>');
+							$changeCounter++;
+						}
+						if ($DateStartedFull != $prevDateStarted) {
+							$this->Model_Logbook->LogbookExtendedEntry(0, 'Contract\'s date start changed from <b>' . $prevDateStarted . '</b> to <b>' . $DateStartedFull . '</b>');
+							$changeCounter++;
+						}
+						if ($DateEndsFull != $prevDateEnds) {
+							$this->Model_Logbook->LogbookExtendedEntry(0, 'Contract\'s date ends changed from <b>' . $prevDateEnds . '</b> to <b>' . $DateEndsFull . '</b>');
+							$changeCounter++;
+						}
+						if ($EmployeeID != $prevEmployeeID) {
+							$this->Model_Logbook->LogbookExtendedEntry(0, 'Employee ID changed from <b>' . $prevEmployeeID . '</b> to <b>' . $EmployeeID . '</b>');
+							$changeCounter++;
+						}
+						if ($Salary != $prevSalary) {
+							$this->Model_Logbook->LogbookExtendedEntry(0, 'Salary changed from <b>' . $prevSalary . '</b> to <b>' . $Salary . '</b>');
+							$changeCounter++;
+						}
+						if ($changeCounter > 0) {
+							$this->Model_Logbook->SetPrompts('success', 'success', 'Updated successfully');
+						} else {
+							$this->Model_Logbook->SetPrompts('info', 'info', 'No changes made');
+						}
+						redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');
+					}
+					else
+					{
+						$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+						redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');
+					}
+				}
+				else
+				{
+					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+					redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');;
+				}
+			}
+		}
+		else
+		{
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+			redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');
+		}
+	}
+	public function EmployUserPermanent()
+	{
+		if (isset($_GET['id']) && isset($_GET['client'])) {
+			$ApplicantID = $this->input->get('id',TRUE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
+			$ClientID = $this->input->get('client',TRUE);
+
+			if ($ApplicantID == NULL || $ClientID == NULL) {
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+			else
+			{
+				$EmployPermanent = $this->Model_Updates->EmployPermanent($ApplicantID, $ClientID);
+				if ($EmployPermanent) {
+					$this->Model_Logbook->SetPrompts('success', 'success', 'Employed successfully');
+					// LOGBOOK
+					$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
+					if ($CheckApplicant->num_rows() > 0) {
+						foreach($CheckApplicant->result_array() as $row) {
+							$LastName = $row['LastName'];
+							$FirstName = $row['FirstName'];
+							$MiddleInitial = $row['MiddleInitial'];
+						}
+					} else {
+						$LastName = 'N/A';
+						$FirstName = 'N/A';
+						$MiddleInitial = 'N/A';
+					}
+					$GetClientID = $this->Model_Selects->GetClientID($ClientID);
+					if ($GetClientID->num_rows() > 0) {
+						foreach($GetClientID->result_array() as $row) {
+							$ClientName = $row['Name'];
+						}
+					} else {
+						$ClientName = 'N/A';
+					}
+					$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' employed <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleInitial) . '</a> permanently to <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $ClientID . '" target="_blank">' . $ClientName . '</a>');
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Status changed from <b>' . $prevStatus . '</b> to <b>Employed (Permanent)</b>');
+					redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');
+				}
+				else
+				{
+					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+					redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');
+				}
+			}
+		}
+		else
+		{
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+			redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');
+		}
 	}
 }

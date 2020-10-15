@@ -306,4 +306,18 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function EmployPermanent($ApplicantID, $ClientID)
+	{
+		$DateStarted = new DateTime();
+		$DateStarted = $DateStarted->format('Y-m-d H:i:s');
+		$data = array(
+			'ClientEmployed' => $ClientID,
+			'Status' => 'Employed (Permanent)',
+			'DateStarted' => $DateStarted,
+			'DateEnds' => '',
+		);
+		$this->db->where('ApplicantID', $ApplicantID);
+		$result = $this->db->update('applicants', $data);
+		return $result;
+	}
 }

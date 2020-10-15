@@ -83,6 +83,8 @@ class Model_Inserts extends CI_Model {
 			'Salary' => $SalaryExpected,
 		);
 		$result = $this->db->insert('hours_weekly', $data);
+		$result = $this->db->insert('hours_semimonthly', $data);
+		$result = $this->db->insert('hours_monthly', $data);
 		return $result;
 	}
 	public function InsertDummyHours($data)
