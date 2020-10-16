@@ -1,4 +1,10 @@
-<?php $T_Header;?>
+<?php 
+
+$T_Header;
+require 'vendor/autoload.php';
+use Carbon\Carbon;
+
+?>
 <body>
 	<div class="wrapper wercher-background-lowpoly">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
@@ -43,6 +49,34 @@
 								</thead>
 								<tbody>
 									<?php foreach ($ShowClients->result_array() as $row): ?>
+										<?php
+											$GetCurrentPrimaryWeek = $this->Model_Selects->GetCurrentPrimaryWeek($row['ClientID']);
+											if ($GetCurrentPrimaryWeek->num_rows() > 0) {
+												foreach($GetCurrentPrimaryWeek->result_array() as $prow) {
+													$PrimaryWeek = $prow['WeekStart'];
+													$currentDate = new DateTime();
+													$date = new DateTime($PrimaryWeek);
+													$day = $date->format('Y-m-d');
+													$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+													$elapsed = Carbon::parse($PrimaryWeek);
+
+													$diff = $currentDate->diff($date)->format("%a");
+													if ($diff <= 7) {
+														$Week = 1;
+													} elseif ($diff <= 14 && $diff > 7) {
+														$Week = 2;
+													} elseif ($diff <= 21 && $diff > 14) {
+														$Week = 3;
+													} elseif ($diff <= 28 && $diff > 21) {
+														$Week = 4;
+													} else {
+														$Week = 1; // Default;
+													}
+												}
+											} else {
+												$PrimaryWeek = 'N/A';
+											}
+										?>
 										<tr class="text-center align-middle">
 											<td>
 												<?php echo $row['Name']; ?>
@@ -54,16 +88,17 @@
 												<?php echo $row['ContactNumber']; ?>
 											</td>
 											<td>
-											</td>
-											<td>
-											</td>
-											<td>
 												<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['ClientID'])->num_rows(); ?>
+											</td>
+											<td data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $elapsed->diffForHumans(); ?>">
+												<?php echo $day; ?>
+											</td>
+											<td>
+												<?php echo $Week; ?>
 											</td>
 											<td class="text-center align-middle PrintExclude">
 												<button id="<?php echo $row['ClientID']; ?>" type="button" class="btn btn-primary btn-sm w-100 mb-1 ViewClientIDButton"  data-toggle="modal" data-target="#ModalClientView"><i class="fas fa-calendar-alt"></i> Date Range</button>
 												<button id="<?php echo $row['ClientID']; ?>" type="button" class="btn btn-primary btn-sm w-100 mb-1 SetPrimaryClientIDButton" data-toggle="modal" data-target="#ModalSetWeek"><i class="fas fa-calendar"></i> Primary Week</button>
-												<!-- <a class="btn btn-success btn-sm w-100 mb-1" href="<?=base_url()?>ViewClient?id=<?php echo $row['ClientID']; ?>"><i class="fas fa-file-excel"></i> Excel</a> -->
 												<button id="<?php echo $row['ClientID']; ?>" type="button" class="excel_formatbtn btn btn-success btn-sm w-100 mb-1"  data-toggle="modal" data-target="#DateFroto_modal" value="<?php echo $row['Name']; ?>"><i class="fas fa-file-download"></i> Download Excel</button>
 											</td>
 										</tr>
@@ -72,39 +107,6 @@
 							</table>
 						</div>
 					</div>
-					<!-- <hr>
-					<div class="row pt-5 pl-5">
-						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
-							<h5>
-								<i class="fas fa-user-edit fa-fw"></i> Recent Hires
-							</h5>
-						</div>
-						<div class="col-sm-12">
-							<div class="table-responsive pb-5 pl-2 pr-2">
-								<table id="ListLogbook" class="table table-condensed PrintOut" style="width: 100%;">
-									<thead>
-										<tr class="text-center align-middle">
-											<th> Time </th>
-											<th> Event </th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php foreach ($GetLogbookLatestHires->result_array() as $row): ?>
-											<tr>
-												</td>
-												<td class="text-center align-middle">
-													<?php echo $row['Time']; ?>
-												</td>
-												<td class="text-center align-middle">
-													<?php echo $row['Event']; ?>
-												</td>
-											</tr>
-										<?php endforeach; ?>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div> -->
 				</div>
 			</div>
 		</div>
@@ -126,6 +128,7 @@
 </form>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('[data-toggle="tooltip"]').tooltip();
 		$('.sorting-table-icon').hide();
 		$('#DTSearch').attr('placeholder', 'Search table');
 		$('#DTSearch').attr('readonly', false);

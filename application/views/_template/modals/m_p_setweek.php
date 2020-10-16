@@ -17,7 +17,7 @@
 				</div>
 			</div>
 			<div class="load-container modal-footer">
-				<button id="LoadButton" type="submit" class="btn btn-primary"><i class="fas fa-clock"></i> View</button>
+				<button id="LoadButton" type="submit" class="btn btn-success"><i class="fas fa-check"></i> Set</button>
 			</div>
 			<?php echo form_close();?>
 		</div>

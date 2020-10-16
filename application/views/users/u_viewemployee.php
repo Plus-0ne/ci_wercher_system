@@ -728,6 +728,16 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 												</div>
 											</div>
 											<?php elseif ($Status == 'Employed (Permanent)'): ?>
+											<div class="employee-content-header">
+												<div class="ml-1 row">
+													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm ExtendButton mr-1" data-toggle="modal" data-target="#ModifyContractModal"><i class="fas fa-edit"></i> Modify Contract</button>
+													<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
+													<div class="ml-auto">
+														<button id="<?php echo $ApplicantID; ?>" class="btn btn-danger btn-sm SuspendButton" data-toggle="modal" data-target="#SuspendModal" type="button"><i class="fas fa-exclamation-triangle"></i> Suspend</button>
+													</div>
+												</div>
+											</div>
+											<hr>
 											<div class="col-sm-12 col-md-12 employee-dynamic-header text-center">
 												<b>
 													Permanently employed since

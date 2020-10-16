@@ -1078,7 +1078,10 @@ class Update_Controller extends CI_Controller {
 
 			//record attendance for each workday
 			$GetCurrentPrimaryWeek = $this->Model_Selects->GetCurrentPrimaryWeek($ClientID);
-			if ($GetCurrentPrimaryWeek->num_rows() > 0) {
+			if ($GetCurrentPrimaryWeek->num_rows() <= 0) {
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Primary week not found. Please set it first on Salary page.');
+				redirect($_SERVER['HTTP_REFERER']);
+			} elseif ($GetCurrentPrimaryWeek->num_rows() > 0) {
 				foreach($GetCurrentPrimaryWeek->result_array() as $prow) {
 					$CurrentPrimaryWeek = new DateTime($prow['WeekStart']);
 					$DateToday = new DateTime();

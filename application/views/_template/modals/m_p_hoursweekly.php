@@ -3,7 +3,7 @@
 		<div class="modal-dialog modal-payroll" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Work Hours for <?php echo $erow['LastName'] . ', ' . $erow['FirstName'] . ' ' . $erow['MiddleInitial'] ?> | <span class="TotalHoursInAWeek">48</span> Hours Total</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Work Hours for <a href="ViewEmployee?id=<?php echo $erow['ApplicantID']; ?>"><?php echo $erow['LastName'] . ', ' . $erow['FirstName'] . ' ' . $erow['MiddleInitial'] ?></a> | <span class="TotalHoursInAWeek">48</span> Hours Total</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -26,21 +26,33 @@
 								</div>
 							</div>
 							<div class="form-group col-sm-12 col-md-2">
+								<label>Per&nbsp;Month</label>
+								<div class="input-icon-sm">
+									<?php
+										$cStarts = new DateTime($erow['DateStarted']);
+										$cEnds = new DateTime($erow['DateEnds']);
+
+										$cDiff = $cEnds->diff($cStarts);
+										$cTotalMonths = (($cDiff->y) * 12) + ($cDiff->m);
+										$cDiffDays = $cEnds->diff($cStarts)->format('%a');
+										$salaryMonthly = $erow['SalaryExpected'] / $cTotalMonths;
+									?>
+									<input id="AveragePerHour" class="form-control" type="number" name="" value="<?=$salaryMonthly;?>" readonly>
+									<i>₱</i>
+								</div>
+							</div>
+							<div class="form-group col-sm-12 col-md-2">
 								<label>Per&nbsp;Day</label>
 								<div class="input-icon-sm">
 									<?php
-										if(!empty($erow['SalaryExpected']) || $erow['SalaryExpected'] != NULL) {
-											if ($Mode == 2) {
-												$RatePerDay = $erow['SalaryExpected'] / 24; // (days) Monthly
-											} elseif ($Mode == 1) {
-												$RatePerDay = $erow['SalaryExpected'] / 12; // (days) Semi-monthly
-											} elseif ($Mode == 0) {
-												$RatePerDay = $erow['SalaryExpected'] / 6; // (days) Weekly
-											}
-											$RatePerDay = round($RatePerDay, 2);
-										} else {
-											$RarePerDay = 0;
+										if ($Mode == 2) {
+											$RatePerDay = $salaryMonthly / 24; // (days) Monthly
+										} elseif ($Mode == 1) {
+											$RatePerDay = $salaryMonthly / 12; // (days) Semi-monthly
+										} elseif ($Mode == 0) {
+											$RatePerDay = $salaryMonthly / 6; // (days) Weekly
 										}
+										$RatePerDay = round($RatePerDay, 2);
 									?>
 									<input id="AveragePerHour" class="form-control" type="number" name="" value="<?=$RatePerDay;?>" readonly>
 									<i>₱</i>

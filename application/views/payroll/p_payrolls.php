@@ -54,7 +54,7 @@
 									for ($i=1; $i<=12; $i++) {
 										$FetchMonth = $i;
 										$GetPayrollMonth = $this->Model_Selects->GetPayrollMonth($FetchYear, $FetchMonth, $Mode);
-										if ($GetPayrollMonth->num_rows() >= 0): 
+										if ($GetPayrollMonth->num_rows() > 0): 
 											$ReadableMonth   = DateTime::createFromFormat('!m', $FetchMonth);
 											$ReadableMonth = $ReadableMonth->format('F');
 											?>
@@ -79,8 +79,8 @@
 																	<th>Tax</th>
 																	<th>SSS</th>
 																	<th style="width: 50px;"><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></th>
-																	<th>To be paid <i style="color: gray">(?)</i></th>
-																	<th style="width: 225px;">Paid this week <i style="color: gray">(?)</i></th>
+																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount left to be paid for this week's SSS contribution">To be paid <i style="color: gray">(?)</i></th>
+																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount that is paid for this week's SSS contribution. Used to subtract next week's SSS contribution." style="width: 225px;">Paid this week <i style="color: gray">(?)</i></th>
 																	<th>Net Pay</th>
 																</thead>
 																<tbody>
@@ -307,10 +307,10 @@
 																			<td><?php echo $row['ApplicantID']; ?></td>
 																			<td data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: <?php echo round($GetPayrollWeekHours, 2) . '<br>Overtime Hours: ' . round($GetPayrollWeekOTHours, 2); ?>"><?php echo $TotalHours; ?></td>
 																			<td><?php echo round($GetPayrollWeekGrossPay, 2); ?></td>
-																			<td><?php echo round($philhealth_contri, 2); ?></td>
+																			<td data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($philhealth_percentage, 2) . ' / ' . $cutoffTaxDivider . '<br><i>PhilHealth Percentage x Mode</i>'; ?>"><?php echo round($philhealth_contri, 2); ?></td>
 																			<td data-toggle="tooltip" data-placement="top" data-html="true" title="(<?php echo round($GetPayrollWeekGrossPay, 2) . ' x ' . $hdmf_rate . ') / ' . $cutoffTaxDivider . '<br><i>(Gross Pay x HDMF Rate) / Mode</i>'; ?>"><?php echo round($hdmf_contriCalc, 2); ?></td>
 
-																			<td data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo 'Annual Salary: ' . round($annualSalary, 2) . '<br>MonthlySalary: ' . round($salaryMonthly, 2); ?>"><?php echo $tax; ?></td>
+																			<td data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo 'Annual Salary: ' . round($annualSalary, 2) . '<br>Monthly Salary: ' . round($salaryMonthly, 2); ?>"><?php echo $tax; ?></td>
 																			<td data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $sss_contri . ' / ' . $cutoffTaxDivider; ?><br><i>SSS Contribution / Mode</i>"><?php echo $sss_contriCalc; ?></td>
 																			<td><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></td>
 																			<td><?php echo $toBePaid; ?></td>
@@ -324,7 +324,7 @@
 																					</div>
 																				</div>
 																			</td>
-																			<td><?php echo round($net_pay, 2); ?>
+																			<td data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($GetPayrollWeekGrossPay, 2) . ' - (' . $hdmf_contriCalc . ' + ' . $philhealth_contri . ' + ' . $tax . ' + ' . $toBePaid . ')<br><i>Gross Pay - (HDMF Contribution + PhilHealth Contribution + Tax + SSS left to be paid)</i>'; ?>"><?php echo round($net_pay, 2); ?>
 																		</tr>
 																	<?php endforeach; ?>
 																</tbody>

@@ -137,7 +137,7 @@
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-8">
-										<?php if($Status == 'Employed'): ?>
+										<?php if($Status == 'Employed' || $Status == 'Employed (Permanent)'): ?>
 										<?php 
 											$GetClientID = $this->Model_Selects->GetClientID($ClientEmployed);
 											if ($GetClientID->num_rows() > 0):
@@ -169,7 +169,7 @@
 												<input class="form-control" type="text" name="PositionGroup" autocomplete="off" value="<?php echo $PositionGroup; ?>">
 											</div>
 										</div>
-										<?php if($Status == 'Employed'): echo '<hr>'; endif; ?>
+										<?php if($Status == 'Employed' || $Status == 'Employed'): echo '<hr>'; endif; ?>
 										<div class="form-row">
 											<div class="form-group col-sm-12 col-lg-6">
 												<label id="SSS_Text">S.S.S. No.</label>
@@ -417,7 +417,7 @@
 										<button class="btn btn-success btn-lg" type="submit"><i class="fas fa-save"></i> Save</button>
 									</div>
 									<div class="form-group ml-auto">
-										<a href="<?=base_url();?>RemoveEmployee?id=<?=$ApplicantID;?>" class="btn btn-danger btn-lg"><i class="fas fa-times"></i> Archive <?php if($Status == 'Employed'): echo 'Employee'; else: echo 'Applicant'; endif; ?></a>
+										<a href="<?=base_url();?>RemoveEmployee?id=<?=$ApplicantID;?>" class="btn btn-danger btn-lg"><i class="fas fa-times"></i> Archive <?php if($Status == 'Employed' || $Status == 'Employed (Permanent)'): echo 'Employee'; else: echo 'Applicant'; endif; ?></a>
 									</div>
 								</div>
 							</form>

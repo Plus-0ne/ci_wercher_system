@@ -42,7 +42,7 @@ use Carbon\Carbon;
 								$FirstDate = $this->session->userdata('FirstDate');
 								$LastDate = $this->session->userdata('LastDate');
 							?>
-							<form class="form-group" action="<?php echo base_url().'PhpOffice_Controller/ExportFrom_To'; ?>" method="post" enctype="multipart/form-data">
+							<form class="form-group mr-1" action="<?php echo base_url().'PhpOffice_Controller/ExportFrom_To'; ?>" method="post" enctype="multipart/form-data">
 							    <input type="text" class="form-control" name="id" readonly hidden value="<?php if($_GET['id'] == 'excel') { echo $ClientID; } else { echo $_GET['id']; } ?>">
 							    <input type="text" class="form-control" name="Mode" readonly hidden value="<?php echo $_GET['mode']; ?>">
 							    <input type="text" class="form-control" name="f_date" readonly hidden value="<?php echo $FirstDate?>">
@@ -50,6 +50,9 @@ use Carbon\Carbon;
 							    <input type="text" class="form-control" name="ExportFileName" readonly hidden value="<?php echo $ClientName . ' (' . $FirstDate . ' - ' . $LastDate . ')' ?>">
 							    <button id="ImportButton" type="submit" class="btn btn-success btn-sm form-control"><i class="fas fa-file-download"></i> Download Excel</button>
 						  	</form>
+						  	<div class="form-group">
+						  		<button id="<?php echo $ClientID; ?>" type="button" class="btn btn-primary btn-sm SetPrimaryClientIDButton" data-toggle="modal" data-target="#ModalSetWeek"><i class="fas fa-calendar"></i> Primary Week</button>
+						  	</div>
 						</div>
 					</div>
 					<div class="col-4 mb-2 text-right">
@@ -110,6 +113,7 @@ use Carbon\Carbon;
 		</div>
 	</div>
 	<?php $this->load->view('_template/modals/m_p_hoursweekly'); ?>
+	<?php $this->load->view('_template/modals/m_p_setweek'); ?>
 	<!-- LOAD MODAL -->
 	<div class="modal fade" id="LoadModal" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog" role="document">
@@ -131,6 +135,10 @@ use Carbon\Carbon;
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('.SetPrimaryClientIDButton').on('click', function () {
+			$('#SetPrimaryClientID').val($(this).attr('id'));
+			console.log($('#SetPrimaryClientID').val());
+		});
 		$('.regular-btn').on('click', function () {
 			$(this).toggleClass('btn-success btn-secondary');
 			$(this).children('i').toggleClass('text-primary');
