@@ -35,9 +35,13 @@
 										$cDiff = $cEnds->diff($cStarts);
 										$cTotalMonths = (($cDiff->y) * 12) + ($cDiff->m);
 										$cDiffDays = $cEnds->diff($cStarts)->format('%a');
-										$salaryMonthly = $erow['SalaryExpected'] / $cTotalMonths;
+										if ($cTotalMonths > 0) {
+											$salaryInterval = $erow['SalaryExpected'] / $cTotalMonths;
+										} else {
+											$salaryInterval = $erow['SalaryExpected'] / $cDiff->d;
+										}
 									?>
-									<input id="AveragePerHour" class="form-control" type="number" name="" value="<?=$salaryMonthly;?>" readonly>
+									<input id="AveragePerHour" class="form-control" type="number" name="" value="<?=$salaryInterval;?>" readonly>
 									<i>₱</i>
 								</div>
 							</div>
@@ -46,11 +50,11 @@
 								<div class="input-icon-sm">
 									<?php
 										if ($Mode == 2) {
-											$RatePerDay = $salaryMonthly / 24; // (days) Monthly
+											$RatePerDay = $salaryInterval / 24; // (days) Monthly
 										} elseif ($Mode == 1) {
-											$RatePerDay = $salaryMonthly / 12; // (days) Semi-monthly
+											$RatePerDay = $salaryInterval / 12; // (days) Semi-monthly
 										} elseif ($Mode == 0) {
-											$RatePerDay = $salaryMonthly / 6; // (days) Weekly
+											$RatePerDay = $salaryInterval / 6; // (days) Weekly
 										}
 										$RatePerDay = round($RatePerDay, 2);
 									?>

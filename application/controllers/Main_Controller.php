@@ -453,13 +453,13 @@
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
-		$header['title'] = 'Permanent Employees | Wercher Solutions and Resources Workers Cooperative';
+		$header['title'] = 'Regular Employees | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
 		<ol class="breadcrumb" style="background-color: transparent;">
 		<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employee</a></li>
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Employee/Permanent">Permanent</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Employee/Regular">Regular</a></li>
 		</ol>
 		</nav>';
 
@@ -1705,21 +1705,138 @@
 		$BellNotifCounter = $this->session->set_userdata('BellNotifCounter', $DBCount);
 		echo ''; // Reset the bell counter
 	}
-	public function Calendar()
+	public function AJAX_removePayrollLoans()
+	{
+		$this->load->model('Model_Deletes');
+
+		$ApplicantID = $this->input->post('ApplicantID');
+		$LoansArray = json_decode($_POST['LoansArray']);
+		if (count($LoansArray) > 0) {
+			for($index = 0; $index < count($LoansArray); $index++) {
+				$LoanID = $LoansArray[$index];
+				if(is_numeric($LoanID)) {
+					// Only numbers allowed
+					$RemovePayrollLoans = $this->Model_Deletes->RemovePayrollLoans($ApplicantID, $LoanID);
+				}
+			}
+		}
+	}
+	public function AJAX_showPayrollLoans()
+	{
+		$ApplicantID = $this->input->post('ApplicantID');
+		$Year = $this->input->post('Year');
+		$Month = $this->input->post('Month');
+		$Week = $this->input->post('Week');
+		$Mode = $this->input->post('Mode');
+		$ShowPayrollLoans = $this->Model_Selects->ShowPayrollLoans($ApplicantID, $Year, $Month, $Week, $Mode);
+		if ($ShowPayrollLoans->num_rows() > 0) {
+			foreach($ShowPayrollLoans->result_array() as $row) {
+				echo '
+				<div class="form-row loan-input w-100">
+					<input class="form-control loan-id" type="hidden" value="' . $row['ID'] . '">
+					<div class="col-sm-7 mt-1">
+						<input class="form-control loan-name" type="text" name="LoanName[]" value="' . $row['LoanName'] . '">
+					</div>
+					<div class="col-sm-4 mt-1">
+						<input class="form-control loan-amount" type="number" name="LoanAmount[]" value="' . $row['Amount'] . '">
+					</div>
+					<div class="col-sm-1 mt-1">
+						<button class="form-control loan-remove btn-secondary" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Remove?"><i class="fas fa-trash" style="font-size: 12px; margin-left: -5px;"></i></button>
+					</div>
+				</div>';
+			}
+		}
+	}
+	public function AJAX_insertPayrollLoans()
+	{
+		$ID = $this->input->post('ID');
+		$ApplicantID = $this->input->post('ApplicantID');
+		$LoanName = $this->input->post('LoanName');
+		$Amount = $this->input->post('Amount');
+		$Year = $this->input->post('Year');
+		$Month = $this->input->post('Month');
+		$Week = $this->input->post('Week');
+		$Mode = $this->input->post('Mode');
+		if ($ApplicantID == NULL || $LoanName == NULL || $Amount == NULL || $Year == NULL || $Month == NULL || $Week == NULL || $Mode == NULL) {
+			echo "Error. Please refresh.";
+		}
+		else
+		{
+			$data = array(
+				'ApplicantID' => $ApplicantID,
+				'LoanName' => $LoanName,
+				'Amount' => $Amount,
+				'Year' => $Year,
+				'Month' => $Month,
+				'Week' => $Week,
+				'Type' => $Mode,
+			);
+			if ($ID == -1 || $ID == NULL) {
+				// Insert if new and doesn't exist
+				$InsertPayrollLoans = $this->Model_Inserts->InsertPayrollLoans($data);
+				if ($InsertPayrollLoans) {
+					$ShowPayrollLoans = $this->Model_Selects->ShowPayrollLoans($ApplicantID, $Year, $Month, $Week, $Mode);
+					if ($ShowPayrollLoans->num_rows() > 0) {
+						foreach($ShowPayrollLoans->result_array() as $row) {
+							echo '
+							<div class="form-row loan-input w-100">
+								<input class="form-control loan-id" type="hidden" value="' . $row['ID'] . '">
+								<div class="col-sm-7 mt-1">
+									<input class="form-control loan-name" type="text" name="LoanName[]" value="' . $row['LoanName'] . '">
+								</div>
+								<div class="col-sm-4 mt-1">
+									<input class="form-control loan-amount" type="number" name="LoanAmount[]" value="' . $row['Amount'] . '">
+								</div>
+								<div class="col-sm-1 mt-1">
+									<button class="form-control loan-remove btn-secondary" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Remove?"><i class="fas fa-trash" style="font-size: 12px; margin-left: -5px;"></i></button>
+								</div>
+							</div>';
+						}
+					}
+				}
+			} else {
+				// Updates if the loan already exists
+				$UpdatePayrollLoans = $this->Model_Inserts->UpdatePayrollLoans($ID, $data);
+				if ($UpdatePayrollLoans) {
+					$ShowPayrollLoans = $this->Model_Selects->ShowPayrollLoans($ApplicantID, $Year, $Month, $Week, $Mode);
+					if ($ShowPayrollLoans->num_rows() > 0) {
+						foreach($ShowPayrollLoans->result_array() as $row) {
+							echo '
+							<div class="form-row loan-input w-100">
+								<input class="form-control loan-id" type="hidden" value="' . $row['ID'] . '">
+								<div class="col-sm-7 mt-1">
+									<input class="form-control loan-name" type="text" name="LoanName[]" value="' . $row['LoanName'] . '">
+								</div>
+								<div class="col-sm-4 mt-1">
+									<input class="form-control loan-amount" type="number" name="LoanAmount[]" value="' . $row['Amount'] . '">
+								</div>
+								<div class="col-sm-1 mt-1">
+									<button class="form-control loan-remove btn-secondary" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Remove?"><i class="fas fa-trash" style="font-size: 12px; margin-left: -5px;"></i></button>
+								</div>
+							</div>';
+						}
+					}
+				}
+			}
+			
+			
+		}
+	}
+	public function SecurityAudit()
 	{
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
-		$header['title'] = 'Calendar | Wercher Solutions and Resources Workers Cooperative';
+		$header['title'] = 'Security Audit | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
 		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Calendar">Calendar</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Security">Security Audit</a></li>
 		</ol>
 		</nav>';
-		$this->load->view('users/u_calendar',$data);
+		$this->load->view('users/u_securityaudit',$data);
 	}
 	// // Relatives
 	// public function ShowRelatives()

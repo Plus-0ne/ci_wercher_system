@@ -45,6 +45,11 @@ input[type="range"]::-webkit-slider-runnable-track {
 	color: #c5ad00;
 }
 
+/* Box shadow to look like typing keys? */
+/*.btn-primary, .btn-success, .btn-secondary, .btn-info, .btn-danger {
+	box-shadow: inset 0 -2px 0 1px rgba(0, 0, 0, 0.16);
+}*/
+
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:focus, .btn-primary .active, .open>.dropdown-toggle.btn-primary {
     background-color: #756700 !important;
     border-color: #756700 !important;
@@ -256,7 +261,7 @@ a[data-toggle="collapse"] {
 	z-index: 1;
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
-	box-shadow: 2px 0 2px #333;
+	/*box-shadow: 2px 0 2px #333;*/
 	text-shadow: 1px 1px 1px #000;
 }
 .progress_value, .SuspensionValue{
@@ -402,7 +407,7 @@ a[data-toggle="collapse"] {
 	margin-top: -100px;
 }
 .employee-static {
-	color: rgba(0, 0, 0, 0.66)
+	color: rgba(0, 0, 0, 0.66);
 }
 .employee-static-item {
 	margin-top: 15px;
@@ -1192,6 +1197,47 @@ a[data-toggle="collapse"] {
 .modal-payroll .modal-content {
 	background-color: #ebebeb;
 }
+.security-container
+{
+	padding: 21px;
+	border-radius: 6px;
+	border: 1px solid gold;
+	box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.1);
+	margin-bottom: 21px;
+	margin-left: 10px;
+	margin-right: 10px;
+	background-image: linear-gradient(135deg, #ab0000 25%, #d60000 25%, #d60000 50%, #ab0000 50%, #ab0000 75%, #d60000 75%, #d60000 100%);
+	background-size: 56.57px 56.57px;
+}
+.security-tabs-active a {
+	border-radius: 4px;
+	border-bottom: 2px solid gold;
+	background-image: linear-gradient(135deg, #ab0000 25%, #d60000 25%, #d60000 50%, #ab0000 50%, #ab0000 75%, #d60000 75%, #d60000 100%);
+	color: rgba(25, 25, 25) !important;
+	font-size: 15px;
+	font-weight: bold;
+}
+.security-tabs ul {
+	list-style-type: none;
+	overflow: hidden;
+	padding: 0;
+	margin-top: 10px;
+	margin-left: -5px;
+	margin-bottom: -2px;
+}
+
+.security-tabs li {
+	float: left;
+	margin-right: 5px;
+}
+
+.security-tabs li a:hover {
+	background-color: #c5ad00;
+
+}
+.row-transparent input[type="text"], .row-transparent input[type="number"] {
+	opacity: 0.33;
+}
 /*form {
 	display: none;
 }*/
@@ -1273,6 +1319,17 @@ input[type=number]::-webkit-inner-spin-button {
 		width: 75px;
 		height: 75px;
 	}
+	.security-tabs li a {
+		display: block;
+		font-size: 12px;
+		text-align: center;
+		padding: 14px;
+		text-decoration: none;
+		border-radius: 4px;
+		border-bottom: 1px solid gold;
+		color: #ebebeb;
+		background-color: #966800;
+	}
 }
 
 /* Medium devices (tablets, 768px and up) */
@@ -1324,6 +1381,20 @@ input[type=number]::-webkit-inner-spin-button {
 	.employee-image img {
 		width: 150px;
 		height: 150px;
+	}
+	.security-tabs li a {
+		display: block;
+		font-size: 16px;
+		text-align: center;
+		padding: 14px;
+		text-decoration: none;
+		border-top: none;
+		border-left: none;
+		border-right: none;
+		border-radius: 4px;
+		border-bottom: 1px solid gold;
+		color: #ebebeb;
+		background-color: #966800;
 	}
 }
 

@@ -17,7 +17,6 @@ if ($Status == 'Employed' || $Status == 'Employed (Permanent)') {
 	$cElapsedText = $cStarts->diff($currentDate)->format('%m months, %d days');
 
 	// 13th Month Pay Calculation
-	// $cTotalMonths = $cEnds->diff($cStarts)->format('%m');
 	$cDiff = $cEnds->diff($cStarts);
 	if ($cDiff->m > 1) {
 		$cTotalMonths = ($cDiff->y * 12) + ($cDiff->m) + ($cDiff->d / 30);
@@ -25,29 +24,24 @@ if ($Status == 'Employed' || $Status == 'Employed (Permanent)') {
 		$cTotalMonths = (($cDiff->y) * 12) + ($cDiff->m);
 	}
 	$cDiffDays = $cEnds->diff($cStarts)->format('%a');
-	if ($cDiffDays > 1) {
+	if ($cDiff->m > 0) {
 		$isThirteenEligible = true;
 	} else {
 		$isThirteenEligible = false;
 	}
-	// if ($cTotalMonths == 0) {
-	// 	$cTotalMonths = 1;
-	// }
 	if ($Status == 'Employed') {
-		$salaryMonthly = $SalaryExpected / $cTotalMonths;
+		if ($cTotalMonths > 0) {
+			// Monthly salary
+			$salaryInterval = $SalaryExpected / $cTotalMonths;
+		} else {
+			// Calculate to as daily salary instead of monthly salary
+			$salaryInterval = $SalaryExpected / $cDiff->d;
+		}
 	} else {
-		$salaryMonthly = $SalaryExpected / 12;
+		// Permanent salary
+		$salaryInterval = $SalaryExpected / 12;
 	}
-	// if ($SalaryExpected != NULL && $cTotalMonths > 0) {
-	// 	if ($cTotalMonths < 12) {
-	// 		$salaryMonthly = $SalaryExpected / $cTotalMonths;
-	// 	} else {
-	// 		$salaryMonthly = $SalaryExpected / 12;
-	// 	}
-	// } else {
-	// 	$salaryMonthly = 0;
-	// }
-	$thirteen = (($salaryMonthly * $cElapsed) / 30) / 12;
+	$thirteen = (($salaryInterval * $cElapsed) / 30) / 12;
 
 	//Contract Dates
 	$dsdate = new DateTime($DateStarted);
@@ -710,10 +704,10 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																		?>
 																	</div>
 																	<div class="col-sm-12 employee-dynamic-header mt-2">
-																		<b>Monthly Salary</b>
+																		<b><?php if ($cDiff->m > 0) { echo 'Monthly Salary'; } else { echo 'Daily Salary'; } ?></b>
 																	</div>
 																	<div class="col-sm-12">
-																		<?php echo '<span style="user-select: none;">₱ </span>' . round($salaryMonthly, 2); ?>
+																		<?php echo '<span style="user-select: none;">₱ </span>' . round($salaryInterval, 2); ?>
 																	</div>
 																	<div class="col-sm-12 employee-dynamic-header mt-2">
 																		<b>Contract Elapsed</b>
@@ -1455,8 +1449,8 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 			// if (rPercentage > 100) {
 			// 	rPercentage = 100;
 			// }
-			$('.progressRemaining').animate({width:rPercentage + "%"},1500);
-			$('.SuspensionRemaining').animate({width:SuspensionPercentage + "%"},1500);
+			$('.progressRemaining').animate({width:rPercentage + "%"},500);
+			$('.SuspensionRemaining').animate({width:SuspensionPercentage + "%"},500);
 			$('.progress_value').text(rPercentage + "%");
 			$('.SuspensionValue').text(SuspensionPercentage + "%");
 			$('.a_eImage').on('click', function () {

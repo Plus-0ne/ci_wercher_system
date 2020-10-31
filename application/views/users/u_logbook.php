@@ -353,7 +353,7 @@
 		        url: "<?php echo base_url() . 'AJAX_checkLogbookNotifCounter';?>",             
 		        dataType: "html",           
 		        success: function(response){                    
-		            $("#NotifContainer").html(response);
+		        	$("#NotifContainer").html(response);
 		        }
 		    }).then(function() {
 		       setTimeout(update, 10000); // 10 seconds default interval

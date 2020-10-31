@@ -135,4 +135,15 @@ class Model_Inserts extends CI_Model {
 		$SQL = "insert into deferred_deduction (id,employee_id,amount,period) values ($id,$empid,$amount,$period)";
         $result = $this->db->query($SQL,$id,$empid,$amount,$period);
 	}
+	public function InsertPayrollLoans($data)
+	{
+		$result = $this->db->insert('payroll_loans', $data);
+		return $result;
+	}
+	public function UpdatePayrollLoans($ID, $data)
+	{
+		$this->db->where('ID', $ID);
+		$result = $this->db->update('payroll_loans', $data);
+		return $result;
+	}
 }

@@ -8,7 +8,7 @@
 				<div class="col-12 col-sm-12 tabs">
 					<ul>
 						<li><a href="<?php echo base_url() ?>Employee">Employees (<?php echo $get_employee->num_rows()?>)</a></li>
-						<li class="tabs-active"><a href="<?php echo base_url() ?>Employee/Permanent">Permanent (<?php echo $GetPermanentEmployees->num_rows()?>)</a></li>
+						<li class="tabs-active"><a href="<?php echo base_url() ?>Employee/Regular">Regular (<?php echo $GetPermanentEmployees->num_rows()?>)</a></li>
 					</ul>
 				</div>
 				<div class="row rcontent">
@@ -133,6 +133,7 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$(".nav-item a[href*='Employee']").addClass("nactive");
 		$('.sorting-table-icon').hide();
 		$('#DTSearch').attr('placeholder', 'Search table');
 		$('#DTSearch').attr('readonly', false);

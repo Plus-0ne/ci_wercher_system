@@ -760,7 +760,7 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->get($Mode)->row();  
 		return $result->day_pay;
 	}
-	public function GetPayrollWeekHours($ApplicantID, $Year, $Month, $Week, $Mode) { // Does not return any other row and column except for the sum of day_pay.
+	public function GetPayrollWeekHours($ApplicantID, $Year, $Month, $Week, $Mode) { // Does not return any other row and column except for the sum of Hours.
 		switch($Mode) {
 			case 0:
 				$Mode = 'hours_weekly';
@@ -778,7 +778,7 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->get($Mode)->row();  
 		return $result->Hours;
 	}
-	public function GetPayrollWeekOTHours($ApplicantID, $Year, $Month, $Week, $Mode) { // Does not return any other row and column except for the sum of day_pay.
+	public function GetPayrollWeekOTHours($ApplicantID, $Year, $Month, $Week, $Mode) { // Does not return any other row and column except for the sum of Overtime.
 		switch($Mode) {
 			case 0:
 				$Mode = 'hours_weekly';
@@ -798,6 +798,16 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetSSSToBePaid($ApplicantID, $ClientID, $Year, $Month) {
 		$SQL = "SELECT * FROM sss_tobepaid WHERE ApplicantID = '$ApplicantID' AND ClientID = '$ClientID' AND Year = '$Year' AND Month = '$Month'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function ShowPayrollLoans($ApplicantID, $Year, $Month, $Week, $Mode) {
+		$SQL = "SELECT * FROM payroll_loans WHERE ApplicantID = '$ApplicantID' AND Year = '$Year' AND $Month = '$Month' AND Week = '$Week' AND Type = '$Mode' AND (Deleted <> '1' || Deleted IS NULL)";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function CheckIfLoanExists($ID) {
+		$SQL = "SELECT * FROM payroll_loans WHERE ID = '$ID'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

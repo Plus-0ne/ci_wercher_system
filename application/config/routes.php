@@ -55,7 +55,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['Dashboard'] = 'Main_Controller/Dashboard';
 $route['Employee'] = 'Main_Controller/Employee';
-$route['Employee/Permanent'] = 'Main_Controller/EmployeePermanent';
+$route['Employee/Regular'] = 'Main_Controller/EmployeePermanent';
 $route['ViewEmployee'] = 'Main_Controller/ViewEmployee';
 $route['ModifyEmployee'] = 'Main_Controller/ModifyEmployee';
 $route['Applicants'] = 'Main_Controller/V_Applicants';
@@ -79,7 +79,7 @@ $route['PrintEmployee'] = 'Main_Controller/PrintEmployee';
 $route['Search'] = 'Main_Controller/Search';
 $route['Logbook'] = 'Main_Controller/Logbook';
 
-$route['Calendar'] = 'Main_Controller/Calendar';
+$route['Security'] = 'Main_Controller/SecurityAudit';
 
 // LOGIN
 $route['LoginValidation'] = 'Login_Controller/LoginValidation';
@@ -124,4 +124,7 @@ $route['AJAX_checkLogbookNotifCounter'] = 'Main_Controller/AJAX_checkLogbookNoti
 $route['AJAX_checkBellNotifCounter'] = 'Main_Controller/AJAX_checkBellNotifCounter';
 $route['AJAX_resetBellNotifCounter'] = 'Main_Controller/AJAX_resetBellNotifCounter';
 $route['AJAX_updateSSSToBePaid'] = 'Update_Controller/AJAX_updateSSSToBePaid';
+$route['AJAX_removePayrollLoans'] = 'Main_Controller/AJAX_removePayrollLoans';
+$route['AJAX_showPayrollLoans'] = 'Main_Controller/AJAX_showPayrollLoans';
+$route['AJAX_insertPayrollLoans'] = 'Main_Controller/AJAX_insertPayrollLoans';
 

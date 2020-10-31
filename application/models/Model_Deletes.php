@@ -57,4 +57,10 @@ class Model_Deletes extends CI_Model {
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
+	public function RemovePayrollLoans($ApplicantID, $LoanID)
+	{
+		$SQL = "UPDATE payroll_loans SET Deleted ='1' WHERE ID = '$LoanID' AND ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }
