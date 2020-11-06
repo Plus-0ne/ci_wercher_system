@@ -29,12 +29,12 @@
 			<a class="link-s" href="<?=base_url()?>Dashboard"><span class="fas fa-tachometer-alt fa-fw"></span> Dashboard </a>
 		</li>
 		<!-- TODO: -->
-		<li class="nav-item">
+		<li class="nav-item mb-4">
 			<a class="link-s" href="<?=base_url()?>Logbook"><span class="fas fa-book fa-fw"></span> Logbook </a>
 		</li>
-		<li class="nav-item mb-4">
+		<!-- <li class="nav-item mb-4">
 			<a class="link-s" href="<?=base_url()?>Security"><span class="fas fa-lock fa-fw"></span> Security Audit </a>
-		</li>
+		</li> -->
 		<!-- <li class="nav-item mb-4">
 			<a class="link-s" href="<?=base_url()?>Calendar"><span class="fas fa-calendar fa-fw"></span> Calendar </a>
 		</li> -->

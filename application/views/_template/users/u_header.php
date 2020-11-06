@@ -31,7 +31,7 @@ __        _______ ____   ____ _   _ _____ ____
 	<!-- <link rel="stylesheet" href="<?=base_url()?>assets/css/bootstrap.css"> -->
 	<link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/css/dataTables.bootstrap4.min.css">
 	<!-- FONTAWESOME -->
-	<link rel="stylesheet" href="<?=base_url()?>assets/css/all.css">
+	<link rel="stylesheet" href="<?=base_url()?>assets/css/all.min.css">
 	<!-- CUSTOM STYLE -->
 	<link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/css/style.css">
 	<link rel="icon" href="<?=base_url()?>/favicon.ico" type="image/gif">

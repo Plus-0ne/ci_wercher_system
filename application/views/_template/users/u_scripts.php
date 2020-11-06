@@ -56,18 +56,18 @@
 			$('#content').css('transition', 'all 0.3s');
 		}
 		$('#sidebarCollapse').on('click', function () {
-			if (localStorage.getItem('SidebarVisible') == 'false') {
-				$('#sidebar').addClass('active');
-				$('.ncontent').addClass('shContent');
-				$('#sidebar').css('transition', 'all 0.3s');
-				$('#content').css('transition', 'all 0.3s');
-		    	localStorage.setItem('SidebarVisible', 'true');
-			} else {
+			if (localStorage.getItem('SidebarVisible') == 'true') {
 				$('#sidebar').removeClass('active');
 				$('.ncontent').removeClass('shContent');
 				$('#sidebar').css('transition', 'all 0.3s');
 				$('#content').css('transition', 'all 0.3s');
-		    	localStorage.setItem('SidebarVisible', 'false');
+				localStorage.setItem('SidebarVisible', 'false');
+			} else {
+				$('#sidebar').addClass('active');
+				$('.ncontent').addClass('shContent');
+				$('#sidebar').css('transition', 'all 0.3s');
+				$('#content').css('transition', 'all 0.3s');
+				localStorage.setItem('SidebarVisible', 'true');
 			}
 		});
 		$('.prompts-tray').on('click', function () {

@@ -796,8 +796,8 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->get($Mode)->row();  
 		return $result->Overtime;
 	}
-	public function GetSSSToBePaid($ApplicantID, $ClientID, $Year, $Month) {
-		$SQL = "SELECT * FROM sss_tobepaid WHERE ApplicantID = '$ApplicantID' AND ClientID = '$ClientID' AND Year = '$Year' AND Month = '$Month'";
+	public function GetSSSToBePaid($ApplicantID, $ClientID, $Year, $Month, $Mode) {
+		$SQL = "SELECT * FROM sss_tobepaid WHERE ApplicantID = '$ApplicantID' AND ClientID = '$ClientID' AND Year = '$Year' AND Month = '$Month' AND Mode = '$Mode'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

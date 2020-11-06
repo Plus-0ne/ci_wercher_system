@@ -1112,7 +1112,7 @@
 		$data['GetLogbookLatestHires'] =  $this->Model_Selects->GetLogbookLatestHires();
 		$this->load->view('payroll/p_clients',$data);
 	}
-	public function Payrollsss()
+	public function ViewPayroll()
 	{
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["emp_cart"]);
@@ -1121,7 +1121,7 @@
 		$id = $_GET['id'];
 		$mode = $_GET['mode'];
 
-		$header['title'] = 'Client Information | Wercher Solutions and Resources Workers Cooperative';
+		$header['title'] = 'Payroll | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 
 		$GetWeeklyList = $this->Model_Selects->GetWeeklyList($id, $mode);
@@ -1822,21 +1822,21 @@
 			
 		}
 	}
-	public function SecurityAudit()
+	public function GeneratePayslip()
 	{
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
-		$header['title'] = 'Security Audit | Wercher Solutions and Resources Workers Cooperative';
+		$header['title'] = 'Generate Payslip | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
 		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Security">Security Audit</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="GeneratePayslip">Generate Payslip</a></li>
 		</ol>
 		</nav>';
-		$this->load->view('users/u_securityaudit',$data);
+		$this->load->view('users/u_generatepayslip',$data);
 	}
 	// // Relatives
 	// public function ShowRelatives()

@@ -206,6 +206,7 @@ class Model_Updates extends CI_Model {
 			'Year' => $Year,
 			'Month' => $Month,
 			'Week' => $Week,
+			'Mode' => $Mode,
 			'DateAdded' => $DateAdded,
 		);
 		switch($Week) {
@@ -229,6 +230,7 @@ class Model_Updates extends CI_Model {
 		ClientID = '$ClientID',
 		Month = '$Month',
 		Year = '$Year',
+		Mode = '$Mode',
 		" . $WeekQuery . "
 		DateAdded = '$DateAdded'";
 		$result = $this->db->query($SQL);
@@ -244,6 +246,7 @@ class Model_Updates extends CI_Model {
 			'Year' => $Year,
 			'Month' => $Month,
 			'Week' => $Week,
+			'Mode' => $Mode,
 		);
 		switch($Week) {
 			case 1:
@@ -265,7 +268,8 @@ class Model_Updates extends CI_Model {
 		$SQL = "UPDATE sss_tobepaid" . $WeekQuery . " WHERE ApplicantID = '$ApplicantID' AND
 		ClientID = '$ClientID' AND
 		Month = '$Month' AND
-		Year = '$Year'
+		Year = '$Year' AND
+		Mode = '$Mode'
 		";
 		$result = $this->db->query($SQL);
 		return $result;
@@ -280,6 +284,7 @@ class Model_Updates extends CI_Model {
 			'Year' => $Year,
 			'Month' => $Month,
 			'Week' => $Week,
+			'Mode' => $Mode,
 			'DateUpdated' => $DateUpdated,
 		);
 		switch($Week) {
@@ -302,7 +307,8 @@ class Model_Updates extends CI_Model {
 		$SQL = "UPDATE sss_tobepaid SET " . $WeekQuery . ", DateUpdated = '$DateUpdated' WHERE ApplicantID = '$ApplicantID' AND
 		ClientID = '$ClientID' AND
 		Month = '$Month' AND
-		Year = '$Year'";
+		Year = '$Year' AND
+		Mode = '$Mode'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

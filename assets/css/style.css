@@ -12,6 +12,18 @@ a:hover {
 input[type="range"]::-webkit-slider-runnable-track {
 	color: #28a745;
 }
+
+/* Text highlight */
+::-moz-selection { /* Firefox */
+	color: white;
+	background: rgba(255, 100, 100);
+}
+
+::selection {
+	color: white;
+	background: rgba(255, 100, 100);
+}
+
 .hover-info:hover {
 	cursor: help;
 }
@@ -352,7 +364,6 @@ a[data-toggle="collapse"] {
 
 .tabs li a:hover {
 	background-color: #c5ad00;
-
 }
 .tabs-icon {
 	font-size: 30px;
@@ -1192,7 +1203,7 @@ a[data-toggle="collapse"] {
 
 }
 .payroll-data {
-	border-left: 2px solid gray;
+	/*border-left: 2px solid gray;*/
 }
 .modal-payroll .modal-content {
 	background-color: #ebebeb;
@@ -1237,6 +1248,17 @@ a[data-toggle="collapse"] {
 }
 .row-transparent input[type="text"], .row-transparent input[type="number"] {
 	opacity: 0.33;
+}
+.payroll-week {
+	font-family: 'Roboto', sans-serif;
+	color: rgba(0, 0, 0, 0.25);
+	border-bottom: 2px solid;
+}
+.payslip-container {
+	font-family: 'Courier';
+	font-size: 12px;
+	border: 1px solid #000000;
+	height: 400px;
 }
 /*form {
 	display: none;
@@ -1292,6 +1314,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-bottom: 4px solid #ebebeb;
 		color: #ebebeb;
 		background-color: #966800;
+		transition: background-color 0.1s ease-in-out;
 	}
 	.payroll-tabs li a {
 		display: block;
@@ -1303,6 +1326,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-bottom: 4px solid #ebebeb;
 		color: #ebebeb;
 		background-color: #966800;
+		transition: background-color 0.1s ease-in-out;
 	}
 	.employee-tabs li a, .employee-tabs li button {
 		display: block;
@@ -1314,6 +1338,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-bottom: 4px solid #ebebeb;
 		color: #FFFFFF;
 		background-color: #966800;
+		transition: background-color 0.1s ease-in-out;
 	}
 	.employee-image img {
 		width: 75px;
@@ -1329,6 +1354,10 @@ input[type=number]::-webkit-inner-spin-button {
 		border-bottom: 1px solid gold;
 		color: #ebebeb;
 		background-color: #966800;
+		transition: background-color 0.1s ease-in-out;
+	}
+	.payroll-week {
+		font-size: 24px;
 	}
 }
 
@@ -1349,6 +1378,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-bottom: 8px solid #ebebeb;
 		color: #ebebeb;
 		background-color: #966800;
+		transition: background-color 0.1s ease-in-out;
 	}
 	.payroll-tabs li a {
 		display: block;
@@ -1363,6 +1393,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-bottom: 8px solid #ebebeb;
 		color: #ebebeb;
 		background-color: #966800;
+		transition: background-color 0.1s ease-in-out;
 	}
 	.employee-tabs li a, .employee-tabs li button {
 		display: block;
@@ -1377,6 +1408,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-bottom: 8px solid #ebebeb;
 		color: #FFFFFF;
 		background-color: #966800;
+		transition: background-color 0.1s ease-in-out;
 	}
 	.employee-image img {
 		width: 150px;
@@ -1395,6 +1427,10 @@ input[type=number]::-webkit-inner-spin-button {
 		border-bottom: 1px solid gold;
 		color: #ebebeb;
 		background-color: #966800;
+		transition: background-color 0.1s ease-in-out;
+	}
+	.payroll-week {
+		font-size: 48px;
 	}
 }
 
