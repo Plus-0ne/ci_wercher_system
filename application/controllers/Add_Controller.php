@@ -203,33 +203,56 @@ class Add_Controller extends CI_Controller {
 					$dir_exist = false;
 				}
 				if ($pImageChecker != NULL) {
-					if ( ! $this->upload->do_upload('pImage'))
-					{
-						$this->Model_Logbook->SetPrompts('error', 'none', $this->upload->display_errors());
-						redirect('NewEmployee');
-					}
-					else
-					{
-						$pImage = base_url().'uploads/'.$customid.'/'.$this->upload->data('file_name');
-						// Create thumbnail
-						$this->load->library('image_lib');
-						$tconfig['image_library'] = 'gd2';
-						$tconfig['source_image'] = './uploads/'.$customid.'/'.$this->upload->data('file_name');
-						$tconfig['create_thumb'] = TRUE;
-						$tconfig['maintain_ratio'] = TRUE;
-						$tconfig['width']         = 70;
-						$tconfig['height']       = 70;
-						$tconfig['new_image'] = './uploads/'.$customid.'/';
-
-						$this->load->library('image_lib', $tconfig);
-						$this->image_lib->initialize($tconfig);
-
-						$this->image_lib->resize();
-						if ( ! $this->image_lib->resize())
+					if ($pImageChecker == 'url') {
+						$pImageURL = $_POST['pImageURL'];
+						// $pImageURL = str_replace('data:image/png;base64,', '', $pImageURL);
+						// $pImageURL = str_replace(' ', '+', $pImageURL);
+						// $pImageDecoded = base64_decode($pImageURL);
+						// file_put_contents(base_url().'uploads/'.$customid.'/image.png', $pImageURL);
+						// if (!empty($pImageDecoded) || $pImageDecoded == NULL) {
+						// 	$this->Model_Logbook->SetPrompts('error', 'error', $pImageURL);
+						// 	redirect('NewEmployee');
+						// } else {
+							$im = imagecreatefromstring($pImageURL);
+							if (!$im) {
+								$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading image.');
+								redirect('NewEmployee');
+							}
+							else {
+								// header('Content-Type: image/png');
+								imagejpeg($im, base_url().'uploads/'.$customid.'/image.png');
+								// imagedestroy($im);
+							}
+						// }
+					} elseif ($pImageChecker == 'manual') {
+						if ( ! $this->upload->do_upload('pImage'))
 						{
-						        $this->Model_Logbook->SetPrompts('error', 'error', $this->image_lib->display_errors() . $tconfig['source_image']);
+							$this->Model_Logbook->SetPrompts('error', 'none', $this->upload->display_errors());
+							redirect('NewEmployee');
 						}
-						$this->image_lib->clear();
+						else
+						{
+							$pImage = base_url().'uploads/'.$customid.'/'.$this->upload->data('file_name');
+							// Create thumbnail
+							$this->load->library('image_lib');
+							$tconfig['image_library'] = 'gd2';
+							$tconfig['source_image'] = './uploads/'.$customid.'/'.$this->upload->data('file_name');
+							$tconfig['create_thumb'] = TRUE;
+							$tconfig['maintain_ratio'] = TRUE;
+							$tconfig['width']         = 70;
+							$tconfig['height']       = 70;
+							$tconfig['new_image'] = './uploads/'.$customid.'/';
+
+							$this->load->library('image_lib', $tconfig);
+							$this->image_lib->initialize($tconfig);
+
+							$this->image_lib->resize();
+							if ( ! $this->image_lib->resize())
+							{
+							        $this->Model_Logbook->SetPrompts('error', 'error', $this->image_lib->display_errors() . $tconfig['source_image']);
+							}
+							$this->image_lib->clear();
+						}
 					}
 				} else {
 					$DiceRoll = rand(1, 3);

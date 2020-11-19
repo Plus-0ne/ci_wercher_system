@@ -1258,7 +1258,7 @@ a[data-toggle="collapse"] {
 	font-family: 'Courier';
 	font-size: 12px;
 	border: 1px solid #000000;
-	height: 400px;
+	padding-bottom: 5px;
 }
 /*form {
 	display: none;

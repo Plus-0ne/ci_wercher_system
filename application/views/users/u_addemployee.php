@@ -10,8 +10,7 @@
 						<div class="col-sm-12 text-right">
 							<button id="DebugFill" type="button" class="btn btn-primary"><i class="fas fa-vial"></i> Debug Fill</button>
 						</div>
-						<div class="p-5">
-							<?php echo $this->session->flashdata('prompts'); ?>
+						<div id="InputFields" class="p-5">
 							<?php $data = $this->session->flashdata('data'); // Load the data array flashdata ?>
 							<?php if($data['Notice'] != NULL): ?>
 								<div class="row m-5 p-2 wercher-notice-banner">
@@ -99,6 +98,7 @@
 							<form action="<?=base_url()?>addNewEmployee" method="POST" enctype="multipart/form-data">
 								<input id="CreateADuplicateField" type="hidden" name="CreateADuplicate">
 								<input id="pImageChecker" type="hidden" name="pImageChecker">
+								<input id="pImageURL" type="hidden" name="pImageURL">
 								<div class="form-row mb-2">
 									
 								</div>
@@ -516,91 +516,6 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="SalaryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-xl" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Salary Expected</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form action="#" method="post">
-						<div class="form-row">
-							<div class="form-group col-sm-12 col-md-2">
-								<label>Type</label>
-								<select class="form-control" name="SalaryType">
-									<option value="Weekly">
-										Weekly
-									</option>
-									<option value="Monthly">
-										Monthly
-									</option>
-									<option value="Semi-Monthly">
-										Semi-Monthly
-									</option>
-								</select>
-							</div>
-							<div class="form-group col-sm-12 col-md-2">
-								<label>Salary</label>
-								<input id="SalaryRaw" class="form-control" type="number" name="">
-							</div>
-							<div id="SalaryOvertimeFade" class="form-group col-sm-12 col-md-2 ml-auto" style="display: none;">
-								<label>Overtime Bonus</label>
-								<input id="SalaryOvertime" class="form-control" type="text" name="" readonly>
-							</div>
-						</div>
-						<div id="SalaryDays" class="form-row" style="display: none;">
-							<div class="form-group col-sm-12 col-md-12 text-center">
-								<table id="SalaryTable" class="table table-condensed">
-									<th>Monday</th>
-									<th>Tuesday</th>
-									<th>Wednesday</th>
-									<th>Thursday</th>
-									<th>Friday</th>
-									<th>Saturday</th>
-									<tr>
-										<td><input id="SalaryDayOne" class="form-control" type="text" name="" readonly></td>
-										<td><input id="SalaryDayTwo" class="form-control" type="text" name="" readonly></td>
-										<td><input id="SalaryDayThree" class="form-control" type="text" name="" readonly></td>
-										<td><input id="SalaryDayFour" class="form-control" type="text" name="" readonly></td>
-										<td><input id="SalaryDayFive" class="form-control" type="text" name="" readonly></td>
-										<td><input id="SalaryDaySix" class="form-control" type="text" name="" readonly></td>
-									</tr>
-									<tr>
-										<td>Hours</td>
-										<td>Hours</td>
-										<td>Hours</td>
-										<td>Hours</td>
-										<td>Hours</td>
-										<td>Hours</td>
-									</tr>
-									<tr>
-										<td><input id="HoursDayOne" class="form-control" type="number" name="" value="8"></td>
-										<td><input id="HoursDayTwo" class="form-control" type="number" name="" value="8"></td>
-										<td><input id="HoursDayThree" class="form-control" type="number" name="" value="8"></td>
-										<td><input id="HoursDayFour" class="form-control" type="number" name="" value="8"></td>
-										<td><input id="HoursDayFive" class="form-control" type="number" name="" value="8"></td>
-										<td><input id="HoursDaySix" class="form-control" type="number" name="" value="8"></td>
-									</tr>
-									<tr>
-										<td colspan="2">Estimated Per Hour</td>
-									</tr>
-									<tr>
-										<td colspan="2"><input id="SalaryPerHour" class="form-control" type="text" name="" readonly></td>	
-									</tr>
-								</table>
-							</div>
-						</div>											
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button id="add_machop" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close"><i class="fas fa-plus"></i> Add</button>
-				</div>
-			</div>
-		</div>
-	</div>
 </body>
 <style type="text/css">
 	.in-beni:focus { box-shadow: none; }
@@ -613,6 +528,31 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		// Local storage
+		// ~ preloading
+		$('#InputFields').find('input').not('input[type="file"]').each(function() {
+			let inputFieldName = $(this).attr('name'); // Fetch input location
+			let inputFieldValue = localStorage.getItem(inputFieldName); // Fetch input value from storage
+			if(inputFieldValue) {
+				$(this).val(inputFieldValue); // Assign input value to location from storage
+			}
+		})
+		profileImage = localStorage.getItem('profileImage');
+		if (profileImage) {
+			$('#blah').attr('src', profileImage);
+			$('#pImageURL').val(profileImage); // Fetch from data url blob
+			$('#pImageChecker').val('url');
+		}
+		referral = localStorage.getItem('referral');
+		if (referral) {
+			let referralValue = localStorage.getItem('referral');
+			$('#Referral').val(referralValue);
+		}
+		// ~ input
+		$('#InputFields').find('input').bind("input", function() {
+			localStorage.setItem($(this).attr('name'), $(this).val());
+		});
+		// Documents
 		var SSS_List = [];
 		var HDMF_List = [];
 		var RCN_List = [];
@@ -628,45 +568,69 @@
 			ATM_List.push("<?php echo $row['ATM_No']; ?>");
 		<?php endforeach; ?>
 		$('#SSS').bind("input", function () {
-			if(SSS_List.includes($('#SSS').val())) {
-				$('#SSS_Text').html('S.S.S. No. <i class="fas fa-times" style="color: red;"></i>')
+			if ($('#SSS').val()) {
+				if(SSS_List.includes($('#SSS').val())) {
+					$('#SSS_Text').html('S.S.S. No. <span style="color: red;"><i class="fas fa-times-circle"></i> Duplicate found</span>')
+				} else {
+					$('#SSS_Text').html('S.S.S. No. <i class="fas fa-check-circle" style="color: green;"></i>')
+				}
 			} else {
-				$('#SSS_Text').html('S.S.S. No. <i class="fas fa-check" style="color: green;"></i>')
+				$('#SSS_Text').html('S.S.S. No.');
 			}
 		});
 		$('#HDMF').bind("input", function () {
-			if(HDMF_List.includes($('#HDMF').val())) {
-				$('#HDMF_Text').html('HDMF <i class="fas fa-times" style="color: red;"></i>')
+			if ($('#HDMF').val()) {
+				if(HDMF_List.includes($('#HDMF').val())) {
+					$('#HDMF_Text').html('HDMF <span style="color: red;"><i class="fas fa-times-circle"></i> Duplicate found</span>')
+				} else {
+					$('#HDMF_Text').html('HDMF <i class="fas fa-check-circle" style="color: green;"></i>')
+				}
 			} else {
-				$('#HDMF_Text').html('HDMF <i class="fas fa-check" style="color: green;"></i>')
+				$('#HDMF_Text').html('HDMF');
 			}
 		});
 		$('#RCN').bind("input", function () {
-			if(RCN_List.includes($('#RCN').val())) {
-				$('#RCN_Text').html('Residence Certificate No. <i class="fas fa-times" style="color: red;"></i>')
+			if ($('#RCN').val()) {
+				if(RCN_List.includes($('#RCN').val())) {
+					$('#RCN_Text').html('Residence Certificate No. <span style="color: red;"><i class="fas fa-times-circle"></i> Duplicate found</span>')
+				} else {
+					$('#RCN_Text').html('Residence Certificate No. <i class="fas fa-check-circle" style="color: green;"></i>')
+				}
 			} else {
-				$('#RCN_Text').html('Residence Certificate No. <i class="fas fa-check" style="color: green;"></i>')
+				$('#RCN_Text').html('Residence Certificate No.');
 			}
 		});
 		$('#PhilHealth').bind("input", function () {
-			if(PhilHealth_List.includes($('#PhilHealth').val())) {
-				$('#PhilHealth_Text').html('PHILHEALTH <i class="fas fa-times" style="color: red;"></i>')
+			if ($('#PhilHealth').val()) {
+				if(PhilHealth_List.includes($('#PhilHealth').val())) {
+					$('#PhilHealth_Text').html('PHILHEALTH <span style="color: red;"><i class="fas fa-times-circle"></i> Duplicate found</span>')
+				} else {
+					$('#PhilHealth_Text').html('PHILHEALTH <i class="fas fa-check-circle" style="color: green;"></i>')
+				}
 			} else {
-				$('#PhilHealth_Text').html('PHILHEALTH <i class="fas fa-check" style="color: green;"></i>')
+				$('#PhilHealth_Text').html('PHILHEALTH');
 			}
 		});
 		$('#TIN').bind("input", function () {
-			if(TIN_List.includes($('#TIN').val())) {
-				$('#TIN_Text').html('Tax Identification No. <i class="fas fa-times" style="color: red;"></i>')
+			if ($('#TIN').val()) {
+				if(TIN_List.includes($('#TIN').val())) {
+					$('#TIN_Text').html('Tax Identification No. <span style="color: red;"><i class="fas fa-times-circle"></i> Duplicate found</span>')
+				} else {
+					$('#TIN_Text').html('Tax Identification No. <i class="fas fa-check-circle" style="color: green;"></i>')
+				}
 			} else {
-				$('#TIN_Text').html('Tax Identification No. <i class="fas fa-check" style="color: green;"></i>')
+				$('#TIN_Text').html('Tax Identification No.');
 			}
 		});
 		$('#ATM').bind("input", function () {
-			if(ATM_List.includes($('#ATM').val())) {
-				$('#ATM_Text').html('ATM No. <i class="fas fa-times" style="color: red;"></i>')
+			if ($('#ATM').val()) {
+				if(ATM_List.includes($('#ATM').val())) {
+					$('#ATM_Text').html('ATM No. <span style="color: red;"><i class="fas fa-times-circle"></i> Duplicate found</span>')
+				} else {
+					$('#ATM_Text').html('ATM No. <i class="fas fa-check-circle" style="color: green;"></i>')
+				}
 			} else {
-				$('#ATM_Text').html('ATM No <i class="fas fa-check" style="color: green;"></i>')
+				$('#ATM_Text').html('ATM No.');
 			}
 		});
 		var CreateADuplicate = ''; // Boolean
@@ -692,6 +656,7 @@
 			$('.referral-btns').children('i').addClass('wercher-transparent');
 			$('.referral-btns').children('i').removeClass('wercher-visible');
 			$('#ReferralOthers').val('');
+			localStorage.setItem('referral', $('#Referral').val());
 		});
 		$('#ReferralWalkIn').on('click', function () {
 			$(this).addClass('btn-success');
@@ -708,12 +673,13 @@
 			$(this).children('i').addClass('wercher-visible');
 			$('#Referral').val('Social Media');
 		});
-		$('#ReferralOthers').on('change', function () {
+		$('#ReferralOthers').bind('input', function () {
 			$('.referral-btns').addClass('btn-secondary');
 			$('.referral-btns').removeClass('btn-success');
 			$('.referral-btns').children('i').addClass('wercher-transparent');
 			$('.referral-btns').children('i').removeClass('wercher-visible');
 			$('#Referral').val($('#ReferralOthers').val());
+			localStorage.setItem('referral', $('#Referral').val());
 		});
 		var today = new Date();
 		<?php if(!empty($data['BirthDate'])): ?>
@@ -746,13 +712,14 @@
 				var reader = new FileReader();
 				reader.onload = function(e) {
 					$('#blah').attr('src', e.target.result);
+					localStorage.setItem('profileImage', e.target.result);
 				}
 				reader.readAsDataURL(input.files[0]);
 			}
 		}
 		$("#imgInp").change(function() {
 			readURL(this);
-			$('#pImageChecker').val('Has Image')
+			$('#pImageChecker').val('manual')
 		});
 		// Cart Academic History
 		$('#add_sssscc').click(function(){

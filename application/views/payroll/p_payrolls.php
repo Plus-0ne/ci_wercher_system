@@ -1224,7 +1224,7 @@
 			$.ajax({
 				url : "<?php echo base_url() . 'AJAX_updateSSSToBePaid';?>",
 				method : "POST",
-				data : {Input: ptwInput, ApplicantID: ptwApplicantID, ClientID: ptwClientID, Year: ptwYear, Month: ptwMonth, Week: ptwWeek},
+				data : {Input: ptwInput, ApplicantID: ptwApplicantID, ClientID: ptwClientID, Year: ptwYear, Month: ptwMonth, Week: ptwWeek, Mode: Mode},
 				success: function(data){
 					location.reload();
 				}

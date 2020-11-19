@@ -245,6 +245,12 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetWeeklyListEmployeeWithSpecificApplicant($ClientID, $ApplicantID)
+	{
+		$SQL = "SELECT * FROM applicants WHERE ClientEmployed = '$ClientID' AND ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function GetLogbookLatestHires()
 	{
 		$SQL = "SELECT * FROM logbook WHERE Type = 'Employment' ORDER BY No DESC";

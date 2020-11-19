@@ -1200,6 +1200,12 @@ class Update_Controller extends CI_Controller {
 				if($Overtime == NULL) {
 					$Overtime = 0;
 				}
+				if($NightHours == NULL) {
+					$NightHours = 0;
+				}
+				if($NightOvertime == NULL) {
+					$NightOvertime = 0;
+				}
 
 				if ($ApplicantID == NULL) {
 					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
@@ -1870,6 +1876,7 @@ class Update_Controller extends CI_Controller {
 		$Year = $this->input->post('Year');
 		$Month = $this->input->post('Month');
 		$Week = $this->input->post('Week');
+		$Mode = $this->input->post('Mode');
 		$now = new DateTime();
 		$DateUpdated = $now->format('Y-m-d H:i:s');
 
@@ -1880,10 +1887,10 @@ class Update_Controller extends CI_Controller {
 			'Month' => $Month,
 			'Year' => $Year,
 			'Week' => $Week,
+			'Mode' => $Mode,
 			'DateUpdated' => $DateUpdated,
 		);
 		$UpdateSSSToBePaid = $this->Model_Updates->UpdateSSSToBePaid($data);
-		echo '<a href="#">Test</a>';
 	}
 	public function ModifyContract()
 	{
