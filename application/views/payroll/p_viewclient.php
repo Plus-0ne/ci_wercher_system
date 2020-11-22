@@ -80,9 +80,40 @@ use Carbon\Carbon;
 								<tbody>
 									<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
 										$TotalRegHours = 0;
-										$TotalOTHours = 0;?>
+										$TotalOTHours = 0;
+
+										// Name Handler
+										$fullName = '';
+										$fullNameHover = '';
+										if ($row['LastName']) {
+											$fullName = $fullName . $row['LastName'] . ', ';
+											$fullNameHover = $fullNameHover . $row['LastName'] . ', ';
+										} else {
+											$fullNameHover = $fullNameHover . '[<i>No Last Name</i>], ';
+										}
+										if ($row['FirstName']) {
+											$fullName = $fullName . $row['FirstName'] . ' ';
+											$fullNameHover = $fullNameHover . $row['FirstName'] . ' ';
+										} else {
+											$fullNameHover = $fullNameHover . '[<i>No First Name</i>] ';
+										}
+										if ($row['MiddleName']) {
+											$fullName = $fullName . $row['MiddleName'][0] . '.';
+											$fullNameHover = $fullNameHover . $row['MiddleName'][0] . '.';
+										} else {
+											$fullNameHover = $fullNameHover . '[<i>No MI</i>].';
+										}
+										if ($row['NameExtension']) {
+											$fullName = $fullName . ', ' . $row['NameExtension'];
+											$fullNameHover = $fullNameHover . ', ' . $row['NameExtension'];
+										}
+										if (strlen($fullName) > 35) {
+											$fullName = substr($fullName, 0, 35);
+											$fullName = $fullName . '...';
+										}
+										?>
 										<tr id="<?php echo $row['SalaryExpected']; ?>" data-clientid="<?php echo $row['ClientEmployed']; ?>" data="<?php echo $row['ApplicantID']; ?>" class='clickable-row' data-toggle="modal" data-target="#HoursWeeklyModal_<?php echo $row['ApplicantID']; ?>">
-											<td data-toggle="tooltip" data-placement="top" data-html="true" title="<b>Employee ID: </b><br><?php echo $row['EmployeeID']; ?><br><br><b>Applicant ID: </b><br><?php echo $row['ApplicantID']; ?>"><a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>" target="_blank"><?php echo $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'];?></a></td>
+											<td data-toggle="tooltip" data-placement="top" data-html="true" title="<b>Employee ID: </b><br><?php echo $row['EmployeeID']; ?><br><br><b>Applicant ID: </b><br><?php echo $row['ApplicantID']; ?>"><a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $fullName; ?></a></td>
 											<td><?php echo $row['SalaryExpected'];?></td>
 											<?php foreach ($GetWeeklyDates->result_array() as $brow):
 												?> <td> <?php

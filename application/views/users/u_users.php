@@ -79,7 +79,43 @@ endif;
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($get_employee->result_array() as $row): ?>
+									<?php foreach ($get_employee->result_array() as $row): 
+
+										// Name Handler
+										$fullName = '';
+										$fullNameHover = '';
+										$isFullNameHoverable = false;
+										if ($row['LastName']) {
+											$fullName = $fullName . $row['LastName'] . ', ';
+											$fullNameHover = $fullNameHover . $row['LastName'] . ', ';
+										} else {
+											$fullNameHover = $fullNameHover . '[<i>No Last Name</i>], ';
+											$isFullNameHoverable = true;
+										}
+										if ($row['FirstName']) {
+											$fullName = $fullName . $row['FirstName'] . ' ';
+											$fullNameHover = $fullNameHover . $row['FirstName'] . ' ';
+										} else {
+											$fullNameHover = $fullNameHover . '[<i>No First Name</i>] ';
+											$isFullNameHoverable = true;
+										}
+										if ($row['MiddleName']) {
+											$fullName = $fullName . $row['MiddleName'][0] . '.';
+											$fullNameHover = $fullNameHover . $row['MiddleName'][0] . '.';
+										} else {
+											$fullNameHover = $fullNameHover . '[<i>No MI</i>].';
+											$isFullNameHoverable = true;
+										}
+										if ($row['NameExtension']) {
+											$fullName = $fullName . ', ' . $row['NameExtension'];
+											$fullNameHover = $fullNameHover . ', ' . $row['NameExtension'];
+										}
+										if (strlen($fullName) > 45) {
+											$fullName = substr($fullName, 0, 45);
+											$fullName = $fullName . '...';
+											$isFullNameHoverable = true;
+										}
+										?>
 										<tr class="table-row-hover">
 											<td class="text-center">
 												<div class="col-sm-12">
@@ -106,12 +142,12 @@ endif;
 												</div>
 											</td>
 											<td class="text-center align-middle">
-												<a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleName']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?></a>
+												<a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"<?php if($isFullNameHoverable): ?> data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $fullNameHover; ?>"<?php endif; ?>><?php echo $fullName; ?></a>
 												<br>
 												<i style="color: gray;"><?php echo $row['PositionDesired']; ?></i>
 											</td>
 											<td class="text-center align-middle d-none">
-												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleName']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
+												<?php echo $fullName; ?>
 											</td>
 											<td class="text-center align-middle d-none">
 												<?php echo $row['PositionDesired']; ?>

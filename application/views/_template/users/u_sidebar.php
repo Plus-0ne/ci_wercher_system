@@ -1,6 +1,8 @@
 <nav id="sidebar" style="position: fixed;">
 	<div class="sidebar-banner text-center">
+		<?php if($this->session->userdata('is_logged_in') == 'Active'): ?>
 		<img class="PrintOutModal PrintOutModalExpired PrintOutHistory" height="26" with="22" style="margin-top: -5px; margin-left: -5px;" src="<?=base_url()?>assets/img/wercher_logo.png">
+		<?php endif; ?>
 		<b>
 			<span style="color: gold;">W</span>ercher <span style="color: gold;">C</span>oop
 		</b>
@@ -77,21 +79,23 @@
 			</ul>
 		</li> -->
 		<li>
-			<a class="link-s" href="#pageSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-cog fa-fw"></i> User Settings <i class="fas fa-caret-down fa-fw" style="float: right; margin-top: 4px;"></i> </a>
+			<a class="link-s" href="#pageSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-bolt fa-fw"></i> Quick Links <i class="fas fa-caret-down fa-fw" style="float: right; margin-top: 4px;"></i> </a>
 			<ul class="collapse list-unstyled collapseSettings animated fadeIn" id="pageSettings">
-				<li>
-					<a class="link-s" class="sublink" href="<?=base_url()?>Experimental"><span class="fas fa-flask"></span> Experimental <span style="color: rgba(255, 50, 50, 1.0);">(Dev Area)</span></a>
-				</li>
 				<li>
 					<a class="link-s" class="sublink" href="<?=base_url()?>SSS_Table"><i class="fas fa-table fa-fw"></i> SSS Table </a>
 				</li>
-				<!-- <li>
-					<a class="link-s" class="sublink" href="#"><span class="fas fa-sign-out-alt fa-fw"></span> Profile </a>
-				</li> -->
+			</ul>
+		</li>
+		<li>
+			<a class="link-s" href="#siteInfo" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-info fa-fw"></i> Site Info <i class="fas fa-caret-down fa-fw" style="float: right; margin-top: 4px;"></i> </a>
+			<ul class="collapse list-unstyled collapseSettings animated fadeIn" id="siteInfo">
 				<li>
-					<a class="link-s" class="sublink" href="<?=base_url()?>"><span class="fas fa-sign-out-alt fa-fw"></span> Logout </a>
+					<a class="link-s" class="sublink" href="#"><span style="color: gold;"><i class="fas fa-info-circle"></i> Build: November 22, 2020</span></a>
 				</li>
 			</ul>
+		</li>
+		<li class="nav-item mb-4">
+			<a class="link-s" class="sublink" href="<?=base_url()?>"><span class="fas fa-sign-out-alt fa-fw"></span> Logout </a>
 		</li>
 	</ul>
 </nav>

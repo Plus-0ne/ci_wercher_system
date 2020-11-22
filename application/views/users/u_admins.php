@@ -95,7 +95,7 @@ use Carbon\Carbon;
 												</div>
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php if($row['MiddleName'] != ''): echo $row['MiddleName'] . '.'; endif; ?>
+												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php if($row['MiddleName'] != ''): echo $row['MiddleName'][0] . '.'; endif; ?>
 											</td>
 											<td class="text-center align-middle">
 												<?php
