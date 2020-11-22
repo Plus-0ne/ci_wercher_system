@@ -436,7 +436,7 @@ class Model_Selects extends CI_Model {
 	}
 	public function SearchPeople($query)
 	{
-		$SQL = "SELECT * FROM applicants WHERE LastName LIKE '%$query%' OR FirstName LIKE '%$query%' OR MiddleInitial LIKE '%$query%'";
+		$SQL = "SELECT * FROM applicants WHERE LastName LIKE '%$query%' OR FirstName LIKE '%$query%' OR MiddleName LIKE '%$query%'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -460,7 +460,7 @@ class Model_Selects extends CI_Model {
 	}
 	public function SearchAdmins($query)
 	{
-		$SQL = "SELECT * FROM admin WHERE LastName LIKE '%$query%' OR FirstName LIKE '%$query%' OR MiddleInitial LIKE '%$query%'";
+		$SQL = "SELECT * FROM admin WHERE LastName LIKE '%$query%' OR FirstName LIKE '%$query%' OR MiddleName LIKE '%$query%'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

@@ -14,7 +14,7 @@
 						<div class="wercher-idcard-fields">
 							<div class="wercher-idcard-name">
 								<div id="Name" style="width:350px; height:50px;" class="col-sm-12">
-									<span style="margin-bottom: -10px;"><?php echo $LastName . ', ' . $FirstName . ' ' . $MiddleInitial . '.'; if ($NameExtension != NULL): echo ', ' . $NameExtension; endif; ?></span>
+									<span style="margin-bottom: -10px;"><?php echo $LastName . ', ' . $FirstName . ' ' . $MiddleName . '.'; if ($NameExtension != NULL): echo ', ' . $NameExtension; endif; ?></span>
 								</div>
 							</div>
 							<div class="row">
@@ -123,7 +123,7 @@
 		$("#FrontSaveBtn").on('click', function () {
 			html2canvas($("#WercherIDFront"), {
 				onrendered: function(canvas) {
-					saveAs(canvas.toDataURL(), 'WercherIDCardFront_<?php echo $LastName . $FirstName . $MiddleInitial; ?>.png');
+					saveAs(canvas.toDataURL(), 'WercherIDCardFront_<?php echo $LastName . $FirstName . $MiddleName; ?>.png');
 				}
 			});
 		});
@@ -131,7 +131,7 @@
 		$("#BackSaveBtn").click(function() {
 			html2canvas($("#WercherIDBack"), {
 				onrendered: function(canvas) {
-					saveAs(canvas.toDataURL(), 'WercherIDCardBack_<?php echo $LastName . $FirstName . $MiddleInitial; ?>.png');
+					saveAs(canvas.toDataURL(), 'WercherIDCardBack_<?php echo $LastName . $FirstName . $MiddleName; ?>.png');
 				}
 			});
 		});

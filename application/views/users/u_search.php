@@ -45,7 +45,7 @@
 													</div>
 												</td>
 												<td class="text-center align-middle">
-													<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+													<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleName']; ?>.
 												</td>
 												<td class="text-center align-middle">
 													<?php echo $row['PositionDesired']; ?>
@@ -102,7 +102,7 @@
 													</div>
 												</td>
 												<td class="text-center align-middle">
-													<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php if($row['MiddleInitial'] != ''): echo $row['MiddleInitial'] . '.'; endif; ?>
+													<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php if($row['MiddleName'] != ''): echo $row['MiddleName'] . '.'; endif; ?>
 												</td>
 												<td class="text-center align-middle">
 													<?php echo $row['PositionDesired']; ?>
@@ -152,7 +152,7 @@
 													</div>
 												</td>
 												<td class="text-center align-middle">
-													<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+													<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleName']; ?>.
 												</td>
 												<td class="text-center align-middle">
 													<?php echo $row['PositionDesired']; ?>
@@ -256,7 +256,7 @@
 													</div>
 												</td>
 												<td class="text-center align-middle">
-													<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php if($row['MiddleInitial'] != ''): echo $row['MiddleInitial'] . '.'; endif; ?>
+													<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php if($row['MiddleName'] != ''): echo $row['MiddleName'] . '.'; endif; ?>
 												</td>
 												<td class="text-center align-middle">
 													<?php echo $row['PositionDesired']; ?>
@@ -311,7 +311,7 @@
 													</div>
 												</td>
 												<td class="text-center align-middle">
-													<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php if($row['MiddleInitial'] != ''): echo $row['MiddleInitial'] . '.'; endif; ?>
+													<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php if($row['MiddleName'] != ''): echo $row['MiddleName'] . '.'; endif; ?>
 												</td>
 												<td class="text-center align-middle">
 													<?php echo $row['PositionDesired']; ?>
@@ -380,7 +380,7 @@
 													<?php echo $row['AdminID'] ; ?>
 												</td>
 												<td class="text-center align-middle">
-													<?php echo $row['FirstName'] ; ?> <?php echo $row['MiddleInitial'] ; ?>. <?php echo $row['LastName'] ; ?>
+													<?php echo $row['FirstName'] ; ?> <?php echo $row['MiddleName'] ; ?>. <?php echo $row['LastName'] ; ?>
 												</td>
 												<td class="text-center align-middle">
 													<?php echo $row['Gender'] ; ?>

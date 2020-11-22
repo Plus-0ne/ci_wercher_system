@@ -160,7 +160,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 							<div class="row w-100 rcontent employee-content">
 								<div class="col-2 employee-static mt-5 d-none d-sm-block">
 									<div class="col-sm-12">
-										<?php echo $LastName; ?>, <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.<?php if ($NameExtension != NULL): echo ', ' . $NameExtension; endif; ?>
+										<?php echo $LastName; ?>, <?php echo $FirstName; ?>  <?php echo $MiddleName; ?>.<?php if ($NameExtension != NULL): echo ', ' . $NameExtension; endif; ?>
 									</div>
 									<hr>
 									<div class="col-sm-12 employee-static-item">
@@ -860,7 +860,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																					<tbody>
 																						<?php foreach ($GetWeeklyListEmployeeWithSpecificApplicant->result_array() as $row):
 																							$ApplicantID = $row['ApplicantID'];
-																							$ApplicantName = $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'] . '.';
+																							$ApplicantName = $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName'] . '.';
 																							if ($row['NameExtension'] != NULL) {
 																								$ApplicantName = $ApplicantName . ', ' . $row['NameExtension'];
 																							}
@@ -1147,7 +1147,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																					<tbody>
 																						<?php foreach ($GetWeeklyListEmployeeWithSpecificApplicant->result_array() as $row):
 																							$ApplicantID = $row['ApplicantID'];
-																							$ApplicantName = $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'] . '.';
+																							$ApplicantName = $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName'] . '.';
 																							if ($row['NameExtension'] != NULL) {
 																								$ApplicantName = $ApplicantName . ', ' . $row['NameExtension'];
 																							}
@@ -1435,7 +1435,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																					<tbody>
 																						<?php foreach ($GetWeeklyListEmployeeWithSpecificApplicant->result_array() as $row):
 																							$ApplicantID = $row['ApplicantID'];
-																							$ApplicantName = $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'] . '.';
+																							$ApplicantName = $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName'] . '.';
 																							if ($row['NameExtension'] != NULL) {
 																								$ApplicantName = $ApplicantName . ', ' . $row['NameExtension'];
 																							}
@@ -2137,7 +2137,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">Contract Report for <?=$LastName?>, <?=$FirstName?> <?=$MiddleInitial?>.</h4>
+					<h4 class="modal-title">Contract Report for <?=$LastName?>, <?=$FirstName?> <?=$MiddleName?>.</h4>
 					<div class="text-right">
 						<button onClick="printContent('PrintOutModal')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
 						<button type="button" class="close d-none d-sm-block" data-dismiss="modal">&times;</button>
@@ -2186,7 +2186,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">Previous Contract Report for <?=$LastName?>, <?=$FirstName?> <?=$MiddleInitial?>.</h4>
+					<h4 class="modal-title">Previous Contract Report for <?=$LastName?>, <?=$FirstName?> <?=$MiddleName?>.</h4>
 					<div class="text-right">
 						<button onClick="printContent('PrintOutModalExpired')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
 						<button type="button" class="close d-none d-sm-block" data-dismiss="modal">&times;</button>

@@ -4,7 +4,7 @@
 
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title PrintOutHistory">Contract History for <?=$LastName?>, <?=$FirstName?> <?=$MiddleInitial?>.</h4>
+					<h4 class="modal-title PrintOutHistory">Contract History for <?=$LastName?>, <?=$FirstName?> <?=$MiddleName?>.</h4>
 					<div class="text-right">
 						<button onClick="printContent('PrintOutHistory')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
 						<button type="button" class="close d-none d-sm-block" data-dismiss="modal">&times;</button>

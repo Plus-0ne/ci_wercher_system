@@ -83,26 +83,32 @@ use Carbon\Carbon;
 										<tr class="table-row-hover">
 											<td class="text-center">
 												<div class="col-sm-12">
-													<img src="<?php echo $thumbnail; ?>" width="70" height="70" class="rounded-circle" loading="lazy">
+													<a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><img src="<?php echo $thumbnail; ?>" width="70" height="70" class="rounded-circle" loading="lazy"></a>
 												</div>
 												<div class="col-sm-12 align-middle">
-													<?php echo $row['ApplicantID']; ?>
+													<a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $row['ApplicantID']; ?></a>
 												</div>
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
+												<a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleName']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?></a>
 												<br>
 												<i style="color: gray;"><?php echo $row['PositionDesired']; ?></i>
 												<br>
 											</td>
 											<td class="text-center align-middle d-none">
-												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
+												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleName']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
 											</td>
 											<td class="text-center align-middle d-none">
 												<?php echo $row['PositionDesired']; ?>
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['Phone_No']; ?>
+												<?php 
+													if ($row['Phone_No']) {
+														echo $row['Phone_No'];
+													} else {
+														echo '<i style="color: gray;">No record.</i>';
+													}
+												?>
 											</td>
 											<!-- <td class="text-center align-middle d-sm-none d-md-block">
 												<?php echo $row['Gender']; ?>
@@ -142,6 +148,15 @@ use Carbon\Carbon;
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		<?php if(!empty($this->session->userdata('isApplicantAdded'))): ?>
+			let inputCart = JSON.parse(localStorage.getItem('inputCart'));
+			if (inputCart) {
+				let inputCartLength = inputCart.items.length;
+				for(let i = 0; i < inputCartLength; i++) {
+					localStorage.removeItem(inputCart.items[i]);
+				}
+			}
+		<?php endif; ?>
 		$('[data-toggle="tooltip"]').tooltip();
 		$('.sorting-table-icon').hide();
 		$('#DTSearch').attr('placeholder', 'Search table');

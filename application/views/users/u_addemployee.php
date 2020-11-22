@@ -49,7 +49,7 @@
 																</div>
 															</td>
 															<td class="text-center align-middle">
-																<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+																<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleName']; ?>.
 															</td>
 															<td class="text-center align-middle">
 																<?php echo $row['PositionDesired']; ?>
@@ -107,15 +107,15 @@
 										<div class="form-row">
 											<div class="form-group col-sm-12 col-md-5">
 												<label>Last Name</label>
-												<input class="form-control" type="text" name="LastName" autocomplete="off" value="<?php echo $data['LastName']; ?>">
+												<input id="LastName" class="form-control" type="text" name="LastName" autocomplete="off" value="<?php echo $data['LastName']; ?>">
 											</div>
 											<div class="form-group col-sm-12 col-md-5">
 												<label>First Name</label>
-												<input class="form-control" type="text" name="FirstName" autocomplete="off" value="<?php echo $data['FirstName']; ?>">
+												<input id="FirstName" class="form-control" type="text" name="FirstName" autocomplete="off" value="<?php echo $data['FirstName']; ?>">
 											</div>
 											<div class="form-group col-sm-12 col-md-2">
-												<label>Middle&nbsp;Initial</label>
-												<input class="form-control" type="text" name="MI" autocomplete="off" value="<?php echo $data['MI']; ?>" maxlength="1">
+												<label>Middle&nbsp;Name</label>
+												<input id="MiddleName" class="form-control" type="text" name="MiddleName" autocomplete="off" value="<?php echo $data['MiddleName']; ?>">
 											</div>
 											<div class="form-group col-sm-12 col-md-3">
 												<label>Name Extension</label>
@@ -266,31 +266,34 @@
 										<b>Source of Application / Referral</b>
 										<input id="Referral" type="hidden" name="Referral">
 										<div class="form-row col-sm-12 mt-2">
-											<div class="form-group col-sm-3 col-md-3">
+											<div class="form-group col-sm-3 col-md-2">
 												<button id="ReferralWalkIn" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
 											</div>
-											<div class="form-group col-sm-9 col-md-9" style="margin-top: 5px;">
+											<div class="form-group col-sm-9 col-md-10" style="margin-top: 5px;">
 												Walk In
 											</div>
 										</div>
 										<div class="form-row col-sm-12">
-											<div class="form-group col-sm-3 col-md-3">
+											<div class="form-group col-sm-3 col-md-2">
 												<button id="ReferralJobFair" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
 											</div>
-											<div class="form-group col-sm-9 col-md-9" style="margin-top: 5px;">
+											<div class="form-group col-sm-9 col-md-10" style="margin-top: 5px;">
 												Job Fair
 											</div>
 										</div>
 										<div class="form-row col-sm-12">
-											<div class="form-group col-sm-3 col-md-3">
+											<div class="form-group col-sm-3 col-md-2">
 												<button id="ReferralSocialMedia" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
 											</div>
-											<div class="form-group col-sm-9 col-md-9" style="margin-top: 5px;">
+											<div class="form-group col-sm-9 col-md-10" style="margin-top: 5px;">
 												Social Media
 											</div>
 										</div>
 										<div class="form-row col-sm-12">
-											<div class="form-group col-sm-12 col-md-12">
+											<div class="form-group col-sm-3 col-md-2">
+												<button id="ReferralOthersButton" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+											</div>
+											<div class="form-group col-sm-12 col-md-10" style="margin-top: 5px;">
 												Or others, please specify:
 											</div>
 											<div class="form-group col-sm-12 col-md-12" style="margin-top: 5px;">
@@ -364,7 +367,25 @@
 								<hr>
 								<div class="form-row pt-5 pb-4 save-button-bg">
 									<div class="form-group mr-auto">
-										<button class="btn btn-success btn-lg" type="submit"><i class="fas fa-save"></i> Save</button>
+										<div class="save-btn-locked-group">
+											<div class="row">
+												<span style="font-size: 18px; color: rgba(255, 25, 25); padding-bottom: 25px; margin-top: -25px;"><i class="fas fa-exclamation-circle"></i> Requires atleast one of any name</span>
+											</div>
+											<div class="row">
+												<button type="button" class="btn btn-secondary btn-lg hover-disabled" data-toggle="tooltip" data-placement="top" data-html="true" title="Requires atleast a <b>Last Name</b>, <b>First Name</b>, or <b>Middle Name</b>"><i class="fas fa-lock"></i> Save</button>
+											</div>
+										</div>
+										<div class="save-btn-valid-group" style="display: none;">
+											<div class="row">
+												<span style="font-size: 18px; color: green; padding-bottom: 25px; margin-top: -25px;"><i class="fas fa-check-circle"></i> Applicant is valid for saving</span>
+											</div>
+											<div class="row">
+												<button id="SaveButton" class="btn btn-success btn-lg" type="submit"><i class="fas fa-save"></i> Save</button>
+											</div>
+										</div>
+									</div>
+									<div class="form-group ml-auto">
+										<button type="button" class="btn btn-info btn-lg" style="float: right;" onclick="backToTop()"><i class="fas fa-level-up-alt"></i> Scroll to Top</button>
 									</div>
 								</div>
 							</form>
@@ -527,30 +548,84 @@
 </style>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
+	function backToTop() {
+		document.body.scrollTop = 0;
+		document.documentElement.scrollTop = 0;
+	}
 	$(document).ready(function () {
+		$('[data-toggle="tooltip"]').tooltip();
 		// Local storage
 		// ~ preloading
-		$('#InputFields').find('input').not('input[type="file"]').each(function() {
+		var inputCart = {
+			items: []
+		};
+		$('#InputFields').find('input').not('input[type="file"]').not('#ReferralOthers').each(function() {
 			let inputFieldName = $(this).attr('name'); // Fetch input location
 			let inputFieldValue = localStorage.getItem(inputFieldName); // Fetch input value from storage
 			if(inputFieldValue) {
 				$(this).val(inputFieldValue); // Assign input value to location from storage
+				inputCart.items.push(inputFieldName); // Sending as JSON
+				localStorage.setItem('inputCart', JSON.stringify(inputCart));
 			}
 		})
-		profileImage = localStorage.getItem('profileImage');
-		if (profileImage) {
-			$('#blah').attr('src', profileImage);
-			$('#pImageURL').val(profileImage); // Fetch from data url blob
-			$('#pImageChecker').val('url');
-		}
+		// profileImage = localStorage.getItem('profileImage');
+		// if (profileImage) {
+		// 	$('#blah').attr('src', profileImage);
+		// 	$('#pImageURL').val(profileImage); // Fetch from data url blob
+		// 	$('#pImageChecker').val('url');
+		// }
 		referral = localStorage.getItem('referral');
 		if (referral) {
 			let referralValue = localStorage.getItem('referral');
+			switch (referralValue.toUpperCase()) { // Insensitive string condition
+				case 'WALK IN':
+					$('#ReferralWalkIn').addClass('btn-success');
+					$('#ReferralWalkIn').children('i').addClass('wercher-visible');
+					break;
+				case 'JOB FAIR':
+					$('#ReferralJobFair').addClass('btn-success');
+					$('#ReferralJobFair').children('i').addClass('wercher-visible');
+					break;
+				case 'SOCIAL MEDIA':
+					$('#ReferralSocialMedia').addClass('btn-success');
+					$('#ReferralSocialMedia').children('i').addClass('wercher-visible');
+					break;
+				default:
+					$('#ReferralOthersButton').addClass('btn-success');
+					$('#ReferralOthersButton').children('i').addClass('wercher-visible');
+					$('#ReferralOthers').val(referralValue);
+					break;
+			}
 			$('#Referral').val(referralValue);
+			if (!inputCart.items.includes('referral')) {
+				inputCart.items.push('referral');
+				localStorage.setItem('inputCart', JSON.stringify(inputCart));
+			}
 		}
 		// ~ input
 		$('#InputFields').find('input').bind("input", function() {
-			localStorage.setItem($(this).attr('name'), $(this).val());
+			let inputName = $(this).attr('name');
+			localStorage.setItem(inputName, $(this).val());
+			if (!inputCart.items.includes(inputName)) {
+				inputCart.items.push(inputName); // Sending as JSON
+				localStorage.setItem('inputCart', JSON.stringify(inputCart));
+			} else { // Field is inside the cart
+				let index = inputCart.items.indexOf(inputName);
+				if (!$(this).val()) { // Check if string is empty
+					inputCart.items.splice(index, 1);
+					localStorage.setItem('inputCart', JSON.stringify(inputCart));
+					localStorage.removeItem(inputName); // Remove local storage if empty
+				}
+			}
+			if (inputName == 'FirstName' || inputName == 'LastName' || inputName == 'MiddleName') {
+				if (!$('#FirstName').val() && !$('#LastName').val() && !$('#MiddleName').val()) {
+					$('.save-btn-locked-group').show();
+					$('.save-btn-valid-group').hide();
+				} else {
+					$('.save-btn-locked-group').hide();
+					$('.save-btn-valid-group').show();
+				}
+			}
 		});
 		// Documents
 		var SSS_List = [];
@@ -644,6 +719,7 @@
 				CreateADuplicate = '';
 				$('#CreateADuplicateField').val('');
 			}
+			$('#SaveButton').trigger('click');
 		});
 		$('#TogglePhoto').on('click', function () {
 			$('#EPrintPhoto').toggleClass('PrintExclude');
@@ -655,31 +731,84 @@
 			$('.referral-btns').removeClass('btn-success');
 			$('.referral-btns').children('i').addClass('wercher-transparent');
 			$('.referral-btns').children('i').removeClass('wercher-visible');
+			$('#ReferralOthers').removeClass('glow-gold');
+			$('#ReferralOthers').attr('placeholder', '');
 			$('#ReferralOthers').val('');
-			localStorage.setItem('referral', $('#Referral').val());
 		});
 		$('#ReferralWalkIn').on('click', function () {
 			$(this).addClass('btn-success');
 			$(this).children('i').addClass('wercher-visible');
 			$('#Referral').val('Walk In');
+			localStorage.setItem('referral', $('#Referral').val());
+			if (!inputCart.items.includes('referral')) {
+				inputCart.items.push('referral');
+				localStorage.setItem('inputCart', JSON.stringify(inputCart));
+			}
 		});
 		$('#ReferralJobFair').on('click', function () {
 			$(this).addClass('btn-success');
 			$(this).children('i').addClass('wercher-visible');
 			$('#Referral').val('Job Fair');
+			localStorage.setItem('referral', $('#Referral').val());
+			if (!inputCart.items.includes('referral')) {
+				inputCart.items.push('referral');
+				localStorage.setItem('inputCart', JSON.stringify(inputCart));
+			}
 		});
 		$('#ReferralSocialMedia').on('click', function () {
 			$(this).addClass('btn-success');
 			$(this).children('i').addClass('wercher-visible');
 			$('#Referral').val('Social Media');
+			localStorage.setItem('referral', $('#Referral').val());
+			if (!inputCart.items.includes('referral')) {
+				inputCart.items.push('referral');
+				localStorage.setItem('inputCart', JSON.stringify(inputCart));
+			}
+		});
+		$('#ReferralOthersButton').on('click', function () {
+			$(this).addClass('btn-success');
+			$(this).children('i').addClass('wercher-visible');
+			$('#Referral').val($('#ReferralOthers').val());
+			$('#ReferralOthers').addClass('glow-gold');
+			$('#ReferralOthers').attr('placeholder', 'Specify here...');
+			localStorage.setItem('referral', $('#Referral').val());
+			if (!inputCart.items.includes('referral')) {
+				inputCart.items.push('referral');
+				localStorage.setItem('inputCart', JSON.stringify(inputCart));
+			}
 		});
 		$('#ReferralOthers').bind('input', function () {
+			$(this).removeClass('glow-gold');
 			$('.referral-btns').addClass('btn-secondary');
 			$('.referral-btns').removeClass('btn-success');
 			$('.referral-btns').children('i').addClass('wercher-transparent');
 			$('.referral-btns').children('i').removeClass('wercher-visible');
+			switch ($('#ReferralOthers').val().toUpperCase()) { // Insensitive string condition
+				case 'WALK IN':
+					$('#ReferralWalkIn').addClass('btn-success');
+					$('#ReferralWalkIn').children('i').addClass('wercher-visible');
+					break;
+				case 'JOB FAIR':
+					$('#ReferralJobFair').addClass('btn-success');
+					$('#ReferralJobFair').children('i').addClass('wercher-visible');
+					break;
+				case 'SOCIAL MEDIA':
+					$('#ReferralSocialMedia').addClass('btn-success');
+					$('#ReferralSocialMedia').children('i').addClass('wercher-visible');
+					break;
+				case '':
+					break;
+				default:
+					$('#ReferralOthersButton').addClass('btn-success');
+					$('#ReferralOthersButton').children('i').addClass('wercher-visible');
+					break;
+			}
 			$('#Referral').val($('#ReferralOthers').val());
 			localStorage.setItem('referral', $('#Referral').val());
+			if (!inputCart.items.includes('referral')) {
+				inputCart.items.push('referral');
+				localStorage.setItem('inputCart', JSON.stringify(inputCart));
+			}
 		});
 		var today = new Date();
 		<?php if(!empty($data['BirthDate'])): ?>
@@ -712,7 +841,7 @@
 				var reader = new FileReader();
 				reader.onload = function(e) {
 					$('#blah').attr('src', e.target.result);
-					localStorage.setItem('profileImage', e.target.result);
+					// localStorage.setItem('profileImage', e.target.result);
 				}
 				reader.readAsDataURL(input.files[0]);
 			}

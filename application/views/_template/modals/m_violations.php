@@ -4,7 +4,7 @@
 
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title PrintOutHistory">Violation Records for <?=$LastName?>, <?=$FirstName?> <?=$MiddleInitial?>.</h4>
+					<h4 class="modal-title PrintOutHistory">Violation Records for <?=$LastName?>, <?=$FirstName?> <?=$MiddleName?>.</h4>
 					<div class="text-right">
 						<div class="datatables-export-violations"></div>
 						<button type="button" class="close d-none d-sm-block" data-dismiss="modal">&times;</button>

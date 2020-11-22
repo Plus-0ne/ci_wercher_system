@@ -30,17 +30,17 @@ class Delete_Controller extends CI_Controller {
 					foreach($CheckEmployee->result_array() as $row) {
 						$LastName = $row['LastName'];
 						$FirstName = $row['FirstName'];
-						$MiddleInitial = $row['MiddleInitial'];
+						$MiddleName = $row['MiddleName'];
 						$ContactNumber = $row['Phone_No'];
 					}
 				} else {
 					// default
 					$LastName = 'N/A';
 					$FirstName = 'N/A';
-					$MiddleInitial = 'N/A';
+					$MiddleName = 'N/A';
 				}
-				$this->Model_Logbook->SetPrompts('success', 'success', 'Succesfully archived ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleInitial));
-				$this->Model_Logbook->LogbookEntry('Red', 'Applicant', ' archived <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $id . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleInitial) . '</a>');
+				$this->Model_Logbook->SetPrompts('success', 'success', 'Succesfully archived ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName));
+				$this->Model_Logbook->LogbookEntry('Red', 'Applicant', ' archived <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $id . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a>');
 				$this->Model_Logbook->LogbookExtendedEntry(0, 'Applicant ID: ' . $id);
 				$this->Model_Logbook->LogbookExtendedEntry(0, 'ContactNumber: ' . $ContactNumber);
 				if (isset($_SERVER['HTTP_REFERER'])) {
@@ -74,7 +74,7 @@ class Delete_Controller extends CI_Controller {
 						$AdminID = $row['AdminID'];
 						$LastName = $row['LastName'];
 						$FirstName = $row['FirstName'];
-						$MiddleInitial = $row['MiddleInitial'];
+						$MiddleName = $row['MiddleName'];
 						$AdminLevel = $row['AdminLevel'];
 						$Position = $row['Position'];
 						$DateAdded = $row['DateAdded'];
@@ -84,14 +84,14 @@ class Delete_Controller extends CI_Controller {
 					$AdminID = 'N/A';
 					$LastName = 'N/A';
 					$FirstName = 'N/A';
-					$MiddleInitial = 'N/A';
+					$MiddleName = 'N/A';
 					$AdminLevel = 'N/A';
 					$Position = 'N/A';
 					$DateAdded = 'N/A';
 				}
 				$this->Model_Logbook->SetPrompts('success', 'success', 'Succesfully archived admin ' . $AdminID);
 				$this->Model_Logbook->LogbookEntry('Red', 'Admin', ' removed admin <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewAdmin?id=' . $id . '" target="_blank">' . $AdminID . '</a>');
-				$this->Model_Logbook->LogbookExtendedEntry(0, 'Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleInitial));
+				$this->Model_Logbook->LogbookExtendedEntry(0, 'Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName));
 				$this->Model_Logbook->LogbookExtendedEntry(0, 'Position: ' . $AdminLevel . ' - ' . $Position);
 				$this->Model_Logbook->LogbookExtendedEntry(0, 'Date Added: ' . date('Y-m-d H:i:s A',$row['DateAdded']));
 				if (isset($_SERVER['HTTP_REFERER'])) {

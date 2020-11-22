@@ -1,21 +1,28 @@
 <nav id="sidebar" style="position: fixed;">
 	<div class="sidebar-banner text-center">
+		<img class="PrintOutModal PrintOutModalExpired PrintOutHistory" height="26" with="22" style="margin-top: -5px; margin-left: -5px;" src="<?=base_url()?>assets/img/wercher_logo.png">
 		<b>
 			<span style="color: gold;">W</span>ercher <span style="color: gold;">C</span>oop
 		</b>
 	</div>
 	<div class="sidebar-header text-center">
-		<div class="text-center" style="width: 100%;">
+		<div class="text-center <?php if($this->session->userdata('is_logged_in') == 'Active') { echo 'mt-4'; } ?>" style="width: 100%;">
+			<?php if($this->session->userdata('is_logged_in') == 'Active'): ?>
+			<a href="Logbook?admin=<?php echo $this->session->userdata('AdminID'); ?>">
+				<img class="m-auto PrintOutModal PrintOutModalExpired PrintOutHistory rounded-circle" height="112" width="112" src="<?php echo $this->session->userdata('AdminImage') ?>">
+			</a>
+			<?php else: ?>
 			<a href="Dashboard">
 				<img class="m-auto PrintOutModal PrintOutModalExpired PrintOutHistory" src="<?=base_url()?>assets/img/wercher_logo.png">
 			</a>
+			<?php endif; ?>
 		</div>
 	</div>
 	<ul class="list-unstyled components">
 		<div class="text-center pt-2 pb-3">
 				<?php
-				if (isset($_SESSION['is_logged_in'])) {
-					echo '<small>'.strtoupper($_SESSION['FirstName']).' '.strtoupper($_SESSION['MiddleInitial']).' '.strtoupper($_SESSION['LastName']).'</small>';
+				if ($this->session->userdata('is_logged_in') == 'Active') {
+					echo '<small><a style="color: gold;" href="Logbook?admin=' . $this->session->userdata('AdminID') . '">' . $this->session->userdata('AdminID') . '</a></small>';
 					echo '<h6>'.strtoupper($_SESSION['Position']).'</h6>';
 				}
 				else

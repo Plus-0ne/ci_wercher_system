@@ -47,8 +47,8 @@ if ($LastName == NULL) {
 if ($FirstName == NULL) {
 	$FirstName = '&nbsp;';
 }
-if ($MiddleInitial == NULL) {
-	$MiddleInitial = '&nbsp;';
+if ($MiddleName == NULL) {
+	$MiddleName = '&nbsp;';
 }
 if ($Gender == NULL) {
 	$Gender = '&nbsp;';
@@ -328,7 +328,7 @@ if ($Referral == NULL) {
 							</ul> -->
 							<div class="row mt-2">
 								<div class="col-sm-12">
-									<button type="button" class="btn btn-success eprint-print-btn eprint-print-btn-glow" onClick="printContent('PrintOut')" style="width: 400px;"><i class="fas fa-print"></i> Print</button>
+									<button type="button" class="btn btn-success eprint-print-btn glow-gold" onClick="printContent('PrintOut')" style="width: 400px;"><i class="fas fa-print"></i> Print</button>
 									<a href="<?=base_url();?>ModifyEmployee?id=<?=$ApplicantID;?>" class="btn btn-primary eprint-print-btn"><i class="fas fa-edit"></i> Edit</a>
 								</div>
 							</div>
@@ -381,7 +381,7 @@ if ($Referral == NULL) {
 								<i>Lower Maingate, Sitio Tagbac, Brgy. San Jose, Antipolo City</i>
 							</div>
 							<div class="col-sm-12 eprint-logo-info printemployee-tooltip">
-								<p id="Name" width="200px" height="50px"><span><b><?php echo $LastName; ?>, <?php echo $NameExtension; ?> <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.</b></span></p>
+								<p id="Name" width="200px" height="50px"><span><b><?php echo $LastName; ?>, <?php echo $NameExtension; ?> <?php echo $FirstName; ?>  <?php echo $MiddleName; ?>.</b></span></p>
 							</div>
 						</div>
 						<div class="col-md-6 mb-5 eprint-photo">

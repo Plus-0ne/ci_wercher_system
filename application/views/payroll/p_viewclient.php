@@ -62,7 +62,6 @@ use Carbon\Carbon;
 						<div class="table-responsive w-100">
 							<table id="WeeklyTable" class="table table-condensed" style="font-size: 14px;">
 								<thead>
-									<th style="min-width: 100px;">Applicant ID</th>
 									<th style="min-width: 200px;">Name</th>
 									<th style="min-width: 50px;">Salary (₱)</th>
 									<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
@@ -83,8 +82,7 @@ use Carbon\Carbon;
 										$TotalRegHours = 0;
 										$TotalOTHours = 0;?>
 										<tr id="<?php echo $row['SalaryExpected']; ?>" data-clientid="<?php echo $row['ClientEmployed']; ?>" data="<?php echo $row['ApplicantID']; ?>" class='clickable-row' data-toggle="modal" data-target="#HoursWeeklyModal_<?php echo $row['ApplicantID']; ?>">
-											<td><?php echo $row['ApplicantID'];?></td>
-											<td><?php echo $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'];?></td>
+											<td data-toggle="tooltip" data-placement="top" data-html="true" title="<b>Employee ID: </b><br><?php echo $row['EmployeeID']; ?><br><br><b>Applicant ID: </b><br><?php echo $row['ApplicantID']; ?>"><a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>" target="_blank"><?php echo $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'];?></a></td>
 											<td><?php echo $row['SalaryExpected'];?></td>
 											<?php foreach ($GetWeeklyDates->result_array() as $brow):
 												?> <td> <?php

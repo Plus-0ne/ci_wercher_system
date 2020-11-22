@@ -65,7 +65,13 @@ use Carbon\Carbon;
 												<?php echo $row['Address']; ?>
 											</td>
 											<td>
-												<?php echo $row['ContactNumber']; ?>
+												<?php 
+													if ($row['ContactNumber']) {
+														echo $row['ContactNumber'];
+													} else {
+														echo '<i style="color: gray;">No record.</i>';
+													}
+												?>
 											</td>
 											<td>
 												<span style="color: rgba(0, 0, 0, 0.33);">WC</span><?php echo $row['EmployeeIDSuffix']; ?><span style="color: rgba(0, 0, 0, 0.5);">-####-<?php 

@@ -151,9 +151,6 @@
 	public function Dashboard()
 	{
 		$this->load->model('Model_Deletes');
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
 
 		###	CHECK SESSION
 		// $this->CheckUserLogin();
@@ -333,10 +330,6 @@
 	
 	public function V_Applicants()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		$header['title'] = 'Applicants | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
@@ -360,10 +353,6 @@
 	}
 	public function V_ApplicantsExpired()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		$header['title'] = 'Expired Contracts | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
@@ -380,10 +369,6 @@
 	}
 	public function V_Archived()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		$header['title'] = 'Archived | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
@@ -401,10 +386,6 @@
 	}
 	public function V_Blacklisted()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		$header['title'] = 'Blacklisted | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
@@ -422,9 +403,6 @@
 	}
 	public function Employee()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
 
 		$header['title'] = 'Employees | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
@@ -449,10 +427,6 @@
 	}
 	public function EmployeePermanent()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		$header['title'] = 'Regular Employees | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
@@ -477,10 +451,6 @@
 	}
 	public function ViewEmployee()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		if (isset($_GET['id'])) {
 
 			$id = $_GET['id'];
@@ -502,7 +472,7 @@
 					'SalaryExpected' => $ged['SalaryExpected'],
 					'LastName' => $ged['LastName'],
 					'FirstName' => $ged['FirstName'],
-					'MiddleInitial' => $ged['MiddleInitial'],
+					'MiddleName' => $ged['MiddleName'],
 					'Gender' => $ged['Gender'],
 					'Age' => $ged['Age'],
 					'Height' => $ged['Height'],
@@ -579,7 +549,7 @@
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employee</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleName'] . '.' . '</a></li>
 					</ol>
 					</nav>';
 				} elseif ($data['Status'] == 'Expired') {
@@ -588,7 +558,7 @@
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a href="ApplicantsExpired">Expired</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleName'] . '.' . '</a></li>
 					</ol>
 					</nav>';
 				} elseif ($data['Status'] == 'Blacklisted') {
@@ -597,7 +567,7 @@
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a href="Blacklisted">Blacklisted</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleName'] . '.' . '</a></li>
 					</ol>
 					</nav>';
 				} elseif ($data['Status'] == 'Deleted') {
@@ -606,7 +576,7 @@
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a href="Archived">Archived</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleName'] . '.' . '</a></li>
 					</ol>
 					</nav>';
 				} else {
@@ -614,7 +584,7 @@
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleName'] . '.' . '</a></li>
 					</ol>
 					</nav>';
 				}
@@ -632,10 +602,6 @@
 	}
 	public function PrintEmployee()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		if (isset($_GET['id'])) {
 
 			$id = $_GET['id'];
@@ -657,7 +623,7 @@
 					'SalaryExpected' => $ged['SalaryExpected'],
 					'LastName' => $ged['LastName'],
 					'FirstName' => $ged['FirstName'],
-					'MiddleInitial' => $ged['MiddleInitial'],
+					'MiddleName' => $ged['MiddleName'],
 					'Gender' => $ged['Gender'],
 					'Age' => $ged['Age'],
 					'Height' => $ged['Height'],
@@ -728,7 +694,7 @@
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employee</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleName'] . '.' . '</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="PrintEmployee?id=' . $ApplicantID .'">Print</a></li>
 					</ol>
 					</nav>';
@@ -738,7 +704,7 @@
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a href="ApplicantsExpired">Expired</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleName'] . '.' . '</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="PrintEmployee?id=' . $ApplicantID .'">Print</a></li>
 					</ol>
 					</nav>';
@@ -748,7 +714,7 @@
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a href="Blacklisted">Blacklisted</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleName'] . '.' . '</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="PrintEmployee?id=' . $ApplicantID .'">Print</a></li>
 					</ol>
 					</nav>';
@@ -758,7 +724,7 @@
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a href="Archived">Archived</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleName'] . '.' . '</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="PrintEmployee?id=' . $ApplicantID .'">Print</a></li>
 					</ol>
 					</nav>';
@@ -767,7 +733,7 @@
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleName'] . '.' . '</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="PrintEmployee?id=' . $ApplicantID .'">Print</a></li>
 					</ol>
 					</nav>';
@@ -786,10 +752,6 @@
 	}
 	public function SSS_Table()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		$header['title'] = 'SSS Table | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
@@ -804,10 +766,6 @@
 	}
 	public function ModifyEmployee()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		if (isset($_GET['id'])) {
 
 			$id = $_GET['id'];
@@ -829,7 +787,7 @@
 					'SalaryExpected' => $ged['SalaryExpected'],
 					'LastName' => $ged['LastName'],
 					'FirstName' => $ged['FirstName'],
-					'MiddleInitial' => $ged['MiddleInitial'],
+					'MiddleName' => $ged['MiddleName'],
 					'Gender' => $ged['Gender'],
 					'Age' => $ged['Age'],
 					'Height' => $ged['Height'],
@@ -891,7 +849,7 @@
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employee</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleName'] . '.' . '</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="">Edit</a></li>
 					</ol>
 					</nav>';
@@ -901,7 +859,7 @@
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a href="ApplicantsExpired">Expired</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleName'] . '.' . '</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="">Edit</a></li>
 					</ol>
 					</nav>';
@@ -911,7 +869,7 @@
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a href="Blacklisted">Blacklisted</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleName'] . '.' . '</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="">Edit</a></li>
 					</ol>
 					</nav>';
@@ -921,7 +879,7 @@
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a href="Archived">Archived</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleName'] . '.' . '</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="">Edit</a></li>
 					</ol>
 					</nav>';
@@ -930,7 +888,7 @@
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleInitial'] . '.' . '</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">' . $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleName'] . '.' . '</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="">Edit</a></li>
 					</ol>
 					</nav>';
@@ -949,10 +907,6 @@
 	}
 	public function GenerateIDCard()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		if (isset($_GET['id'])) {
 
 			$id = $_GET['id'];
@@ -974,7 +928,7 @@
 					'SalaryExpected' => $ged['SalaryExpected'],
 					'LastName' => $ged['LastName'],
 					'FirstName' => $ged['FirstName'],
-					'MiddleInitial' => $ged['MiddleInitial'],
+					'MiddleName' => $ged['MiddleName'],
 					'Gender' => $ged['Gender'],
 					'Age' => $ged['Age'],
 					'Height' => $ged['Height'],
@@ -1045,10 +999,6 @@
 	}
 	public function NewEmployee()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		$header['title'] = 'New Employee | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
@@ -1062,10 +1012,6 @@
 	}
 	public function View_Admins()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		$header['title'] = 'Administrator | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
@@ -1079,10 +1025,6 @@
 	}
 	public function Clients()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		$header['title'] = 'Clients | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
@@ -1096,10 +1038,6 @@
 	}
 	public function PayrollClients()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		$header['title'] = 'Clients | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
@@ -1114,10 +1052,6 @@
 	}
 	public function ViewPayroll()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		$id = $_GET['id'];
 		$mode = $_GET['mode'];
 
@@ -1156,10 +1090,6 @@
 	}
 	public function ViewClient()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		if (isset($_GET['id'])) {
 
 			$id = $_GET['id'];
@@ -1217,10 +1147,6 @@
 	}
 	public function ExcelImportSuccessful()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		$header['title'] = 'Client Information | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
@@ -1234,10 +1160,6 @@
 	}
 	public function Experimental()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		$header['title'] = 'Experimental | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
@@ -1519,10 +1441,6 @@
 	}
 	public function Search()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		$header['title'] = 'Search | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
@@ -1546,10 +1464,6 @@
 	}
 	public function Logbook()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		$header['title'] = 'Logbook | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
@@ -1824,10 +1738,6 @@
 	}
 	public function GeneratePayslip()
 	{
-		unset($_SESSION["acadcart"]);
-		unset($_SESSION["emp_cart"]);
-		unset($_SESSION["mach_cart"]);
-
 		$header['title'] = 'Generate Payslip | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '

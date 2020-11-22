@@ -95,7 +95,7 @@ use Carbon\Carbon;
 												</div>
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php if($row['MiddleInitial'] != ''): echo $row['MiddleInitial'] . '.'; endif; ?>
+												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php if($row['MiddleName'] != ''): echo $row['MiddleName'] . '.'; endif; ?>
 											</td>
 											<td class="text-center align-middle">
 												<?php
@@ -138,7 +138,7 @@ use Carbon\Carbon;
 											</td>
 											<?php else: ?>
 											<td class="text-center align-middle">
-												No record.
+												<i style="color: gray;">No record.</i>
 											</td>
 											<?php endif; ?>
 											<td class="text-center align-middle PrintExclude">
@@ -146,7 +146,7 @@ use Carbon\Carbon;
 												<?php if ($ShowAdmin->num_rows() > 1) { ?>
 													<a href="<?=base_url()?>RemoveAdmin?id=<?php echo $row['AdminNo']; ?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Admin?')"><i class="fas fa-trash"></i> Delete</a>
 												<?php } else { ?>
-													<button data-toggle="tooltip" data-placement="top" data-html="true" title="Must have 1 admin minimum." class="btn btn-secondary btn-sm w-100 mb-1 wercher-hover-disabled" onclick="alert('Must have 1 admin minimum.')"><i class="fas fa-lock"></i> Delete</button>
+													<button data-toggle="tooltip" data-placement="top" data-html="true" title="Must have 1 admin minimum." class="btn btn-secondary btn-sm w-100 mb-1 hover-disabled" onclick="alert('Must have 1 admin minimum.')"><i class="fas fa-lock"></i> Delete</button>
 												<?php } ?>
 											</td>
 										</tr>

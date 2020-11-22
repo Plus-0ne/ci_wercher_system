@@ -332,7 +332,7 @@ class Update_Controller extends CI_Controller {
 		$SalaryExpected = $this->input->post('SalaryExpected');
 		$LastName = $this->input->post('LastName');
 		$FirstName = $this->input->post('FirstName');
-		$MI = $this->input->post('MI');
+		$MiddleName = $this->input->post('MiddleName');
 		$Gender = $this->input->post('Gender');
 		$Age = $this->input->post('Age');
 		$Height = $this->input->post('Height');
@@ -372,7 +372,7 @@ class Update_Controller extends CI_Controller {
 				'SalaryExpected' => $SalaryExpected,
 				'LastName' => $LastName,
 				'FirstName' => $FirstName,
-				'MI' => $MI,
+				'MiddleName' => $MiddleName,
 				'Gender' => $Gender,
 				'Age' => $Age,
 				'Height' => $Height,
@@ -418,7 +418,7 @@ class Update_Controller extends CI_Controller {
 					$prevSalaryExpected = $row['SalaryExpected'];
 					$prevLastName = $row['LastName'];
 					$prevFirstName = $row['FirstName'];
-					$prevMI = $row['MiddleInitial'];
+					$prevMiddleName = $row['MiddleInitial'];
 					$prevGender = $row['Gender'];
 					$prevAge = $row['Age'];
 					$prevHeight = $row['Height'];
@@ -458,7 +458,7 @@ class Update_Controller extends CI_Controller {
 				$prevSalaryExpected = 'N/A';
 				$prevLastName = 'N/A';
 				$prevFirstName = 'N/A';
-				$prevMI = 'N/A';
+				$prevMiddleName = 'N/A';
 				$prevGender = 'N/A';
 				$prevAge = 'N/A';
 				$prevHeight = 'N/A';
@@ -529,7 +529,7 @@ class Update_Controller extends CI_Controller {
 				'SalaryExpected' => $SalaryExpected,
 				'LastName' => ucfirst($LastName),
 				'FirstName' => ucfirst($FirstName),
-				'MiddleInitial' => ucfirst($MI),
+				'MiddleInitial' => ucfirst($MiddleName),
 				'Gender' => $Gender,
 				'Age' => $Age,
 				'Height' => $Height,
@@ -670,8 +670,8 @@ class Update_Controller extends CI_Controller {
 					$this->Model_Logbook->LogbookExtendedEntry(0, 'First Name changed from <b>' . $prevFirstName . '</b> to <b>' . $FirstName . '</b>', +1);
 					$changesCounter++;
 				}
-				if ($MI != $prevMI) {
-					$this->Model_Logbook->LogbookExtendedEntry(0, 'Middle Initial changed from <b>' . $prevMI . '</b> to <b>' . $MI . '</b>', +1);
+				if ($MiddleName != $prevMiddleName) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Middle Initial changed from <b>' . $prevMiddleName . '</b> to <b>' . $MiddleName . '</b>', +1);
 					$changesCounter++;
 				}
 				if ($Gender != $prevGender) {
@@ -815,7 +815,7 @@ class Update_Controller extends CI_Controller {
 					$changesCounter++;
 				}
 				if ($changesCounter > 0) {
-					$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' updated details for <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
+					$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' updated details for <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a>');
 					$this->Model_Logbook->SetPrompts('success', 'success', 'Details updated');
 				}
 				redirect($_SERVER['HTTP_REFERER']);
@@ -850,14 +850,14 @@ class Update_Controller extends CI_Controller {
 				foreach($CheckEmployee->result_array() as $row) {
 					$LastName = $row['LastName'];
 					$FirstName = $row['FirstName'];
-					$MI = $row['MiddleInitial'];
+					$MiddleName = $row['MiddleInitial'];
 				}
 			} else {
 				$LastName = 'N/A';
 				$FirstName = 'N/A';
-				$MI = 'N/A';
+				$MiddleName = 'N/A';
 			}
-			$this->Model_Logbook->LogbookEntry('Yellow', 'Note', ' attached a new note to <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
+			$this->Model_Logbook->LogbookEntry('Yellow', 'Note', ' attached a new note to <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a>');
 			$this->Model_Logbook->LogbookExtendedEntry(0, $Note);
 			redirect(base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Documents');
 
@@ -964,11 +964,11 @@ class Update_Controller extends CI_Controller {
 						foreach($CheckApplicant->result_array() as $row) {
 							$LastName = $row['LastName'];
 							$FirstName = $row['FirstName'];
-							$MI = $row['MiddleInitial'];
+							$MiddleName = $row['MiddleInitial'];
 							$ReminderDateString = $row['ReminderDateString'];
 						}
 						if ($duration != $ReminderDateString) {
-							$this->Model_Logbook->LogbookEntry('Yellow', 'Note', ' added a new contract reminder to <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
+							$this->Model_Logbook->LogbookEntry('Yellow', 'Note', ' added a new contract reminder to <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a>');
 							$this->Model_Logbook->LogbookExtendedEntry(0, 'Notifies when the date reaches ' . $duration . ' before contract expires');
 						}
 						redirect($_SERVER['HTTP_REFERER']);
@@ -1008,10 +1008,10 @@ class Update_Controller extends CI_Controller {
 				foreach($CheckApplicant->result_array() as $row) {
 					$LastName = $row['LastName'];
 					$FirstName = $row['FirstName'];
-					$MI = $row['MiddleInitial'];
+					$MiddleName = $row['MiddleInitial'];
 				}
-				$this->Model_Logbook->SetPrompts('success', 'success', 'Successfully blacklisted ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI));
-				$this->Model_Logbook->LogbookEntry('Red', 'Employee', ' blacklisted <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
+				$this->Model_Logbook->SetPrompts('success', 'success', 'Successfully blacklisted ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName));
+				$this->Model_Logbook->LogbookEntry('Red', 'Employee', ' blacklisted <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a>');
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
 				}
@@ -1041,10 +1041,10 @@ class Update_Controller extends CI_Controller {
 				foreach($CheckApplicant->result_array() as $row) {
 					$LastName = $row['LastName'];
 					$FirstName = $row['FirstName'];
-					$MI = $row['MiddleInitial'];
+					$MiddleName = $row['MiddleInitial'];
 				}
-				$this->Model_Logbook->SetPrompts('success', 'success', 'Successfully restored ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI));
-				$this->Model_Logbook->LogbookEntry('Green', 'Applicant', ' restored <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
+				$this->Model_Logbook->SetPrompts('success', 'success', 'Successfully restored ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName));
+				$this->Model_Logbook->LogbookEntry('Green', 'Applicant', ' restored <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a>');
 				$this->Model_Logbook->LogbookExtendedEntry(0, 'Changed status from <b>Blacklisted</b> to <b>Applicant</b>');
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
@@ -1249,9 +1249,9 @@ class Update_Controller extends CI_Controller {
 							foreach($CheckApplicant->result_array() as $row) {
 								$LastName = $row['LastName'];
 								$FirstName = $row['FirstName'];
-								$MI = $row['MiddleInitial'];
+								$MiddleName = $row['MiddleInitial'];
 							}
-							$this->Model_Logbook->LogbookEntry('Blue', 'Salary', ' updated the hours of <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
+							$this->Model_Logbook->LogbookEntry('Blue', 'Salary', ' updated the hours of <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a>');
 						}
 					}
 					else
@@ -1762,9 +1762,9 @@ class Update_Controller extends CI_Controller {
 					// foreach($CheckApplicant->result_array() as $row) {
 					// 	$LastName = $row['LastName'];
 					// 	$FirstName = $row['FirstName'];
-					// 	$MI = $row['MiddleInitial'];
+					// 	$MiddleName = $row['MiddleInitial'];
 					// }
-					// $this->Model_Logbook->LogbookEntry('Blue', 'Salary', ' updated the hours of <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) . '</a>');
+					// $this->Model_Logbook->LogbookEntry('Blue', 'Salary', ' updated the hours of <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a>');
 					// $this->Model_Logbook->LogbookExtendedEntry(0, 'Changed status from <b>Blacklisted</b> to <b>Applicant</b>');
 					redirect('ExcelImportSuccessful');
 				}

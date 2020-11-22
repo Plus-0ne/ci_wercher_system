@@ -92,7 +92,7 @@
 		</div>
 		<div class="col-sm-12 col-md-4 e-det">
 			<p>
-				<?php echo $LastName; ?> , <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.
+				<?php echo $LastName; ?> , <?php echo $FirstName; ?>  <?php echo $MiddleName; ?>.
 			</p>
 		</div>
 		<div class="col-sm-12 col-md-2 e-title">

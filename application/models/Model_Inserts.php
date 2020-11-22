@@ -75,7 +75,7 @@ class Model_Inserts extends CI_Model {
 	public function InsertToClient($ClientID, $Temp_ApplicantID, $data)
 	{
 		extract($data);
-		$Name = $LastName . ', ' . $FirstName . ' ' . $MiddleInitial . '.';
+		$Name = $LastName . ', ' . $FirstName . ' ' . $MiddleName . '.';
 		$data = array(
 			'ClientID' => $ClientID,
 			'ApplicantID' => $Temp_ApplicantID,

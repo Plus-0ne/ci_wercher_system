@@ -3,7 +3,7 @@
 		<div class="modal-content">
 			<?php echo form_open(base_url().'ExtendContract','method="POST"');?>
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Extend Contract for <?=$LastName?>, <?=$FirstName?> <?=$MiddleInitial?>.</h5>
+				<h5 class="modal-title" id="exampleModalLongTitle">Extend Contract for <?=$LastName?>, <?=$FirstName?> <?=$MiddleName?>.</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>

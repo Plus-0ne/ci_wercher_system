@@ -27,6 +27,9 @@ input[type="range"]::-webkit-slider-runnable-track {
 .hover-info:hover {
 	cursor: help;
 }
+.hover-disabled:hover {
+	cursor: help;
+}
 .table th {
 	border: none;
 	border-color: black;
@@ -757,7 +760,7 @@ a[data-toggle="collapse"] {
 	margin-top: -20px;
 	margin-bottom: 5px;
 }
-.wercher-hover-disabled:hover {
+.hover-disabled:hover {
 	cursor: not-allowed !important;
 }
 .wercher-progress-bar {
@@ -927,8 +930,8 @@ a[data-toggle="collapse"] {
 	font-size: 18px;
 }
 
-.eprint-print-btn-glow {
-	animation: glow-green 1s infinite alternate;
+.glow-gold {
+	animation: glow-gold 1s linear infinite alternate;
 }
 
 .eprint-field-title { 
@@ -1493,12 +1496,12 @@ input[type=number]::-webkit-inner-spin-button {
         display: none !important;
     }
 }
-@keyframes glow-green {
+@keyframes glow-gold {
 	from {
-		box-shadow: 0 0 10px 10px gold;
+		box-shadow: 0 0 10px -10px gold;
 	}
 	to {
-		box-shadow: 0 0 10px -10px gold;
+		box-shadow: 0 0 10px 10px gold;
 	}
 }
 @keyframes glow-red {

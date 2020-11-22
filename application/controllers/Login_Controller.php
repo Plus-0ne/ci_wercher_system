@@ -26,11 +26,12 @@ class Login_Controller extends CI_Controller {
 				if (password_verify($Password, $d_row['Password'])) {
 					$data = array(
 						'AdminNo' => $d_row['AdminNo'],
+						'AdminImage' => $d_row['Image'],
 						'AdminLevel' => $d_row['AdminLevel'],
 						'Position' => $d_row['Position'],
 						'AdminID' => $d_row['AdminID'],
 						'FirstName' => $d_row['FirstName'],
-						'MiddleInitial' => $d_row['MiddleInitial'],
+						'MiddleName' => $d_row['MiddleName'],
 						'LastName' => $d_row['LastName'],
 						'Gender' => $d_row['Gender'],
 						'DateAdded' => $d_row['DateAdded'],

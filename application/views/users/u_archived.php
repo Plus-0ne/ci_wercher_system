@@ -67,25 +67,31 @@ use Carbon\Carbon;
 										<tr class="table-row-hover">
 											<td class="text-center">
 												<div class="col-sm-12">
-													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
+													<a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle"></a>
 												</div>
 												<div class="col-sm-12 align-middle">
-													<?php echo $row['ApplicantID']; ?>
+													<a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $row['ApplicantID']; ?></a>
 												</div>
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
+												<a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleName']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?></a>
 												<br>
 												<i style="color: gray;"><?php echo $row['PositionDesired']; ?></i>
 											</td>
 											<td class="text-center align-middle d-none">
-												<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
+												<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleName']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
 											</td>
 											<td class="text-center align-middle d-none">
 												<?php echo $row['PositionDesired']; ?>
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['Phone_No']; ?>
+												<?php 
+													if ($row['Phone_No']) {
+														echo $row['Phone_No'];
+													} else {
+														echo '<i style="color: gray;">No record.</i>';
+													}
+												?>
 											</td>
 											<td class="text-center align-middle" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $elapsed->diffForHumans(); ?>">
 												<div class="d-none">

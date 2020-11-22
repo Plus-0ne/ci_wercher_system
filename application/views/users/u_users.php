@@ -12,7 +12,7 @@ if ($LatestHireesCount > 0):
 		$thumbnail = substr($thumbnail, 0, -4);
 		$thumbnail = $thumbnail . '_thumb.jpg';
 		$LatestHireesIteration++;
-		$LatestHireesText = $LatestHireesText . '<a href="ViewEmployee?id=' . $erow['ApplicantID'] . '">' . '<img src="' . $thumbnail .'" height="18px; width: 18px;" class="rounded-circle"> ' . $erow['LastName'] . ', ' . $erow['FirstName'] . ' ' . $erow['MiddleInitial']  .'.';
+		$LatestHireesText = $LatestHireesText . '<a href="ViewEmployee?id=' . $erow['ApplicantID'] . '">' . '<img src="' . $thumbnail .'" height="18px; width: 18px;" class="rounded-circle"> ' . $erow['LastName'] . ', ' . $erow['FirstName'] . ' ' . $erow['MiddleName']  .'.';
 		if ($erow['NameExtension'] != NULL) {
 			$LatestHireesText = $LatestHireesText . ', ' . $erow['NameExtension'];
 		}
@@ -93,23 +93,25 @@ endif;
 													// 	$thumbnail = $row['ApplicantImage'];
 													// }
 													?>
-													<img src="<?php echo $thumbnail; ?>" width="70" height="70" class="rounded-circle">
+													<a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><img src="<?php echo $thumbnail; ?>" width="70" height="70" class="rounded-circle"></a>
 												</div>
 												<div class="col-sm-12 align-middle">
+													<a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>">
 													<?php if($row['EmployeeID'] != NULL): ?>
 														<?php echo $row['EmployeeID']; ?>
 													<?php else: ?>
 														<?php echo 'No Employee ID'; ?>
 													<?php endif; ?>
+													</a>
 												</div>
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
+												<a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleName']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?></a>
 												<br>
 												<i style="color: gray;"><?php echo $row['PositionDesired']; ?></i>
 											</td>
 											<td class="text-center align-middle d-none">
-												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
+												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleName']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
 											</td>
 											<td class="text-center align-middle d-none">
 												<?php echo $row['PositionDesired']; ?>

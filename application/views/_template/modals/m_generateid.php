@@ -11,7 +11,7 @@
 						<div class="wercher-idcard-fields">
 							<div class="wercher-idcard-name">
 								<div class="col-sm-12">
-									<?php echo $LastName . ', ' . $FirstName . ' ' . $MiddleInitial . '.'; ?>
+									<?php echo $LastName . ', ' . $FirstName . ' ' . $MiddleName . '.'; ?>
 								</div>
 							</div>
 							<div class="row">

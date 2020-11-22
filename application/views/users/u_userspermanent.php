@@ -55,23 +55,25 @@
 													// 	$thumbnail = $row['ApplicantImage'];
 													// }
 													?>
-													<img src="<?php echo $thumbnail; ?>" width="70" height="70" class="rounded-circle">
+													<a href="<?php echo base_url(); ?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><img src="<?php echo $thumbnail; ?>" width="70" height="70" class="rounded-circle"></a>
 												</div>
 												<div class="col-sm-12 align-middle">
+													<a href="<?php echo base_url(); ?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>">
 													<?php if($row['EmployeeID'] != NULL): ?>
 														<?php echo $row['EmployeeID']; ?>
 													<?php else: ?>
 														<?php echo 'No Employee ID'; ?>
 													<?php endif; ?>
+													</a>
 												</div>
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
+												<a href="<?php echo base_url(); ?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleName']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?></a>
 												<br>
 												<i style="color: gray;"><?php echo $row['PositionDesired']; ?></i>
 											</td>
 											<td class="text-center align-middle d-none">
-												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
+												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleName']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
 											</td>
 											<td class="text-center align-middle d-none">
 												<?php echo $row['PositionDesired']; ?>

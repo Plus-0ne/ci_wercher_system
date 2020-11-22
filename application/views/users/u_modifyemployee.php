@@ -33,7 +33,7 @@
 											</div>
 											<div class="form-group col-sm-12 col-md-2">
 												<label>Middle&nbsp;Initial</label>
-												<input class="form-control" type="text" name="MI" autocomplete="off" value="<?php echo $MiddleInitial; ?>" maxlength="1">
+												<input class="form-control" type="text" name="MI" autocomplete="off" value="<?php echo $MiddleName; ?>" maxlength="1">
 											</div>
 											<div class="form-group col-sm-12 col-md-3">
 												<label>Name Extension</label>
