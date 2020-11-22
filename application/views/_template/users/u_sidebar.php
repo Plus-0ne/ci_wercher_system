@@ -94,8 +94,10 @@
 				</li>
 			</ul>
 		</li>
+		<?php if($this->session->userdata('is_logged_in') == 'Active'): ?>
 		<li class="nav-item mb-4">
 			<a class="link-s" class="sublink" href="<?=base_url()?>"><span class="fas fa-sign-out-alt fa-fw"></span> Logout </a>
 		</li>
+		<?php endif; ?>
 	</ul>
 </nav>
