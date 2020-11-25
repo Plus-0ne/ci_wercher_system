@@ -326,4 +326,11 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->update('applicants', $data);
 		return $result;
 	}
+	public function UpdateClientInfo($data)
+	{
+		extract($data);
+		$this->db->where('ClientID', $ClientID);
+		$result = $this->db->update('clients', $data);
+		return $result;
+	}
 }

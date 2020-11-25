@@ -1268,6 +1268,10 @@ a[data-toggle="collapse"] {
 	bottom: 5px;
 	left: 10px;
 }
+.required-field {
+	font-size: 14px;
+	color: red;
+}
 /*form {
 	display: none;
 }*/

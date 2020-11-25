@@ -7,8 +7,8 @@
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="col-12 col-sm-12 tabs">
 					<ul>
-						<li><a href="<?php echo base_url() ?>Employee">Employees (<?php echo $get_employee->num_rows()?>)</a></li>
-						<li class="tabs-active"><a href="<?php echo base_url() ?>Employee/Regular">Regular (<?php echo $GetPermanentEmployees->num_rows()?>)</a></li>
+						<li><a href="<?php echo base_url() ?>Employees">Employees (<?php echo $get_employee->num_rows()?>)</a></li>
+						<li class="tabs-active"><a href="<?php echo base_url() ?>Employees/Regulars">Regulars (<?php echo $GetPermanentEmployees->num_rows()?>)</a></li>
 					</ul>
 				</div>
 				<div class="row rcontent">
@@ -104,7 +104,7 @@
 												</div>
 											</td>
 											<td class="text-center align-middle">
-												<a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"<?php if($isFullNameHoverable): ?> data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $fullNameHover; ?>"<?php endif; ?>><?php echo $fullName; ?></a>
+												<a href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"<?php if($isFullNameHoverable): ?> data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $fullNameHover; ?>"<?php endif; ?>><?php echo $fullName; ?></a>
 												<br>
 												<i style="color: gray;"><?php echo $row['PositionDesired']; ?></i>
 											</td>

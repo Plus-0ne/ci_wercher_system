@@ -56,34 +56,48 @@ use Carbon\Carbon;
 										$hours = $date->format('h:i:s A');
 										$elapsed = Carbon::parse($date);
 
+										$clientName = $row['Name'];
+										$isClientNameHoverable = false;
+										if (strlen($clientName) > 25) {
+											$clientName = substr($clientName, 0, 25);
+											$clientName = $clientName . '...';
+											$isClientNameHoverable = true;
+										}
+										$clientNameHover = $row['Name'];
+										$clientAddress = $row['Address'];
+										$clientContact = $row['ContactNumber'];
+
+									 	$now = new DateTime();
+										$currentYear = $now->format('Y');
+										$currentYear = substr($currentYear, -2);
+										$clientSuffix = '<span style="color: rgba(0, 0, 0, 0.33);">WC</span>' . $row['EmployeeIDSuffix'] . '<span style="color: rgba(0, 0, 0, 0.5);">-####-' . $currentYear . '</span>';
+										$clientSuffixNoColor = 'WC' . $row['EmployeeIDSuffix'] . '-####-' . $currentYear;
+
+
 										?>
 										<tr class="text-center align-middle table-row-hover">
-											<td>
-												<?php echo $row['Name']; ?>
+											<td<?php if ($isClientNameHoverable): ?> data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $clientNameHover; ?>"<?php endif; ?>>
+												<?php echo $clientName; ?>
 											</td>
 											<td>
-												<?php echo $row['Address']; ?>
+												<?php echo $clientAddress; ?>
 											</td>
 											<td>
 												<?php 
-													if ($row['ContactNumber']) {
-														echo $row['ContactNumber'];
+													if ($clientContact) {
+														echo $clientContact;
 													} else {
 														echo '<i style="color: gray;">No record.</i>';
 													}
 												?>
 											</td>
 											<td>
-												<span style="color: rgba(0, 0, 0, 0.33);">WC</span><?php echo $row['EmployeeIDSuffix']; ?><span style="color: rgba(0, 0, 0, 0.5);">-####-<?php 
-													$now = new DateTime();
-													$currentYear = $now->format('Y');
-													echo $currentYear; 
-												?>		
-												</span>
+												<?php echo $clientSuffix; ?>
 											</td>
 											<td>
 												<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['ClientID'])->num_rows(); ?>
 											</td>
+											<?php if (!empty($row['DateAdded'])): ?>
 											<td class="text-center align-middle" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $elapsed->diffForHumans(); ?>">
 												<div class="d-none">
 													<?php echo $row['DateAdded']; ?>
@@ -92,12 +106,17 @@ use Carbon\Carbon;
 													echo $day . '<br>' . $hours;
 												?>
 											</td>
+											<?php else: ?>
+											<td>
+												<i style="color: gray;">No record.</i>
+											</td>
+											<?php endif; ?>
 											<td class="text-center align-middle d-none">
 												<?php echo $day . ' at ' . $hours; ?>
 											</td>
 											<td class="text-center align-middle PrintExclude">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>Clients?id=<?php echo $row['ClientID']; ?>"><i class="fas fa-users"></i> Employees</a>
-												<a href="<?=base_url()?>RemoveClient?id=<?=$row['ClientID']?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Client?')"><i class="fas fa-trash"></i> Delete</a>
+												<button type="button" class="btn btn-info btn-sm w-100 edit-client-btn" data-toggle="modal" data-target="#editClient" data-clientid="<?php echo $row['ClientID']; ?>" data-clientname="<?php echo $clientName; ?>" data-clientaddress="<?php echo $clientAddress; ?>" data-clientcontact="<?php echo $clientContact; ?>" data-clientsuffix="<?php echo $row['EmployeeIDSuffix']; ?>" data-clientsuffixpreview="<?php echo $clientSuffixNoColor; ?>"><i class="fas fa-edit"></i> Edit</button>
 											</td>
 										</tr>
 									<?php endforeach ?>
@@ -115,16 +134,16 @@ use Carbon\Carbon;
 			<div class="modal-content">
 				<?php echo form_open(base_url().'Add_newClient','method="post"');?>
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Add New Client</h5>
+					<h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-plus"></i> Add New Client</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
+				<div id="InputFields" class="modal-body">
 					<div class="form-row">
 						<div class="form-group col-sm-12">
-							<label>Name</label>
-							<input class="form-control" type="text" name="ClientName" autocomplete="off">
+							<label>Name <span class="required-field">*</span></label>
+							<input id="ClientName" class="form-control" type="text" name="ClientName" autocomplete="off">
 						</div>
 					</div>
 					<div class="form-row">
@@ -141,7 +160,7 @@ use Carbon\Carbon;
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-5">
-							<label>Employee ID Suffix <span style="color: rgba(0, 0, 0, 0.55);" data-toggle="tooltip" data-placement="top" data-html="true" title="Applicants who get hired to this client will be assigned the designated Employee ID with this as the suffix. See the preview for an example.<br><br>By default, all ID follows the format of WC(Suffix)-NUMBER-YEAR. You can manually change the ID of an applicant whenever they are hired."><i>(?)</i></span></label>
+							<label>Employee ID Suffix <span style="color: rgba(0, 0, 0, 0.55);" data-toggle="tooltip" data-placement="top" data-html="true" title="Applicants who get hired to this client will be assigned the designated Employee ID with this as the suffix. See the preview for an example.<br><br>By default, all ID follows the format of WC(Suffix)-NUMBER-YEAR. You can manually change the ID of an applicant whenever they are hired."><i>(?)</i></span> <span class="required-field">*</span></label>
 							<input id="EmployeeIDSuffix" class="form-control" type="text" name="EmployeeIDSuffix" autocomplete="off">
 						</div>
 						<div class="form-group col-sm-2 text-center">
@@ -155,7 +174,14 @@ use Carbon\Carbon;
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Add</button>
+					<div class="save-btn-locked-group">
+						<span class="mr-2" style="font-size: 18px; color: rgba(255, 25, 25);"><i class="fas fa-exclamation-circle"></i> Name and suffix is required</span>
+						<button type="button" class="btn btn-secondary hover-disabled"><i class="fas fa-lock"></i> Add</button>
+					</div>
+					<div class="save-btn-valid-group" style="display: none;">
+						<span class="mr-2" style="font-size: 18px; color: green;"><i class="fas fa-check-circle"></i> Client is valid for saving</span>
+						<button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Add</button>
+					</div>
 				</div>
 				<?php echo form_close();?>
 			</div>
@@ -165,10 +191,95 @@ use Carbon\Carbon;
 	<?php $this->load->view('_template/modals/m_export'); ?>
 	<!-- CLIENTS EMPLOYED MODAL -->
 	<?php $this->load->view('_template/modals/m_clientemployees'); ?>
+	<!-- EDIT CLIENT MODAL -->
+	<?php $this->load->view('_template/modals/m_clientedit'); ?>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		let currentYear = new Date().getFullYear().toString().substr(-2);
+		// Local storage
+		// ~ preloading
+		var inputCart = {
+			items: []
+		};
+		var cartName = 'inputClientCart';
+		let inputFieldCounter = 0;
+		<?php if(!empty($this->session->userdata('isClientAdded'))): ?>
+			inputCart = JSON.parse(localStorage.getItem(cartName));
+			if (inputCart) {
+				let inputCartLength = inputCart.items.length;
+				for(let i = 0; i < inputCartLength; i++) {
+					localStorage.removeItem(inputCart.items[i]);
+				}
+			}
+		<?php endif; ?>
+		$('#InputFields').find('input').each(function() {
+			let inputFieldName = $(this).attr('name'); // Fetch input location
+			let inputFieldValue = localStorage.getItem(inputFieldName); // Fetch input value from storage
+			if(inputFieldValue) {
+				$(this).val(inputFieldValue); // Assign input value to location from storage
+				inputCart.items.push(inputFieldName); // Sending as JSON
+				localStorage.setItem(cartName, JSON.stringify(inputCart));
+			}
+			if (inputFieldName == 'EmployeeIDSuffix') {
+				if (inputFieldValue) {
+					$('#SuffixPreview').val('WC' + inputFieldValue + '-####-' + currentYear);
+				}
+			}
+			if (inputFieldName == 'ClientName' || inputFieldName == 'EmployeeIDSuffix') {
+				if (inputFieldValue) { // Has data
+					inputFieldCounter++;
+					if (inputFieldCounter >= 2) {
+						$('.save-btn-locked-group').hide();
+						$('.save-btn-valid-group').show();
+					}
+				}
+			}
+		})
+		// ~ input
+		$('#InputFields').find('input').bind("input", function() {
+			let inputName = $(this).attr('name');
+			localStorage.setItem(inputName, $(this).val());
+			if (!inputCart.items.includes(inputName)) {
+				inputCart.items.push(inputName); // Sending as JSON
+				localStorage.setItem(cartName, JSON.stringify(inputCart));
+			} else { // Field is inside the cart
+				let index = inputCart.items.indexOf(inputName);
+				if (!$(this).val()) { // Check if string is empty
+					inputCart.items.splice(index, 1);
+					localStorage.setItem(cartName, JSON.stringify(inputCart));
+					localStorage.removeItem(inputName); // Remove local storage if empty
+				}
+			}
+			if (inputName == 'ClientName' || inputName == 'EmployeeIDSuffix') {
+				if (!$('#ClientName').val() || !$('#EmployeeIDSuffix').val()) {
+					$('.save-btn-locked-group').show();
+					$('.save-btn-valid-group').hide();
+				} else {
+					$('.save-btn-locked-group').hide();
+					$('.save-btn-valid-group').show();
+				}
+			}
+		});
+		// =====================
+		// Edit Client
+		$('.edit-client-btn').on('click', function() {
+			// Set ID
+			let ClientID = $(this).data('clientid');
+			$('#EditClientID').val(ClientID);
+			// Client info
+			$('#EditClientNameTitle').text($(this).data('clientname'));
+			$('#EditClientName').val($(this).data('clientname'));
+			$('#EditClientAddress').val($(this).data('clientaddress'));
+			$('#EditClientContact').val($(this).data('clientcontact'));
+			$('#EditEmployeeIDSuffix').val($(this).data('clientsuffix'));
+			$('#EditSuffixPreview').val($(this).data('clientsuffixpreview'));
+		});
+		$('#EditEmployeeIDSuffix').bind('input', function() {
+			$('#EditSuffixPreview').val('WC' + $(this).val() + '-####-' + currentYear);
+		});
+		// =====================
 		$('.sorting-table-icon').hide();
 		$('#DTSearch').attr('placeholder', 'Search table');
 		$('#DTSearch').attr('readonly', false);
@@ -179,7 +290,7 @@ use Carbon\Carbon;
 		    history.pushState(null, null, '<?php echo base_url() . 'Clients';  ?>');
 		});
 		$('#EmployeeIDSuffix').bind('input', function() {
-			$('#SuffixPreview').val('WC' + $(this).val() + '-####-20');
+			$('#SuffixPreview').val('WC' + $(this).val() + '-####-' + currentYear);
 		});
 		$('[data-toggle="tooltip"]').tooltip();
 		if (localStorage.getItem('SidebarVisible') == 'true') {

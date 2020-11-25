@@ -2450,19 +2450,6 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 
 				});
 			});
-			var defaultEmployeeID = '<?php echo $EmployeeID; ?>';
-			var defaultClientID = <?php echo $ClientEmployed; ?>;
-			var defaultSalary = <?php echo $SalaryExpected; ?>;
-			var defaultdsText = <?php echo $dsText; ?>;
-			var defaultdsH = <?php echo $dsH; ?>;
-			var defaultdsi = <?php echo $dsi; ?>;
-			var defaultdss = <?php echo $dss; ?>;
-			var defaultdsType = '<?php echo $dsType; ?>';
-			var defaultdeText = <?php echo $deText; ?>;
-			var defaultdeH = <?php echo $deH; ?>;
-			var defaultdei = <?php echo $dei; ?>;
-			var defaultdes = <?php echo $des; ?>;
-			var defaultdeType = '<?php echo $deType; ?>';
 			<?php endif; ?>
 			$('.modify-contract-reset-btn').on('click', function () {
 				$('#AddNote_ApplicantID').val($(this).attr('applicant-id'));

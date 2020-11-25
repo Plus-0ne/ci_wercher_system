@@ -51,7 +51,7 @@
 			<a class="link-s" href="<?=base_url()?>Applicants"><span class="fas fa-user-tie fa-fw"></span> Applicants </a>
 		</li>
 		<li class="nav-item">
-			<a class="link-s" href="<?=base_url()?>Employee"><span class="fas fa-users fa-fw"></span> Employees </a>
+			<a class="link-s" href="<?=base_url()?>Employees"><span class="fas fa-users fa-fw"></span> Employees </a>
 		</li>
 		<!-- FOR LEVEL 1 USER -->
 		<li class="nav-item">

@@ -473,10 +473,12 @@ class Add_Controller extends CI_Controller {
 					'Address' => $ClientAddress,
 					'ContactNumber' => $ClientContact,
 					'EmployeeIDSuffix' => $EmployeeIDSuffix,
+					'DateAdded' => date('Y-m-d h:i:s A'),
 					'Status' => 'Active',
 				);
 				$InsertNewClient = $this->Model_Inserts->InsertNewClient($data);
 				if ($InsertNewClient == TRUE) {
+					$this->session->set_userdata('isClientAdded', true);
 					$this->Model_Logbook->SetPrompts('success', 'success', 'New client added.');
 					// LOGBOOK
 					$GetClientIDFromName = $this->Model_Selects->GetClientIDFromName($ClientName);
@@ -519,7 +521,7 @@ class Add_Controller extends CI_Controller {
 
 		if ($ApplicantID == NULL || $Subject == NULL || $Description == NULL || $Remarks == NULL || $Type == NULL) {
 			$this->Model_Logbook->SetPrompts('error', 'error', 'Missing fields. Please try again.');
-			redirect('Employee');
+			redirect('Employees');
 			exit();
 		}
 
@@ -547,7 +549,7 @@ class Add_Controller extends CI_Controller {
 			// PDF File Upload
 			if ( ! $this->upload->do_upload('pFile')) {
 				$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
-				redirect('Employee');
+				redirect('Employees');
 				exit();
 			} else {
 				$pFile = base_url().'uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
@@ -580,7 +582,7 @@ class Add_Controller extends CI_Controller {
 				else
 				{
 					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
-					redirect('Employee');
+					redirect('Employees');
 					exit();
 				}
 			}

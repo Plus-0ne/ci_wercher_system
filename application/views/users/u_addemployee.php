@@ -567,6 +567,12 @@
 				inputCart.items.push(inputFieldName); // Sending as JSON
 				localStorage.setItem('inputCart', JSON.stringify(inputCart));
 			}
+			if(inputFieldName == 'FirstName' || inputFieldName == 'LastName' || inputFieldName == 'MiddleName') {
+				if (inputFieldValue) { // Has data
+					$('.save-btn-locked-group').hide();
+					$('.save-btn-valid-group').show();
+				}
+			}
 		})
 		// profileImage = localStorage.getItem('profileImage');
 		// if (profileImage) {

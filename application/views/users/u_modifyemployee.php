@@ -32,8 +32,8 @@
 												<input class="form-control" type="text" name="FirstName" autocomplete="off" value="<?php echo $FirstName; ?>">
 											</div>
 											<div class="form-group col-sm-12 col-md-2">
-												<label>Middle&nbsp;Initial</label>
-												<input class="form-control" type="text" name="MI" autocomplete="off" value="<?php echo $MiddleName; ?>" maxlength="1">
+												<label>Middle&nbsp;Name</label>
+												<input class="form-control" type="text" name="MiddleName" autocomplete="off" value="<?php echo $MiddleName; ?>">
 											</div>
 											<div class="form-group col-sm-12 col-md-3">
 												<label>Name Extension</label>
@@ -205,35 +205,61 @@
 										<b>Source of Application / Referral</b>
 										<input id="Referral" type="hidden" name="Referral" value="<?php echo $Referral; ?>">
 										<div class="form-row col-sm-12 mt-2">
-											<div class="form-group col-sm-3 col-md-3">
-												<button id="ReferralWalkIn" type="button" class="referral-btns btn <?php if ($Referral == 'Walk In'): echo 'btn-success'; else: echo 'btn-secondary'; endif; ?> w-100"><i class="fas fa-check <?php if ($Referral == 'Walk In'): echo 'wercher-visible'; else: echo 'wercher-transparent'; endif; ?>" style="margin-right: -1px;"></i></button>
+											<div class="form-group col-sm-3 col-md-2">
+												<?php if(strcasecmp($Referral, 'Walk In') == 0): // Insensitive string comparison ?>
+													<button id="ReferralWalkIn" type="button" class="referral-btns btn btn-success w-100"><i class="fas fa-check wercher-visible" style="margin-right: -1px;"></i></button>
+												<?php else: ?>
+													<button id="ReferralWalkIn" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+												<?php endif; ?>
 											</div>
-											<div class="form-group col-sm-9 col-md-9" style="margin-top: 5px;">
+											<div class="form-group col-sm-9 col-md-10" style="margin-top: 5px;">
 												Walk In
 											</div>
 										</div>
 										<div class="form-row col-sm-12">
-											<div class="form-group col-sm-3 col-md-3">
-												<button id="ReferralJobFair" type="button" class="referral-btns btn <?php if ($Referral == 'Job Fair'): echo 'btn-success'; else: echo 'btn-secondary'; endif; ?> w-100"><i class="fas fa-check <?php if ($Referral == 'Job Fair'): echo 'wercher-visible'; else: echo 'wercher-transparent'; endif; ?>" style="margin-right: -1px;"></i></button>
+											<div class="form-group col-sm-3 col-md-2">
+												<?php if(strcasecmp($Referral, 'Job Fair') == 0): // Insensitive string comparison ?>
+													<button id="ReferralJobFair" type="button" class="referral-btns btn btn-success w-100"><i class="fas fa-check wercher-visible" style="margin-right: -1px;"></i></button>
+												<?php else: ?>
+													<button id="ReferralJobFair" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+												<?php endif; ?>
 											</div>
-											<div class="form-group col-sm-9 col-md-9" style="margin-top: 5px;">
+											<div class="form-group col-sm-9 col-md-10" style="margin-top: 5px;">
 												Job Fair
 											</div>
 										</div>
 										<div class="form-row col-sm-12">
-											<div class="form-group col-sm-3 col-md-3">
-												<button id="ReferralSocialMedia" type="button" class="referral-btns btn <?php if ($Referral == 'Social Media'): echo 'btn-success'; else: echo 'btn-secondary'; endif; ?> w-100"><i class="fas fa-check <?php if ($Referral == 'Social Media'): echo 'wercher-visible'; else: echo 'wercher-transparent'; endif; ?>" style="margin-right: -1px;"></i></button>
+											<div class="form-group col-sm-3 col-md-2">
+												<?php if(strcasecmp($Referral, 'Social Media') == 0): // Insensitive string comparison ?>
+													<button id="ReferralSocialMedia" type="button" class="referral-btns btn btn-success w-100"><i class="fas fa-check wercher-visible" style="margin-right: -1px;"></i></button>
+												<?php else: ?>
+													<button id="ReferralSocialMedia" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+												<?php endif; ?>
 											</div>
-											<div class="form-group col-sm-9 col-md-9" style="margin-top: 5px;">
+											<div class="form-group col-sm-9 col-md-10" style="margin-top: 5px;">
 												Social Media
 											</div>
 										</div>
 										<div class="form-row col-sm-12">
-											<div class="form-group col-sm-12 col-md-12">
+											<div class="form-group col-sm-3 col-md-2">
+												<?php if ($Referral != NULL): ?>
+													<?php if (strcasecmp($Referral, 'Walk In') != 0 && strcasecmp($Referral, 'Job Fair') != 0 && strcasecmp($Referral, 'Social Media') != 0): 
+														$isReferralOthers = true; ?>
+														<button id="ReferralOthersButton" type="button" class="referral-btns btn btn-success w-100"><i class="fas fa-check wercher-visible" style="margin-right: -1px;"></i></button>
+													<?php else: 
+														$isReferralOthers = false; ?>
+														<button id="ReferralOthersButton" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+													<?php endif; ?>
+												<?php else: 
+													$isReferralOthers = false; ?>
+													<button id="ReferralOthersButton" type="button" class="referral-btns btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+												<?php endif; ?>
+											</div>
+											<div class="form-group col-sm-12 col-md-10" style="margin-top: 5px;">
 												Or others, please specify:
 											</div>
 											<div class="form-group col-sm-12 col-md-12" style="margin-top: 5px;">
-												<input id="ReferralOthers" class="form-control" type="text" name="ReferralOthers" autocomplete="off" value="<?php if ($Referral != 'Walk In' && $Referral != 'Job Fair' && $Referral != 'Social Media'): echo $Referral; endif; ?>">
+												<input id="ReferralOthers" class="form-control" type="text" name="ReferralOthers" autocomplete="off" value="<?php if ($isReferralOthers == true) { echo $Referral; } ?>">
 											</div>
 										</div>
 									</div>
@@ -654,6 +680,8 @@
 			$('.referral-btns').removeClass('btn-success');
 			$('.referral-btns').children('i').addClass('wercher-transparent');
 			$('.referral-btns').children('i').removeClass('wercher-visible');
+			$('#ReferralOthers').removeClass('glow-gold');
+			$('#ReferralOthers').attr('placeholder', '');
 			$('#ReferralOthers').val('');
 		});
 		$('#ReferralWalkIn').on('click', function () {
@@ -671,11 +699,39 @@
 			$(this).children('i').addClass('wercher-visible');
 			$('#Referral').val('Social Media');
 		});
-		$('#ReferralOthers').on('change', function () {
+		$('#ReferralOthersButton').on('click', function () {
+			$(this).addClass('btn-success');
+			$(this).children('i').addClass('wercher-visible');
+			$('#Referral').val($('#ReferralOthers').val());
+			$('#ReferralOthers').addClass('glow-gold');
+			$('#ReferralOthers').attr('placeholder', 'Specify here...');
+		});
+		$('#ReferralOthers').bind('input', function () {
+			$(this).removeClass('glow-gold');
 			$('.referral-btns').addClass('btn-secondary');
 			$('.referral-btns').removeClass('btn-success');
 			$('.referral-btns').children('i').addClass('wercher-transparent');
 			$('.referral-btns').children('i').removeClass('wercher-visible');
+			switch ($('#ReferralOthers').val().toUpperCase()) { // Insensitive string condition
+				case 'WALK IN':
+					$('#ReferralWalkIn').addClass('btn-success');
+					$('#ReferralWalkIn').children('i').addClass('wercher-visible');
+					break;
+				case 'JOB FAIR':
+					$('#ReferralJobFair').addClass('btn-success');
+					$('#ReferralJobFair').children('i').addClass('wercher-visible');
+					break;
+				case 'SOCIAL MEDIA':
+					$('#ReferralSocialMedia').addClass('btn-success');
+					$('#ReferralSocialMedia').children('i').addClass('wercher-visible');
+					break;
+				case '':
+					break;
+				default:
+					$('#ReferralOthersButton').addClass('btn-success');
+					$('#ReferralOthersButton').children('i').addClass('wercher-visible');
+					break;
+			}
 			$('#Referral').val($('#ReferralOthers').val());
 		});
 		var today = new Date();

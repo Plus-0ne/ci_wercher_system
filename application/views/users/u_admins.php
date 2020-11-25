@@ -229,7 +229,7 @@ use Carbon\Carbon;
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary">Save</button>
+					<button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Save</button>
 				</div>
 			</div>
 			</form>
