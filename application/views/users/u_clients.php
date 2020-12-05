@@ -28,9 +28,11 @@ use Carbon\Carbon;
 							<i class="sorting-table-icon spinner-border spinner-border-sm mr-2"></i>
 							<input id="DTSearch" type="search" class="input-bootstrap" placeholder="Sorting table..." readonly>
 						</span>
+						<?php if(in_array('ClientsEditing', $this->session->userdata('Permissions'))): ?>
 						<button class="btn btn-success" data-toggle="modal" data-target="#addClients">
 							<i class="fas fa-user-plus"></i> New
 						</button>
+						<?php endif; ?>
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
 					<div class="col-sm-12">
@@ -116,7 +118,9 @@ use Carbon\Carbon;
 											</td>
 											<td class="text-center align-middle PrintExclude">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>Clients?id=<?php echo $row['ClientID']; ?>"><i class="fas fa-users"></i> Employees</a>
+												<?php if(in_array('ClientsEditing', $this->session->userdata('Permissions'))): ?>
 												<button type="button" class="btn btn-info btn-sm w-100 edit-client-btn" data-toggle="modal" data-target="#editClient" data-clientid="<?php echo $row['ClientID']; ?>" data-clientname="<?php echo $clientName; ?>" data-clientaddress="<?php echo $clientAddress; ?>" data-clientcontact="<?php echo $clientContact; ?>" data-clientsuffix="<?php echo $row['EmployeeIDSuffix']; ?>" data-clientsuffixpreview="<?php echo $clientSuffixNoColor; ?>"><i class="fas fa-edit"></i> Edit</button>
+												<?php endif; ?>
 											</td>
 										</tr>
 									<?php endforeach ?>
@@ -205,7 +209,7 @@ use Carbon\Carbon;
 		};
 		var cartName = 'inputClientCart';
 		let inputFieldCounter = 0;
-		<?php if(!empty($this->session->userdata('isClientAdded'))): ?>
+		<?php if(!empty($this->session->flashdata('isClientAdded'))): ?>
 			inputCart = JSON.parse(localStorage.getItem(cartName));
 			if (inputCart) {
 				let inputCartLength = inputCart.items.length;
@@ -275,6 +279,7 @@ use Carbon\Carbon;
 			$('#EditClientContact').val($(this).data('clientcontact'));
 			$('#EditEmployeeIDSuffix').val($(this).data('clientsuffix'));
 			$('#EditSuffixPreview').val($(this).data('clientsuffixpreview'));
+			$('#EditRemoveClient').attr('href', 'RemoveClient?id=' + ClientID);
 		});
 		$('#EditEmployeeIDSuffix').bind('input', function() {
 			$('#EditSuffixPreview').val('WC' + $(this).val() + '-####-' + currentYear);

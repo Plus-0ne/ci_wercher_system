@@ -2,6 +2,10 @@
 /*font-family: 'Open Sans', sans-serif;  FOR SIDEBARS */
 /* font-family: 'Roboto', sans-serif; FOR HEADINGS */
 
+:root {
+	--wercher-info-color: #966800;
+}
+
 a {
 	color: rgba(155, 75, 25);
 }
@@ -30,6 +34,9 @@ input[type="range"]::-webkit-slider-runnable-track {
 .hover-disabled:hover {
 	cursor: help;
 }
+.hover-pointer:hover {
+	cursor: pointer;
+}
 .table th {
 	border: none;
 	border-color: black;
@@ -40,11 +47,17 @@ input[type="range"]::-webkit-slider-runnable-track {
 .btn-primary {
 	background-color: #c5ad00;
 	border-color: #c5ad00;
+	/*background-color: #735600;
+	border-color: #735600;*/
 }
 
 .btn-info {
 	background-color: #966800;
 	border-color: #966800;
+}
+
+.btn-secondary {
+	color: rgba(255, 255, 255, 0.5);
 }
 
 .page-item.active .page-link {
@@ -864,8 +877,14 @@ a[data-toggle="collapse"] {
 	font-size: 22px;
 }
 
+.wercher-idcard-emergency {
+	margin-top: 55px;
+	margin-left: 5px;
+	font-size: 22px;
+}
+
 .wercher-idcard-telno {
-	margin-top: 115px;
+	margin-top: 25px;
 	margin-left: 150px;
 	font-size: 22px;
 }
@@ -1271,6 +1290,30 @@ a[data-toggle="collapse"] {
 .required-field {
 	font-size: 14px;
 	color: red;
+}
+.setpermissions-text {
+	font-size: 18px;
+	margin-top: 5px;
+}
+.setpermissions-subgroup-text {
+	font-size: 14px;
+	margin-top: 5px;
+	opacity: 0.9;
+}
+.setpermissions-checked-text {
+	color: green;
+}
+#SetPermissions .form-row:hover, #EditSetPermissions .form-row:hover {
+	cursor: pointer;
+	color: var(--wercher-info-color);
+}
+.admin-moreinfo-header-text {
+	font-weight: 500;
+}
+.admin-moreinfo-activity-container {
+	height: 425px;
+	background-color: rgba(0, 0, 0, 0.08);
+	border-radius: 16px;
 }
 /*form {
 	display: none;

@@ -30,9 +30,11 @@ use Carbon\Carbon;
 							<i class="sorting-table-icon spinner-border spinner-border-sm mr-2"></i>
 							<input id="DTSearch" type="search" class="input-bootstrap" placeholder="Sorting table..." readonly>
 						</span>
+						<?php if(in_array('ApplicantsEditing', $this->session->userdata('Permissions'))): ?>
 						<a href="<?=base_url()?>NewEmployee" class="btn btn-success">
 							<i class="fas fa-user-plus"></i> New
 						</a>
+						<?php endif; ?>
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
 					<div class="col-sm-12">
@@ -61,8 +63,9 @@ use Carbon\Carbon;
 										$sortAppliedOn = strtotime($row['AppliedOn']);
 
 										$thumbnail = $row['ApplicantImage'];
+										$thumbnailType = substr($thumbnail, -4);
 										$thumbnail = substr($thumbnail, 0, -4);
-										$thumbnail = $thumbnail . '_thumb.jpg';
+										$thumbnail = $thumbnail . '_thumb' . $thumbnailType;
 
 										// Name Handler
 										$fullName = '';

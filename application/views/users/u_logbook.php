@@ -86,7 +86,7 @@
 							<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#LogbookFilter"><i class="fas fa-filter"></i> Filter</button>
 							<!-- <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button> -->
 							<span id="NotifContainer">
-								<a href="Logbook" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" data-html="true" title="Click to refresh" style="float: right;"><i class="fas fa-check"></i> Viewing latest entries</a>
+								<a href="Logbook" class="btn btn-sm btn-success ml-auto" data-toggle="tooltip" data-placement="top" data-html="true" title="Click to refresh"><i class="fas fa-check"></i> Viewing latest entries</a>
 							</span>
 						</div>
 						<hr>
@@ -238,7 +238,7 @@
 					<!-- Notes -->
 					<div class="col-md-4 wercher-tablelist-container">
 						<div class="col-12 col-sm-12 col-md-12 logbook-log-notes">
-							<input id="HookNo" class="logbook-log-notes-button" type="number" name="HookNo">
+							<input id="HookNo" class="logbook-log-notes-button" type="number" name="HookNo" style="width: 100px;">
 							<button id="HookBtn" type="button" class="btn btn-sm btn-primary"><i class="fas fa-paperclip"></i> Hook</button>
 							<span style="color: rgba(0, 0, 0, 0.55);" data-toggle="tooltip" data-placement="top" data-html="true" title="Hooking a note means it will be attached to the log entry instead of being broadcasted down below.<br><br>To find out what the Hook number is for a log entry, simply hover on the log entry and it will be shown on the right."><i>(?)</i></span>
 							<button id="PublishNote" type="button" class="btn btn-success" style="float: right;"><i class="fas fa-bullhorn"></i> Publish</button>
@@ -255,7 +255,7 @@
 								$GetLogbookLogExtended = $this->Model_Selects->GetLogbookLogExtended($row['No']);
 							?>
 							<div class="row logbook-log-container logbook-log logbook-log-toggle <?php if ($GetLogbookLogExtended->num_rows() > 0): echo 'logbook-log-hover '; endif; ?>">
-								<div class="col-sm-1">
+								<div class="col-sm-2">
 									<?php
 										$GetLogbookAdminImage = $this->Model_Selects->GetLogbookAdminImage($row['AdminID']);
 										if ($GetLogbookAdminImage->num_rows() > 0 || !empty($row['Image'])): 
@@ -263,14 +263,14 @@
 												$AdminImage = $nrow['Image'];
 											endforeach;
 											echo '
-											<div class="logbook-notes-admin-image text-center align-middle">
+											<div class="logbook-notes-admin-image ml-2">
 												<a href="?user=' . $row['AdminID'] . '"><img src="' . $AdminImage . '" width="45px" height="45px" class="rounded-circle"></a>
 											</div>
 											';
 										else:
 											$AdminImage = base_url() . 'assets/img/wercher_logo.png';
 											echo '
-											<div class="logbook-notes-admin-image text-center align-middle">
+											<div class="logbook-notes-admin-image ml-2">
 												<a href="?user=' . $row['AdminID'] . '"><img src="' . $AdminImage . '" width="53px" height="46px" class="rounded-circle"></a>
 											</div>
 											';
@@ -278,7 +278,7 @@
 
 									?>
 								</div>
-								<div class="col-sm-11">
+								<div class="col-sm-10">
 									<div class="row">
 										<div class="col-sm-12">
 											<?php echo '<a href="?user=' . $row['AdminID'] . '" class="logbook-tooltip-highlight">' . $row['AdminID'] . '</a>' . $row['Event']; ?>

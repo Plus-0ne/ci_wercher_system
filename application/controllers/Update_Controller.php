@@ -7,6 +7,7 @@ class Update_Controller extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 
+		$this->load->model('Model_Security');
 		$this->load->model('Model_Selects');
 		$this->load->model('Model_Inserts');
 		$this->load->model('Model_Deletes');
@@ -517,6 +518,25 @@ class Update_Controller extends CI_Controller {
 				else
 				{
 					$pImage = base_url().'uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
+					// Create thumbnail
+					$this->load->library('image_lib');
+					$tconfig['image_library'] = 'gd2';
+					$tconfig['source_image'] = './uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
+					$tconfig['create_thumb'] = TRUE;
+					$tconfig['maintain_ratio'] = TRUE;
+					$tconfig['width']         = 70;
+					$tconfig['height']       = 70;
+					$tconfig['new_image'] = './uploads/'.$ApplicantID.'/';
+
+					$this->load->library('image_lib', $tconfig);
+					$this->image_lib->initialize($tconfig);
+
+					$this->image_lib->resize();
+					if ( ! $this->image_lib->resize())
+					{
+					        $this->Model_Logbook->SetPrompts('error', 'error', $this->image_lib->display_errors() . $tconfig['source_image']);
+					}
+					$this->image_lib->clear();
 				}
 			}
 				// INSERT EMPLOYEE
@@ -2154,88 +2174,301 @@ class Update_Controller extends CI_Controller {
 		$ClientContact = $this->input->post('EditClientContact',TRUE);
 		$EmployeeIDSuffix = $this->input->post('EditEmployeeIDSuffix',TRUE);
 
-		if ( $ClientName == NULL || $ClientAddress == NULL || $ClientContact == NULL || $EmployeeIDSuffix == NULL ) {
-			$this->Model_Logbook->SetPrompts('error', 'error', 'All fields are required.');
+		if ( $ClientName == NULL || $EmployeeIDSuffix == NULL ) {
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Client name and suffix is required');
 			redirect('Clients');
 		}
 		else
 		{
-			$CheckClient = $this->Model_Selects->CheckClient($ClientName);
-			if ($CheckClient->num_rows() <= 0) {
-				$this->Model_Logbook->SetPrompts('error', 'error', 'Client does not exist.');
+			$GetClientID = $this->Model_Selects->GetClientID($ClientID);
+			if ($GetClientID->num_rows() > 0) {
+				foreach($GetClientID->result_array() as $crow) {
+					if ($crow['Name'] != NULL) {
+						$prevClientName = $crow['Name'];
+					} else {
+						$prevClientName = 'N/A';
+					}
+					if ($crow['Address'] != NULL) {
+						$prevClientAddress = $crow['Address'];
+					} else {
+						$prevClientAddress = 'N/A';
+					}
+					if ($crow['ContactNumber'] != NULL) {
+						$prevClientContact = $crow['ContactNumber'];
+					} else {
+						$prevClientContact = 'N/A';
+					}
+					if ($crow['EmployeeIDSuffix'] != NULL) {
+						$prevEmployeeIDSuffix = $crow['EmployeeIDSuffix'];
+					} else {
+						$prevEmployeeIDSuffix = 'N/A';
+					}
+				}
+			} else {
+				$prevClientName = 'N/A';
+				$prevClientAddress = 'N/A';
+				$prevClientContact = 'N/A';
+				$prevEmployeeIDSuffix = 'N/A';
+			}
+			$data = array(
+				'ClientID' => $ClientID,
+				'Name' => $ClientName,
+				'Address' => $ClientAddress,
+				'ContactNumber' => $ClientContact,
+				'EmployeeIDSuffix' => $EmployeeIDSuffix,
+			);
+			$UpdateClientInfo = $this->Model_Updates->UpdateClientInfo($data);
+			if ($UpdateClientInfo) {
+				// LOGBOOK
+				$this->Model_Logbook->LogbookEntry('Blue', 'Client', ' updated client <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $ClientID . '" target="_blank">' . $ClientName . '</a>');
+				$changesCounter = 0;
+				if ($prevClientName != $ClientName) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Name changed from <b>' . $prevClientName . '</b> to <b>' . $ClientName . '</b>.');
+					$changesCounter++;
+				}
+				if ($prevClientAddress != $ClientAddress) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Address changed from <b>' . $prevClientAddress . '</b> to <b>' . $ClientAddress . '</b>.');
+					$changesCounter++;
+				}
+				if ($prevClientContact != $ClientContact) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Contact number changed from <b>' . $prevClientContact . '</b> to <b>' . $ClientContact . '</b>.');
+					$changesCounter++;
+				}
+				if ($prevEmployeeIDSuffix != $EmployeeIDSuffix) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Employee\'s ID Suffix changed from <b>' . $prevEmployeeIDSuffix . '</b> to <b>' . $EmployeeIDSuffix . '</b>.');
+					$changesCounter++;
+				}
+				if ($changesCounter == 0) {
+					$this->Model_Logbook->SetPrompts('info', 'info', 'No changes made');
+				} else {
+					$this->Model_Logbook->SetPrompts('success', 'success', 'Updated client succesfully');
+				}
 				redirect('Clients');
 			}
 			else
 			{
-				$GetClientID = $this->Model_Selects->GetClientID($ClientID);
-				if ($GetClientID->num_rows() > 0) {
-					foreach($GetClientID->result_array() as $crow) {
-						if ($crow['Name'] != NULL) {
-							$prevClientName = $crow['Name'];
-						} else {
-							$prevClientName = 'N/A';
-						}
-						if ($crow['Address'] != NULL) {
-							$prevClientAddress = $crow['Address'];
-						} else {
-							$prevClientAddress = 'N/A';
-						}
-						if ($crow['ContactNumber'] != NULL) {
-							$prevClientContact = $crow['ContactNumber'];
-						} else {
-							$prevClientContact = 'N/A';
-						}
-						if ($crow['EmployeeIDSuffix'] != NULL) {
-							$prevEmployeeIDSuffix = $crow['EmployeeIDSuffix'];
-						} else {
-							$prevEmployeeIDSuffix = 'N/A';
-						}
-					}
-				} else {
-					$prevClientName = 'N/A';
-					$prevClientAddress = 'N/A';
-					$prevClientContact = 'N/A';
-					$prevEmployeeIDSuffix = 'N/A';
-				}
-				$data = array(
-					'ClientID' => $ClientID,
-					'Name' => $ClientName,
-					'Address' => $ClientAddress,
-					'ContactNumber' => $ClientContact,
-					'EmployeeIDSuffix' => $EmployeeIDSuffix,
-				);
-				$UpdateClientInfo = $this->Model_Updates->UpdateClientInfo($data);
-				if ($UpdateClientInfo) {
-					// LOGBOOK
-					$this->Model_Logbook->LogbookEntry('Blue', 'Client', ' updated client <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $ClientID . '" target="_blank">' . $ClientName . '</a>');
-					$changesCounter = 0;
-					if ($prevClientName != $ClientName) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Name changed from <b>' . $prevClientName . '</b> to <b>' . $ClientName . '</b>.');
-						$changesCounter++;
-					}
-					if ($prevClientAddress != $ClientAddress) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Address changed from <b>' . $prevClientAddress . '</b> to <b>' . $ClientAddress . '</b>.');
-						$changesCounter++;
-					}
-					if ($prevClientContact != $ClientContact) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Contact number changed from <b>' . $prevClientContact . '</b> to <b>' . $ClientContact . '</b>.');
-						$changesCounter++;
-					}
-					if ($prevEmployeeIDSuffix != $EmployeeIDSuffix) {
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Employee\'s ID Suffix changed from <b>' . $prevEmployeeIDSuffix . '</b> to <b>' . $EmployeeIDSuffix . '</b>.');
-						$changesCounter++;
-					}
-					if ($changesCounter == 0) {
-						$this->Model_Logbook->SetPrompts('info', 'info', 'No changes made');
-					} else {
-						$this->Model_Logbook->SetPrompts('success', 'success', 'Updated client succesfully');
-					}
-					redirect('Clients');
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+				redirect('Clients');
+			}
+		}
+	}
+	public function EditAdmin() 
+	{
+		$AdminDatabaseID = $this->input->post('EditAdminDatabaseID',TRUE);
+		$AdminID = $this->input->post('EditAdminID',TRUE);
+		$Password = $this->input->post('EditNewPasswordHolder',TRUE);
+		$PasswordChanged = $this->input->post('EditPasswordChanged',TRUE);
+		$PasswordVerified = $this->session->flashdata('checkPasswordVerification'); // Called from Main Controller -> AJAX_checkPassword
+		// 'pImage': Do not forget the encryption.
+		$pImage = $this->input->post('EditAdminImage');
+		$pImageChecker = $this->input->post('EditpImageChecker');
+		$Permissions = $this->input->post('EditPermissionsCart',TRUE);
+		$Position = $this->input->post('EditAdminPosition',TRUE);
+		$FirstName = $this->input->post('EditAdminFirstName',TRUE);
+		$MiddleName = $this->input->post('EditAdminMiddleName',TRUE);
+		$LastName = $this->input->post('EditAdminLastName',TRUE);
+		$Notes = $this->input->post('EditAdminNotes',TRUE);
+
+		if (!$PasswordVerified && $PasswordChanged) {
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Current password not verified. Are you trying to bypass?');
+			redirect('Admins');
+		} else {
+			if ($Position == NULL || $AdminID == NULL) {
+				$this->Model_Logbook->SetPrompts('error', 'error', 'ID, password, and position is required.');
+				redirect('Admins');
+			}
+			else
+			{
+				$CheckAdminNo = $this->Model_Selects->CheckAdminNo($AdminDatabaseID);
+				if ($CheckAdminNo->num_rows() <= 0) {
+					$this->Model_Logbook->SetPrompts('error', 'error', 'Admin not found in database');
+					redirect('Admins');
 				}
 				else
 				{
-					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
-					redirect('Clients');
+					$CheckAdminID = $this->Model_Selects->CheckAdminID($AdminID);
+					if ($CheckAdminID->num_rows() > 1) {
+						$this->Model_Logbook->SetPrompts('error', 'error', 'Admin ID already exists');
+						redirect('Admins');
+					} else {
+						$config['upload_path']          = './uploads/'.$AdminID;
+						$config['allowed_types']        = 'gif|jpg|png';
+						$config['max_size']             = 2000;
+						$config['max_width']            = 2000;
+						$config['max_height']           = 2000;
+
+						$this->load->library('upload', $config);
+						if (!is_dir('uploads'))
+						{
+							mkdir('./uploads', 0777, true);
+						}
+						if (!is_dir('uploads/' . $AdminID))
+						{
+							mkdir('./uploads/' . $AdminID, 0777, true);
+							$dir_exist = false;
+						}
+						if (!$_FILES['EditadminImage']['name'] == '') {
+							if ($pImageChecker != NULL) {
+								if ( ! $this->upload->do_upload('EditadminImage'))
+								{
+									$this->Model_Logbook->SetPrompts('error', 'error', $this->upload->display_errors());
+									redirect('Admins');
+								}
+								else
+								{
+									$pImage = base_url().'uploads/'.$AdminID.'/'.$this->upload->data('file_name');
+									// Create thumbnail
+									$this->load->library('image_lib');
+									$tconfig['image_library'] = 'gd2';
+									$tconfig['source_image'] = './uploads/'.$AdminID.'/'.$this->upload->data('file_name');
+									$tconfig['create_thumb'] = TRUE;
+									$tconfig['maintain_ratio'] = TRUE;
+									$tconfig['width']         = 70;
+									$tconfig['height']       = 70;
+									$tconfig['new_image'] = './uploads/'.$AdminID.'/';
+
+									$this->load->library('image_lib', $tconfig);
+									$this->image_lib->initialize($tconfig);
+
+									$this->image_lib->resize();
+									if ( ! $this->image_lib->resize())
+									{
+									        $this->Model_Logbook->SetPrompts('error', 'error', $this->image_lib->display_errors() . $tconfig['source_image']);
+									}
+									$this->image_lib->clear();
+								}
+							}
+						}
+						foreach($CheckAdminNo->result_array() as $crow) {
+							$prevAdminID = $crow['AdminID'];
+							if ($PasswordVerified && $PasswordChanged) {
+								$prevPassword = $crow['Password'];
+							}
+							$prevpImage = $crow['Image'];
+							$prevPermissions = $crow['Permissions'];
+							$prevPosition = $crow['Position'];
+							$prevFirstName = $crow['FirstName'];
+							$prevMiddleName = $crow['MiddleName'];
+							$prevLastName = $crow['LastName'];
+							$prevNotes = $crow['Notes'];
+						}
+						if ($prevAdminID == NULL) {
+							$prevAdminID = 'N/A';
+						}
+						if ($PasswordVerified && $PasswordChanged) {
+							if ($prevPassword == NULL) {
+								$prevPassword = 'N/A';
+							}
+						}
+						if ($prevpImage == NULL) {
+							$prevpImage = 'N/A';
+						}
+						if ($prevPermissions == NULL) {
+							$prevPermissions = 'N/A';
+						}
+						if ($prevPosition == NULL) {
+							$prevPosition = 'N/A';
+						}
+						if ($prevFirstName == NULL) {
+							$prevFirstName = 'N/A';
+						}
+						if ($prevMiddleName == NULL) {
+							$prevMiddleName = 'N/A';
+						}
+						if ($prevLastName == NULL) {
+							$prevLastName = 'N/A';
+						}
+						if ($prevNotes == NULL) {
+							$prevNotes = 'N/A';
+						}
+
+						$data = array(
+							'AdminID' => $AdminID,
+							'Image' => $pImage,
+							'Permissions' => $Permissions,
+							'Position' => $Position,
+							'FirstName' => $FirstName,
+							'MiddleName' => $MiddleName,
+							'LastName' => $LastName,
+							'Notes' => $Notes,
+						);
+						if ($PasswordVerified && $PasswordChanged) {
+							$En_Password = password_hash($Password, PASSWORD_BCRYPT);
+							$data['Password'] = $En_Password;
+						}
+						$InsertAdminToEditHistory = $this->Model_Inserts->InsertAdminToEditHistory($data);
+						$UpdateAdminInfo = $this->Model_Updates->UpdateAdminInfo($data, $AdminDatabaseID);
+						if ($UpdateAdminInfo == TRUE) {
+							if ($this->session->userdata('AdminID') === $AdminID) {
+								$data = array(
+									'AdminImage' => $pImage,
+									'Permissions' => explode(',', $Permissions),
+									'Position' => $Position,
+									'AdminID' => $AdminID,
+									'FirstName' => $FirstName,
+									'MiddleName' => $MiddleName,
+									'LastName' => $LastName,
+									'Notes' => $Notes,
+								);
+								$this->session->set_userdata($data);
+							}
+							// LOGBOOK
+							$this->Model_Logbook->LogbookEntry('Blue', 'Admin', ' updated <a class="logbook-tooltip-highlight" href="' . base_url() . 'Admins?id=' . $AdminID . '" target="_blank">' . $AdminID . '</a>');
+							$changesCounter = 0;
+							if ($prevAdminID != $AdminID && $AdminID != NULL) {
+								$this->Model_Logbook->LogbookExtendedEntry(0, 'Admin ID changed from <b>' . $prevAdminID . '</b> to <b>' . $AdminID . '</b>.');
+								$changesCounter++;
+							}
+							if ($PasswordVerified && $PasswordChanged) {
+								if ($prevPassword != $En_Password && $Password != NULL) {
+									$this->Model_Logbook->LogbookExtendedEntry(0, 'Changed password.');
+									$changesCounter++;
+								}
+							}
+							if ($prevpImage != $pImage && $pImage != NULL) {
+								$this->Model_Logbook->LogbookExtendedEntry(0, 'Changed profile picture.');
+								$changesCounter++;
+							}
+							if ($prevPermissions != $Permissions && $Permissions != NULL) {
+								$prevPermissions = explode(',', $prevPermissions);
+								$prevPermissions = implode(', ', $prevPermissions);
+								$Permissions = explode(',', $Permissions);
+								$this->Model_Logbook->LogbookExtendedEntry(0, 'Permissions changed from <b>' . $prevPermissions . '</b> to <b>' . $Permissions . '</b>.');
+								$changesCounter++;
+							}
+							if ($prevPosition != $Position && $Position != NULL) {
+								$this->Model_Logbook->LogbookExtendedEntry(0, 'Position changed from <b>' . $prevPosition . '</b> to <b>' . $Position . '</b>.');
+								$changesCounter++;
+							}
+							if ($prevFirstName != $FirstName && $FirstName != NULL) {
+								$this->Model_Logbook->LogbookExtendedEntry(0, 'First name changed from <b>' . $prevFirstName . '</b> to <b>' . $FirstName . '</b>.');
+								$changesCounter++;
+							}
+							if ($prevMiddleName != $MiddleName && $MiddleName != NULL) {
+								$this->Model_Logbook->LogbookExtendedEntry(0, 'Middle name changed from <b>' . $prevMiddleName . '</b> to <b>' . $MiddleName . '</b>.');
+								$changesCounter++;
+							}
+							if ($prevLastName != $LastName && $LastName != NULL) {
+								$this->Model_Logbook->LogbookExtendedEntry(0, 'Last name changed from <b>' . $prevLastName . '</b> to <b>' . $LastName . '</b>.');
+								$changesCounter++;
+							}
+							if ($prevNotes != $Notes && $Notes != NULL) {
+								$this->Model_Logbook->LogbookExtendedEntry(0, 'Notes changed from <b>' . $prevNotes . '</b> to <b>' . $Notes . '</b>.');
+								$changesCounter++;
+							}
+							if ($changesCounter == 0) {
+								$this->Model_Logbook->SetPrompts('info', 'info', 'No changes made');
+							} else {
+								$this->Model_Logbook->SetPrompts('success', 'success', 'Updated admin succesfully');
+							}
+							redirect('Admins');
+						}
+						else
+						{
+							$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+							redirect('Admins');
+						}
+					}
 				}
 			}
 		}

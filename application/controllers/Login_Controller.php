@@ -27,7 +27,7 @@ class Login_Controller extends CI_Controller {
 					$data = array(
 						'AdminNo' => $d_row['AdminNo'],
 						'AdminImage' => $d_row['Image'],
-						'AdminLevel' => $d_row['AdminLevel'],
+						'Permissions' => explode(',', $d_row['Permissions']),
 						'Position' => $d_row['Position'],
 						'AdminID' => $d_row['AdminID'],
 						'FirstName' => $d_row['FirstName'],
@@ -35,6 +35,7 @@ class Login_Controller extends CI_Controller {
 						'LastName' => $d_row['LastName'],
 						'Gender' => $d_row['Gender'],
 						'DateAdded' => $d_row['DateAdded'],
+						'Notes' => $d_row['Notes'],
 						'is_logged_in' => 'Active',
 					);
 					$this->session->set_userdata($data);

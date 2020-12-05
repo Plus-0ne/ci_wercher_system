@@ -28,8 +28,15 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('machine_operated', $data);
 		return $result;
 	}
-	public function InsertNewClient($data)
+	public function InsertNewClient($data, $ClientID)
 	{
+		$date = date('Y-m-d');
+		$salary_data = array(
+			'ClientID' => $ClientID,
+			'WeekStart' => $date,
+			'TimeAdded' => 'On creation',
+		);
+		$result = $this->db->insert('salary', $salary_data);
 		$result = $this->db->insert('clients', $data);
 		return $result;
 	}
@@ -144,6 +151,14 @@ class Model_Inserts extends CI_Model {
 	{
 		$this->db->where('ID', $ID);
 		$result = $this->db->update('payroll_loans', $data);
+		return $result;
+	}
+	public function InsertAdminToEditHistory($data)
+	{
+		$now = new DateTime();
+		$DateUpdated = $now->format('Y-m-d H:i:s');
+		$data['DateUpdated'] = $DateUpdated;
+		$result = $this->db->insert('admin_edithistory', $data);
 		return $result;
 	}
 }

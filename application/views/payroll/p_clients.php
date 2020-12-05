@@ -76,21 +76,38 @@ use Carbon\Carbon;
 											} else {
 												$PrimaryWeek = 'N/A';
 											}
+
+											$clientName = $row['Name'];
+											$isClientNameHoverable = false;
+											if (strlen($clientName) > 25) {
+												$clientName = substr($clientName, 0, 25);
+												$clientName = $clientName . '...';
+												$isClientNameHoverable = true;
+											}
+											$clientNameHover = $row['Name'];
+											$clientAddress = $row['Address'];
+											$clientContact = $row['ContactNumber'];
 										?>
 										<tr class="text-center align-middle">
-											<td>
-												<?php echo $row['Name']; ?>
+											<td<?php if ($isClientNameHoverable): ?> data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $clientNameHover; ?>"<?php endif; ?>>
+												<?php echo $clientName; ?>
 											</td>
 											<td>
-												<?php echo $row['Address']; ?>
+												<?php echo $clientAddress; ?>
 											</td>
 											<td>
-												<?php echo $row['ContactNumber']; ?>
+												<?php 
+													if ($clientContact) {
+														echo $clientContact;
+													} else {
+														echo '<i style="color: gray;">No record.</i>';
+													}
+												?>
 											</td>
 											<td>
 												<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['ClientID'])->num_rows(); ?>
 											</td>
-											<td data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $elapsed->diffForHumans(); ?>">
+											<td <?php if(!empty($elapsed)): ?> data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $elapsed->diffForHumans(); ?>"<?php endif; ?>>
 												<?php echo $day; ?>
 											</td>
 											<td>

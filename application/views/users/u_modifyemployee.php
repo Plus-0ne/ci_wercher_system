@@ -286,7 +286,7 @@
 								<div class="form-row">
 									<div class="form-group col-sm-7 col-md-7">
 										<label>Person to notify in case of emergency</label>
-										<input class="form-control" type="text" name="EmergencyPerson" autocomplete="off" value="<?php echo $Address_Present; ?>">
+										<input class="form-control" type="text" name="EmergencyPerson" autocomplete="off" value="<?php echo $EmergencyPerson; ?>">
 									</div>
 									<div class="form-group col-sm-1 col-md-1 text-center">
 										<p><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></p>
@@ -294,7 +294,7 @@
 									</div>
 									<div class="form-group col-sm-4 col-md-4">
 										<label>Contact Number</label>
-										<input class="form-control" type="text" name="EmergencyContact" autocomplete="off" value="<?php echo $Address_Provincial; ?>">
+										<input class="form-control" type="text" name="EmergencyContact" autocomplete="off" value="<?php echo $EmergencyContact; ?>">
 									</div>
 								</div>
 								<div class="mt-5">

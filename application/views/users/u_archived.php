@@ -30,9 +30,11 @@ use Carbon\Carbon;
 							<i class="sorting-table-icon spinner-border spinner-border-sm mr-2"></i>
 							<input id="DTSearch" type="search" class="input-bootstrap" placeholder="Sorting table..." readonly>
 						</span>
+						<?php if(in_array('ApplicantsEditing', $this->session->userdata('Permissions'))): ?>
 						<a href="<?=base_url()?>NewEmployee" class="btn btn-success">
 							<i class="fas fa-user-plus"></i> New
 						</a>
+						<?php endif; ?>
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
 					<div class="col-sm-12">
@@ -61,8 +63,9 @@ use Carbon\Carbon;
 										$sortAppliedOn = strtotime($row['AppliedOn']);
 
 										$thumbnail = $row['ApplicantImage'];
+										$thumbnailType = substr($thumbnail, -4);
 										$thumbnail = substr($thumbnail, 0, -4);
-										$thumbnail = $thumbnail . '_thumb.jpg';
+										$thumbnail = $thumbnail . '_thumb' . $thumbnailType;
 
 										// Name Handler
 										$fullName = '';
@@ -141,7 +144,9 @@ use Carbon\Carbon;
 											</td>
 											<td class="text-center align-middle PrintExclude" width="100">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
+												<?php if(in_array('ApplicantsEditing', $this->session->userdata('Permissions'))): ?>
 												<a href="<?=base_url()?>RestoreEmployee?id=<?php echo $row['ApplicantID']; ?>" class="btn btn-success btn-sm w-100 mb-1"><i class="fas fa-redo"></i> Restore</a>
+												<?php endif; ?>
 
 												<!-- <a href="<?=base_url()?>RemoveEmployee?id=<?php echo $row['ApplicantID']; ?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Applicant?')"><i class="fas fa-lock"></i> Archive</a> -->
 											</td>

@@ -52,6 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'Main_Controller';
 $route['404_override'] = 'Main_Controller/FourOhFour';
 $route['translate_uri_dashes'] = FALSE;
+$route['Forbidden'] = 'Main_Controller/Forbidden';
 
 $route['Dashboard'] = 'Main_Controller/Dashboard';
 $route['Employees'] = 'Main_Controller/Employee';
@@ -117,6 +118,7 @@ $route['SetPrimaryWeek'] = 'Update_Controller/SetPrimaryWeek';
 $route['ModifyContract'] = 'Update_Controller/ModifyContract';
 $route['EmployUserPermanent'] = 'Update_Controller/EmployUserPermanent';
 $route['EditClient'] = 'Update_Controller/EditClient';
+$route['EditAdmin'] = 'Update_Controller/EditAdmin';
 
 // AJAX
 $route['AJAX_addLogbookNotes'] = 'Main_Controller/AJAX_addLogbookNotes';
@@ -128,4 +130,8 @@ $route['AJAX_updateSSSToBePaid'] = 'Update_Controller/AJAX_updateSSSToBePaid';
 $route['AJAX_removePayrollLoans'] = 'Main_Controller/AJAX_removePayrollLoans';
 $route['AJAX_showPayrollLoans'] = 'Main_Controller/AJAX_showPayrollLoans';
 $route['AJAX_insertPayrollLoans'] = 'Main_Controller/AJAX_insertPayrollLoans';
+$route['AJAX_checkPassword'] = 'Main_Controller/AJAX_checkPassword';
+$route['AJAX_showLatestAdminActivity'] = 'Main_Controller/AJAX_showLatestAdminActivity';
 
+// ADMIN
+$route['Logout'] = 'Main_Controller/Logout';

@@ -19,18 +19,18 @@
 							</div>
 							<div class="row">
 								<div class="wercher-idcard-designation">
-									<div class="col-sm-12">
+									<div id="PositionDesired" style="width:250px; height:25px;" class="col-sm-12">
 										<?php echo $PositionDesired; ?>
 									</div>
 								</div>
 								<div class="wercher-idcard-dateissued">
-									<div class="col-sm-12">
+									<div id="DateIssued" style="width:250px; height:25px;" class="col-sm-12">
 										<?php echo date("Y-m-d"); ?>
 									</div>
 								</div>
 							</div>
 							<div class="wercher-idcard-employeeid">
-								<div class="col-sm-12">
+								<div id="EmployeeID" style="width:250px; height:25px;" class="col-sm-12">
 									<?php if($Status == 'Employed'): ?>
 										<?php echo $EmployeeID; ?>
 									<?php else: ?>
@@ -46,8 +46,13 @@
 					<div id="WercherIDBack" style="width: 530px; height: 770px; user-select: none;">
 						<img class="wercher-idcard-container" src="<?php echo base_url(); ?>assets/img/wercher_id_back.png">
 						<div class="wercher-idcard-address">
-							<div class="col-sm-12">
+							<div id="Address" style="width:125px; height:25px;" class="col-sm-12">
 								<?php echo $Address_Present; ?>
+							</div>
+						</div>
+						<div id="Emergency" style="width:125px; height:25px;" class="wercher-idcard-emergency">
+							<div class="col-sm-12">
+								<?php echo $EmergencyPerson; ?>
 							</div>
 						</div>
 						<div class="wercher-idcard-telno">
@@ -99,6 +104,16 @@
 		$('#Name').textfill({
 			debug: true,
 			minFontPixels: 16,
+			maxFontPixels: 40,
+		});
+		$('#Address').textfill({
+			debug: true,
+			minFontPixels: 16,
+			maxFontPixels: 40,
+		});
+		$('#Emergency').textfill({
+			debug: true,
+			minFontPixels: 8,
 			maxFontPixels: 40,
 		});
 		$('[data-toggle="tooltip"]').tooltip();

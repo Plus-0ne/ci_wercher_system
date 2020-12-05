@@ -28,9 +28,11 @@ use Carbon\Carbon;
 							<i class="sorting-table-icon spinner-border spinner-border-sm mr-2"></i>
 							<input id="DTSearch" type="search" class="input-bootstrap" placeholder="Sorting table..." readonly>
 						</span>
+						<?php if(in_array('AdminsEditing', $this->session->userdata('Permissions'))): ?>
 						<button class="btn btn-success" data-toggle="modal" data-target="#add_UserAdmin">
 							<i class="fas fa-user-plus"></i> New
 						</button>
+						<?php endif; ?>
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
 					<div class="col-sm-12">
@@ -39,8 +41,9 @@ use Carbon\Carbon;
 								<thead>
 									<tr class="text-center">
 										<th> Username </th>
-										<th> Full Name </th>
-										<th> Access Level </th>
+										<th> Full Name / Position </th>
+										<th class="d-none"> Full Name </th>
+										<th class="d-none"> Position </th>
 										<th> Date Added </th>
 										<th class="d-none"> Date Added </th>
 										<th style="width: 325px;"> Latest Activity </th>
@@ -56,8 +59,9 @@ use Carbon\Carbon;
 										$elapsed = Carbon::parse($date);
 
 										$thumbnail = $row['Image'];
+										$thumbnailType = substr($thumbnail, -4);
 										$thumbnail = substr($thumbnail, 0, -4);
-										$thumbnail = $thumbnail . '_thumb.jpg';
+										$thumbnail = $thumbnail . '_thumb' . $thumbnailType;
 
 										$GetLatestAdminActivity = $this->Model_Selects->GetLatestAdminActivity($row['AdminID'], 1);
 										if ($GetLatestAdminActivity->num_rows() > 0) {
@@ -74,6 +78,37 @@ use Carbon\Carbon;
 											}
 										} else {
 											$isActivityNotEmpty = false;
+										}
+
+										// Name Handler
+										$fullName = '';
+										$fullNameHover = '';
+										$isFullNameHoverable = false;
+										if ($row['LastName']) {
+											$fullName = $fullName . $row['LastName'] . ', ';
+											$fullNameHover = $fullNameHover . $row['LastName'] . ', ';
+										} else {
+											$fullNameHover = $fullNameHover . '[<i>No Last Name</i>], ';
+											$isFullNameHoverable = true;
+										}
+										if ($row['FirstName']) {
+											$fullName = $fullName . $row['FirstName'] . ' ';
+											$fullNameHover = $fullNameHover . $row['FirstName'] . ' ';
+										} else {
+											$fullNameHover = $fullNameHover . '[<i>No First Name</i>] ';
+											$isFullNameHoverable = true;
+										}
+										if ($row['MiddleName']) {
+											$fullName = $fullName . $row['MiddleName'][0] . '.';
+											$fullNameHover = $fullNameHover . $row['MiddleName'][0] . '.';
+										} else {
+											$fullNameHover = $fullNameHover . '[<i>No MI</i>].';
+											$isFullNameHoverable = true;
+										}
+										if (strlen($fullName) > 25) {
+											$fullName = substr($fullName, 0, 25);
+											$fullName = $fullName . '...';
+											$isFullNameHoverable = true;
 										}
 
 										?>
@@ -95,26 +130,16 @@ use Carbon\Carbon;
 												</div>
 											</td>
 											<td class="text-center align-middle">
-												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php if($row['MiddleName'] != ''): echo $row['MiddleName'][0] . '.'; endif; ?>
+												<a href="Logbook?admin=<?php echo $row['AdminID']; ?>"<?php if($isFullNameHoverable): ?> data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $fullNameHover; ?>"<?php endif; ?>><?php echo $fullName; ?></a>
+												<br>
+												<i style="color: gray;"><?php echo $row['Position']; ?></i>
+												<br>
 											</td>
-											<td class="text-center align-middle">
-												<?php
-												switch ($row['AdminLevel']) {
-													case 'Level_1':
-														echo "Level 1 - " . $row['Position'];
-														break;
-													case 'Level_2':
-														echo "Level 2 - " . $row['Position'];
-														break;
-													case 'Level_3':
-														echo "Level 3 - " . $row['Position'];
-														break;
-													
-													default:
-														echo "ERROR";
-														break;
-												}
-												?>
+											<td class="text-center align-middle d-none">
+												<?php echo $fullName; ?>
+											</td>
+											<td class="text-center align-middle d-none">
+												<?php echo $row['Position']; ?>
 											</td>
 											<td class="text-center align-middle" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $elapsed->diffForHumans(); ?>">
 												<div class="d-none">
@@ -142,12 +167,11 @@ use Carbon\Carbon;
 											</td>
 											<?php endif; ?>
 											<td class="text-center align-middle PrintExclude">
-												<a href="<?=base_url()?>Logbook?admin=<?php echo $row['AdminID']; ?>" class="btn btn-primary btn-sm w-100 mb-1"><i class="fas fa-book"></i> Logbook</a>
-												<?php if ($ShowAdmin->num_rows() > 1) { ?>
-													<a href="<?=base_url()?>RemoveAdmin?id=<?php echo $row['AdminNo']; ?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Admin?')"><i class="fas fa-trash"></i> Delete</a>
-												<?php } else { ?>
-													<button data-toggle="tooltip" data-placement="top" data-html="true" title="Must have 1 admin minimum." class="btn btn-secondary btn-sm w-100 mb-1 hover-disabled" onclick="alert('Must have 1 admin minimum.')"><i class="fas fa-lock"></i> Delete</button>
-												<?php } ?>
+												<!-- <a href="<?=base_url()?>Logbook?admin=<?php echo $row['AdminID']; ?>" class="btn btn-primary btn-sm w-100 mb-1"><i class="fas fa-book"></i> Logbook</a> -->
+												<button type="button" class="btn btn-primary btn-sm w-100 admin-moreinfo-btn mb-1" data-toggle="modal" data-target="#AdminMoreInfoModal" data-adminid="<?php echo $row['AdminID']; ?>" data-adminimage="<?php echo $row['Image']; ?>" data-adminposition="<?php echo $row['Position']; ?>" data-adminpermissions="<?php echo $row['Permissions']; ?>" data-adminlastname="<?php echo $row['LastName']; ?>" data-adminfirstname="<?php echo $row['FirstName']; ?>" data-adminmiddlename="<?php echo $row['MiddleName']; ?>" data-adminnotes="<?php echo $row['Notes']; ?>" data-activityelapsed="<?php echo $activityElapsed->diffForHumans(); ?>"><i class="fas fa-address-card"></i> More Info</button>
+												<?php if(in_array('AdminsEditing', $this->session->userdata('Permissions'))): ?>
+												<button type="button" class="btn btn-info btn-sm w-100 edit-admin-btn" data-toggle="modal" data-target="#EditAdminModal" data-admindatabaseid="<?php echo $row['AdminNo']; ?>" data-adminid="<?php echo $row['AdminID']; ?>" data-adminimage="<?php echo $row['Image']; ?>" data-adminposition="<?php echo $row['Position']; ?>" data-adminpermissions="<?php echo $row['Permissions']; ?>" data-adminlastname="<?php echo $row['LastName']; ?>" data-adminfirstname="<?php echo $row['FirstName']; ?>" data-adminmiddlename="<?php echo $row['MiddleName']; ?>" data-adminnotes="<?php echo $row['Notes']; ?>"><i class="fas fa-edit"></i> Edit</button>
+												<?php endif; ?>
 											</td>
 										</tr>
 									<?php endforeach ?>
@@ -165,12 +189,12 @@ use Carbon\Carbon;
 			<form action="<?=base_url()?>Add_NewAdmin" method="post" enctype="multipart/form-data">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLongTitle">Add Admin</h5>
+					<h5 class="modal-title" id="exampleModalLongTitle"><i class="fas fa-plus"></i> Add New Admin</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body p-5">
+				<div id="InputFields" class="modal-body">
 					<div class="form-row">
 						<div class="form-group ml-auto mr-auto">
 							<input id="pImageChecker" type="hidden" name="pImageChecker">
@@ -183,64 +207,615 @@ use Carbon\Carbon;
 						</div>
 					</div>
 					<div class="form-row">
-						<div class="form-group m-1 col">
-							<label>Access Level</label>
-							<select class="form-control" name="AdminLevel">
-								<option value="Level_1">Level 1</option>
-								<option value="Level_2">Level 2</option>
-								<option value="Level_3">Level 3</option>
-							</select>
-						</div>
-						<div class="form-group m-1 col">
-							<label>Position</label>
-							<select class="form-control" name="Position">
+						<input id="PermissionsCart" type="hidden" name="PermissionsCart">
+						<input id="Position" type="hidden" name="AdminPosition">
+						<input id="PasswordHolder" type="hidden" name="PasswordHolder">
+						<div class="form-group col-sm-8">
+							<label>Position <span class="required-field">*</span></label>
+							<select id="PositionSelect" class="position-select form-control glow-gold" name="PositionSelect">
+								<option hidden disabled selected>Choose Position</option>
 								<option value="Developer">Developer</option>
 								<option value="President">President</option>
-								<option value="HR_Manager">HR Manager</option>
-								<option value="HR_Assistant">HR Assistant</option>
-								<option value="Accounting_Manager">Accounting Manager</option>
-								<option value="Accounting_Assistant">Accounting Assistant</option>
+								<option value="HR Manager">HR Manager</option>
+								<option value="HR Assistant">HR Assistant</option>
+								<option value="Accounting Manager">Accounting Manager</option>
+								<option value="Accounting Assistant">Accounting Assistant</option>
 							</select>
 						</div>
+						<div class="form-group col-sm-4">
+							<label>Permissions</label>
+							<div class="setpermissions-locked-group">
+								<button type="button" class="hover-disabled btn btn-secondary" data-toggle="tooltip" data-placement="top" data-html="true" title="Choose a position first" style="width: 145px;"><i class="fas fa-lock"></i> Designate</button>
+							</div>
+							<div class="setpermissions-valid-group" style="display: none">
+								<button type="button" class="setpermissions-btn btn btn-info" data-toggle="modal" data-target="#AdminPermissionsModal" style="width: 145px;"><i class="fas fa-eye"></i> Designate</button>
+							</div>
+						</div>
 					</div>
 					<div class="form-row">
-						<div class="form-group m-1 col">
-							<label>Admin ID</label>
-							<input class="form-control" type="text" name="AdminID">
+						<div class="form-group col-sm-8">
+							<label>Admin ID <span class="required-field">*</span></label>
+							<input id="AdminID" class="form-control" type="text" name="AdminID">
 						</div>
-						<div class="form-group m-1 col">
-							<label>Password</label>
-							<input class="form-control" type="password" name="Password">
+						<div class="form-group col-sm-4">
+							<label>Password <span class="required-field">*</span></label>
+							<button id="AdminPassword" type="button" class="changepassword-btn btn btn-info" data-toggle="modal" data-target="#AdminPasswordModal" style="width: 145px;"><i class="fas fa-key"></i> Set</button>
 						</div>
 					</div>
-					<div class="form-row">
-						<div class="form-group m-1 col">
-							<label>First Name</label>
-							<input class="form-control" type="text" name="FirstName">
-						</div>
-						<div class="form-group m-1 col">
-							<label>Middle Name</label>
-							<input class="form-control" type="text" name="MiddleIN">
-						</div>
-						<div class="form-group m-1 col">
+					<hr>
+					<div class="form-row mt-2">
+						<div class="form-group col-sm-4">
 							<label>Last Name</label>
-							<input class="form-control" type="text" name="LastName">
+							<input class="form-control" type="text" name="AdminLastName">
+						</div>
+						<div class="form-group col-sm-4">
+							<label>First Name</label>
+							<input class="form-control" type="text" name="AdminFirstName">
+						</div>
+						<div class="form-group col-sm-4">
+							<label>Middle Name</label>
+							<input class="form-control" type="text" name="AdminMiddleName">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-12">
+							<label>Notes</label>
+							<textarea class="form-control" name="AdminNotes" rows="2"></textarea>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Save</button>
+					<div class="save-btn-locked-group">
+						<span class="mr-2" style="font-size: 18px; color: rgba(255, 25, 25);"><i class="fas fa-exclamation-circle"></i> <span class="save-btn-locked-group-text">ID, password, and position is required</span></span>
+						<button type="button" class="btn btn-secondary hover-disabled"><i class="fas fa-lock"></i> Save</button>
+					</div>
+					<div class="save-btn-valid-group" style="display: none;">
+						<span class="mr-2" style="font-size: 18px; color: green;"><i class="fas fa-check-circle"></i> Admin is valid for saving</span>
+						<button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Save</button>
+					</div>
 				</div>
 			</div>
 			</form>
 		</div>
 	</div>
+	<!-- SET PERMISSIONS MODAL -->
+	<?php $this->load->view('_template/modals/m_adminpermissions'); ?>
+	<!-- SET PASSWORDS MODAL -->
+	<?php $this->load->view('_template/modals/m_adminpassword'); ?>
+	<!-- ADMIN EDIT MODAL -->
+	<?php $this->load->view('_template/modals/m_adminedit'); ?>
+	<!-- EDIT PERMISSIONS MODAL -->
+	<?php $this->load->view('_template/modals/m_admineditpermissions'); ?>
+	<!-- EDIT PASSWORD MODAL -->
+	<?php $this->load->view('_template/modals/m_admineditpassword'); ?>
 	<!-- EXPORT MODAL -->
 	<?php $this->load->view('_template/modals/m_export'); ?>
+	<!-- MORE INFO MODAL -->
+	<?php $this->load->view('_template/modals/m_adminmoreinfo'); ?>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		var permissionsCart = [];
+		var permissionsCartForEdit = [];
+		function resetPermissionsCart() {
+			permissionsCart = [];
+			$('#SetPermissions').find('.form-row').each(function() {
+				$(this).find('.form-group').removeClass('setpermissions-checked-text');
+				$(this).find('button').removeClass('btn-success');
+				$(this).find('button').children('i').removeClass('wercher-visible');
+				$(this).find('button').addClass('btn-secondary');
+				$(this).find('button').children('i').addClass('wercher-transparent');
+			});
+		}
+		function resetEditPermissionsCart() {
+			permissionsCartForEdit = [];
+			$('#EditSetPermissions').find('.form-row').each(function() {
+				$(this).find('.form-group').removeClass('setpermissions-checked-text');
+				$(this).find('button').removeClass('btn-success');
+				$(this).find('button').children('i').removeClass('wercher-visible');
+				$(this).find('button').addClass('btn-secondary');
+				$(this).find('button').children('i').addClass('wercher-transparent');
+			});
+		}
+		// Local storage
+		// ~ preloading
+		var inputCart = {
+			items: []
+		};
+		var cartName = 'inputAdminCart';
+		let inputFieldCounter = 0;
+		<?php if(!empty($this->session->flashdata('isAdminAdded'))): ?>
+			inputCart = JSON.parse(localStorage.getItem(cartName));
+			if (inputCart) {
+				let inputCartLength = inputCart.items.length;
+				for(let i = 0; i < inputCartLength; i++) {
+					localStorage.removeItem(inputCart.items[i]);
+				}
+			}
+		<?php endif; ?>
+		var adminIDList = [];
+		<?php foreach($this->Model_Selects->GetAllAdmins()->result_array() as $row): ?>
+		adminIDList.push("<?php echo $row['AdminID']; ?>");
+		<?php endforeach; ?>
+		var permissionsList = localStorage.getItem('PermissionsCart');
+		if (permissionsList) {
+			var permissionsListString = permissionsList.toString().replace(/[\[\]']+/g,'');
+			permissionsListString = permissionsListString.replace(/"/g,'');
+		}
+		// console.log(permissionsListString);
+		$('#InputFields input, textarea, select, #PasswordFields input, #SetPermissions button').each(function() {
+			let inputFieldName = $(this).attr('name'); // Fetch input location
+			let inputFieldValue = localStorage.getItem(inputFieldName); // Fetch input value from storage
+			if(inputFieldValue) {
+				if (inputFieldName != 'PermissionsCart') { // Excluded
+					$(this).val(inputFieldValue); // Assign input value to location from storage
+					inputCart.items.push(inputFieldName); // Sending as JSON
+					localStorage.setItem(cartName, JSON.stringify(inputCart));
+				}
+			}
+			if (inputFieldName == 'PermissionsCart') {
+				if (inputFieldValue) {
+					let inputFieldArray = inputFieldValue.toString().replace(/[\[\]']+/g,'');
+					inputFieldArray = inputFieldArray.replace(/"/g,'');
+					inputFieldArray = inputFieldArray.split(',');
+					for (i = 0; i < inputFieldArray.length; i++) {
+						permissionsCart.push(inputFieldArray[i]);
+					}
+					console.log(permissionsCart);
+				}
+			}
+			let permissionsFieldName = $(this).data('permissions');
+			if (permissionsCart.includes(permissionsFieldName)) { // Permissions
+				// console.log(permissionsFieldName);
+				$(this).parent('.form-group').parent('.form-row').find('.form-group').addClass('setpermissions-checked-text');
+				$(this).addClass('btn-success');
+				$(this).removeClass('btn-secondary');
+				$(this).children('i').addClass('wercher-visible');
+				$(this).children('i').removeClass('wercher-transparent');
+				$('#PermissionsCart').val(permissionsListString);
+			}
+			if (inputFieldName == 'AdminPosition') {
+				if (inputFieldValue) {
+					$('#Position').val(inputFieldValue);
+					$('.position-select').val(inputFieldValue);
+					$('.position-select').removeClass('glow-gold');
+					$('.setpermissions-valid-group').show();
+					$('.setpermissions-locked-group').hide();
+					$('.setpermissions-btn').addClass('glow-gold');
+				}
+			}
+			if (inputFieldName == 'AdminID' || inputFieldName == 'PasswordHolder' || inputFieldName == 'AdminPosition') { // Required fields
+				if (inputFieldValue) { // Has data
+					inputFieldCounter++;
+					if (inputFieldCounter >= 3) {
+						$('.save-btn-locked-group').hide();
+						$('.save-btn-valid-group').show();
+					}
+				}
+				if (inputFieldName == 'AdminID' && adminIDList.includes(inputFieldValue)) {
+					$('.save-btn-locked-group-text').text('Admin ID exists');
+					$('.save-btn-locked-group').show();
+					$('.save-btn-valid-group').hide();
+				}
+				if (inputFieldName == 'PasswordHolder') {
+					if (inputFieldValue) {
+						$('#PasswordHolder').val(inputFieldValue);
+						$('#AdminPassword').toggleClass('btn-success btn-info');
+						$('.password-btn-locked-group').hide();
+						$('.password-btn-valid-group').show();
+					}
+				}
+			}
+		});
+		// ~ input
+		$('#InputFields input, textarea, select, #PasswordFields input').bind("input", function() {
+			let inputName = $(this).attr('name');
+			localStorage.setItem(inputName, $(this).val());
+			if (!inputCart.items.includes(inputName)) {
+				inputCart.items.push(inputName); // Sending as JSON
+				localStorage.setItem(cartName, JSON.stringify(inputCart));
+			} else { // Field is inside the cart
+				let index = inputCart.items.indexOf(inputName);
+				if (!$(this).val()) { // Check if string is empty
+					inputCart.items.splice(index, 1);
+					localStorage.setItem(cartName, JSON.stringify(inputCart));
+					localStorage.removeItem(inputName); // Remove local storage if empty
+				}
+			}
+			if (inputName == 'AdminID' || inputName == 'AdminPassword' || inputName == 'AdminPosition') {
+				if (!$('#AdminID').val() || !$('#PasswordHolder').val() || !$('#Position').val()) { // Required fields
+					$('.save-btn-locked-group-text').text('ID, password, and position is required');
+					$('.save-btn-locked-group').show();
+					$('.save-btn-valid-group').hide();
+				} else {
+					if (adminIDList.includes($('#AdminID').val())) {
+						$('.save-btn-locked-group-text').text('Admin ID exists');
+						$('.save-btn-locked-group').show();
+						$('.save-btn-valid-group').hide();
+					} else {
+						$('.save-btn-locked-group').hide();
+						$('.save-btn-valid-group').show();
+					}
+				}
+			}
+			if (inputName == 'NewPassword' || inputName == 'RepeatPassword') {
+				if ($('#NewPassword').val() == $('#RepeatPassword').val() && $('#NewPassword').val() && $('#RepeatPassword').val()) {
+					$('.password-btn-locked-group').hide();
+					$('.password-btn-valid-group').show();
+				} else {
+					$('.password-btn-locked-group').show();
+					$('.password-btn-valid-group').hide();
+				}
+			}
+		});
+		$('.setpermissions-btn').on('click', function() {
+			$('#add_UserAdmin').modal('toggle');
+			$(this).removeClass('glow-gold');
+		});
+		$('#AdminPermissionsBackButton').on('click', function() {
+			$('#add_UserAdmin').modal('toggle');
+			$('#AdminPermissionsModal').modal('toggle');
+		});
+		$('#AdminPermissionsConfirmButton').on('click', function() {
+			$('#add_UserAdmin').modal('toggle');
+			$('#AdminPermissionsModal').modal('toggle');
+		});
+		$('#PositionSelect').on('change', function() {
+			resetPermissionsCart();
+			let positionSelectValue = $('#PositionSelect').val();
+			$('#PositionSelectPermissions').val(positionSelectValue);
+			$('#Position').val(positionSelectValue);
+			if (positionSelectValue == 'Developer' || positionSelectValue == 'President' || positionSelectValue == 'HR Manager' || positionSelectValue == 'HR Assistant') {
+				let noPermissions = [];
+				$('#SetPermissions').find('.form-row button').each(function() {
+					if (!noPermissions.includes($(this).data('permissions'))) {
+						$(this).trigger('click');
+					}
+				});
+			} else if (positionSelectValue == 'Accounting Manager' || positionSelectValue == 'Accounting Assistant') {
+				let noPermissions = ['Admins', 'AdminsArchived', 'AdminsEditing', 'EmployeesHiring', 'EmployeesEditing', 'ApplicantsEditing', 'ClientsEditing'];
+				$('#SetPermissions').find('.form-row button').each(function() {
+					if (!noPermissions.includes($(this).data('permissions'))) {
+						$(this).trigger('click');
+					}
+				});
+			}
+
+		});
+		$('#PositionSelectPermissions').on('change', function() {
+			resetPermissionsCart();
+			let positionSelectValue = $('#PositionSelectPermissions').val();
+			$('#PositionSelect').val(positionSelectValue);
+			$('#Position').val(positionSelectValue);
+			if (positionSelectValue == 'Developer' || positionSelectValue == 'President' || positionSelectValue == 'HR Manager' || positionSelectValue == 'HR Assistant') {
+				let noPermissions = [];
+				$('#SetPermissions').find('.form-row button').each(function() {
+					if (!noPermissions.includes($(this).data('permissions'))) {
+						$(this).trigger('click');
+					}
+				});
+			} else if (positionSelectValue == 'Accounting Manager' || positionSelectValue == 'Accounting Assistant') {
+				let noPermissions = ['Admins', 'AdminsArchived', 'AdminsEditing', 'EmployeesHiring', 'EmployeesEditing', 'ApplicantsEditing', 'ClientsEditing'];
+				$('#SetPermissions').find('.form-row button').each(function() {
+					if (!noPermissions.includes($(this).data('permissions'))) {
+						$(this).trigger('click');
+					}
+				});
+			}
+		});
+		$('.position-select').on('change', function() {
+			$('.position-select').removeClass('glow-gold');
+			$('.setpermissions-valid-group').show();
+			$('.setpermissions-locked-group').hide();
+			$('.setpermissions-btn').addClass('glow-gold');
+			if (!$('#AdminID').val() || !$('#PasswordHolder').val() || !$('#Position').val()) { // Required fields
+				$('.save-btn-locked-group-text').text('ID, password, and position is required');
+				$('.save-btn-locked-group').show();
+				$('.save-btn-valid-group').hide();
+			} else {
+				if (adminIDList.includes($('#AdminID').val())) {
+					$('.save-btn-locked-group-text').text('Admin ID exists');
+					$('.save-btn-locked-group').show();
+					$('.save-btn-valid-group').hide();
+				} else {
+					$('.save-btn-locked-group').hide();
+					$('.save-btn-valid-group').show();
+				}
+			}
+			localStorage.setItem('AdminPosition', $('#Position').val());
+			if (!inputCart.items.includes('AdminPosition')) {
+				inputCart.items.push('AdminPosition'); // Sending as JSON
+				localStorage.setItem(cartName, JSON.stringify(inputCart));
+			}
+		});
+		$('#SetPermissions').find('.form-row').on('click', function() {
+			$(this).find('.form-group').toggleClass('setpermissions-checked-text');
+			$(this).find('button').toggleClass('btn-success btn-secondary');
+			$(this).find('button').children('i').toggleClass('wercher-visible wercher-transparent');
+			let permissionsData = $(this).find('button').data('permissions');
+			if (!permissionsCart.includes(permissionsData)) {
+				permissionsCart.push(permissionsData);
+			} else {
+				let index = permissionsCart.indexOf(permissionsData);
+				permissionsCart.splice(index, 1);
+			}
+			$('#PermissionsCart').val(permissionsCart);
+			localStorage.setItem('PermissionsCart', JSON.stringify(permissionsCart));
+			if (!inputCart.items.includes('PermissionsCart')) {
+				inputCart.items.push('PermissionsCart'); // Sending as JSON
+				localStorage.setItem(cartName, JSON.stringify(inputCart));
+			}
+			console.log(permissionsCart);
+		});
+		$('.changepassword-btn').on('click', function() {
+			$('#add_UserAdmin').modal('toggle');
+		});
+		$('.showpassword-btn').on('click', function() {
+			let input = $(this).parent('.input-group-append').parent('.input-group').find('input');
+			let inputType = input.attr('type');
+			if (inputType === 'password') {
+				input.attr('type', 'text');
+			} else {
+				input.attr('type', 'password');
+			}
+			$(this).children('i').toggleClass('fa-low-vision fa-eye');
+		});
+		$('#AdminPasswordBackButton').on('click', function() {
+			$('#add_UserAdmin').modal('toggle');
+			$('#AdminPasswordModal').modal('toggle');
+		});
+		$('#AdminPasswordConfirmButton').on('click', function() {
+			$('#add_UserAdmin').modal('toggle');
+			$('#AdminPasswordModal').modal('toggle');
+			$('#PasswordHolder').val($('#NewPassword').val());
+			$('#AdminPassword').toggleClass('btn-success btn-info');
+			localStorage.setItem('PasswordHolder', $('#NewPassword').val());
+			if (!inputCart.items.includes('PasswordHolder')) {
+				inputCart.items.push('PasswordHolder'); // Sending as JSON
+				localStorage.setItem(cartName, JSON.stringify(inputCart));
+			}
+			if (!$('#AdminID').val() || !$('#PasswordHolder').val() || !$('#Position').val()) { // Required fields
+				$('.save-btn-locked-group-text').text('ID, password, and position is required');
+				$('.save-btn-locked-group').show();
+				$('.save-btn-valid-group').hide();
+			} else {
+				if (adminIDList.includes($('#AdminID').val())) {
+					$('.save-btn-locked-group-text').text('Admin ID exists');
+					$('.save-btn-locked-group').show();
+					$('.save-btn-valid-group').hide();
+				} else {
+					$('.save-btn-locked-group').hide();
+					$('.save-btn-valid-group').show();
+				}
+			}
+		});
+		// =====================
+		// Edit Admin
+		$('.edit-admin-btn').on('click', function() {
+			// Set ID
+			let adminDatabaseID = $(this).data('admindatabaseid');
+			let adminID = $(this).data('adminid');
+			$('#EditAdminDatabaseID').val(adminDatabaseID);
+			// Admin info
+			$('#EditAdminTitle').html('<a href="#" data-toggle="modal" data-target="#AdminMoreInfoModal">' + adminID + '</a>');
+			$('#EditAdminID').val(adminID);
+			$('#EditAdminImage').val($(this).data('adminimage'));
+			$('#EditAdminImageHolder').attr('src', $(this).data('adminimage'));
+			$('#EditPosition').val($(this).data('adminposition'));
+			$('#EditPositionSelect').val($(this).data('adminposition'));
+			$('#EditAdminLastName').val($(this).data('adminlastname'));
+			$('#EditAdminFirstName').val($(this).data('adminfirstname'));
+			$('#EditAdminMiddleName').val($(this).data('adminmiddlename'));
+			$('#EditAdminNotes').val($(this).data('adminnotes'));
+			$('#EditRemoveAdmin').attr('href', 'RemoveAdmin?id=' + adminDatabaseID);
+			// Admin permissions
+			resetEditPermissionsCart();
+			$('#EditAdminPermissionsTitle').html(adminID);
+			$('#EditPositionSelectPermissions').val($(this).data('adminposition'));
+			let adminPermissions = $(this).data('adminpermissions');
+			let adminPermissionsArray = adminPermissions.split(",");
+			$('#EditSetPermissions').find('.form-row').each(function() {
+				if (adminPermissionsArray.includes($(this).find('button').data('permissions'))) {
+					$(this).find('.form-group').toggleClass('setpermissions-checked-text');
+					$(this).find('button').toggleClass('btn-success btn-secondary');
+					$(this).find('button').children('i').toggleClass('wercher-visible wercher-transparent');
+					let permissionsData = $(this).find('button').data('permissions');
+					if (!permissionsCartForEdit.includes(permissionsData)) {
+						permissionsCartForEdit.push(permissionsData);
+					} else {
+						let index = permissionsCartForEdit.indexOf(permissionsData);
+						permissionsCartForEdit.splice(index, 1);
+					}
+					$('#EditPermissionsCart').val(permissionsCartForEdit);
+				}
+			});
+			// Admin password
+			$('#EditAdminPasswordTitle').text(adminID);
+		});
+		$('.edit-setpermissions-btn').on('click', function() {
+			$('#EditAdminModal').modal('toggle');
+			$(this).removeClass('glow-gold');
+		});
+		$('#EditAdminPermissionsBackButton').on('click', function() {
+			$('#EditAdminModal').modal('toggle');
+			$('#EditAdminPermissionsModal').modal('toggle');
+		});
+		$('#EditAdminPermissionsConfirmButton').on('click', function() {
+			$('#EditAdminModal').modal('toggle');
+			$('#EditAdminPermissionsModal').modal('toggle');
+		});
+		$('#EditPositionSelect').on('change', function() {
+			resetEditPermissionsCart();
+			let positionSelectValue = $('#EditPositionSelect').val();
+			$('#EditPositionSelectPermissions').val(positionSelectValue);
+			$('#EditPosition').val(positionSelectValue);
+			if (positionSelectValue == 'Developer' || positionSelectValue == 'President' || positionSelectValue == 'HR Manager' || positionSelectValue == 'HR Assistant') {
+				let noPermissions = [];
+				$('#EditSetPermissions').find('.form-row button').each(function() {
+					if (!noPermissions.includes($(this).data('permissions'))) {
+						$(this).trigger('click');
+					}
+				});
+			} else if (positionSelectValue == 'Accounting Manager' || positionSelectValue == 'Accounting Assistant') {
+				let noPermissions = ['Admins', 'AdminsArchived', 'AdminsEditing', 'EmployeesHiring', 'EmployeesEditing', 'ApplicantsEditing', 'ClientsEditing'];
+				$('#EditSetPermissions').find('.form-row button').each(function() {
+					if (!noPermissions.includes($(this).data('permissions'))) {
+						$(this).trigger('click');
+					}
+				});
+			}
+
+		});
+		$('#EditPositionSelectPermissions').on('change', function() {
+			resetEditPermissionsCart();
+			let positionSelectValue = $('#EditPositionSelectPermissions').val();
+			$('#EditPositionSelect').val(positionSelectValue);
+			$('#EditPosition').val(positionSelectValue);
+			if (positionSelectValue == 'Developer' || positionSelectValue == 'President' || positionSelectValue == 'HR Manager' || positionSelectValue == 'HR Assistant') {
+				let noPermissions = [];
+				$('#EditSetPermissions').find('.form-row button').each(function() {
+					if (!noPermissions.includes($(this).data('permissions'))) {
+						$(this).trigger('click');
+					}
+				});
+			} else if (positionSelectValue == 'Accounting Manager' || positionSelectValue == 'Accounting Assistant') {
+				let noPermissions = ['Admins', 'AdminsArchived', 'AdminsEditing', 'EmployeesHiring', 'EmployeesEditing', 'ApplicantsEditing', 'ClientsEditing'];
+				$('#EditSetPermissions').find('.form-row button').each(function() {
+					if (!noPermissions.includes($(this).data('permissions'))) {
+						$(this).trigger('click');
+					}
+				});
+			}
+		});
+		$('.edit-position-select').on('change', function() {
+			$('.edit-position-select').removeClass('glow-gold');
+			$('.edit-setpermissions-btn').addClass('glow-gold');
+		});
+		$('#EditSetPermissions').find('.form-row').on('click', function() {
+			$(this).find('.form-group').toggleClass('setpermissions-checked-text');
+			$(this).find('button').toggleClass('btn-success btn-secondary');
+			$(this).find('button').children('i').toggleClass('wercher-visible wercher-transparent');
+			let permissionsData = $(this).find('button').data('permissions');
+			if (!permissionsCartForEdit.includes(permissionsData)) {
+				permissionsCartForEdit.push(permissionsData);
+			} else {
+				let index = permissionsCartForEdit.indexOf(permissionsData);
+				permissionsCartForEdit.splice(index, 1);
+			}
+			$('#EditPermissionsCart').val(permissionsCartForEdit);
+			console.log(permissionsCartForEdit);
+		});
+		$('#EditAdminImageHolder').click(function(){ $('#EditimgInp').trigger('click'); });
+		function editReadURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$('#EditAdminImageHolder').attr('src', e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+		$("#EditimgInp").change(function() {
+			editReadURL(this);
+			$('#EditpImageChecker').val('Has Image')
+		});
+		$('.edit-changepassword-btn').on('click', function() {
+			$('#EditAdminModal').modal('toggle');
+		});
+		$('#EditAdminPasswordBackButton').on('click', function() {
+			$('#EditAdminModal').modal('toggle');
+			$('#EditAdminPasswordModal').modal('toggle');
+		});
+		let checkPasswordOnProgress = false;
+		$('#EditAdminPasswordConfirmButton').on('click', function() {
+			if (checkPasswordOnProgress == false) {
+				checkPasswordOnProgress = true;
+				let AdminID = $('#EditAdminID').val();
+				let CurrentPassword = $('#EditCurrentPassword').val();
+				$(this).find('i').removeClass('fas fa-redo');
+				$(this).find('i').addClass('spinner-border spinner-border-sm');
+				$.ajax({
+					url : "<?php echo base_url() . 'AJAX_checkPassword';?>",
+					method : "POST",
+					data: {AdminID: AdminID, CurrentPassword: CurrentPassword},
+					dataType: "json",
+					success: function(data){
+						console.log('Current password check: ' + data);
+						if (data == true) { // Returns true
+							$('#EditPasswordChanged').val('true');
+							$('#EditAdminModal').modal('toggle');
+							$('#EditAdminPasswordModal').modal('toggle');
+							$('#EditNewPasswordHolder').val($('#EditNewPassword').val());
+							$('.edit-changepassword-btn').toggleClass('btn-success btn-info');
+							$('.edit-password-text-container').hide();
+						} else {
+							$('.edit-password-text-container').show();
+							$('.edit-password-text').text('Invalid current password');
+							$('#EditCurrentPasswordContainer').addClass('glow-gold');
+						}
+						checkPasswordOnProgress = false;
+						$('#EditAdminPasswordConfirmButton').find('i').addClass('fas fa-redo');
+						$('#EditAdminPasswordConfirmButton').find('i').removeClass('spinner-border spinner-border-sm');
+					}
+				});
+			}
+		});
+		$('#EditNewPassword, #EditRepeatPassword').bind('input', function() {
+			if ($('#EditNewPassword').val() == $('#EditRepeatPassword').val() && $('#EditNewPassword').val() && $('#EditRepeatPassword').val()) {
+				$('.edit-password-text-container').hide();
+				$('.edit-password-btn-locked-group').hide();
+				$('.edit-password-btn-valid-group').show();
+			} else {
+				$('.edit-password-text-container').show();
+				$('.edit-password-text').text('Password does not match');
+				$('.edit-password-btn-locked-group').show();
+				$('.edit-password-btn-valid-group').hide();
+			}
+		});
+		$('#EditCurrentPassword').bind('input', function() {
+			$(this).parent('#EditCurrentPasswordContainer').removeClass('glow-gold');
+		});
+		// =====================
+		// Admin More Info
+		$('.admin-moreinfo-btn').on('click', function() {
+			// Set ID
+			let adminDatabaseID = $(this).data('admindatabaseid');
+			let adminID = $(this).data('adminid');
+			let adminImage = $(this).data('adminimage');
+			let adminPermissions = $(this).data('adminpermissions');
+			let adminLastName = $(this).data('adminlastname');
+			let adminFirstName = $(this).data('adminfirstname');
+			let adminMiddleName = $(this).data('adminmiddlename');
+			let adminRealName = '';
+			if (adminLastName) {
+				adminRealName = adminRealName + adminLastName + ', ';
+			}
+			if (adminFirstName) {
+				adminRealName = adminRealName + adminFirstName;
+			}
+			if (adminMiddleName) {
+				adminRealName = adminRealName + ' ' + adminMiddleName;
+			}
+			let adminPosition = $(this).data('adminposition');
+			let adminNotes = $(this).data('adminnotes');
+			// Admin info
+			$('#AdminMoreInfoTitle').html('<img class="rounded-circle" src="' + adminImage + '" height="48" width="48"><span class="ml-2">' + adminID + '</span>');
+			$('#AdminMoreInfoPermissions').text(adminPermissions);
+			$('#AdminMoreInfoRealName').text(adminRealName);
+			$('#AdminMoreInfoPosition').text(adminPosition);
+			$('#AdminMoreInfoNotes').text(adminNotes);
+			$.ajax({
+				url : "<?php echo base_url() . 'AJAX_showLatestAdminActivity';?>",
+				method : "POST",
+				data: {AdminID: adminID},
+				dataType: "html",
+				success: function(data){
+					$('.admin-moreinfo-activity-container').html(data);
+				}
+			});
+		});
+		// =====================
 		$('.sorting-table-icon').hide();
 		$('#DTSearch').attr('placeholder', 'Search table');
 		$('#DTSearch').attr('readonly', false);
@@ -266,7 +841,7 @@ use Carbon\Carbon;
 	            {
 		            extend: 'print',
 		            exportOptions: {
-		                columns: [ 0, 1, 2, 4 ]
+		                columns: [ 0, 2, 3, 5 ]
 		            },
 		            customize: function ( doc ) {
 		            	$(doc.document.body).find('h1').prepend('<img src="<?=base_url()?>assets/img/wercher_logo.png" width="63px" height="56px" />');
@@ -277,25 +852,25 @@ use Carbon\Carbon;
 		        {
 		            extend: 'copyHtml5',
 		            exportOptions: {
-		                columns: [ 0, 1, 2, 4 ]
+		                columns: [ 0, 2, 3, 5 ]
 		            }
 		        },
 		        {
 		            extend: 'excelHtml5',
 		            exportOptions: {
-		                columns: [ 0, 1, 2, 4 ]
+		                columns: [ 0, 2, 3, 5 ]
 		            }
 		        },
 		        {
 		            extend: 'csvHtml5',
 		            exportOptions: {
-		                columns: [ 0, 1, 2, 4 ]
+		                columns: [ 0, 2, 3, 5 ]
 		            }
 		        },
 		        {
 		            extend: 'pdfHtml5',
 		            exportOptions: {
-		                columns: [ 0, 1, 2, 4 ]
+		                columns: [ 0, 2, 3, 5 ]
 		            }
 		        }
 	        ]
@@ -320,4 +895,10 @@ use Carbon\Carbon;
 		})
 	});
 </script>
+<style>
+	.modal-body{
+	    max-height: calc(100vh - 200px);
+	    overflow-y: auto;
+	}
+</style>
 </html>

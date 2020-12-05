@@ -333,4 +333,10 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->update('clients', $data);
 		return $result;
 	}
+	public function UpdateAdminInfo($data, $AdminNo)
+	{
+		$this->db->where('AdminNo', $AdminNo);
+		$result = $this->db->update('admin', $data);
+		return $result;
+	}
 }

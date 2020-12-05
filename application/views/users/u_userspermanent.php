@@ -84,8 +84,9 @@
 													<?php
 													// Thumbnail
 													$thumbnail = $row['ApplicantImage'];
+													$thumbnailType = substr($thumbnail, -4);
 													$thumbnail = substr($thumbnail, 0, -4);
-													$thumbnail = $thumbnail . '_thumb.jpg';
+													$thumbnail = $thumbnail . '_thumb' . $thumbnailType;
 													// TODO: getimagesize() severely lags the server on large amount of fetches.
 													// if(!getimagesize($thumbnail)) {
 													// 	$thumbnail = $row['ApplicantImage'];

@@ -151,6 +151,12 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetLogbookWithLimitSpecificID($Limit, $AdminID)
+	{
+		$SQL = "SELECT * FROM logbook WHERE AdminID = '$AdminID' ORDER BY No DESC LIMIT $Limit";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function GetPreviousContract($id)
 	{
 		$SQL = "SELECT * FROM contract_history, applicants WHERE contract_history.ApplicantID = '$id' AND applicants.ApplicantID = '$id' ORDER BY ID DESC LIMIT 1";
@@ -533,6 +539,12 @@ class Model_Selects extends CI_Model {
 	public function GetAllApplicants()
 	{
 		$SQL = "SELECT * FROM applicants";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetAllAdmins()
+	{
+		$SQL = "SELECT * FROM admin";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

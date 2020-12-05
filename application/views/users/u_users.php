@@ -39,7 +39,7 @@ endif;
 					</ul>
 				</div>
 				<div class="row rcontent">
-					<div class="col-sm-12 col-md-9 PrintPageName PrintOut">
+					<div class="col-sm-12 col-md-7 PrintPageName PrintOut">
 						<i class="fas fa-info-circle"></i>
 						<i>Found <?php echo $GetTotalEmployees->num_rows(); ?> employee<?php if($GetTotalEmployees->num_rows() != 1): echo 's'; endif;?> currently in the database, <?php echo $get_employee->num_rows(); ?> of which have contract and <?php echo $GetPermanentEmployees->num_rows(); ?> permanent.
 						<?php if($LatestHireesCount > 0):
@@ -53,7 +53,7 @@ endif;
 						endif; ?>.
 						</i>
 					</div>
-					<div class="col-sm-12 col-md-3 text-right">
+					<div class="col-sm-12 col-md-5 text-right">
 						<span class="input-bootstrap">
 							<i class="sorting-table-icon spinner-border spinner-border-sm mr-2"></i>
 							<input id="DTSearch" type="search" class="input-bootstrap" placeholder="Sorting table..." readonly>
@@ -122,8 +122,9 @@ endif;
 													<?php
 													// Thumbnail
 													$thumbnail = $row['ApplicantImage'];
+													$thumbnailType = substr($thumbnail, -4);
 													$thumbnail = substr($thumbnail, 0, -4);
-													$thumbnail = $thumbnail . '_thumb.jpg';
+													$thumbnail = $thumbnail . '_thumb' . $thumbnailType;
 													// TODO: getimagesize() severely lags the server on large amount of fetches.
 													// if(!getimagesize($thumbnail)) {
 													// 	$thumbnail = $row['ApplicantImage'];
@@ -292,7 +293,9 @@ endif;
 											</td>
 											<td class="text-center align-middle PrintExclude" width="110">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
+												<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions'))): ?>
 												<button id="<?php echo $row['ApplicantID']; ?>" type="button" class="btn btn-info btn-sm w-100 mb-1 doc_btn" data-toggle="modal" data-target="#AddSuppDoc"><i class="fas fa-file-upload"></i> Documents</button>
+												<?php endif; ?>
 												<!-- <button type="button" class="btn btn-info btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-clock"></i> Work</button> -->
 												<!-- <a class="btn btn-secondary btn-sm w-100 mb-1" href="#"onclick=" return confirm('Update Employee?')"><i class="fas fa-user-edit"></i> Update</a> -->
 												<!-- <a href="<?=base_url()?>RemoveEmployee?id=<?php echo $row['ApplicantID']; ?>" class="btn btn-danger btn-sm w-100 mb-1" href="#" onclick="return confirm('Remove Employee?')"><i class="fas fa-lock"></i> Archive</a> -->

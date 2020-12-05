@@ -127,8 +127,8 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 ?>
 <body>
 <style>
-	.rounded-circle {
-		border: 4px solid white;
+	.rounded-circle-profile-picture {
+		border: 4px solid #ebebeb;
 	}
 </style>
 	<div class="wrapper wercher-background-lowpoly">
@@ -150,11 +150,13 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 										<li id="TabEmploymentsBtn" class="employee-tabs-select<?php if ($employment_record->num_rows() <= 0) { echo ' employee-tabs-inactive'; }?>"><a href="#Employments" onclick="">Employments</a></li>
 										<li id="TabMachineBtn" class="employee-tabs-select<?php if ($Machine_Operatessss->num_rows() <= 0) { echo ' employee-tabs-inactive'; }?>"><a href="#Machine" onclick="">Machine</a></li>
 										<li><a href="<?=base_url()?>PrintEmployee?id=<?=$ApplicantID?>" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Print Employee" style="color: gold;"><i class="fas fa-print" style="margin-right: -1px;"></i> </a></li>
+										<?php if((in_array('ApplicantsEditing', $this->session->userdata('Permissions')) && ($Status == 'Applicant' || $Status == 'Expired' || $Status == 'Blacklisted' || $Status == 'Deleted')) || (in_array('EmployeesEditing', $this->session->userdata('Permissions')) && ($Status == 'Employed' || $Status == 'Employed (Permanent)'))): ?>
 										<li id="TabEditBtn"><a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" onclick="" target="_blank" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Edit" style="color: gold;"><i class="fas fa-edit" style="margin-right: -1px;"></i></a></li>
+										<?php endif; ?>
 									</ul>
 								</div>
 								<div class="col-2 mb-5 employee-image">
-									<img class="rounded-circle" src="<?php echo $ApplicantImage; ?>">
+									<img class="rounded-circle rounded-circle-profile-picture" src="<?php echo $ApplicantImage; ?>">
 								</div>
 							</div>
 							<div class="row w-100 rcontent employee-content">
@@ -211,9 +213,11 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 											<div class="col-sm-12 col-mb-12 pb-2">
 												<a href="#Violations" class="btn btn-danger"><i class="fas fa-book"></i> Violations</a>
 											</div>
+											<?php if(in_array('ApplicantsEditing', $this->session->userdata('Permissions'))): ?>
 											<div class="col-sm-12 col-mb-12 pb-2" style="min-width: 125px;">
 												<a href="<?=base_url()?>RestoreEmployee?id=<?php echo $ApplicantID; ?>" class="btn btn-success"><i class="fas fa-redo"></i> Restore</a>
 											</div>
+											<?php endif; ?>
 										</div>
 									</div>
 									<?php elseif ($Status == 'Deleted'): ?>
@@ -228,9 +232,11 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 											<div class="col-sm-12 pb-2">
 												This individual is <b>Archived</b>
 											</div>
+											<?php if(in_array('ApplicantsEditing', $this->session->userdata('Permissions'))): ?>
 											<div class="col-sm-12 col-mb-12 pb-2" style="min-width: 125px;">
 												<a href="<?=base_url()?>RestoreEmployee?id=<?php echo $ApplicantID; ?>" class="btn btn-success"><i class="fas fa-redo"></i> Restore</a>
 											</div>
+											<?php endif; ?>
 										</div>
 									</div>
 									<?php endif; ?>
@@ -424,12 +430,18 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 											<?php if ($Status == 'Employed'): ?>
 											<div class="employee-content-header">
 												<div class="ml-1 row">
+													<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions'))): ?>
 													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm ExtendButton mr-1" data-toggle="modal" data-target="#ModifyContractModal"><i class="fas fa-edit"></i> Modify Contract</button>
+													<?php endif; ?>
+													<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions'))): ?>
 													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-info btn-sm ExtendButton mr-1" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-plus"></i> Extend Contract</button>
+													<?php endif; ?>
 													<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
+													<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions'))): ?>
 													<div class="ml-auto">
 														<button id="<?php echo $ApplicantID; ?>" class="btn btn-danger btn-sm SuspendButton" data-toggle="modal" data-target="#SuspendModal" type="button"><i class="fas fa-exclamation-triangle"></i> Suspend</button>
 													</div>
+													<?php endif; ?>
 												</div>
 											</div>
 											<hr>
@@ -1717,11 +1729,15 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 											<?php elseif ($Status == 'Employed (Permanent)'): ?>
 											<div class="employee-content-header">
 												<div class="ml-1 row">
+													<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions'))): ?>
 													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm ExtendButton mr-1" data-toggle="modal" data-target="#ModifyContractModal"><i class="fas fa-edit"></i> Modify Contract</button>
+													<?php endif; ?>
 													<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
+													<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions'))): ?>
 													<div class="ml-auto">
 														<button id="<?php echo $ApplicantID; ?>" class="btn btn-danger btn-sm SuspendButton" data-toggle="modal" data-target="#SuspendModal" type="button"><i class="fas fa-exclamation-triangle"></i> Suspend</button>
 													</div>
+													<?php endif; ?>
 												</div>
 											</div>
 											<hr>
@@ -1856,7 +1872,9 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 											</div>
 											<?php else: ?>
 											<div class="employee-content-header">
+												<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions')) || in_array('EmployeesHiring', $this->session->userdata('Permissions'))): ?>
 												<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm mr-auto ModalHire" data-toggle="modal" data-target="#hirthis"><i class="fas fa-plus"></i> New Contract</button>
+												<?php endif; ?>
 												<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
 											</div>
 											<hr>
@@ -1871,7 +1889,9 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 									<div id="TabDocuments">
 										<div class="employee-tabs-group-content">
 											<div class="employee-content-header">
+												<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions'))): ?>
 												<button id="<?php echo $ApplicantID; ?>" class="btn btn-primary btn-sm doc_btn" data-toggle="modal" data-target="#AddSuppDoc"><i class="fas fa-file-upload"></i> Upload Documents</button>
+												<?php endif; ?>
 											</div>
 											<hr>
 											<div class="row">
@@ -2022,8 +2042,10 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																		<td colspan="6">
 																			<h5>
 																				No data available.
+																				<?php if((in_array('ApplicantsEditing', $this->session->userdata('Permissions')) && ($Status == 'Applicant' || $Status == 'Expired' || $Status == 'Blacklisted' || $Status == 'Deleted')) || (in_array('EmployeesEditing', $this->session->userdata('Permissions')) && ($Status == 'Employed' || $Status == 'Employed (Permanent)'))): ?>
 																				<br>
 																				<a href="ModifyEmployee?id=<?php echo $ApplicantID; ?>#Academic_History" class="btn btn-sm btn-primary mt-2"><i class="fas fa-plus"></i> Add Data</a>
+																				<?php endif; ?>
 																			</h5>
 																		</td>
 																	</tr>
@@ -2068,8 +2090,10 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																		<td colspan="6">
 																			<h5>
 																				No data available.
+																				<?php if((in_array('ApplicantsEditing', $this->session->userdata('Permissions')) && ($Status == 'Applicant' || $Status == 'Expired' || $Status == 'Blacklisted' || $Status == 'Deleted')) || (in_array('EmployeesEditing', $this->session->userdata('Permissions')) && ($Status == 'Employed' || $Status == 'Employed (Permanent)'))): ?>
 																				<br>
 																				<a href="ModifyEmployee?id=<?php echo $ApplicantID; ?>#Employment_Record" class="btn btn-sm btn-primary mt-2"><i class="fas fa-plus"></i> Add Data</a>
+																				<?php endif; ?>
 																			</h5>
 																		</td>
 																	</tr>
@@ -2105,8 +2129,10 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																		<td>
 																			<h5>
 																				No data available.
+																				<?php if((in_array('ApplicantsEditing', $this->session->userdata('Permissions')) && ($Status == 'Applicant' || $Status == 'Expired' || $Status == 'Blacklisted' || $Status == 'Deleted')) || (in_array('EmployeesEditing', $this->session->userdata('Permissions')) && ($Status == 'Employed' || $Status == 'Employed (Permanent)'))): ?>
 																				<br>
 																				<a href="ModifyEmployee?id=<?php echo $ApplicantID; ?>#Machine_Operated" class="btn btn-sm btn-primary mt-2"><i class="fas fa-plus"></i> Add Data</a>
+																				<?php endif; ?>
 																			</h5>
 																		</td>
 																	</tr>
@@ -2170,7 +2196,9 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
+					<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions')) || in_array('EmployeesHiring', $this->session->userdata('Permissions'))): ?>
 					<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary mr-auto ExtendButton" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-plus"></i> Extend Contract</button>
+					<?php endif; ?>
 					<button type="button" class="btn btn-danger ml-auto" data-dismiss="modal">Close</button>
 				</div>
 

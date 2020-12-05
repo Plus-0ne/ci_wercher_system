@@ -5,6 +5,7 @@
 
  	public function __construct() {
  		parent::__construct();
+ 		$this->load->model('Model_Security');
  		$this->load->model('Model_Selects');
 		$this->load->model('Model_Updates');
 		$this->load->model('Model_Inserts');
@@ -130,7 +131,7 @@
 	}
 	public function index()
 	{
-		$this->session->unset_userdata('acadcart');
+		// $this->session->unset_userdata('acadcart');
 		// redirect('Dashboard');
 		$this->load->view('Login');
 	}
@@ -138,6 +139,11 @@
 	{
 		// redirect('Dashboard');
 		$this->load->view('FourOhFour');
+	}
+	public function Forbidden()
+	{
+		// redirect('Dashboard');
+		$this->load->view('Forbidden');
 	}
 	public function CheckUserLogin()
 	{
@@ -150,93 +156,65 @@
 	}
 	public function Dashboard()
 	{
-		$this->load->model('Model_Deletes');
+		if($this->Model_Security->CheckPermissions('Dashboard')):
+			$this->load->model('Model_Deletes');
 
-		###	CHECK SESSION
-		// $this->CheckUserLogin();
+			###	CHECK SESSION
+			// $this->CheckUserLogin();
 
-		$header['title'] = 'Dashboard | Wercher Solutions and Resources Workers Cooperative';
-		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$header['title'] = 'Dashboard | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 
-		// CHART
-		$result =  $this->Model_Selects->GetApplicantSkills();
+			// CHART
+			$result =  $this->Model_Selects->GetApplicantSkills();
 
-		$record = $result->result();
-		$data = [];
+			$record = $result->result();
+			$data = [];
 
-		// WEEKLY INCREASE
-		$CurrentDay = date('Y-m-d h:i:s A');
-		$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
-		$data['WeeklyApplicants'] = $this->Model_Selects->GetApplicantsIncrease($CurrentDay, $CurrentDayScope)->num_rows();
-		$data['WeeklyEmployees'] = $this->Model_Selects->GetEmployeesIncrease($CurrentDay, $CurrentDayScope)->num_rows();
+			// WEEKLY INCREASE
+			$CurrentDay = date('Y-m-d h:i:s A');
+			$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
+			$data['WeeklyApplicants'] = $this->Model_Selects->GetApplicantsIncrease($CurrentDay, $CurrentDayScope)->num_rows();
+			$data['WeeklyEmployees'] = $this->Model_Selects->GetEmployeesIncrease($CurrentDay, $CurrentDayScope)->num_rows();
 
-		foreach($record as $row) {
-			$data['label'][] = $row->PositionGroup;
-			$data['data'][] = (int) $row->count;
-		}
-		$data['chart_data'] = json_encode($data);
-		$edata = [];
-		$GetApplicantSkillsExpired = $this->Model_Selects->GetApplicantSkillsExpired();
-		$edata['data'][] = $GetApplicantSkillsExpired->num_rows();
-		foreach($GetApplicantSkillsExpired->result_array() as $row) {
-			$edata['label'][] = $row['PositionGroup'];
-		}
-		$data['chart_data_expired'] = json_encode($edata);
-		$data['Breadcrumb'] = '
-		<nav aria-label="breadcrumb">
-		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Dashboard">Dashboard</a></li>
-		</ol>
-		</nav>';
-		// COUNT ADMIN
-		$data['result_cadmin'] =  $this->Model_Selects->GetAdmin();
-		// COUNT APPLICANTS
-		$data['result_capp'] =  $this->Model_Selects->GetTotalApplicants();
-		// COUNT EMPLOYEE
-		$data['result_cemployee'] =  $this->Model_Selects->GetEmployee();
-		// COUNT CLIENT
-		$data['result_cclients'] =  $this->Model_Selects->GetClients();
-		// LOGBOOK
-		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
-		// COUNT MONTHLY TOTAl
-		$CurrentYear = date('Y');
-		$Year = $CurrentYear;
-		$Month = date('01');
-		$data['CurrentYear'] = $CurrentYear;
-		if (isset($_GET['Year'])) {
-			$Year = $this->input->get('Year');
-			$CountMonthlyTotal =  $this->Model_Selects->CountMonthlyTotal();
-			if ($CountMonthlyTotal->num_rows() > 144) { // Truncates cache (Database) after 12 years of history
-				$this->Model_Deletes->CleanDashboardMonths($CurrentYear);
-				for ($i = 0; $i < 12; $i++) {
-					$MonthAdd = date('m', strtotime('+' . $i . ' month', strtotime($Month)));
-					$sql = array(
-						'Year' => $Year,
-						'Month' => $MonthAdd,
-						'Total' => '0'
-					);
-					$this->Model_Inserts->InsertDashboardMonths($sql);
-					$this->Model_Inserts->InsertToGraph();
-					if ($i == 11) {
-						$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($Year);
-						$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
-						$data['SelectedYear'] = $Year;
-						$CountTotal = 0;
-						foreach ($this->Model_Selects->GetMonthlyTotal($CurrentYear)->result_array() as $row) {
-							$CountTotal = $CountTotal + $row['Total'];
-						}
-						$data['CurrentYearTotal'] = $CountTotal;
-						$CountTotal = 0;
-						foreach ($this->Model_Selects->GetMonthlyTotal($Year)->result_array() as $row) {
-							$CountTotal = $CountTotal + $row['Total'];
-						}
-						$data['SelectedYearTotal'] = $CountTotal;
-						$this->load->view('users/u_dashboard',$data);
-					}
-				}
-			} else {
-				$YearChecker =  $this->Model_Selects->GetMonthlyTotal($Year);
-				if ($YearChecker->num_rows() < 12) { // Loads faster if already on cache (Database)
+			foreach($record as $row) {
+				$data['label'][] = $row->PositionGroup;
+				$data['data'][] = (int) $row->count;
+			}
+			$data['chart_data'] = json_encode($data);
+			$edata = [];
+			$GetApplicantSkillsExpired = $this->Model_Selects->GetApplicantSkillsExpired();
+			$edata['data'][] = $GetApplicantSkillsExpired->num_rows();
+			foreach($GetApplicantSkillsExpired->result_array() as $row) {
+				$edata['label'][] = $row['PositionGroup'];
+			}
+			$data['chart_data_expired'] = json_encode($edata);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Dashboard">Dashboard</a></li>
+			</ol>
+			</nav>';
+			// COUNT ADMIN
+			$data['result_cadmin'] =  $this->Model_Selects->GetAdmin();
+			// COUNT APPLICANTS
+			$data['result_capp'] =  $this->Model_Selects->GetTotalApplicants();
+			// COUNT EMPLOYEE
+			$data['result_cemployee'] =  $this->Model_Selects->GetEmployee();
+			// COUNT CLIENT
+			$data['result_cclients'] =  $this->Model_Selects->GetClients();
+			// LOGBOOK
+			$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
+			// COUNT MONTHLY TOTAl
+			$CurrentYear = date('Y');
+			$Year = $CurrentYear;
+			$Month = date('01');
+			$data['CurrentYear'] = $CurrentYear;
+			if (isset($_GET['Year'])) {
+				$Year = $this->input->get('Year');
+				$CountMonthlyTotal =  $this->Model_Selects->CountMonthlyTotal();
+				if ($CountMonthlyTotal->num_rows() > 144) { // Truncates cache (Database) after 12 years of history
+					$this->Model_Deletes->CleanDashboardMonths($CurrentYear);
 					for ($i = 0; $i < 12; $i++) {
 						$MonthAdd = date('m', strtotime('+' . $i . ' month', strtotime($Month)));
 						$sql = array(
@@ -264,42 +242,42 @@
 						}
 					}
 				} else {
-					if ($CountMonthlyTotal->num_rows() > 144) {
-						$this->Model_Deletes->CleanDashboardMonths();
-					}
-					$this->Model_Inserts->InsertToGraph();
-					$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($Year);
-					$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
-					$data['SelectedYear'] = $Year;
-					$CountTotal = 0;
-					foreach ($this->Model_Selects->GetMonthlyTotal($CurrentYear)->result_array() as $row) {
-						$CountTotal = $CountTotal + $row['Total'];
-					}
-					$data['CurrentYearTotal'] = $CountTotal;
-					$CountTotal = 0;
-					foreach ($this->Model_Selects->GetMonthlyTotal($Year)->result_array() as $row) {
-						$CountTotal = $CountTotal + $row['Total'];
-					}
-					$data['SelectedYearTotal'] = $CountTotal;
-					$this->load->view('users/u_dashboard',$data);
-				}
-			}
-		} else {
-			$YearChecker =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
-			if ($YearChecker->num_rows() < 12) { // Cache on first Dashboard visit
-				for ($i = 0; $i < 12; $i++) {
-					$MonthAdd = date('m', strtotime('+' . $i . ' month', strtotime($Month)));
-					$sql = array(
-						'Year' => $CurrentYear,
-						'Month' => $MonthAdd,
-						'Total' => '0'
-					);
-					$this->Model_Inserts->InsertDashboardMonths($sql);
-					$this->Model_Inserts->InsertToGraph();
-					if ($i == 11) {
-						$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+					$YearChecker =  $this->Model_Selects->GetMonthlyTotal($Year);
+					if ($YearChecker->num_rows() < 12) { // Loads faster if already on cache (Database)
+						for ($i = 0; $i < 12; $i++) {
+							$MonthAdd = date('m', strtotime('+' . $i . ' month', strtotime($Month)));
+							$sql = array(
+								'Year' => $Year,
+								'Month' => $MonthAdd,
+								'Total' => '0'
+							);
+							$this->Model_Inserts->InsertDashboardMonths($sql);
+							$this->Model_Inserts->InsertToGraph();
+							if ($i == 11) {
+								$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($Year);
+								$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+								$data['SelectedYear'] = $Year;
+								$CountTotal = 0;
+								foreach ($this->Model_Selects->GetMonthlyTotal($CurrentYear)->result_array() as $row) {
+									$CountTotal = $CountTotal + $row['Total'];
+								}
+								$data['CurrentYearTotal'] = $CountTotal;
+								$CountTotal = 0;
+								foreach ($this->Model_Selects->GetMonthlyTotal($Year)->result_array() as $row) {
+									$CountTotal = $CountTotal + $row['Total'];
+								}
+								$data['SelectedYearTotal'] = $CountTotal;
+								$this->load->view('users/u_dashboard',$data);
+							}
+						}
+					} else {
+						if ($CountMonthlyTotal->num_rows() > 144) {
+							$this->Model_Deletes->CleanDashboardMonths();
+						}
+						$this->Model_Inserts->InsertToGraph();
+						$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($Year);
 						$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
-						$data['SelectedYear'] = $CurrentYear;
+						$data['SelectedYear'] = $Year;
 						$CountTotal = 0;
 						foreach ($this->Model_Selects->GetMonthlyTotal($CurrentYear)->result_array() as $row) {
 							$CountTotal = $CountTotal + $row['Total'];
@@ -314,326 +292,385 @@
 					}
 				}
 			} else {
-				$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
-				$data['SelectedYear'] = $CurrentYear;
-				$CountTotal = 0;
-				foreach ($this->Model_Selects->GetMonthlyTotal($CurrentYear)->result_array() as $row) {
-					$CountTotal = $CountTotal + $row['Total'];
+				$YearChecker =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+				if ($YearChecker->num_rows() < 12) { // Cache on first Dashboard visit
+					for ($i = 0; $i < 12; $i++) {
+						$MonthAdd = date('m', strtotime('+' . $i . ' month', strtotime($Month)));
+						$sql = array(
+							'Year' => $CurrentYear,
+							'Month' => $MonthAdd,
+							'Total' => '0'
+						);
+						$this->Model_Inserts->InsertDashboardMonths($sql);
+						$this->Model_Inserts->InsertToGraph();
+						if ($i == 11) {
+							$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+							$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+							$data['SelectedYear'] = $CurrentYear;
+							$CountTotal = 0;
+							foreach ($this->Model_Selects->GetMonthlyTotal($CurrentYear)->result_array() as $row) {
+								$CountTotal = $CountTotal + $row['Total'];
+							}
+							$data['CurrentYearTotal'] = $CountTotal;
+							$CountTotal = 0;
+							foreach ($this->Model_Selects->GetMonthlyTotal($Year)->result_array() as $row) {
+								$CountTotal = $CountTotal + $row['Total'];
+							}
+							$data['SelectedYearTotal'] = $CountTotal;
+							$this->load->view('users/u_dashboard',$data);
+						}
+					}
+				} else {
+					$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+					$data['SelectedYear'] = $CurrentYear;
+					$CountTotal = 0;
+					foreach ($this->Model_Selects->GetMonthlyTotal($CurrentYear)->result_array() as $row) {
+						$CountTotal = $CountTotal + $row['Total'];
+					}
+					$data['CurrentYearTotal'] = $CountTotal;
+					$data['SelectedYearTotal'] = $CountTotal;
+					$this->load->view('users/u_dashboard',$data);
 				}
-				$data['CurrentYearTotal'] = $CountTotal;
-				$data['SelectedYearTotal'] = $CountTotal;
-				$this->load->view('users/u_dashboard',$data);
 			}
-		}
-		
+		else:
+			redirect('Forbidden');
+		endif;
 	}
 	
 	public function V_Applicants()
 	{
-		$header['title'] = 'Applicants | Wercher Solutions and Resources Workers Cooperative';
-		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		$data['Breadcrumb'] = '
-		<nav aria-label="breadcrumb">
-		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Applicants">Applicants</a></li>
-		</ol>
-		</nav>';
+		if($this->Model_Security->CheckPermissions('Applicants')):
+			$header['title'] = 'Applicants | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Applicants">Applicants</a></li>
+			</ol>
+			</nav>';
 
-		// WEEKLY INCREASE
-		$CurrentDay = date('Y-m-d h:i:s A');
-		$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
-		$data['WeeklyApplicants'] = $this->Model_Selects->GetApplicantsIncrease($CurrentDay, $CurrentDayScope)->num_rows();
+			// WEEKLY INCREASE
+			$CurrentDay = date('Y-m-d h:i:s A');
+			$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
+			$data['WeeklyApplicants'] = $this->Model_Selects->GetApplicantsIncrease($CurrentDay, $CurrentDayScope)->num_rows();
 
-		$data['GetAllApplicants'] = $this->Model_Selects->GetAllApplicants()->num_rows();
-		$data['get_employee'] = $this->Model_Selects->getApplicant();
-		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
-		$data['getClientOption'] = $this->Model_Selects->getClientOption();
-		$this->load->view('users/u_applicant',$data);
+			$data['GetAllApplicants'] = $this->Model_Selects->GetAllApplicants()->num_rows();
+			$data['get_employee'] = $this->Model_Selects->getApplicant();
+			$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+			$data['getClientOption'] = $this->Model_Selects->getClientOption();
+			$this->load->view('users/u_applicant',$data);
+		else:
+			redirect('Forbidden');
+		endif;
 
 	}
 	public function V_ApplicantsExpired()
 	{
-		$header['title'] = 'Expired Contracts | Wercher Solutions and Resources Workers Cooperative';
-		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		$data['Breadcrumb'] = '
-		<nav aria-label="breadcrumb">
-		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ApplicantsExpired">Expired</a></li>
-		</ol>
-		</nav>';
-		$data['get_employee'] = $this->Model_Selects->getApplicant();
-		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
-		$data['getClientOption'] = $this->Model_Selects->getClientOption();
-		$this->load->view('users/u_applicantexpired',$data);
+		if($this->Model_Security->CheckPermissions('ApplicantsExpired')):
+			$header['title'] = 'Expired Contracts | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ApplicantsExpired">Expired</a></li>
+			</ol>
+			</nav>';
+			$data['get_employee'] = $this->Model_Selects->getApplicant();
+			$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+			$data['getClientOption'] = $this->Model_Selects->getClientOption();
+			$this->load->view('users/u_applicantexpired',$data);
+		else:
+			redirect('Forbidden');
+		endif;
 	}
 	public function V_Archived()
 	{
-		$header['title'] = 'Archived | Wercher Solutions and Resources Workers Cooperative';
-		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		$data['Breadcrumb'] = '
-		<nav aria-label="breadcrumb">
-		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Archived">Archived</a></li>
-		</ol>
-		</nav>';
-		$data['get_employee'] = $this->Model_Selects->getApplicant();
-		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
-		$data['GetArchived'] = $this->Model_Selects->GetApplicantArchived();
-		$data['getClientOption'] = $this->Model_Selects->getClientOption();
-		$this->load->view('users/u_archived',$data);
+		if($this->Model_Security->CheckPermissions('ApplicantsArchived')):
+			$header['title'] = 'Archived | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Archived">Archived</a></li>
+			</ol>
+			</nav>';
+			$data['get_employee'] = $this->Model_Selects->getApplicant();
+			$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+			$data['GetArchived'] = $this->Model_Selects->GetApplicantArchived();
+			$data['getClientOption'] = $this->Model_Selects->getClientOption();
+			$this->load->view('users/u_archived',$data);
+		else:
+			redirect('Forbidden');
+		endif;
 	}
 	public function V_Blacklisted()
 	{
-		$header['title'] = 'Blacklisted | Wercher Solutions and Resources Workers Cooperative';
-		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		$data['Breadcrumb'] = '
-		<nav aria-label="breadcrumb">
-		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Blacklisted">Blacklisted</a></li>
-		</ol>
-		</nav>';
-		$data['get_employee'] = $this->Model_Selects->getApplicant();
-		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
-		$data['GetBlacklisted'] = $this->Model_Selects->GetApplicantBlacklisted();
-		$data['getClientOption'] = $this->Model_Selects->getClientOption();
-		$this->load->view('users/u_blacklisted',$data);
+		if($this->Model_Security->CheckPermissions('ApplicantsBlacklisted')):
+			$header['title'] = 'Blacklisted | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Blacklisted">Blacklisted</a></li>
+			</ol>
+			</nav>';
+			$data['get_employee'] = $this->Model_Selects->getApplicant();
+			$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+			$data['GetBlacklisted'] = $this->Model_Selects->GetApplicantBlacklisted();
+			$data['getClientOption'] = $this->Model_Selects->getClientOption();
+			$this->load->view('users/u_blacklisted',$data);
+		else:
+			redirect('Forbidden');
+		endif;
 	}
 	public function Employee()
 	{
+		if($this->Model_Security->CheckPermissions('Employees')):
+			$header['title'] = 'Employees | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Employees">Employees</a></li>
+			</ol>
+			</nav>';
 
-		$header['title'] = 'Employees | Wercher Solutions and Resources Workers Cooperative';
-		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		$data['Breadcrumb'] = '
-		<nav aria-label="breadcrumb">
-		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Employees">Employees</a></li>
-		</ol>
-		</nav>';
+			// WEEKLY INCREASE
+			$CurrentDay = date('Y-m-d h:i:s A');
+			$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
+			$data['WeeklyEmployees'] = $this->Model_Selects->GetEmployeesIncrease($CurrentDay, $CurrentDayScope)->num_rows();
 
-		// WEEKLY INCREASE
-		$CurrentDay = date('Y-m-d h:i:s A');
-		$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
-		$data['WeeklyEmployees'] = $this->Model_Selects->GetEmployeesIncrease($CurrentDay, $CurrentDayScope)->num_rows();
-
-		$data['get_employee'] = $this->Model_Selects->GetEmployee();
-		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
-		$data['getClientOption'] = $this->Model_Selects->getClientOption();
-		$data['GetTotalEmployees'] = $this->Model_Selects->GetTotalEmployees();
-		$data['GetPermanentEmployees'] = $this->Model_Selects->GetPermanentEmployees();
-		$this->load->view('users/u_users',$data);
+			$data['get_employee'] = $this->Model_Selects->GetEmployee();
+			$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+			$data['getClientOption'] = $this->Model_Selects->getClientOption();
+			$data['GetTotalEmployees'] = $this->Model_Selects->GetTotalEmployees();
+			$data['GetPermanentEmployees'] = $this->Model_Selects->GetPermanentEmployees();
+			$this->load->view('users/u_users',$data);
+		else:
+			redirect('Forbidden');
+		endif;
 	}
 	public function EmployeePermanent()
 	{
-		$header['title'] = 'Regular Employees | Wercher Solutions and Resources Workers Cooperative';
-		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		$data['Breadcrumb'] = '
-		<nav aria-label="breadcrumb">
-		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a href="' . base_url() . 'Employees">Employees</a></li>
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="' . base_url() . 'Employees/Regulars">Regulars</a></li>
-		</ol>
-		</nav>';
+		if($this->Model_Security->CheckPermissions('EmployeesRegulars')):
+			$header['title'] = 'Regular Employees | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a href="' . base_url() . 'Employees">Employees</a></li>
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="' . base_url() . 'Employees/Regulars">Regulars</a></li>
+			</ol>
+			</nav>';
 
-		// WEEKLY INCREASE
-		$CurrentDay = date('Y-m-d h:i:s A');
-		$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
-		$data['WeeklyEmployees'] = $this->Model_Selects->GetEmployeesIncrease($CurrentDay, $CurrentDayScope)->num_rows();
+			// WEEKLY INCREASE
+			$CurrentDay = date('Y-m-d h:i:s A');
+			$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
+			$data['WeeklyEmployees'] = $this->Model_Selects->GetEmployeesIncrease($CurrentDay, $CurrentDayScope)->num_rows();
 
-		$data['get_employee'] = $this->Model_Selects->GetEmployee();
-		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
-		$data['getClientOption'] = $this->Model_Selects->getClientOption();
-		$data['GetTotalEmployees'] = $this->Model_Selects->GetTotalEmployees();
-		$data['GetPermanentEmployees'] = $this->Model_Selects->GetPermanentEmployees();
-		$this->load->view('users/u_userspermanent',$data);
+			$data['get_employee'] = $this->Model_Selects->GetEmployee();
+			$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+			$data['getClientOption'] = $this->Model_Selects->getClientOption();
+			$data['GetTotalEmployees'] = $this->Model_Selects->GetTotalEmployees();
+			$data['GetPermanentEmployees'] = $this->Model_Selects->GetPermanentEmployees();
+			$this->load->view('users/u_userspermanent',$data);
+		else:
+			redirect('Forbidden');
+		endif;
 	}
 	public function ViewEmployee()
 	{
-		if (isset($_GET['id'])) {
+		if($this->Model_Security->CheckPermissions('Employees')):
+			if (isset($_GET['id'])) {
 
-			$id = $_GET['id'];
+				$id = $_GET['id'];
 
-			$header['title'] = 'Information | Wercher Solutions and Resources Workers Cooperative';
-			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+				$header['title'] = 'Information | Wercher Solutions and Resources Workers Cooperative';
+				$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 
-			$GetEmployeeDetails = $this->Model_Selects->GetEmployeeDetails($id);
+				$GetEmployeeDetails = $this->Model_Selects->GetEmployeeDetails($id);
 
-			if ($GetEmployeeDetails->num_rows() > 0) {
-				$ged = $GetEmployeeDetails->row_array();
-				$data = array(
-					'ApplicantNo' => $ged['ApplicantNo'],
-					'ApplicantImage' => $ged['ApplicantImage'],
-					'EmployeeID' => $ged['EmployeeID'],
-					'ApplicantID' => $ged['ApplicantID'],
-					'PositionDesired' => $ged['PositionDesired'],
-					'PositionGroup' => $ged['PositionGroup'],
-					'SalaryExpected' => $ged['SalaryExpected'],
-					'LastName' => $ged['LastName'],
-					'FirstName' => $ged['FirstName'],
-					'MiddleName' => $ged['MiddleName'],
-					'Gender' => $ged['Gender'],
-					'Age' => $ged['Age'],
-					'Height' => $ged['Height'],
-					'Weight' => $ged['Weight'],
-					'Religion' => $ged['Religion'],
-					'BirthDate' => $ged['BirthDate'],
-					'BirthPlace' => $ged['BirthPlace'],
-					'Citizenship' => $ged['Citizenship'],
-					'CivilStatus' => $ged['CivilStatus'],
-					'No_OfChildren' => $ged['No_OfChildren'],
-					'Phone_No' => $ged['Phone_No'],
-					'Address_Present' => $ged['Address_Present'],
-					'Address_Provincial' => $ged['Address_Provincial'],
-					'Address_Manila' => $ged['Address_Manila'],
+				if ($GetEmployeeDetails->num_rows() > 0) {
+					$ged = $GetEmployeeDetails->row_array();
+					$data = array(
+						'ApplicantNo' => $ged['ApplicantNo'],
+						'ApplicantImage' => $ged['ApplicantImage'],
+						'EmployeeID' => $ged['EmployeeID'],
+						'ApplicantID' => $ged['ApplicantID'],
+						'PositionDesired' => $ged['PositionDesired'],
+						'PositionGroup' => $ged['PositionGroup'],
+						'SalaryExpected' => $ged['SalaryExpected'],
+						'LastName' => $ged['LastName'],
+						'FirstName' => $ged['FirstName'],
+						'MiddleName' => $ged['MiddleName'],
+						'Gender' => $ged['Gender'],
+						'Age' => $ged['Age'],
+						'Height' => $ged['Height'],
+						'Weight' => $ged['Weight'],
+						'Religion' => $ged['Religion'],
+						'BirthDate' => $ged['BirthDate'],
+						'BirthPlace' => $ged['BirthPlace'],
+						'Citizenship' => $ged['Citizenship'],
+						'CivilStatus' => $ged['CivilStatus'],
+						'No_OfChildren' => $ged['No_OfChildren'],
+						'Phone_No' => $ged['Phone_No'],
+						'Address_Present' => $ged['Address_Present'],
+						'Address_Provincial' => $ged['Address_Provincial'],
+						'Address_Manila' => $ged['Address_Manila'],
 
-					'SSS_No' => $ged['SSS_No'],
-					'EffectiveDateCoverage' => $ged['EffectiveDateCoverage'],
-					'ResidenceCertificateNo' => $ged['ResidenceCertificateNo'],
-					'Rcn_At' => $ged['Rcn_At'],
-					'Rcn_On' => $ged['Rcn_On'],
-					'TIN' => $ged['TIN'],
-					'TIN_At' => $ged['TIN_At'],
-					'TIN_On' => $ged['TIN_On'],
+						'SSS_No' => $ged['SSS_No'],
+						'EffectiveDateCoverage' => $ged['EffectiveDateCoverage'],
+						'ResidenceCertificateNo' => $ged['ResidenceCertificateNo'],
+						'TIN' => $ged['TIN'],
+						'HDMF' => $ged['HDMF'],
+						'PhilHealth' => $ged['PhilHealth'],
+						'ATM_No' => $ged['ATM_No'],
 
-					'HDMF' => $ged['HDMF'],
-					'HDMF_At' => $ged['HDMF_At'],
-					'HDMF_On' => $ged['HDMF_On'],
+						'Status' => $ged['Status'],
 
-					'PhilHealth' => $ged['PhilHealth'],
-					'PhilHealth_At' => $ged['PhilHealth_At'],
-					'PhilHealth_On' => $ged['PhilHealth_On'],
+						'ClientEmployed' => $ged['ClientEmployed'],
+						'DateStarted' => $ged['DateStarted'],
+						'DateEnds' => $ged['DateEnds'],
+						'AppliedOn' => $ged['AppliedOn'],
 
-					'ATM_No' => $ged['ATM_No'],
+						'SuspensionStarted' => $ged['SuspensionStarted'],
+						'SuspensionEnds' => $ged['SuspensionEnds'],
+						'SuspensionRemarks' => $ged['SuspensionRemarks'],
+						'Suspended' => $ged['Suspended'],
 
-					'Status' => $ged['Status'],
+						'ReminderDate' => $ged['ReminderDate'],
+						'ReminderDateString' => $ged['ReminderDateString'],
 
+						'NameExtension' => $ged['NameExtension'],
+						'EmergencyPerson' => $ged['EmergencyPerson'],
+						'EmergencyContact' => $ged['EmergencyContact'],
+						'Referral' => $ged['Referral'],
 
-					'ClientEmployed' => $ged['ClientEmployed'],
-					'DateStarted' => $ged['DateStarted'],
-					'DateEnds' => $ged['DateEnds'],
-					'AppliedOn' => $ged['AppliedOn'],
+					);
+					if(!$this->Model_Security->CheckPermissions('Applicants') && $ged['Status'] == 'Applicant'):
+						redirect('Forbidden');
+					elseif(!$this->Model_Security->CheckPermissions('ApplicantsExpired') && $ged['Status'] == 'Expired'):
+						redirect('Forbidden');
+					elseif(!$this->Model_Security->CheckPermissions('ApplicantsBlacklisted') && $ged['Status'] == 'Blacklisted'):
+						redirect('Forbidden');
+					elseif(!$this->Model_Security->CheckPermissions('ApplicantsArchived') && $ged['Status'] == 'Deleted'):
+						redirect('Forbidden');
+					elseif(!$this->Model_Security->CheckPermissions('Employees') && $ged['Status'] == 'Employed'):
+						redirect('Forbidden');
+					elseif(!$this->Model_Security->CheckPermissions('EmployeesRegulars') && $ged['Status'] == 'Employed (Permanent)'):
+						redirect('Forbidden');
+					endif;
+					$ApplicantID = $ged['ApplicantID'];
+					$ClientID = $ged['ClientEmployed'];
+					$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);
+					$data['employment_record'] = $this->Model_Selects->GetEmploymentDetails($ApplicantID);
+					$data['Machine_Operatessss'] = $this->Model_Selects->Machine_Operatessss($ApplicantID);
+					$data['get_employee'] = $this->Model_Selects->GetEmployee();
+					$data['getClientOption'] = $this->Model_Selects->getClientOption();
+					$data['ShowClients'] = $this->Model_Selects->GetClients();
+					$data['GetContractHistory'] = $this->Model_Selects->GetContractHistory($ApplicantID);
+					$data['GetPreviousContract'] = $this->Model_Selects->GetPreviousContract($ApplicantID);
+					$data['GetViolations'] = $this->Model_Selects->GetViolations($ApplicantID);
+					$data['GetDocuments'] = $this->Model_Selects->GetDocuments($ApplicantID, $ClientID);
+					$data['GetDocumentsViolations'] = $this->Model_Selects->GetDocumentsViolations($ApplicantID, $ClientID);
+					$data['GetDocumentsNotes'] = $this->Model_Selects->GetDocumentsNotes($ApplicantID);
+					$data['GetEmployeeMatchingClient'] = $this->Model_Selects->GetEmployeeMatchingClient($ApplicantID);
+					$breadcrumbFullName = $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleName'] . '.';
 
-					'SuspensionStarted' => $ged['SuspensionStarted'],
-					'SuspensionEnds' => $ged['SuspensionEnds'],
-					'SuspensionRemarks' => $ged['SuspensionRemarks'],
-					'Suspended' => $ged['Suspended'],
-
-					'ReminderDate' => $ged['ReminderDate'],
-					'ReminderDateString' => $ged['ReminderDateString'],
-
-					'NameExtension' => $ged['NameExtension'],
-					'EmergencyPerson' => $ged['EmergencyPerson'],
-					'EmergencyContact' => $ged['EmergencyContact'],
-					'Referral' => $ged['Referral'],
-
-				);
-				$ApplicantID = $ged['ApplicantID'];
-				$ClientID = $ged['ClientEmployed'];
-				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);
-				$data['employment_record'] = $this->Model_Selects->GetEmploymentDetails($ApplicantID);
-				$data['Machine_Operatessss'] = $this->Model_Selects->Machine_Operatessss($ApplicantID);
-				$data['get_employee'] = $this->Model_Selects->GetEmployee();
-				$data['getClientOption'] = $this->Model_Selects->getClientOption();
-				$data['ShowClients'] = $this->Model_Selects->GetClients();
-				$data['GetContractHistory'] = $this->Model_Selects->GetContractHistory($ApplicantID);
-				$data['GetPreviousContract'] = $this->Model_Selects->GetPreviousContract($ApplicantID);
-				$data['GetViolations'] = $this->Model_Selects->GetViolations($ApplicantID);
-				$data['GetDocuments'] = $this->Model_Selects->GetDocuments($ApplicantID, $ClientID);
-				$data['GetDocumentsViolations'] = $this->Model_Selects->GetDocumentsViolations($ApplicantID, $ClientID);
-				$data['GetDocumentsNotes'] = $this->Model_Selects->GetDocumentsNotes($ApplicantID);
-				$data['GetEmployeeMatchingClient'] = $this->Model_Selects->GetEmployeeMatchingClient($ApplicantID);
-				$breadcrumbFullName = $ged['LastName'] . ', ' . $ged['FirstName'] . ' ' . $ged['MiddleName'] . '.';
-
-				// Name Handler
-				$breadcrumbFullName = '';
-				if ($ged['LastName']) {
-					$breadcrumbFullName = $breadcrumbFullName . $ged['LastName'] . ', ';
-				} else {
-					$breadcrumbFullName = $breadcrumbFullName . '[No Last Name], ';
+					// Name Handler
+					$breadcrumbFullName = '';
+					if ($ged['LastName']) {
+						$breadcrumbFullName = $breadcrumbFullName . $ged['LastName'] . ', ';
+					} else {
+						$breadcrumbFullName = $breadcrumbFullName . '[No Last Name], ';
+					}
+					if ($ged['FirstName']) {
+						$breadcrumbFullName = $breadcrumbFullName . $ged['FirstName'] . ' ';
+					} else {
+						$breadcrumbFullName = $breadcrumbFullName . '[No First Name] ';
+					}
+					if ($ged['MiddleName']) {
+						$breadcrumbFullName = $breadcrumbFullName . $ged['MiddleName'][0] . '.';
+					} else {
+						$breadcrumbFullName = $breadcrumbFullName . '[No MI].';
+					}
+					if ($ged['NameExtension']) {
+						$breadcrumbFullName = $breadcrumbFullName . ', ' . $ged['NameExtension'];
+					}
+					if (strlen($breadcrumbFullName) > 45) {
+						$breadcrumbFullName = substr($breadcrumbFullName, 0, 45);
+						$breadcrumbFullName = $breadcrumbFullName . '...';
+					}
+					if ($data['Status'] == 'Employed') {
+						$data['Breadcrumb'] = '
+						<nav aria-label="breadcrumb">
+						<ol class="breadcrumb" style="background-color: transparent;">
+						<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $breadcrumbFullName . '</a></li>
+						</ol>
+						</nav>';
+					} elseif ($data['Status'] == 'Employed (Permanent)') {
+						$data['Breadcrumb'] = '
+						<nav aria-label="breadcrumb">
+						<ol class="breadcrumb" style="background-color: transparent;">
+						<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a href="Employees/Regulars">Regulars</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $breadcrumbFullName . '</a></li>
+						</ol>
+						</nav>';
+					} elseif ($data['Status'] == 'Expired') {
+						$data['Breadcrumb'] = '
+						<nav aria-label="breadcrumb">
+						<ol class="breadcrumb" style="background-color: transparent;">
+						<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a href="ApplicantsExpired">Expired</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $breadcrumbFullName . '</a></li>
+						</ol>
+						</nav>';
+					} elseif ($data['Status'] == 'Blacklisted') {
+						$data['Breadcrumb'] = '
+						<nav aria-label="breadcrumb">
+						<ol class="breadcrumb" style="background-color: transparent;">
+						<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a href="Blacklisted">Blacklisted</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $breadcrumbFullName . '</a></li>
+						</ol>
+						</nav>';
+					} elseif ($data['Status'] == 'Deleted') {
+						$data['Breadcrumb'] = '
+						<nav aria-label="breadcrumb">
+						<ol class="breadcrumb" style="background-color: transparent;">
+						<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a href="Archived">Archived</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $breadcrumbFullName . '</a></li>
+						</ol>
+						</nav>';
+					} else {
+						$data['Breadcrumb'] = '
+						<nav aria-label="breadcrumb">
+						<ol class="breadcrumb" style="background-color: transparent;">
+						<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $breadcrumbFullName . '</a></li>
+						</ol>
+						</nav>';
+					}
+					$this->load->view('users/u_viewemployee',$data);
 				}
-				if ($ged['FirstName']) {
-					$breadcrumbFullName = $breadcrumbFullName . $ged['FirstName'] . ' ';
-				} else {
-					$breadcrumbFullName = $breadcrumbFullName . '[No First Name] ';
+				else
+				{
+					redirect('Employees');
 				}
-				if ($ged['MiddleName']) {
-					$breadcrumbFullName = $breadcrumbFullName . $ged['MiddleName'][0] . '.';
-				} else {
-					$breadcrumbFullName = $breadcrumbFullName . '[No MI].';
-				}
-				if ($ged['NameExtension']) {
-					$breadcrumbFullName = $breadcrumbFullName . ', ' . $ged['NameExtension'];
-				}
-				if (strlen($breadcrumbFullName) > 45) {
-					$breadcrumbFullName = substr($breadcrumbFullName, 0, 45);
-					$breadcrumbFullName = $breadcrumbFullName . '...';
-				}
-				if ($data['Status'] == 'Employed') {
-					$data['Breadcrumb'] = '
-					<nav aria-label="breadcrumb">
-					<ol class="breadcrumb" style="background-color: transparent;">
-					<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $breadcrumbFullName . '</a></li>
-					</ol>
-					</nav>';
-				} elseif ($data['Status'] == 'Employed (Permanent)') {
-					$data['Breadcrumb'] = '
-					<nav aria-label="breadcrumb">
-					<ol class="breadcrumb" style="background-color: transparent;">
-					<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a href="Employees/Regulars">Regulars</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $breadcrumbFullName . '</a></li>
-					</ol>
-					</nav>';
-				} elseif ($data['Status'] == 'Expired') {
-					$data['Breadcrumb'] = '
-					<nav aria-label="breadcrumb">
-					<ol class="breadcrumb" style="background-color: transparent;">
-					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a href="ApplicantsExpired">Expired</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $breadcrumbFullName . '</a></li>
-					</ol>
-					</nav>';
-				} elseif ($data['Status'] == 'Blacklisted') {
-					$data['Breadcrumb'] = '
-					<nav aria-label="breadcrumb">
-					<ol class="breadcrumb" style="background-color: transparent;">
-					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a href="Blacklisted">Blacklisted</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $breadcrumbFullName . '</a></li>
-					</ol>
-					</nav>';
-				} elseif ($data['Status'] == 'Deleted') {
-					$data['Breadcrumb'] = '
-					<nav aria-label="breadcrumb">
-					<ol class="breadcrumb" style="background-color: transparent;">
-					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a href="Archived">Archived</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $breadcrumbFullName . '</a></li>
-					</ol>
-					</nav>';
-				} else {
-					$data['Breadcrumb'] = '
-					<nav aria-label="breadcrumb">
-					<ol class="breadcrumb" style="background-color: transparent;">
-					<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $breadcrumbFullName . '</a></li>
-					</ol>
-					</nav>';
-				}
-				$this->load->view('users/u_viewemployee',$data);
 			}
 			else
 			{
 				redirect('Employees');
 			}
-		}
-		else
-		{
-			redirect('Employees');
-		}
+		else:
+			redirect('Forbidden');
+		endif;
 	}
 	public function PrintEmployee()
 	{
@@ -677,24 +714,12 @@
 					'SSS_No' => $ged['SSS_No'],
 					'EffectiveDateCoverage' => $ged['EffectiveDateCoverage'],
 					'ResidenceCertificateNo' => $ged['ResidenceCertificateNo'],
-					'Rcn_At' => $ged['Rcn_At'],
-					'Rcn_On' => $ged['Rcn_On'],
 					'TIN' => $ged['TIN'],
-					'TIN_At' => $ged['TIN_At'],
-					'TIN_On' => $ged['TIN_On'],
-
 					'HDMF' => $ged['HDMF'],
-					'HDMF_At' => $ged['HDMF_At'],
-					'HDMF_On' => $ged['HDMF_On'],
-
 					'PhilHealth' => $ged['PhilHealth'],
-					'PhilHealth_At' => $ged['PhilHealth_At'],
-					'PhilHealth_On' => $ged['PhilHealth_On'],
-
 					'ATM_No' => $ged['ATM_No'],
 
 					'Status' => $ged['Status'],
-
 
 					'ClientEmployed' => $ged['ClientEmployed'],
 					'DateStarted' => $ged['DateStarted'],
@@ -715,6 +740,19 @@
 					'Referral' => $ged['Referral'],
 
 				);
+				if(!$this->Model_Security->CheckPermissions('Applicants') && $ged['Status'] == 'Applicant'):
+					redirect('Forbidden');
+				elseif(!$this->Model_Security->CheckPermissions('ApplicantsExpired') && $ged['Status'] == 'Expired'):
+					redirect('Forbidden');
+				elseif(!$this->Model_Security->CheckPermissions('ApplicantsBlacklisted') && $ged['Status'] == 'Blacklisted'):
+					redirect('Forbidden');
+				elseif(!$this->Model_Security->CheckPermissions('ApplicantsArchived') && $ged['Status'] == 'Deleted'):
+					redirect('Forbidden');
+				elseif(!$this->Model_Security->CheckPermissions('Employees') && $ged['Status'] == 'Employed'):
+					redirect('Forbidden');
+				elseif(!$this->Model_Security->CheckPermissions('EmployeesRegulars') && $ged['Status'] == 'Employed (Permanent)'):
+					redirect('Forbidden');
+				endif;
 				$ApplicantID = $ged['ApplicantID'];
 				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);
 				$data['employment_record'] = $this->Model_Selects->GetEmploymentDetails($ApplicantID);
@@ -821,16 +859,20 @@
 	}
 	public function SSS_Table()
 	{
-		$header['title'] = 'SSS Table | Wercher Solutions and Resources Workers Cooperative';
-		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		$data['Breadcrumb'] = '
-		<nav aria-label="breadcrumb">
-		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Applicants">SSS Table</a></li>
-		</ol>
-		</nav>';
-		$data['sss_Contri'] = $this->Model_Selects->sss_Contri();
-		$this->load->view('payroll/p_sssPage',$data);
+		if($this->Model_Security->CheckPermissions('Payroll')):
+			$header['title'] = 'SSS Table | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Applicants">SSS Table</a></li>
+			</ol>
+			</nav>';
+			$data['sss_Contri'] = $this->Model_Selects->sss_Contri();
+			$this->load->view('payroll/p_sssPage',$data);
+		else:
+			redirect('Forbidden');
+		endif;
 
 	}
 	public function ModifyEmployee()
@@ -875,24 +917,12 @@
 					'SSS_No' => $ged['SSS_No'],
 					'EffectiveDateCoverage' => $ged['EffectiveDateCoverage'],
 					'ResidenceCertificateNo' => $ged['ResidenceCertificateNo'],
-					'Rcn_At' => $ged['Rcn_At'],
-					'Rcn_On' => $ged['Rcn_On'],
 					'TIN' => $ged['TIN'],
-					'TIN_At' => $ged['TIN_At'],
-					'TIN_On' => $ged['TIN_On'],
-
 					'HDMF' => $ged['HDMF'],
-					'HDMF_At' => $ged['HDMF_At'],
-					'HDMF_On' => $ged['HDMF_On'],
-
 					'PhilHealth' => $ged['PhilHealth'],
-					'PhilHealth_At' => $ged['PhilHealth_At'],
-					'PhilHealth_On' => $ged['PhilHealth_On'],
-
 					'ATM_No' => $ged['ATM_No'],
 
 					'Status' => $ged['Status'],
-
 
 					'ClientEmployed' => $ged['ClientEmployed'],
 					'DateStarted' => $ged['DateStarted'],
@@ -905,6 +935,11 @@
 					'Referral' => $ged['Referral'],
 
 				);
+				if(!$this->Model_Security->CheckPermissions('ApplicantsEditing') && ($ged['Status'] == 'Applicant' || $ged['Status'] == 'Expired' || $ged['Status'] == 'Blacklisted' || $ged['Status'] == 'Deleted')):
+					redirect('Forbidden');
+				elseif(!$this->Model_Security->CheckPermissions('EmployeesEditing') && ($ged['Status'] == 'Employed' || $ged['Status'] == 'Employed (Permanent)')):
+					redirect('Forbidden');
+				endif;
 				$ApplicantID = $ged['ApplicantID'];
 				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);
 				$data['employment_record'] = $this->Model_Selects->GetEmploymentDetails($ApplicantID);
@@ -1050,24 +1085,12 @@
 					'SSS_No' => $ged['SSS_No'],
 					'EffectiveDateCoverage' => $ged['EffectiveDateCoverage'],
 					'ResidenceCertificateNo' => $ged['ResidenceCertificateNo'],
-					'Rcn_At' => $ged['Rcn_At'],
-					'Rcn_On' => $ged['Rcn_On'],
 					'TIN' => $ged['TIN'],
-					'TIN_At' => $ged['TIN_At'],
-					'TIN_On' => $ged['TIN_On'],
-
 					'HDMF' => $ged['HDMF'],
-					'HDMF_At' => $ged['HDMF_At'],
-					'HDMF_On' => $ged['HDMF_On'],
-
 					'PhilHealth' => $ged['PhilHealth'],
-					'PhilHealth_At' => $ged['PhilHealth_At'],
-					'PhilHealth_On' => $ged['PhilHealth_On'],
-
 					'ATM_No' => $ged['ATM_No'],
 
 					'Status' => $ged['Status'],
-
 
 					'ClientEmployed' => $ged['ClientEmployed'],
 					'DateStarted' => $ged['DateStarted'],
@@ -1083,6 +1106,11 @@
 					'Referral' => $ged['Referral'],
 
 				);
+				if(!$this->Model_Security->CheckPermissions('Applicants') && ($ged['Status'] == 'Applicant' || $ged['Status'] == 'Expired' || $ged['Status'] == 'Blacklisted' || $ged['Status'] == 'Deleted')):
+					redirect('Forbidden');
+				elseif(!$this->Model_Security->CheckPermissions('Employees') && ($ged['Status'] == 'Employed' || $ged['Status'] == 'Employed (Permanent)')):
+					redirect('Forbidden');
+				endif;
 				$ApplicantID = $ged['ApplicantID'];
 				if ($data['Status'] == 'Employed' || $data['Status'] == 'Employed (Permanent)') {
 					$this->load->view('users/u_generateid',$data);
@@ -1102,114 +1130,83 @@
 	}
 	public function NewEmployee()
 	{
-		$header['title'] = 'New Employee | Wercher Solutions and Resources Workers Cooperative';
-		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		$data['Breadcrumb'] = '
-		<nav aria-label="breadcrumb">
-		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="NewEmployee">New</a></li>
-		</ol>
-		</nav>';
-		$this->load->view('users/u_addemployee',$data);
+		if($this->Model_Security->CheckPermissions('ApplicantsEditing')):
+			$header['title'] = 'New Employee | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a href="Applicants">Applicants</a></li>
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="NewEmployee">New</a></li>
+			</ol>
+			</nav>';
+			$this->load->view('users/u_addemployee',$data);
+		else:
+			redirect('Forbidden');
+		endif;
 	}
 	public function View_Admins()
 	{
-		$header['title'] = 'Administrator | Wercher Solutions and Resources Workers Cooperative';
-		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		$data['Breadcrumb'] = '
-		<nav aria-label="breadcrumb">
-		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Admins">Admins</a></li>
-		</ol>
-		</nav>';
-		$data['ShowAdmin'] = $this->Model_Selects->GetAdmin();
-		$this->load->view('users/u_admins',$data);
+		if($this->Model_Security->CheckPermissions('Admins')):
+			$header['title'] = 'Administrator | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Admins">Admins</a></li>
+			</ol>
+			</nav>';
+			$data['ShowAdmin'] = $this->Model_Selects->GetAdmin();
+			$this->load->view('users/u_admins',$data);
+		else:
+			redirect('Forbidden');
+		endif;
 	}
 	public function Clients()
 	{
-		$header['title'] = 'Clients | Wercher Solutions and Resources Workers Cooperative';
-		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		$data['Breadcrumb'] = '
-		<nav aria-label="breadcrumb">
-		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Clients">Clients</a></li>
-		</ol>
-		</nav>';
-		$data['ShowClients'] = $this->Model_Selects->GetClients();
-		$this->load->view('users/u_clients',$data);
+		if($this->Model_Security->CheckPermissions('Clients')):
+			$header['title'] = 'Clients | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Clients">Clients</a></li>
+			</ol>
+			</nav>';
+			$data['ShowClients'] = $this->Model_Selects->GetClients();
+			$this->load->view('users/u_clients',$data);
+		else:
+			redirect('Forbidden');
+		endif;
 	}
 	public function PayrollClients()
 	{
-		$header['title'] = 'Clients | Wercher Solutions and Resources Workers Cooperative';
-		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		$data['Breadcrumb'] = '
-		<nav aria-label="breadcrumb">
-		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Payroll">Payroll</a></li>
-		</ol>
-		</nav>';
-		$data['ShowClients'] = $this->Model_Selects->GetClients();
-		$data['GetLogbookLatestHires'] =  $this->Model_Selects->GetLogbookLatestHires();
-		$this->load->view('payroll/p_clients',$data);
+		if($this->Model_Security->CheckPermissions('Payroll')):
+			$header['title'] = 'Clients | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Payroll">Payroll</a></li>
+			</ol>
+			</nav>';
+			$data['ShowClients'] = $this->Model_Selects->GetClients();
+			$data['GetLogbookLatestHires'] =  $this->Model_Selects->GetLogbookLatestHires();
+			$this->load->view('payroll/p_clients',$data);
+		else:
+			redirect('Forbidden');
+		endif;
 	}
 	public function ViewPayroll()
 	{
-		$id = $_GET['id'];
-		$mode = $_GET['mode'];
-
-		$header['title'] = 'Payroll | Wercher Solutions and Resources Workers Cooperative';
-		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-
-		$GetWeeklyList = $this->Model_Selects->GetWeeklyList($id, $mode);
-
-		$row = $GetWeeklyList->row_array();
-		$data = array(
-			'ClientID' => $row['ClientID'],
-			'ApplicantID' => $row['ApplicantID'],
-
-		);
-		$ApplicantID = $row['ApplicantID'];
-		$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployee($id);
-		
-		$data['get_applicantContri'] = $this->Model_Selects->get_applicantContri($id);
-		
-
-
-		$data['IsFromExcel'] = False;
-		$data['Breadcrumb'] = '
-		<nav aria-label="breadcrumb">
-		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a href="Payroll">Payroll</a></li>
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewClient?id=' . $id . '&mode=' . $mode . '">Details</a></li>
-		</ol>
-		</nav>';
-
-		// $data['ShowClients'] = $this->Model_Selects->GetClients();
-		$data['GetLogbookLatestHires'] =  $this->Model_Selects->GetLogbookLatestHires();
-		$data["Mode"]=$_GET['mode'];
-		$data["ClientID"] = $_GET['id'];
-		$this->load->view('payroll/p_payrolls',$data);
-	}
-	public function ViewClient()
-	{
-		if (isset($_GET['id'])) {
-
+		if($this->Model_Security->CheckPermissions('Payroll')):
 			$id = $_GET['id'];
-			$ClientID = $_GET['id'];
 			$mode = $_GET['mode'];
 
-			$header['title'] = 'Client Information | Wercher Solutions and Resources Workers Cooperative';
+			$header['title'] = 'Payroll | Wercher Solutions and Resources Workers Cooperative';
 			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 
-			if ($id == 'excel') {
-				// print_r($ApplicantsArray);
-				$ApplicantsArray = $this->session->userdata('ApplicantsArray');
-				$ApplicantsArray = unserialize($ApplicantsArray);
-				$GetWeeklyList = $this->Model_Selects->GetWeeklyImports($ApplicantsArray);
-			} else {
-				$GetWeeklyList = $this->Model_Selects->GetWeeklyList($id,$mode);
-			}
+			$GetWeeklyList = $this->Model_Selects->GetWeeklyList($id, $mode);
 
 			$row = $GetWeeklyList->row_array();
 			$data = array(
@@ -1217,20 +1214,13 @@
 				'ApplicantID' => $row['ApplicantID'],
 
 			);
-
 			$ApplicantID = $row['ApplicantID'];
+			$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployee($id);
+			
+			$data['get_applicantContri'] = $this->Model_Selects->get_applicantContri($id);
+			
 
-			$data['GetWeeklyList'] = $this->Model_Selects->GetWeeklyList($ClientID,$mode);
 
-			if ($id == 'excel') {
-				$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployeeFromImports($ApplicantsArray);
-			} else {
-				$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployee($id);
-			}
-			// $data['GetWeeklyListEmployeeActive'] = $this->Model_Selects->GetWeeklyListEmployeeActive($id);
-			$data['GetClientID'] = $this->Model_Selects->GetClientID($id);
-			$data['GetWeeklyDates'] = $this->Model_Selects->GetWeeklyDates();
-			// $data['GetWeeklyDatesForEmployee'] = $this->Model_Selects->GetWeeklyDatesForEmployee($row['ApplicantID']);
 			$data['IsFromExcel'] = False;
 			$data['Breadcrumb'] = '
 			<nav aria-label="breadcrumb">
@@ -1239,27 +1229,93 @@
 			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewClient?id=' . $id . '&mode=' . $mode . '">Details</a></li>
 			</ol>
 			</nav>';
+
+			// $data['ShowClients'] = $this->Model_Selects->GetClients();
+			$data['GetLogbookLatestHires'] =  $this->Model_Selects->GetLogbookLatestHires();
 			$data["Mode"]=$_GET['mode'];
 			$data["ClientID"] = $_GET['id'];
-			$this->load->view('payroll/p_viewclient',$data);
-		}
-		else
-		{
-			redirect('Clients');
-		}
+			$this->load->view('payroll/p_payrolls',$data);
+		else:
+			redirect('Forbidden');
+		endif;
+	}
+	public function ViewClient()
+	{
+		if($this->Model_Security->CheckPermissions('Payroll')):
+			if (isset($_GET['id'])) {
+
+				$id = $_GET['id'];
+				$ClientID = $_GET['id'];
+				$mode = $_GET['mode'];
+
+				$header['title'] = 'Client Information | Wercher Solutions and Resources Workers Cooperative';
+				$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+
+				if ($id == 'excel') {
+					// print_r($ApplicantsArray);
+					$ApplicantsArray = $this->session->userdata('ApplicantsArray');
+					$ApplicantsArray = unserialize($ApplicantsArray);
+					$GetWeeklyList = $this->Model_Selects->GetWeeklyImports($ApplicantsArray);
+				} else {
+					$GetWeeklyList = $this->Model_Selects->GetWeeklyList($id,$mode);
+				}
+
+				$row = $GetWeeklyList->row_array();
+				$data = array(
+					'ClientID' => $row['ClientID'],
+					'ApplicantID' => $row['ApplicantID'],
+
+				);
+
+				$ApplicantID = $row['ApplicantID'];
+
+				$data['GetWeeklyList'] = $this->Model_Selects->GetWeeklyList($ClientID,$mode);
+
+				if ($id == 'excel') {
+					$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployeeFromImports($ApplicantsArray);
+				} else {
+					$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployee($id);
+				}
+				// $data['GetWeeklyListEmployeeActive'] = $this->Model_Selects->GetWeeklyListEmployeeActive($id);
+				$data['GetClientID'] = $this->Model_Selects->GetClientID($id);
+				$data['GetWeeklyDates'] = $this->Model_Selects->GetWeeklyDates();
+				// $data['GetWeeklyDatesForEmployee'] = $this->Model_Selects->GetWeeklyDatesForEmployee($row['ApplicantID']);
+				$data['IsFromExcel'] = False;
+				$data['Breadcrumb'] = '
+				<nav aria-label="breadcrumb">
+				<ol class="breadcrumb" style="background-color: transparent;">
+				<li class="breadcrumb-item" aria-current="page"><a href="Payroll">Payroll</a></li>
+				<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewClient?id=' . $id . '&mode=' . $mode . '">Details</a></li>
+				</ol>
+				</nav>';
+				$data["Mode"]=$_GET['mode'];
+				$data["ClientID"] = $_GET['id'];
+				$this->load->view('payroll/p_viewclient',$data);
+			}
+			else
+			{
+				redirect('Clients');
+			}
+		else:
+			redirect('Forbidden');
+		endif;
 	}
 	public function ExcelImportSuccessful()
 	{
-		$header['title'] = 'Client Information | Wercher Solutions and Resources Workers Cooperative';
-		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		$data['Breadcrumb'] = '
-		<nav aria-label="breadcrumb">
-		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a href="Payroll">Payroll</a></li>
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active">Details</a></li>
-		</ol>
-		</nav>';
-		$this->load->view('payroll/p_excelimportsuccessful',$data);
+		if($this->Model_Security->CheckPermissions('Payroll')):
+			$header['title'] = 'Client Information | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a href="Payroll">Payroll</a></li>
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active">Details</a></li>
+			</ol>
+			</nav>';
+			$this->load->view('payroll/p_excelimportsuccessful',$data);
+		else:
+			redirect('Forbidden');
+		endif;
 	}
 	public function Experimental()
 	{
@@ -1544,41 +1600,49 @@
 	}
 	public function Search()
 	{
-		$header['title'] = 'Search | Wercher Solutions and Resources Workers Cooperative';
-		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		$data['Breadcrumb'] = '
-		<nav aria-label="breadcrumb">
-		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Search">Search</a></li>
-		</ol>
-		</nav>';
-		if(isset($_GET['query'])) {
-			$query = $_GET['query'];
-			$data['query'] = $query;
-			$data['SearchApplicantID'] = $this->Model_Selects->SearchApplicantID($query);
-			$data['SearchEmployeeID'] = $this->Model_Selects->SearchEmployeeID($query);
-			$data['SearchPeople'] = $this->Model_Selects->SearchPeople($query);
-			$data['SearchClients'] = $this->Model_Selects->SearchClients($query);
-			$data['SearchPositionGroups'] = $this->Model_Selects->SearchPositionGroups($query);
-			$data['SearchPositionSpecific'] = $this->Model_Selects->SearchPositionSpecific($query);
-			$data['SearchAdmins'] = $this->Model_Selects->SearchAdmins($query);
-		}
-		$this->load->view('users/u_search',$data);
+		if ($this->Model_Security->CheckPermissions('Search')):
+			$header['title'] = 'Search | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Search">Search</a></li>
+			</ol>
+			</nav>';
+			if(isset($_GET['query'])) {
+				$query = $_GET['query'];
+				$data['query'] = $query;
+				$data['SearchApplicantID'] = $this->Model_Selects->SearchApplicantID($query);
+				$data['SearchEmployeeID'] = $this->Model_Selects->SearchEmployeeID($query);
+				$data['SearchPeople'] = $this->Model_Selects->SearchPeople($query);
+				$data['SearchClients'] = $this->Model_Selects->SearchClients($query);
+				$data['SearchPositionGroups'] = $this->Model_Selects->SearchPositionGroups($query);
+				$data['SearchPositionSpecific'] = $this->Model_Selects->SearchPositionSpecific($query);
+				$data['SearchAdmins'] = $this->Model_Selects->SearchAdmins($query);
+			}
+			$this->load->view('users/u_search',$data);
+		else:
+			redirect('Forbidden');
+		endif;
 	}
 	public function Logbook()
 	{
-		$header['title'] = 'Logbook | Wercher Solutions and Resources Workers Cooperative';
-		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		$data['Breadcrumb'] = '
-		<nav aria-label="breadcrumb">
-		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Logbook">Logbook</a></li>
-		</ol>
-		</nav>';
-		$LogbookDBCount = $this->db->count_all('logbook');
-		$this->session->set_userdata('NotifCounterLogbook', $LogbookDBCount);
-		$this->session->set_userdata('BellNotifCounter', $LogbookDBCount);
-		$this->load->view('users/u_logbook',$data);
+		if ($this->Model_Security->CheckPermissions('DashboardLogbook')):
+			$header['title'] = 'Logbook | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Logbook">Logbook</a></li>
+			</ol>
+			</nav>';
+			$LogbookDBCount = $this->db->count_all('logbook');
+			$this->session->set_userdata('NotifCounterLogbook', $LogbookDBCount);
+			$this->session->set_userdata('BellNotifCounter', $LogbookDBCount);
+			$this->load->view('users/u_logbook',$data);
+		else:
+			redirect('Forbidden');
+		endif;
 	}
 	public function AJAX_showLogbookNotes()
 	{
@@ -1678,9 +1742,9 @@
 			$AdminID = 'GUEST';
 		endif;
 		$Type = 1;
-		$HookNo = $this->input->post('HookNo');
-		$LimitNotes = $this->input->post("LimitNotes");
-		$Event = $this->input->post('NotesEvent');
+		$HookNo = $this->input->post('HookNo', TRUE);
+		$LimitNotes = $this->input->post('LimitNotes', TRUE);
+		$Event = $this->input->post('NotesEvent', TRUE);
 		if ($LimitNotes == NULL || $AdminID == NULL || $Event == NULL) {
 			echo "Error";
 		}
@@ -1839,17 +1903,98 @@
 			
 		}
 	}
+	public function AJAX_checkPassword()
+	{
+		$AdminID = $this->input->post('AdminID');
+		$Password = $this->input->post('CurrentPassword');
+		if ($AdminID == NULL || $Password == NULL) {
+			echo json_encode(false);
+		}
+		else
+		{
+			$CheckAdminCred = $this->Model_Selects->CheckAdminCred($AdminID);
+			if ($CheckAdminCred->num_rows() > 0) {
+				$row = $CheckAdminCred->row_array();
+				if (password_verify($Password, $row['Password'])) {
+					$this->session->set_flashdata('checkPasswordVerification', true);
+					echo json_encode(true); // Returns true to the AJAX call
+				}
+				else
+				{
+					echo json_encode(false);
+				}
+			}
+			else
+			{
+				echo 'Error. No admin found with specified ID.';
+			}
+		}
+	}
+	public function AJAX_showLatestAdminActivity()
+	{
+		$AdminID = $this->input->post('AdminID');
+		$GetLogbookWithLimitSpecificID = $this->Model_Selects->GetLogbookWithLimitSpecificID(5, $AdminID);
+		if ($GetLogbookWithLimitSpecificID->num_rows() > 0) {
+			foreach($GetLogbookWithLimitSpecificID->result_array() as $row) {
+				$date = new DateTime($row['Time']);
+				$day = $date->format('Y-m-d');
+				$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+				$hours = $date->format('h:i:s A');
+				$icon = $row['Icon'];
+				if ($icon == 'Applicant'):
+					$iconText = '<i class="fas fa-user-tie" style="margin-right: -1px;"></i>';
+				elseif ($icon == 'Employee'):
+					$iconText = '<i class="fas fa-users" style="margin-right: -1px;"></i>';
+				elseif ($icon == 'Admin'):
+					$iconText = '<i class="fas fa-user-secret" style="margin-right: -1px;"></i>';
+				elseif ($icon == 'Client'):
+					$iconText = '<i class="fas fa-user-tag" style="margin-right: -1px;"></i>';
+				elseif ($icon == 'Note'):
+					$iconText = '<i class="fas fa-sticky-note" style="margin-right: -1px;"></i>';
+				elseif ($icon == 'Salary'):
+					$iconText = '<i class="fas fa-dollar-sign" style="margin-right: -1px;"></i>';
+				else:
+					$iconText = '<i class="fas fa-cog" style="margin-right: -1px;"></i>';
+				endif;
+				echo '
+				<div class="row mt-2">
+					<div class="col-sm-1 ml-1" style="margin-top: 5px;">
+						' . $iconText . '
+					</div>
+					<div class="col-sm-10" style="margin-left: -20px;">
+						<div class="row">
+							<div class="col-sm-12">
+								<a href="?admin=' . $row['AdminID'] . ' class="logbook-tooltip-highlight">' . $row['AdminID'] . '</a> ' . $row['Event'] . '
+							</div>
+							<div class="col-sm-12">
+								<i style="color: gray;"> 
+										' . $day . ' at ' . $hours . '
+								</i>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>';
+			}
+		} else {
+			echo '<div class="mt-2">No records found.</div>';
+		}
+	}
 	public function GeneratePayslip()
 	{
-		$header['title'] = 'Generate Payslip | Wercher Solutions and Resources Workers Cooperative';
-		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-		$data['Breadcrumb'] = '
-		<nav aria-label="breadcrumb">
-		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="GeneratePayslip">Generate Payslip</a></li>
-		</ol>
-		</nav>';
-		$this->load->view('users/u_generatepayslip',$data);
+		if ($this->Model_Security->CheckPermissions('Payroll')):
+			$header['title'] = 'Generate Payslip | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="GeneratePayslip">Generate Payslip</a></li>
+			</ol>
+			</nav>';
+			$this->load->view('users/u_generatepayslip',$data);
+		else:
+			redirect('Forbidden');
+		endif;
 	}
 	// // Relatives
 	// public function ShowRelatives()
@@ -2015,5 +2160,6 @@
 	public function Logout()
 	{
 		session_destroy();
+		redirect(base_url());
 	}
 }

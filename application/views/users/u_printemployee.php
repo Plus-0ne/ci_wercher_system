@@ -101,38 +101,14 @@ if ($EffectiveDateCoverage == NULL) {
 if ($ResidenceCertificateNo == NULL) {
 	$ResidenceCertificateNo = '&nbsp;';
 }
-if ($Rcn_At == NULL) {
-	$Rcn_At = '&nbsp;';
-}
-if ($Rcn_On == NULL) {
-	$Rcn_On = '&nbsp;';
-}
 if ($TIN == NULL) {
 	$TIN = '&nbsp;';
-}
-if ($TIN_At == NULL) {
-	$TIN_At = '&nbsp;';
-}
-if ($TIN_On == NULL) {
-	$TIN_On = '&nbsp;';
 }
 if ($HDMF == NULL) {
 	$HDMF = '&nbsp;';
 }
-if ($HDMF_At == NULL) {
-	$HDMF_At = '&nbsp;';
-}
-if ($HDMF_On == NULL) {
-	$HDMF_On = '&nbsp;';
-}
 if ($PhilHealth == NULL) {
 	$PhilHealth = '&nbsp;';
-}
-if ($PhilHealth_At == NULL) {
-	$PhilHealth_At = '&nbsp;';
-}
-if ($PhilHealth_On == NULL) {
-	$PhilHealth_On = '&nbsp;';
 }
 if ($ATM_No == NULL) {
 	$ATM_No = '&nbsp;';
@@ -329,7 +305,9 @@ if ($Referral == NULL) {
 							<div class="row mt-2">
 								<div class="col-sm-12">
 									<button type="button" class="btn btn-success eprint-print-btn glow-gold" onClick="printContent('PrintOut')" style="width: 400px;"><i class="fas fa-print"></i> Print</button>
+									<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions'))): ?>
 									<a href="<?=base_url();?>ModifyEmployee?id=<?=$ApplicantID;?>" class="btn btn-primary eprint-print-btn"><i class="fas fa-edit"></i> Edit</a>
+									<?php endif; ?>
 								</div>
 							</div>
 						</div>

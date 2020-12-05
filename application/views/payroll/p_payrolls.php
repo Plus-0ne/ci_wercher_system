@@ -154,11 +154,42 @@
 																</thead>
 																<tbody>
 																	<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
-																		$ApplicantID = $row['ApplicantID'];
-																		$ApplicantName = $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'] . '.';
-																		if ($row['NameExtension'] != NULL) {
-																			$ApplicantName = $ApplicantName . ', ' . $row['NameExtension'];
+																		// Name Handler
+																		$fullName = '';
+																		$fullNameHover = '';
+																		$isFullNameHoverable = false;
+																		if ($row['LastName']) {
+																			$fullName = $fullName . $row['LastName'] . ', ';
+																			$fullNameHover = $fullNameHover . $row['LastName'] . ', ';
+																		} else {
+																			$fullNameHover = $fullNameHover . '[<i>No Last Name</i>], ';
+																			$isFullNameHoverable = true;
 																		}
+																		if ($row['FirstName']) {
+																			$fullName = $fullName . $row['FirstName'] . ' ';
+																			$fullNameHover = $fullNameHover . $row['FirstName'] . ' ';
+																		} else {
+																			$fullNameHover = $fullNameHover . '[<i>No First Name</i>] ';
+																			$isFullNameHoverable = true;
+																		}
+																		if ($row['MiddleName']) {
+																			$fullName = $fullName . $row['MiddleName'][0] . '.';
+																			$fullNameHover = $fullNameHover . $row['MiddleName'][0] . '.';
+																		} else {
+																			$fullNameHover = $fullNameHover . '[<i>No MI</i>].';
+																			$isFullNameHoverable = true;
+																		}
+																		if ($row['NameExtension']) {
+																			$fullName = $fullName . ', ' . $row['NameExtension'];
+																			$fullNameHover = $fullNameHover . ', ' . $row['NameExtension'];
+																		}
+																		if (strlen($fullName) > 45) {
+																			$fullName = substr($fullName, 0, 45);
+																			$fullName = $fullName . '...';
+																			$isFullNameHoverable = true;
+																		}
+																		$ApplicantID = $row['ApplicantID'];
+																		$ApplicantName = $fullName;
 																		$GetPayrollWeekGrossPay = $this->Model_Selects->GetPayrollWeekGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
 																		if ($GetPayrollWeekGrossPay == NULL) {
 																			$GetPayrollWeekGrossPay = 0;
@@ -387,7 +418,7 @@
 
 																		?>
 																		<tr class="payroll-week-row">
-																			<td><?php echo $row['ApplicantID']; ?></td>
+																			<td><a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $fullName; ?></a></td>
 																			<td class="payroll-hours" data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: <?php echo round($GetPayrollWeekHours, 2) . '<br>Overtime Hours: ' . round($GetPayrollWeekOTHours, 2); ?>"><?php echo $TotalHours; ?></td>
 																			<td class="payroll-grosspay"><?php echo round($GetPayrollWeekGrossPay, 2); ?></td>
 																			<td class="payroll-philhealth" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($philhealth_percentage, 2) . ' / ' . $cutoffTaxDivider . '<br><i>PhilHealth Percentage x Mode</i>'; ?>"><?php echo round($philhealth_contri, 2); ?></td>
@@ -442,11 +473,43 @@
 																</thead>
 																<tbody>
 																	<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
-																		$ApplicantID = $row['ApplicantID'];
-																		$ApplicantName = $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'] . '.';
-																		if ($row['NameExtension'] != NULL) {
-																			$ApplicantName = $ApplicantName . ', ' . $row['NameExtension'];
+
+																		// Name Handler
+																		$fullName = '';
+																		$fullNameHover = '';
+																		$isFullNameHoverable = false;
+																		if ($row['LastName']) {
+																			$fullName = $fullName . $row['LastName'] . ', ';
+																			$fullNameHover = $fullNameHover . $row['LastName'] . ', ';
+																		} else {
+																			$fullNameHover = $fullNameHover . '[<i>No Last Name</i>], ';
+																			$isFullNameHoverable = true;
 																		}
+																		if ($row['FirstName']) {
+																			$fullName = $fullName . $row['FirstName'] . ' ';
+																			$fullNameHover = $fullNameHover . $row['FirstName'] . ' ';
+																		} else {
+																			$fullNameHover = $fullNameHover . '[<i>No First Name</i>] ';
+																			$isFullNameHoverable = true;
+																		}
+																		if ($row['MiddleName']) {
+																			$fullName = $fullName . $row['MiddleName'][0] . '.';
+																			$fullNameHover = $fullNameHover . $row['MiddleName'][0] . '.';
+																		} else {
+																			$fullNameHover = $fullNameHover . '[<i>No MI</i>].';
+																			$isFullNameHoverable = true;
+																		}
+																		if ($row['NameExtension']) {
+																			$fullName = $fullName . ', ' . $row['NameExtension'];
+																			$fullNameHover = $fullNameHover . ', ' . $row['NameExtension'];
+																		}
+																		if (strlen($fullName) > 45) {
+																			$fullName = substr($fullName, 0, 45);
+																			$fullName = $fullName . '...';
+																			$isFullNameHoverable = true;
+																		}
+																		$ApplicantID = $row['ApplicantID'];
+																		$ApplicantName = $fullName;
 																		$GetPayrollWeekGrossPay = $this->Model_Selects->GetPayrollWeekGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
 																		if ($GetPayrollWeekGrossPay == NULL) {
 																			$GetPayrollWeekGrossPay = 0;
@@ -675,7 +738,7 @@
 
 																		?>
 																		<tr class="payroll-week-row">
-																			<td><?php echo $row['ApplicantID']; ?></td>
+																			<td><a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $fullName; ?></a></td>
 																			<td class="payroll-hours" data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: <?php echo round($GetPayrollWeekHours, 2) . '<br>Overtime Hours: ' . round($GetPayrollWeekOTHours, 2); ?>"><?php echo $TotalHours; ?></td>
 																			<td class="payroll-grosspay"><?php echo round($GetPayrollWeekGrossPay, 2); ?></td>
 																			<td class="payroll-philhealth" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($philhealth_percentage, 2) . ' / ' . $cutoffTaxDivider . '<br><i>PhilHealth Percentage x Mode</i>'; ?>"><?php echo round($philhealth_contri, 2); ?></td>
@@ -730,11 +793,42 @@
 																</thead>
 																<tbody>
 																	<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
-																		$ApplicantID = $row['ApplicantID'];
-																		$ApplicantName = $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'] . '.';
-																		if ($row['NameExtension'] != NULL) {
-																			$ApplicantName = $ApplicantName . ', ' . $row['NameExtension'];
+																		// Name Handler
+																		$fullName = '';
+																		$fullNameHover = '';
+																		$isFullNameHoverable = false;
+																		if ($row['LastName']) {
+																			$fullName = $fullName . $row['LastName'] . ', ';
+																			$fullNameHover = $fullNameHover . $row['LastName'] . ', ';
+																		} else {
+																			$fullNameHover = $fullNameHover . '[<i>No Last Name</i>], ';
+																			$isFullNameHoverable = true;
 																		}
+																		if ($row['FirstName']) {
+																			$fullName = $fullName . $row['FirstName'] . ' ';
+																			$fullNameHover = $fullNameHover . $row['FirstName'] . ' ';
+																		} else {
+																			$fullNameHover = $fullNameHover . '[<i>No First Name</i>] ';
+																			$isFullNameHoverable = true;
+																		}
+																		if ($row['MiddleName']) {
+																			$fullName = $fullName . $row['MiddleName'][0] . '.';
+																			$fullNameHover = $fullNameHover . $row['MiddleName'][0] . '.';
+																		} else {
+																			$fullNameHover = $fullNameHover . '[<i>No MI</i>].';
+																			$isFullNameHoverable = true;
+																		}
+																		if ($row['NameExtension']) {
+																			$fullName = $fullName . ', ' . $row['NameExtension'];
+																			$fullNameHover = $fullNameHover . ', ' . $row['NameExtension'];
+																		}
+																		if (strlen($fullName) > 45) {
+																			$fullName = substr($fullName, 0, 45);
+																			$fullName = $fullName . '...';
+																			$isFullNameHoverable = true;
+																		}
+																		$ApplicantID = $row['ApplicantID'];
+																		$ApplicantName = $fullName;
 																		$GetPayrollWeekGrossPay = $this->Model_Selects->GetPayrollWeekGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
 																		if ($GetPayrollWeekGrossPay == NULL) {
 																			$GetPayrollWeekGrossPay = 0;
@@ -963,7 +1057,7 @@
 
 																		?>
 																		<tr class="payroll-week-row">
-																			<td><?php echo $row['ApplicantID']; ?></td>
+																			<td><a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $fullName; ?></a></td>
 																			<td class="payroll-hours" data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: <?php echo round($GetPayrollWeekHours, 2) . '<br>Overtime Hours: ' . round($GetPayrollWeekOTHours, 2); ?>"><?php echo $TotalHours; ?></td>
 																			<td class="payroll-grosspay"><?php echo round($GetPayrollWeekGrossPay, 2); ?></td>
 																			<td class="payroll-philhealth" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($philhealth_percentage, 2) . ' / ' . $cutoffTaxDivider . '<br><i>PhilHealth Percentage x Mode</i>'; ?>"><?php echo round($philhealth_contri, 2); ?></td>

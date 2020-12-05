@@ -10,7 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="robots" content="noindex" /> <!-- No search engine queries. Private website. -->
 	<title>
-		404 - Page not found | Wercher Solutions and Resources Workers Cooperative
+		403 - Forbidden | Wercher Solutions and Resources Workers Cooperative
 	</title>
 	<link rel="stylesheet" href="<?=base_url()?>assets/css/bootstrap.min.css">
 	<link rel="icon" href="<?=base_url()?>/favicon.ico" type="image/gif">
@@ -51,9 +51,9 @@
 						</div>
 					</div>
 					<div class="fourohfour-text pl-4 pb-4 pr-4 text-center">
-						<span>Error 404 -- Page not found</span>
+						<span>Error 403 -- Forbidden</span>
 						<br>
-						We've hit a road block! There is no page here.
+						Access denied.
 						<br>
 						<!-- <a href="<?=base_url();?>">Go back.</a> -->
 					</div>
