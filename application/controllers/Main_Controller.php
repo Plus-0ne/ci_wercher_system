@@ -1980,6 +1980,32 @@
 			echo '<div class="mt-2">No records found.</div>';
 		}
 	}
+	public function AJAX_showLogbookDataForAdmin()
+	{
+		$AdminID = $this->input->post('AdminID');
+		$CheckAdminID = $this->Model_Selects->CheckAdminID($AdminID);
+		if ($CheckAdminID->num_rows() > 0) {
+			$dataSet = [];
+			$GetLogbookDataTotal = $this->Model_Selects->GetLogbookDataTotal($AdminID);
+			array_push($dataSet, $GetLogbookDataTotal->num_rows());
+			$GetLogbookDataApplicant = $this->Model_Selects->GetLogbookDataForAdmin($AdminID, 'Applicant');
+			array_push($dataSet, ($GetLogbookDataApplicant->num_rows()));
+			$GetLogbookDataEmployee = $this->Model_Selects->GetLogbookDataForAdmin($AdminID, 'Employee');
+			array_push($dataSet, ($GetLogbookDataEmployee->num_rows()));
+			$GetLogbookDataClient = $this->Model_Selects->GetLogbookDataForAdmin($AdminID, 'Client');
+			array_push($dataSet, $GetLogbookDataClient->num_rows());
+			$GetLogbookDataSalary = $this->Model_Selects->GetLogbookDataForAdmin($AdminID, 'Salary');
+			array_push($dataSet, $GetLogbookDataSalary->num_rows());
+			$GetLogbookDataAdmin = $this->Model_Selects->GetLogbookDataForAdmin($AdminID, 'Admin');
+			array_push($dataSet, $GetLogbookDataAdmin->num_rows());
+			$GetLogbookDataNote = $this->Model_Selects->GetLogbookDataForAdmin($AdminID, 'Note');
+			array_push($dataSet, $GetLogbookDataNote->num_rows());
+
+			echo json_encode($dataSet);
+		} else {
+			echo 'No admin found.';
+		}
+	}
 	public function GeneratePayslip()
 	{
 		if ($this->Model_Security->CheckPermissions('Payroll')):

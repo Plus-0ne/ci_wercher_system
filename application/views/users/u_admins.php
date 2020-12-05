@@ -800,7 +800,7 @@ use Carbon\Carbon;
 			let adminPosition = $(this).data('adminposition');
 			let adminNotes = $(this).data('adminnotes');
 			// Admin info
-			$('#AdminMoreInfoTitle').html('<img class="rounded-circle" src="' + adminImage + '" height="48" width="48"><span class="ml-2">' + adminID + '</span>');
+			$('#AdminMoreInfoTitle').html('<a href="Logbook?admin=' + adminID + '"><img class="rounded-circle" src="' + adminImage + '" height="48" width="48"><span class="ml-2">' + adminID + '</span></a>');
 			$('#AdminMoreInfoPermissions').text(adminPermissions);
 			$('#AdminMoreInfoRealName').text(adminRealName);
 			$('#AdminMoreInfoPosition').text(adminPosition);
@@ -812,6 +812,32 @@ use Carbon\Carbon;
 				dataType: "html",
 				success: function(data){
 					$('.admin-moreinfo-activity-container').html(data);
+				}
+			});
+			$.ajax({
+				url : "<?php echo base_url() . 'AJAX_showLogbookDataForAdmin';?>",
+				method : "POST",
+				data: {AdminID: adminID},
+				dataType: "json",
+				success: function(data){
+					$('#AdminMoreInfoTotalLogEntries').text(data[0]);
+					$('#AdminMoreInfoTotalLogEntries').attr('href', 'Logbook?admin=' + adminID);
+					$('#AdminMoreInfoApplicantEntries').text(data[1]);
+					$('#AdminMoreInfoApplicantEntries').attr('href', 'Logbook?admin=' + adminID + '&type=Applicant');
+					$('#AdminMoreInfoEmployeeEntries').text(data[2]);
+					$('#AdminMoreInfoEmployeeEntries').attr('href', 'Logbook?admin=' + adminID + '&type=Employee');
+					$('#AdminMoreInfoClientEntries').text(data[3]);
+					$('#AdminMoreInfoClientEntries').attr('href', 'Logbook?admin=' + adminID + '&type=Client');
+					$('#AdminMoreInfoSalaryEntries').text(data[4]);
+					$('#AdminMoreInfoSalaryEntries').attr('href', 'Logbook?admin=' + adminID + '&type=Salary');
+					$('#AdminMoreInfoAdminEntries').text(data[5]);
+					$('#AdminMoreInfoAdminEntries').attr('href', 'Logbook?admin=' + adminID + '&type=Admin');
+					$('#AdminMoreInfoNotesMade').text(data[6]);
+					$('#AdminMoreInfoNotesMade').attr('href', 'Logbook?admin=' + adminID + '&type=Note');
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					console.log(textStatus);
+					console.log(errorThrown);
 				}
 			});
 		});

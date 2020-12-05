@@ -829,6 +829,15 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-
+	public function GetLogbookDataForAdmin($AdminID, $Type) {
+		$SQL = "SELECT * FROM logbook WHERE AdminID = '$AdminID' AND Icon = '$Type'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetLogbookDataTotal($AdminID) {
+		$SQL = "SELECT * FROM logbook WHERE AdminID = '$AdminID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	
 }

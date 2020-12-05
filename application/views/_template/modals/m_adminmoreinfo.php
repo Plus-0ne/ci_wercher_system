@@ -40,37 +40,43 @@
 							Log entries:
 						</div>
 						<div class="col-sm-6">
-							9125498245
+							<a id="AdminMoreInfoTotalLogEntries"></a>
+						</div>
+						<div class="col-sm-6">
+							- to applicants:
+						</div>
+						<div class="col-sm-6">
+							<a id="AdminMoreInfoApplicantEntries"></a>
 						</div>
 						<div class="col-sm-6">
 							- to employees:
 						</div>
 						<div class="col-sm-6">
-							290524924680
+							<a id="AdminMoreInfoEmployeeEntries"></a>
 						</div>
 						<div class="col-sm-6">
 							- to clients:
 						</div>
 						<div class="col-sm-6">
-							35903569035690
+							<a id="AdminMoreInfoClientEntries"></a>
 						</div>
-						<div class="col-sm-6 mb-2">
+						<div class="col-sm-6">
+							- to payroll:
+						</div>
+						<div class="col-sm-6">
+							<a id="AdminMoreInfoSalaryEntries"></a>
+						</div>
+						<div class="col-sm-6">
 							- to admins:
 						</div>
 						<div class="col-sm-6">
-							425890890
-						</div>
-						<div class="col-sm-6 mb-2 admin-moreinfo-header-text">
-							Timed edited (to self):
+							<a id="AdminMoreInfoAdminEntries"></a>
 						</div>
 						<div class="col-sm-6">
-							&nbsp;
-						</div>
-						<div class="col-sm-6 mb-2 admin-moreinfo-header-text">
-							Payroll entries:
+							- notes made:
 						</div>
 						<div class="col-sm-6">
-							23982549589
+							<a id="AdminMoreInfoNotesMade"></a>
 						</div>
 						<div class="col-sm-12 mt-2">
 							<b>Information</b>

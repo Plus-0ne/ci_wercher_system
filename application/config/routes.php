@@ -132,6 +132,7 @@ $route['AJAX_showPayrollLoans'] = 'Main_Controller/AJAX_showPayrollLoans';
 $route['AJAX_insertPayrollLoans'] = 'Main_Controller/AJAX_insertPayrollLoans';
 $route['AJAX_checkPassword'] = 'Main_Controller/AJAX_checkPassword';
 $route['AJAX_showLatestAdminActivity'] = 'Main_Controller/AJAX_showLatestAdminActivity';
+$route['AJAX_showLogbookDataForAdmin'] = 'Main_Controller/AJAX_showLogbookDataForAdmin';
 
 // ADMIN
 $route['Logout'] = 'Main_Controller/Logout';
