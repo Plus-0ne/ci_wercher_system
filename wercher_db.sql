@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2020 at 11:25 AM
+-- Generation Time: Dec 07, 2020 at 07:49 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.10
 
@@ -66,14 +66,14 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`AdminNo`, `Image`, `Permissions`, `Position`, `AdminID`, `Password`, `FirstName`, `MiddleName`, `LastName`, `DateAdded`, `DateRemoved`, `Notes`, `Status`) VALUES
-(23, 'http://localhost/ci_wercher_system/assets/img/wercher_noimage_standard.png', 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'President', 'admin', '$2y$10$s64PjHG2ax5zG4GikYK8qOXDygYyGT/ZTbhswBa.mekcpRvotSluK', 'aab', 'b', 'test', '2020-11-27 09:14:17', NULL, 'super admin', 'Active'),
+(23, 'http://localhost/ci_wercher_system/assets/img/wercher_noimage_standard.png', 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'Developer', 'admin', '$2y$10$s64PjHG2ax5zG4GikYK8qOXDygYyGT/ZTbhswBa.mekcpRvotSluK', 'aab', 'b', 'test', '2020-11-27 09:14:17', NULL, 'super admin', 'Active'),
 (24, 'http://localhost/ci_wercher_system/assets/img/wercher_noimage_standard.png', 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'Developer', 'dev', '$2y$10$Uj479MnjZrips4lbbJPfG.GLLSkUTwIUgxjX.a5LXw2YAAy/9Qfpa', '', '', '', '2020-12-02 01:25:27', NULL, '', 'Active'),
 (25, 'http://localhost/ci_wercher_system/assets/img/wercher_noimage_standard.png', 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'Developer', 'admi', '$2y$10$/MqksaHOjO5N5mFIqBxEL.03vMSij2dOVpDHNPGSi4yRGnxiBusEK', 'a', 'a', 'a', '2020-12-03 06:04:13', NULL, 'a', 'Active'),
-(26, 'http://localhost/ci_wercher_system/assets/img/wercher_noimage_standard.png', 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'Developer', 'test', '$2y$10$BQwXUdmcCzPgUTQ/kwwZcOOV0NVUBvgsQKr3nvPOi3yLB9VExJH8W', 'test', 'test', 'test', '2020-12-03 06:05:45', NULL, 'test', 'Active'),
-(27, 'http://localhost/ci_wercher_system/assets/img/wercher_noimage_standard.png', 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'Developer', 'v', '$2y$10$Af60CJqDoiUGNP6K/uaKU.0E0X0bZGifXj.QqmC1vdlOHLrRHL4CK', 'v', 'v', 'v', '2020-12-03 06:07:36', NULL, 'v', 'Active'),
-(28, 'http://localhost/ci_wercher_system/assets/img/wercher_noimage_standard.png', '', 'Developer', '123', '$2y$10$UdS0cLQIWO4fBdzSmSQcpud0Gdzyfc4SYZlUMbn.uqWoIWhRX.t0.', '123', '123', '123', '2020-12-03 06:13:25', NULL, '123', 'Active'),
-(29, 'http://localhost/ci_wercher_system/assets/img/wercher_noimage_standard.png', 'Dashboard,DashboardLogbook', 'President', 'a2', '$2y$10$A9ZF4qIZEQ2iCJwIydIEXeGeaW2E5tNE85oMfQlgckn76KjkTLygq', 'a2', 'a2', 'a2', '2020-12-03 08:39:27', NULL, 'a2', 'Active'),
-(30, 'http://localhost/ci_wercher_system/assets/img/wercher_noimage_standard.png', 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'Developer', 'aa', '$2y$10$WCH5omlTj4Qm/MqamQPFLO3if6NSolUJ449GXd9cfxdXhIY4C6kJu', 'a', 'a', 'a', '2020-12-05 18:22:20', NULL, 'a', 'Active');
+(26, 'http://localhost/ci_wercher_system/assets/img/wercher_noimage_standard.png', 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'Developer', 'test', '$2y$10$BQwXUdmcCzPgUTQ/kwwZcOOV0NVUBvgsQKr3nvPOi3yLB9VExJH8W', 'test', 'test', 'test', '2020-12-03 06:05:45', '2020-12-08 00:40:48', 'test', 'Deleted'),
+(27, 'http://localhost/ci_wercher_system/assets/img/wercher_noimage_standard.png', 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'Developer', 'v', '$2y$10$Af60CJqDoiUGNP6K/uaKU.0E0X0bZGifXj.QqmC1vdlOHLrRHL4CK', 'v', 'v3', 'v', '2020-12-03 06:07:36', '2020-12-08 00:26:56', 'v', 'Deleted'),
+(28, 'http://localhost/ci_wercher_system/assets/img/wercher_noimage_standard.png', 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing', 'Developer', '123', '$2y$10$UdS0cLQIWO4fBdzSmSQcpud0Gdzyfc4SYZlUMbn.uqWoIWhRX.t0.', '1236', '123', '123', '2020-12-03 06:13:25', NULL, '123', 'Active'),
+(29, 'http://localhost/ci_wercher_system/assets/img/wercher_noimage_standard.png', 'Dashboard,DashboardLogbook', 'President', 'a2', '$2y$10$A9ZF4qIZEQ2iCJwIydIEXeGeaW2E5tNE85oMfQlgckn76KjkTLygq', 'a2', 'a2', 'a2', '2020-12-03 08:39:27', NULL, 'a2', 'Deleted'),
+(30, 'http://localhost/ci_wercher_system/assets/img/wercher_noimage_standard.png', 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'Developer', 'aa', '$2y$10$WCH5omlTj4Qm/MqamQPFLO3if6NSolUJ449GXd9cfxdXhIY4C6kJu', 'a6', 'a', 'a', '2020-12-05 18:22:20', NULL, 'a', 'Active');
 
 -- --------------------------------------------------------
 
@@ -119,7 +119,17 @@ INSERT INTO `admin_edithistory` (`EntryID`, `AdminNo`, `Image`, `Permissions`, `
 (14, NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f61646d692f6368726f6d655f4e7056446f68467359722e706e67, 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'Developer', 'admi', NULL, 'a', 'a', 'a', '2020-12-04 17:38:00', 'a', NULL, NULL),
 (15, NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f61646d696e2f31315f31385f323032302e706e67, 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'President', 'admin', NULL, 'aab', 'b', 'test', '2020-12-04 18:03:25', 'super admin', NULL, NULL),
 (16, NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f61646d692f6368726f6d655f4e7056446f68467359722e706e67, 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'Developer', 'admi', NULL, 'a', 'a', 'a', '2020-12-05 08:28:04', 'a', NULL, NULL),
-(17, NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f61612f31315f31385f323032302e706e67, 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'Developer', 'aa', NULL, 'a', 'a', 'a', '2020-12-05 18:22:27', 'a', NULL, NULL);
+(17, NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f75706c6f6164732f61612f31315f31385f323032302e706e67, 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'Developer', 'aa', NULL, 'a', 'a', 'a', '2020-12-05 18:22:27', 'a', NULL, NULL),
+(18, NULL, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f7374616e646172642e706e67, 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'Developer', 'admin', NULL, 'aab', 'b', 'test', '2020-12-06 05:08:31', 'super admin', NULL, NULL),
+(19, 28, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f7374616e646172642e706e67, '', 'Developer', '123', NULL, '123', '123', '123', '2020-12-07 15:10:45', '123', NULL, NULL),
+(20, 28, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f7374616e646172642e706e67, '', 'Developer', '123', NULL, '1236', '123', '123', '2020-12-07 15:10:49', '123', NULL, NULL),
+(21, 30, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f7374616e646172642e706e67, 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'Developer', 'aa', NULL, 'a6', 'a', 'a', '2020-12-07 15:10:52', 'a', NULL, NULL),
+(22, 27, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f7374616e646172642e706e67, 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'Developer', 'v', NULL, 'v', 'v3', 'v', '2020-12-07 15:11:15', 'v', NULL, NULL),
+(23, 28, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f7374616e646172642e706e67, 'DashboardLogbook,Dashboard,Applicants,ApplicantsEditing', 'Developer', '123', NULL, '1236', '123', '123', '2020-12-07 15:11:41', '123', NULL, NULL),
+(24, 28, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f7374616e646172642e706e67, 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing', 'Developer', '123', NULL, '1236', '123', '123', '2020-12-07 18:42:05', '123', NULL, NULL),
+(25, 28, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f7374616e646172642e706e67, 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing', 'Developer', '123', NULL, '1236', '123', '123', '2020-12-07 18:42:08', '123', NULL, NULL),
+(26, 28, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f7374616e646172642e706e67, 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing', 'Developer', '123', NULL, '1236', '123', '123', '2020-12-07 18:42:33', '123', NULL, NULL),
+(27, 24, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f7374616e646172642e706e67, 'Dashboard,DashboardLogbook,Applicants,ApplicantsEditing,ApplicantsExpired,ApplicantsBlacklisted,ApplicantsArchived,Employees,EmployeesHiring,EmployeesEditing,EmployeesRegulars,Admins,AdminsEditing,AdminsArchived,Clients,ClientsEditing,ClientsArchived,Payroll', 'Developer', 'dev', NULL, '', '', '', '2020-12-07 19:11:41', '', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -176,17 +186,18 @@ CREATE TABLE `applicants` (
   `ReminderDate` varchar(255) DEFAULT NULL,
   `ReminderDateString` varchar(255) DEFAULT NULL,
   `ReminderLocked` varchar(255) DEFAULT NULL,
-  `Temp_ApplicantID` varchar(255) DEFAULT NULL
+  `Temp_ApplicantID` varchar(255) DEFAULT NULL,
+  `DateRemoved` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `applicants`
 --
 
-INSERT INTO `applicants` (`ApplicantNo`, `ApplicantImage`, `ApplicantID`, `EmployeeID`, `PositionDesired`, `PositionGroup`, `SalaryExpected`, `LastName`, `FirstName`, `MiddleName`, `NameExtension`, `Gender`, `Age`, `Height`, `Weight`, `Religion`, `BirthDate`, `BirthPlace`, `Citizenship`, `CivilStatus`, `No_OfChildren`, `Address_Present`, `Address_Provincial`, `Address_Manila`, `EmergencyPerson`, `EmergencyContact`, `Referral`, `Phone_No`, `SSS_No`, `EffectiveDateCoverage`, `ResidenceCertificateNo`, `TIN`, `HDMF`, `PhilHealth`, `ATM_No`, `Status`, `ClientEmployed`, `DateStarted`, `DateEnds`, `SuspensionStarted`, `SuspensionEnds`, `SuspensionRemarks`, `Suspended`, `AppliedOn`, `ReminderType`, `ReminderDate`, `ReminderDateString`, `ReminderLocked`, `Temp_ApplicantID`) VALUES
-(1, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f707572706c652e706e67, '00001-A', 'WCtest-0001-20', 'TEST-854055', 'TEST-854055', '20000', 'TEST-854055', 'TEST-854055', 'TEST-85055', 'TEST-854055', 'Male', NULL, 'TEST-854055', 'TEST-854055', 'TEST-854055', '2020-11-29', 'TEST-854055', 'TEST-854055', 'Single', '44', 'TEST-854055', 'TEST-854055', 'TEST-854055', 'TEST-854055', 'TEST-854055', '', 'TEST-854055', 'TEST-854055', NULL, 'TEST-854055', 'TEST-854055', 'TEST-854055', 'TEST-854055', 'TEST-854055', 'Employed', '1', '2020-11-29 09:57:26 PM', '2021-11-29 09:57:26 PM', NULL, NULL, NULL, NULL, '2020-11-29 09:57:18 PM', NULL, NULL, NULL, NULL, '00001-B'),
-(2, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f7374616e646172642e706e67, '00002-A', 'WCtest-0002-20', 'TEST-2394007', 'TEST-2394007', '4', 'TEST-2394007', 'TEST-2394007', 'TEST-2394007', 'TEST-2394007', 'Male', NULL, 'TEST-2394007', 'TEST-2394007', 'TEST-2394007', '2020-12-01', 'TEST-2394007', 'TEST-2394007', 'Single', '19', 'TEST-2394006', 'TEST-2394007', 'TEST-2394007', 'TEST-2394007', 'TEST-2394007', '', 'TEST-2394007', 'TEST-2394007', NULL, 'TEST-2394007', 'TEST-2394007', 'TEST-2394007', 'TEST-2394007', 'TEST-2394007', 'Employed', '1', '2020-12-05 06:14:09 PM', '2022-02-05 06:12:09 PM', NULL, NULL, NULL, NULL, '2020-12-01 07:47:08 PM', NULL, NULL, NULL, NULL, '00002-B'),
-(3, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f7374616e646172642e706e67, '00003-A', NULL, 'TEST-5612299', 'TEST-5612299', NULL, 'TEST-5612299', 'TEST-5612299', 'TEST-562299', 'TEST-5612299', 'Male', NULL, 'TEST-5612299', 'TEST-5612299', 'TEST-5612299', '2020-12-05', 'TEST-5612299', 'TEST-5612299', 'Single', '4', 'TEST-5612299', 'TEST-5612299', 'TEST-5612299', 'TEST-5612299', 'TEST-5612299', 'Job Fair', 'TEST-5612299', 'TEST-5612299', NULL, 'TEST-5612299', 'TEST-5612299', 'TEST-5612299', 'TEST-5612299', 'TEST-5612299', 'Applicant', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-12-05 06:12:53 PM', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `applicants` (`ApplicantNo`, `ApplicantImage`, `ApplicantID`, `EmployeeID`, `PositionDesired`, `PositionGroup`, `SalaryExpected`, `LastName`, `FirstName`, `MiddleName`, `NameExtension`, `Gender`, `Age`, `Height`, `Weight`, `Religion`, `BirthDate`, `BirthPlace`, `Citizenship`, `CivilStatus`, `No_OfChildren`, `Address_Present`, `Address_Provincial`, `Address_Manila`, `EmergencyPerson`, `EmergencyContact`, `Referral`, `Phone_No`, `SSS_No`, `EffectiveDateCoverage`, `ResidenceCertificateNo`, `TIN`, `HDMF`, `PhilHealth`, `ATM_No`, `Status`, `ClientEmployed`, `DateStarted`, `DateEnds`, `SuspensionStarted`, `SuspensionEnds`, `SuspensionRemarks`, `Suspended`, `AppliedOn`, `ReminderType`, `ReminderDate`, `ReminderDateString`, `ReminderLocked`, `Temp_ApplicantID`, `DateRemoved`) VALUES
+(1, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f707572706c652e706e67, '00001-A', 'WCtest-0001-20', 'TEST-854055', 'TEST-854055', '20000', 'TEST-854055', 'TEST-854055', 'TEST-85055', 'TEST-854055', 'Male', NULL, 'TEST-854055', 'TEST-854055', 'TEST-854055', '2020-11-29', 'TEST-854055', 'TEST-854055', 'Single', '44', 'TEST-854055', 'TEST-854055', 'TEST-854055', 'TEST-854055', 'TEST-854055', '', 'TEST-854055', 'TEST-854055', NULL, 'TEST-854055', 'TEST-854055', 'TEST-854055', 'TEST-854055', 'TEST-854055', 'Applicant', '1', '2020-11-29 09:57:26 PM', '2021-11-29 09:57:26 PM', NULL, NULL, NULL, NULL, '2020-11-29 09:57:18 PM', NULL, NULL, NULL, NULL, '00001-B', NULL),
+(2, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f7374616e646172642e706e67, '00002-A', 'WCtes', 'TEST-239135123123123132', 'TEST-2394007', '500000', 'TEST-23940071233', 'TEST-2394', 'TEST-2394007', 'TEST-2394007', 'Male', NULL, 'TEST-2394007', 'TEST-2394007', 'TEST-2394007', '2020-12-01', 'TEST-2394007', 'TEST-2394007', 'Single', '19', 'TEST-239400612313231313133131234234242234234234234244234234234234', 'TEST-2394007', 'TEST-2394007', 'TEST-239400612313231313133131234234242234234234234244234234234234', 'TEST-2394007', '', 'TEST-2394007123123213123123123123123123', 'TEST-2394007123131231231231231232132132133', NULL, 'TEST-2394007', 'TEST-2394007', 'TEST-2394007', 'TEST-2394007', 'TEST-2394007', 'Employed', '1', '2020-12-05 06:14:09 PM', '2022-02-05 06:12:09 PM', NULL, NULL, NULL, NULL, '2020-12-01 07:47:08 PM', NULL, NULL, NULL, NULL, '00002-B', NULL),
+(3, 0x687474703a2f2f6c6f63616c686f73742f63695f776572636865725f73797374656d2f6173736574732f696d672f776572636865725f6e6f696d6167655f7374616e646172642e706e67, '00003-A', NULL, 'TEST-5612299', 'TEST-5612299', NULL, 'TEST-5612299', 'TEST-5612299', 'TEST-562299', 'TEST-5612299', 'Male', NULL, 'TEST-5612299', 'TEST-5612299', 'TEST-5612299', '2020-12-05', 'TEST-5612299', 'TEST-5612299', 'Single', '4', 'TEST-5612299', 'TEST-5612299', 'TEST-5612299', 'TEST-5612299', 'TEST-5612299', 'Job Fair', 'TEST-5612299', 'TEST-5612299', NULL, 'TEST-5612299', 'TEST-5612299', 'TEST-5612299', 'TEST-5612299', 'TEST-5612299', 'Deleted', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-12-05 06:12:53 PM', NULL, NULL, NULL, NULL, NULL, '2020-12-08 00:36:25');
 
 -- --------------------------------------------------------
 
@@ -235,7 +246,8 @@ CREATE TABLE `applicants_edithistory` (
   `ClientEmployed` varchar(255) DEFAULT NULL,
   `DateStarted` varchar(255) DEFAULT NULL,
   `DateEnds` varchar(255) DEFAULT NULL,
-  `AppliedOn` varchar(255) DEFAULT NULL
+  `AppliedOn` varchar(255) DEFAULT NULL,
+  `DateRemoved` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -279,16 +291,17 @@ CREATE TABLE `clients` (
   `ContactNumber` varchar(255) DEFAULT NULL,
   `EmployeeIDSuffix` varchar(255) DEFAULT NULL,
   `DateAdded` varchar(255) DEFAULT NULL,
-  `Status` varchar(255) DEFAULT NULL
+  `Status` varchar(255) DEFAULT NULL,
+  `DateRemoved` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `clients`
 --
 
-INSERT INTO `clients` (`ClientID`, `Name`, `Address`, `ContactNumber`, `EmployeeIDSuffix`, `DateAdded`, `Status`) VALUES
-(1, 'test2', '1', '15546754756774373467, 3944584359034589, 395498-5389-6589--89365, 34953489893570893, 3958 90345890 349085, 4895658076803580, 3958 6 3589698554909999999999999999999999999999999999991', 'test', '2020-11-28 06:45:52 AM', 'Active'),
-(2, '1', '1', '1', '1', '2020-11-28 06:46:01 AM', 'Active');
+INSERT INTO `clients` (`ClientID`, `Name`, `Address`, `ContactNumber`, `EmployeeIDSuffix`, `DateAdded`, `Status`, `DateRemoved`) VALUES
+(1, 'test2', '118490201248924811184902012489248111849020124892481118490201248924811184902012489248111849020124892481118490201248924811184902012489248111849020124892481118490201248924811184902012489248111849020124892481118490201248924811184902012489248111849020124892481', '15546754756774373467, 3944584359034589, 395498-5389-6589--89365, 34953489893570893, 3958 90345890 349085, 4895658076803580, 3958 6 3589698554909999999999999999999999999999999999991', 'test', '2020-11-28 06:45:52 AM', 'Active', NULL),
+(2, '1', '1', '1', '1', '2020-11-28 06:46:01 AM', 'Deleted', '2020-12-08 00:55:16');
 
 -- --------------------------------------------------------
 
@@ -305,7 +318,8 @@ CREATE TABLE `clients_edithistory` (
   `EmployeeIDSuffix` varchar(255) DEFAULT NULL,
   `DateUpdated` varchar(255) DEFAULT NULL,
   `Status` varchar(255) DEFAULT NULL,
-  `IsHidden` tinyint(1) DEFAULT NULL
+  `IsHidden` tinyint(1) DEFAULT NULL,
+  `DateRemoved` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -351,8 +365,20 @@ INSERT INTO `dashboard_months` (`ID`, `Year`, `Month`, `Total`) VALUES
 (8, '2020', '08', '0'),
 (9, '2020', '09', '0'),
 (10, '2020', '10', '0'),
-(11, '2020', '11', '0'),
-(12, '2020', '12', '0');
+(13, '2021', '01', '0'),
+(17, '2021', '02', '0'),
+(21, '2021', '03', '0'),
+(25, '2021', '04', '0'),
+(29, '2021', '05', '0'),
+(33, '2021', '06', '0'),
+(37, '2021', '07', '0'),
+(41, '2021', '08', '0'),
+(45, '2021', '09', '0'),
+(49, '2021', '10', '0'),
+(53, '2021', '11', '0'),
+(57, '2021', '12', '0'),
+(58, '2020', '11', '1'),
+(59, '2020', '12', '2');
 
 -- --------------------------------------------------------
 
@@ -388,13 +414,37 @@ CREATE TABLE `dummy_hours` (
 --
 
 INSERT INTO `dummy_hours` (`ID`, `Time`, `Current`, `Regular`, `NightShift`, `Holiday`) VALUES
-(22, '2020-11-27', 'Current', NULL, NULL, NULL),
-(23, '2020-11-28', 'Current', NULL, NULL, NULL),
-(24, '2020-11-29', 'Current', NULL, NULL, NULL),
-(25, '2020-11-30', 'Current', NULL, NULL, NULL),
-(26, '2020-12-01', 'Current', NULL, NULL, NULL),
-(27, '2020-12-02', 'Current', NULL, NULL, NULL),
-(28, '2020-12-03', 'Current', NULL, NULL, NULL);
+(60, '2020-12-01', 'Current', NULL, NULL, NULL),
+(61, '2020-12-02', 'Current', NULL, NULL, NULL),
+(62, '2020-12-03', 'Current', NULL, NULL, NULL),
+(63, '2020-12-04', 'Current', NULL, NULL, NULL),
+(64, '2020-12-05', 'Current', NULL, NULL, NULL),
+(65, '2020-12-06', 'Current', NULL, NULL, NULL),
+(66, '2020-12-07', 'Current', NULL, NULL, NULL),
+(67, '2020-12-08', 'Current', NULL, NULL, NULL),
+(68, '2020-12-09', 'Current', NULL, NULL, NULL),
+(69, '2020-12-10', 'Current', NULL, NULL, NULL),
+(70, '2020-12-11', 'Current', NULL, NULL, NULL),
+(71, '2020-12-12', 'Current', NULL, NULL, NULL),
+(72, '2020-12-13', 'Current', NULL, NULL, NULL),
+(73, '2020-12-14', 'Current', NULL, NULL, NULL),
+(74, '2020-12-15', 'Current', NULL, NULL, NULL),
+(75, '2020-12-16', 'Current', NULL, NULL, NULL),
+(76, '2020-12-17', 'Current', NULL, NULL, NULL),
+(77, '2020-12-18', 'Current', NULL, NULL, NULL),
+(78, '2020-12-19', 'Current', NULL, NULL, NULL),
+(79, '2020-12-20', 'Current', NULL, NULL, NULL),
+(80, '2020-12-21', 'Current', NULL, NULL, NULL),
+(81, '2020-12-22', 'Current', NULL, NULL, NULL),
+(82, '2020-12-23', 'Current', NULL, NULL, NULL),
+(83, '2020-12-24', 'Current', NULL, NULL, NULL),
+(84, '2020-12-25', 'Current', NULL, NULL, NULL),
+(85, '2020-12-26', 'Current', NULL, NULL, NULL),
+(86, '2020-12-27', 'Current', NULL, NULL, NULL),
+(87, '2020-12-28', 'Current', NULL, NULL, NULL),
+(88, '2020-12-29', 'Current', NULL, NULL, NULL),
+(89, '2020-12-30', 'Current', NULL, NULL, NULL),
+(90, '2020-12-31', 'Current', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -530,7 +580,8 @@ CREATE TABLE `hours_monthly` (
 INSERT INTO `hours_monthly` (`No`, `ClientID`, `ApplicantID`, `Name`, `Salary`, `Week`, `Month`, `t_year`, `Time`, `Hours`, `NightHours`, `Type`, `Overtime`, `NightOvertime`, `Remarks`, `Regular`, `NightShift`, `Holiday`, `Current`, `HDMF`, `Philhealth`, `SSS`, `Tax`, `day_pay`, `ispaid`) VALUES
 (1, '1', '00001-B', 'TEST-854055, TEST-854055 TEST-85055.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
 (2, '1', '00002-B', 'TEST-2394007, TEST-2394007 TEST-2394007.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(3, '1', '00002-B', 'TEST-2394007, TEST-2394007 TEST-2394007.', '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0);
+(3, '1', '00002-B', 'TEST-2394007, TEST-2394007 TEST-2394007.', '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(4, '1', '00002-B', 'TEST-2394007, TEST-2394007 TEST-2394007.', '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -573,7 +624,8 @@ CREATE TABLE `hours_semimonthly` (
 INSERT INTO `hours_semimonthly` (`No`, `ClientID`, `ApplicantID`, `Name`, `Salary`, `Week`, `Month`, `t_year`, `Time`, `Hours`, `NightHours`, `Type`, `Overtime`, `NightOvertime`, `Remarks`, `Regular`, `NightShift`, `Holiday`, `Current`, `HDMF`, `Philhealth`, `SSS`, `Tax`, `day_pay`, `ispaid`) VALUES
 (1, '1', '00001-B', 'TEST-854055, TEST-854055 TEST-85055.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
 (2, '1', '00002-B', 'TEST-2394007, TEST-2394007 TEST-2394007.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(3, '1', '00002-B', 'TEST-2394007, TEST-2394007 TEST-2394007.', '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0);
+(3, '1', '00002-B', 'TEST-2394007, TEST-2394007 TEST-2394007.', '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(4, '1', '00002-B', 'TEST-2394007, TEST-2394007 TEST-2394007.', '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -616,7 +668,15 @@ CREATE TABLE `hours_weekly` (
 INSERT INTO `hours_weekly` (`No`, `ClientID`, `ApplicantID`, `Name`, `Salary`, `Week`, `Month`, `t_year`, `Time`, `Hours`, `NightHours`, `Type`, `Overtime`, `NightOvertime`, `Remarks`, `Regular`, `NightShift`, `Holiday`, `Current`, `HDMF`, `Philhealth`, `SSS`, `Tax`, `day_pay`, `ispaid`) VALUES
 (1, '1', '00001-B', 'TEST-854055, TEST-854055 TEST-85055.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
 (2, '1', '00002-B', 'TEST-2394007, TEST-2394007 TEST-2394007.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(3, '1', '00002-B', 'TEST-2394007, TEST-2394007 TEST-2394007.', '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0);
+(3, '1', '00002-B', 'TEST-2394007, TEST-2394007 TEST-2394007.', '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(4, '1', '00002-A', NULL, NULL, 1, 11, 2020, '2020-11-29', 2, 0, NULL, 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '0.00', 0),
+(5, '1', '00002-A', NULL, NULL, 1, 11, 2020, '2020-11-30', 0, 0, NULL, 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(6, '1', '00002-A', NULL, NULL, 1, 11, 2020, '2020-12-01', 0, 0, NULL, 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(7, '1', '00002-A', NULL, NULL, 1, 11, 2020, '2020-12-02', 0, 0, NULL, 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(8, '1', '00002-A', NULL, NULL, 1, 11, 2020, '2020-12-03', 0, 0, NULL, 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(9, '1', '00002-A', NULL, NULL, 1, 11, 2020, '2020-12-04', 0, 0, NULL, 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(10, '1', '00002-A', NULL, NULL, 1, 11, 2020, '2020-12-05', 0, 0, NULL, 0, 0, '', NULL, NULL, NULL, NULL, '', '', '', '', '', 0),
+(11, '1', '00002-B', 'TEST-2394007, TEST-2394007 TEST-2394007.', '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -692,7 +752,72 @@ INSERT INTO `logbook` (`No`, `AdminID`, `Time`, `Icon`, `Type`, `Event`, `Link`)
 (51, 'admin', '2020-12-05 06:12:31 PM', 'Employee', 'Blue', ' updated contract duration for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A#Contract\" target=\"_blank\">TEST-2394007, TEST-2394007 TEST-2394007</a>', NULL),
 (52, 'admin', '2020-12-05 06:12:53 PM', 'Applicant', 'Green', ' added a new applicant: <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00003-A\" target=\"_blank\">TEST-5612299, TEST-5612299 TEST-562299</a>', NULL),
 (53, 'admin', '2020-12-05 06:22:21 PM', 'Admin', 'Green', ' added a new admin: <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewAdmin?id=aa\" target=\"_blank\">A, A </a>', NULL),
-(54, 'admin', '2020-12-05 06:22:27 PM', 'Admin', 'Blue', ' updated <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/Admins?id=aa\" target=\"_blank\">aa</a>', NULL);
+(54, 'admin', '2020-12-05 06:22:27 PM', 'Admin', 'Blue', ' updated <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/Admins?id=aa\" target=\"_blank\">aa</a>', NULL),
+(55, 'admin', '2020-12-05 10:06:39 PM', 'Salary', 'Blue', ' updated the hours of <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007, TEST-2394007 TEST-2394007</a>', NULL),
+(56, 'admin', '2020-12-06 05:08:31 AM', 'Admin', 'Blue', ' updated <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/Admins?id=admin\" target=\"_blank\">admin</a>', NULL),
+(57, 'admin', '2020-12-06 10:40:45 AM', 'Applicant', 'Green', ' restored <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00001-A\" target=\"_blank\">TEST-854055, TEST-854055 TEST-85055</a>', NULL),
+(58, 'admin', '2020-12-06 01:35:42 PM', 'Client', 'Red', ' archived client <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/Clients?id=2\" target=\"_blank\">2</a>', NULL),
+(59, 'admin', '2020-12-06 01:41:31 PM', 'Admin', 'Red', ' removed admin <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewAdmin?id=29\" target=\"_blank\">a2</a>', NULL),
+(60, 'admin', '2020-12-06 02:40:36 PM', 'Applicant', 'Red', ' archived <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00003-A\" target=\"_blank\">TEST-5612299, TEST-5612299 TEST-562299</a>', NULL),
+(61, 'admin', '2020-12-07 03:10:45 PM', 'Admin', 'Blue', ' updated <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/Admins?id=123\" target=\"_blank\">123</a>', NULL),
+(62, 'admin', '2020-12-07 03:10:49 PM', 'Admin', 'Blue', ' updated <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/Admins?id=123\" target=\"_blank\">123</a>', NULL),
+(63, 'admin', '2020-12-07 03:10:53 PM', 'Admin', 'Blue', ' updated <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/Admins?id=aa\" target=\"_blank\">aa</a>', NULL),
+(64, 'admin', '2020-12-07 03:11:15 PM', 'Admin', 'Blue', ' updated <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/Admins?id=v\" target=\"_blank\">v</a>', NULL),
+(65, 'admin', '2020-12-07 03:11:41 PM', 'Admin', 'Blue', ' updated <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/Admins?id=123\" target=\"_blank\">123</a>', NULL),
+(66, 'admin', '2020-12-07 06:35:34 PM', 'Employee', 'Blue', ' updated <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A#Contract\" target=\"_blank\">TEST-2394007, TEST-2394007 TEST-2394007</a>\'s contract details', NULL),
+(67, 'admin', '2020-12-07 06:42:05 PM', 'Admin', 'Blue', ' updated <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/Admins?id=123\" target=\"_blank\">123</a>', NULL),
+(68, 'admin', '2020-12-07 06:42:08 PM', 'Admin', 'Blue', ' updated <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/Admins?id=123\" target=\"_blank\">123</a>', NULL),
+(69, 'admin', '2020-12-07 06:42:33 PM', 'Admin', 'Blue', ' updated <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/Admins?id=123\" target=\"_blank\">123</a>', NULL),
+(70, 'admin', '2020-12-07 06:46:30 PM', 'Client', 'Blue', ' updated client <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/Clients?id=1\" target=\"_blank\">test2</a>', NULL),
+(71, 'admin', '2020-12-07 06:56:08 PM', 'Admin', 'Red', ' removed admin <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewAdmin?id=27\" target=\"_blank\">v</a>', NULL),
+(72, 'admin', '2020-12-08 12:19:28 AM', 'Admin', 'Red', ' removed admin <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewAdmin?id=27\" target=\"_blank\">v</a>', NULL),
+(73, 'admin', '2020-12-08 12:19:34 AM', 'Applicant', 'Green', ' restored <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/Logbook?admin=v\" target=\"_blank\">v</a>', NULL),
+(74, 'admin', '2020-12-08 12:22:20 AM', 'Applicant', 'Green', ' restored client <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/Clients?id=2\" target=\"_blank\">1</a>', NULL),
+(75, 'admin', '2020-12-08 12:22:32 AM', 'Client', 'Red', ' archived client <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/Clients?id=2\" target=\"_blank\">2</a>', NULL),
+(76, 'admin', '2020-12-08 12:22:39 AM', 'Applicant', 'Green', ' restored <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00003-A\" target=\"_blank\">TEST-5612299, TEST-5612299 TEST-562299</a>', NULL),
+(77, 'admin', '2020-12-08 12:26:56 AM', 'Admin', 'Red', ' removed admin <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewAdmin?id=27\" target=\"_blank\">v</a>', NULL),
+(78, 'admin', '2020-12-08 12:36:25 AM', 'Applicant', 'Red', ' archived <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00003-A\" target=\"_blank\">TEST-5612299, TEST-5612299 T.</a>', NULL),
+(79, 'admin', '2020-12-08 12:40:48 AM', 'Admin', 'Red', ' removed admin <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewAdmin?id=26\" target=\"_blank\">test</a>', NULL),
+(80, 'admin', '2020-12-08 12:54:13 AM', 'Applicant', 'Green', ' restored client <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/Clients?id=2\" target=\"_blank\">1</a>', NULL),
+(81, 'admin', '2020-12-08 12:55:16 AM', 'Client', 'Red', ' archived client <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/Clients?id=2\" target=\"_blank\">2</a>', NULL),
+(82, 'admin', '2020-12-08 01:54:32 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-23940076245542526465526552522464554655244562456245544524655244555245, TEST-2394007 TEST-2394007</a>', NULL),
+(83, 'admin', '2020-12-08 01:55:10 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-23940076245542526465526, TEST-2394007 TEST-2394007</a>', NULL),
+(84, 'admin', '2020-12-08 01:55:29 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-23940076245542526465526, TEST-2394007234324 TEST-2394007</a>', NULL),
+(85, 'admin', '2020-12-08 01:57:06 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394, TEST-2394007234324 TEST-2394007</a>', NULL),
+(86, 'admin', '2020-12-08 01:57:14 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394, TEST-23 TEST-2394007</a>', NULL),
+(87, 'admin', '2020-12-08 02:02:15 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394, TEST-23 TEST-2394007</a>', NULL),
+(88, 'admin', '2020-12-08 02:02:23 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394, TEST-23 TEST-2394007</a>', NULL),
+(89, 'admin', '2020-12-08 02:03:18 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(90, 'admin', '2020-12-08 02:05:05 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(91, 'admin', '2020-12-08 02:05:12 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(92, 'admin', '2020-12-08 02:05:36 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(93, 'admin', '2020-12-08 02:05:47 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(94, 'admin', '2020-12-08 02:06:24 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(95, 'admin', '2020-12-08 02:06:43 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(96, 'admin', '2020-12-08 02:07:15 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(97, 'admin', '2020-12-08 02:07:23 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(98, 'admin', '2020-12-08 02:07:29 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(99, 'admin', '2020-12-08 02:11:06 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(100, 'admin', '2020-12-08 02:11:23 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(101, 'admin', '2020-12-08 02:12:44 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(102, 'admin', '2020-12-08 02:13:11 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(103, 'admin', '2020-12-08 02:13:21 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(104, 'admin', '2020-12-08 02:14:03 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(105, 'admin', '2020-12-08 02:14:18 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(106, 'admin', '2020-12-08 02:15:13 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(107, 'admin', '2020-12-08 02:15:20 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(108, 'admin', '2020-12-08 02:15:25 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(109, 'admin', '2020-12-08 02:25:22 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(110, 'admin', '2020-12-08 02:25:41 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(111, 'admin', '2020-12-08 02:25:49 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(112, 'admin', '2020-12-08 02:25:58 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(113, 'admin', '2020-12-08 02:26:19 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(114, 'admin', '2020-12-08 02:31:55 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-2394007123331312313131313, TEST-2394007 TEST-2394007</a>', NULL),
+(115, 'admin', '2020-12-08 02:32:32 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-23940071233313123131313133331131312312313131232, TEST-2394007123123331231231231312312312313231231233123 TEST-2394007</a>', NULL),
+(116, 'admin', '2020-12-08 02:32:44 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-23940071233, TEST-2394 TEST-2394007</a>', NULL),
+(117, 'admin', '2020-12-08 02:39:32 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-23940071233, TEST-2394 TEST-2394007</a>', NULL),
+(118, 'admin', '2020-12-08 02:39:40 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-23940071233, TEST-2394 TEST-2394007</a>', NULL),
+(119, 'admin', '2020-12-08 02:39:51 AM', 'Employee', 'Blue', ' updated details for <a class=\"logbook-tooltip-highlight\" href=\"http://localhost/ci_wercher_system/ViewEmployee?id=00002-A\" target=\"_blank\">TEST-23940071233, TEST-2394 TEST-2394007</a>', NULL);
 
 -- --------------------------------------------------------
 
@@ -776,7 +901,92 @@ INSERT INTO `logbook_extended` (`ID`, `AdminID`, `Time`, `HookNo`, `Type`, `Even
 (61, 'admin', '2020-12-05 06:12:53 PM', '52', 0, 'Referral: <b>Job Fair</b>'),
 (62, 'admin', '2020-12-05 06:22:21 PM', '53', 0, 'Admin ID: '),
 (63, 'admin', '2020-12-05 06:22:21 PM', '53', 0, 'Position:  - Developer'),
-(64, 'admin', '2020-12-05 06:22:27 PM', '54', 0, 'Changed profile picture.');
+(64, 'admin', '2020-12-05 06:22:27 PM', '54', 0, 'Changed profile picture.'),
+(65, 'admin', '2020-12-06 05:08:31 AM', '56', 0, 'Position changed from <b>President</b> to <b>Developer</b>.'),
+(66, 'admin', '2020-12-06 10:40:45 AM', '57', 0, 'Changed status from <b>Blacklisted</b> to <b>Applicant</b>'),
+(67, 'admin', '2020-12-06 01:35:43 PM', '58', 0, 'Name: N/A'),
+(68, 'admin', '2020-12-06 01:35:43 PM', '58', 0, 'Address: N/A'),
+(69, 'admin', '2020-12-06 01:35:43 PM', '58', 0, 'Contact Number: 1970-01-01 08:00:00 AM'),
+(70, 'admin', '2020-12-06 01:41:31 PM', '59', 0, 'Name: A2, A2 A2'),
+(71, 'admin', '2020-12-06 01:41:31 PM', '59', 0, 'Position:  - President'),
+(72, 'admin', '2020-12-06 01:41:31 PM', '59', 0, 'Date Added: 1970-01-01 08:33:40 AM'),
+(73, 'admin', '2020-12-06 02:40:36 PM', '60', 0, 'Applicant ID: 00003-A'),
+(74, 'admin', '2020-12-06 02:40:36 PM', '60', 0, 'ContactNumber: TEST-5612299'),
+(75, 'admin', '2020-12-07 03:10:49 PM', '62', 0, 'First name changed from <b>123</b> to <b>1236</b>.'),
+(76, 'admin', '2020-12-07 03:10:53 PM', '63', 0, 'First name changed from <b>a</b> to <b>a6</b>.'),
+(77, 'admin', '2020-12-07 03:11:15 PM', '64', 0, 'Middle name changed from <b>v</b> to <b>v3</b>.'),
+(78, 'admin', '2020-12-07 03:11:41 PM', '65', 0, 'Permissions changed from <b>N/A</b> to <b>Array</b>.'),
+(79, 'admin', '2020-12-07 06:35:34 PM', '66', 0, 'Salary changed from <b>4</b> to <b>500000</b>'),
+(80, 'admin', '2020-12-07 06:42:05 PM', '67', 0, 'Permissions changed from <b>DashboardLogbook, Dashboard, Applicants, ApplicantsEditing</b> to <b>Array</b>.'),
+(81, 'admin', '2020-12-07 06:46:30 PM', '70', 0, 'Address changed from <b>1</b> to <b>1184902012489248111849020124892481118490201248924811184902012489248111849020124892481118490201248924811184902012489248111849020124892481118490201248924811184902012489248111849020124892481118490201248924811184902012489248111849020124892481118490201248924811184902012489248111849020124892481118490201248924811184902012489248111849020124892481118490201248924811184902012489248111849020124892481</b>.'),
+(82, 'admin', '2020-12-07 06:56:08 PM', '71', 0, 'Name: V, V V3'),
+(83, 'admin', '2020-12-07 06:56:08 PM', '71', 0, 'Position:  - Developer'),
+(84, 'admin', '2020-12-07 06:56:08 PM', '71', 0, 'Date Added: 1970-01-01 08:33:40 AM'),
+(85, 'admin', '2020-12-08 12:19:28 AM', '72', 0, 'Name: V, V V3'),
+(86, 'admin', '2020-12-08 12:19:28 AM', '72', 0, 'Position:  - Developer'),
+(87, 'admin', '2020-12-08 12:19:28 AM', '72', 0, 'Date Added: 1970-01-01 08:33:40 AM'),
+(88, 'admin', '2020-12-08 12:19:34 AM', '73', 0, 'Changed status from <b>Archived</b> to <b>Active</b>'),
+(89, 'admin', '2020-12-08 12:22:21 AM', '74', 0, 'Changed status from <b>Archived</b> to <b>Active</b>'),
+(90, 'admin', '2020-12-08 12:22:32 AM', '75', 0, 'Name: N/A'),
+(91, 'admin', '2020-12-08 12:22:32 AM', '75', 0, 'Address: N/A'),
+(92, 'admin', '2020-12-08 12:22:32 AM', '75', 0, 'Contact Number: 1970-01-01 08:00:00 AM'),
+(93, 'admin', '2020-12-08 12:22:39 AM', '76', 0, 'Changed status to <b>Applicant</b>'),
+(94, 'admin', '2020-12-08 12:26:56 AM', '77', 0, 'Name: v, v 3'),
+(95, 'admin', '2020-12-08 12:26:56 AM', '77', 0, 'Position: Developer'),
+(96, 'admin', '2020-12-08 12:26:56 AM', '77', 0, 'Permissions: Dashboard, DashboardLogbook, Applicants, ApplicantsEditing, ApplicantsExpired, ApplicantsBlacklisted, ApplicantsArchived, Employees, EmployeesHiring, EmployeesEditing, EmployeesRegulars, Admins, AdminsEditing, AdminsArchived, Clients, ClientsEditing, ClientsArchived, Payroll'),
+(97, 'admin', '2020-12-08 12:26:57 AM', '77', 0, 'Date Added: 2020-12-03 06:07:36'),
+(98, 'admin', '2020-12-08 12:36:25 AM', '78', 0, '<b>Applicant ID:</b> 00003-A'),
+(99, 'admin', '2020-12-08 12:36:25 AM', '78', 0, '<b>ContactNumber:</b> N/A'),
+(100, 'admin', '2020-12-08 12:40:48 AM', '79', 0, '<b>Name:</b> test, test t.'),
+(101, 'admin', '2020-12-08 12:40:48 AM', '79', 0, '<b>Position:</b> Developer'),
+(102, 'admin', '2020-12-08 12:40:48 AM', '79', 0, '<b>Permissions:</b> Dashboard, DashboardLogbook, Applicants, ApplicantsEditing, ApplicantsExpired, ApplicantsBlacklisted, ApplicantsArchived, Employees, EmployeesHiring, EmployeesEditing, EmployeesRegulars, Admins, AdminsEditing, AdminsArchived, Clients, ClientsEditing, ClientsArchived, Payroll'),
+(103, 'admin', '2020-12-08 12:40:48 AM', '79', 0, '<b>Date Added:</b> 2020-12-03 06:05:45'),
+(104, 'admin', '2020-12-08 12:54:13 AM', '80', 0, 'Changed status from <b>Archived</b> to <b>Active</b>'),
+(105, 'admin', '2020-12-08 12:55:16 AM', '81', 0, 'Name: N/A'),
+(106, 'admin', '2020-12-08 12:55:16 AM', '81', 0, 'Address: N/A'),
+(107, 'admin', '2020-12-08 12:55:16 AM', '81', 0, 'Contact Number: N/A'),
+(108, 'admin', '2020-12-08 01:54:32 AM', '82', 0, 'Last Name changed from <b>TEST-2394007</b> to <b>TEST-23940076245542526465526552522464554655244562456245544524655244555245</b>'),
+(109, 'admin', '2020-12-08 01:55:10 AM', '83', 0, 'Last Name changed from <b>TEST-23940076245542526465526552522464554655244562456245544524655244555245</b> to <b>TEST-23940076245542526465526</b>'),
+(110, 'admin', '2020-12-08 01:55:29 AM', '84', 0, 'First Name changed from <b>TEST-2394007</b> to <b>TEST-2394007234324</b>'),
+(111, 'admin', '2020-12-08 01:57:06 AM', '85', 0, 'Last Name changed from <b>TEST-23940076245542526465526</b> to <b>TEST-2394</b>'),
+(112, 'admin', '2020-12-08 01:57:14 AM', '86', 0, 'First Name changed from <b>TEST-2394007234324</b> to <b>TEST-23</b>'),
+(113, 'admin', '2020-12-08 02:02:15 AM', '87', 0, 'Position desired changed from <b>TEST-2394007</b> to <b>46512365133451345</b>'),
+(114, 'admin', '2020-12-08 02:02:23 AM', '88', 0, 'Position desired changed from <b>46512365133451345</b> to <b>46512365133451345134341434134134134134134134414</b>'),
+(115, 'admin', '2020-12-08 02:03:18 AM', '89', 0, 'Position desired changed from <b>46512365133451345134341434134134134134134134414</b> to <b>TEST-2394007</b>'),
+(116, 'admin', '2020-12-08 02:03:18 AM', '89', 0, 'Last Name changed from <b>TEST-2394</b> to <b>TEST-2394007123331312313131313</b>'),
+(117, 'admin', '2020-12-08 02:03:18 AM', '89', 0, 'First Name changed from <b>TEST-23</b> to <b>TEST-2394007</b>'),
+(118, 'admin', '2020-12-08 02:05:05 AM', '90', 0, 'Position desired changed from <b>TEST-2394007</b> to <b>TEST-239400712313</b>'),
+(119, 'admin', '2020-12-08 02:05:12 AM', '91', 0, 'Position desired changed from <b>TEST-239400712313</b> to <b>TEST-23940071231312313</b>'),
+(120, 'admin', '2020-12-08 02:05:36 AM', '92', 0, 'Position desired changed from <b>TEST-23940071231312313</b> to <b>TEST-2394007123131231332432423423424242342</b>'),
+(121, 'admin', '2020-12-08 02:05:47 AM', '93', 0, 'Position desired changed from <b>TEST-2394007123131231332432423423424242342</b> to <b>TEST-239400712</b>'),
+(122, 'admin', '2020-12-08 02:06:24 AM', '94', 0, 'Position desired changed from <b>TEST-239400712</b> to <b>TEST-239400712123213131231232133</b>'),
+(123, 'admin', '2020-12-08 02:06:43 AM', '95', 0, 'Position desired changed from <b>TEST-239400712123213131231232133</b> to <b>TEST-239</b>'),
+(124, 'admin', '2020-12-08 02:07:15 AM', '96', 0, 'Position desired changed from <b>TEST-239</b> to <b>TEST-239135155135</b>'),
+(125, 'admin', '2020-12-08 02:07:23 AM', '97', 0, 'Position desired changed from <b>TEST-239135155135</b> to <b>TEST-23913515513513515135135135</b>'),
+(126, 'admin', '2020-12-08 02:07:29 AM', '98', 0, 'Position desired changed from <b>TEST-23913515513513515135135135</b> to <b>TEST-2391351551351351513513513531515315135135</b>'),
+(127, 'admin', '2020-12-08 02:11:06 AM', '99', 0, 'Position desired changed from <b>TEST-2391351551351351513513513531515315135135</b> to <b>TEST-239135</b>'),
+(128, 'admin', '2020-12-08 02:11:23 AM', '100', 0, 'Position desired changed from <b>TEST-239135</b> to <b>TEST-239135123123123132</b>'),
+(129, 'admin', '2020-12-08 02:12:44 AM', '101', 0, 'Employee ID from <b>WCtest-0002-20</b> to <b>WCtest-0002-201231231313</b>'),
+(130, 'admin', '2020-12-08 02:13:11 AM', '102', 0, 'Employee ID from <b>WCtest-0002-201231231313</b> to <b>WCtest-000</b>'),
+(131, 'admin', '2020-12-08 02:13:21 AM', '103', 0, 'Employee ID from <b>WCtest-000</b> to <b>WCtes2458924-0001-20</b>'),
+(132, 'admin', '2020-12-08 02:14:02 AM', '104', 0, 'Employee ID from <b>WCtes2458924-0001-20</b> to <b>WCtes2458924-0001-201232131313213123</b>'),
+(133, 'admin', '2020-12-08 02:14:18 AM', '105', 0, 'Employee ID from <b>WCtes2458924-0001-201232131313213123</b> to <b>WCtes2458924-0001-20123</b>'),
+(134, 'admin', '2020-12-08 02:15:13 AM', '106', 0, 'Employee ID from <b>WCtes2458924-0001-20123</b> to <b>WCtes2458924-00</b>'),
+(135, 'admin', '2020-12-08 02:15:20 AM', '107', 0, 'Employee ID from <b>WCtes2458924-00</b> to <b>WCtes2458924-001231312</b>'),
+(136, 'admin', '2020-12-08 02:15:25 AM', '108', 0, 'Employee ID from <b>WCtes2458924-001231312</b> to <b>WCtes</b>'),
+(137, 'admin', '2020-12-08 02:25:22 AM', '109', 0, 'Present address changed from <b>TEST-2394006</b> to <b>TEST-2394006123132313131331313123331313</b>'),
+(138, 'admin', '2020-12-08 02:25:41 AM', '110', 0, 'Present address changed from <b>TEST-2394006123132313131331313123331313</b> to <b>TEST-2394006123132313131331313123331313123133112332313</b>'),
+(139, 'admin', '2020-12-08 02:25:49 AM', '111', 0, 'Present address changed from <b>TEST-2394006123132313131331313123331313123133112332313</b> to <b>TEST-239400612313231313133131312333131312311231313131313131312333312333112332313</b>'),
+(140, 'admin', '2020-12-08 02:25:58 AM', '112', 0, 'Present address changed from <b>TEST-239400612313231313133131312333131312311231313131313131312333312333112332313</b> to <b>TEST-2394006123132313131331313123331313121212331313131312213133313311231313131313131312333312333112332313</b>'),
+(141, 'admin', '2020-12-08 02:26:19 AM', '113', 0, 'Present address changed from <b>TEST-2394006123132313131331313123331313121212331313131312213133313311231313131313131312333312333112332313</b> to <b>TEST-239400612313231313133131234234242234234234234244234234234234</b>'),
+(142, 'admin', '2020-12-08 02:31:55 AM', '114', 0, 'Person to notify in case of emergyency changed from <b>TEST-2394007</b> to <b>TEST-239400612313231313133131234234242234234234234244234234234234</b>'),
+(143, 'admin', '2020-12-08 02:32:32 AM', '115', 0, 'Last Name changed from <b>TEST-2394007123331312313131313</b> to <b>TEST-23940071233313123131313133331131312312313131232</b>'),
+(144, 'admin', '2020-12-08 02:32:32 AM', '115', 0, 'First Name changed from <b>TEST-2394007</b> to <b>TEST-2394007123123331231231231312312312313231231233123</b>'),
+(145, 'admin', '2020-12-08 02:32:44 AM', '116', 0, 'Last Name changed from <b>TEST-23940071233313123131313133331131312312313131232</b> to <b>TEST-23940071233</b>'),
+(146, 'admin', '2020-12-08 02:32:44 AM', '116', 0, 'First Name changed from <b>TEST-2394007123123331231231231312312312313231231233123</b> to <b>TEST-2394</b>'),
+(147, 'admin', '2020-12-08 02:39:32 AM', '117', 0, 'SSS number changed from <b>TEST-2394007</b> to <b>TEST-239400712313123123123</b>'),
+(148, 'admin', '2020-12-08 02:39:40 AM', '118', 0, 'SSS number changed from <b>TEST-239400712313123123123</b> to <b>TEST-2394007123131231231231231232132132133</b>'),
+(149, 'admin', '2020-12-08 02:39:51 AM', '119', 0, 'Contact number changed from <b>TEST-2394007</b> to <b>TEST-2394007123123213123123123123123123</b>');
 
 -- --------------------------------------------------------
 
@@ -985,6 +1195,13 @@ CREATE TABLE `tracking_table` (
   `c_week` int(11) DEFAULT NULL,
   `c_month` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tracking_table`
+--
+
+INSERT INTO `tracking_table` (`id`, `ApplicantID`, `ClientID`, `gross_pay`, `TotalHours`, `TotaOT`, `sss_contri`, `hdmf_contri`, `philhealth_contri`, `tax`, `date_period`, `net_pay`, `c_week`, `c_month`) VALUES
+(1, '00002-A', '1', '0', '2', '0', '0.00', NULL, NULL, NULL, NULL, '-450', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1235,7 +1452,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `admin_edithistory`
 --
 ALTER TABLE `admin_edithistory`
-  MODIFY `EntryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `EntryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `applicants`
@@ -1277,13 +1494,13 @@ ALTER TABLE `contract_history`
 -- AUTO_INCREMENT for table `dashboard_months`
 --
 ALTER TABLE `dashboard_months`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `dummy_hours`
 --
 ALTER TABLE `dummy_hours`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `employment_record`
@@ -1307,31 +1524,31 @@ ALTER TABLE `hdmf_table`
 -- AUTO_INCREMENT for table `hours_monthly`
 --
 ALTER TABLE `hours_monthly`
-  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `hours_semimonthly`
 --
 ALTER TABLE `hours_semimonthly`
-  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `hours_weekly`
 --
 ALTER TABLE `hours_weekly`
-  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `No` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `logbook`
 --
 ALTER TABLE `logbook`
-  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 
 --
 -- AUTO_INCREMENT for table `logbook_extended`
 --
 ALTER TABLE `logbook_extended`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
 
 --
 -- AUTO_INCREMENT for table `machine_operated`
@@ -1391,7 +1608,7 @@ ALTER TABLE `tax_table`
 -- AUTO_INCREMENT for table `tracking_table`
 --
 ALTER TABLE `tracking_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
