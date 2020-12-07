@@ -5,19 +5,25 @@ class Model_Deletes extends CI_Model {
 
 	public function RemoveEmpl($ApplicantID)
 	{
-		$SQL = "UPDATE applicants SET Status ='Deleted' WHERE ApplicantID = '$ApplicantID'";
+		$now = new DateTime();
+		$DateRemoved = $now->format('Y-m-d H:i:s');
+		$SQL = "UPDATE applicants SET Status ='Deleted', DateRemoved = '$DateRemoved' WHERE ApplicantID = '$ApplicantID'";
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
 	public function RemoveAdminM($id)
 	{
-		$SQL = "UPDATE admin SET Status = 'Deleted' WHERE AdminNo = ?";
+		$now = new DateTime();
+		$DateRemoved = $now->format('Y-m-d H:i:s');
+		$SQL = "UPDATE admin SET Status = 'Deleted', DateRemoved = '$DateRemoved' WHERE AdminNo = ?";
 		$result = $this->db->query($SQL,$id);
 		return $result;
 	}
 	public function RemoveClientM($id)
 	{
-		$SQL = "UPDATE clients SET Status ='Deleted' WHERE ClientID = ?";
+		$now = new DateTime();
+		$DateRemoved = $now->format('Y-m-d H:i:s');
+		$SQL = "UPDATE clients SET Status ='Deleted', DateRemoved = '$DateRemoved' WHERE ClientID = ?";
 		$result = $this->db->query($SQL,$id);
 		return $result;
 	}

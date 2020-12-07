@@ -30,21 +30,31 @@ class Delete_Controller extends CI_Controller {
 					$CheckEmployee = $this->Model_Selects->CheckEmployee($id);
 					if ($CheckEmployee->num_rows() > 0) {
 						foreach($CheckEmployee->result_array() as $row) {
-							$LastName = $row['LastName'];
-							$FirstName = $row['FirstName'];
-							$MiddleName = $row['MiddleName'];
-							$ContactNumber = $row['Phone_No'];
+							$FullName = '';
+							if ($row['LastName']) {
+								$FullName = $FullName . $row['LastName'] . ', ';
+							}
+							if ($row['FirstName']) {
+								$FullName = $FullName . $row['FirstName'];
+							}
+							if ($row['MiddleName']) {	
+								$FullName = $FullName . ' ' . $row['MiddleName'][0] . '.';
+							}
+							if ($row['ContactNumber']) {
+								$ContactNumber = $row['Phone_No'];
+							} else {
+								$ContactNumber = 'N/A';
+							}
 						}
 					} else {
 						// default
-						$LastName = 'N/A';
-						$FirstName = 'N/A';
-						$MiddleName = 'N/A';
+						$FullName = '[No Name]';
+						$ContactNumber = 'No record';
 					}
-					$this->Model_Logbook->SetPrompts('success', 'success', 'Succesfully archived ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName));
-					$this->Model_Logbook->LogbookEntry('Red', 'Applicant', ' archived <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $id . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a>');
-					$this->Model_Logbook->LogbookExtendedEntry(0, 'Applicant ID: ' . $id);
-					$this->Model_Logbook->LogbookExtendedEntry(0, 'ContactNumber: ' . $ContactNumber);
+					$this->Model_Logbook->SetPrompts('success', 'success', 'Succesfully archived ' . $FullName);
+					$this->Model_Logbook->LogbookEntry('Red', 'Applicant', ' archived <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $id . '" target="_blank">' . $FullName . '</a>');
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Applicant ID:</b> ' . $id);
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>ContactNumber:</b> ' . $ContactNumber);
 					if (isset($_SERVER['HTTP_REFERER'])) {
 						redirect($_SERVER['HTTP_REFERER']);
 					}
@@ -77,29 +87,51 @@ class Delete_Controller extends CI_Controller {
 					$CheckAdminNo = $this->Model_Selects->CheckAdminNo($id);
 					if ($CheckAdminNo->num_rows() > 0) {
 						foreach($CheckAdminNo->result_array() as $row) {
-							$AdminID = $row['AdminID'];
-							$LastName = $row['LastName'];
-							$FirstName = $row['FirstName'];
-							$MiddleName = $row['MiddleName'];
-							$AdminLevel = $row['AdminLevel'];
-							$Position = $row['Position'];
-							$DateAdded = $row['DateAdded'];
+							if ($row['AdminID']) {
+								$AdminID = $row['AdminID'];
+							} else {
+								$AdminID = '[No Admin ID]';
+							}
+							$FullName = '';
+							if ($row['LastName']) {
+								$FullName = $FullName . $row['LastName'] . ', ';
+							}
+							if ($row['FirstName']) {
+								$FullName = $FullName . $row['FirstName'];
+							}
+							if ($row['MiddleName']) {	
+								$FullName = $FullName . ' ' . $row['MiddleName'][0] . '.';
+							}
+							if ($row['Position']) {
+								$Position = $row['Position'];
+							} else {
+								$Position = 'N/A';
+							}
+							if ($row['Permissions']) {
+								$Permissions = str_replace(',', ', ', $row['Permissions']);
+							} else {
+								$Permissions = 'N/A';
+							}
+							if ($row['DateAdded']) {
+								$DateAdded = $row['DateAdded'];
+							} else {
+								$DateAdded = 'N/A';
+							}
 						}
 					} else {
 						// default
-						$AdminID = 'N/A';
-						$LastName = 'N/A';
-						$FirstName = 'N/A';
-						$MiddleName = 'N/A';
-						$AdminLevel = 'N/A';
+						$AdminID = '[No Admin ID]';
+						$FullName = '[No Name]';
 						$Position = 'N/A';
+						$Permissions = 'N/A';
 						$DateAdded = 'N/A';
 					}
 					$this->Model_Logbook->SetPrompts('success', 'success', 'Succesfully archived admin ' . $AdminID);
 					$this->Model_Logbook->LogbookEntry('Red', 'Admin', ' removed admin <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewAdmin?id=' . $id . '" target="_blank">' . $AdminID . '</a>');
-					$this->Model_Logbook->LogbookExtendedEntry(0, 'Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName));
-					$this->Model_Logbook->LogbookExtendedEntry(0, 'Position: ' . $AdminLevel . ' - ' . $Position);
-					$this->Model_Logbook->LogbookExtendedEntry(0, 'Date Added: ' . date('Y-m-d H:i:s A',$row['DateAdded']));
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Name:</b> ' . $FullName);
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Position:</b> ' . $Position);
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Permissions:</b> ' . $Permissions);
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Date Added:</b> ' . $DateAdded);
 					if (isset($_SERVER['HTTP_REFERER'])) {
 						redirect($_SERVER['HTTP_REFERER']);
 					}
@@ -132,9 +164,21 @@ class Delete_Controller extends CI_Controller {
 					$CheckClient = $this->Model_Selects->CheckClient($id);
 					if ($CheckClient->num_rows() > 0) {
 						foreach($CheckClient->result_array() as $row) {
-							$Name = $row['Name'];
-							$Address = $row['Address'];
-							$ContactNumber = $row['ContactNumber'];
+							if ($row['Name']) {
+								$Name = $row['Name'];
+							} else {
+								$Name = '[No Name]';
+							}
+							if ($row['Address']) {
+								$Address = $row['Address'];
+							} else {
+								$Address = 'N/A';
+							}
+							if ($row['ContactNumber']) {
+								$ContactNumber = $row['ContactNumber'];
+							} else {
+								$ContactNumber = 'N/A';
+							}
 						}
 					} else {
 						// default
@@ -144,9 +188,9 @@ class Delete_Controller extends CI_Controller {
 					}
 					$this->Model_Logbook->SetPrompts('success', 'success', 'Succesfully archived client ' . $Name);
 					$this->Model_Logbook->LogbookEntry('Red', 'Client', ' archived client <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $id . '" target="_blank">' . $id . '</a>');
-					$this->Model_Logbook->LogbookExtendedEntry(0, 'Name: ' . $Name);
-					$this->Model_Logbook->LogbookExtendedEntry(0, 'Address: ' . $Address);
-					$this->Model_Logbook->LogbookExtendedEntry(0, 'Contact Number: ' . date('Y-m-d H:i:s A',$row['DateAdded']));
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Name:</b> ' . $Name);
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Address:</b> ' . $Address);
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Contact Number:</b> ' . $ContactNumber);
 					if (isset($_SERVER['HTTP_REFERER'])) {
 						redirect($_SERVER['HTTP_REFERER']);
 					}

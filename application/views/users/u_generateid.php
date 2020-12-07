@@ -1,87 +1,65 @@
 <?php $T_Header;?>
-<body class="wercher-background-lowpoly">
-	<div class="wrapper">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
-				</div>
-				<div class="col-8 col-sm-8 col-md-8 text-right">
-				</div>
-				<div class="col-sm-6">
-					<div id="WercherIDFront" style="width: 530px; height: 770px; user-select: none;">
-						<img class="wercher-idcard-container" src="<?php echo base_url(); ?>assets/img/wercher_id_front.png">
-						<img class="wercher-idcard-photo" src="<?php echo $ApplicantImage; ?>" width="200" height="200">
-						<div class="wercher-idcard-fields">
+<body>
+	<div class="wrapper wercher-background-lowpoly">
+		<div id="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
+					</div>
+					<div class="col-8 col-sm-8 col-md-8 text-right">
+					</div>
+					<div class="col-sm-6">
+						<div id="WercherIDFront" style="width: 530px; height: 770px; user-select: none;">
+							<img class="wercher-idcard-container" src="<?php echo base_url(); ?>assets/img/wercher_id_front.png">
+							<img class="wercher-idcard-photo" src="<?php echo $ApplicantImage; ?>" width="200" height="200">
 							<div class="wercher-idcard-name">
-								<div id="Name" style="width:350px; height:50px;" class="col-sm-12">
-									<span style="margin-bottom: -10px;"><?php echo $LastName . ', ' . $FirstName . ' ' . $MiddleName . '.'; if ($NameExtension != NULL): echo ', ' . $NameExtension; endif; ?></span>
-								</div>
+								<span><b><?php echo $LastName . ', ' . $FirstName . ' ' . $MiddleName[0] . '.'; if ($NameExtension != NULL): echo ', ' . $NameExtension; endif; ?></b></span>
 							</div>
-							<div class="row">
-								<div class="wercher-idcard-designation">
-									<div id="PositionDesired" style="width:250px; height:25px;" class="col-sm-12">
-										<?php echo $PositionDesired; ?>
-									</div>
-								</div>
-								<div class="wercher-idcard-dateissued">
-									<div id="DateIssued" style="width:250px; height:25px;" class="col-sm-12">
-										<?php echo date("Y-m-d"); ?>
-									</div>
-								</div>
+							<div class="wercher-idcard-designation">
+								<span><?php echo $PositionDesired; ?></span>
+							</div>
+							<div class="wercher-idcard-dateissued">
+								<span><?php echo date("Y-m-d"); ?></span>
 							</div>
 							<div class="wercher-idcard-employeeid">
-								<div id="EmployeeID" style="width:250px; height:25px;" class="col-sm-12">
+								<span>
 									<?php if($Status == 'Employed'): ?>
 										<?php echo $EmployeeID; ?>
 									<?php else: ?>
 										<?php echo 'NO EMPLOYEE ID ASSIGNED'; ?>
 									<?php endif; ?>
-								</div>
+								</span>
 							</div>
 						</div>
+						<button id="FrontSaveBtn" type="button" class="btn btn-primary wercher-idcard-frontbtn"><i class="fas fa-download"></i> Save Front to Computer</button>
 					</div>
-					<button id="FrontSaveBtn" type="button" class="btn btn-primary wercher-idcard-frontbtn"><i class="fas fa-download"></i> Save Front to Computer</button>
-				</div>
-				<div class="col-sm-6">
-					<div id="WercherIDBack" style="width: 530px; height: 770px; user-select: none;">
-						<img class="wercher-idcard-container" src="<?php echo base_url(); ?>assets/img/wercher_id_back.png">
-						<div class="wercher-idcard-address">
-							<div id="Address" style="width:125px; height:25px;" class="col-sm-12">
-								<?php echo $Address_Present; ?>
+					<div class="col-sm-6">
+						<div id="WercherIDBack" style="width: 530px; height: 770px; user-select: none;">
+							<img class="wercher-idcard-container" src="<?php echo base_url(); ?>assets/img/wercher_id_back.png">
+							<div class="wercher-idcard-address">
+								<span><?php echo $Address_Present; ?></span>
+							</div>
+							<div class="wercher-idcard-emergency">
+								<span><?php echo $EmergencyPerson; ?></span>
+							</div>
+							<div class="wercher-idcard-telno">
+								<span><?php echo $Phone_No; ?></span>
+							</div>
+							<div class="wercher-idcard-sssno">
+								<span><?php echo $SSS_No; ?></span>
+							</div>
+							<div class="wercher-idcard-tin">
+								<span><?php echo $TIN; ?></span>
+							</div>
+							<div class="wercher-idcard-pagibig">
+								<span><?php echo $HDMF; ?></span>
+							</div>
+							<div class="wercher-idcard-philhealth">
+								<span><?php echo $PhilHealth; ?></span>
 							</div>
 						</div>
-						<div id="Emergency" style="width:125px; height:25px;" class="wercher-idcard-emergency">
-							<div class="col-sm-12">
-								<?php echo $EmergencyPerson; ?>
-							</div>
-						</div>
-						<div class="wercher-idcard-telno">
-							<div class="col-sm-12">
-								<?php echo $Phone_No; ?>
-							</div>
-						</div>
-						<div class="wercher-idcard-numberfields">
-							<div class="col-sm-12">
-								<?php echo $SSS_No; ?>
-							</div>
-						</div>
-						<div class="wercher-idcard-numberfields">
-							<div class="col-sm-12">
-								<?php echo $TIN; ?>
-							</div>
-						</div>
-						<div class="wercher-idcard-numberfields">
-							<div class="col-sm-12">
-								<?php echo $HDMF; ?>
-							</div>
-						</div>
-						<div class="wercher-idcard-numberfields">
-							<div class="col-sm-12">
-								<?php echo $PhilHealth; ?>
-							</div>
-						</div>
+						<button id="BackSaveBtn" type="button" class="btn btn-primary wercher-idcard-backbtn"><i class="fas fa-download"></i> Save Back to Computer</button>
 					</div>
-					<button id="BackSaveBtn" type="button" class="btn btn-primary wercher-idcard-backbtn"><i class="fas fa-download"></i> Save Back to Computer</button>
 				</div>
 			</div>
 		</div>
@@ -101,20 +79,35 @@
 		$('#WercherIDBack').on('contextmenu', 'img', function(e){ 
 			return false;
 		});
-		$('#Name').textfill({
-			debug: true,
-			minFontPixels: 16,
-			maxFontPixels: 40,
-		});
-		$('#Address').textfill({
-			debug: true,
-			minFontPixels: 16,
-			maxFontPixels: 40,
-		});
-		$('#Emergency').textfill({
+		$('.wercher-idcard-name').textfill({
 			debug: true,
 			minFontPixels: 8,
 			maxFontPixels: 40,
+		});
+		$('.wercher-idcard-designation').textfill({
+			debug: true,
+			minFontPixels: 8,
+			maxFontPixels: 22,
+		});
+		$('.wercher-idcard-dateissused').textfill({
+			debug: true,
+			minFontPixels: 8,
+			maxFontPixels: 22,
+		});
+		$('.wercher-idcard-employeeid').textfill({
+			debug: true,
+			minFontPixels: 8,
+			maxFontPixels: 18,
+		});
+		$('.wercher-idcard-address, .wercher-idcard-emergency').textfill({
+			debug: true,
+			minFontPixels: 9,
+			maxFontPixels: 22,
+		});
+		$('.wercher-idcard-telno, .wercher-idcard-sssno, .wercher-idcard-tin, .wercher-idcard-pagibig, .wercher-idcard-philhealth').textfill({
+			debug: true,
+			minFontPixels: 8,
+			maxFontPixels: 22,
 		});
 		$('[data-toggle="tooltip"]').tooltip();
 		function saveAs(uri, filename) {

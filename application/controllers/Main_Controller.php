@@ -1148,7 +1148,7 @@
 	public function View_Admins()
 	{
 		if($this->Model_Security->CheckPermissions('Admins')):
-			$header['title'] = 'Administrator | Wercher Solutions and Resources Workers Cooperative';
+			$header['title'] = 'Administrators | Wercher Solutions and Resources Workers Cooperative';
 			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 			$data['Breadcrumb'] = '
 			<nav aria-label="breadcrumb">
@@ -1158,6 +1158,24 @@
 			</nav>';
 			$data['ShowAdmin'] = $this->Model_Selects->GetAdmin();
 			$this->load->view('users/u_admins',$data);
+		else:
+			redirect('Forbidden');
+		endif;
+	}
+	public function AdminsArchived()
+	{
+		if($this->Model_Security->CheckPermissions('AdminsArchived')):
+			$header['title'] = 'Admin Archived | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a href="Admins">Admins</a></li>
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="AdminsArchived">Archived</a></li>
+			</ol>
+			</nav>';
+			$data['ShowAdmin'] = $this->Model_Selects->GetAdminArchived();
+			$this->load->view('users/u_adminsarchived',$data);
 		else:
 			redirect('Forbidden');
 		endif;
@@ -1175,6 +1193,24 @@
 			</nav>';
 			$data['ShowClients'] = $this->Model_Selects->GetClients();
 			$this->load->view('users/u_clients',$data);
+		else:
+			redirect('Forbidden');
+		endif;
+	}
+	public function ClientsArchived()
+	{
+		if($this->Model_Security->CheckPermissions('ClientsArchived')):
+			$header['title'] = 'Clients Archived | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a href="Clients">Clients</a></li>
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ClientsArchived">Archived</a></li>
+			</ol>
+			</nav>';
+			$data['ShowClients'] = $this->Model_Selects->GetClientsArchived();
+			$this->load->view('users/u_clientsarchived',$data);
 		else:
 			redirect('Forbidden');
 		endif;

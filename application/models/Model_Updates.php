@@ -87,14 +87,26 @@ class Model_Updates extends CI_Model {
 	}
 	public function BlacklistEmployee($ApplicantID)
 	{
-		$SQL = "UPDATE applicants SET Status ='Blacklisted' WHERE ApplicantID = '$ApplicantID'";
+		$SQL = "UPDATE applicants SET Status = 'Blacklisted' WHERE ApplicantID = '$ApplicantID'";
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
 	public function RestoreEmployee($ApplicantID)
 	{
-		$SQL = "UPDATE applicants SET Status ='Applicant' WHERE ApplicantID = '$ApplicantID'";
-		$result = $this->db->query($SQL,$ApplicantID);
+		$SQL = "UPDATE applicants SET Status = 'Applicant' WHERE ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function RestoreAdmin($AdminNo)
+	{
+		$SQL = "UPDATE admin SET Status = 'Active' WHERE AdminNo = '$AdminNo'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function RestoreClient($ClientID)
+	{
+		$SQL = "UPDATE clients SET Status = 'Active' WHERE ClientID = '$ClientID'";
+		$result = $this->db->query($SQL);
 		return $result;
 	}
 	public function UpdateWeeklyHours($Mode, $ApplicantID,$data)

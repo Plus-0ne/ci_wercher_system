@@ -407,13 +407,13 @@ class Update_Controller extends CI_Controller {
 		}
 		else
 		{
-				// Logbook Records
+			// Logbook Records
 			$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
 			if ($CheckEmployee->num_rows() > 0) {
 				foreach ($CheckEmployee->result_array() as $row) {
 					$prevEmployeeID = $row['EmployeeID'];
 					$prevpImage = $row['ApplicantImage'];
-						# PERSONAL INFORMATION
+					# PERSONAL INFORMATION
 					$prevPositionDesired = $row['PositionDesired'];
 					$prevPositionGroup = $row['PositionGroup'];
 					$prevSalaryExpected = $row['SalaryExpected'];
@@ -432,7 +432,7 @@ class Update_Controller extends CI_Controller {
 					$prevCivilStatus = $row['CivilStatus'];
 					$prevNo_Children = $row['No_OfChildren'];
 					$prevPhoneNumber = $row['Phone_No'];
-						# DOCUMENTS
+					# DOCUMENTS
 					$prevSSS = $row['SSS_No'];
 					$prevRCN = $row['ResidenceCertificateNo'];
 					$prevTIN = $row['TIN'];
@@ -445,7 +445,7 @@ class Update_Controller extends CI_Controller {
 					$prevReferral = $row['Referral'];
 					$prevNameExtension = $row['NameExtension'];
 
-						# ADDRESSES
+					# ADDRESSES
 					$prevAddress_Present = $row['Address_Present'];
 					$prevAddress_Provincial = $row['Address_Provincial'];
 					$prevAddress_Manila = $row['Address_Manila'];
@@ -453,7 +453,7 @@ class Update_Controller extends CI_Controller {
 			} else {
 				$prevEmployeeID = 'N/A';
 				$prevpImage = 'N/A';
-					# PERSONAL INFORMATION
+				# PERSONAL INFORMATION
 				$prevPositionDesired = 'N/A';
 				$prevPositionGroup = 'N/A';
 				$prevSalaryExpected = 'N/A';
@@ -472,7 +472,7 @@ class Update_Controller extends CI_Controller {
 				$prevCivilStatus = 'N/A';
 				$prevNo_Children = 'N/A';
 				$prevPhoneNumber = 'N/A';
-					# DOCUMENTS
+				# DOCUMENTS
 				$prevSSS = 'N/A';
 				$prevRCN = 'N/A';
 				$prevTIN = 'N/A';
@@ -485,31 +485,31 @@ class Update_Controller extends CI_Controller {
 				$prevReferral = 'N/A';
 				$prevNameExtension = 'N/A';
 
-					# ADDRESSES
+				# ADDRESSES
 				$prevAddress_Present = 'N/A';
 				$prevAddress_Provincial = 'N/A';
 				$prevAddress_Manila = 'N/A';
 
 			}
 
-			$config['upload_path']          = './uploads/'.$ApplicantID;
-			$config['allowed_types']        = 'gif|jpg|png';
-			$config['max_size']             = 2000;
-			$config['max_width']            = 2000;
-			$config['max_height']           = 2000;
-
-			$this->load->library('upload', $config);
-			if (!is_dir('uploads'))
-			{
-				mkdir('./uploads', 0777, true);
-			}
-			if (!is_dir('uploads/' . $ApplicantID))
-			{
-				mkdir('./uploads/' . $ApplicantID, 0777, true);
-				$dir_exist = false;
-			}
-
 			if (!$_FILES['pImage']['name'] == '') {
+				$config['upload_path']          = './uploads/'.$ApplicantID;
+				$config['allowed_types']        = 'gif|jpg|png';
+				$config['max_size']             = 2000;
+				$config['max_width']            = 2000;
+				$config['max_height']           = 2000;
+
+				$this->load->library('upload', $config);
+				if (!is_dir('uploads'))
+				{
+					mkdir('./uploads', 0777, true);
+				}
+				if (!is_dir('uploads/' . $ApplicantID))
+				{
+					mkdir('./uploads/' . $ApplicantID, 0777, true);
+					$dir_exist = false;
+				}
+
 				if (! $this->upload->do_upload('pImage'))
 				{
 					$this->Model_Logbook->SetPrompts('error', 'none', $this->upload->display_errors());
@@ -539,7 +539,8 @@ class Update_Controller extends CI_Controller {
 					$this->image_lib->clear();
 				}
 			}
-				// INSERT EMPLOYEE
+
+			// INSERT EMPLOYEE
 			$data = array(
 				'ApplicantImage' => $pImage,
 				'ApplicantID' => $ApplicantID,
@@ -1054,18 +1055,30 @@ class Update_Controller extends CI_Controller {
 		}
 		else
 		{
-			$Removethis = $this->Model_Updates->RestoreEmployee($ApplicantID);
-			if ($Removethis == TRUE) {
+			$RestoreEmployee = $this->Model_Updates->RestoreEmployee($ApplicantID);
+			if ($RestoreEmployee == TRUE) {
 				// LOGBOOK
-				$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
-				foreach($CheckApplicant->result_array() as $row) {
-					$LastName = $row['LastName'];
-					$FirstName = $row['FirstName'];
-					$MiddleName = $row['MiddleName'];
+				$CheckApplicant = $this->Model_Selects->CheckApplicant($id);
+				if ($CheckApplicant->num_rows() > 0) {
+					foreach($CheckApplicant->result_array() as $row) {
+						$FullName = '';
+						if ($row['LastName']) {
+							$FullName = $FullName . $row['LastName'] . ', ';
+						}
+						if ($row['FirstName']) {
+							$FullName = $FullName . $row['FirstName'];
+						}
+						if ($row['MiddleName']) {	
+							$FullName = $FullName . ' ' . $row['MiddleName'][0] . '.';
+						}
+					}
+				} else {
+					// default
+					$FullName = '[No Name]';
 				}
-				$this->Model_Logbook->SetPrompts('success', 'success', 'Successfully restored ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName));
-				$this->Model_Logbook->LogbookEntry('Green', 'Applicant', ' restored <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a>');
-				$this->Model_Logbook->LogbookExtendedEntry(0, 'Changed status from <b>Blacklisted</b> to <b>Applicant</b>');
+				$this->Model_Logbook->SetPrompts('success', 'success', 'Successfully restored ' . $FullName);
+				$this->Model_Logbook->LogbookEntry('Green', 'Applicant', ' restored <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '" target="_blank">' . $FullName . '</a>');
+				$this->Model_Logbook->LogbookExtendedEntry(0, 'Changed status to <b>Applicant</b>');
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
 				}
@@ -1077,6 +1090,78 @@ class Update_Controller extends CI_Controller {
 			else
 			{
 				redirect('Employees');
+			}
+		}
+	}
+	public function RestoreAdmin()
+	{
+		$AdminNo = $this->input->get('id');
+		if (!isset($_GET['id'])) {
+			redirect('Admins');
+		}
+		else
+		{
+			$RestoreAdmin = $this->Model_Updates->RestoreAdmin($AdminNo);
+			if ($RestoreAdmin == TRUE) {
+				// LOGBOOK
+				$CheckAdminNo = $this->Model_Selects->CheckAdminNo($AdminNo);
+				foreach($CheckAdminNo->result_array() as $row) {
+					if ($row['AdminID']) {
+						$AdminID = $row['AdminID'];
+					} else {
+						$AdminID = '[No Admin ID]';
+					}
+				}
+				$this->Model_Logbook->SetPrompts('success', 'success', 'Successfully restored ' . $AdminID);
+				$this->Model_Logbook->LogbookEntry('Green', 'Applicant', ' restored admin <a class="logbook-tooltip-highlight" href="' . base_url() . 'Logbook?admin=' . $AdminID . '" target="_blank">' . $AdminID . '</a>');
+				$this->Model_Logbook->LogbookExtendedEntry(0, 'Changed status from <b>Archived</b> to <b>Active</b>');
+				if (isset($_SERVER['HTTP_REFERER'])) {
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+				else
+				{
+					redirect('Admins');
+				}
+			}
+			else
+			{
+				redirect('Admins');
+			}
+		}
+	}
+	public function RestoreClient()
+	{
+		$ClientID = $this->input->get('id');
+		if (!isset($_GET['id'])) {
+			redirect('Clients');
+		}
+		else
+		{
+			$RestoreClient = $this->Model_Updates->RestoreClient($ClientID);
+			if ($RestoreClient == TRUE) {
+				// LOGBOOK
+				$GetClientID = $this->Model_Selects->GetClientID($ClientID);
+				foreach($GetClientID->result_array() as $row) {
+					if ($row['Name']) {
+						$ClientName = $row['Name'];
+					} else {
+						$ClientName = '[No Client Name]';
+					}
+				}
+				$this->Model_Logbook->SetPrompts('success', 'success', 'Successfully restored ' . $ClientID);
+				$this->Model_Logbook->LogbookEntry('Green', 'Applicant', ' restored client <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $ClientID . '" target="_blank">' . $ClientName . '</a>');
+				$this->Model_Logbook->LogbookExtendedEntry(0, 'Changed status from <b>Archived</b> to <b>Active</b>');
+				if (isset($_SERVER['HTTP_REFERER'])) {
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+				else
+				{
+					redirect('Clients');
+				}
+			}
+			else
+			{
+				redirect('Clients');
 			}
 		}
 	}
@@ -2383,6 +2468,7 @@ class Update_Controller extends CI_Controller {
 						}
 
 						$data = array(
+							'AdminNo' => $AdminDatabaseID,
 							'AdminID' => $AdminID,
 							'Image' => $pImage,
 							'Permissions' => $Permissions,
@@ -2396,7 +2482,7 @@ class Update_Controller extends CI_Controller {
 							$En_Password = password_hash($Password, PASSWORD_BCRYPT);
 							$data['Password'] = $En_Password;
 						}
-						$InsertAdminToEditHistory = $this->Model_Inserts->InsertAdminToEditHistory($data);
+						$InsertToEditHistory = $this->Model_Inserts->InsertToEditHistory($data, 'admin_edithistory');
 						$UpdateAdminInfo = $this->Model_Updates->UpdateAdminInfo($data, $AdminDatabaseID);
 						if ($UpdateAdminInfo == TRUE) {
 							if ($this->session->userdata('AdminID') === $AdminID) {
@@ -2413,7 +2499,6 @@ class Update_Controller extends CI_Controller {
 								$this->session->set_userdata($data);
 							}
 							// LOGBOOK
-							$this->Model_Logbook->LogbookEntry('Blue', 'Admin', ' updated <a class="logbook-tooltip-highlight" href="' . base_url() . 'Admins?id=' . $AdminID . '" target="_blank">' . $AdminID . '</a>');
 							$changesCounter = 0;
 							if ($prevAdminID != $AdminID && $AdminID != NULL) {
 								$this->Model_Logbook->LogbookExtendedEntry(0, 'Admin ID changed from <b>' . $prevAdminID . '</b> to <b>' . $AdminID . '</b>.');
@@ -2459,6 +2544,7 @@ class Update_Controller extends CI_Controller {
 							if ($changesCounter == 0) {
 								$this->Model_Logbook->SetPrompts('info', 'info', 'No changes made');
 							} else {
+								$this->Model_Logbook->LogbookEntry('Blue', 'Admin', ' updated <a class="logbook-tooltip-highlight" href="' . base_url() . 'Admins?id=' . $AdminID . '" target="_blank">' . $AdminID . '</a>');
 								$this->Model_Logbook->SetPrompts('success', 'success', 'Updated admin succesfully');
 							}
 							redirect('Admins');

@@ -153,12 +153,12 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->update('payroll_loans', $data);
 		return $result;
 	}
-	public function InsertAdminToEditHistory($data)
+	public function InsertToEditHistory($data, $table)
 	{
 		$now = new DateTime();
 		$DateUpdated = $now->format('Y-m-d H:i:s');
 		$data['DateUpdated'] = $DateUpdated;
-		$result = $this->db->insert('admin_edithistory', $data);
+		$result = $this->db->insert($table, $data);
 		return $result;
 	}
 }

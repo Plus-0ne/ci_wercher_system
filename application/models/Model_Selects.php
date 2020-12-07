@@ -59,7 +59,13 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetAdmin()
 	{
-		$SQL = "SELECT * FROM admin WHERE Status <> 'Deleted'";
+		$SQL = "SELECT * FROM admin WHERE Status = 'Active'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetAdminArchived()
+	{
+		$SQL = "SELECT * FROM admin WHERE Status = 'Deleted'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -124,6 +130,12 @@ class Model_Selects extends CI_Model {
 	public function GetClients()
 	{
 		$SQL = "SELECT * FROM clients WHERE Status = 'Active'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetClientsArchived()
+	{
+		$SQL = "SELECT * FROM clients WHERE Status = 'Deleted'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -703,7 +715,7 @@ class Model_Selects extends CI_Model {
 		return $result;
 	}
 	public function GetLatestAdminActivity($AdminID, $FetchNum = 1) {
-		$SQL = "SELECT * FROM logbook WHERE AdminID = '$AdminID' ORDER BY Time DESC LIMIT $FetchNum";
+		$SQL = "SELECT * FROM logbook WHERE AdminID = '$AdminID' ORDER BY No DESC LIMIT $FetchNum";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

@@ -79,10 +79,11 @@
 			</div>
 			<div class="modal-footer">
 				<?php if ($ShowAdmin->num_rows() > 1): ?>
-					<a href="#" id="EditRemoveAdmin" class="btn btn-danger mr-auto" onclick="return confirm('Archive Admin?')"><i class="fas fa-times"></i> Archive Admin</a>
+					<a href="#" id="EditRemoveAdmin" class="removeadmin-btn btn btn-danger mr-auto" onclick="return confirm('Archive admin?')"><i class="fas fa-times"></i> Archive Admin</a>
 				<?php else: ?>
-					<button type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Must have 1 admin minimum." class="btn btn-secondary mr-auto hover-disabled"><i class="fas fa-lock"></i> Archive Admin</button>
+					<button type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Must have 1 admin minimum." class="removeadmin-btn btn btn-secondary mr-auto hover-disabled"><i class="fas fa-lock"></i> Archive Admin</button>
 				<?php endif; ?>
+				<a href="#" id="EditRestoreAdmin" class="restoreadmin-btn btn btn-info mr-auto" onclick="return confirm('Restore admin?')"><i class="fas fa-redo"></i> Restore Admin</a>
 				<button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Confirm Changes</button>
 				<!-- <div class="edit-save-btn-locked-group">
 					<span class="mr-2" style="font-size: 18px; color: rgba(255, 25, 25);"><i class="fas fa-exclamation-circle"></i> ID, password, and position is required</span>

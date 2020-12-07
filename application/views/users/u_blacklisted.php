@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
 ?>
 <body>
-	<div class="wrapper wercher-background-lowpoly">
+	<div class="wrapper wercher-background-lowpoly-black">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
@@ -30,7 +30,7 @@ use Carbon\Carbon;
 							<i class="sorting-table-icon spinner-border spinner-border-sm mr-2"></i>
 							<input id="DTSearch" type="search" class="input-bootstrap" placeholder="Sorting table..." readonly>
 						</span>
-						<?php if(in_array('ApplicantsEditing', $this->session->userdata('Permissions'))): ?>
+						<?php if($this->Model_Security->CheckPermissions('ApplicantsEditing')): ?>
 						<a href="<?=base_url()?>NewEmployee" class="btn btn-success">
 							<i class="fas fa-user-plus"></i> New
 						</a>
@@ -145,9 +145,6 @@ use Carbon\Carbon;
 											<td class="text-center align-middle PrintExclude" width="100">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
 												<a class="btn btn-danger btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>#Violations"><i class="fas fa-book"></i> Violations</a>
-												<!-- <a href="<?=base_url()?>RestoreEmployee?id=<?php echo $row['ApplicantID']; ?>" class="btn btn-success btn-sm w-100 mb-1"><i class="fas fa-redo"></i> Restore</a> -->
-
-												<!-- <a href="<?=base_url()?>RemoveEmployee?id=<?php echo $row['ApplicantID']; ?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Applicant?')"><i class="fas fa-lock"></i> Archive</a> -->
 											</td>
 										</tr>
 									<?php endforeach ?>

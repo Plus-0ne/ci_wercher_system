@@ -71,7 +71,7 @@
 						<div class="form-row">
 							<div class="form-group w-100">
 								<!-- <button type="submit" class="btn btn-primary w-100"> Sign-in </button> -->
-								<button type="submit" class="btn btn-primary w-100"> Log In </button>
+								<button type="submit" class="btn btn-info w-100"> Log In </button>
 							</div>
 							<!-- <div class="form-group w-100">
 								<button class="btn btn-secondary w-100"> Sign-up </button>

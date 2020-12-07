@@ -44,7 +44,8 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<a href="#" id="EditRemoveClient" class="btn btn-danger mr-auto" onclick="return confirm('Remove Client?')"><i class="fas fa-times"></i> Archive Client</a>
+				<a href="#" id="EditRemoveClient" class="removeclient-btn btn btn-danger mr-auto" onclick="return confirm('Remove client?')"><i class="fas fa-times"></i> Archive Client</a>
+				<a href="#" id="EditRestoreClient" class="restoreclient-btn btn btn-info mr-auto" onclick="return confirm('Restore client?')"><i class="fas fa-redo"></i> Restore Client</a>
 				<button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Confirm Changes</button>
 			</div>
 			<?php echo form_close();?>

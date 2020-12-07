@@ -16,7 +16,7 @@
 				<div class="col-sm-8">
 					<div class="row">
 						<div class="col-sm-12">
-							<b>Recent activity</b>
+							<b>Recent activity</b> - <span id="AdminMoreInfoActivityExpand"></span>
 						</div>
 						<hr class="col-sm-12 my-1">
 						<div class="col-sm-12 m-2 admin-moreinfo-activity-container">

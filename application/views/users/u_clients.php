@@ -28,7 +28,7 @@ use Carbon\Carbon;
 							<i class="sorting-table-icon spinner-border spinner-border-sm mr-2"></i>
 							<input id="DTSearch" type="search" class="input-bootstrap" placeholder="Sorting table..." readonly>
 						</span>
-						<?php if(in_array('ClientsEditing', $this->session->userdata('Permissions'))): ?>
+						<?php if($this->Model_Security->CheckPermissions('ClientsEditing')): ?>
 						<button class="btn btn-success" data-toggle="modal" data-target="#addClients">
 							<i class="fas fa-user-plus"></i> New
 						</button>
@@ -41,8 +41,8 @@ use Carbon\Carbon;
 								<thead>
 									<tr class="text-center align-middle">
 										<th style="width: 100px;"> Name </th>
-										<th style="width: 225px;"> Address </th>
-										<th> Contact </th>
+										<th style="max-width: 225px;"> Address </th>
+										<th style="max-width: 175px;"> Contact </th>
 										<th> ID Suffix </th>
 										<th style="width: 25px;"> Employees </th>
 										<th> Date Added </th>
@@ -52,11 +52,15 @@ use Carbon\Carbon;
 								</thead>
 								<tbody>
 									<?php foreach ($ShowClients->result_array() as $row): 
-										$date = new DateTime($row['DateAdded']);
-										$day = $date->format('Y-m-d');
-										$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
-										$hours = $date->format('h:i:s A');
-										$elapsed = Carbon::parse($date);
+										$isDateAddedValid = false;
+										if ($row['DateAdded']) {
+											$date = new DateTime($row['DateAdded']);
+											$day = $date->format('Y-m-d');
+											$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+											$hours = $date->format('h:i:s A');
+											$elapsed = Carbon::parse($date);
+											$isDateAddedValid = true;
+										}
 
 										$clientName = $row['Name'];
 										$isClientNameHoverable = false;
@@ -75,16 +79,18 @@ use Carbon\Carbon;
 										$clientSuffix = '<span style="color: rgba(0, 0, 0, 0.33);">WC</span>' . $row['EmployeeIDSuffix'] . '<span style="color: rgba(0, 0, 0, 0.5);">-####-' . $currentYear . '</span>';
 										$clientSuffixNoColor = 'WC' . $row['EmployeeIDSuffix'] . '-####-' . $currentYear;
 
-
 										?>
 										<tr class="text-center align-middle table-row-hover">
 											<td<?php if ($isClientNameHoverable): ?> data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $clientNameHover; ?>"<?php endif; ?>>
 												<?php echo $clientName; ?>
 											</td>
 											<td>
-												<?php echo $clientAddress; ?>
+												<div style="max-width: 225px;">
+													<?php echo $clientAddress; ?>
+												</div>
 											</td>
 											<td>
+												<div style="max-width: 225px;">
 												<?php 
 													if ($clientContact) {
 														echo $clientContact;
@@ -92,6 +98,7 @@ use Carbon\Carbon;
 														echo '<i style="color: gray;">No record.</i>';
 													}
 												?>
+												</div>
 											</td>
 											<td>
 												<?php echo $clientSuffix; ?>
@@ -99,7 +106,7 @@ use Carbon\Carbon;
 											<td>
 												<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['ClientID'])->num_rows(); ?>
 											</td>
-											<?php if (!empty($row['DateAdded'])): ?>
+											<?php if ($isDateAddedValid): ?>
 											<td class="text-center align-middle" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $elapsed->diffForHumans(); ?>">
 												<div class="d-none">
 													<?php echo $row['DateAdded']; ?>
@@ -108,18 +115,21 @@ use Carbon\Carbon;
 													echo $day . '<br>' . $hours;
 												?>
 											</td>
+											<td class="text-center align-middle d-none">
+												<?php echo $day . ' at ' . $hours; ?>
+											</td>
 											<?php else: ?>
 											<td>
 												<i style="color: gray;">No record.</i>
 											</td>
-											<?php endif; ?>
 											<td class="text-center align-middle d-none">
-												<?php echo $day . ' at ' . $hours; ?>
+												--
 											</td>
+											<?php endif; ?>
 											<td class="text-center align-middle PrintExclude">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>Clients?id=<?php echo $row['ClientID']; ?>"><i class="fas fa-users"></i> Employees</a>
-												<?php if(in_array('ClientsEditing', $this->session->userdata('Permissions'))): ?>
-												<button type="button" class="btn btn-info btn-sm w-100 edit-client-btn" data-toggle="modal" data-target="#editClient" data-clientid="<?php echo $row['ClientID']; ?>" data-clientname="<?php echo $clientName; ?>" data-clientaddress="<?php echo $clientAddress; ?>" data-clientcontact="<?php echo $clientContact; ?>" data-clientsuffix="<?php echo $row['EmployeeIDSuffix']; ?>" data-clientsuffixpreview="<?php echo $clientSuffixNoColor; ?>"><i class="fas fa-edit"></i> Edit</button>
+												<?php if($this->Model_Security->CheckPermissions('ClientsEditing')): ?>
+												<button type="button" class="btn btn-info btn-sm w-100 edit-client-btn" data-toggle="modal" data-target="#editClient" data-clientid="<?php echo $row['ClientID']; ?>" data-clientname="<?php echo $clientName; ?>" data-clientaddress="<?php echo $clientAddress; ?>" data-clientcontact="<?php echo $clientContact; ?>" data-clientsuffix="<?php echo $row['EmployeeIDSuffix']; ?>" data-clientsuffixpreview="<?php echo $clientSuffixNoColor; ?>" data-clientstatus="<?php echo $row['Status']; ?>"><i class="fas fa-edit"></i> Edit</button>
 												<?php endif; ?>
 											</td>
 										</tr>
@@ -133,64 +143,8 @@ use Carbon\Carbon;
 		</div>
 	</div>
 	<!-- MODALS -->
-	<div class="modal fade" id="addClients" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<?php echo form_open(base_url().'Add_newClient','method="post"');?>
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-plus"></i> Add New Client</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div id="InputFields" class="modal-body">
-					<div class="form-row">
-						<div class="form-group col-sm-12">
-							<label>Name <span class="required-field">*</span></label>
-							<input id="ClientName" class="form-control" type="text" name="ClientName" autocomplete="off">
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group col-sm-12">
-							<label>Address</label>
-							<input class="form-control" type="text" name="ClientAddress" autocomplete="off">
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group col-sm-12">
-							<label>Contact Number</label>
-							<input class="form-control" type="text" name="ClientContact" autocomplete="off">
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group col-sm-5">
-							<label>Employee ID Suffix <span style="color: rgba(0, 0, 0, 0.55);" data-toggle="tooltip" data-placement="top" data-html="true" title="Applicants who get hired to this client will be assigned the designated Employee ID with this as the suffix. See the preview for an example.<br><br>By default, all ID follows the format of WC(Suffix)-NUMBER-YEAR. You can manually change the ID of an applicant whenever they are hired."><i>(?)</i></span> <span class="required-field">*</span></label>
-							<input id="EmployeeIDSuffix" class="form-control" type="text" name="EmployeeIDSuffix" autocomplete="off">
-						</div>
-						<div class="form-group col-sm-2 text-center">
-							<p><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></p>
-							<p><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></p>
-						</div>
-						<div class="form-group col-sm-5">
-							<label>Preview</label>
-							<input id="SuffixPreview" class="form-control" type="text" autocomplete="off" readonly>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<div class="save-btn-locked-group">
-						<span class="mr-2" style="font-size: 18px; color: rgba(255, 25, 25);"><i class="fas fa-exclamation-circle"></i> Name and suffix is required</span>
-						<button type="button" class="btn btn-secondary hover-disabled"><i class="fas fa-lock"></i> Add</button>
-					</div>
-					<div class="save-btn-valid-group" style="display: none;">
-						<span class="mr-2" style="font-size: 18px; color: green;"><i class="fas fa-check-circle"></i> Client is valid for saving</span>
-						<button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Add</button>
-					</div>
-				</div>
-				<?php echo form_close();?>
-			</div>
-		</div>
-	</div>
+	<!-- ADD CLIENT MODAL -->
+	<?php $this->load->view('_template/modals/m_addclient'); ?>
 	<!-- EXPORT MODAL -->
 	<?php $this->load->view('_template/modals/m_export'); ?>
 	<!-- CLIENTS EMPLOYED MODAL -->
@@ -269,9 +223,10 @@ use Carbon\Carbon;
 		// =====================
 		// Edit Client
 		$('.edit-client-btn').on('click', function() {
-			// Set ID
+			// Set data
 			let ClientID = $(this).data('clientid');
 			$('#EditClientID').val(ClientID);
+			let clientStatus = $(this).data('clientstatus');
 			// Client info
 			$('#EditClientNameTitle').text($(this).data('clientname'));
 			$('#EditClientName').val($(this).data('clientname'));
@@ -279,7 +234,15 @@ use Carbon\Carbon;
 			$('#EditClientContact').val($(this).data('clientcontact'));
 			$('#EditEmployeeIDSuffix').val($(this).data('clientsuffix'));
 			$('#EditSuffixPreview').val($(this).data('clientsuffixpreview'));
-			$('#EditRemoveClient').attr('href', 'RemoveClient?id=' + ClientID);
+			if (clientStatus == 'Deleted') {
+				$('.restoreclient-btn').show();
+				$('.removeclient-btn').hide();
+				$('#EditRestoreClient').attr('href', 'RestoreClient?id=' + ClientID);
+			} else {
+				$('.restoreclient-btn').hide();
+				$('.removeclient-btn').show();
+				$('#EditRemoveClient').attr('href', 'RemoveClient?id=' + ClientID);
+			}
 		});
 		$('#EditEmployeeIDSuffix').bind('input', function() {
 			$('#EditSuffixPreview').val('WC' + $(this).val() + '-####-' + currentYear);
