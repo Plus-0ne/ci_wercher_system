@@ -840,6 +840,9 @@
 			$('input[type="number"]').val(Math.floor(Math.random() * Math.floor(99)));
 			$('input[type="text"]').val('TEST-' + Math.floor(Math.random() * Math.floor(9999999)));
 			$('input[type="date"]').val(moment().format('YYYY-MM-DD'));
+			$('#ReferralWalkIn').trigger('click');
+			$('.save-btn-locked-group').hide();
+			$('.save-btn-valid-group').show();
 		});
 		$('#blah').click(function(){ $('#imgInp').trigger('click'); });
 		function readURL(input) {

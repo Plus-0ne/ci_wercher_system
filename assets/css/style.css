@@ -4,6 +4,7 @@
 
 :root {
 	--wercher-info-color: #966800;
+	--highlight-text-color: rgba(255, 100, 100);
 }
 
 a {
@@ -26,12 +27,12 @@ table td {
 /* Text highlight */
 ::-moz-selection { /* Firefox */
 	color: white;
-	background: rgba(255, 100, 100);
+	background: var(--highlight-text-color);
 }
 
 ::selection {
 	color: white;
-	background: rgba(255, 100, 100);
+	background: var(--highlight-text-color);
 }
 
 .hover-info:hover {
@@ -114,10 +115,14 @@ table td {
     box-shadow: 0 0 0 0.2rem gold !important;
 }
 
-input[type]:focus {
+input[type]:focus, select:focus {
 	border-color: gold !important;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px gold !important;
 	outline: 0 none !important;
+}
+
+select option:hover, select option:active, select option:focus {
+	background-color: var(--highlight-text-color);
 }
 
 textarea:focus {

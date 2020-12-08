@@ -80,7 +80,7 @@ use Carbon\Carbon;
 										$clientSuffixNoColor = 'WC' . $row['EmployeeIDSuffix'] . '-####-' . $currentYear;
 
 										?>
-										<tr class="text-center align-middle table-row-hover">
+										<tr class="text-center table-row-hover">
 											<td<?php if ($isClientNameHoverable): ?> data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $clientNameHover; ?>"<?php endif; ?>>
 												<?php echo $clientName; ?>
 											</td>
@@ -107,7 +107,7 @@ use Carbon\Carbon;
 												<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['ClientID'])->num_rows(); ?>
 											</td>
 											<?php if ($isDateAddedValid): ?>
-											<td class="text-center align-middle" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $elapsed->diffForHumans(); ?>">
+											<td class="text-center" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $elapsed->diffForHumans(); ?>">
 												<div class="d-none">
 													<?php echo $row['DateAdded']; ?>
 												</div>
@@ -115,18 +115,18 @@ use Carbon\Carbon;
 													echo $day . '<br>' . $hours;
 												?>
 											</td>
-											<td class="text-center align-middle d-none">
+											<td class="text-center d-none">
 												<?php echo $day . ' at ' . $hours; ?>
 											</td>
 											<?php else: ?>
 											<td>
 												<i style="color: gray;">No record.</i>
 											</td>
-											<td class="text-center align-middle d-none">
+											<td class="text-center d-none">
 												--
 											</td>
 											<?php endif; ?>
-											<td class="text-center align-middle PrintExclude">
+											<td class="text-center PrintExclude">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>Clients?id=<?php echo $row['ClientID']; ?>"><i class="fas fa-users"></i> Employees</a>
 												<?php if($this->Model_Security->CheckPermissions('ClientsEditing')): ?>
 												<button type="button" class="btn btn-info btn-sm w-100 edit-client-btn" data-toggle="modal" data-target="#editClient" data-clientid="<?php echo $row['ClientID']; ?>" data-clientname="<?php echo $clientName; ?>" data-clientaddress="<?php echo $clientAddress; ?>" data-clientcontact="<?php echo $clientContact; ?>" data-clientsuffix="<?php echo $row['EmployeeIDSuffix']; ?>" data-clientsuffixpreview="<?php echo $clientSuffixNoColor; ?>" data-clientstatus="<?php echo $row['Status']; ?>"><i class="fas fa-edit"></i> Edit</button>

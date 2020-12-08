@@ -26,6 +26,7 @@ class Update_Controller extends CI_Controller {
 			$H_Years = $this->input->post('H_Years',TRUE);
 			$Salary = $this->input->post('Salary',TRUE);
 			$EmployeeID = $this->input->post('EmployeeID',TRUE);
+			$EmploymentType = $this->input->post('EmploymentType',TRUE);
 			if($H_Days == NULL) {
 				$H_Days = 0;
 			}
@@ -39,7 +40,7 @@ class Update_Controller extends CI_Controller {
 			$Temp_ApplicantID++;
 
 			if ($ApplicantID == NULL || $ClientID == NULL) {
-				$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+				$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again.');
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
@@ -47,114 +48,166 @@ class Update_Controller extends CI_Controller {
 				$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
 				if ($CheckApplicant->num_rows() > 0) {
 					$row = $CheckApplicant->row_array();
+					if ($EmploymentType == 'Contractual') {
+						$DateStarted = date('Y-m-d h:i:s A');
 
-					$DateStarted = date('Y-m-d h:i:s A');
-
-					if ($H_Months == NULL) {
-						$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 months', strtotime($DateStarted)));
-					} else {
-						$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$H_Months.' months', strtotime($DateStarted)));
-					}
-					if ($H_Days == NULL) {
-						$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 days', strtotime($DateEnds)));
-					} else {
-						$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$H_Days.' days', strtotime($DateEnds)));
-					}
-					if ($H_Years == NULL) {
-						$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 days', strtotime($DateEnds)));
-					} else {
-						$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$H_Years.' years', strtotime($DateEnds)));
-					}
-
-					$data = array(
-						'EmployeeID' => $EmployeeID,
-						'ClientEmployed' => $ClientID,
-						'DateStarted' => $DateStarted,
-						'DateEnds' => $DateEnds,
-						'Salary' => $Salary,
-					);
-					$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
-					$data = array(
-						'ClientID' => $ClientID,
-						'FirstName' => $row['FirstName'],
-						'MiddleName' => $row['MiddleName'],
-						'LastName' => $row['LastName'],
-						'SalaryExpected' => $row['SalaryExpected'],
-					);
-					$EmployNewApplicant = $this->Model_Inserts->InsertToClient($ClientID,$Temp_ApplicantID,$data);
-					if ($EmployNewApplicant == TRUE) {
-						$this->Model_Logbook->SetPrompts('success', 'success', 'Employed successfully');
-						// LOGBOOK
-						$duration = '';
-						if($H_Years != 0) {
-							$duration = $duration . $H_Years;
-							if($H_Years == 1) {
-								$duration = $duration . ' year, ';
-							} else {
-								$duration = $duration . ' years, ';
-							}
-						}
-						if($H_Months != 0) {
-							$duration = $duration . $H_Months;
-							if($H_Months == 1) {
-								$duration = $duration . ' month, ';
-							} else {
-								$duration = $duration . ' months, ';
-							}
-						}
-						if($H_Days != 0) {
-							$duration = $duration . $H_Days;
-							if($H_Days == 1) {
-								$duration = $duration . ' day, ';
-							} else {
-								$duration = $duration . ' days, ';
-							}
-						}
-						$duration = substr($duration, 0, -2);
-						$duration = new DateTime($duration);
-						$now = (new DateTime(date('Y-m-d')))->format('F d, Y');
-						$duration = $duration->format('F d, Y');
-						$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
-						if ($CheckApplicant->num_rows() > 0) {
-							foreach($CheckApplicant->result_array() as $row) {
-								$LastName = $row['LastName'];
-								$FirstName = $row['FirstName'];
-								$MiddleName = $row['MiddleName'];
-							}
+						if ($H_Months == NULL) {
+							$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 months', strtotime($DateStarted)));
 						} else {
-							$LastName = 'N/A';
-							$FirstName = 'N/A';
-							$MiddleName = 'N/A';
+							$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$H_Months.' months', strtotime($DateStarted)));
 						}
-						$GetClientID = $this->Model_Selects->GetClientID($ClientID);
-						if ($GetClientID->num_rows() > 0) {
-							foreach($GetClientID->result_array() as $row) {
-								$ClientName = $row['Name'];
-							}
+						if ($H_Days == NULL) {
+							$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 days', strtotime($DateEnds)));
 						} else {
-							$ClientName = 'N/A';
+							$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$H_Days.' days', strtotime($DateEnds)));
 						}
-						$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' employed <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a> to <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $ClientID . '" target="_blank">' . $ClientName . '</a>');
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Status changed from <b>Applicant</b> to <b>Employed</b>');
-						$this->Model_Logbook->LogbookExtendedEntry(0, 'Contract Duration: <b>' . $now . '</b> to <b>' . $duration . '</b>');
-						redirect($_SERVER['HTTP_REFERER']);
+						if ($H_Years == NULL) {
+							$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 days', strtotime($DateEnds)));
+						} else {
+							$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$H_Years.' years', strtotime($DateEnds)));
+						}
+
+						$data = array(
+							'EmployeeID' => $EmployeeID,
+							'ClientEmployed' => $ClientID,
+							'DateStarted' => $DateStarted,
+							'DateEnds' => $DateEnds,
+							'Status' => 'Employed',
+							'SalaryExpected' => $Salary,
+						);
+						$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
+						$data = array(
+							'ClientID' => $ClientID,
+							'FirstName' => $row['FirstName'],
+							'MiddleName' => $row['MiddleName'],
+							'LastName' => $row['LastName'],
+							'SalaryExpected' => $row['SalaryExpected'],
+						);
+						$InsertToClient = $this->Model_Inserts->InsertToClient($ClientID,$Temp_ApplicantID,$data);
+						if ($EmployNewApplicant && $InsertToClient) {
+							$this->Model_Logbook->SetPrompts('success', 'success', 'Employed successfully');
+							// LOGBOOK
+							$duration = '';
+							if($H_Years != 0) {
+								$duration = $duration . $H_Years;
+								if($H_Years == 1) {
+									$duration = $duration . ' year, ';
+								} else {
+									$duration = $duration . ' years, ';
+								}
+							}
+							if($H_Months != 0) {
+								$duration = $duration . $H_Months;
+								if($H_Months == 1) {
+									$duration = $duration . ' month, ';
+								} else {
+									$duration = $duration . ' months, ';
+								}
+							}
+							if($H_Days != 0) {
+								$duration = $duration . $H_Days;
+								if($H_Days == 1) {
+									$duration = $duration . ' day, ';
+								} else {
+									$duration = $duration . ' days, ';
+								}
+							}
+							$duration = substr($duration, 0, -2);
+							$duration = new DateTime($duration);
+							$now = (new DateTime(date('Y-m-d')))->format('F d, Y');
+							$duration = $duration->format('F d, Y');
+							$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
+							if ($CheckApplicant->num_rows() > 0) {
+								foreach($CheckApplicant->result_array() as $row) {
+									$LastName = $row['LastName'];
+									$FirstName = $row['FirstName'];
+									$MiddleName = $row['MiddleName'];
+								}
+							} else {
+								$LastName = 'N/A';
+								$FirstName = 'N/A';
+								$MiddleName = 'N/A';
+							}
+							$GetClientID = $this->Model_Selects->GetClientID($ClientID);
+							if ($GetClientID->num_rows() > 0) {
+								foreach($GetClientID->result_array() as $row) {
+									$ClientName = $row['Name'];
+								}
+							} else {
+								$ClientName = 'N/A';
+							}
+							$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' employed <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a> to <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $ClientID . '" target="_blank">' . $ClientName . '</a>');
+							$this->Model_Logbook->LogbookExtendedEntry(0, 'Status changed from <b>Applicant</b> to <b>Employed</b>');
+							$this->Model_Logbook->LogbookExtendedEntry(0, 'Contract Duration: <b>' . $now . '</b> to <b>' . $duration . '</b>');
+							redirect($_SERVER['HTTP_REFERER']);
+						}
+						else
+						{
+							$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again.');
+							redirect($_SERVER['HTTP_REFERER']);
+						}
 					}
 					else
 					{
-						$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
-						redirect($_SERVER['HTTP_REFERER']);
+						$data = array(
+							'EmployeeID' => $EmployeeID,
+							'ClientEmployed' => $ClientID,
+							'Status' => 'Employed (Permanent)',
+							'SalaryExpected' => $Salary,
+						);
+						$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
+						$data = array(
+							'ClientID' => $ClientID,
+							'FirstName' => $row['FirstName'],
+							'MiddleName' => $row['MiddleName'],
+							'LastName' => $row['LastName'],
+							'SalaryExpected' => $row['SalaryExpected'],
+						);
+						$InsertToClient = $this->Model_Inserts->InsertToClient($ClientID,$Temp_ApplicantID,$data);
+						if ($EmployNewApplicant && $InsertToClient) {
+							$this->Model_Logbook->SetPrompts('success', 'success', 'Employed successfully');
+							// LOGBOOK
+							$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
+							if ($CheckApplicant->num_rows() > 0) {
+								foreach($CheckApplicant->result_array() as $row) {
+									$LastName = $row['LastName'];
+									$FirstName = $row['FirstName'];
+									$MiddleName = $row['MiddleName'];
+								}
+							} else {
+								$LastName = 'N/A';
+								$FirstName = 'N/A';
+								$MiddleName = 'N/A';
+							}
+							$GetClientID = $this->Model_Selects->GetClientID($ClientID);
+							if ($GetClientID->num_rows() > 0) {
+								foreach($GetClientID->result_array() as $row) {
+									$ClientName = $row['Name'];
+								}
+							} else {
+								$ClientName = 'N/A';
+							}
+							$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' employed <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a> to <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $ClientID . '" target="_blank">' . $ClientName . '</a>');
+							$this->Model_Logbook->LogbookExtendedEntry(0, 'Status changed from <b>Applicant</b> to <b>Regular</b>');
+							redirect($_SERVER['HTTP_REFERER']);
+						}
+						else
+						{
+							$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again.');
+							redirect($_SERVER['HTTP_REFERER']);
+						}
 					}
 				}
 				else
 				{
-					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+					$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again.');
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
 		}
 		else
 		{
-			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+			$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again.');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
@@ -168,7 +221,7 @@ class Update_Controller extends CI_Controller {
 			$E_Years = $this->input->post('E_Years',TRUE);
 
 			if ($ApplicantID == NULL) {
-				$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+				$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again.');
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
@@ -223,20 +276,20 @@ class Update_Controller extends CI_Controller {
 					}
 					else
 					{
-						$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+						$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again.');
 						redirect($_SERVER['HTTP_REFERER']);
 					}
 				}
 				else
 				{
-					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+					$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again.');
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
 		}
 		else
 		{
-			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+			$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again.');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}

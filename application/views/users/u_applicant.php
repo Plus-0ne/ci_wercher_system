@@ -220,6 +220,13 @@ use Carbon\Carbon;
 			}
 			<?php endforeach; ?>
 		});
+		$('#EmploymentType').on('change', function() {
+			if ($(this).val() == 'Contractual') {
+				$('.contractual-group').show();
+			} else {
+				$('.contractual-group').hide();
+			}
+		});
 		var table = $('#emp').DataTable( {
 			sDom: 'lrtip',
 			"bLengthChange": false,

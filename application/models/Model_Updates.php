@@ -5,16 +5,6 @@ class Model_Updates extends CI_Model {
 
 	public function EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data)
 	{
-		extract($data);
-		$data = array(
-			'EmployeeID' => $EmployeeID,
-			'Temp_ApplicantID' => $Temp_ApplicantID,
-			'ClientEmployed' => $ClientEmployed,
-			'DateStarted' => $DateStarted,
-			'DateEnds' => $DateEnds,
-			'SalaryExpected' => $Salary,
-			'Status' => 'Employed',
-		);
 		$this->db->where('ApplicantID', $ApplicantID);
 		$result = $this->db->update('applicants', $data);
 		return $result;

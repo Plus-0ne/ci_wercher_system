@@ -113,7 +113,7 @@
 			<a class="link-s" href="#siteInfo" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-info fa-fw"></i> Site Info <i class="fas fa-caret-down fa-fw" style="float: right; margin-top: 4px;"></i> </a>
 			<ul class="collapse list-unstyled collapseSettings animated fadeIn" id="siteInfo">
 				<li>
-					<a class="link-s" class="sublink" href="#"><span style="color: gold;"><i class="fas fa-info-circle"></i> Build: December 04, 2020</span></a>
+					<a class="link-s" class="sublink" href="#"><span style="color: gold;"><i class="fas fa-info-circle"></i> Build: December 08, 2020</span></a>
 				</li>
 			</ul>
 		</li>

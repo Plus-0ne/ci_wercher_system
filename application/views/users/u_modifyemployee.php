@@ -619,6 +619,11 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		<?php if ($Status == 'Employed') { ?>
+			$(".nav-item a[href*='Employee']").addClass("nactive");
+		<?php } else { ?>
+			$(".nav-item a[href*='Applicants']").addClass("nactive");
+		<?php } ?>
 		var SSS_List = [];
 		var HDMF_List = [];
 		var RCN_List = [];

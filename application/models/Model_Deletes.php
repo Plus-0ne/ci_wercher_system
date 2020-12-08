@@ -7,7 +7,7 @@ class Model_Deletes extends CI_Model {
 	{
 		$now = new DateTime();
 		$DateRemoved = $now->format('Y-m-d H:i:s');
-		$SQL = "UPDATE applicants SET Status ='Deleted', DateRemoved = '$DateRemoved' WHERE ApplicantID = '$ApplicantID'";
+		$SQL = "UPDATE applicants SET Status ='Deleted', DateRemoved = '$DateRemoved', ClientEmployed = NULL WHERE ApplicantID = '$ApplicantID'";
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}

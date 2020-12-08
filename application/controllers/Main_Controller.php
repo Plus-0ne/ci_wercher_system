@@ -24,19 +24,19 @@
 			$ApplicantID = $row['ApplicantID'];
 			if ($row['ReminderLocked'] != 'Yes'){
 				if (strtotime($row['DateEnds']) < (strtotime($currTime) + strtotime($row['ReminderDate'])) && strtotime($row['DateEnds']) > strtotime($currTime)) {
-					$LogbookInsert = $this->Model_Updates->ReminderLocked($ApplicantID);
-					// LOGBOOK
-					$LogbookCurrentTime = date('Y-m-d h:i:s A');
-					$LogbookType = 'Reminder';
-					$LogbookEvent = 'Employee ' . $ApplicantID . ' is expiring in ' . $row['ReminderDateString'] . '!';
-					$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
-					$data = array(
-						'Time' => $LogbookCurrentTime,
-						'Type' => $LogbookType,
-						'Event' => $LogbookEvent,
-						'Link' => $LogbookLink,
-					);
-					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+					// $LogbookInsert = $this->Model_Updates->ReminderLocked($ApplicantID);
+					// // LOGBOOK
+					// $LogbookCurrentTime = date('Y-m-d h:i:s A');
+					// $LogbookType = 'Reminder';
+					// $LogbookEvent = 'Employee ' . $ApplicantID . ' is expiring in ' . $row['ReminderDateString'] . '!';
+					// $LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+					// $data = array(
+					// 	'Time' => $LogbookCurrentTime,
+					// 	'Type' => $LogbookType,
+					// 	'Event' => $LogbookEvent,
+					// 	'Link' => $LogbookLink,
+					// );
+					// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 				}
 			}
 			if (strtotime($row['DateEnds']) < strtotime($currTime)) {
@@ -65,19 +65,18 @@
 						$ApplicantExpired = $this->Model_Updates->ApplicantExpired($ApplicantID);
 						if ($ApplicantExpired == TRUE) {
 							$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ' . $ApplicantID . ' has expired!</h5></div>');
-							// LOGBOOK
-							date_default_timezone_set('Asia/Manila');
-							$LogbookCurrentTime = date('Y-m-d h:i:s A');
-							$LogbookType = 'Update';
-							$LogbookEvent = 'Employee ' . $ApplicantID . ' has expired!';
-							$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
-							$data = array(
-								'Time' => $LogbookCurrentTime,
-								'Type' => $LogbookType,
-								'Event' => $LogbookEvent,
-								'Link' => $LogbookLink,
-							);
-							$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+							// // LOGBOOK
+							// $LogbookCurrentTime = date('Y-m-d h:i:s A');
+							// $LogbookType = 'Update';
+							// $LogbookEvent = 'Employee ' . $ApplicantID . ' has expired!';
+							// $LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+							// $data = array(
+							// 	'Time' => $LogbookCurrentTime,
+							// 	'Type' => $LogbookType,
+							// 	'Event' => $LogbookEvent,
+							// 	'Link' => $LogbookLink,
+							// );
+							// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 						}
 						else
 						{

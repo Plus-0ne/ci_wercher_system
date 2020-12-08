@@ -171,7 +171,7 @@ use Carbon\Carbon;
 											</td>
 											<td class="text-center align-middle PrintExclude" width="100">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
-												<?php if($this->Model_Security->CheckPermissions('EmployeeHiring')): ?>
+												<?php if($this->Model_Security->CheckPermissions('EmployeesHiring')): ?>
 												<button id="<?php echo $row['ApplicantID']; ?>" type="button" class="btn btn-info btn-sm w-100 mb-1 ModalHire"  data-toggle="modal" data-target="#hirthis"><i class="fas fa-user-edit"></i> Hire</button>
 												<?php endif; ?>
 
@@ -216,6 +216,13 @@ use Carbon\Carbon;
 				$(this).closest('#ClientModal').find('#EmployeeID').val('<?php echo $EmployeeID; ?>');
 			}
 			<?php endforeach; ?>
+		});
+		$('#EmploymentType').on('change', function() {
+			if ($(this).val() == 'Contractual') {
+				$('.contractual-group').show();
+			} else {
+				$('.contractual-group').hide();
+			}
 		});
 		$(".nav-item a[href*='Applicants']").addClass("nactive");
 		var table = $('#emp').DataTable( {

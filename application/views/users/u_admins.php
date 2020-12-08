@@ -330,7 +330,7 @@ use Carbon\Carbon;
 			}
 		});
 		// ~ input
-		$('#InputFields input, textarea, select, #PasswordFields input').bind("input", function() {
+		$('#InputFields input, textarea, select, #PasswordFields input').not('input[type=file]').bind("input", function() {
 			let inputName = $(this).attr('name');
 			localStorage.setItem(inputName, $(this).val());
 			if (!inputCart.items.includes(inputName)) {
