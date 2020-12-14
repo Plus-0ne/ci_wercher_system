@@ -4,6 +4,8 @@
 
 :root {
 	--wercher-info-color: #966800;
+	--wercher-primary-color: #c5ad00;
+	/*--wercher-primary-color: linear-gradient(180deg, rgba(219,173,0,1) 0%, rgba(190,150,0,1) 100%);*/
 	--highlight-text-color: rgba(255, 100, 100);
 }
 
@@ -52,6 +54,7 @@ table td {
 	border: none;
 }
 .btn-primary {
+	/*background: var(--wercher-primary-color);*/
 	background-color: #c5ad00;
 	border-color: #c5ad00;
 	/*background-color: #735600;
@@ -65,6 +68,10 @@ table td {
 
 .btn-secondary {
 	color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-flag-ph {
+	background-image: linear-gradient(rgba(25, 25, 185, 1), rgba(185, 25, 25, 1));
 }
 
 .page-item.active .page-link {
@@ -86,6 +93,8 @@ table td {
 }*/
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:focus, .btn-primary .active, .open>.dropdown-toggle.btn-primary {
+	transition: 0.1s;
+	/*background: linear-gradient(180deg, rgba(213,169,0,1) 0%, rgba(156,122,0,1) 100%) !important;*/
     background-color: #756700 !important;
     border-color: #756700 !important;
     outline: gold !important;
@@ -1345,9 +1354,19 @@ a[data-toggle="collapse"] {
 }
 .payslip-container {
 	font-family: 'Courier';
-	font-size: 12px;
+	font-size: 14px;
 	border: 1px solid #000000;
 	padding-bottom: 5px;
+	background-color: #ffffff;
+}
+.payslip-field {
+	font-size: 12px;
+}
+.payslip-field-value {
+
+}
+.payslip-header {
+	font-weight: 900;
 }
 .build-number {
 	position: absolute;
@@ -1602,7 +1621,7 @@ input[type=number]::-webkit-inner-spin-button {
 		max-width:1200px;
 	}
 	.modal-payroll {
-		width: 90%;
+		width: 95%;
 		max-width:1680px;
 	}
 

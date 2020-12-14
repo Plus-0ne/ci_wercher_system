@@ -11,7 +11,8 @@
 							<i class="fas fa-exclamation-triangle"></i> We've come up empty! No data found.
 						</div>
 					</div>
-				<?php else: ?>
+				<?php else: 
+					if ($this->Model_Security->CheckPermissions('DashboardLogbook')): ?>
 					<!-- APPLICANT ID -->
 					<?php if($SearchApplicantID->num_rows() > 0): ?>
 					<div class="row wercher-tablelist-container">
@@ -28,7 +29,6 @@
 											<th> Applicant </th>
 											<th> Full Name </th>
 											<th> Position Desired </th>
-											<th> Sex </th>
 											<th> Applied On </th>
 											<th class="PrintExclude"> Action </th>
 										</tr>
@@ -49,9 +49,6 @@
 												</td>
 												<td class="text-center align-middle">
 													<?php echo $row['PositionDesired']; ?>
-												</td>
-												<td class="text-center align-middle">
-													<?php echo $row['Gender']; ?>
 												</td>
 												<td class="text-center align-middle">
 													<?php echo $row['AppliedOn']; ?>
@@ -135,7 +132,6 @@
 											<th> Applicant </th>
 											<th> Full Name </th>
 											<th> Position Desired </th>
-											<th> Sex </th>
 											<th> Applied On </th>
 											<th class="PrintExclude"> Action </th>
 										</tr>
@@ -156,9 +152,6 @@
 												</td>
 												<td class="text-center align-middle">
 													<?php echo $row['PositionDesired']; ?>
-												</td>
-												<td class="text-center align-middle">
-													<?php echo $row['Gender']; ?>
 												</td>
 												<td class="text-center align-middle">
 													<?php echo $row['AppliedOn']; ?>

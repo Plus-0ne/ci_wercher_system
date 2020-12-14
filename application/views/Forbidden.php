@@ -55,6 +55,7 @@
 						<br>
 						Access denied.
 						<br>
+						Unsufficient permission has been met.
 						<!-- <a href="<?=base_url();?>">Go back.</a> -->
 					</div>
 				</div>

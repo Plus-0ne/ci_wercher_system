@@ -44,7 +44,7 @@ use Carbon\Carbon;
 										<th style="width: 25px;"> Employees </th>
 										<th>Primary Week</th>
 										<th style="width: 25px;">Current Week</th>
-										<th class="text-center PrintExclude" style="width: 125px;"> View Hours </th>
+										<th class="text-center PrintExclude" style="width: 125px;"> Attendance </th>
 									</tr>
 								</thead>
 								<tbody>

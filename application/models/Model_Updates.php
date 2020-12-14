@@ -99,9 +99,8 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function UpdateWeeklyHours($Mode, $ApplicantID,$data)
+	public function UpdateWeeklyHours($data, $Mode)
 	{
-		extract($data);
 		switch ($Mode) {
 			case '0':
 				$Mode = 'hours_weekly';
@@ -117,42 +116,7 @@ class Model_Updates extends CI_Model {
 				$this->Model_Logbook->SetPrompts('info', 'info', 'Invalid salary mode. Defaulting to weekly.');
 				break;
 		}
-		$data = array(
-			'ApplicantID' => $ApplicantID,
-			'ClientID' => $ClientID,
-			'Week' => $Week,
-			'Month' => $Month,
-			't_year' => $t_year,
-			
-			'Time' => $Date,
-			'Hours' => $Hours,
-			'Overtime' => $Overtime,
-			'NightHours' => $NightHours,
-			'NightOvertime' => $NightOvertime,
-			'Remarks' => $Remarks,
-			'HDMF' => $HDMF,
-			'Philhealth' => $Philhealth,
-			'SSS' => $SSS,
-			'Tax' => $Tax,
-			'day_pay' => $day_pay,
-		);
-		$SQL = "REPLACE INTO " . $Mode . "
-		SET ApplicantID = '$ApplicantID',
-		ClientID = '$ClientID',
-		Week = '$Week',
-		Month = '$Month',
-		t_year = '$t_year',
-		Time = '$Date', Hours = '$Hours',
-		Overtime = '$Overtime',
-		NightHours = '$NightHours',
-		NightOvertime = '$NightOvertime',
-		Remarks = '$Remarks',
-		HDMF = '$HDMF',
-		Philhealth = '$Philhealth',
-		SSS = '$SSS',
-		Tax = '$Tax',
-		day_pay = '$day_pay'";
-		$result = $this->db->query($SQL,$ApplicantID);
+		$result = $this->db->replace($Mode, $data);
 		return $result;
 	}
 	public function UpdateWeeklyHoursCurrent()

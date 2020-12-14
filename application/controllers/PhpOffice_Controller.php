@@ -21,13 +21,13 @@ class PhpOffice_Controller extends CI_Controller {
 
         
 		$ClientID = $this->input->post('id',true);
-        $SalaryMode = $this->input->post('Mode',true);
+        $Mode = $this->input->post('Mode',true);
 		$f_date = $this->input->post('f_date',true);
 		$t_date = $this->input->post('t_date',true);
         $filename = $this->input->post('ExportFileName',true);
         $GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
 
-        switch ($SalaryMode) {
+        switch ($Mode) {
             case 0:
                 $SalaryMode = 'Weekly';
                 break;
@@ -80,11 +80,27 @@ class PhpOffice_Controller extends CI_Controller {
         $hoursColumn = 'D';
         $hoursRow = '3';
         foreach ($GetApplicantDetails->result_array() as $row) {
-
+            $fullName = '';
+            if ($row['LastName']) {
+                $fullName = $fullName . $row['LastName'] . ', ';
+            } else {
+                $fullName = $fullName . '[No Last Name], ';
+            }
+            if ($row['FirstName']) {
+                $fullName = $fullName . $row['FirstName'];
+            } else {
+                $fullName = $fullName . '[No First Name]';
+            }
+            if ($row['MiddleName']) {
+                $fullName = ' ' . $fullName . ' ' . $row['MiddleName'][0] . '.';
+            }
+            if ($row['NameExtension']) {
+                $fullName = $fullName . ', ' . $row['NameExtension'];
+            }
         	$sheet->getColumnDimension('A')->setAutoSize(true);
             $sheet->setCellValue('A'.$i, $row['ApplicantID']);
             $sheet->getColumnDimension('B')->setAutoSize(true);
-            $sheet->setCellValue('B'.$i, $row['LastName'].' '.$row['FirstName'].', '.$row['MiddleInitial']);
+            $sheet->setCellValue('B'.$i, $fullName);
             $sheet->getColumnDimension('B')->setAutoSize(true);
             $sheet->setCellValue('C'.$i, $row['SalaryExpected']);
 
@@ -108,8 +124,8 @@ class PhpOffice_Controller extends CI_Controller {
             $TotalRegHours = 0;
             $TotalOTHours = 0;
             foreach ($GetWeeklyDates->result_array() as $brow):
-                if($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->num_rows() > 0) {
-                    foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->result_array() as $nrow):
+                if($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'], $Mode)->num_rows() > 0) {
+                    foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'], $Mode)->result_array() as $nrow):
                         $Hours = $nrow['Hours'];
                         $OT = $nrow['Overtime'];
                         $totalh =  $nrow['Hours'] + $nrow['Overtime'];

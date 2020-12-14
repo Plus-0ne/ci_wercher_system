@@ -38,7 +38,11 @@
 										if ($cTotalMonths > 0) {
 											$salaryInterval = $erow['SalaryExpected'] / $cTotalMonths;
 										} else {
-											$salaryInterval = $erow['SalaryExpected'] / $cDiff->d;
+											if ($cDiff->d > 0) {
+												$salaryInterval = $erow['SalaryExpected'] / $cDiff->d;
+											} else {
+												$salaryInterval = 0;
+											}
 										}
 										$salaryInterval = round($salaryInterval, 2);
 									?>
@@ -79,7 +83,48 @@
 									$pday = DateTime::createFromFormat('Y-m-d', $pdayRaw)->format('M d, Y');
 									$pdayText = DateTime::createFromFormat('Y-m-d', $pdayRaw)->format('D');
 									$pdayTooltip = DateTime::createFromFormat('Y-m-d', $pdayRaw)->format('l'); 
+									foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'], $_GET['mode'])->result_array() as $nrow):
+										if($nrow['Hours']) {
+											$salaryHours = $nrow['Hours'];
+										} else {
+											$salaryHours = 0;
+										}
+										if($nrow['Overtime']) {
+											$salaryOvertime = $nrow['Overtime'];
+										} else {
+											$salaryOvertime = 0;
+										}
+										if($nrow['NightHours']) {
+											$salaryNightHours = $nrow['NightHours'];
+										} else {
+											$salaryNightHours = 0;
+										}
+										if($nrow['NightOvertime']) {
+											$salaryNightOvertime = $nrow['NightOvertime'];
+										} else {
+											$salaryNightOvertime = 0;
+										}
+										if($nrow['RestDay']) {
+											$RestDay = true;
+										} else {
+											$RestDay = false;
+										}
+										if($nrow['SpecialHoliday']) {
+											$SpecialHoliday = true;
+										} else {
+											$SpecialHoliday = false;
+										}
+										if($nrow['NationalHoliday']) {
+											$NationalHoliday = true;
+										} else {
+											$NationalHoliday = false;
+										}
+									endforeach;
 								?>
+								<input class="form-control regular_pay_<?php echo $row['Time']; ?>" type="hidden" name="RegularGrossPay_<?php echo $row['Time']; ?>">
+								<input class="form-control overtime_pay_<?php echo $row['Time']; ?>" type="hidden" name="OvertimeGrossPay_<?php echo $row['Time']; ?>">
+								<input class="form-control nightpremium_pay_<?php echo $row['Time']; ?>" type="hidden" name="NPGrossPay_<?php echo $row['Time']; ?>">
+								<input class="form-control nightpremiumovertime_pay_<?php echo $row['Time']; ?>" type="hidden" name="NPOvertimeGrossPay_<?php echo $row['Time']; ?>">
 								<div class="day-container_<?php echo $row['Time']; ?> col-sm-12 col-md-2" style="margin-left: 25px;">
 									<div class="card mb-3">
 										<input id="<?php echo $row['Time']; ?>" type="hidden" name="<?php echo $row['Time']; ?>" value="<?php echo $row['Time']; ?>">
@@ -90,47 +135,31 @@
 										</div>
 										<div class="card-body">
 											<div class="form-row">
-												<div class="form-group col-8">
-													<div>Hours</div>
-													<input id="" class="form-control Hours_<?php echo $row['Time']; ?>" type="number" name="Hours_<?php echo $row['Time']; ?>" value="<?php
-															foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'], $_GET['mode'])->result_array() as $nrow):
-																if($nrow['Hours'] != NULL) {
-																	echo $nrow['Hours'];
-																} else {
-																	echo '0';
-																}
-															endforeach;
-													?>">
+												<div class="form-group col-7">
+													<span style="font-size: 14px;">Hours</span>
+													<input id="" class="form-control Hours_<?php echo $row['Time']; ?>" type="number" name="Hours_<?php echo $row['Time']; ?>" value="<?php echo $salaryHours; ?>">
 												</div>
-												<div class="form-group col-4">
-													<div class="">Overtime</div>
-													<input class="form-control OTHours_<?php echo $row['Time']; ?>" type="number" name="OTHours_<?php echo $row['Time']; ?>" value="<?php
-															foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'], $_GET['mode'])->result_array() as $nrow):
-																if($nrow['Overtime'] != NULL) {
-																	echo $nrow['Overtime'];
-																} else {
-																	echo '0';
-																}
-															endforeach;
-													?>">
+												<div class="form-group col-5">
+													<span style="font-size: 14px;">Overtime</span>
+													<input class="form-control OTHours_<?php echo $row['Time']; ?>" type="number" name="OTHours_<?php echo $row['Time']; ?>" value="<?php echo $salaryOvertime; ?>">
 												</div>
 											</div>
 											<div class="btn-group form-row">
-												<div class="regular-btn-group form-group col-sm-1 col-md-2 mr-1">
-													<button  type="button" class="regular-btn btn btn-success SalaryButtons"><i class="fas fa-sun wercher-visible text-primary" style="margin-right: -1px;"></i></button>
-													<input class="REGCheck_<?php echo $row['Time']; ?> regular-btn" type="checkbox" <?php if (isset($Regular)) { echo 'checked'; } ?> checked>
+												<div class="regular-btn-group form-group col-sm-1 col-md-2 mr-1 d-none">
+													<button type="button" class="regular-btn btn btn-success SalaryButtons" data-placement="top" data-html="true" title="Regular"><i class="fas fa-sun wercher-visible text-primary" style="margin-right: -1px;" data-toggle="tooltip"></i></button>
+													<input class="REGCheck_<?php echo $row['Time']; ?> regular-btn" type="checkbox" name="REGCheck_<?php echo $row['Time']; ?>" checked>
 												</div>
 												<div class="rest-btn-group form-group col-sm-1 col-md-2 mr-2">
-													<button type="button" class="rest-btn btn btn-secondary SalaryButtons"><i class="fas fa-bed wercher-visible" style="margin-right: -1px;"></i></button>
-													<input class="RESTCheck_<?php echo $row['Time']; ?>" type="checkbox" <?php if (isset($RestDay)) { echo 'checked'; } ?>>
+													<button type="button" class="rest-btn btn <?php if ($RestDay) { echo 'btn-info'; } else { echo 'btn-secondary'; } ?> SalaryButtons" data-placement="top" data-html="true" title="Rest Day"><i class="fas fa-bed wercher-visible <?php if ($RestDay) { echo 'text-primary'; } ?>" style="margin-right: -1px;"></i></button>
+													<input class="RESTCheck_<?php echo $row['Time']; ?>" type="checkbox" <?php if ($RestDay) { echo 'checked'; } ?> name="RESTCheck_<?php echo $row['Time']; ?>">
 												</div>
 												<div class="special-btn-group form-group col-sm-1 col-md-2 mr-1">
-													<button type="button" class="special-btn btn btn-secondary SalaryButtons"><i class="fas fa-flag wercher-visible" style="margin-right: -1px;"></i></button>
-													<input class="SPCheck_<?php echo $row['Time']; ?>" type="checkbox" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
+													<button type="button" class="special-btn btn <?php if ($SpecialHoliday) { echo 'btn-danger'; } else { echo 'btn-secondary'; } ?> SalaryButtons" data-placement="top" data-html="true" title="Special Holiday"><i class="fas fa-candy-cane wercher-visible <?php if ($SpecialHoliday) { echo 'text-primary'; } ?>" style="margin-right: -1px;"></i></button>
+													<input class="SPCheck_<?php echo $row['Time']; ?>" type="checkbox" <?php if ($SpecialHoliday) { echo 'checked'; } ?> name="SPCheck_<?php echo $row['Time']; ?>">
 												</div>
-												<div class="national-btn-group form-group col-sm-1 col-md-2 mr-3">
-													<button type="button" class="national-btn btn btn-secondary SalaryButtons"><i class="fas fa-candy-cane wercher-visible" style="margin-right: -1px;"></i></button>
-													<input class="NHCheck_<?php echo $row['Time']; ?>" type="checkbox" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
+												<div class="national-btn-group form-group col-sm-1 col-md-2 mr-5">
+													<button type="button" class="national-btn btn <?php if ($NationalHoliday) { echo 'btn-flag-ph'; } else { echo 'btn-secondary'; } ?> SalaryButtons" data-placement="top" data-html="true" title="National Holiday"><i class="fas fa-flag wercher-visible <?php if ($NationalHoliday) { echo 'text-primary'; } ?>" style="margin-right: -1px;"></i></button>
+													<input class="NHCheck_<?php echo $row['Time']; ?>" type="checkbox" <?php if ($NationalHoliday) { echo 'checked'; } ?> name="NHCheck_<?php echo $row['Time']; ?>">
 												</div>
 												<div class="night-btn-group form-group col-sm-1 col-md-2">
 													<button type="button" class="night-btn NCheck_<?php echo $row['Time']; ?> btn btn-secondary SalaryButtons"><i class="fas fa-moon wercher-visible" style="margin-right: -1px;"></i></button>
@@ -146,34 +175,18 @@
 												<div class="col-sm-12 text-center NightPremium">
 													<b>Night Premium</b>
 												</div>
-												<div class="form-group col-8 NightPremium">
-													<div>Hours</div>
-													<input id="" class="form-control NightHours_<?php echo $row['Time']; ?>" type="number" name="NightHours_<?php echo $row['Time']; ?>" value="<?php
-															foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'], $_GET['mode'])->result_array() as $nrow):
-																if($nrow['NightHours'] != NULL) {
-																	echo $nrow['NightHours'];
-																} else {
-																	echo '0';
-																}
-															endforeach;
-													?>">
+												<div class="form-group col-7 NightPremium">
+													<span style="font-size: 14px;">Hours</span>
+													<input id="" class="form-control NightHours_<?php echo $row['Time']; ?>" type="number" name="NightHours_<?php echo $row['Time']; ?>" value="<?php echo $salaryNightHours; ?>">
 												</div>
-												<div class="form-group col-4 NightPremium">
-													<div class="">Overtime</div>
-													<input class="form-control NightOTHours_<?php echo $row['Time']; ?>" type="number" name="NightOTHours_<?php echo $row['Time']; ?>" value="<?php
-															foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'], $_GET['mode'])->result_array() as $nrow):
-																if($nrow['NightOvertime'] != NULL) {
-																	echo $nrow['NightOvertime'];
-																} else {
-																	echo '0';
-																}
-															endforeach;
-													?>">
+												<div class="form-group col-5 NightPremium">
+													<span style="font-size: 14px;">Overtime</span>
+													<input class="form-control NightOTHours_<?php echo $row['Time']; ?>" type="number" name="NightOTHours_<?php echo $row['Time']; ?>" value="<?php echo $salaryNightOvertime; ?>">
 												</div>
 											</div>
 											<div class="form-row hhhh">
 												<div class="form-group col-6 input-icon">
-													<label>Per Hour</label>
+													<label><span style="font-size: 14px;">Per Hour</span></label>
 													<div class="input-icon-sm">
 														<input class="form-control  h_valueh" type="hidden" name="total_hoursperday_<?php echo $row['Time']; ?>" value="<?php if(isset($nrow['Hours'])) {
 															$totalho = $nrow['Hours'];
@@ -196,14 +209,14 @@
 													</div>
 												</div>
 												<div class="form-group col-6 input-icon">
-													<label>Total Day Pay</label>
+													<label><span style="font-size: 14px;">Total</span></label>
 													<div class="input-icon-sm">
 														<input id="t_pay" class="form-control t_pay_<?php echo $row['Time']; ?>" type="text" name="TdRate_<?php echo $row['Time']; ?>" value="" readonly>
 														<i>₱</i>
 													</div>
 												</div>
 												<div class="form-group col-12">
-													<label>Remarks</label>
+													<label><span style="font-size: 14px;">Remarks</span></label>
 													<div class="input-icon-sm">
 														<input class="form-control" type="text" name="Remarks_<?php echo $row['Time']; ?>" value="<?php
 															foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'], $_GET['mode'])->result_array() as $nrow):

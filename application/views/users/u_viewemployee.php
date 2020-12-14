@@ -161,8 +161,45 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 							</div>
 							<div class="row w-100 rcontent employee-content">
 								<div class="col-2 employee-static mt-5 d-none d-sm-block">
-									<div class="col-sm-12">
-										<?php echo $LastName; ?>, <?php echo $FirstName; ?>  <?php echo $MiddleName; ?>.<?php if ($NameExtension != NULL): echo ', ' . $NameExtension; endif; ?>
+									<?php
+									// Name Handler
+									$fullName = '';
+									$fullNameHover = '';
+									$isFullNameHoverable = false;
+									if ($LastName) {
+										$fullName = $fullName . $LastName . ', ';
+										$fullNameHover = $fullNameHover . $LastName . ', ';
+									} else {
+										$fullNameHover = $fullNameHover . '[<i>No Last Name</i>], ';
+										$isFullNameHoverable = true;
+									}
+									if ($FirstName) {
+										$fullName = $fullName . $FirstName . ' ';
+										$fullNameHover = $fullNameHover . $FirstName . ' ';
+									} else {
+										$fullNameHover = $fullNameHover . '[<i>No First Name</i>] ';
+										$isFullNameHoverable = true;
+									}
+									if ($MiddleName) {
+										$fullName = $fullName . $MiddleName[0] . '.';
+										$fullNameHover = $fullNameHover . $MiddleName[0] . '.';
+									} else {
+										$fullNameHover = $fullNameHover . '[<i>No MI</i>].';
+										$isFullNameHoverable = true;
+									}
+									if ($NameExtension) {
+										$fullName = $fullName . ', ' . $NameExtension;
+										$fullNameHover = $fullNameHover . ', ' . $NameExtension;
+									}
+									if (strlen($fullName) > 90) {
+										$fullName = substr($fullName, 0, 90);
+										$fullName = $fullName . '...';
+										$isFullNameHoverable = true;
+									}
+
+									?>
+									<div class="col-sm-12"<?php if($isFullNameHoverable): ?> data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $fullNameHover; ?>"<?php endif; ?>>
+										<?php echo $fullName; ?>
 									</div>
 									<hr>
 									<div class="col-sm-12 employee-static-item">

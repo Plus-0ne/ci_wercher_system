@@ -132,7 +132,11 @@
 	{
 		// $this->session->unset_userdata('acadcart');
 		// redirect('Dashboard');
-		$this->load->view('Login');
+		if ($this->session->userdata('is_logged_in')) {
+			redirect('Dashboard');
+		} else {
+			$this->load->view('Login');
+		}
 	}
 	public function FourOhFour()
 	{
@@ -1283,7 +1287,7 @@
 				$ClientID = $_GET['id'];
 				$mode = $_GET['mode'];
 
-				$header['title'] = 'Client Information | Wercher Solutions and Resources Workers Cooperative';
+				$header['title'] = 'Attendance | Wercher Solutions and Resources Workers Cooperative';
 				$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 
 				if ($id == 'excel') {
@@ -1291,20 +1295,21 @@
 					$ApplicantsArray = $this->session->userdata('ApplicantsArray');
 					$ApplicantsArray = unserialize($ApplicantsArray);
 					$GetWeeklyList = $this->Model_Selects->GetWeeklyImports($ApplicantsArray);
+					$data['GetWeeklyList'] = $this->Model_Selects->GetWeeklyImports($ApplicantsArray);
 				} else {
 					$GetWeeklyList = $this->Model_Selects->GetWeeklyList($id,$mode);
+					$data['GetWeeklyList'] = $this->Model_Selects->GetWeeklyList($ClientID,$mode);
 				}
 
 				$row = $GetWeeklyList->row_array();
 				$data = array(
 					'ClientID' => $row['ClientID'],
 					'ApplicantID' => $row['ApplicantID'],
-
 				);
 
 				$ApplicantID = $row['ApplicantID'];
 
-				$data['GetWeeklyList'] = $this->Model_Selects->GetWeeklyList($ClientID,$mode);
+				
 
 				if ($id == 'excel') {
 					$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployeeFromImports($ApplicantsArray);
@@ -1635,30 +1640,26 @@
 	}
 	public function Search()
 	{
-		if ($this->Model_Security->CheckPermissions('Search')):
-			$header['title'] = 'Search | Wercher Solutions and Resources Workers Cooperative';
-			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-			$data['Breadcrumb'] = '
-			<nav aria-label="breadcrumb">
-			<ol class="breadcrumb" style="background-color: transparent;">
-			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Search">Search</a></li>
-			</ol>
-			</nav>';
-			if(isset($_GET['query'])) {
-				$query = $_GET['query'];
-				$data['query'] = $query;
-				$data['SearchApplicantID'] = $this->Model_Selects->SearchApplicantID($query);
-				$data['SearchEmployeeID'] = $this->Model_Selects->SearchEmployeeID($query);
-				$data['SearchPeople'] = $this->Model_Selects->SearchPeople($query);
-				$data['SearchClients'] = $this->Model_Selects->SearchClients($query);
-				$data['SearchPositionGroups'] = $this->Model_Selects->SearchPositionGroups($query);
-				$data['SearchPositionSpecific'] = $this->Model_Selects->SearchPositionSpecific($query);
-				$data['SearchAdmins'] = $this->Model_Selects->SearchAdmins($query);
-			}
-			$this->load->view('users/u_search',$data);
-		else:
-			redirect('Forbidden');
-		endif;
+		$header['title'] = 'Search | Wercher Solutions and Resources Workers Cooperative';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Search">Search</a></li>
+		</ol>
+		</nav>';
+		if(isset($_GET['query'])) {
+			$query = $_GET['query'];
+			$data['query'] = $query;
+			$data['SearchApplicantID'] = $this->Model_Selects->SearchApplicantID($query);
+			$data['SearchEmployeeID'] = $this->Model_Selects->SearchEmployeeID($query);
+			$data['SearchPeople'] = $this->Model_Selects->SearchPeople($query);
+			$data['SearchClients'] = $this->Model_Selects->SearchClients($query);
+			$data['SearchPositionGroups'] = $this->Model_Selects->SearchPositionGroups($query);
+			$data['SearchPositionSpecific'] = $this->Model_Selects->SearchPositionSpecific($query);
+			$data['SearchAdmins'] = $this->Model_Selects->SearchAdmins($query);
+		}
+		$this->load->view('users/u_search',$data);
 	}
 	public function Logbook()
 	{
@@ -1928,6 +1929,123 @@
 								</div>
 								<div class="col-sm-1 mt-1">
 									<button class="form-control loan-remove btn-secondary" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Remove?"><i class="fas fa-trash" style="font-size: 12px; margin-left: -5px;"></i></button>
+								</div>
+							</div>';
+						}
+					}
+				}
+			}
+			
+			
+		}
+	}
+	public function AJAX_removePayrollProvisions()
+	{
+		$this->load->model('Model_Deletes');
+
+		$ApplicantID = $this->input->post('ApplicantID');
+		$ProvisionsArray = json_decode($_POST['ProvisionsArray']);
+		if (count($ProvisionsArray) > 0) {
+			for($index = 0; $index < count($ProvisionsArray); $index++) {
+				$ProvisionID = $ProvisionArray[$index];
+				if(is_numeric($ProvisionID)) {
+					// Only numbers allowed
+					$RemovePayrollProvisions = $this->Model_Deletes->RemovePayrollProvisions($ApplicantID, $ProvisionID);
+				}
+			}
+		}
+	}
+	public function AJAX_showPayrollProvisions()
+	{
+		$ApplicantID = $this->input->post('ApplicantID');
+		$Year = $this->input->post('Year');
+		$Month = $this->input->post('Month');
+		$Week = $this->input->post('Week');
+		$Mode = $this->input->post('Mode');
+		$ShowPayrollProvisions = $this->Model_Selects->ShowPayrollProvisions($ApplicantID, $Year, $Month, $Week, $Mode);
+		if ($ShowPayrollProvisions->num_rows() > 0) {
+			foreach($ShowPayrollProvisions->result_array() as $row) {
+				echo '
+				<div class="form-row provision-input w-100">
+					<input class="form-control provision-id" type="hidden" value="' . $row['ID'] . '">
+					<div class="col-sm-7 mt-1">
+						<input class="form-control provision-name" type="text" name="ProvisionName[]" value="' . $row['ProvisionName'] . '">
+					</div>
+					<div class="col-sm-4 mt-1">
+						<input class="form-control provision-amount" type="number" name="ProvisionAmount[]" value="' . $row['Amount'] . '">
+					</div>
+					<div class="col-sm-1 mt-1">
+						<button class="form-control provision-remove btn-secondary" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Remove?"><i class="fas fa-trash" style="font-size: 12px; margin-left: -5px;"></i></button>
+					</div>
+				</div>';
+			}
+		}
+	}
+	public function AJAX_insertPayrollProvisions()
+	{
+		$ID = $this->input->post('ID');
+		$ApplicantID = $this->input->post('ApplicantID');
+		$ProvisionName = $this->input->post('ProvisionName');
+		$Amount = $this->input->post('Amount');
+		$Year = $this->input->post('Year');
+		$Month = $this->input->post('Month');
+		$Week = $this->input->post('Week');
+		$Mode = $this->input->post('Mode');
+		if ($ApplicantID == NULL || $ProvisionName == NULL || $Amount == NULL || $Year == NULL || $Month == NULL || $Week == NULL || $Mode == NULL) {
+			echo "Error. Please refresh.";
+		}
+		else
+		{
+			$data = array(
+				'ApplicantID' => $ApplicantID,
+				'ProvisionName' => $ProvisionName,
+				'Amount' => $Amount,
+				'Year' => $Year,
+				'Month' => $Month,
+				'Week' => $Week,
+				'Type' => $Mode,
+			);
+			if ($ID == -1 || $ID == NULL) {
+				// Insert if new and doesn't exist
+				$InsertPayrollProvisions = $this->Model_Inserts->InsertPayrollProvisions($data);
+				if ($InsertPayrollProvisions) {
+					$ShowPayrollProvisions = $this->Model_Selects->ShowPayrollProvisions($ApplicantID, $Year, $Month, $Week, $Mode);
+					if ($ShowPayrollProvisions->num_rows() > 0) {
+						foreach($ShowPayrollProvisions->result_array() as $row) {
+							echo '
+							<div class="form-row provision-input w-100">
+								<input class="form-control provision-id" type="hidden" value="' . $row['ID'] . '">
+								<div class="col-sm-7 mt-1">
+									<input class="form-control provision-name" type="text" name="ProvisionName[]" value="' . $row['ProvisionName'] . '">
+								</div>
+								<div class="col-sm-4 mt-1">
+									<input class="form-control provision-amount" type="number" name="ProvisionAmount[]" value="' . $row['Amount'] . '">
+								</div>
+								<div class="col-sm-1 mt-1">
+									<button class="form-control provision-remove btn-secondary" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Remove?"><i class="fas fa-trash" style="font-size: 12px; margin-left: -5px;"></i></button>
+								</div>
+							</div>';
+						}
+					}
+				}
+			} else {
+				// Updates if the provision already exists
+				$UpdatePayrollProvisions = $this->Model_Inserts->UpdatePayrollProvisions($ID, $data);
+				if ($UpdatePayrollProvisions) {
+					$ShowPayrollProvisions = $this->Model_Selects->ShowPayrollProvisions($ApplicantID, $Year, $Month, $Week, $Mode);
+					if ($ShowPayrollProvisions->num_rows() > 0) {
+						foreach($ShowPayrollProvisions->result_array() as $row) {
+							echo '
+							<div class="form-row provision-input w-100">
+								<input class="form-control provision-id" type="hidden" value="' . $row['ID'] . '">
+								<div class="col-sm-7 mt-1">
+									<input class="form-control provision-name" type="text" name="ProvisionName[]" value="' . $row['ProvisionName'] . '">
+								</div>
+								<div class="col-sm-4 mt-1">
+									<input class="form-control provision-amount" type="number" name="ProvisionAmount[]" value="' . $row['Amount'] . '">
+								</div>
+								<div class="col-sm-1 mt-1">
+									<button class="form-control provision-remove btn-secondary" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Remove?"><i class="fas fa-trash" style="font-size: 12px; margin-left: -5px;"></i></button>
 								</div>
 							</div>';
 						}

@@ -40,7 +40,7 @@ class Update_Controller extends CI_Controller {
 			$Temp_ApplicantID++;
 
 			if ($ApplicantID == NULL || $ClientID == NULL) {
-				$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again.');
+				$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again. 1');
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
@@ -76,14 +76,27 @@ class Update_Controller extends CI_Controller {
 							'SalaryExpected' => $Salary,
 						);
 						$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
+						$fullName = '';
+						if ($row['LastName']) {
+							$fullName = $fullName . $row['LastName'] . ', ';
+						} else {
+							$fullName = $fullName . '[No Last Name], ';
+						}
+						if ($row['FirstName']) {
+							$fullName = $fullName . $row['FirstName'];
+						} else {
+							$fullName = $fullName . '[No First Name]';
+						}
+						if ($row['MiddleName']) {
+							$fullName = ' ' . $fullName . $row['MiddleName'];
+						}
 						$data = array(
 							'ClientID' => $ClientID,
-							'FirstName' => $row['FirstName'],
-							'MiddleName' => $row['MiddleName'],
-							'LastName' => $row['LastName'],
-							'SalaryExpected' => $row['SalaryExpected'],
+							'ApplicantID' => $Temp_ApplicantID,
+							'Name' => $fullName,
+							'Salary' => $row['SalaryExpected'],
 						);
-						$InsertToClient = $this->Model_Inserts->InsertToClient($ClientID,$Temp_ApplicantID,$data);
+						$InsertToClient = $this->Model_Inserts->InsertToClient($data);
 						if ($EmployNewApplicant && $InsertToClient) {
 							$this->Model_Logbook->SetPrompts('success', 'success', 'Employed successfully');
 							// LOGBOOK
@@ -143,7 +156,7 @@ class Update_Controller extends CI_Controller {
 						}
 						else
 						{
-							$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again.');
+							$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again. 6');
 							redirect($_SERVER['HTTP_REFERER']);
 						}
 					}
@@ -156,14 +169,27 @@ class Update_Controller extends CI_Controller {
 							'SalaryExpected' => $Salary,
 						);
 						$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
+						$fullName = '';
+						if ($row['LastName']) {
+							$fullName = $fullName . $row['LastName'] . ', ';
+						} else {
+							$fullName = $fullName . '[No Last Name], ';
+						}
+						if ($row['FirstName']) {
+							$fullName = $fullName . $row['FirstName'];
+						} else {
+							$fullName = $fullName . '[No First Name]';
+						}
+						if ($row['MiddleName']) {
+							$fullName = ' ' . $fullName . $row['MiddleName'];
+						}
 						$data = array(
 							'ClientID' => $ClientID,
-							'FirstName' => $row['FirstName'],
-							'MiddleName' => $row['MiddleName'],
-							'LastName' => $row['LastName'],
-							'SalaryExpected' => $row['SalaryExpected'],
+							'ApplicantID' => $Temp_ApplicantID,
+							'Name' => $fullName,
+							'Salary' => $row['SalaryExpected'],
 						);
-						$InsertToClient = $this->Model_Inserts->InsertToClient($ClientID,$Temp_ApplicantID,$data);
+						$EmployNewApplicant = $this->Model_Inserts->InsertToClient($data);
 						if ($EmployNewApplicant && $InsertToClient) {
 							$this->Model_Logbook->SetPrompts('success', 'success', 'Employed successfully');
 							// LOGBOOK
@@ -193,21 +219,21 @@ class Update_Controller extends CI_Controller {
 						}
 						else
 						{
-							$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again.');
+							$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again. 2');
 							redirect($_SERVER['HTTP_REFERER']);
 						}
 					}
 				}
 				else
 				{
-					$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again.');
+					$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again. 3');
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
 		}
 		else
 		{
-			$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again.');
+			$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again. 4');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
@@ -1340,6 +1366,15 @@ class Update_Controller extends CI_Controller {
 				$NightHours = $this->input->post('NightHours_' . $nrow['Time'],TRUE);
 				$NightOvertime = $this->input->post('NightOTHours_' . $nrow['Time'],TRUE);
 				$Remarks = $this->input->post('Remarks_' . $nrow['Time'],TRUE);
+				// TYPE
+				$RegCheck = $this->input->post('REGCheck_' . $nrow['Time'],TRUE);
+				$RestCheck = $this->input->post('RESTCheck_' . $nrow['Time'],TRUE);
+				$SpecialCheck = $this->input->post('SPCheck_' . $nrow['Time'],TRUE);
+				$NationalCheck = $this->input->post('NHCheck_' . $nrow['Time'],TRUE);
+				$RegularGrossPay = $this->input->post('RegularGrossPay_' . $nrow['Time'],TRUE);
+				$OvertimeGrossPay = $this->input->post('OvertimeGrossPay_' . $nrow['Time'],TRUE);
+				$NPGrossPay = $this->input->post('NPGrossPay_' . $nrow['Time'],TRUE);
+				$NPOvertimeGrossPay = $this->input->post('NPOvertimeGrossPay_' . $nrow['Time'],TRUE);
 				// BENEFITS
 				$HDMF = $this->input->post('HDMF_' . $nrow['Time'],TRUE);
 				$Philhealth = $this->input->post('Philhealth_' . $nrow['Time'],TRUE);
@@ -1374,14 +1409,14 @@ class Update_Controller extends CI_Controller {
 					$GrossPay = $total_hoursperday * $dayRate;
 
 					$data = array(
+						'ApplicantID' => $ApplicantID,
 						'ClientID' => $ClientID,
-						'Date' => $Date,
+						'Time' => $Date,
 						'Week' => $Week,
 						'Month' => $Month,
 						't_year' => $CurrentPrimaryWeek->format('Y'),
 						'Hours' => $Hours,
 						'Overtime' => $Overtime,
-
 						'NightHours' => $NightHours,
 						'NightOvertime' => $NightOvertime,
 						'Remarks' => $Remarks,
@@ -1392,10 +1427,22 @@ class Update_Controller extends CI_Controller {
 						'SSS' => $SSS,
 						'Tax' => $Tax,
 
-						'day_pay' => $TdRate,
+						'GrossPay' => $RegularGrossPay,
+						'OvertimeGrossPay' => $OvertimeGrossPay,
+						'NPGrossPay' => $NPGrossPay,
+						'NPOvertimeGrossPay' => $NPOvertimeGrossPay,
 
 					);
-					$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($Mode, $ApplicantID,$data);
+					if ($RestCheck) {
+						$data['RestDay'] = 1;
+					}
+					if ($SpecialCheck) {
+						$data['SpecialHoliday'] = 1;
+					}
+					if ($NationalCheck) {
+						$data['NationalHoliday'] = 1;
+					}
+					$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($data, $Mode);
 					if ($UpdateWeeklyHours == TRUE) {
 						// $DateReadable = (new DateTime(date($Date)))->format('F d, Y');
 						// $this->Model_Logbook->LogbookExtendedEntry(0, 'Remarks: ' . $Remarks . '<br><b>' . $DateReadable . '</b>\' total hours: ' . $total_hoursperday, +1);
@@ -1783,13 +1830,13 @@ class Update_Controller extends CI_Controller {
 									}
 								}
 
-							}
-							if ($RowCount == 1){
-								if ($ColCount == 3) {
-									$StartingDate = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
+						}
+						if ($RowCount == 1){
+							if ($ColCount == 3) {
+								$StartingDate = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
 
-									$this->Model_Updates->UpdateWeeklyHoursCurrent();
-									$this->Model_Deletes->CleanWeeklyDates();
+								$this->Model_Updates->UpdateWeeklyHoursCurrent();
+								$this->Model_Deletes->CleanWeeklyDates();
 								$HoursHolidays = array('01-01', '04-09', '04-10', '05-01', '06-12', '08-31', '11-30', '12-25', '12-30'); // MONTH - DAY
 								$SpecialHolidays = array('01-25', '02-25', '04-11', '08-21', '11-01', '11-02', '12-08', '12-24', '12-31'); // MONTH - DAY
 
@@ -1841,6 +1888,97 @@ class Update_Controller extends CI_Controller {
 								$Salary = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
 							}
 							if ($ColCount >= 3 && $ColCount < $cols - 1) {
+								$GetCurrentPrimaryWeek = $this->Model_Selects->GetCurrentPrimaryWeek($ClientID);
+								if ($GetCurrentPrimaryWeek->num_rows() <= 0) {
+									$this->Model_Logbook->SetPrompts('error', 'error', 'Primary week not found. Please set it first on Salary page.');
+									redirect($_SERVER['HTTP_REFERER']);
+								} elseif ($GetCurrentPrimaryWeek->num_rows() > 0) {
+									foreach($GetCurrentPrimaryWeek->result_array() as $prow) {
+										$CurrentPrimaryWeek = new DateTime($prow['WeekStart']);
+										$DateToday = new DateTime();
+
+										
+										switch ($SalaryMode) {
+
+											case '0': ### WEEKLY
+
+												$diff = $DateToday->diff($CurrentPrimaryWeek)->format("%a");
+												if ($diff <= 7) {
+													$Week = 1;
+												} elseif ($diff <= 14 && $diff > 7) {
+													$Week = 2;
+												} elseif ($diff <= 21 && $diff > 14) {
+													$Week = 3;
+												} elseif ($diff <= 28 && $diff > 21) {
+													$Week = 4;
+												} else {
+													$PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P29D'));
+													$PrimaryWeek = $PrimaryWeek->format('Y-m-d');
+													$this->Model_Updates->SetPrimaryWeek($PrimaryWeek, $ClientID);
+													$Week = 1;
+												}
+
+												$Month = $CurrentPrimaryWeek->format('m');
+											break;
+
+											case '1': ### SEMI-MONTHLY
+
+												if ($diff <= 15) {
+													$Week = 1;
+												} elseif ($diff > 15 || $diff <= 30) {
+													$Week = 2;
+												}
+												else
+												{
+													$PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P31D'));
+													$PrimaryWeek = $PrimaryWeek->format('Y-m-d');
+													$this->Model_Updates->SetPrimaryWeek($PrimaryWeek, $ClientID);
+													$Week = 1;
+												}
+
+												$Month = $CurrentPrimaryWeek->format('m');
+
+											break;
+
+											case '2': ### MONTHLY
+												if ($diff < 31) {
+													$PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P31D'));
+													$PrimaryWeek = $PrimaryWeek->format('Y-m-d');
+													$this->Model_Updates->SetPrimaryWeek($PrimaryWeek, $ClientID);
+													$Week = 1;
+												}
+
+												$Month = $CurrentPrimaryWeek->format('m') - 1;
+											break;
+
+											default:
+												$diff = $DateToday->diff($CurrentPrimaryWeek)->format("%a");
+												if ($diff <= 7) {
+													$Week = 1;
+												} elseif ($diff <= 14 && $diff > 7) {
+													$Week = 2;
+												} elseif ($diff <= 21 && $diff > 14) {
+													$Week = 3;
+												} elseif ($diff <= 28 && $diff > 21) {
+													$Week = 4;
+												} else {
+													$PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P29D'));
+													$PrimaryWeek = $PrimaryWeek->format('Y-m-d');
+													$this->Model_Updates->SetPrimaryWeek($PrimaryWeek, $ClientID);
+													$Week = 1;
+												}
+
+												$Month = $CurrentPrimaryWeek->format('m');
+											break;
+										}
+										
+										
+										
+
+										
+										// $this->Model_Logbook->SetPrompts('info', 'info', $diff);
+									}
+								}
 								$GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
 								// foreach ($GetWeeklyDates->result_array($ColCount - 3) as $nrow):
 								// 	echo $nrow['Time'];
@@ -1874,16 +2012,20 @@ class Update_Controller extends CI_Controller {
 									$rHours = $Split[0];
 								}
 								$data = array(
+									'ApplicantID' => $ApplicantID,
 									'ClientID' => $ClientID,
-									'Date' => $GetWeeklyDates->result_array()[$ColCount - 3]['Time'],
+									'Time' => $GetWeeklyDates->result_array()[$ColCount - 3]['Time'],
 									'Type' => $Type,
+									'Week' => $Week,
+									'Month' => $Month,
+									't_year' => $CurrentPrimaryWeek->format('Y'),
 
 									// ADD VARIBLES
 									// ERROR 01
 									'NightHours' => null,
 									'NightOvertime' => null,
 									'Remarks' => null,
-									'day_pay' => null,
+									'GrossPay' => null,
 
 									'Hours' => $rHours,
 									'Overtime' => $otValue,
@@ -1892,7 +2034,7 @@ class Update_Controller extends CI_Controller {
 									'SSS' => null,
 									'Tax' => null
 								);
-								$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
+								$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($data, $SalaryMode);
 								// echo '------------- <br>';
 								// echo 'Applicant ID: ' . $ApplicantID . '<br>';
 								// echo 'Name: ' . $Name . '<br>';
@@ -2036,7 +2178,7 @@ class Update_Controller extends CI_Controller {
 		$Week = $this->input->post('Week');
 		$Mode = $this->input->post('Mode');
 		$now = new DateTime();
-		$DateUpdated = $now->format('Y-m-d H:i:s');
+		$DateUpdated = $now->format('Y-m-d H:i:s A');
 
 		$data = array(
 			'Input' => $Input,
@@ -2049,6 +2191,16 @@ class Update_Controller extends CI_Controller {
 			'DateUpdated' => $DateUpdated,
 		);
 		$UpdateSSSToBePaid = $this->Model_Updates->UpdateSSSToBePaid($data);
+		$data = array(
+			'Amount' => $Input,
+			'ApplicantID' => $ApplicantID,
+			'ClientID' => $ClientID,
+			'Month' => $Month,
+			'Year' => $Year,
+			'Week' => $Week,
+			'Mode' => $Mode,
+		);
+		$InsertSSSWeekPaid = $this->Model_Inserts->InsertSSSWeekPaid($data);
 	}
 	public function ModifyContract()
 	{
@@ -2181,14 +2333,27 @@ class Update_Controller extends CI_Controller {
 						'Salary' => $Salary,
 					);
 					$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
+					$fullName = '';
+					if ($row['LastName']) {
+						$fullName = $fullName . $row['LastName'] . ', ';
+					} else {
+						$fullName = $fullName . '[No Last Name], ';
+					}
+					if ($row['FirstName']) {
+						$fullName = $fullName . $row['FirstName'];
+					} else {
+						$fullName = $fullName . '[No First Name]';
+					}
+					if ($row['MiddleName']) {
+						$fullName = ' ' . $fullName . $row['MiddleName'];
+					}
 					$data = array(
 						'ClientID' => $ClientID,
-						'FirstName' => $row['FirstName'],
-						'MiddleName' => $row['MiddleName'],
-						'LastName' => $row['LastName'],
-						'SalaryExpected' => $row['SalaryExpected'],
+						'ApplicantID' => $Temp_ApplicantID,
+						'Name' => $fullName,
+						'Salary' => $row['SalaryExpected'],
 					);
-					$EmployNewApplicant = $this->Model_Inserts->InsertToClient($ClientID,$Temp_ApplicantID,$data);
+					$EmployNewApplicant = $this->Model_Inserts->InsertToClient($data);
 					if ($EmployNewApplicant == TRUE) {
 						// LOGBOOK
 						$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);

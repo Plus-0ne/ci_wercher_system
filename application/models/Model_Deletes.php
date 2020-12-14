@@ -69,4 +69,10 @@ class Model_Deletes extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function RemovePayrollProvisions($ApplicantID, $ProvisionID)
+	{
+		$SQL = "UPDATE payroll_provisions SET Deleted ='1' WHERE ID = '$ProvisionID' AND ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }

@@ -408,10 +408,10 @@ class Model_Selects extends CI_Model {
 	public function GetempGP($ApplicantID)
 	{
 
-		$this->db->select_sum('day_pay');
+		$this->db->select_sum('GrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
 		$result = $this->db->get('hours_weekly')->row();  
-		return $result->day_pay;
+		return $result->GrossPay;
 	}
 	public function getsssRa()
 	{
@@ -784,11 +784,11 @@ class Model_Selects extends CI_Model {
 				$Mode = 'hours_monthly';
 				break;
 		}
-		$this->db->select_sum('day_pay');
+		$this->db->select_sum('GrossPay');
 		$array = array('ApplicantID' => $ApplicantID, 't_year' => $Year, 'Month' => $Month, 'Week' => $Week);
 		$this->db->where($array);
 		$result = $this->db->get($Mode)->row();  
-		return $result->day_pay;
+		return $result->GrossPay;
 	}
 	public function GetPayrollWeekHours($ApplicantID, $Year, $Month, $Week, $Mode) { // Does not return any other row and column except for the sum of Hours.
 		switch($Mode) {
@@ -836,6 +836,11 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function ShowPayrollProvisions($ApplicantID, $Year, $Month, $Week, $Mode) {
+		$SQL = "SELECT * FROM payroll_provisions WHERE ApplicantID = '$ApplicantID' AND Year = '$Year' AND $Month = '$Month' AND Week = '$Week' AND Type = '$Mode' AND (Deleted <> '1' || Deleted IS NULL)";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function CheckIfLoanExists($ID) {
 		$SQL = "SELECT * FROM payroll_loans WHERE ID = '$ID'";
 		$result = $this->db->query($SQL);
@@ -851,5 +856,1121 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	
+	// PAYSLIP: Does not return anything except the sum of the query
+	// ~ regular
+	public function GetPayslipRegularHours($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('Hours');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->Hours;
+	}
+	public function GetPayslipRegularGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('GrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->GrossPay;
+	}
+	public function GetPayslipRegularOvertime($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('Overtime');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->Overtime;
+	}
+	public function GetPayslipRegularOvertimeGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('OvertimeGrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->OvertimeGrossPay;
+	}
+	public function GetPayslipRegularNightHours($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NightHours');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NightHours;
+	}
+	public function GetPayslipRegularNPGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NPGrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NPGrossPay;
+	}
+	public function GetPayslipRegularNightOvertime($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NightOvertime');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NightOvertime;
+	}
+	public function GetPayslipRegularNPOvertimeGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NPOvertimeGrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NPOvertimeGrossPay;
+	}
+	// ~ rest day
+	public function GetPayslipRestDayHours($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('Hours');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->Hours;
+	}
+	public function GetPayslipRestDayGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('GrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->GrossPay;
+	}
+	public function GetPayslipRestDayOvertime($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('Overtime');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->Overtime;
+	}
+	public function GetPayslipRestDayOvertimeGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('OvertimeGrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->OvertimeGrossPay;
+	}
+	public function GetPayslipRestDayNightHours($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NightHours');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NightHours;
+	}
+	public function GetPayslipRestDayNPGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NPGrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NPGrossPay;
+	}
+	public function GetPayslipRestDayNightOvertime($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NightOvertime');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NightOvertime;
+	}
+	public function GetPayslipRestDayNPOvertimeGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NPOvertimeGrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NPOvertimeGrossPay;
+	}
+	// ~ special holiday
+	public function GetPayslipSpecialHolidayHours($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('Hours');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', 1);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->Hours;
+	}
+	public function GetPayslipSpecialHolidayGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('GrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', 1);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->GrossPay;
+	}
+	public function GetPayslipSpecialHolidayOvertime($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('Overtime');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', 1);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->Overtime;
+	}
+	public function GetPayslipSpecialHolidayOvertimeGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('OvertimeGrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', 1);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->OvertimeGrossPay;
+	}
+	public function GetPayslipSpecialHolidayNightHours($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NightHours');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', 1);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NightHours;
+	}
+	public function GetPayslipSpecialHolidayNPGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NPGrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', 1);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NPGrossPay;
+	}
+	public function GetPayslipSpecialHolidayNightOvertime($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NightOvertime');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', 1);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NightOvertime;
+	}
+	public function GetPayslipSpecialHolidayNPOvertimeGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NPOvertimeGrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', 1);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NPOvertimeGrossPay;
+	}
+	// ~ special holiday & rest day
+	public function GetPayslipSPHRDHours($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('Hours');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', 1);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->Hours;
+	}
+	public function GetPayslipSPHRDGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('GrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', 1);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->GrossPay;
+	}
+	public function GetPayslipSPHRDOvertime($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('Overtime');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', 1);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->Overtime;
+	}
+	public function GetPayslipSPHRDOvertimeGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('OvertimeGrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', 1);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->OvertimeGrossPay;
+	}
+	public function GetPayslipSPHRDNightHours($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NightHours');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', 1);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NightHours;
+	}
+	public function GetPayslipSPHRDNPGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NPGrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', 1);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NPGrossPay;
+	}
+	public function GetPayslipSPHRDNightOvertime($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NightOvertime');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', 1);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NightOvertime;
+	}
+	public function GetPayslipSPHRDNPOvertimeGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NPOvertimeGrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', 1);
+		$this->db->where('NationalHoliday', NULL);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NPOvertimeGrossPay;
+	}
+	// ~ national holiday
+	public function GetPayslipNationalHolidayHours($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('Hours');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', 1);
+		$result = $this->db->get($Mode)->row();  
+		return $result->Hours;
+	}
+	public function GetPayslipNationalHolidayGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('GrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', 1);
+		$result = $this->db->get($Mode)->row();  
+		return $result->GrossPay;
+	}
+	public function GetPayslipNationalHolidayOvertime($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('Overtime');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', 1);
+		$result = $this->db->get($Mode)->row();  
+		return $result->Overtime;
+	}
+	public function GetPayslipNationalHolidayOvertimeGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('OvertimeGrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', 1);
+		$result = $this->db->get($Mode)->row();  
+		return $result->OvertimeGrossPay;
+	}
+	public function GetPayslipNationalHolidayNightHours($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NightHours');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', 1);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NightHours;
+	}
+	public function GetPayslipNationalHolidayNPGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NPGrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', 1);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NPGrossPay;
+	}
+	public function GetPayslipNationalHolidayNightOvertime($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NightOvertime');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', 1);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NightOvertime;
+	}
+	public function GetPayslipNationalHolidayNPOvertimeGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NPOvertimeGrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', NULL);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', 1);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NPOvertimeGrossPay;
+	}
+	// ~ national holiday & rest day
+	public function GetPayslipNHRDHours($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('Hours');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', 1);
+		$result = $this->db->get($Mode)->row();  
+		return $result->Hours;
+	}
+	public function GetPayslipNHRDGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('GrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', 1);
+		$result = $this->db->get($Mode)->row();  
+		return $result->GrossPay;
+	}
+	public function GetPayslipNHRDOvertime($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('Overtime');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', 1);
+		$result = $this->db->get($Mode)->row();  
+		return $result->Overtime;
+	}
+	public function GetPayslipNHRDOvertimeGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('OvertimeGrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', 1);
+		$result = $this->db->get($Mode)->row();  
+		return $result->OvertimeGrossPay;
+	}
+	public function GetPayslipNHRDNightHours($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NightHours');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', 1);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NightHours;
+	}
+	public function GetPayslipNHRDNPGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NPGrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', 1);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NPGrossPay;
+	}
+	public function GetPayslipNHRDNightOvertime($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NightOvertime');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', 1);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NightOvertime;
+	}
+	public function GetPayslipNHRDNPOvertimeGrossPay($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NPOvertimeGrossPay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('RestDay', 1);
+		$this->db->where('SpecialHoliday', NULL);
+		$this->db->where('NationalHoliday', 1);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NPOvertimeGrossPay;
+	}
+	public function GetPayrollLoansBetweenPeriod($ApplicantID, $Mode, $FromDate, $ToDate) {
+		$Mode = strtoupper($Mode);
+		switch($Mode) {
+			case 'WEEKLY':
+				$Mode = 0;
+				break;
+			case 'SEMI-MONTHLY':
+				$Mode = 1;
+				break;
+			case 'MONTHLY':
+				$Mode = 2;
+				break;
+		}
+		$this->db->select('*');
+		$this->db->from('payroll_loans');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Type', $Mode);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('Deleted', NULL);
+		$result = $this->db->get();
+		return $result;
+	}
+	public function GetPayrollProvisionsBetweenPeriod($ApplicantID, $Mode, $FromDate, $ToDate) {
+		$Mode = strtoupper($Mode);
+		switch($Mode) {
+			case 'WEEKLY':
+				$Mode = 0;
+				break;
+			case 'SEMI-MONTHLY':
+				$Mode = 1;
+				break;
+			case 'MONTHLY':
+				$Mode = 2;
+				break;
+		}
+		$this->db->select('*');
+		$this->db->from('payroll_provisions');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Type', $Mode);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$this->db->where('Deleted', NULL);
+		$result = $this->db->get();
+		return $result;
+	}
+	public function GetSSSWeekPaidTotalBetweenPeriod($ApplicantID, $Mode, $FromDate, $ToDate) {
+		$this->db->select_sum('Amount');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where('Time >=', $FromDate);
+		$this->db->where('Time <=', $ToDate);
+		$result = $this->db->get('sss_weekpaid')->row();  
+		return $result->Amount;
+	}
 }

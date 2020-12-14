@@ -31,10 +31,11 @@ class Model_Inserts extends CI_Model {
 	public function InsertNewClient($data, $ClientID)
 	{
 		$date = date('Y-m-d');
+		$dateHours = date('Y-m-d H:i:s A');
 		$salary_data = array(
 			'ClientID' => $ClientID,
 			'WeekStart' => $date,
-			'TimeAdded' => 'On creation',
+			'TimeAdded' => $dateHours,
 		);
 		$result = $this->db->insert('salary', $salary_data);
 		$result = $this->db->insert('clients', $data);
@@ -79,16 +80,8 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->update('applicants', $data);
 		return $result;
 	}
-	public function InsertToClient($ClientID, $Temp_ApplicantID, $data)
+	public function InsertToClient($data)
 	{
-		extract($data);
-		$Name = $LastName . ', ' . $FirstName . ' ' . $MiddleName . '.';
-		$data = array(
-			'ClientID' => $ClientID,
-			'ApplicantID' => $Temp_ApplicantID,
-			'Name' => $Name,
-			'Salary' => $SalaryExpected,
-		);
 		$result = $this->db->insert('hours_weekly', $data);
 		$result = $this->db->insert('hours_semimonthly', $data);
 		$result = $this->db->insert('hours_monthly', $data);
@@ -144,6 +137,7 @@ class Model_Inserts extends CI_Model {
 	}
 	public function InsertPayrollLoans($data)
 	{
+		$data['Time'] = date('Y-m-d H:i:s A');
 		$result = $this->db->insert('payroll_loans', $data);
 		return $result;
 	}
@@ -153,12 +147,30 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->update('payroll_loans', $data);
 		return $result;
 	}
+	public function InsertPayrollProvisions($data)
+	{
+		$data['Time'] = date('Y-m-d H:i:s A');
+		$result = $this->db->insert('payroll_provisions', $data);
+		return $result;
+	}
+	public function UpdatePayrollProvisions($ID, $data)
+	{
+		$this->db->where('ID', $ID);
+		$result = $this->db->update('payroll_provisions', $data);
+		return $result;
+	}
 	public function InsertToEditHistory($data, $table)
 	{
 		$now = new DateTime();
 		$DateUpdated = $now->format('Y-m-d H:i:s');
 		$data['DateUpdated'] = $DateUpdated;
 		$result = $this->db->insert($table, $data);
+		return $result;
+	}
+	public function InsertSSSWeekPaid($data)
+	{
+		$data['Time'] = date('Y-m-d H:i:s A');
+		$result = $this->db->insert('sss_weekpaid', $data);
 		return $result;
 	}
 }

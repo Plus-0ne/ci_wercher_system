@@ -196,7 +196,7 @@ use Carbon\Carbon;
 			}
 		});
 		$('.national-btn').on('click', function () {
-			$(this).toggleClass('btn-danger btn-secondary');
+			$(this).toggleClass('btn-flag-ph btn-secondary');
 			$(this).children('i').toggleClass('text-primary');
 			if ($(this).closest('.national-btn-group').find('input[type=checkbox]').is(':checked')) {
 				$(this).closest('.national-btn-group').find('input[type=checkbox]').attr('checked', false);
@@ -285,73 +285,107 @@ use Carbon\Carbon;
 	 			$('.REGCheck_<?php echo $row['Time']; ?>').prop("checked", false);
 	 		});
 	 		$('.NCheck_<?php echo $row['Time']; ?>').on('click', function() {
-	 			$(this).closest('.card').find('.NightHours_<?php echo $row['Time']; ?>').val('');
-	 			$(this).closest('.card').find('.NightOTHours_<?php echo $row['Time']; ?>').val('');
 	 			$(this).closest('.card').find('.night-premium-container').toggle();
 	 			$(this).closest('.card').find('.NightPremium').toggle();
 	 		});
 		 	$(".Hours_<?php echo $row['Time']; ?>, .OTHours_<?php echo $row['Time']; ?>, .NightHours_<?php echo $row['Time']; ?>, .NightOTHours_<?php echo $row['Time']; ?>").bind("input", function () {
 		 			// General
-	                var PerHour = $(this).closest("#SalaryDays").find('.PerHour').val();
-	                var PerDay = $(this).closest("#SalaryDays").find('.PerDay').val();
+	                let PerHour = $(this).closest("#SalaryDays").find('.PerHour').val();
+	                let PerDay = $(this).closest("#SalaryDays").find('.PerDay').val();
 		 			// Hours
-	                var Hours = $(this).closest("#SalaryDays").find('.Hours_<?php echo $row['Time']; ?>').val();
+	                let Hours = $(this).closest("#SalaryDays").find('.Hours_<?php echo $row['Time']; ?>').val();
 	                // OT
-	                var OT = $(this).closest("#SalaryDays").find('.OTHours_<?php echo $row['Time']; ?>').val();
-	                var NightHours = $(this).closest("#SalaryDays").find('.NightHours_<?php echo $row['Time']; ?>').val();
-	                var NightOT = $(this).closest("#SalaryDays").find('.NightOTHours_<?php echo $row['Time']; ?>').val();
+	                let OT = $(this).closest("#SalaryDays").find('.OTHours_<?php echo $row['Time']; ?>').val();
+	                let NightHours = $(this).closest("#SalaryDays").find('.NightHours_<?php echo $row['Time']; ?>').val();
+	                let NightOT = $(this).closest("#SalaryDays").find('.NightOTHours_<?php echo $row['Time']; ?>').val();
 
-	                var TotalPerDay;
-	                var NightTotalPerDay;
+	                let TotalPerDay;
+	                let NightTotalPerDay;
+	                let Regular = PerHour * Hours;
+	                let Overtime = (PerHour * OT) * 1.25;
+	                let NightPremium = PerHour * NightHours;
+	                let NightPremiumOvertime = (PerHour * NightOT) * 1.25;
+	                let RegularPay;
+	                let OvertimePay;
+	                let NightPremiumPay;
+	                let NightPremiumOvertimePay;
 	                // Regular
 	                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
-		                TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25));
-		                NightTotalPerDay = ((PerHour  * NightHours) + ((PerHour * NightOT) * 1.25));
+	                	RegularPay = Regular;
+	                	OvertimePay = Overtime;
+		                TotalPerDay = (Regular + Overtime);
+
+		                NightPremiumPay = NightPremium;
+		                NightPremiumOvertimePay = NightPremiumOvertime;
+		                NightTotalPerDay = (NightPremium + NightPremiumOvertime);
 		                NightTotalPerDay = NightTotalPerDay * 1.1;
 	           		}
 	           		// Rest Day
 	           		if($(this).closest("#SalaryDays").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
-		                TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 1.3;
-		                NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 1.3;
+	           			RegularPay = Regular * 1.3;
+	           			OvertimePay = Overtime * 1.3;
+		                TotalPerDay = (Regular + Overtime) * 1.3;
+
+		                NightPremiumPay = NightPremium * 1.3;
+		                NightPremiumOvertimePay = NightPremiumOvertime * 1.3;
+		                NightTotalPerDay = (NightPremium + NightPremiumOvertime) * 1.3;
 		                NightTotalPerDay = NightTotalPerDay * 1.1;
 	           		}
 	           		// Special
 	           		if($(this).closest("#SalaryDays").find('.SPCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
-		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 1.3;
-		                	NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 1.3;
+		                	RegularPay = Regular * 1.3;
+		                	OvertimePay = Overtime * 1.3;
+		                	TotalPerDay = (Regular + Overtime) * 1.3;
+
+		                	NightPremiumPay = NightPremium * 1.3;
+		                	NightPremiumOvertimePay = NightPremiumOvertime * 1.3;
+		                	NightTotalPerDay = (NightPremium + NightPremiumOvertime) * 1.3;
 		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 		            	}
 		                if($(this).closest("#SalaryDays").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
-		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 1.5;
-		                	NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 1.5;
+		                	RegularPay = Regular * 1.5;
+		                	OvertimePay = Overtime * 1.5;
+		                	TotalPerDay = (Regular + Overtime) * 1.5;
+
+		                	NightPremiumPay = NightPremium * 1.5;
+		                	NightPremiumOvertimePay = NightPremiumOvertime * 1.5;
+		                	NightTotalPerDay = (NightPremium + NightPremiumOvertime) * 1.5;
 		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 	           			}
 	           		}
 	           		// National
 	           		if($(this).closest("#SalaryDays").find('.NHCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
-		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 2.0;
-		                	NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 2.0;
+		                	RegularPay = Regular * 2.0;
+		                	OvertimePay = Overtime * 2.0;
+		                	TotalPerDay = (Regular + Overtime) * 2.0;
+
+		                	NightPremiumPay = NightPremium * 2.0;
+		                	NightPremiumOvertimePay = NightPremiumOvertime * 2.0;
+		                	NightTotalPerDay = (NightPremium + NightPremiumOvertime) * 2.0;
 		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 		            	}
 		                if($(this).closest("#SalaryDays").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
-		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 2.6;
-		                	NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 2.6;
+		                	RegularPay = Regular * 2.6;
+		                	OvertimePay = Overtime * 2.6;
+		                	TotalPerDay = (Regular + Overtime) * 2.6;
+
+		                	NightPremiumPay = NightPremium * 2.6;
+		                	NightPremiumOvertimePay = NightPremiumOvertime * 2.6;
+		                	NightTotalPerDay = (NightPremium + NightPremiumOvertime) * 2.6;
 		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 	           			}
 	           		}
-	           		var Result = TotalPerDay + NightTotalPerDay;
-	           		// Night additional
-	             //    if($(this).closest("#SalaryDays").find('.NCheck_<?php echo $row['Time']; ?>').is(":checked")){
-		            //     TotalPerDay = TotalPerDay * 1.1;
-	           		// }
-	           		$(this).closest("#SalaryDays").find('.t_pay_<?php echo $row['Time']; ?>').val(Result.toFixed(2));
+	           		let Result = TotalPerDay + NightTotalPerDay;
+	           		NightPremiumPay = NightPremiumPay * 1.1;
+	           		NightPremiumOvertimePay = NightPremiumOvertimePay * 1.1;
 
-	                // var v = $(this).closest("div.hhhh").find(".t_pay").val();
-	                // var perh = $(this).vl();
-	                // var hidden_hval = $(this).closest("div.hhhh").find(".h_valueh").val();
-	                // $(this).closest("div.hhhh").find(".t_pay").val(perh * hidden_hval);;
+	           		$(this).closest("#SalaryDays").find('.t_pay_<?php echo $row['Time']; ?>').val(Result.toFixed(2));
+	           		$(this).closest("#SalaryDays").find('.regular_pay_<?php echo $row['Time']; ?>').val(RegularPay.toFixed(2));
+	           		$(this).closest("#SalaryDays").find('.overtime_pay_<?php echo $row['Time']; ?>').val(OvertimePay.toFixed(2));
+	           		$(this).closest("#SalaryDays").find('.nightpremium_pay_<?php echo $row['Time']; ?>').val(NightPremiumPay.toFixed(2));
+	           		$(this).closest("#SalaryDays").find('.nightpremiumovertime_pay_<?php echo $row['Time']; ?>').val(NightPremiumOvertimePay.toFixed(2));
 	         });
 		 	$(".SalaryButtons").on("click", function () {
 		 			// General
@@ -364,57 +398,93 @@ use Carbon\Carbon;
 	                var NightHours = $(this).closest("#SalaryDays").find('.NightHours_<?php echo $row['Time']; ?>').val();
 	                var NightOT = $(this).closest("#SalaryDays").find('.NightOTHours_<?php echo $row['Time']; ?>').val();
 
-	                var TotalPerDay;
-	                var NightTotalPerDay;
+	                let TotalPerDay;
+	                let NightTotalPerDay;
+	                let Regular = PerHour * Hours;
+	                let Overtime = (PerHour * OT) * 1.25;
+	                let NightPremium = PerHour * NightHours;
+	                let NightPremiumOvertime = (PerHour * NightOT) * 1.25;
+	                let RegularPay;
+	                let OvertimePay;
+	                let NightPremiumPay;
+	                let NightPremiumOvertimePay;
 	                // Regular
 	                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
-		                TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25));
-		                NightTotalPerDay = ((PerHour  * NightHours) + ((PerHour * NightOT) * 1.25));
+	                	RegularPay = Regular;
+	                	OvertimePay = Overtime;
+		                TotalPerDay = (Regular + Overtime);
+
+		                NightPremiumPay = NightPremium;
+		                NightPremiumOvertimePay = NightPremiumOvertime;
+		                NightTotalPerDay = (NightPremium + NightPremiumOvertime);
 		                NightTotalPerDay = NightTotalPerDay * 1.1;
 	           		}
 	           		// Rest Day
 	           		if($(this).closest("#SalaryDays").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
-		                TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 1.3;
-		                NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 1.3;
+	           			RegularPay = Regular * 1.3;
+	           			OvertimePay = Overtime * 1.3;
+		                TotalPerDay = (Regular + Overtime) * 1.3;
+
+		                NightPremiumPay = NightPremium * 1.3;
+		                NightPremiumOvertimePay = NightPremiumOvertime * 1.3;
+		                NightTotalPerDay = (NightPremium + NightPremiumOvertime) * 1.3;
 		                NightTotalPerDay = NightTotalPerDay * 1.1;
 	           		}
 	           		// Special
 	           		if($(this).closest("#SalaryDays").find('.SPCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
-		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 1.3;
-		                	NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 1.3;
+		                	RegularPay = Regular * 1.3;
+		                	OvertimePay = Overtime * 1.3;
+		                	TotalPerDay = (Regular + Overtime) * 1.3;
+
+		                	NightPremiumPay = NightPremium * 1.3;
+		                	NightPremiumOvertimePay = NightPremiumOvertime * 1.3;
+		                	NightTotalPerDay = (NightPremium + NightPremiumOvertime) * 1.3;
 		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 		            	}
 		                if($(this).closest("#SalaryDays").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
-		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 1.5;
-		                	NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 1.5;
+		                	RegularPay = Regular * 1.5;
+		                	OvertimePay = Overtime * 1.5;
+		                	TotalPerDay = (Regular + Overtime) * 1.5;
+
+		                	NightPremiumPay = NightPremium * 1.5;
+		                	NightPremiumOvertimePay = NightPremiumOvertime * 1.5;
+		                	NightTotalPerDay = (NightPremium + NightPremiumOvertime) * 1.5;
 		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 	           			}
 	           		}
 	           		// National
 	           		if($(this).closest("#SalaryDays").find('.NHCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
-		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 2.0;
-		                	NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 2.0;
+		                	RegularPay = Regular * 2.0;
+		                	OvertimePay = Overtime * 2.0;
+		                	TotalPerDay = (Regular + Overtime) * 2.0;
+
+		                	NightPremiumPay = NightPremium * 2.0;
+		                	NightPremiumOvertimePay = NightPremiumOvertime * 2.0;
+		                	NightTotalPerDay = (NightPremium + NightPremiumOvertime) * 2.0;
 		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 		            	}
 		                if($(this).closest("#SalaryDays").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
-		                	TotalPerDay = ((PerHour * Hours) + ((PerHour * OT) * 1.25)) * 2.6;
-		                	NightTotalPerDay = ((PerHour * NightHours) + ((PerHour * NightOT) * 1.25)) * 2.6;
+		                	RegularPay = Regular * 2.6;
+		                	OvertimePay = Overtime * 2.6;
+		                	TotalPerDay = (Regular + Overtime) * 2.6;
+
+		                	NightPremiumPay = NightPremium * 2.6;
+		                	NightPremiumOvertimePay = NightPremiumOvertime * 2.6;
+		                	NightTotalPerDay = (NightPremium + NightPremiumOvertime) * 2.6;
 		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 	           			}
 	           		}
-	           		var Result = TotalPerDay + NightTotalPerDay;
-	           		// Night additional
-	             //    if($(this).closest("#SalaryDays").find('.NCheck_<?php echo $row['Time']; ?>').is(":checked")){
-		            //     TotalPerDay = TotalPerDay * 1.1;
-	           		// }
-	           		$(this).closest("#SalaryDays").find('.t_pay_<?php echo $row['Time']; ?>').val(Result.toFixed(2));
+	           		let Result = TotalPerDay + NightTotalPerDay;
+	           		NightPremiumPay = NightPremiumPay * 1.1;
+	           		NightPremiumOvertimePay = NightPremiumOvertimePay * 1.1;
 
-	                // var v = $(this).closest("div.hhhh").find(".t_pay").val();
-	                // var perh = $(this).vl();
-	                // var hidden_hval = $(this).closest("div.hhhh").find(".h_valueh").val();
-	                // $(this).closest("div.hhhh").find(".t_pay").val(perh * hidden_hval);;
+	           		$(this).closest("#SalaryDays").find('.t_pay_<?php echo $row['Time']; ?>').val(Result.toFixed(2));
+	           		$(this).closest("#SalaryDays").find('.regular_pay_<?php echo $row['Time']; ?>').val(RegularPay.toFixed(2));
+	           		$(this).closest("#SalaryDays").find('.overtime_pay_<?php echo $row['Time']; ?>').val(OvertimePay.toFixed(2));
+	           		$(this).closest("#SalaryDays").find('.nightpremium_pay_<?php echo $row['Time']; ?>').val(NightPremiumPay.toFixed(2));
+	           		$(this).closest("#SalaryDays").find('.nightpremiumovertime_pay_<?php echo $row['Time']; ?>').val(NightPremiumOvertimePay.toFixed(2));
 	         });
 	 	<?php endforeach; ?>
 	});

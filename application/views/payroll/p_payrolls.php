@@ -38,7 +38,7 @@
 							<a href="<?php echo base_url() ?>ViewClient?id=<?php echo $ClientID; ?>&mode=<?php echo $Mode; ?>">Attendance</a>
 						</li>
 						<li class="payroll-tabs-active">
-							<a href="<?php echo base_url() ?>Payrollsss?id=<?php echo $ClientID; ?>&mode=<?php echo $Mode; ?>">Payroll</a>
+							<a href="<?php echo base_url() ?>ViewPayroll?id=<?php echo $ClientID; ?>&mode=<?php echo $Mode; ?>">Payroll</a>
 						</li>
 					</ul>
 				</div>
@@ -101,8 +101,8 @@
 						<div class="col-4 mb-2 text-right">
 							<!-- Config -->
 							<a href="ViewPayroll?id=<?php echo $ClientID; ?>&mode=<?php echo $Mode; ?>" class="btn btn-primary" data-toggle="tooltip" data-placement="top" data-html="true" title="Reset to current year (<?php echo $currentYear; ?>) and month (<?php echo $currentMonthReadable; ?>)"><i class="fas fa-redo"></i> Reset</a>
-							<button type="button" class="btn btn-info"><i class="fas fa-cog"></i> Config</button>
-							<a href="GeneratePayslip" class="btn btn-success"><i class="fas fa-book"></i> Generate Payslip (WIP)</a>
+							<!-- <button type="button" class="btn btn-info"><i class="fas fa-cog"></i> Config</button> -->
+							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#GeneratePayslipModal"><i class="fas fa-file-invoice-dollar"></i> Generate Payslip</button>
 						</div>
 						<div class="col-sm-12">
 							<?php 
@@ -115,7 +115,7 @@
 
 							$GetPayrollYear = $this->Model_Selects->GetPayrollYear($FetchYear, $Mode);
 							if ($GetPayrollYear->num_rows() > 0): ?>
-								<div class="payroll-year-container row">
+								<div class="payroll-container row" style="font-size: 14px;">
 									<?php
 									if (!empty($_GET['month'])) {
 										$FetchMonth = $_GET['month'];
@@ -149,8 +149,9 @@
 																	<th style="width: 50px;"><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></th>
 																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount left to be paid for this week's SSS contribution">To be paid <i style="color: gray">(?)</i></th>
 																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount that is paid for this week's SSS contribution. Used to subtract next week's SSS contribution." style="width: 225px;">Paid this week <i style="color: gray">(?)</i></th>
-																	<th>Loans</th>
+																	<th>Inputs</th>
 																	<th>Net Pay</th>
+																	<th>Action</th>
 																</thead>
 																<tbody>
 																	<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
@@ -438,8 +439,14 @@
 																					</div>
 																				</div>
 																			</td>
-																			<td><button type="button" class="loans-btn btn btn-info btn-sm SetPrimaryClientIDButton" data-toggle="modal" data-target="#ModalLoans" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-loanstotal="<?php echo $loansTotal; ?>"><i class="fas fa-piggy-bank"></i> Loans</button></td>
+																			<td>
+																				<button type="button" class="loans-btn btn btn-info btn-sm w-100" data-toggle="modal" data-target="#ModalLoans" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-loanstotal="<?php echo $loansTotal; ?>"><i class="fas fa-piggy-bank"></i> Loans</button>
+																				<button type="button" class="provisions-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#ModalProvisions" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-provisionstotal="<?php echo $loansTotal; ?>" style="margin-top: 1px;"><i class="fas fa-donate"></i> Provisions</button>
+																			</td>
 																			<td class="payroll-net-pay" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($GetPayrollWeekGrossPay, 2) . ' - (' . $hdmf_contriCalc . ' + ' . $philhealth_contri . ' + ' . $tax . ' + ' . $toBePaid . ')<br><i>Gross Pay - (HDMF Contribution + PhilHealth Contribution + Tax + SSS left to be paid)</i>'; ?>"><?php echo round($net_pay, 2); ?></td>
+																			<td>
+																				<button type="button" class="btn btn-success btn-sm w-100" data-toggle="modal" data-target="#GeneratePayslipModal"><i class="fas fa-file-invoice-dollar"></i> Payslip</button>
+																			</td>
 																		</tr>
 																	<?php endforeach; ?>
 																</tbody>
@@ -452,7 +459,7 @@
 												<?php for($Week=1; $Week<=2; $Week++): ?>
 												<div class="payroll-week-container col-sm-12">
 													<div class="payroll-week col-sm-12">
-														<b>Week <?php echo $Week; ?></b>
+														<b>Period <?php echo $Week; ?></b>
 													</div>
 													<div class="payroll-data col-sm-12 col-mb-12">
 														<div class="table-responsive w-100">
@@ -1108,6 +1115,8 @@
 		</div>
 	</div>
 	<?php $this->load->view('_template/modals/m_p_loans'); ?>
+	<?php $this->load->view('_template/modals/m_p_generatepayslip'); ?>
+	<?php $this->load->view('_template/modals/m_p_provisions'); ?>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
@@ -1300,6 +1309,135 @@
 				$('.new-loan-row').fadeOut('fast');
 			}
 		});
+		// Provision remove
+		var ProvisionsArray = [];
+		$('body').on('click', '.provision-remove', function () { // Using body for dynamic appends.
+			$(this).parents('.provision-input').toggleClass('row-transparent');
+			ProvisionID = $(this).closest('.provision-input').find('.provision-id').val();
+			$(this).toggleClass('btn-secondary btn-danger');
+			if ($(this).hasClass('btn-danger')) {
+				// Add to array
+				ProvisionsArray.push(ProvisionID);
+			} else {
+				// Remove from array
+				let index = ProvisionsArray.indexOf(ProvisionID); // Search in array
+				if (index > -1) {
+					ProvisionsArray.splice(index, 1);
+				}
+			}
+			console.log(ProvisionsArray);
+		});
+		$("#ModalProvisions").on("hidden.bs.modal", function () { // Resets modal on close
+			$('#NewProvisionContainer').empty();
+			$('.new-provision-row').hide();
+		});
+		$('.save-provision-btn').on('click', function () {
+			if (AJAX_onCall == false) {
+				$(this).find('i').removeClass('fas');
+				$(this).find('i').removeClass('fa-check');
+				$(this).removeClass('btn-success');
+				$(this).addClass('btn-secondary');
+				$(this).find('i').addClass('spinner-border');
+				$(this).find('i').addClass('spinner-border-sm');
+				$('.provision-input > div').children().prop('readonly', true);
+				$('.provision-input > div').children().css('opacity', '0.5');
+				AJAX_onCall = true;
+				// AJAX Call
+				let ApplicantID = $('#ProvisionsApplicantID').text();
+				let Year = $('#ProvisionsYear').val();
+				let Month = $('#ProvisionsMonth').val();
+				let Week = $('#ProvisionsWeek').val();
+				if (ProvisionsArray.length > 0) {
+					$.ajax({
+						url : "<?php echo base_url() . 'AJAX_removePayrollProvisions';?>",
+						method : "POST",
+						data: {ProvisionsArray: JSON.stringify(ProvisionsArray), ApplicantID: ApplicantID, Year: Year, Month: Month, Week: Week, Mode: Mode},
+						dataType: "html",
+						success: function(data){
+							console.log('success');
+							// $("body").html(data);
+
+						}
+					})
+				}
+				$('.provision-input').each(function() {
+					let ProvisionName = $(this).find(".provision-name").val();
+					let Amount = $(this).find(".provision-amount").val();
+					let ID = $(this).find(".provision-id").val();
+					let totalCounter = 0;
+					$.ajax({
+						url : "<?php echo base_url() . 'AJAX_insertPayrollProvisions';?>",
+						method : "POST",
+						data: {ID: ID, ApplicantID: ApplicantID, ProvisionName: ProvisionName, Amount: Amount, Year: Year, Month: Month, Week: Week, Mode: Mode},
+						dataType: "html",
+						success: function(data){
+							console.log('success');
+							console.log(ApplicantID);
+							console.log(Year);
+							console.log(Month);
+							console.log(Week);
+							$("#LoadProvisionContainer").html(data);
+							$('.save-provision-btn').closest('.save-provision-btn').find('i').addClass('fas');
+							$('.save-provision-btn').closest('.save-provision-btn').find('i').addClass('fa-check');
+							$('.save-provision-btn').closest('.save-provision-btn').addClass('btn-success');
+							$('.save-provision-btn').closest('.save-provision-btn').removeClass('btn-secondary');
+							$('.save-provision-btn').closest('.save-provision-btn').find('i').removeClass('spinner-border');
+							$('.save-provision-btn').closest('.save-provision-btn').find('i').removeClass('spinner-border-sm');
+							$('.new-provision-row').hide();
+							$('#NewProvisionContainer').children().empty();
+							$('.provision-input').each(function() {
+								totalCounter = totalCounter + parseFloat($(this).find('.provision-amount').val());
+								console.log(totalCounter);
+								$('.provisions-btn[data-applicantid=' + ApplicantID + '][data-year=' + Year + '][data-month=' + Month + '][data-week=' + Week + ']').data('loanstotal', totalCounter);
+							})
+							AJAX_onCall = false;
+						}
+					})
+				})
+			}
+		});
+		$('.new-provision-add-btn').on('click', function () {
+			$('.new-provision-row').show();
+			$('.new-provision-row').animate({opacity: '1.0'});
+			$('#NewProvisionContainer').append('<div class="form-row provision-input w-100"><input class="form-control provision-id" type="hidden" value="-1"><div class="col-sm-7 mt-1"><input class="form-control provision-name" type="text" name="ProvisionName[]"></div><div class="col-sm-4 mt-1"><input class="form-control provision-amount" type="number" name="ProvisionAmount[]"></div><div class="col-sm-1 mt-1"><button class="form-control provision-discard btn-danger" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Discard?"><i class="fas fa-times" style="font-size: 12px; margin-left: -4px;"></i></button></div></div>')
+		});
+		$('.provisions-btn').on('click', function () {
+			$('#ProvisionsApplicantID').text($(this).data('applicantid'));
+			$('#ProvisionsApplicantName').text($(this).data('applicantname'));
+			let ApplicantURL = "ViewEmployee?id=" + $(this).data('applicantid');
+			$('#ProvisionsApplicantName').attr('href', ApplicantURL);
+			$('#ProvisionsYear').val($(this).data('year'));
+			$('#ProvisionsMonth').val($(this).data('month'));
+			$('#ProvisionsWeek').val($(this).data('week'));
+			// AJAX Call
+			let ApplicantID = $('#ProvisionsApplicantID').text();
+			let Year = $('#ProvisionsYear').val();
+			let Month = $('#ProvisionsMonth').val();
+			let Week = $('#ProvisionsWeek').val();
+			let totalCounter = 0;
+			$.ajax({
+				url : "<?php echo base_url() . 'AJAX_showPayrollProvisions';?>",
+				method : "POST",
+				data: {ApplicantID: ApplicantID, Year: Year, Month: Month, Week: Week, Mode: Mode},
+				dataType: "html",
+				success: function(response){
+					$("#LoadProvisionContainer").html(response);
+					$('.ajax-load-container').show();
+					$('.provision-input').each(function() {
+						totalCounter = totalCounter + parseFloat($(this).find('.provision-amount').val());
+						$('#ProvisionTotal').text(totalCounter);
+					})
+			}
+
+			});
+		});
+		// Provision discard
+		$('body').on('click', '.provision-discard', function () { // Using body for dynamic appends.
+			$(this).parents('.provision-input').remove();
+			if ($('#NewProvisionContainer > div').length <= 0) {
+				$('.new-provision-row').fadeOut('fast');
+			}
+		});
 		$(".payroll-weekrow-input").bind("input", function () {
 			if ($(this).val()) {
 				$(this).closest(".payroll-week-row").find('.payroll-weekrow-btn').show();
@@ -1324,6 +1462,19 @@
 				}
 
 			});
+		});
+		$('.payslip-inputs').bind('input', function() {
+			let payslipApplicantID = $('#PayslipApplicantID').val();
+			let payslipMode = $('#PayslipModeSelect').val();
+			let payslipFromDate = new Date($('#PayslipFromDate').val());
+			let payslipFromDateDay = payslipFromDate.getUTCDate();
+			let payslipFromDateMonth = payslipFromDate.getUTCMonth() + 1;
+			let payslipFromDateYear = payslipFromDate.getFullYear();
+			let payslipToDate = new Date($('#PayslipToDate').val());
+			let payslipToDateDay = payslipToDate.getUTCDate();
+			let payslipToDateMonth = payslipToDate.getUTCMonth() + 1;
+			let payslipToDateYear = payslipToDate.getFullYear();
+			$('#GeneratePayslipLink').attr('href', 'GeneratePayslip?id=' + payslipApplicantID + '&mode=' + payslipMode + '&from_day=' + payslipFromDateDay + '&from_month=' + payslipFromDateMonth + '&from_year=' + payslipFromDateYear + '&to_day=' + payslipToDateDay + '&to_month=' + payslipToDateMonth + '&to_year=' + payslipToDateYear);
 		});
 		$(".nav-item a[href*='Payroll']").addClass("nactive");
 		$('[data-toggle="tooltip"]').tooltip();
