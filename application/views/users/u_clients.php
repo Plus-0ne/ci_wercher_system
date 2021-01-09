@@ -251,8 +251,10 @@ use Carbon\Carbon;
 		$('.sorting-table-icon').hide();
 		$('#DTSearch').attr('placeholder', 'Search table');
 		$('#DTSearch').attr('readonly', false);
-		<?php if (isset($_GET['id'])): ?>
+		<?php if (isset($_GET['id'])):
+			$GetClientID = $this->Model_Selects->GetClientID($_GET['id']);?>
 			$('#ClientsEmployedModal').modal('show');
+			$(document).attr('title', 'Employees of')
 		<?php endif; ?>
 		$("#ClientsEmployedModal").on("hidden.bs.modal", function () { // Change URL on modal close
 		    history.pushState(null, null, '<?php echo base_url() . 'Clients';  ?>');

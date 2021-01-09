@@ -2112,18 +2112,25 @@ class Update_Controller extends CI_Controller {
 			$id = $this->input->post('id',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 			$f_range = $this->input->post('f_range',TRUE);
 			$t_range = $this->input->post('t_range',TRUE);
-			$contribution = $this->input->post('contribution',TRUE);
-			if ($f_range == NULL || $t_range == NULL) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Field/s)</h5></div>');
+			$contributionER = $this->input->post('contribution_er',TRUE);
+			$contributionEE = $this->input->post('contribution_ee',TRUE);
+			$contributionEC = $this->input->post('contribution_ec',TRUE);
+			if ($f_range == NULL || $t_range == NULL || $contributionEE = NULL ) {
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Missing fields. Please try again.');
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
 			{
+				$total = $contributionER + $contributionEE;
+				$totalEC = $total + $contributionEC;
 				$data = array(
 					'f_range' => $f_range,
 					't_range' => $t_range,
-					'contribution' => $contribution,
-					'last_update' => '',
+					'contribution_er' => $contributionER,
+					'contribution_ee' => $contributionEE,
+					'contribution_ec' => $contributionEC,
+					'total' => $total,
+					'total_with_ec' => $totalEC,
 				);
 				$UpdateSSSField = $this->Model_Updates->UpdateSSSField($id, $data);
 				if ($UpdateSSSField == TRUE) {

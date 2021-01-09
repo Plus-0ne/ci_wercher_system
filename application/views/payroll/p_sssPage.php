@@ -44,7 +44,7 @@
 										<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
 											<input type="hidden" name="id" value="<?php echo $row['id']; ?>">
 										<?php endif; ?>
-										<tr class="sss-row">
+										<tr id="<?php echo $row['id']; ?>" class="sss-row">
 											<td>
 												<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
 													<input class="form-control w-75" type="number" name="f_range" min="0" value="<?php echo $row['f_range']; ?>">
@@ -89,9 +89,12 @@
 												<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
 													<button class="btn btn-success btn-sm w-100 mb-1" type="submit"><i class="fas fa-check fa-fw"></i> Update</button>
 													<a class="btn btn-secondary btn-sm w-100 mb-1" href="<?php echo base_url() ?>SSS_Table"><i class="fas fa-times fa-fw"></i> Cancel</a>
+												<?php elseif(isset($_GET['delete']) && ($_GET['delete'] == $row['id'])): ?>
+													<a class="btn btn-danger btn-sm w-100 mb-1" href="<?php echo base_url() ?>DeleteSSSTableRow?row=<?php echo $row['id']; ?>"><i class="fas fa-trash-alt fa-fw"></i> Confirm</button>
+													<a class="btn btn-secondary btn-sm w-100 mb-1" href="<?php echo base_url() ?>SSS_Table"><i class="fas fa-times fa-fw"></i> Cancel</a>
 												<?php else: ?>
 													<a class="btn btn-info btn-sm w-100 mb-1" href="<?php echo base_url() ?>SSS_Table?row=<?php echo $row['id']; ?>"><i class="fas fa-edit fa-fw"></i> Update</a>
-													<a class="btn btn-danger btn-sm w-100 mb-1" href="#"><i class="fas fa-trash-alt fa-fw"></i> Delete</a>
+													<a class="btn btn-danger btn-sm w-100 mb-1" href="<?php echo base_url() ?>SSS_Table?delete=<?php echo $row['id']; ?>"><i class="fas fa-trash-alt fa-fw"></i> Delete</a>
 												<?php endif; ?>
 											</td>
 										</tr>
@@ -118,24 +121,37 @@
 				</div>
 				<div class="modal-body">
 					<div class="text-center">
-						<h6>
+						<h5>
 							Range of Compensations
-						</h6>
+						</h5>
 					</div>
 					<div class="form-row text-center">
-						<div class="form-group m-auto w-50">
+						<div class="form-group m-auto col-sm-6 col-md-6">
 							<label>From</label>
-							<input class="form-control text-center" type="text" name="f_range">
+							<input class="form-control text-center" type="number" step=".01" name="f_range">
 						</div>
-						<div class="form-group m-auto w-50">
+						<div class="form-group m-auto col-sm-6 col-md-6">
 							<label>To</label>
-							<input class="form-control text-center" type="text" name="t_range">
+							<input class="form-control text-center" type="number" step=".01" name="t_range">
 						</div>
 					</div>
+					<div class="text-center mt-4">
+						<h5> 
+							Contributions
+						</h5>
+					</div>
 					<div class="form-row text-center">
-						<div class="form-group m-auto w-100">
-							<label>Contribution</label>
-							<input class="form-control text-center" type="text" name="contribution">
+						<div class="form-group m-auto col-sm-4 col-md-4">
+							<label>ER</label>
+							<input class="form-control text-center" type="number" step=".01" name="contribution_er">
+						</div>
+						<div class="form-group m-auto col-sm-4 col-md-4">
+							<label>EE</label>
+							<input class="form-control text-center" type="number" step=".01" name="contribution_ee">
+						</div>
+						<div class="form-group m-auto col-sm-4 col-md-4">
+							<label>EC</label>
+							<input class="form-control text-center" type="number" step=".01" name="contribution_ec">
 						</div>
 					</div>
 				</div>

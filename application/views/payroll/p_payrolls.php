@@ -151,7 +151,6 @@
 																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount that is paid for this week's SSS contribution. Used to subtract next week's SSS contribution." style="width: 225px;">Paid this week <i style="color: gray">(?)</i></th>
 																	<th>Inputs</th>
 																	<th>Net Pay</th>
-																	<th>Action</th>
 																</thead>
 																<tbody>
 																	<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
@@ -444,9 +443,9 @@
 																				<button type="button" class="provisions-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#ModalProvisions" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-provisionstotal="<?php echo $loansTotal; ?>" style="margin-top: 1px;"><i class="fas fa-donate"></i> Provisions</button>
 																			</td>
 																			<td class="payroll-net-pay" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($GetPayrollWeekGrossPay, 2) . ' - (' . $hdmf_contriCalc . ' + ' . $philhealth_contri . ' + ' . $tax . ' + ' . $toBePaid . ')<br><i>Gross Pay - (HDMF Contribution + PhilHealth Contribution + Tax + SSS left to be paid)</i>'; ?>"><?php echo round($net_pay, 2); ?></td>
-																			<td>
+																			<!-- <td>
 																				<button type="button" class="btn btn-success btn-sm w-100" data-toggle="modal" data-target="#GeneratePayslipModal"><i class="fas fa-file-invoice-dollar"></i> Payslip</button>
-																			</td>
+																			</td> -->
 																		</tr>
 																	<?php endforeach; ?>
 																</tbody>
@@ -475,7 +474,7 @@
 																	<th style="width: 50px;"><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></th>
 																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount left to be paid for this week's SSS contribution">To be paid <i style="color: gray">(?)</i></th>
 																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount that is paid for this week's SSS contribution. Used to subtract next week's SSS contribution." style="width: 225px;">Paid this week <i style="color: gray">(?)</i></th>
-																	<th>Loans</th>
+																	<th>Inputs</th>
 																	<th>Net Pay</th>
 																</thead>
 																<tbody>
@@ -765,7 +764,10 @@
 																					</div>
 																				</div>
 																			</td>
-																			<td><button type="button" class="loans-btn btn btn-info btn-sm SetPrimaryClientIDButton" data-toggle="modal" data-target="#ModalLoans" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-loanstotal="<?php echo $loansTotal; ?>"><i class="fas fa-piggy-bank"></i> Loans</button></td>
+																			<td>
+																				<button type="button" class="loans-btn btn btn-info btn-sm w-100" data-toggle="modal" data-target="#ModalLoans" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-loanstotal="<?php echo $loansTotal; ?>"><i class="fas fa-piggy-bank"></i> Loans</button>
+																				<button type="button" class="provisions-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#ModalProvisions" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-provisionstotal="<?php echo $loansTotal; ?>" style="margin-top: 1px;"><i class="fas fa-donate"></i> Provisions</button>
+																			</td>
 																			<td class="payroll-net-pay" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($GetPayrollWeekGrossPay, 2) . ' - (' . $hdmf_contriCalc . ' + ' . $philhealth_contri . ' + ' . $tax . ' + ' . $toBePaid . ')<br><i>Gross Pay - (HDMF Contribution + PhilHealth Contribution + Tax + SSS left to be paid)</i>'; ?>"><?php echo round($net_pay, 2); ?></td>
 																		</tr>
 																	<?php endforeach; ?>
@@ -795,7 +797,7 @@
 																	<th style="width: 50px;"><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></th>
 																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount left to be paid for this week's SSS contribution">To be paid <i style="color: gray">(?)</i></th>
 																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount that is paid for this week's SSS contribution. Used to subtract next week's SSS contribution." style="width: 225px;">Paid this week <i style="color: gray">(?)</i></th>
-																	<th>Loans</th>
+																	<th>Inputs</th>
 																	<th>Net Pay</th>
 																</thead>
 																<tbody>
@@ -1084,7 +1086,10 @@
 																					</div>
 																				</div>
 																			</td>
-																			<td><button type="button" class="loans-btn btn btn-info btn-sm SetPrimaryClientIDButton" data-toggle="modal" data-target="#ModalLoans" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-loanstotal="<?php echo $loansTotal; ?>"><i class="fas fa-piggy-bank"></i> Loans</button></td>
+																			<td>
+																				<button type="button" class="loans-btn btn btn-info btn-sm w-100" data-toggle="modal" data-target="#ModalLoans" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-loanstotal="<?php echo $loansTotal; ?>"><i class="fas fa-piggy-bank"></i> Loans</button>
+																				<button type="button" class="provisions-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#ModalProvisions" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-provisionstotal="<?php echo $loansTotal; ?>" style="margin-top: 1px;"><i class="fas fa-donate"></i> Provisions</button>
+																			</td>
 																			<td class="payroll-net-pay" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($GetPayrollWeekGrossPay, 2) . ' - (' . $hdmf_contriCalc . ' + ' . $philhealth_contri . ' + ' . $tax . ' + ' . $toBePaid . ')<br><i>Gross Pay - (HDMF Contribution + PhilHealth Contribution + Tax + SSS left to be paid)</i>'; ?>"><?php echo round($net_pay, 2); ?></td>
 																		</tr>
 																	<?php endforeach; ?>
@@ -1269,7 +1274,7 @@
 		$('.new-loan-add-btn').on('click', function () {
 			$('.new-loan-row').show();
 			$('.new-loan-row').animate({opacity: '1.0'});
-			$('#NewLoanContainer').append('<div class="form-row loan-input w-100"><input class="form-control loan-id" type="hidden" value="-1"><div class="col-sm-7 mt-1"><input class="form-control loan-name" type="text" name="LoanName[]"></div><div class="col-sm-4 mt-1"><input class="form-control loan-amount" type="number" name="LoanAmount[]"></div><div class="col-sm-1 mt-1"><button class="form-control loan-discard btn-danger" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Discard?"><i class="fas fa-times" style="font-size: 12px; margin-left: -4px;"></i></button></div></div>')
+			$('#NewLoanContainer').append('<div class="form-row loan-input w-100"><input class="form-control loan-id" type="hidden" value="-1"><div class="col-sm-7 mt-1"><input class="form-control loan-name" type="text" name="LoanName[]"></div><div class="col-sm-4 mt-1"><input class="form-control loan-amount" type="number" name="LoanAmount[]"></div><div class="col-sm-1 mt-1"><button class="form-control loan-discard btn-danger" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Discard?"><i class="fas fa-times" style="font-size: 12px; margin-left: -4px;"></i></button></div></div>');
 		});
 		$('.loans-btn').on('click', function () {
 			$('#LoansApplicantID').text($(this).data('applicantid'));

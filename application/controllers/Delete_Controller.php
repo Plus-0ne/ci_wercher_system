@@ -231,5 +231,54 @@ class Delete_Controller extends CI_Controller {
 			redirect('Forbidden');
 		endif;
 	}
+	public function DeleteSSSTableRow()
+	{
+		if($this->Model_Security->CheckPermissions('Payroll')):
+			$row = $this->input->get('row');
+			if ($row == NULL) {
+				redirect('SSS_Table');
+				$this->Model_Logbook->SetPrompts('danger', 'danger', 'No row selected for deletion');
+			}
+			else
+			{
+				$dataAvailable = false;
+				$GetSSSTableRow = $this->Model_Selects->GetSSSTableRow($row);
+				if ($GetSSSTableRow->num_rows() > 0) {
+					foreach($GetSSSTableRow->result_array() as $srow) {
+						$dataAvailable = true;
+						$fromRange = $srow['f_range'];
+						$toRange = $srow['t_range'];
+						$contributionER = $srow['contribution_er'];
+						$contributionEE = $srow['contribution_ee'];
+						$contributionEC = $srow['contribution_ec'];
+						$total = $srow['total'];
+						$totalEC = $srow['total_with_ec'];
+
+					}
+				}
+				$RemoveSSSTableRow = $this->Model_Deletes->RemoveSSSTableRow($row);
+				if ($RemoveSSSTableRow == TRUE) {
+					redirect('SSS_Table');
+					$this->Model_Logbook->SetPrompts('success', 'success', 'Succesfully removed row');
+					$this->Model_Logbook->LogbookEntry('Red', 'Payroll', ' removed an SSS table row');
+					if ($dataAvailable) {
+						$this->Model_Logbook->LogbookExtendedEntry(0, '<b>From:</b> ' . $fromRange);
+						$this->Model_Logbook->LogbookExtendedEntry(0, '<b>To:</b> ' . $toRange);
+						$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Contribution (ER):</b> ' . $contributionER);
+						$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Contribution (EE):</b> ' . $contributionEE);
+						$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Contribution (EC):</b> ' . $contributionEC);
+						$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Total:</b> ' . $total);
+						$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Total with EC:</b> ' . $totalEC);
+					}
+				}
+				else
+				{
+					redirect('SSS_Table');
+				}
+			}
+		else:
+			redirect('Forbidden');
+		endif;
+	}
 
 }

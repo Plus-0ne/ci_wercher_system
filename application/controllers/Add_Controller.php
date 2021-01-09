@@ -585,21 +585,37 @@ class Add_Controller extends CI_Controller {
 		if($this->Model_Security->CheckPermissions('Payroll')):
 			$f_range = $this->input->post('f_range',TRUE);
 			$t_range = $this->input->post('t_range',TRUE);
-			$contribution = $this->input->post('contribution',TRUE);
-			if ($f_range == NULL || $t_range == NULL || $contribution == NULL) {
+			$contributionER = $this->input->post('contribution_er',TRUE);
+			$contributionEE = $this->input->post('contribution_ee',TRUE);
+			$contributionEC = $this->input->post('contribution_ec',TRUE);
+			if ($f_range == NULL || $t_range == NULL || $contributionER == NULL || $contributionEE == NULL || $contributionEC = NULL) {
 				$this->Model_Logbook->SetPrompts('error', 'error', 'Missing fields. Please try again.');
 				redirect('SSS_Table');
 			}
 			else
 			{
+				$total = $contributionER + $contributionEE;
+				// $totalEC = $total + $contributionEC;
 				$data = array(
 					'f_range' => $f_range,
 					't_range' => $t_range,
-					'contribution' => $contribution,
+					'contribution_er' => $contributionER,
+					'contribution_ee' => $contributionEE,
+					'contribution_ec' => $contributionEC,
+					'total' => $total,
+					// 'total_with_ec' => $totalEC,
 				);
 				$AddtoSSS = $this->Model_Inserts->AddtoSSS($data);
 				if ($AddtoSSS == TRUE) {
-					$this->Model_Logbook->SetPrompts('success', 'success', 'Data added.');
+					$this->Model_Logbook->SetPrompts('success', 'success', $contributionEC);
+					$this->Model_Logbook->LogbookEntry('Green', 'Payroll', ' added a new SSS table row');
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>From:</b> ' . $f_range);
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>To:</b> ' . $t_range);
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Contribution (ER):</b> ' . $contributionER);
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Contribution (EE):</b> ' . $contributionEE);
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Contribution (EC):</b> ' . $contributionEC);
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Total:</b> ' . $total);
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Total with EC:</b> ' . $totalEC);
 					redirect('SSS_Table');
 				}
 				else

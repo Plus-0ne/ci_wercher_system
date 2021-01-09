@@ -82,42 +82,35 @@
 									$pdayRaw = $pdate->format('Y-m-d');
 									$pday = DateTime::createFromFormat('Y-m-d', $pdayRaw)->format('M d, Y');
 									$pdayText = DateTime::createFromFormat('Y-m-d', $pdayRaw)->format('D');
-									$pdayTooltip = DateTime::createFromFormat('Y-m-d', $pdayRaw)->format('l'); 
+									$pdayTooltip = DateTime::createFromFormat('Y-m-d', $pdayRaw)->format('l');
+									$salaryHours = 0;
+									$salaryOvertime = 0;
+									$salaryNightHours = 0;
+									$salaryNightOvertime = 0;
+									$RestDay = false;
+									$SpecialHoliday = false;
+									$NationalHoliday = false;
 									foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'], $_GET['mode'])->result_array() as $nrow):
 										if($nrow['Hours']) {
 											$salaryHours = $nrow['Hours'];
-										} else {
-											$salaryHours = 0;
 										}
 										if($nrow['Overtime']) {
 											$salaryOvertime = $nrow['Overtime'];
-										} else {
-											$salaryOvertime = 0;
 										}
 										if($nrow['NightHours']) {
 											$salaryNightHours = $nrow['NightHours'];
-										} else {
-											$salaryNightHours = 0;
 										}
 										if($nrow['NightOvertime']) {
 											$salaryNightOvertime = $nrow['NightOvertime'];
-										} else {
-											$salaryNightOvertime = 0;
 										}
 										if($nrow['RestDay']) {
 											$RestDay = true;
-										} else {
-											$RestDay = false;
 										}
 										if($nrow['SpecialHoliday']) {
 											$SpecialHoliday = true;
-										} else {
-											$SpecialHoliday = false;
 										}
 										if($nrow['NationalHoliday']) {
 											$NationalHoliday = true;
-										} else {
-											$NationalHoliday = false;
 										}
 									endforeach;
 								?>

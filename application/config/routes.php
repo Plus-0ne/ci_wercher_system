@@ -101,6 +101,7 @@ $route['RemoveEmployee'] = 'Delete_Controller/RemoveEmployee';
 $route['RemoveAdmin'] = 'Delete_Controller/RemoveAdmin';
 $route['RemoveClient'] = 'Delete_Controller/RemoveClient';
 $route['RemoveDocumentsNote'] = 'Delete_Controller/RemoveDocumentsNote';
+$route['DeleteSSSTableRow'] = 'Delete_Controller/DeleteSSSTableRow';
 
 // UPDATE
 $route['EmployApplicant'] = 'Update_Controller/EmployApplicant';

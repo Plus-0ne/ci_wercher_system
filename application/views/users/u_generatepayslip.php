@@ -546,8 +546,15 @@
 					<div class="row m-5 p-2">
 						<div class="col-sm-6 mt-4 eprint-commandcard-text">
 							<div class="row mt-2">
-								<div class="col-sm-12">
-									<button type="button" class="btn btn-success eprint-print-btn eprint-print-btn-glow" onClick="printContent('PrintOut')" style="width: 400px;"><i class="fas fa-print"></i> Print</button>
+								<div class="row">
+									<div class="col-sm-12">
+										<button type="button" class="btn btn-success glow-gold" onClick="printContent('PrintOut')" style="width: 400px;"><i class="fas fa-print"></i> Print</button>
+									</div>
+									<div class="col-sm-12 mt-2">
+										<button type="button" class="new-earnings-row-btn btn btn-info"><i class="fas fa-plus"></i> Earnings</button>
+										<button type="button" class="new-deductions-row-btn btn btn-info"><i class="fas fa-plus"></i> Deductions</button>
+										<button type="button" class="new-provisions-row-btn btn btn-info"><i class="fas fa-plus"></i> Provisions</button>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -873,7 +880,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="row" style="margin-bottom: 2px;">
+								<div class="row">
 									<div class="col-sm-12">
 										<div class="row">
 											<div class="col-sm-6">
@@ -884,6 +891,8 @@
 											</div>
 										</div>
 									</div>
+								</div>
+								<div class="NewEarningsContainer row" style="margin-bottom: 2px;">
 								</div>
 								<div class="row" style="border-top: 1px solid black; border-bottom: 1px solid black;">
 									<div class="col-sm-12">
@@ -929,6 +938,8 @@
 											<div class="col-sm-3 text-right">
 												<input class="payslip-number" type="text" value="<?php echo $SSSTotal; ?>">
 											</div>
+										</div>
+										<div class="NewDeductionsContainer row">
 										</div>
 									</div>
 									<?php if ($GetPayrollLoansBetweenPeriod->num_rows() > 0): ?>
@@ -976,7 +987,7 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-sm-4" style="margin-top: 1px;">
+									<div class="col-sm-4" style="margin-top: 1px; margin-bottom: 1px;">
 										<input type="text" value="Received by:">
 									</div>
 									<div class="col-sm-8" style="margin-bottom: 6px;">
@@ -1020,6 +1031,8 @@
 									<?php endforeach; ?>
 								</div>
 								<?php endif; ?>
+								<div class="NewProvisionsContainer row">
+								</div>
 								<div class="row" style="border-top: 1px solid black; border-bottom: 1px solid black; margin-top: 2px;">
 									<div class="col-sm-12">
 										<div class="row" style="font-size: 17px;">
@@ -1058,5 +1071,14 @@
 	$(document).ready(function () {
 		$(".nav-item a[href*='Payroll']").addClass("nactive");
 		$('[data-toggle="tooltip"]').tooltip();
+		$('.new-earnings-row-btn').on('click', function () {
+			$('.NewEarningsContainer').append('<div class="col-sm-12"><div class="row"><div class="col-sm-6"><input type="text" value="#####:"></div><div class="col-sm-6 text-right"><input class="payslip-number" type="text" value="####"></div></div></div>');
+		});
+		$('.new-deductions-row-btn').on('click', function () {
+			$('.NewDeductionsContainer').append('<div class="payslip-field col-sm-3"><input type="text" value="#####:"></div><div class="col-sm-3 text-right"><input class="payslip-number" type="text" value="####"></div>');
+		});
+		$('.new-provisions-row-btn').on('click', function () {
+			$('.NewProvisionsContainer').append('<div class="payslip-field col-sm-3"><input type="text" value="#####:"></div><div class="col-sm-3 text-right"><input class="payslip-number" type="text" value="####"></div>');
+		});
 	});
 </script>
