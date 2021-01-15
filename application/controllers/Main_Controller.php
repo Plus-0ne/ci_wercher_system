@@ -871,7 +871,18 @@
 			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Applicants">SSS Table</a></li>
 			</ol>
 			</nav>';
-			$data['sss_Contri'] = $this->Model_Selects->sss_Contri();
+			$latestBatch = 0;
+			$createdDate = 'N/A';
+			$GetSSSLatestBatch = $this->Model_Selects->GetSSSLatestBatch();
+			if($GetSSSLatestBatch->num_rows() > 0) {
+				foreach($GetSSSLatestBatch->result_array() as $row) {
+					$latestBatch = $row['Batch'];
+					$createdDate = $row['DateAdded'];
+				}
+			}
+			$data['latestBatch'] = $latestBatch;
+			$data['createdDate'] = $createdDate;
+			$data['GetSSSBatchRows'] = $this->Model_Selects->GetSSSBatchRows($latestBatch);
 			$this->load->view('payroll/p_sssPage',$data);
 		else:
 			redirect('Forbidden');

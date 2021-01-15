@@ -130,6 +130,8 @@
 		}
 		$("#FrontSaveBtn").on('click', function () {
 			html2canvas($("#WercherIDFront"), {
+				dpi:300,
+                scale:0.5,
 				onrendered: function(canvas) {
 					saveAs(canvas.toDataURL(), 'WercherIDCardFront_<?php echo $LastName . $FirstName . $MiddleName; ?>.png');
 				}

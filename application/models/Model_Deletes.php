@@ -75,4 +75,13 @@ class Model_Deletes extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function RemoveSSSTableRow($id)
+	{
+		$data = array(
+			'active' => 0,
+		);
+		$this->db->where('ID', $id);
+		$result = $this->db->update('sss_table', $data);
+		return $result;
+	}
 }

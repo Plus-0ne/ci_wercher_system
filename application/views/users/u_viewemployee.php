@@ -474,11 +474,6 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-info btn-sm ExtendButton mr-1" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-plus"></i> Extend Contract</button>
 													<?php endif; ?>
 													<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
-													<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions'))): ?>
-													<div class="ml-auto">
-														<button id="<?php echo $ApplicantID; ?>" class="btn btn-danger btn-sm SuspendButton" data-toggle="modal" data-target="#SuspendModal" type="button"><i class="fas fa-exclamation-triangle"></i> Suspend</button>
-													</div>
-													<?php endif; ?>
 												</div>
 											</div>
 											<hr>
@@ -2280,12 +2275,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 			<?php $this->load->view('_template/modals/m_extendcontract'); ?>
 			<!-- SET A REMINDER MODAL -->
 			<?php $this->load->view('_template/modals/m_setreminder'); ?>
-			<!-- DOCUMENT MODAL -->
-			<?php $this->load->view('_template/modals/m_documents'); ?>
-			<!-- DOCUMENTS NOTE MODAL -->
-			<?php $this->load->view('_template/modals/m_addnote_documents'); ?>
-			<!-- ADD DOCUMENTS MODAL -->
-			<?php $this->load->view('_template/modals/m_adddocuments'); ?>
+			
 			<!-- GENERATE ID CARD MODAL -->
 			<?php $this->load->view('_template/modals/m_generateid'); ?>
 			<!-- SUSPEND MODAL -->
@@ -2297,6 +2287,12 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 			<?php $this->load->view('_template/modals/m_clienthire'); ?>
 		<?php endif; ?>
 		<?php $this->load->view('_template/modals/m_p_loans'); ?>
+		<!-- DOCUMENT MODAL -->
+		<?php $this->load->view('_template/modals/m_documents'); ?>
+		<!-- DOCUMENTS NOTE MODAL -->
+		<?php $this->load->view('_template/modals/m_addnote_documents'); ?>
+		<!-- ADD DOCUMENTS MODAL -->
+		<?php $this->load->view('_template/modals/m_adddocuments'); ?>
 	</body>
 	<?php $this->load->view('_template/users/u_scripts');?>
 	<script type="text/javascript">
@@ -2554,9 +2550,11 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 				$('#BlacklistNotice').hide();
 				if ( $(this).val() == "Violation" ) { 
 					$("#ViolationNotice").fadeIn();
-			    }
-			    if ( $(this).val() == "Blacklist" ) { 
+			    } else if ( $(this).val() == "Blacklist" ) { 
 					$("#BlacklistNotice").fadeIn();
+			    } else if ( $(this).val() == "Suspension" ) { 
+					$("#SuspensionNotice").fadeIn();
+					$('.suspension-group').fadeIn();
 			    }
 			});
 			$('.doc_btn').on('click', function () {

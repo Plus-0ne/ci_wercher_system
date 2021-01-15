@@ -44,12 +44,31 @@
 							<select id="Type" class="form-control" name="Type">
 								<option value="Document">Document</option>
 								<option value="Violation">Violation</option>
+								<option value="Suspension">Suspension</option>
 								<option value="Blacklist">Blacklist</option>
 							</select>
 						</div>
 						<div class="form-group col-sm-8 text-center">
 							<label>Subject</label>
 							<input class="form-control" type="text" name="Subject">
+						</div>
+					</div>
+					<div class="suspension-group form-row mx-1" style="display: none;">
+						<div class="form-group col-4">
+							<label>Years</label>
+							<input class="form-control" type="number" name="S_Years">
+						</div>
+						<div class="form-group col-4">
+							<label>Months</label>
+							<input class="form-control" type="number" name="S_Months">
+						</div>
+						<div class="form-group col-4">
+							<label>Days</label>
+							<input class="form-control" type="number" name="S_Days">
+						</div>
+						<div class="form-group col-12 mt-2">
+							<label>Remarks</label>
+							<input class="form-control" type="text" name="S_Remarks">
 						</div>
 					</div>
 					<div class="form-group col-sm-12 text-center">
@@ -75,6 +94,14 @@
 								<div class="col-sm-12">
 									<i class="fas fa-exclamation-triangle" style="font-size: 24px;"></i>
 									This individual will be blacklisted.
+								</div>
+							</div>
+						</div>
+						<div id="SuspensionNotice" class="row ml-auto mr-auto w-100" style="display: none; float: left;">
+							<div class="col-sm-12 col-mb-12 w-100 text-center document-notice-violation py-2">
+								<div class="col-sm-12">
+									<i class="fas fa-exclamation-triangle" style="font-size: 24px;"></i>
+									This individual will be suspended.
 								</div>
 							</div>
 						</div>

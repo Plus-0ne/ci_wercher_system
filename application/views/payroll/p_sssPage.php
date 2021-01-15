@@ -1,4 +1,16 @@
-<?php $T_Header;?>
+<?php
+
+$T_Header;
+require 'vendor/autoload.php';
+use Carbon\Carbon;
+
+$date = new DateTime($createdDate);
+$day = $date->format('Y-m-d');
+$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+$hours = $date->format('h:i:s A');
+$elapsed = Carbon::parse($createdDate);
+
+?>
 <body>
 	<div class="wrapper wercher-background-lowpoly">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
@@ -22,60 +34,64 @@
 					</div>
 					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 						<h4 class="sss-datecreated">
-							Created in 
+							<a href="#">Batch #<?php echo $latestBatch; ?></a> | Created on <span data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $elapsed->diffForHumans(); ?>"><?php echo $day . ' at ' . $hours; ?></span>
 						</h4>
 					</div>
 					<div class="col-sm-12 col-mb-12 mt-2">
 						<div class="table-responsive">
 							<table id="SalaryTable" class="table table-condensed">
 								<thead>
-									<th>From</th>
-									<th>To</th>
+									<th>Range</th>
+									<th>&nbsp;</th>
+									<th>&nbsp;</th>
 									<th>Contribution ER</th>
 									<th>Contribution EE</th>
 									<th>Contribution EC</th>
 									<th>Total</th>
-									<th>Updated</th>
+									<th>Total with EC</th>
 									<th style="width: 75px;">Action</th>
 								</thead>
 								<tbody>
 									<form method="POST" action="UpdateSSSField">
-									<?php foreach ($sss_Contri->result_array() as $row) { ?>
+									<?php foreach ($GetSSSBatchRows->result_array() as $row) { ?>
 										<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
 											<input type="hidden" name="id" value="<?php echo $row['id']; ?>">
 										<?php endif; ?>
 										<tr id="<?php echo $row['id']; ?>" class="sss-row">
 											<td>
 												<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
-													<input class="form-control w-75" type="number" name="f_range" min="0" value="<?php echo $row['f_range']; ?>">
+													<input class="form-control w-75" type="number" name="f_range" step=".01" value="<?php echo $row['f_range']; ?>">
 												<?php else: ?>
 													<?php print $row['f_range']; ?>
 												<?php endif; ?>
 											</td>
 											<td>
+												-
+											</td>
+											<td>
 												<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
-													<input class="form-control w-75" type="number" name="t_range" min="0" value="<?php echo $row['t_range']; ?>">
+													<input class="form-control w-75" type="number" name="t_range" step=".01" value="<?php echo $row['t_range']; ?>">
 												<?php else: ?>
 													<?php print $row['t_range']; ?>
 												<?php endif; ?>
 											</td>
 											<td>
 												<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
-													<input class="form-control w-75" type="number" name="contribution_er" min="0" value="<?php echo $row['contribution_er']; ?>">
+													<input class="form-control w-75" type="number" name="contribution_er" step=".01" value="<?php echo $row['contribution_er']; ?>">
 												<?php else: ?>
 													<?php print $row['contribution_er']; ?>
 												<?php endif; ?>
 											</td>
 											<td>
 												<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
-													<input class="form-control w-75" type="number" name="contribution_ee" min="0" value="<?php echo $row['contribution_ee']; ?>">
+													<input class="form-control w-75" type="number" name="contribution_ee" step=".01" value="<?php echo $row['contribution_ee']; ?>">
 												<?php else: ?>
 													<?php print $row['contribution_ee']; ?>
 												<?php endif; ?>
 											</td>
 											<td>
 												<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
-													<input class="form-control w-75" type="number" name="contribution_ec" min="0" value="<?php echo $row['contribution_ec']; ?>">
+													<input class="form-control w-75" type="number" name="contribution_ec" step=".01" value="<?php echo $row['contribution_ec']; ?>">
 												<?php else: ?>
 													<?php print $row['contribution_ec']; ?>
 												<?php endif; ?>
@@ -83,7 +99,8 @@
 											<td>
 												<?php echo $row['total']; ?>
 											</td>
-											<td class="sss-updated">
+											<td>
+												<?php echo $row['total_with_ec']; ?>
 											</td>
 											<td width="140">
 												<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
@@ -166,6 +183,7 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('[data-toggle="tooltip"]').tooltip();
 		$(".nav-item a[href*='Payroll']").addClass("nactive");
 		$('#TaxTable').hide();
 	});

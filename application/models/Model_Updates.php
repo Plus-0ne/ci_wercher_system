@@ -130,12 +130,6 @@ class Model_Updates extends CI_Model {
 	}
 	public function UpdateSSSField($id, $data)
 	{
-		extract($data);
-		$data = array(
-			'f_range' => $f_range,
-			't_range' => $t_range,
-			'contribution' => $contribution,
-		);
 		$this->db->where('id', $id);
 		$result = $this->db->update('sss_table', $data);
 		return $result;

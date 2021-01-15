@@ -508,8 +508,8 @@ class Add_Controller extends CI_Controller {
 				$ClientID = 'N/A';
 			}
 
-			if ($ApplicantID == NULL || $Subject == NULL || $Description == NULL || $Remarks == NULL || $Type == NULL) {
-				$this->Model_Logbook->SetPrompts('error', 'error', 'Missing fields. Please try again.');
+			if ($ApplicantID == NULL || $Subject == NULL || $Type == NULL) {
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Subject is missing. Please try again.');
 				redirect('Employees');
 				exit();
 			}
@@ -565,8 +565,70 @@ class Add_Controller extends CI_Controller {
 					$AddDocuments = $this->Model_Inserts->AddDocuments($data);
 					if ($AddDocuments == TRUE) {
 						$this->Model_Logbook->SetPrompts('success', 'success', 'New document added.');
-						redirect('ViewEmployee?id=' . $ApplicantID . '#Documents');
-						exit();
+						if ($Type == 'Suspension') {
+							$S_Days = $this->input->post('S_Days',TRUE);
+							$S_Months = $this->input->post('S_Months',TRUE);
+							$S_Years = $this->input->post('S_Years',TRUE);
+
+							$DateStarted = date('Y-m-d h:i:s A');
+
+							if ($S_Months == NULL) {
+								$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 months', strtotime($DateStarted)));
+							} else {
+								$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$S_Months.' months', strtotime($DateStarted)));
+							}
+							if ($S_Days == NULL) {
+								$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 days', strtotime($DateEnds)));
+							} else {
+								$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$S_Days.' days', strtotime($DateEnds)));
+							}
+							if ($S_Years == NULL) {
+								$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 days', strtotime($DateEnds)));
+							} else {
+								$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$S_Years.' years', strtotime($DateEnds)));
+							}
+
+							$sdata = array(
+								'SuspensionStarted' => $DateStarted,
+								'SuspensionEnds' => $DateEnds,
+								'SuspensionRemarks' => $S_Remarks,
+								'Suspended' => 'Yes',
+							);
+							$Suspend = $this->Model_Updates->Suspend($ApplicantID,$sdata);
+							if ($Suspend == TRUE) {
+								// LOGBOOK
+								$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
+								if ($CheckEmployee->num_rows() > 0) {
+									foreach($CheckEmployee->result_array() as $row) {
+										$LastName = $row['LastName'];
+										$FirstName = $row['FirstName'];
+										$MiddleName = $row['MiddleName'];
+									}
+								} else {
+									$LastName = 'N/A';
+									$FirstName = 'N/A';
+									$MiddleName = 'N/A';
+								}
+								$logbookBeforeDate = new DateTime($DateStarted);
+								$logbookAfterDate = new DateTime($DateEnds);
+								$logbookBeforeDate = $logbookBeforeDate->format('Y-m-d');
+								$logbookAfterDate = $logbookAfterDate->format('Y-m-d');
+								$logbookBeforeDate = DateTime::createFromFormat('Y-m-d', $logbookBeforeDate)->format('F d, Y');
+								$logbookAfterDate = DateTime::createFromFormat('Y-m-d', $logbookAfterDate)->format('F d, Y');
+								$this->Model_Logbook->SetPrompts('success', 'success', 'Added suspension until ' . $logbookAfterDate);
+								$this->Model_Logbook->LogbookEntry('Red', 'Employee', ' suspended <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a>');
+								$this->Model_Logbook->LogbookExtendedEntry(0, 'Suspended for <b>' . $logbookBeforeDate . '</b> to <b>' . $logbookAfterDate . '</b>');
+								redirect('ViewEmployee?id=' . $ApplicantID . '#Documents');
+							}
+							else
+							{
+								$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+								redirect($_SERVER['HTTP_REFERER']);
+							}
+						} else {
+							redirect('ViewEmployee?id=' . $ApplicantID . '#Documents');
+							exit();
+						}
 					}
 					else
 					{
@@ -588,26 +650,35 @@ class Add_Controller extends CI_Controller {
 			$contributionER = $this->input->post('contribution_er',TRUE);
 			$contributionEE = $this->input->post('contribution_ee',TRUE);
 			$contributionEC = $this->input->post('contribution_ec',TRUE);
-			if ($f_range == NULL || $t_range == NULL || $contributionER == NULL || $contributionEE == NULL || $contributionEC = NULL) {
+			if ($f_range == NULL || $t_range == NULL || $contributionER == NULL || $contributionEE == NULL || $contributionEC == NULL) {
 				$this->Model_Logbook->SetPrompts('error', 'error', 'Missing fields. Please try again.');
 				redirect('SSS_Table');
 			}
 			else
 			{
+				$batch = 1;
+				$GetSSSLatestBatch = $this->Model_Selects->GetSSSLatestBatch();
+				if ($GetSSSLatestBatch->num_rows() > 0) {
+					foreach($GetSSSLatestBatch->result_array() as $row) {
+						$batch = $row['Batch'];
+					}
+				}
 				$total = $contributionER + $contributionEE;
-				// $totalEC = $total + $contributionEC;
+				$totalEC = $total + $contributionEC;
 				$data = array(
+					'batch' => $batch,
 					'f_range' => $f_range,
 					't_range' => $t_range,
 					'contribution_er' => $contributionER,
 					'contribution_ee' => $contributionEE,
 					'contribution_ec' => $contributionEC,
 					'total' => $total,
-					// 'total_with_ec' => $totalEC,
+					'total_with_ec' => $totalEC,
+					'active' => 1,
 				);
 				$AddtoSSS = $this->Model_Inserts->AddtoSSS($data);
 				if ($AddtoSSS == TRUE) {
-					$this->Model_Logbook->SetPrompts('success', 'success', $contributionEC);
+					$this->Model_Logbook->SetPrompts('success', 'success', 'Added new row');
 					$this->Model_Logbook->LogbookEntry('Green', 'Payroll', ' added a new SSS table row');
 					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>From:</b> ' . $f_range);
 					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>To:</b> ' . $t_range);

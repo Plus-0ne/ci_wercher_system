@@ -1,5 +1,6 @@
 <?php
 
+$currentDate = new DateTime();
 // Birthdate
 $date = new DateTime($BirthDate);
 $day = $date->format('Y-m-d');
@@ -19,7 +20,8 @@ $deDate = new DateTime($DateEnds);
 $deDay = $deDate->format('Y-m-d');
 $deDay = DateTime::createFromFormat('Y-m-d', $deDay)->format('F d, Y');
 $deHours = $deDate->format('h:i:s A');
-
+//Calculate Age
+$Age = $currentDate->diff($date)->format('%y');
 if ($ApplicantNo == NULL) {
 	$ApplicantNo = '&nbsp;';
 }
@@ -52,9 +54,6 @@ if ($MiddleName == NULL) {
 }
 if ($Gender == NULL) {
 	$Gender = '&nbsp;';
-}
-if ($Age == NULL) {
-	$Age = '&nbsp;';
 }
 if ($Height == NULL) {
 	$Height = '&nbsp;';

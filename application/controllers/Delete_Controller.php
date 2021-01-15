@@ -234,17 +234,17 @@ class Delete_Controller extends CI_Controller {
 	public function DeleteSSSTableRow()
 	{
 		if($this->Model_Security->CheckPermissions('Payroll')):
-			$row = $this->input->get('row');
-			if ($row == NULL) {
+			$id = $this->input->get('row');
+			if ($id == NULL) {
 				redirect('SSS_Table');
 				$this->Model_Logbook->SetPrompts('danger', 'danger', 'No row selected for deletion');
 			}
 			else
 			{
 				$dataAvailable = false;
-				$GetSSSTableRow = $this->Model_Selects->GetSSSTableRow($row);
-				if ($GetSSSTableRow->num_rows() > 0) {
-					foreach($GetSSSTableRow->result_array() as $srow) {
+				$GetSSSTableRowFromID = $this->Model_Selects->GetSSSTableRowFromID($id);
+				if ($GetSSSTableRowFromID->num_rows() > 0) {
+					foreach($GetSSSTableRowFromID->result_array() as $srow) {
 						$dataAvailable = true;
 						$fromRange = $srow['f_range'];
 						$toRange = $srow['t_range'];
@@ -256,7 +256,7 @@ class Delete_Controller extends CI_Controller {
 
 					}
 				}
-				$RemoveSSSTableRow = $this->Model_Deletes->RemoveSSSTableRow($row);
+				$RemoveSSSTableRow = $this->Model_Deletes->RemoveSSSTableRow($id);
 				if ($RemoveSSSTableRow == TRUE) {
 					redirect('SSS_Table');
 					$this->Model_Logbook->SetPrompts('success', 'success', 'Succesfully removed row');

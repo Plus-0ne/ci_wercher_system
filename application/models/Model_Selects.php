@@ -359,13 +359,13 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetDocumentsViolations($ApplicantID, $ClientID) // Also includes Blacklists.
 	{
-		$SQL = "SELECT * FROM supp_documents WHERE ApplicantID = '$ApplicantID' AND (Type = 'Violation' OR Type = 'Blacklist') AND ClientID = '$ClientID'";
+		$SQL = "SELECT * FROM supp_documents WHERE ApplicantID = '$ApplicantID' AND (Type = 'Violation' OR Type = 'Blacklist' OR Type = 'Suspension') AND ClientID = '$ClientID'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
 	public function GetDocumentsViolationsFromClient($ApplicantID, $ClientID, $HistoryFrom, $HistoryTo) // Also includes Blacklists.
 	{
-		$SQL = "SELECT * FROM supp_documents WHERE ApplicantID = '$ApplicantID' AND (Type = 'Violation' OR Type = 'Blacklist') AND ClientID = '$ClientID' AND (DateAdded BETWEEN '$HistoryFrom' AND '$HistoryTo')";
+		$SQL = "SELECT * FROM supp_documents WHERE ApplicantID = '$ApplicantID' AND (Type = 'Violation' OR Type = 'Blacklist' OR Type = 'Suspension') AND ClientID = '$ClientID' AND (DateAdded BETWEEN '$HistoryFrom' AND '$HistoryTo')";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -1972,5 +1972,29 @@ class Model_Selects extends CI_Model {
 		$this->db->where('Time <=', $ToDate);
 		$result = $this->db->get('sss_weekpaid')->row();  
 		return $result->Amount;
+	}
+	public function GetSSSLatestBatch() {
+		$this->db->select('*');
+		$this->db->from('sss_batches');
+		$this->db->where('Active', '1');
+		$this->db->order_by('DateAdded', 'desc');
+		$this->db->limit(1);
+		$result = $this->db->get();
+		return $result;
+	}
+	public function GetSSSBatchRows($Batch) {
+		$this->db->select('*');
+		$this->db->from('sss_table');
+		$this->db->where('batch', $Batch);
+		$this->db->order_by('total', 'asc');
+		$result = $this->db->get();
+		return $result;
+	}
+	public function GetSSSTableRowFromID($id) {
+		$this->db->select('*');
+		$this->db->from('sss_table');
+		$this->db->where('id', $id);
+		$result = $this->db->get();
+		return $result;
 	}
 }

@@ -1315,13 +1315,14 @@ class Update_Controller extends CI_Controller {
 
 						case '2': ### MONTHLY
 							if ($diff < 31) {
+								$Week = 1;
+							} else {
 								$PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P31D'));
 								$PrimaryWeek = $PrimaryWeek->format('Y-m-d');
 								$this->Model_Updates->SetPrimaryWeek($PrimaryWeek, $ClientID);
-								$Week = 1;
 							}
 
-							$Month = $CurrentPrimaryWeek->format('m') - 1;
+							$Month = $CurrentPrimaryWeek->format('m');
 						break;
 
 						default:
@@ -2115,7 +2116,7 @@ class Update_Controller extends CI_Controller {
 			$contributionER = $this->input->post('contribution_er',TRUE);
 			$contributionEE = $this->input->post('contribution_ee',TRUE);
 			$contributionEC = $this->input->post('contribution_ec',TRUE);
-			if ($f_range == NULL || $t_range == NULL || $contributionEE = NULL ) {
+			if ($f_range == NULL || $t_range == NULL || $contributionER == NULL || $contributionEE == NULL || $contributionEC == NULL ) {
 				$this->Model_Logbook->SetPrompts('error', 'error', 'Missing fields. Please try again.');
 				redirect($_SERVER['HTTP_REFERER']);
 			}
@@ -2136,7 +2137,13 @@ class Update_Controller extends CI_Controller {
 				if ($UpdateSSSField == TRUE) {
 					$this->Model_Logbook->SetPrompts('success', 'success', 'Updated successfully.');
 					$this->Model_Logbook->LogbookEntry('Blue', 'Salary', ' updated the SSS table');
-					// $this->Model_Logbook->LogbookExtendedEntry(0, 'Suspended for <b>' . $logbookBeforeDate . '</b> to <b>' . $logbookAfterDate . '</b>');
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>From:</b> ' . $f_range);
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>To:</b> ' . $t_range);
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Contribution (ER):</b> ' . $contributionER);
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Contribution (EE):</b> ' . $contributionEE);
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Contribution (EC):</b> ' . $contributionEC);
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Total:</b> ' . $total);
+					$this->Model_Logbook->LogbookExtendedEntry(0, '<b>Total with EC:</b> ' . $totalEC);
 					redirect('SSS_Table');
 				}
 				else

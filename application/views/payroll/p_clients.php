@@ -42,7 +42,7 @@ use Carbon\Carbon;
 										<th> Address </th>
 										<th> Contact </th>
 										<th style="width: 25px;"> Employees </th>
-										<th>Primary Week</th>
+										<th>Starting Week</th>
 										<th style="width: 25px;">Current Week</th>
 										<th class="text-center PrintExclude" style="width: 125px;"> Attendance </th>
 									</tr>
@@ -115,7 +115,7 @@ use Carbon\Carbon;
 											</td>
 											<td class="text-center PrintExclude">
 												<button id="<?php echo $row['ClientID']; ?>" type="button" class="btn btn-primary btn-sm w-100 mb-1 ViewClientIDButton"  data-toggle="modal" data-target="#ModalClientView"><i class="fas fa-calendar-alt"></i> Date Range</button>
-												<button id="<?php echo $row['ClientID']; ?>" type="button" class="btn btn-primary btn-sm w-100 mb-1 SetPrimaryClientIDButton" data-toggle="modal" data-target="#ModalSetWeek"><i class="fas fa-calendar"></i> Primary Week</button>
+												<button id="<?php echo $row['ClientID']; ?>" type="button" class="btn btn-primary btn-sm w-100 mb-1 SetPrimaryClientIDButton" data-toggle="modal" data-target="#ModalSetWeek"><i class="fas fa-calendar"></i> Starting Week</button>
 												<button id="<?php echo $row['ClientID']; ?>" type="button" class="excel_formatbtn btn btn-success btn-sm w-100 mb-1"  data-toggle="modal" data-target="#DateFroto_modal" value="<?php echo $row['Name']; ?>"><i class="fas fa-file-download"></i> Download Excel</button>
 											</td>
 										</tr>

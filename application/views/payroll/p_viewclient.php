@@ -51,12 +51,38 @@ use Carbon\Carbon;
 							    <button id="ImportButton" type="submit" class="btn btn-success btn-sm form-control"><i class="fas fa-file-download"></i> Download Excel</button>
 						  	</form>
 						  	<div class="form-group">
-						  		<button id="<?php echo $ClientID; ?>" type="button" class="btn btn-primary btn-sm SetPrimaryClientIDButton" data-toggle="modal" data-target="#ModalSetWeek"><i class="fas fa-calendar"></i> Primary Week</button>
+						  		<?php
+						  		$GetCurrentPrimaryWeek = $this->Model_Selects->GetCurrentPrimaryWeek($row['ClientID']);
+								if ($GetCurrentPrimaryWeek->num_rows() > 0) {
+									foreach($GetCurrentPrimaryWeek->result_array() as $prow) {
+										$PrimaryWeek = $prow['WeekStart'];
+										$currentDate = new DateTime();
+										$date = new DateTime($PrimaryWeek);
+										$day = $date->format('Y-m-d');
+										$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+										$elapsed = Carbon::parse($PrimaryWeek);
+
+										$diff = $currentDate->diff($date)->format("%a");
+										if ($diff <= 7) {
+											$Week = '1st';
+										} elseif ($diff <= 14 && $diff > 7) {
+											$Week = '2nd';
+										} elseif ($diff <= 21 && $diff > 14) {
+											$Week = '3rd';
+										} elseif ($diff <= 28 && $diff > 21) {
+											$Week = '4th';
+										} else {
+											$Week = '1st'; // Default;
+										}
+									}
+								} else {
+									$PrimaryWeek = 'N/A';
+								}
+						  		?>
+						  		<button id="<?php echo $ClientID; ?>" type="button" class="btn btn-primary btn-sm SetPrimaryClientIDButton" data-toggle="modal" data-target="#ModalSetWeek"><i class="fas fa-calendar"></i> Set Starting Week</button>
+						  		<i class="fas fa-info-circle"></i> <i>The starting week for this client is <b><?php echo $day; ?></b>. It is currently the <b><?php echo $Week; ?></b> week.</i>
 						  	</div>
 						</div>
-					</div>
-					<div class="col-4 mb-2 text-right">
-						<button id="ImportButton" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-lock"></i> Generate Payslip (WIP)</button>
 					</div>
 					<div class="col-sm-12 col-mb-12">
 						<div class="table-responsive w-100">

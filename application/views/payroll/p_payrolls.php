@@ -84,7 +84,7 @@
 								<!-- Months -->
 								<div class="form-group col-sm-6 col-md-2">
 									<select id="MonthsSelect" class="payroll-select form-control" name="month">
-										<?php for($i = 0; $i <= 12; $i++): 
+										<?php for($i = 1; $i <= 12; $i++): 
 											$monthCount = DateTime::createFromFormat('!m', $i);
 											$monthCount = $monthCount->format('F'); ?>
 											<option value="<?php echo $i; ?>" <?php if ($i == $Month) { echo 'selected'; } ?>><?php echo $monthCount; ?></option>
@@ -151,6 +151,7 @@
 																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount that is paid for this week's SSS contribution. Used to subtract next week's SSS contribution." style="width: 225px;">Paid this week <i style="color: gray">(?)</i></th>
 																	<th>Inputs</th>
 																	<th>Net Pay</th>
+																	<th>Generate</th>
 																</thead>
 																<tbody>
 																	<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
@@ -443,9 +444,9 @@
 																				<button type="button" class="provisions-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#ModalProvisions" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-provisionstotal="<?php echo $loansTotal; ?>" style="margin-top: 1px;"><i class="fas fa-donate"></i> Provisions</button>
 																			</td>
 																			<td class="payroll-net-pay" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($GetPayrollWeekGrossPay, 2) . ' - (' . $hdmf_contriCalc . ' + ' . $philhealth_contri . ' + ' . $tax . ' + ' . $toBePaid . ')<br><i>Gross Pay - (HDMF Contribution + PhilHealth Contribution + Tax + SSS left to be paid)</i>'; ?>"><?php echo round($net_pay, 2); ?></td>
-																			<!-- <td>
-																				<button type="button" class="btn btn-success btn-sm w-100" data-toggle="modal" data-target="#GeneratePayslipModal"><i class="fas fa-file-invoice-dollar"></i> Payslip</button>
-																			</td> -->
+																			<td>
+																				<button type="button" class="individual-payslip-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#GeneratePayslipModal" data-applicantid="<?php echo $ApplicantID; ?>" data-periodmode="<?php echo $Mode; ?>"><i class="fas fa-file-invoice-dollar"></i> Payslip</button>
+																			</td>
 																		</tr>
 																	<?php endforeach; ?>
 																</tbody>
@@ -476,6 +477,7 @@
 																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount that is paid for this week's SSS contribution. Used to subtract next week's SSS contribution." style="width: 225px;">Paid this week <i style="color: gray">(?)</i></th>
 																	<th>Inputs</th>
 																	<th>Net Pay</th>
+																	<th>Generate</th>
 																</thead>
 																<tbody>
 																	<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
@@ -769,6 +771,9 @@
 																				<button type="button" class="provisions-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#ModalProvisions" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-provisionstotal="<?php echo $loansTotal; ?>" style="margin-top: 1px;"><i class="fas fa-donate"></i> Provisions</button>
 																			</td>
 																			<td class="payroll-net-pay" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($GetPayrollWeekGrossPay, 2) . ' - (' . $hdmf_contriCalc . ' + ' . $philhealth_contri . ' + ' . $tax . ' + ' . $toBePaid . ')<br><i>Gross Pay - (HDMF Contribution + PhilHealth Contribution + Tax + SSS left to be paid)</i>'; ?>"><?php echo round($net_pay, 2); ?></td>
+																			<td>
+																				<button type="button" class="individual-payslip-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#GeneratePayslipModal" data-applicantid="<?php echo $ApplicantID; ?>" data-periodmode="<?php echo $Mode; ?>"><i class="fas fa-file-invoice-dollar"></i> Payslip</button>
+																			</td>
 																		</tr>
 																	<?php endforeach; ?>
 																</tbody>
@@ -799,6 +804,7 @@
 																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount that is paid for this week's SSS contribution. Used to subtract next week's SSS contribution." style="width: 225px;">Paid this week <i style="color: gray">(?)</i></th>
 																	<th>Inputs</th>
 																	<th>Net Pay</th>
+																	<th>Generate</th>
 																</thead>
 																<tbody>
 																	<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
@@ -1091,6 +1097,9 @@
 																				<button type="button" class="provisions-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#ModalProvisions" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-provisionstotal="<?php echo $loansTotal; ?>" style="margin-top: 1px;"><i class="fas fa-donate"></i> Provisions</button>
 																			</td>
 																			<td class="payroll-net-pay" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($GetPayrollWeekGrossPay, 2) . ' - (' . $hdmf_contriCalc . ' + ' . $philhealth_contri . ' + ' . $tax . ' + ' . $toBePaid . ')<br><i>Gross Pay - (HDMF Contribution + PhilHealth Contribution + Tax + SSS left to be paid)</i>'; ?>"><?php echo round($net_pay, 2); ?></td>
+																			<td>
+																				<button type="button" class="individual-payslip-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#GeneratePayslipModal" data-applicantid="<?php echo $ApplicantID; ?>" data-periodmode="<?php echo $Mode; ?>"><i class="fas fa-file-invoice-dollar"></i> Payslip</button>
+																			</td>
 																		</tr>
 																	<?php endforeach; ?>
 																</tbody>
@@ -1468,6 +1477,27 @@
 
 			});
 		});
+		$('.individual-payslip-btn').on('click', function() {
+			let applicantID = $(this).data('applicantid');
+			let modeRaw = $(this).data('periodmode');
+			switch (modeRaw) {
+				case 0:
+					mode = 'Weekly';
+					break;
+				case 1:
+					mode = 'Semi-monthly';
+					break;
+				case 2:
+					mode = 'Monthly';
+					break;
+				default:
+					mode = 'Weekly';
+					break;
+			}
+			$('#PayslipApplicantID').val(applicantID);
+			$('#PayslipModeSelect option[value=' + mode + ']').attr('selected', 'selected');
+			console.log(modeRaw);
+		});
 		$('.payslip-inputs').bind('input', function() {
 			let payslipApplicantID = $('#PayslipApplicantID').val();
 			let payslipMode = $('#PayslipModeSelect').val();
@@ -1480,6 +1510,10 @@
 			let payslipToDateMonth = payslipToDate.getUTCMonth() + 1;
 			let payslipToDateYear = payslipToDate.getFullYear();
 			$('#GeneratePayslipLink').attr('href', 'GeneratePayslip?id=' + payslipApplicantID + '&mode=' + payslipMode + '&from_day=' + payslipFromDateDay + '&from_month=' + payslipFromDateMonth + '&from_year=' + payslipFromDateYear + '&to_day=' + payslipToDateDay + '&to_month=' + payslipToDateMonth + '&to_year=' + payslipToDateYear);
+			if (Date.parse(payslipFromDate) && Date.parse(payslipToDate)) {
+				$('.gpm-locked-group').hide();
+				$('.gpm-valid-group').show();
+			}
 		});
 		$(".nav-item a[href*='Payroll']").addClass("nactive");
 		$('[data-toggle="tooltip"]').tooltip();

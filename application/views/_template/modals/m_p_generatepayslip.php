@@ -40,7 +40,13 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<a href="#" id="GeneratePayslipLink" class="btn btn-success" target="_blank"><i class="fas fa-sync-alt"></i> Generate</a>
+				<div class="gpm-locked-group">
+					<span class="mr-2" style="font-size: 18px; color: rgba(255, 25, 25);"><i class="fas fa-exclamation-circle"></i> <span class="edit-password-text">Must contain both dates</span></span>
+					<button type="button" class="btn btn-secondary hover-disabled"><i class="fas fa-sync-alt"></i> Generate</button>
+				</div>
+				<div class="gpm-valid-group" style="display: none">
+					<a href="#" id="GeneratePayslipLink" class="btn btn-success" target="_blank"><i class="fas fa-sync-alt"></i> Generate</a>
+				</div>
 			</div>
 		</div>
 	</div>
