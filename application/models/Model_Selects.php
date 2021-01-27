@@ -710,7 +710,12 @@ class Model_Selects extends CI_Model {
 		return $result;
 	}
 	public function GetLatestEmployees($FetchNum = 1) {
-		$SQL = "SELECT * FROM applicants WHERE Status = 'Employed' ORDER BY DateStarted DESC LIMIT $FetchNum";
+		$SQL = "SELECT * FROM applicants WHERE Status = 'Employed' OR Status = 'Employed (Permanent)' ORDER BY DateStarted DESC LIMIT $FetchNum";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetLatestApplicants($FetchNum = 1) {
+		$SQL = "SELECT * FROM applicants WHERE Status = 'Applicant' OR Status = 'Expired' ORDER BY DateStarted DESC LIMIT $FetchNum";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -1994,6 +1999,15 @@ class Model_Selects extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('sss_table');
 		$this->db->where('id', $id);
+		$result = $this->db->get();
+		return $result;
+	}
+	public function GetExpiringSoon($limit = 5) {
+		$this->db->select('*');
+		$this->db->from('applicants');
+		$this->db->where('Status', 'Employed');
+		$this->db->order_by('DateEnds', 'asc');
+		$this->db->limit($limit);
 		$result = $this->db->get();
 		return $result;
 	}

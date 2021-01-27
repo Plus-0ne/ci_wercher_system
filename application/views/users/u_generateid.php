@@ -1,4 +1,9 @@
-<?php $T_Header;?>
+<?php
+$T_Header;
+
+$date = new DateTime();
+$day = $date->format('Y-m-d');
+$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 <body>
 	<div class="wrapper wercher-background-lowpoly">
 		<div id="content">
@@ -19,7 +24,7 @@
 								<span><?php echo $PositionDesired; ?></span>
 							</div>
 							<div class="wercher-idcard-dateissued">
-								<span><?php echo date("Y-m-d"); ?></span>
+								<span><?php echo $day; ?></span>
 							</div>
 							<div class="wercher-idcard-employeeid">
 								<span>

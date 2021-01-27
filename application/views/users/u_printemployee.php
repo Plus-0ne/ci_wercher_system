@@ -566,7 +566,7 @@ if ($Referral == NULL) {
 							</div>
 							<div class="col-md-3 printemployee-tooltip">
 								<p>
-									<span style="margin-left: 10px;"><?php echo $appliedDay . ' at ' . $appliedHours; ?></span>
+									<span style="margin-left: 10px; font-size: 14px;"><?php echo $appliedDay . ' at ' . $appliedHours; ?></span>
 								</p>
 							</div>
 							<div class="col-md-2">

@@ -12,7 +12,7 @@ if ($LatestHireesCount > 0):
 		$thumbnail = substr($thumbnail, 0, -4);
 		$thumbnail = $thumbnail . '_thumb.jpg';
 		$LatestHireesIteration++;
-		$LatestHireesText = $LatestHireesText . '<a href="ViewEmployee?id=' . $erow['ApplicantID'] . '">' . '<img src="' . $thumbnail .'" height="18px; width: 18px;" class="rounded-circle"> ' . $erow['LastName'] . ', ' . $erow['FirstName'] . ' ' . $erow['MiddleName']  .'.';
+		$LatestHireesText = $LatestHireesText . '<a href="ViewEmployee?id=' . $erow['ApplicantID'] . '">' . '<img src="' . $thumbnail .'" height="18px; width: 18px;" class="rounded-circle"> ' . $erow['LastName'] . ', ' . $erow['FirstName'] . ' ' . $erow['MiddleName'][0]  .'.';
 		if ($erow['NameExtension'] != NULL) {
 			$LatestHireesText = $LatestHireesText . ', ' . $erow['NameExtension'];
 		}

@@ -189,7 +189,7 @@ class Update_Controller extends CI_Controller {
 							'Name' => $fullName,
 							'Salary' => $row['SalaryExpected'],
 						);
-						$EmployNewApplicant = $this->Model_Inserts->InsertToClient($data);
+						$InsertToClient = $this->Model_Inserts->InsertToClient($data);
 						if ($EmployNewApplicant && $InsertToClient) {
 							$this->Model_Logbook->SetPrompts('success', 'success', 'Employed successfully');
 							// LOGBOOK
@@ -2344,7 +2344,7 @@ class Update_Controller extends CI_Controller {
 						'ClientEmployed' => $ClientID,
 						'DateStarted' => $DateStartedFull,
 						'DateEnds' => $DateEndsFull,
-						'Salary' => $Salary,
+						'SalaryExpected' => $Salary,
 					);
 					$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
 					$fullName = '';

@@ -14,7 +14,7 @@ if ($Status == 'Employed' || $Status == 'Employed (Permanent)') {
 	$cEnds = new DateTime($DateEnds);
 
 	$cElapsed = $cStarts->diff($currentDate)->format('%a');
-	$cElapsedText = $cStarts->diff($currentDate)->format('%m months, %d days');
+	$cElapsedText = $cStarts->diff($currentDate)->format('%y years, %m months, %d days');
 
 	// 13th Month Pay Calculation
 	$cDiff = $cEnds->diff($cStarts);
@@ -583,8 +583,8 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 													Days Remaining on Contract
 												</b>
 											</div>
-											<div class="col-sm-12 col-md-12 text-center">
-												<p>
+											<div class="col-sm-12 col-md-12 mb-2 text-center">
+												<b style="font-size: 28px;">
 													<?php
 
 														$currTime = time();
@@ -660,7 +660,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 														}
 													?>
 													<input type="hidden" id="TimeLeft" value="<?php echo $rPercentage;?>">
-												</p>
+												</b>
 											</div>
 											<div class="col-sm-12 col-md-12 PrintExclude">
 												<div class="progressBar">
@@ -1767,7 +1767,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 													<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
 													<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions'))): ?>
 													<div class="ml-auto">
-														<button id="<?php echo $ApplicantID; ?>" class="btn btn-danger btn-sm SuspendButton" data-toggle="modal" data-target="#SuspendModal" type="button"><i class="fas fa-exclamation-triangle"></i> Suspend</button>
+														<!-- <button id="<?php echo $ApplicantID; ?>" class="btn btn-danger btn-sm SuspendButton" data-toggle="modal" data-target="#SuspendModal" type="button"><i class="fas fa-exclamation-triangle"></i> Suspend</button> -->
 													</div>
 													<?php endif; ?>
 												</div>
@@ -1775,27 +1775,15 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 											<hr>
 											<div class="col-sm-12 col-md-12 employee-dynamic-header text-center">
 												<b>
-													Permanently employed since
+													Regular since
 												</b>
 											</div>
-											<div class="col-sm-12 col-md-12 text-center">
-												<p>
+											<div class="col-sm-12 col-md-12 mb-2 text-center">
+												<b style="font-size: 28px;">
 													<?php
 														echo $cElapsedText;
 													?>
-												</p>
-											</div>
-											<div class="col-sm-12 col-md-12 text-center">
-												<p>
-													<input type="hidden" id="TimeLeft" value="100">
-												</p>
-											</div>
-											<div class="col-sm-12 col-md-12 PrintExclude">
-												<div class="progressBar">
-													<div class="progressBarTitle progressRemainingColor">Permanent</div>
-													<div class="progress progressRemaining"></div>
-													<div class="progress_value">45%</div>
-												</div>
+												</b>
 											</div>
 											<div class="row">
 												<div class="col-sm-3">

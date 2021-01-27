@@ -198,6 +198,7 @@
 			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Dashboard">Dashboard</a></li>
 			</ol>
 			</nav>';
+			$data['getClientOption'] = $this->Model_Selects->getClientOption();
 			// COUNT ADMIN
 			$data['result_cadmin'] =  $this->Model_Selects->GetAdmin();
 			// COUNT APPLICANTS
@@ -207,7 +208,7 @@
 			// COUNT CLIENT
 			$data['result_cclients'] =  $this->Model_Selects->GetClients();
 			// LOGBOOK
-			$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
+			$data['GetLogbook'] =  $this->Model_Selects->GetLogbookWithLimit(10);
 			// COUNT MONTHLY TOTAl
 			$CurrentYear = date('Y');
 			$Year = $CurrentYear;

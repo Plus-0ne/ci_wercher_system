@@ -2,6 +2,12 @@
 
 $T_Header;
 
+require 'vendor/autoload.php';
+use Carbon\Carbon;
+
+$logbookIteration = 0;
+$GetLogbookNotes = $this->Model_Selects->GetLogbookNotes();
+
 ?>
 <body>
 	<div class="wrapper">
@@ -64,6 +70,10 @@ $T_Header;
 					.card-icon {
 						font-size: 45px;
 						color: rgba(255, 255, 255, 0.33);
+					}
+					.latesthires-container {
+						border-radius: 6px;
+						background-color: rgba(0, 0, 0, 0.08);
 					}
 				</style>
 				<div class="row p-4">
@@ -179,10 +189,10 @@ $T_Header;
 							</a>
 						</div>
 					</div>
-					<div id="GraphChartButton" class="col-sm-12 col-lg-12 mt-5 mb-5 chart-hover">
+					<div id="GraphChartButton" class="col-sm-12 col-lg-8 mt-5 mb-5 chart-hover">
 						<div class="chart-title text-center">
 							<h5 class="titless">
-								<i class="fas fa-calendar-week fa-fw chart-hover-static"></i> <?php echo $CurrentYear; ?> Applicants
+								<i class="fas fa-chart-line fa-fw chart-hover-static"></i> <?php echo $CurrentYear; ?> Applicants
 							</h5>
 						</div>
 						<!-- <div class="col-1 ml-auto chart-hover-settings" style="margin-top: -30px; display: none;">
@@ -190,18 +200,72 @@ $T_Header;
 						</div> -->
 						<canvas id="ApplicantChart" class="w-100" width="800" height="250"></canvas>
 					</div>
-					<div id="PieChartButton" class="col-sm-12 col-lg-6 mt-5 mb-5">
+					<div class="col-sm-12 col-lg-4">
+						<div class="chart-title text-center">
+							<h5 class="titless">
+								<i class="fas fa-users fa-fw chart-hover-static"></i> Latest Applicants
+							</h5>
+						</div>
+						<div class="latesthires-container">
+							<?php
+							$GetLatestApplicants = $this->Model_Selects->GetLatestApplicants(5);
+							if($GetLatestApplicants->num_rows() > 0):
+								foreach($GetLatestApplicants->result_array() as $row):
+									$thumbnail = $row['ApplicantImage'];
+									$thumbnail = substr($thumbnail, 0, -4);
+									$thumbnail = $thumbnail . '_thumb.jpg';
+									$employeeName = '<div class="col-sm-12"><a href="ViewEmployee?id=' . $row['ApplicantID'] . '">' . '<img src="' . $thumbnail .'" height="18px; width: 18px;" class="rounded-circle"> ' . $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName'][0]  .'.';
+									if ($row['NameExtension'] != NULL) {
+										$employeeName = $employeeName . ', ' . $row['NameExtension'];
+									$GetClientID = $this->Model_Selects->GetClientID($row['ClientEmployed']);
+									}
+									if ($GetClientID->num_rows() > 0) {
+										foreach($GetClientID->result_array() as $crow) {
+											$clientName = $crow['Name'];
+										}
+									} else {
+										$clientName = 'N/A';
+									}
+									?>
+									<div class="row">
+										<div class="col-sm-12 ml-4 mt-2">
+											<div class="row">
+												<div class="col-sm-12">
+													<?php echo $employeeName . '</a>' ?>
+												</div>
+												<div class="col-sm-12">
+													<i style="color: gray;">
+														<?php 
+															$date = new DateTime($row['DateStarted']);
+															$day = $date->format('Y-m-d');
+															$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+
+															echo '<a href="#" id="' . $row['ApplicantID'] . '" class="ModalHire"  data-toggle="modal" data-target="#hirthis"><i class="fas fa-user-edit"></i> Click to hire</a> - Applied on ' . $day . '</div>';
+														?>
+													</i>
+												</div>
+											</div>
+										</div>
+									</div>
+									<hr>
+								<?php endforeach;
+							else:
+								echo 'No data';
+							endif; ?>
+						</div>
+					</div>
+					<!-- <div id="PieChartButton" class="col-sm-12 col-lg-6 mt-5 mb-5">
 						<div class="chart-title text-center">
 							<h5 class="titless">
 								<i class="fas fa-chart-pie fa-fw"></i> Applicants Pool
 							</h5>
 						</div>
-						<!-- <div class="col-1 ml-auto chart-hover-settings" style="margin-top: -30px; display: none;">
+						<div class="col-1 ml-auto chart-hover-settings" style="margin-top: -30px; display: none;">
 							<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog" style="margin-right: -1px;"></i></button>
-						</div> -->
+						</div>
 						<canvas id="pie-chart" width="800" height="800"></canvas>
-					</div>
-					<div id="BarChartButton" class="col-sm-12 col-lg-6 mt-5 mb-5">
+					</div> -->
+					<div id="BarChartButton" class="col-sm-12 col-lg-4 mt-5 mb-5">
 						<div class="chart-title text-center">
 							<h5 class="titless">
 								<i class="fas fa-chart-line fa-fw"></i> Total Employed
@@ -210,72 +274,417 @@ $T_Header;
 						<!-- <div class="col-1 ml-auto chart-hover-settings" style="margin-top: -30px; display: none;">
 							<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog" style="margin-right: -1px;"></i></button>
 						</div> -->
-						<canvas id="bar-chart-horizontal" width="800" height="450"></canvas>
+						<canvas id="bar-chart-horizontal" width="800" height="300"></canvas>
 					</div>
-
-					<!-- LOGBOOK -->
-					<div id="Logbook" class="col-sm-12 col-lg-12 mt-5">
+					<div class="col-sm-12 col-lg-4">
 						<div class="chart-title text-center">
-							<h5>
-								<i class="fas fa-list"></i> Latest Logbook Entries
+							<h5 class="titless">
+								<i class="fas fa-users fa-fw chart-hover-static"></i> Expiring Soon
 							</h5>
 						</div>
-					</div>
-					<div class="col-sm-12 col-lg-12 mt-2">
-						<div class="text-center">
-							<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#AddNote"><i class="fas fa-plus"></i> Add Note</button>
-							<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download" style="margin-right: -1px;"></i></button>
-							<a class="btn btn-primary btn-sm" href="Logbook"><i class="fas fa-book" style="margin-right: -1px;"></i></a>
+						<div class="latesthires-container">
+							<?php
+							$GetExpiringSoon = $this->Model_Selects->GetExpiringSoon(5);
+							if($GetExpiringSoon->num_rows() > 0):
+								foreach($GetExpiringSoon->result_array() as $row):
+									$currTime = time();
+									$strDateEnds = strtotime($row['DateEnds']);
+									$strDateStarted = strtotime($row['DateStarted']);
+									// DAYS REMAINING
+									$dateTimeZone = new DateTimeZone("Asia/Manila");
+									$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
+									$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
+									$interval = $datetime1->diff($datetime2);
+									$TimeString = "";
+									if($interval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
+										if($interval->format('%H') == '1') {
+											$TimeString = $interval->format('%H hour');
+											if($interval->format('%I') != NULL || $interval->format('%S') != NULL) {
+												$TimeString = $TimeString . ', ';
+											}
+										} else {
+											$TimeString = $interval->format('%H hours');
+											if($interval->format('%I') != NULL || $interval->format('%S') != NULL) {
+												$TimeString = $TimeString . ', ';
+											}
+										}
+										if($interval->format('%I') == '1') {
+											$TimeString = $TimeString . $interval->format('%I minute');
+											if($interval->format('%S') != NULL) {
+												$TimeString = $TimeString . ', ';
+											}
+										} else {
+											$TimeString = $TimeString . $interval->format('%I minutes');
+											if($interval->format('%S') != NULL) {
+												$TimeString = $TimeString . ', ';
+											}
+										}
+										if($interval->format('%S') == '1') {
+											$TimeString = $TimeString . $interval->format('%S second');
+										} else {
+											$TimeString = $TimeString . $interval->format('%S seconds');
+										}
+									} else {
+										if($interval->format('%y') == '1') {
+											$TimeString = $interval->format('%y year');
+											if($interval->format('%m') != NULL || $interval->format('%d') != NULL) {
+												$TimeString = $TimeString . ', ';
+											}
+										} else {
+											$TimeString = $interval->format('%y years');
+											if($interval->format('%m') != NULL || $interval->format('%d') != NULL) {
+												$TimeString = $TimeString . ', ';
+											}
+										}
+										if($interval->format('%m') == '1') {
+											$TimeString = $TimeString . $interval->format('%m month');
+											if($interval->format('%d') != NULL) {
+												$TimeString = $TimeString . ', ';
+											}
+										} else {
+											$TimeString = $TimeString . $interval->format('%m months');
+											if($interval->format('%d') != NULL) {
+												$TimeString = $TimeString . ', ';
+											}
+										}
+										if($interval->format('%d') == '1') {
+											$TimeString = $TimeString . $interval->format('%d day');
+										} else {
+											$TimeString = $TimeString . $interval->format('%d days');
+										}
+									}
+									$thumbnail = $row['ApplicantImage'];
+									$thumbnail = substr($thumbnail, 0, -4);
+									$thumbnail = $thumbnail . '_thumb.jpg';
+									$employeeName = '<a href="ViewEmployee?id=' . $row['ApplicantID'] . '">' . '<img src="' . $thumbnail .'" height="18px; width: 18px;" class="rounded-circle"> ' . $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName'][0]  .'.';
+									if ($row['NameExtension'] != NULL) {
+										$employeeName = $employeeName . ', ' . $row['NameExtension'];
+									$GetClientID = $this->Model_Selects->GetClientID($row['ClientEmployed']);
+									}
+									if ($GetClientID->num_rows() > 0) {
+										foreach($GetClientID->result_array() as $crow) {
+											$clientName = $crow['Name'];
+										}
+									} else {
+										$clientName = 'N/A';
+									}
+									?>
+									<div class="row">
+										<div class="col-sm-12 ml-4 mt-2">
+											<div class="row">
+												<div class="col-sm-12">
+													<?php echo $employeeName . '</a>' ?>
+												</div>
+												<div class="col-sm-12">
+													<i style="color: gray;">
+														<?php 
+															if ($TimeString != NULL) {
+																echo 'Expiring in ' . $TimeString;
+															} else {
+																echo 'Expiring in less than 1 day';
+															}
+														?>
+													</i>
+												</div>
+											</div>
+										</div>
+									</div>
+									<hr>
+								<?php endforeach;
+							else:
+								echo 'No data';
+							endif; ?>
 						</div>
 					</div>
-					<div class="col-sm-12">
-						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
-							<table id="ListLogbook" class="table table-condensed PrintOut" style="width: 100%;">
-								<thead>
-									<tr class="text-center align-middle">
-										<th> Time </th>
-										<th> Event </th>
-										<th> Action </th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php foreach ($GetLogbook->result_array() as $row): ?>
-										<tr class="
-											<?php 
-												if ($row['Type'] == 'New' || $row['Type'] == 'Employment') 
-												{ 
-													echo 'logbook-success'; 
-												}
-												elseif ($row['Type'] == 'Archival') 
-												{
-													echo 'logbook-danger';
-												} 
-												elseif ($row['Type'] == 'Update')
-												{
-													echo 'logbook-info';
-												}
-												elseif ($row['Type'] == 'Reminder' || $row['Type'] == 'Note') 
-												{
-													echo 'logbook-warning';
-												}
-											?>">
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['Time']; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['Event']; ?>
-											</td>
-											<td class="text-center align-middle PrintExclude" width="100">
-												<a href="<?php echo $row['Link'] ?>" class="btn btn-primary btn-sm w-100 mb-1" href="#" target="_blank"><i class="fas fa-external-link-alt"></i> View</a>
-											</td>
-										</tr>
-									<?php endforeach; ?>
-								</tbody>
-							</table>
+					<div class="col-sm-12 col-lg-4">
+						<div class="chart-title text-center">
+							<h5 class="titless">
+								<i class="fas fa-users fa-fw chart-hover-static"></i> Latest Hires
+							</h5>
+						</div>
+						<div class="latesthires-container">
+							<?php
+							$GetLatestEmployees = $this->Model_Selects->GetLatestEmployees(5);
+							if($GetLatestEmployees->num_rows() > 0):
+								foreach($GetLatestEmployees->result_array() as $row):
+									$thumbnail = $row['ApplicantImage'];
+									$thumbnail = substr($thumbnail, 0, -4);
+									$thumbnail = $thumbnail . '_thumb.jpg';
+									$employeeName = '<a href="ViewEmployee?id=' . $row['ApplicantID'] . '">' . '<img src="' . $thumbnail .'" height="18px; width: 18px;" class="rounded-circle"> ' . $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName'][0]  .'.';
+									if ($row['NameExtension'] != NULL) {
+										$employeeName = $employeeName . ', ' . $row['NameExtension'];
+									$GetClientID = $this->Model_Selects->GetClientID($row['ClientEmployed']);
+									}
+									if ($GetClientID->num_rows() > 0) {
+										foreach($GetClientID->result_array() as $crow) {
+											$clientName = $crow['Name'];
+										}
+									} else {
+										$clientName = 'N/A';
+									}
+									?>
+									<div class="row">
+										<div class="col-sm-12 ml-4 mt-2">
+											<div class="row">
+												<div class="col-sm-12">
+													<?php echo $employeeName . '</a>' ?>
+												</div>
+												<div class="col-sm-12">
+													<i style="color: gray;">
+														<?php 
+															$date = new DateTime($row['DateStarted']);
+															$day = $date->format('Y-m-d');
+															$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+
+															echo 'Employed to ' . $clientName . ' on ' . $day;
+														?>
+													</i>
+												</div>
+											</div>
+										</div>
+									</div>
+									<hr>
+								<?php endforeach;
+							else:
+								echo 'No data';
+							endif; ?>
 						</div>
 					</div>
-					
+					<!-- LOGBOOK -->
+					<hr>
+					<div class="col-sm-8">
+						<div class="chart-title text-center">
+							<h5 class="titless">
+								<i class="fas fa-book fa-fw chart-hover-static"></i> Logbook - <a href="Logbook">View all</a>
+							</h5>
+						</div>
+						<div class="pt-2 pb-5 pl-2 pr-2">
+							<?php if ($GetLogbook->num_rows() > 0): ?>
+								<?php foreach ($GetLogbook->result_array() as $row): 
+										$logbookIteration++;
+										$GetLogbookLogExtended = $this->Model_Selects->GetLogbookLogExtended($row['No']);
+										$logbookType = $row['Type'];
+										switch($logbookType) {
+											case 'Blue':
+												$logbookTypeClass = 'logbook-log-type-blue';
+												break;
+											case 'Red':
+												$logbookTypeClass = 'logbook-log-type-red';
+												break;
+											case 'Green':
+												$logbookTypeClass = 'logbook-log-type-green';
+												break;
+											case 'Yellow':
+												$logbookTypeClass = 'logbook-log-type-yellow';
+												break;
+											default:
+												$logbookTypeClass = 'logbook-log-type-unknown';
+												break;
+										}
+									?>
+									<div id="navigateTo_<?=$logbookIteration;?>" class="row logbook-log-container logbook-log logbook-log-toggle <?php if ($GetLogbookLogExtended->num_rows() > 0): echo 'logbook-log-hover '; endif; echo $logbookTypeClass; ?>">
+										<div class="col-sm-1">
+											<div class="text-center align-middle logbook-tooltip-icon">
+												<?php
+													$icon = $row['Icon'];
+													if ($icon == 'Applicant'):
+												?>
+													<i class="fas fa-user-tie" style="margin-right: -1px;"></i>
+												<?php elseif ($icon == 'Employee'): ?>
+													<i class="fas fa-users" style="margin-right: -1px;"></i>
+												<?php elseif ($icon == 'Admin'): ?>
+													<i class="fas fa-user-secret" style="margin-right: -1px;"></i>
+												<?php elseif ($icon == 'Client'): ?>
+													<i class="fas fa-user-tag" style="margin-right: -1px;"></i>
+												<?php elseif ($icon == 'Note'): ?>
+													<i class="fas fa-sticky-note" style="margin-right: -1px;"></i>
+												<?php elseif ($icon == 'Salary'): ?>
+													<i class="fas fa-dollar-sign" style="margin-right: -1px;"></i>
+												<?php else: ?>
+													<i class="fas fa-cog" style="margin-right: -1px;"></i>
+												<?php endif; ?>
+											</div>
+										</div>
+										<div class="col-sm-1">
+											<?php
+												$GetLogbookAdminImage = $this->Model_Selects->GetLogbookAdminImage($row['AdminID']);
+												if ($GetLogbookAdminImage->num_rows() > 0 || !empty($row['Image'])): 
+													foreach ($GetLogbookAdminImage->result_array() as $nrow):
+														$AdminImage = $nrow['Image'];
+													endforeach;
+													echo '
+													<div class="logbook-admin-image text-center align-middle">
+														<a href="?admin=' . $row['AdminID'] . '"><img src="' . $AdminImage . '" width="45px" height="45px" class="rounded-circle"></a>
+													</div>
+													';
+												else:
+													$AdminImage = base_url() . 'assets/img/wercher_logo.png';
+													echo '
+													<div class="logbook-admin-image text-center align-middle">
+														<a href="?admin=' . $row['AdminID'] . '"><img src="' . $AdminImage . '" width="53px" height="46px" class="rounded-circle"></a>
+													</div>
+													';
+												endif;
+
+											?>
+										</div>
+										<div class="col-sm-10">
+											<div class="row">
+												<div class="col-sm-12">
+													<?php echo '<a href="?admin=' . $row['AdminID'] . '" class="logbook-tooltip-highlight">' . $row['AdminID'] . '</a> ' . $row['Event']; ?>
+													<span class="logbook-log-number" style="float: right; display: none;" value="<?php echo $row['No']; ?>">
+														<i class="fas fa-paperclip" style="font-size: 13px;"></i><?php echo $row['No']; ?>
+													</span>
+												</div>
+												<div class="col-sm-12">
+													<div class="logbook-tooltip-date">
+														<?php 
+															$date = new DateTime($row['Time']);
+															$day = $date->format('Y-m-d');
+															$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+															$hours = $date->format('h:i:s A');
+															$elapsed = Carbon::parse($row['Time']);
+
+															echo $elapsed->diffForHumans() . ' - ' . $day . ' at ' . $hours;
+														?>
+														<?php if ($GetLogbookLogExtended->num_rows() > 0): ?>
+															<span class="logbook-log-toggle" style="float: right;">
+																<i class="fas fa-angle-right" style="margin-right: -1px;"></i>
+															</span>
+														<?php endif; ?>
+													</div>
+												</div>
+											</div>
+										</div>
+										<?php if ($GetLogbookLogExtended->num_rows() > 0):
+											$iteration = 0;
+											foreach ($GetLogbookLogExtended->result_array() as $nrow):
+												$iteration++; ?>
+												<div class="col-sm-12">
+													<div class="logbook-tooltip-extended" style="display: none;">
+														<?php if ($iteration == $GetLogbookLogExtended->num_rows()): ?>
+															<img class="logbook-tooltip-extended-tree" src="assets/img/documents-folder-tree.png">
+														<?php else: ?>
+															<img class="logbook-tooltip-extended-tree" src="assets/img/documents-folder-tree-continuous.png">
+														<?php endif; ?>
+														<div class="logbook-tooltip-extended-text">
+															<?php
+															if($nrow['Type'] == 1):
+																$date = new DateTime($nrow['Time']);
+																$day = $date->format('Y-m-d');
+																$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+																$hours = $date->format('h:i:s A');
+																echo '<div class="col-sm-12"><span class="logbook-tooltip-extended-note"><b>Note:</b></span> ' . $nrow['EventTooltip'] . '</div><div class="col-sm-12 logbook-tooltip-extended-note-admin">- ' . $nrow['AdminID'] . ' <span class="logbook-tooltip-extended-note-date">' . $day . ' at ' . $hours . '</span></div>';
+															else:
+																echo $nrow['EventTooltip'];
+															endif;
+															?>
+														</div>
+													</div>
+												</div>
+											<?php endforeach;
+										endif; ?>
+									</div>
+								<?php endforeach;
+							else: ?>
+								<div class="logbook-log-nodata">
+									We've come up empty! No data is available to show.
+									<br>
+									<i class="fas fa-bell-slash" style="margin-right: -1px;"></i>
+								</div>
+							<?php endif; ?>
+						</div>
+					</div>
+					<!-- Notes -->
+					<div class="col-md-4">
+						<div class="chart-title text-center">
+							<h5 class="titless">
+								<i class="fas fa-book fa-fw chart-hover-static"></i> Notes
+							</h5>
+						</div>
+						<div id="NotesArea" class="col-sm-12">
+							<?php foreach ($GetLogbookNotes->result_array() as $row): 
+								$GetLogbookLogExtended = $this->Model_Selects->GetLogbookLogExtended($row['No']);
+							?>
+							<div class="row logbook-log-container logbook-log logbook-log-toggle <?php if ($GetLogbookLogExtended->num_rows() > 0): echo 'logbook-log-hover '; endif; ?>">
+								<div class="col-sm-2">
+									<?php
+										$GetLogbookAdminImage = $this->Model_Selects->GetLogbookAdminImage($row['AdminID']);
+										if ($GetLogbookAdminImage->num_rows() > 0 || !empty($row['Image'])): 
+											foreach ($GetLogbookAdminImage->result_array() as $nrow):
+												$AdminImage = $nrow['Image'];
+											endforeach;
+											echo '
+											<div class="logbook-notes-admin-image ml-2">
+												<a href="?user=' . $row['AdminID'] . '"><img src="' . $AdminImage . '" width="45px" height="45px" class="rounded-circle"></a>
+											</div>
+											';
+										else:
+											$AdminImage = base_url() . 'assets/img/wercher_logo.png';
+											echo '
+											<div class="logbook-notes-admin-image ml-2">
+												<a href="?user=' . $row['AdminID'] . '"><img src="' . $AdminImage . '" width="53px" height="46px" class="rounded-circle"></a>
+											</div>
+											';
+										endif;
+
+									?>
+								</div>
+								<div class="col-sm-10">
+									<div class="row">
+										<div class="col-sm-12">
+											<?php echo '<a href="?user=' . $row['AdminID'] . '" class="logbook-tooltip-highlight">' . $row['AdminID'] . '</a>' . $row['Event']; ?>
+											<span class="logbook-log-number" style="float: right; display: none;" value="<?php echo $row['No']; ?>">
+												<i class="fas fa-paperclip" style="font-size: 13px;"></i><?php echo $row['No']; ?>
+											</span>
+										</div>
+										<div class="col-sm-12">
+											<div class="logbook-tooltip-date">
+												<?php 
+													$date = new DateTime($row['Time']);
+													$day = $date->format('Y-m-d');
+													$day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');
+													$hours = $date->format('h:i:s A');
+
+													echo $day . ' at ' . $hours;
+												?>
+												<?php if ($GetLogbookLogExtended->num_rows() > 0): ?>
+													<span class="logbook-log-toggle" style="float: right;">
+														<i class="fas fa-angle-right" style="margin-right: -1px;"></i>
+													</span>
+												<?php endif; ?>
+											</div>
+										</div>
+									</div>
+								</div>
+								<?php if ($GetLogbookLogExtended->num_rows() > 0):
+									$iteration = 0;
+									foreach ($GetLogbookLogExtended->result_array() as $nrow):
+										$iteration++; ?>
+										<div class="col-sm-12">
+											<div class="logbook-tooltip-extended" style="display: none;">
+												<?php if ($iteration == $GetLogbookLogExtended->num_rows()): ?>
+													<img class="logbook-tooltip-extended-tree" src="assets/img/documents-folder-tree.png">
+												<?php else: ?>
+													<img class="logbook-tooltip-extended-tree" src="assets/img/documents-folder-tree-continuous.png">
+												<?php endif; ?>
+												<div class="logbook-tooltip-extended-text">
+													<?php
+													if($nrow['Type'] == 1):
+														echo '<span class="logbook-tooltip-extended-note">Note:</span> ' . $nrow['EventTooltip'];
+													else:
+														echo $nrow['EventTooltip'];
+													endif;
+													?>
+												</div>
+											</div>
+										</div>
+									<?php endforeach;
+								endif; ?>
+							</div>
+						<?php endforeach ?>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -290,6 +699,8 @@ $T_Header;
 	<?php $this->load->view('_template/modals/m_dashboard_bar'); ?>
 	<!-- GRAPH CHART MODAL -->
 	<?php $this->load->view('_template/modals/m_dashboard_graph'); ?>
+	<!-- CLIENT HIRE MODAL -->
+	<?php $this->load->view('_template/modals/m_clienthire'); ?>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css">
@@ -326,6 +737,42 @@ $T_Header;
 ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('.ModalHire').on('click', function () {
+			$('#idToHire').val($(this).attr('id'));
+			console.log($('#idToHire').val());
+		});
+		$('#ClientSelect').on('change', function() {
+			<?php foreach ($getClientOption->result_array() as $row): ?>
+			<?php
+			// Count how many employees are on the client
+			$CountEmployees = $this->Model_Selects->GetClientsEmployed($row['ClientID'])->num_rows();
+			$CountEmployees++;
+			$CountEmployees = str_pad($CountEmployees,4,0,STR_PAD_LEFT);
+			// Get the current year
+			$Year = date('Y');
+			$Year = substr($Year, 2);
+			// Concatenate them all together
+			$EmployeeID = 'WC' . $row['EmployeeIDSuffix'] . '-' . $CountEmployees . '-' . $Year;
+			?>
+			if ($(this).val() == '<?php echo $row['ClientID']; ?>') {
+				$(this).closest('#ClientModal').find('#EmployeeID').val('<?php echo $EmployeeID; ?>');
+			}
+			<?php endforeach; ?>
+		});
+		$('#EmploymentType').on('change', function() {
+			if ($(this).val() == 'Contractual') {
+				$('.contractual-group').show();
+			} else {
+				$('.contractual-group').hide();
+			}
+		});
+		$(document).on('click', '.logbook-log-hover', function () {
+			$(this).closest('.logbook-log-container').find('.logbook-tooltip-extended').toggle('fast');
+			$(this).closest('.logbook-log-container').find('.fas').toggleClass('fa-angle-right');
+			$(this).closest('.logbook-log-container').find('.fas').toggleClass('fa-angle-down');
+			$(this).toggleClass('logbook-log');
+			$(this).toggleClass('logbook-log-active');
+		});
 		$('[data-toggle="tooltip"]').tooltip();
 		<?php if (isset($_GET['Year'])): ?>
 			$('#GraphChartModal').modal('show');
@@ -349,29 +796,6 @@ $T_Header;
 		// },function(){
 		// 	$(this).find('.chart-hover-settings').hide();
 		// });
-		var cData = JSON.parse(`<?php echo $chart_data; ?>`);
-		new Chart(document.getElementById("pie-chart"), {
-			type: 'pie',
-			data: {
-				labels: cData.label,
-				datasets: [{
-					label: cData.label,
-					backgroundColor: ["#FFDB00", "#FFA600","#FF7900","#FF5900","#FF3900","#E32B2B", "#FF004D","#FF0071","#FF009E","#FF00D3","#FF00FB", "#DB00FF","#9A00FF","#6900FF","#2C00FF","#0014FF", "#0051FF","#0086FF","#00BAFF","#00E7FF","#37C6A9", "#37C682","#37C659","#42DA00","#ACE72D", "#FFDB00", "#FFA600","#FF7900","#FF5900","#FF3900","#E32B2B", "#FF004D","#FF0071","#FF009E","#FF00D3","#FF00FB", "#DB00FF","#9A00FF","#6900FF","#2C00FF","#0014FF", "#0051FF","#0086FF","#00BAFF","#00E7FF","#37C6A9", "#37C682","#37C659","#42DA00","#ACE72D", "#FFDB00", "#FFA600","#FF7900","#FF5900","#FF3900","#E32B2B", "#FF004D","#FF0071","#FF009E","#FF00D3","#FF00FB", "#DB00FF","#9A00FF","#6900FF","#2C00FF","#0014FF", "#0051FF","#0086FF","#00BAFF","#00E7FF","#37C6A9", "#37C682","#37C659","#42DA00","#ACE72D","#FFDB00", "#FFA600","#FF7900","#FF5900","#FF3900","#E32B2B", "#FF004D","#FF0071","#FF009E","#FF00D3","#FF00FB", "#DB00FF","#9A00FF","#6900FF","#2C00FF","#0014FF", "#0051FF","#0086FF","#00BAFF","#00E7FF","#37C6A9", "#37C682","#37C659","#42DA00","#ACE72D", "#FFDB00", "#FFA600","#FF7900","#FF5900","#FF3900","#E32B2B", "#FF004D","#FF0071","#FF009E","#FF00D3","#FF00FB", "#DB00FF","#9A00FF","#6900FF","#2C00FF","#0014FF", "#0051FF","#0086FF","#00BAFF","#00E7FF","#37C6A9", "#37C682","#37C659","#42DA00","#ACE72D", "#FFDB00", "#FFA600","#FF7900","#FF5900","#FF3900","#E32B2B", "#FF004D","#FF0071","#FF009E","#FF00D3","#FF00FB", "#DB00FF","#9A00FF","#6900FF","#2C00FF","#0014FF", "#0051FF","#0086FF","#00BAFF","#00E7FF","#37C6A9", "#37C682","#37C659","#42DA00","#ACE72D"],
-					data: cData.data,
-				}]
-			},
-			options: {
-				responsive: true,
-				legend:
-				{
-					display: true,
-				},
-				title: {
-					display: true,
-					text: 'Position by Group'
-				}
-			}
-		});
 		new Chart(document.getElementById("bar-chart-horizontal"), {
 			type: 'horizontalBar',
 			data: {
@@ -604,41 +1028,6 @@ $T_Header;
 		$('#MoreOptions').on('click', function () {
 			$('#MoreOptions').hide();
 			$('.modal-fade').fadeIn();
-		});
-		new Chart(document.getElementById("GM_pie-chart"), {
-			type: 'pie',
-			data: {
-				labels: cData.label,
-				datasets: [{
-					label: cData.label,
-					backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-					data: cData.data,
-				}]
-			},
-			options: {
-				legend:
-				{
-					display: true,
-				},
-			}
-		});
-		var cDataExpired = JSON.parse(`<?php echo $chart_data_expired; ?>`);
-		new Chart(document.getElementById("GM_pie-chart-expired"), {
-			type: 'pie',
-			data: {
-				labels: cDataExpired.label,
-				datasets: [{
-					label: cDataExpired.label,
-					backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-					data: cDataExpired.data,
-				}]
-			},
-			options: {
-				legend:
-				{
-					display: true,
-				},
-			}
 		});
 	});
 </script>

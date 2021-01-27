@@ -29,7 +29,7 @@
 						</select>
 					</div>
 					<div class="form-group col-4">
-						<label>Salary</label>
+						<label>Salary Per Month</label>
 						<div class="input-icon-sm">
 							<input class="form-control" type="number" name="Salary" value="">
 							<i>₱</i>

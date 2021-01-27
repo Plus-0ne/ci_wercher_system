@@ -16,7 +16,7 @@
 				<?php endif; ?>
 				<div class="form-row">
 					<div class="form-group col-8">
-						<label>Choose Client</label>
+						<label>Client</label>
 						<select id="ClientSelect" class="form-control" name="M_ClientID">
 							<?php foreach ($getClientOption->result_array() as $row): ?>
 								<option value="<?=$row['ClientID'];?>" <?php if ($row['ClientID'] == $ClientEmployed) { echo 'selected'; } ?>>
@@ -54,6 +54,7 @@
 						<input class="form-control" type="date" name="M_DateStarted" value="<?php echo $dsText; ?>">
 					</div>
 					<div class="form-group col-sm-12 col-md-6">
+						<?php if($row['Status'] == 'Employed'): ?>
 						<?php
 							$de = new DateTime($DateEnds);
 							$deText = $de->format('Y-m-d');
@@ -71,6 +72,7 @@
 						?>
 						<label>Contract Ends</label>
 						<input class="form-control" type="date" name="M_DateEnds" value="<?php echo $deText; ?>">
+						<?php endif; ?>
 					</div>
 					<div class="form-row col-sm-6">
 						<div class="form-group col-sm-4">
@@ -90,6 +92,7 @@
 						</div>
 					</div>
 					<div class="form-row col-sm-6 ml-auto">
+						<?php if($row['Status'] == 'Employed'): ?>
 						<div class="form-group col-sm-4">
 							<input class="form-control" type="number" name="M_DateEndsHour" value="<?php echo $deH; ?>">
 						</div>
@@ -105,6 +108,7 @@
 								<i>:</i>
 							</div>
 						</div>
+						<?php endif; ?>
 					</div>
 					<div class="form-row col-sm-6 mr-auto">
 						<div class="form-group col-sm-6">
@@ -115,12 +119,14 @@
 						</div>
 					</div>
 					<div class="form-row col-sm-6 ml-auto">
+						<?php if($row['Status'] == 'Employed'): ?>
 						<div class="form-group col-sm-6">
 							<input type="radio" id="M_DateEndsHourTypeAM" name="M_DateEndsHourType" value="AM" <?php if($deType == 'AM') { echo 'checked'; } ?>>
 							<label for="M_DateEndsHourTypeAM">AM</label>
 							<input type="radio" id="M_DateEndsHourTypePM" name="M_DateEndsHourType" value="PM" <?php if($deType == 'PM') { echo 'checked'; } ?>>
 							<label for="M_DateEndsHourTypePM">PM</label>
 						</div>
+						<?php endif; ?>
 					</div>
 				</div>
 				<div class="form-row">
