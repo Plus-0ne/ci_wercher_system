@@ -1,9 +1,15 @@
-<?php foreach ($GetWeeklyListEmployee->result_array() as $erow): ?>
+<?php foreach ($GetWeeklyListEmployee->result_array() as $erow):
+if ($erow['SalaryExpected'] > 0) {
+	$SalaryExpected = $erow['SalaryExpected'];
+} else {
+	$SalaryExpected = 0;
+}
+?>
 <div class="modal fade wercher-modal-background modal-fixed-footer" id="HoursWeeklyModal_<?php echo $erow['ApplicantID']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-payroll" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Work Hours for <a href="ViewEmployee?id=<?php echo $erow['ApplicantID']; ?>"><?php echo $erow['LastName'] . ', ' . $erow['FirstName'] . ' ' . $erow['MiddleName'] ?></a> | <span class="TotalHoursInAWeek">48</span> Hours Total</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Work Hours for <a href="ViewEmployee?id=<?php echo $erow['ApplicantID']; ?>"><?php echo $erow['LastName'] . ', ' . $erow['FirstName'] . ' ' . $erow['MiddleName'] ?></a> <!-- | <span class="TotalHoursInAWeek">48</span> Hours Total --></h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -21,7 +27,7 @@
 							<div class="form-group col-sm-12 col-md-2">
 								<label>Salary</label>
 								<div class="input-icon-sm">
-									<input id="Salary" class="form-control" type="number" name="" value="<?php echo $erow['SalaryExpected']; ?>" readonly>
+									<input id="Salary" class="form-control" type="number" name="" value="<?php echo $SalaryExpected; ?>" readonly>
 									<i>₱</i>
 								</div>
 							</div>
@@ -36,7 +42,7 @@
 										$cTotalMonths = (($cDiff->y) * 12) + ($cDiff->m);
 										$cDiffDays = $cEnds->diff($cStarts)->format('%a');
 										if ($cTotalMonths > 0) {
-											$salaryInterval = $erow['SalaryExpected'] / $cTotalMonths;
+											$salaryInterval = $SalaryExpected / $cTotalMonths;
 										} else {
 											if ($cDiff->d > 0) {
 												$salaryInterval = $erow['SalaryExpected'] / $cDiff->d;

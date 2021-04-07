@@ -82,6 +82,9 @@ if ($No_OfChildren == NULL) {
 if ($Phone_No == NULL) {
 	$Phone_No = '&nbsp;';
 }
+if ($EmailAddress == NULL) {
+	$EmailAddress = '&nbsp;';
+}
 if ($Address_Present == NULL) {
 	$Address_Present = '&nbsp;';
 }
@@ -108,6 +111,9 @@ if ($HDMF == NULL) {
 }
 if ($PhilHealth == NULL) {
 	$PhilHealth = '&nbsp;';
+}
+if ($HMO == NULL) {
+	$HMO = '&nbsp;';
 }
 if ($ATM_No == NULL) {
 	$ATM_No = '&nbsp;';
@@ -411,6 +417,16 @@ if ($Referral == NULL) {
 									<?php echo $Phone_No; ?>
 								</p>
 							</div>
+							<div class="col-md-2">
+								<h6>
+									Email&nbsp;Address:
+								</h6>
+							</div>
+							<div class="col-md-4 printemployee-tooltip">
+								<p>
+									<?php echo $EmailAddress; ?>
+								</p>
+							</div>
 							<div class="col-md-3">
 								<h6>
 									Emergency&nbsp;Contact&nbsp;Number:
@@ -426,7 +442,7 @@ if ($Referral == NULL) {
 									Person&nbsp;to&nbsp;notify&nbsp;in&nbsp;case&nbsp;of&nbsp;emergency:
 								</h6>
 							</div>
-							<div class="col-md-8 printemployee-tooltip">
+							<div class="col-md-2 printemployee-tooltip">
 								<p>
 									<?php echo $EmergencyPerson; ?>
 								</p>
@@ -607,6 +623,16 @@ if ($Referral == NULL) {
 							<div class="col-md-4 printemployee-tooltip">
 								<p>
 									<?php echo $PhilHealth; ?>
+								</p>
+							</div>
+							<div class="col-md-2">
+								<h6>
+									HMO:
+								</h6>
+							</div>
+							<div class="col-md-4 printemployee-tooltip">
+								<p>
+									<?php echo $HMO; ?>
 								</p>
 							</div>
 							<div class="col-md-2">

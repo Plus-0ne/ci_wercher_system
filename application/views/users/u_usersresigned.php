@@ -11,16 +11,16 @@ $T_Header;
 				<div class="col-12 col-sm-12 tabs">
 					<ul>
 						<li><a href="<?php echo base_url() ?>Employees">Employees (<?php echo $get_employee->num_rows()?>)</a></li>
-						<li class="tabs-active"><a href="<?php echo base_url() ?>Employees/Regulars">Regulars (<?php echo $GetPermanentEmployees->num_rows()?>)</a></li>
+						<li><a href="<?php echo base_url() ?>Employees/Regulars">Regulars (<?php echo $GetPermanentEmployees->num_rows()?>)</a></li>
 						<li><a href="<?php echo base_url() ?>Employees/Absorbed">Absorbed (<?php echo $GetAbsorbedEmployees->num_rows()?>)</a></li>
-						<li><a href="<?php echo base_url() ?>Employees/Resigned">Resigned (<?php echo $GetResignedEmployees->num_rows()?>)</a></li>
+						<li class="tabs-active"><a href="<?php echo base_url() ?>Employees/Resigned">Resigned (<?php echo $GetResignedEmployees->num_rows()?>)</a></li>
 						<li><a href="<?php echo base_url() ?>Employees/Terminated">Terminated (<?php echo $GetTerminatedEmployees->num_rows()?>)</a></li>
 					</ul>
 				</div>
 				<div class="row rcontent">
 					<div class="col-sm-12 col-md-9 PrintPageName PrintOut">
 						<i class="fas fa-info-circle"></i>
-						<i>Found <?php echo $GetPermanentEmployees->num_rows(); ?> regular employee<?php if($GetPermanentEmployees->num_rows() != 1): echo 's'; endif;?> in the database. 
+						<i>Found <?php echo $GetResignedEmployees->num_rows(); ?> resigned employee<?php if($GetResignedEmployees->num_rows() != 1): echo 's'; endif;?> in the database. 
 						</i>
 					</div>
 					<div class="col-sm-12 col-md-3 text-right">
@@ -47,7 +47,7 @@ $T_Header;
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($GetPermanentEmployees->result_array() as $row): 
+									<?php foreach ($GetResignedEmployees->result_array() as $row): 
 
 										// Name Handler
 										$fullName = '';

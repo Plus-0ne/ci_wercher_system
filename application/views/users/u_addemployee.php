@@ -11,7 +11,49 @@
 							<button id="DebugFill" type="button" class="btn btn-primary"><i class="fas fa-vial"></i> Debug Fill</button>
 						</div>
 						<div id="InputFields" class="p-5">
-							<?php $data = $this->session->flashdata('data'); // Load the data array flashdata ?>
+							<?php
+							$data = $this->session->flashdata('data'); // Load the data array flashdata 
+							if (!isset($data)) {
+								$data = array(
+									'PositionDesired' => NULL,
+									'PositionGroup' => NULL,
+									'LastName' => NULL,
+									'FirstName' => NULL,
+									'MiddleName' => NULL,
+									'Gender' => NULL,
+									'Age' => NULL,
+									'Height' => NULL,
+									'Weight' => NULL,
+									'Religion' => NULL,
+									'bDate' => NULL,
+									'bPlace' => NULL,
+									'Citizenship' => NULL,
+									'CivilStatus' => NULL,
+									'No_Children' => NULL,
+									'PhoneNumber' => NULL,
+									'EmailAddress' => NULL,
+									'SSS' => NULL,
+									'SSS_Effective' => NULL,
+									'RCN' => NULL,
+									'TIN' => NULL,
+									'HDMF' => NULL,
+									'ATM_No' => NULL,
+									'PhilHealth' => NULL,
+									'HMO' => NULL,
+
+									'EmergencyPerson' => NULL,
+									'EmergencyContact' => NULL,
+									'Referral' => NULL,
+									'NameExtension' => NULL,
+
+									'Address_Present' => NULL,
+									'Address_Provincial' => NULL,
+									'Address_Manila' => NULL,
+
+									'Notice' => NULL,
+								);
+							}
+							?>
 							<?php if($data['Notice'] != NULL): ?>
 								<div class="row m-5 p-2 wercher-notice-banner">
 									<div class="col-sm-12">
@@ -213,6 +255,10 @@
 										<label>Contact Number</label>
 										<input class="form-control" type="text" name="PhoneNumber" autocomplete="off" value="<?php echo $data['PhoneNumber']; ?>">
 									</div>
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Email Address (@)</label>
+										<input class="form-control" type="text" name="EmailAddress" autocomplete="off" value="<?php echo $data['EmailAddress']; ?>">
+									</div>
 								</div>
 								<div class="mt-5 mb-4">
 									<h6>
@@ -259,6 +305,12 @@
 											<div class="form-group col-sm-12 col-lg-6">
 												<label id="ATM_Text">ATM No.</label>
 												<input id="ATM" class="form-control" type="text" name="ATM_No" autocomplete="off" value="<?php echo $data['ATM_No']; ?>">
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col-sm-12 col-lg-6">
+												<label id="HMO_Text">Health Maintenance Organization No.</label>
+												<input id="HMO" class="form-control" type="text" name="HMO" autocomplete="off" value="<?php echo $data['HMO']; ?>">
 											</div>
 										</div>
 									</div>

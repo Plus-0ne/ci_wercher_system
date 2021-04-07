@@ -105,6 +105,24 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetAbsorbedEmployees()
+	{
+		$SQL = "SELECT * FROM applicants WHERE Status = 'Absorbed'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetResignedEmployees()
+	{
+		$SQL = "SELECT * FROM applicants WHERE Status = 'Resigned'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetTerminatedEmployees()
+	{
+		$SQL = "SELECT * FROM applicants WHERE Status = 'Terminated'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function GetApplicantSkills()
 	{
 		$result =  $this->db->query("SELECT PositionGroup, COUNT(*) as count FROM applicants WHERE Status = 'Applicant' AND PositionGroup IS NOT NULL GROUP BY PositionGroup");
@@ -183,7 +201,7 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetClientsEmployed($ClientID)
 	{
-		$SQL = "SELECT * FROM applicants, clients WHERE applicants.ClientEmployed = '$ClientID' AND clients.ClientID = '$ClientID'";
+		$SQL = "SELECT *, applicants.Status AS Status, clients.Status AS ClientStatus FROM applicants, clients WHERE applicants.ClientEmployed = '$ClientID' AND clients.ClientID = '$ClientID'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

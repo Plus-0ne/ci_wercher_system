@@ -26,6 +26,9 @@
 
 <script type="text/javascript">
 	$(document).ready(function () {
+		$("body").tooltip({
+	    	selector: '[data-toggle="tooltip"]'
+		});
 		(function notifications() {
 		    $.ajax({
 		        type: "GET",
@@ -72,6 +75,15 @@
 		});
 		$('.prompts-tray').on('click', function () {
 			$(this).animate({left: "-1000px"});
+		});
+	});
+</script>
+<script type="text/javascript">
+	var scale = 'scale(0.8)';
+	document.body.style.zoom = scale;    // Chrome, Opera, Safari
+	$(document).ready(function () {
+		$("body").tooltip({
+	    	selector: '[data-toggle="tooltip"]'
 		});
 	});
 </script>

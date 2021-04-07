@@ -12,7 +12,7 @@ $GetLogbookNotes = $this->Model_Selects->GetLogbookNotes();
 <body>
 	<div class="wrapper">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
-		<div id="content" class="ncontent">
+		<div id="content" class="ncontent" style="overflow: hidden;">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<style type="text/css">
@@ -76,7 +76,7 @@ $GetLogbookNotes = $this->Model_Selects->GetLogbookNotes();
 						background-color: rgba(0, 0, 0, 0.08);
 					}
 				</style>
-				<div class="row p-4">
+				<div class="row col-sm-12 p-4">
 					<div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
 							<a href="Applicants">
@@ -189,7 +189,7 @@ $GetLogbookNotes = $this->Model_Selects->GetLogbookNotes();
 							</a>
 						</div>
 					</div>
-					<div id="GraphChartButton" class="col-sm-12 col-lg-8 mt-5 mb-5 chart-hover">
+					<div id="GraphChartButton" class="col-sm-12 col-lg-8 mb-5 chart-hover">
 						<div class="chart-title text-center">
 							<h5 class="titless">
 								<i class="fas fa-chart-line fa-fw chart-hover-static"></i> <?php echo $CurrentYear; ?> Applicants
@@ -198,7 +198,7 @@ $GetLogbookNotes = $this->Model_Selects->GetLogbookNotes();
 						<!-- <div class="col-1 ml-auto chart-hover-settings" style="margin-top: -30px; display: none;">
 							<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog" style="margin-right: -1px;"></i></button>
 						</div> -->
-						<canvas id="ApplicantChart" class="w-100" width="800" height="250"></canvas>
+						<canvas id="ApplicantChart" class="w-100" width="800" height="350"></canvas>
 					</div>
 					<div class="col-sm-12 col-lg-4">
 						<div class="chart-title text-center">
@@ -217,8 +217,8 @@ $GetLogbookNotes = $this->Model_Selects->GetLogbookNotes();
 									$employeeName = '<div class="col-sm-12"><a href="ViewEmployee?id=' . $row['ApplicantID'] . '">' . '<img src="' . $thumbnail .'" height="18px; width: 18px;" class="rounded-circle"> ' . $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName'][0]  .'.';
 									if ($row['NameExtension'] != NULL) {
 										$employeeName = $employeeName . ', ' . $row['NameExtension'];
-									$GetClientID = $this->Model_Selects->GetClientID($row['ClientEmployed']);
 									}
+									$GetClientID = $this->Model_Selects->GetClientID($row['ClientEmployed']);
 									if ($GetClientID->num_rows() > 0) {
 										foreach($GetClientID->result_array() as $crow) {
 											$clientName = $crow['Name'];
@@ -265,7 +265,7 @@ $GetLogbookNotes = $this->Model_Selects->GetLogbookNotes();
 						</div>
 						<canvas id="pie-chart" width="800" height="800"></canvas>
 					</div> -->
-					<div id="BarChartButton" class="col-sm-12 col-lg-4 mt-5 mb-5">
+					<div id="BarChartButton" class="col-sm-12 col-lg-4 mb-5">
 						<div class="chart-title text-center">
 							<h5 class="titless">
 								<i class="fas fa-chart-line fa-fw"></i> Total Employed
@@ -359,8 +359,8 @@ $GetLogbookNotes = $this->Model_Selects->GetLogbookNotes();
 									$employeeName = '<a href="ViewEmployee?id=' . $row['ApplicantID'] . '">' . '<img src="' . $thumbnail .'" height="18px; width: 18px;" class="rounded-circle"> ' . $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName'][0]  .'.';
 									if ($row['NameExtension'] != NULL) {
 										$employeeName = $employeeName . ', ' . $row['NameExtension'];
-									$GetClientID = $this->Model_Selects->GetClientID($row['ClientEmployed']);
 									}
+									$GetClientID = $this->Model_Selects->GetClientID($row['ClientEmployed']);
 									if ($GetClientID->num_rows() > 0) {
 										foreach($GetClientID->result_array() as $crow) {
 											$clientName = $crow['Name'];
@@ -413,8 +413,8 @@ $GetLogbookNotes = $this->Model_Selects->GetLogbookNotes();
 									$employeeName = '<a href="ViewEmployee?id=' . $row['ApplicantID'] . '">' . '<img src="' . $thumbnail .'" height="18px; width: 18px;" class="rounded-circle"> ' . $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName'][0]  .'.';
 									if ($row['NameExtension'] != NULL) {
 										$employeeName = $employeeName . ', ' . $row['NameExtension'];
-									$GetClientID = $this->Model_Selects->GetClientID($row['ClientEmployed']);
 									}
+									$GetClientID = $this->Model_Selects->GetClientID($row['ClientEmployed']);
 									if ($GetClientID->num_rows() > 0) {
 										foreach($GetClientID->result_array() as $crow) {
 											$clientName = $crow['Name'];
@@ -530,7 +530,7 @@ $GetLogbookNotes = $this->Model_Selects->GetLogbookNotes();
 										</div>
 										<div class="col-sm-10">
 											<div class="row">
-												<div class="col-sm-12">
+												<div class="col-sm-12" style="word-wrap: break-word;">
 													<?php echo '<a href="?admin=' . $row['AdminID'] . '" class="logbook-tooltip-highlight">' . $row['AdminID'] . '</a> ' . $row['Event']; ?>
 													<span class="logbook-log-number" style="float: right; display: none;" value="<?php echo $row['No']; ?>">
 														<i class="fas fa-paperclip" style="font-size: 13px;"></i><?php echo $row['No']; ?>
@@ -632,7 +632,7 @@ $GetLogbookNotes = $this->Model_Selects->GetLogbookNotes();
 								</div>
 								<div class="col-sm-10">
 									<div class="row">
-										<div class="col-sm-12">
+										<div class="col-sm-12" style="word-wrap: break-word;">
 											<?php echo '<a href="?user=' . $row['AdminID'] . '" class="logbook-tooltip-highlight">' . $row['AdminID'] . '</a>' . $row['Event']; ?>
 											<span class="logbook-log-number" style="float: right; display: none;" value="<?php echo $row['No']; ?>">
 												<i class="fas fa-paperclip" style="font-size: 13px;"></i><?php echo $row['No']; ?>

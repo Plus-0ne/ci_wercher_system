@@ -387,7 +387,7 @@ use Carbon\Carbon;
 			let positionSelectValue = $('#PositionSelect').val();
 			$('#PositionSelectPermissions').val(positionSelectValue);
 			$('#Position').val(positionSelectValue);
-			if (positionSelectValue == 'Developer' || positionSelectValue == 'President' || positionSelectValue == 'HR Manager' || positionSelectValue == 'HR Assistant') {
+			if (positionSelectValue == 'Developer' || positionSelectValue == 'President' || positionSelectValue == 'Admin Officer' || positionSelectValue == 'HR Manager' || positionSelectValue == 'HR Assistant') {
 				let noPermissions = [];
 				$('#SetPermissions').find('.form-row button').each(function() {
 					if (!noPermissions.includes($(this).data('permissions'))) {
@@ -409,7 +409,7 @@ use Carbon\Carbon;
 			let positionSelectValue = $('#PositionSelectPermissions').val();
 			$('#PositionSelect').val(positionSelectValue);
 			$('#Position').val(positionSelectValue);
-			if (positionSelectValue == 'Developer' || positionSelectValue == 'President' || positionSelectValue == 'HR Manager' || positionSelectValue == 'HR Assistant') {
+			if (positionSelectValue == 'Developer' || positionSelectValue == 'President' || positionSelectValue == 'Admin Officer' || positionSelectValue == 'HR Manager' || positionSelectValue == 'HR Assistant') {
 				let noPermissions = [];
 				$('#SetPermissions').find('.form-row button').each(function() {
 					if (!noPermissions.includes($(this).data('permissions'))) {
@@ -580,7 +580,7 @@ use Carbon\Carbon;
 			let positionSelectValue = $('#EditPositionSelect').val();
 			$('#EditPositionSelectPermissions').val(positionSelectValue);
 			$('#EditPosition').val(positionSelectValue);
-			if (positionSelectValue == 'Developer' || positionSelectValue == 'President' || positionSelectValue == 'HR Manager' || positionSelectValue == 'HR Assistant') {
+			if (positionSelectValue == 'Developer' || positionSelectValue == 'President' || positionSelectValue == 'Admin Officer' || positionSelectValue == 'HR Manager' || positionSelectValue == 'HR Assistant') {
 				let noPermissions = [];
 				$('#EditSetPermissions').find('.form-row button').each(function() {
 					if (!noPermissions.includes($(this).data('permissions'))) {
@@ -602,7 +602,7 @@ use Carbon\Carbon;
 			let positionSelectValue = $('#EditPositionSelectPermissions').val();
 			$('#EditPositionSelect').val(positionSelectValue);
 			$('#EditPosition').val(positionSelectValue);
-			if (positionSelectValue == 'Developer' || positionSelectValue == 'President' || positionSelectValue == 'HR Manager' || positionSelectValue == 'HR Assistant') {
+			if (positionSelectValue == 'Developer' || positionSelectValue == 'President' || positionSelectValue == 'Admin Officer' || positionSelectValue == 'HR Manager' || positionSelectValue == 'HR Assistant') {
 				let noPermissions = [];
 				$('#EditSetPermissions').find('.form-row button').each(function() {
 					if (!noPermissions.includes($(this).data('permissions'))) {

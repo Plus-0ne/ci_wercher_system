@@ -57,6 +57,9 @@ $route['Forbidden'] = 'Main_Controller/Forbidden';
 $route['Dashboard'] = 'Main_Controller/Dashboard';
 $route['Employees'] = 'Main_Controller/Employee';
 $route['Employees/Regulars'] = 'Main_Controller/EmployeePermanent';
+$route['Employees/Absorbed'] = 'Main_Controller/EmployeeAbsorbed';
+$route['Employees/Resigned'] = 'Main_Controller/EmployeeResigned';
+$route['Employees/Terminated'] = 'Main_Controller/EmployeeTerminated';
 $route['ViewEmployee'] = 'Main_Controller/ViewEmployee';
 $route['ModifyEmployee'] = 'Main_Controller/ModifyEmployee';
 $route['Applicants'] = 'Main_Controller/V_Applicants';
@@ -124,6 +127,7 @@ $route['ModifyContract'] = 'Update_Controller/ModifyContract';
 $route['EmployUserPermanent'] = 'Update_Controller/EmployUserPermanent';
 $route['EditClient'] = 'Update_Controller/EditClient';
 $route['EditAdmin'] = 'Update_Controller/EditAdmin';
+$route['ChangeEmploymentType'] = 'Update_Controller/UpdateEmploymentType';
 
 // AJAX
 $route['AJAX_addLogbookNotes'] = 'Main_Controller/AJAX_addLogbookNotes';

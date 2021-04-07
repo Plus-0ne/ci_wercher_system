@@ -425,12 +425,14 @@ class Update_Controller extends CI_Controller {
 		$CivilStatus = $this->input->post('CivilStatus');
 		$No_Children = $this->input->post('No_Children');
 		$PhoneNumber = $this->input->post('PhoneNumber');
+		$EmailAddress = $this->input->post('EmailAddress');
 		# DOCUMENTS
 		$SSS = $this->input->post('SSS');
 		$RCN = $this->input->post('RCN');
 		$TIN = $this->input->post('TIN');
 		$HDMF = $this->input->post('HDMF');
 		$PhilHealth = $this->input->post('PhilHealth');
+		$HMO = $this->input->post('HMO');
 		$ATM_No = $this->input->post('ATM_No');
 
 		$EmergencyPerson = $this->input->post('EmergencyPerson');
@@ -464,12 +466,14 @@ class Update_Controller extends CI_Controller {
 				'CivilStatus' => $CivilStatus,
 				'No_Children' => $No_Children,
 				'PhoneNumber' => $PhoneNumber,
+				'EmailAddress' => $EmailAddress,
 				'SSS' => $SSS,
 				'RCN' => $RCN,
 				'TIN' => $TIN,
 				'HDMF' => $HDMF,
 				'ATM_No' => $ATM_No,
 				'PhilHealth' => $PhilHealth,
+				'HMO' => $HMO,
 
 				'EmergencyPerson' => $EmergencyPerson,
 				'EmergencyContact' => $EmergencyContact,
@@ -511,12 +515,14 @@ class Update_Controller extends CI_Controller {
 					$prevCivilStatus = $row['CivilStatus'];
 					$prevNo_Children = $row['No_OfChildren'];
 					$prevPhoneNumber = $row['Phone_No'];
+					$prevEmailAddress = $row['EmailAddress'];
 					# DOCUMENTS
 					$prevSSS = $row['SSS_No'];
 					$prevRCN = $row['ResidenceCertificateNo'];
 					$prevTIN = $row['TIN'];
 					$prevHDMF = $row['HDMF'];
 					$prevPhilHealth = $row['PhilHealth'];
+					$prevHMO = $row['HMO'];
 					$prevATM_No = $row['ATM_No'];
 
 					$prevEmergencyPerson = $row['EmergencyPerson'];
@@ -557,6 +563,7 @@ class Update_Controller extends CI_Controller {
 				$prevTIN = 'N/A';
 				$prevHDMF = 'N/A';
 				$prevPhilHealth = 'N/A';
+				$prevHMO = 'N/A';
 				$prevATM_No = 'N/A';
 
 				$prevEmergencyPerson = 'N/A';
@@ -646,6 +653,7 @@ class Update_Controller extends CI_Controller {
 				'Address_Manila' => $Address_Manila,
 
 				'Phone_No' => $PhoneNumber,
+				'EmailAddress' => $EmailAddress,
 
 				'SSS_No' => $SSS,
 				'ResidenceCertificateNo' => $RCN,
@@ -653,6 +661,7 @@ class Update_Controller extends CI_Controller {
 				'HDMF' => $HDMF,
 				'ATM_No' => $ATM_No,
 				'PhilHealth' => $PhilHealth,
+				'HMO' => $HMO,
 
 				'EmergencyPerson' => $EmergencyPerson,
 				'EmergencyContact' => $EmergencyContact,
@@ -816,6 +825,10 @@ class Update_Controller extends CI_Controller {
 					$this->Model_Logbook->LogbookExtendedEntry(0, 'Contact number changed from <b>' . $prevPhoneNumber . '</b> to <b>' . $PhoneNumber . '</b>', +1);
 					$changesCounter++;
 				}
+				if ($EmailAddress != $prevEmailAddress) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Email address changed from <b>' . $prevEmailAddress . '</b> to <b>' . $EmailAddress . '</b>', +1);
+					$changesCounter++;
+				}
 				if ($SSS != $prevSSS) {
 					$this->Model_Logbook->LogbookExtendedEntry(0, 'SSS number changed from <b>' . $prevSSS . '</b> to <b>' . $SSS . '</b>', +1);
 					$changesCounter++;
@@ -876,6 +889,10 @@ class Update_Controller extends CI_Controller {
 					// 	$this->Model_Logbook->LogbookExtendedEntry(0, 'PhilHealth location changed from <b>' . $prevPhilHealth_At . '</b> to <b>' . $PhilHealth_At . '</b>', +1);
 					// 	$changesCounter++;
 					// }
+				if ($HMO != $prevHMO) {
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'HMO number changed from <b>' . $prevHMO . '</b> to <b>' . $HMO . '</b>', +1);
+					$changesCounter++;
+				}
 					// $PhilHealth_OnReadable = (new DateTime(date($PhilHealth_On)))->format('F d, Y');
 					// $prevPhilHealth_OnReadable = (new DateTime(date($prevPhilHealth_On)))->format('F d, Y');
 					// if ($PhilHealth_On != $prevPhilHealth_On) {
@@ -2481,6 +2498,24 @@ class Update_Controller extends CI_Controller {
 		{
 			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 			redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');
+		}
+	}
+	public function UpdateEmploymentType()
+	{
+		$ApplicantID = $this->input->post('ApplicantID', TRUE);
+		$EmploymentType = $this->input->post('EmploymentType', TRUE);
+		if ($ApplicantID == NULL || $EmploymentType == NULL) {
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+			redirect($_SERVER['HTTP_REFERER']);
+		} else {
+			$ChangeEmploymentType = $this->Model_Updates->ChangeEmploymentType($ApplicantID, $EmploymentType);
+			if ($ChangeEmploymentType) {
+				$this->Model_Logbook->SetPrompts('success', 'success', 'Changed successfully');
+				redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');
+			} else {
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+				redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');
+			}
 		}
 	}
 	public function EditClient()

@@ -280,7 +280,7 @@
 								</div>
 								<div class="col-sm-10">
 									<div class="row">
-										<div class="col-sm-12">
+										<div class="col-sm-12" style="max-width: 330px; word-wrap: break-word;">
 											<?php echo '<a href="?user=' . $row['AdminID'] . '" class="logbook-tooltip-highlight">' . $row['AdminID'] . '</a>' . $row['Event']; ?>
 											<span class="logbook-log-number" style="float: right; display: none;" value="<?php echo $row['No']; ?>">
 												<i class="fas fa-paperclip" style="font-size: 13px;"></i><?php echo $row['No']; ?>

@@ -452,6 +452,9 @@
 			$data['getClientOption'] = $this->Model_Selects->getClientOption();
 			$data['GetTotalEmployees'] = $this->Model_Selects->GetTotalEmployees();
 			$data['GetPermanentEmployees'] = $this->Model_Selects->GetPermanentEmployees();
+			$data['GetAbsorbedEmployees'] = $this->Model_Selects->GetAbsorbedEmployees();
+			$data['GetResignedEmployees'] = $this->Model_Selects->GetResignedEmployees();
+			$data['GetTerminatedEmployees'] = $this->Model_Selects->GetTerminatedEmployees();
 			$this->load->view('users/u_users',$data);
 		else:
 			redirect('Forbidden');
@@ -480,7 +483,103 @@
 			$data['getClientOption'] = $this->Model_Selects->getClientOption();
 			$data['GetTotalEmployees'] = $this->Model_Selects->GetTotalEmployees();
 			$data['GetPermanentEmployees'] = $this->Model_Selects->GetPermanentEmployees();
+			$data['GetAbsorbedEmployees'] = $this->Model_Selects->GetAbsorbedEmployees();
+			$data['GetResignedEmployees'] = $this->Model_Selects->GetResignedEmployees();
+			$data['GetTerminatedEmployees'] = $this->Model_Selects->GetTerminatedEmployees();
 			$this->load->view('users/u_userspermanent',$data);
+		else:
+			redirect('Forbidden');
+		endif;
+	}
+	public function EmployeeAbsorbed()
+	{
+		if($this->Model_Security->CheckPermissions('EmployeesAbsorbed')):
+			$header['title'] = 'Absorbed Employees | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a href="' . base_url() . 'Employees">Employees</a></li>
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="' . base_url() . 'Employees/Absorbed">Absorbed</a></li>
+			</ol>
+			</nav>';
+
+			// WEEKLY INCREASE
+			$CurrentDay = date('Y-m-d h:i:s A');
+			$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
+			$data['WeeklyEmployees'] = $this->Model_Selects->GetEmployeesIncrease($CurrentDay, $CurrentDayScope)->num_rows();
+
+			$data['get_employee'] = $this->Model_Selects->GetEmployee();
+			$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+			$data['getClientOption'] = $this->Model_Selects->getClientOption();
+			$data['GetTotalEmployees'] = $this->Model_Selects->GetTotalEmployees();
+			$data['GetPermanentEmployees'] = $this->Model_Selects->GetPermanentEmployees();
+			$data['GetAbsorbedEmployees'] = $this->Model_Selects->GetAbsorbedEmployees();
+			$data['GetResignedEmployees'] = $this->Model_Selects->GetResignedEmployees();
+			$data['GetTerminatedEmployees'] = $this->Model_Selects->GetTerminatedEmployees();
+			$this->load->view('users/u_usersabsorbed',$data);
+		else:
+			redirect('Forbidden');
+		endif;
+	}
+	public function EmployeeResigned()
+	{
+		if($this->Model_Security->CheckPermissions('EmployeesResigned')):
+			$header['title'] = 'Resigned Employees | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a href="' . base_url() . 'Employees">Employees</a></li>
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="' . base_url() . 'Employees/Resigned">Resigned</a></li>
+			</ol>
+			</nav>';
+
+			// WEEKLY INCREASE
+			$CurrentDay = date('Y-m-d h:i:s A');
+			$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
+			$data['WeeklyEmployees'] = $this->Model_Selects->GetEmployeesIncrease($CurrentDay, $CurrentDayScope)->num_rows();
+
+			$data['get_employee'] = $this->Model_Selects->GetEmployee();
+			$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+			$data['getClientOption'] = $this->Model_Selects->getClientOption();
+			$data['GetTotalEmployees'] = $this->Model_Selects->GetTotalEmployees();
+			$data['GetPermanentEmployees'] = $this->Model_Selects->GetPermanentEmployees();
+			$data['GetAbsorbedEmployees'] = $this->Model_Selects->GetAbsorbedEmployees();
+			$data['GetResignedEmployees'] = $this->Model_Selects->GetResignedEmployees();
+			$data['GetTerminatedEmployees'] = $this->Model_Selects->GetTerminatedEmployees();
+			$this->load->view('users/u_usersresigned',$data);
+		else:
+			redirect('Forbidden');
+		endif;
+	}
+	public function EmployeeTerminated()
+	{
+		if($this->Model_Security->CheckPermissions('EmployeesTerminated')):
+			$header['title'] = 'Terminated Employees | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a href="' . base_url() . 'Employees">Employees</a></li>
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="' . base_url() . 'Employees/Terminated">Terminated</a></li>
+			</ol>
+			</nav>';
+
+			// WEEKLY INCREASE
+			$CurrentDay = date('Y-m-d h:i:s A');
+			$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
+			$data['WeeklyEmployees'] = $this->Model_Selects->GetEmployeesIncrease($CurrentDay, $CurrentDayScope)->num_rows();
+
+			$data['get_employee'] = $this->Model_Selects->GetEmployee();
+			$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+			$data['getClientOption'] = $this->Model_Selects->getClientOption();
+			$data['GetTotalEmployees'] = $this->Model_Selects->GetTotalEmployees();
+			$data['GetPermanentEmployees'] = $this->Model_Selects->GetPermanentEmployees();
+			$data['GetAbsorbedEmployees'] = $this->Model_Selects->GetAbsorbedEmployees();
+			$data['GetResignedEmployees'] = $this->Model_Selects->GetResignedEmployees();
+			$data['GetTerminatedEmployees'] = $this->Model_Selects->GetTerminatedEmployees();
+			$this->load->view('users/u_usersterminated',$data);
 		else:
 			redirect('Forbidden');
 		endif;
@@ -521,6 +620,7 @@
 						'CivilStatus' => $ged['CivilStatus'],
 						'No_OfChildren' => $ged['No_OfChildren'],
 						'Phone_No' => $ged['Phone_No'],
+						'EmailAddress' => $ged['EmailAddress'],
 						'Address_Present' => $ged['Address_Present'],
 						'Address_Provincial' => $ged['Address_Provincial'],
 						'Address_Manila' => $ged['Address_Manila'],
@@ -531,6 +631,7 @@
 						'TIN' => $ged['TIN'],
 						'HDMF' => $ged['HDMF'],
 						'PhilHealth' => $ged['PhilHealth'],
+						'HMO' => $ged['HMO'],
 						'ATM_No' => $ged['ATM_No'],
 
 						'Status' => $ged['Status'],
@@ -711,6 +812,7 @@
 					'CivilStatus' => $ged['CivilStatus'],
 					'No_OfChildren' => $ged['No_OfChildren'],
 					'Phone_No' => $ged['Phone_No'],
+					'EmailAddress' => $ged['EmailAddress'],
 					'Address_Present' => $ged['Address_Present'],
 					'Address_Provincial' => $ged['Address_Provincial'],
 					'Address_Manila' => $ged['Address_Manila'],
@@ -721,6 +823,7 @@
 					'TIN' => $ged['TIN'],
 					'HDMF' => $ged['HDMF'],
 					'PhilHealth' => $ged['PhilHealth'],
+					'HMO' => $ged['HMO'],
 					'ATM_No' => $ged['ATM_No'],
 
 					'Status' => $ged['Status'],
@@ -925,6 +1028,7 @@
 					'CivilStatus' => $ged['CivilStatus'],
 					'No_OfChildren' => $ged['No_OfChildren'],
 					'Phone_No' => $ged['Phone_No'],
+					'EmailAddress' => $ged['EmailAddress'],
 					'Address_Present' => $ged['Address_Present'],
 					'Address_Provincial' => $ged['Address_Provincial'],
 					'Address_Manila' => $ged['Address_Manila'],
@@ -935,6 +1039,7 @@
 					'TIN' => $ged['TIN'],
 					'HDMF' => $ged['HDMF'],
 					'PhilHealth' => $ged['PhilHealth'],
+					'HMO' => $ged['HMO'],
 					'ATM_No' => $ged['ATM_No'],
 
 					'Status' => $ged['Status'],
@@ -1093,6 +1198,7 @@
 					'CivilStatus' => $ged['CivilStatus'],
 					'No_OfChildren' => $ged['No_OfChildren'],
 					'Phone_No' => $ged['Phone_No'],
+					'EmailAddress' => $ged['EmailAddress'],
 					'Address_Present' => $ged['Address_Present'],
 					'Address_Provincial' => $ged['Address_Provincial'],
 					'Address_Manila' => $ged['Address_Manila'],
@@ -1103,6 +1209,7 @@
 					'TIN' => $ged['TIN'],
 					'HDMF' => $ged['HDMF'],
 					'PhilHealth' => $ged['PhilHealth'],
+					'HMO' => $ged['HMO'],
 					'ATM_No' => $ged['ATM_No'],
 
 					'Status' => $ged['Status'],
@@ -1734,7 +1841,7 @@
 				echo '</div>';
 				echo '<div class="col-sm-11">';
 					echo '<div class="row">';
-						echo '<div class="col-sm-12">';
+						echo '<div class="col-sm-12" style="max-width: 330px; word-wrap: break-word;">';
 							echo '<a href="?user=' . $row['AdminID'] . '" class="logbook-tooltip-highlight">' . $row['AdminID'] . '</a>' . $row['Event'];
 							echo '<span class="logbook-log-number" style="float: right; display: none;" value="' . $row['No'] . '">';
 								echo '<i class="fas fa-paperclip" style="font-size: 13px;"></i>' . $row['No'];
@@ -1798,6 +1905,8 @@
 		}
 		else
 		{
+			// ~ sanitize
+			$Event = filter_var($Event, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_AMP);
 			if (!empty($HookNo)) {
 				$this->Model_Logbook->LogbookNotesExtendedEntry($HookNo, 1, $Event);
 			} else {

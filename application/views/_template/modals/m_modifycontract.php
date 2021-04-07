@@ -54,7 +54,7 @@
 						<input class="form-control" type="date" name="M_DateStarted" value="<?php echo $dsText; ?>">
 					</div>
 					<div class="form-group col-sm-12 col-md-6">
-						<?php if($row['Status'] == 'Employed'): ?>
+						<?php if($Status == 'Employed'): ?>
 						<?php
 							$de = new DateTime($DateEnds);
 							$deText = $de->format('Y-m-d');
@@ -92,7 +92,7 @@
 						</div>
 					</div>
 					<div class="form-row col-sm-6 ml-auto">
-						<?php if($row['Status'] == 'Employed'): ?>
+						<?php if($Status == 'Employed'): ?>
 						<div class="form-group col-sm-4">
 							<input class="form-control" type="number" name="M_DateEndsHour" value="<?php echo $deH; ?>">
 						</div>

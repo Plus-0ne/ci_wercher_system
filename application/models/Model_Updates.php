@@ -299,4 +299,16 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->update('admin', $data);
 		return $result;
 	}
+	public function ChangeEmploymentType($ApplicantID, $EmploymentType)
+	{
+		$DateEnds = new DateTime();
+		$DateEnds = $DateEnds->format('Y-m-d H:i:s');
+		$data = array(
+			'Status' => $EmploymentType,
+			'DateEnds' => $DateEnds,
+		);
+		$this->db->where('ApplicantID', $ApplicantID);
+		$result = $this->db->update('applicants', $data);
+		return $result;
+	}
 }

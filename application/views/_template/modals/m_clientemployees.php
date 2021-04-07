@@ -43,13 +43,46 @@
 												<th class="d-none"> Contract Started </th>
 												<th class="d-none"> Contract Ends </th>
 												<th> Contract Lifespan </th>
-												<th class="PrintExclude"> Action </th>
 											</tr>
 										</thead>
 										<tbody>
 											<?php 
 											$GetClientsEmployed = $this->Model_Selects->GetClientsEmployed($_GET['id']);
-											foreach ($GetClientsEmployed->result_array() as $row): ?>
+											foreach ($GetClientsEmployed->result_array() as $row): 
+												// Name Handler
+												$fullName = '';
+												$fullNameHover = '';
+												$isFullNameHoverable = false;
+												if ($row['LastName']) {
+													$fullName = $fullName . $row['LastName'] . ', ';
+													$fullNameHover = $fullNameHover . $row['LastName'] . ', ';
+												} else {
+													$fullNameHover = $fullNameHover . '[<i>No Last Name</i>], ';
+													$isFullNameHoverable = true;
+												}
+												if ($row['FirstName']) {
+													$fullName = $fullName . $row['FirstName'] . ' ';
+													$fullNameHover = $fullNameHover . $row['FirstName'] . ' ';
+												} else {
+													$fullNameHover = $fullNameHover . '[<i>No First Name</i>] ';
+													$isFullNameHoverable = true;
+												}
+												if ($row['MiddleName']) {
+													$fullName = $fullName . $row['MiddleName'][0] . '.';
+													$fullNameHover = $fullNameHover . $row['MiddleName'][0] . '.';
+												} else {
+													$fullNameHover = $fullNameHover . '[<i>No MI</i>].';
+													$isFullNameHoverable = true;
+												}
+												if ($row['NameExtension']) {
+													$fullName = $fullName . ', ' . $row['NameExtension'];
+													$fullNameHover = $fullNameHover . ', ' . $row['NameExtension'];
+												}
+												if (strlen($fullName) > 45) {
+													$fullName = substr($fullName, 0, 45);
+													$fullName = $fullName . '...';
+													$isFullNameHoverable = true;
+												} ?>
 												<tr>
 													<td class="text-center">
 														<div class="col-sm-12">
@@ -63,23 +96,24 @@
 															// 	$thumbnail = $row['ApplicantImage'];
 															// }
 															?>
-															<img src="<?php echo $thumbnail; ?>" width="70" height="70" class="rounded-circle">
+															<a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><img src="<?php echo $thumbnail; ?>" width="70" height="70" class="rounded-circle"></a>
 														</div>
 														<div class="col-sm-12 align-middle">
 															<?php if($row['EmployeeID'] != NULL): ?>
-																<?php echo $row['EmployeeID']; ?>
+																<a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $row['EmployeeID']; ?></a>
 															<?php else: ?>
 																<?php echo 'No Employee ID'; ?>
 															<?php endif; ?>
 														</div>
 													</td>
 													<td class="text-center align-middle">
-														<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleName']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
+														<a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"<?php if($isFullNameHoverable): ?> data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $fullNameHover; ?>"<?php endif; ?>><?php echo $fullName; ?></a>
 														<br>
 														<i style="color: gray;"><?php echo $row['PositionDesired']; ?></i>
+														<br>
 													</td>
 													<td class="text-center align-middle d-none">
-														<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleName']; ?>.<?php if ($row['NameExtension'] != NULL): echo ', ' . $row['NameExtension']; endif; ?>
+														<?php echo $fullName; ?>
 													</td>
 													<td class="text-center align-middle d-none">
 														<?php echo $row['PositionDesired']; ?>
@@ -200,6 +234,7 @@
 															echo $dayEnds . ' at ' . $hoursEnds;
 														?>
 													</td>
+													<?php if ($row['Status'] == 'Employed'): ?>
 													<td class="text-center align-middle" data-toggle="tooltip" data-placement="top" data-html="true" title="<b>Contract Started</b><br><?php echo $dayStarts . '<br>' . $hoursStarts; ?><br><br><b>Contract Ends</b><br><?php echo $dayEnds . '<br>' . $hoursEnds; ?><br><br><b>Salary</b><br>₱<?php echo $row['SalaryExpected']; ?><br><br><i>Click the bar to open the Contract tab</i>">
 														<div class="d-none"> 
 															<?php echo $row['DateEnds']; // For sorting ?>
@@ -215,9 +250,11 @@
 															<div class="progress-bar wercher-progress-bar" role="progressbar" style="width: <?php echo $rPercentage; ?>%;" aria-valuenow="<?php echo $rPercentage; ?>" aria-valuemin="0" aria-valuemax="100"><?php echo $rPercentage; ?>%</div>
 														</a>
 													</td>
-													<td class="text-center align-middle PrintExclude" width="110">
-														<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
+													<?php elseif ($row['Status'] == 'Employed (Permanent)'): ?>
+													<td class="text-center align-middle">
+														Regular
 													</td>
+													<?php endif; ?>
 												</tr>
 											<?php endforeach ?>
 										</tbody>

@@ -36,12 +36,15 @@ endif;
 					<ul>
 						<li class="tabs-active"><a href="<?php echo base_url() ?>Employees">Employees (<?php echo $get_employee->num_rows()?>)</a></li>
 						<li><a href="<?php echo base_url() ?>Employees/Regulars">Regulars (<?php echo $GetPermanentEmployees->num_rows()?>)</a></li>
+						<li><a href="<?php echo base_url() ?>Employees/Absorbed">Absorbed (<?php echo $GetAbsorbedEmployees->num_rows()?>)</a></li>
+						<li><a href="<?php echo base_url() ?>Employees/Resigned">Resigned (<?php echo $GetResignedEmployees->num_rows()?>)</a></li>
+						<li><a href="<?php echo base_url() ?>Employees/Terminated">Terminated (<?php echo $GetTerminatedEmployees->num_rows()?>)</a></li>
 					</ul>
 				</div>
 				<div class="row rcontent">
 					<div class="col-sm-12 col-md-7 PrintPageName PrintOut">
 						<i class="fas fa-info-circle"></i>
-						<i>Found <?php echo $GetTotalEmployees->num_rows(); ?> employee<?php if($GetTotalEmployees->num_rows() != 1): echo 's'; endif;?> currently in the database, <?php echo $get_employee->num_rows(); ?> of which have contract and <?php echo $GetPermanentEmployees->num_rows(); ?> permanent.
+						<i>Found <?php echo $GetTotalEmployees->num_rows(); ?> employee<?php if($GetTotalEmployees->num_rows() != 1): echo 's'; endif;?> currently in the database, <?php echo $get_employee->num_rows(); ?> of which have contract and <?php echo $GetPermanentEmployees->num_rows(); ?> regulars.
 						<?php if($LatestHireesCount > 0):
 							echo '<br>Latest ';
 							if ($LatestHireesCount == 1):
@@ -158,7 +161,7 @@ endif;
 											</td>
 											<?php foreach ($getClientOption->result_array() as $nrow): ?>
 												<?php if ($row['ClientEmployed'] == $nrow['ClientID']) {
-													echo '<td class="text-center align-middle"><a href="Employee?client_id=' . $nrow['ClientID'] . '">
+													echo '<td class="text-center align-middle"><a href="Clients?id=' . $nrow['ClientID'] . '">
 													'.$nrow['Name'].'</a>
 													</td>';
 												} ?>

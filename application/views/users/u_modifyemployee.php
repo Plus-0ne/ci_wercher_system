@@ -129,6 +129,10 @@
 										<label>Contact Number</label>
 										<input class="form-control" type="text" name="PhoneNumber" autocomplete="off" value="<?php echo $Phone_No; ?>">
 									</div>
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Email Address (@)</label>
+										<input class="form-control" type="text" name="EmailAddress" autocomplete="off" value="<?php echo $EmailAddress; ?>">
+									</div>
 								</div>
 								<div class="mt-5 mb-4">
 									<h6>
@@ -198,6 +202,12 @@
 											<div class="form-group col-sm-12 col-lg-6">
 												<label id="ATM_Text">ATM No.</label>
 												<input id="ATM" class="form-control" type="text" name="ATM_No" autocomplete="off" value="<?php echo $ATM_No; ?>">
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col-sm-12 col-lg-6">
+												<label id="HMO_Text">Health Maintenance Organization No.</label>
+												<input id="HMO" class="form-control" type="text" name="HMO" autocomplete="off" value="<?php echo $HMO; ?>">
 											</div>
 										</div>
 									</div>
@@ -634,6 +644,7 @@
 		var HDMF_List = [];
 		var RCN_List = [];
 		var PhilHealth_List = [];
+		var HMO_List = [];
 		var TIN_List = [];
 		var ATM_List = [];
 		<?php foreach($this->Model_Selects->GetAllApplicants()->result_array() as $row): ?>
@@ -641,6 +652,7 @@
 			HDMF_List.push("<?php echo $row['HDMF']; ?>");
 			RCN_List.push("<?php echo $row['ResidenceCertificateNo']; ?>");
 			PhilHealth_List.push("<?php echo $row['PhilHealth']; ?>");
+			HMO_List.push("<?php echo $row['HMO']; ?>");
 			TIN_List.push("<?php echo $row['TIN']; ?>");
 			ATM_List.push("<?php echo $row['ATM_No']; ?>");
 		<?php endforeach; ?>
@@ -670,6 +682,13 @@
 				$('#PhilHealth_Text').html('PHILHEALTH <i class="fas fa-times" style="color: red;"></i>')
 			} else {
 				$('#PhilHealth_Text').html('PHILHEALTH <i class="fas fa-check" style="color: green;"></i>')
+			}
+		});
+		$('#HMO').bind("input", function () {
+			if(HMO_List.includes($('#HMO').val())) {
+				$('HMO_Text').html('Health Maintenance Organization No. <i class="fas fa-times" style="color: red;"></i>')
+			} else {
+				$('#HMO_Text').html('Health Maintenance Organization No. <i class="fas fa-check" style="color: green;"></i>')
 			}
 		});
 		$('#TIN').bind("input", function () {

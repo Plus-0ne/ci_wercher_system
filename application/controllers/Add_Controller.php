@@ -38,6 +38,7 @@ class Add_Controller extends CI_Controller {
 			$CivilStatus = $this->input->post('CivilStatus');
 			$No_Children = $this->input->post('No_Children');
 			$PhoneNumber = $this->input->post('PhoneNumber');
+			$EmailAddress = $this->input->post('EmailAddress');
 			# DOCUMENTS
 			$SSS = $this->input->post('SSS');
 			$SSS_Effective = $this->input->post('SSS_Effective');
@@ -45,6 +46,7 @@ class Add_Controller extends CI_Controller {
 			$TIN = $this->input->post('TIN');
 			$HDMF = $this->input->post('HDMF');
 			$PhilHealth = $this->input->post('PhilHealth');
+			$HMO = $this->input->post('HMO');
 			$ATM_No = $this->input->post('ATM_No');
 
 			$EmergencyPerson = $this->input->post('EmergencyPerson');
@@ -80,6 +82,7 @@ class Add_Controller extends CI_Controller {
 					'CivilStatus' => $CivilStatus,
 					'No_Children' => $No_Children,
 					'PhoneNumber' => $PhoneNumber,
+					'EmailAddress' => $EmailAddress,
 					'SSS' => $SSS,
 					'SSS_Effective' => $SSS_Effective,
 					'RCN' => $RCN,
@@ -87,6 +90,7 @@ class Add_Controller extends CI_Controller {
 					'HDMF' => $HDMF,
 					'ATM_No' => $ATM_No,
 					'PhilHealth' => $PhilHealth,
+					'HMO' => $HMO,
 
 					'EmergencyPerson' => $EmergencyPerson,
 					'EmergencyContact' => $EmergencyContact,
@@ -213,6 +217,7 @@ class Add_Controller extends CI_Controller {
 					'Address_Manila' => $Address_Manila,
 
 					'Phone_No' => $PhoneNumber,
+					'EmailAddress' => $EmailAddress,
 
 					'SSS_No' => $SSS,
 					'EffectiveDateCoverage' => $SSS_Effective,
@@ -221,6 +226,7 @@ class Add_Controller extends CI_Controller {
 					'HDMF' => $HDMF,
 					'ATM_No' => $ATM_No,
 					'PhilHealth' => $PhilHealth,
+					'HMO' => $HMO,
 
 					'EmergencyPerson' => $EmergencyPerson,
 					'EmergencyContact' => $EmergencyContact,

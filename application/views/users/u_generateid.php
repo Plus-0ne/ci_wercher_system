@@ -62,6 +62,9 @@ $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 							<div class="wercher-idcard-philhealth">
 								<span><?php echo $PhilHealth; ?></span>
 							</div>
+							<div class="wercher-idcard-hmo">
+								<span><?php echo $HMO; ?></span>
+							</div>
 						</div>
 						<button id="BackSaveBtn" type="button" class="btn btn-primary wercher-idcard-backbtn"><i class="fas fa-download"></i> Save Back to Computer</button>
 					</div>
@@ -109,7 +112,7 @@ $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 			minFontPixels: 9,
 			maxFontPixels: 22,
 		});
-		$('.wercher-idcard-telno, .wercher-idcard-sssno, .wercher-idcard-tin, .wercher-idcard-pagibig, .wercher-idcard-philhealth').textfill({
+		$('.wercher-idcard-telno, .wercher-idcard-sssno, .wercher-idcard-tin, .wercher-idcard-pagibig, .wercher-idcard-philhealth, .wercher-idcard-hmo').textfill({
 			debug: true,
 			minFontPixels: 8,
 			maxFontPixels: 22,

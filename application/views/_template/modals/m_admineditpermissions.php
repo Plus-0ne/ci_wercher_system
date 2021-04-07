@@ -15,6 +15,7 @@
 							<option hidden disabled selected>Choose Position</option>
 							<option value="Developer">Developer</option>
 							<option value="President">President</option>
+							<option value="Admin Officer">Admin Officer</option>
 							<option value="HR Manager">HR Manager</option>
 							<option value="HR Assistant">HR Assistant</option>
 							<option value="Accounting Manager">Accounting Manager</option>
@@ -132,13 +133,46 @@
 				</div>
 				<div class="form-row">
 					<div class="form-group col-sm-1">
-						<img width="32" height="32" src="assets/img/documents-folder-tree.png">
+						<img width="32" height="32" src="assets/img/documents-folder-tree-continuous.png">
 					</div>
 					<div class="form-group col-sm-2">
 						<button type="button" class="btn btn-sm btn-secondary w-100" data-permissions="EmployeesRegulars"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
 					</div>
 					<div class="form-group setpermissions-subgroup-text col-sm-8">
 						<i class="fas fa-users"></i> Access to Regulars
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-sm-1">
+						<img width="32" height="32" src="assets/img/documents-folder-tree-continuous.png">
+					</div>
+					<div class="form-group col-sm-2">
+						<button type="button" class="btn btn-sm btn-secondary w-100" data-permissions="EmployeesAbsorbed"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+					</div>
+					<div class="form-group setpermissions-subgroup-text col-sm-8">
+						<i class="fas fa-users"></i> Access to Absorbed
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-sm-1">
+						<img width="32" height="32" src="assets/img/documents-folder-tree-continuous.png">
+					</div>
+					<div class="form-group col-sm-2">
+						<button type="button" class="btn btn-sm btn-secondary w-100" data-permissions="EmployeesResigned"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+					</div>
+					<div class="form-group setpermissions-subgroup-text col-sm-8">
+						<i class="fas fa-users"></i> Access to Resigned
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-sm-1">
+						<img width="32" height="32" src="assets/img/documents-folder-tree.png">
+					</div>
+					<div class="form-group col-sm-2">
+						<button type="button" class="btn btn-sm btn-secondary w-100" data-permissions="EmployeesTerminated"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+					</div>
+					<div class="form-group setpermissions-subgroup-text col-sm-8">
+						<i class="fas fa-users"></i> Access to Terminated
 					</div>
 				</div>
 				<!-- Admins -->

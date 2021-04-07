@@ -30,6 +30,7 @@
 							<option hidden disabled selected>Choose Position</option>
 							<option value="Developer">Developer</option>
 							<option value="President">President</option>
+							<option value="Admin Officer">Admin Officer</option>
 							<option value="HR Manager">HR Manager</option>
 							<option value="HR Assistant">HR Assistant</option>
 							<option value="Accounting Manager">Accounting Manager</option>

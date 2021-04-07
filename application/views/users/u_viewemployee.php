@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 use Carbon\Carbon;
 
 $currentDate = new DateTime();
-if ($Status == 'Employed' || $Status == 'Employed (Permanent)') {
+if ($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Absorbed' || $Status == 'Resigned' || $Status == 'Terminated') {
 	if ($SalaryExpected == NULL) {
 		$SalaryExpected = 0;
 	}
@@ -150,7 +150,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 										<li id="TabEmploymentsBtn" class="employee-tabs-select<?php if ($employment_record->num_rows() <= 0) { echo ' employee-tabs-inactive'; }?>"><a href="#Employments" onclick="">Employments</a></li>
 										<li id="TabMachineBtn" class="employee-tabs-select<?php if ($Machine_Operatessss->num_rows() <= 0) { echo ' employee-tabs-inactive'; }?>"><a href="#Machine" onclick="">Machine</a></li>
 										<li><a href="<?=base_url()?>PrintEmployee?id=<?=$ApplicantID?>" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Print Employee" style="color: gold;"><i class="fas fa-print" style="margin-right: -1px;"></i> </a></li>
-										<?php if((in_array('ApplicantsEditing', $this->session->userdata('Permissions')) && ($Status == 'Applicant' || $Status == 'Expired' || $Status == 'Blacklisted' || $Status == 'Deleted')) || (in_array('EmployeesEditing', $this->session->userdata('Permissions')) && ($Status == 'Employed' || $Status == 'Employed (Permanent)'))): ?>
+										<?php if((in_array('ApplicantsEditing', $this->session->userdata('Permissions')) && ($Status == 'Applicant' || $Status == 'Expired' || $Status == 'Blacklisted' || $Status == 'Deleted' || $Status == 'Resigned' || $Status == 'Terminated')) || (in_array('EmployeesEditing', $this->session->userdata('Permissions')) && ($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Absorbed'))): ?>
 										<li id="TabEditBtn"><a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" onclick="" target="_blank" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Edit" style="color: gold;"><i class="fas fa-edit" style="margin-right: -1px;"></i></a></li>
 										<?php endif; ?>
 									</ul>
@@ -160,7 +160,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 								</div>
 							</div>
 							<div class="row w-100 rcontent employee-content">
-								<div class="col-2 employee-static mt-5 d-none d-sm-block">
+								<div class="col-2 employee-static mt-5 d-none d-sm-block" style="word-wrap: break-word;">
 									<?php
 									// Name Handler
 									$fullName = '';
@@ -206,7 +206,10 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 										<i class="fas fa-phone"></i> <?php echo $Phone_No; ?>
 									</div>
 									<div class="col-sm-12 employee-static-item">
-										<i class="fas fa-map-marker-alt"></i> <?php echo $Address_Present; ?>
+										<i class="fas fa-at"></i> <?php echo $EmailAddress; ?>
+									</div>
+									<div class="col-sm-12 employee-static-item">
+										<i class="fas fa-map-marker-alt"></i> <span style="font-size: 14px;"><?php echo $Address_Present; ?></span>
 									</div>
 									<hr>
 									<div class="col-sm-12">
@@ -225,12 +228,18 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 											<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Employed
 										<?php } elseif ($Status == 'Employed (Permanent)') { ?>
 											<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Employed (Permanent)
+										<?php } elseif ($Status == 'Absorbed') { ?>
+											<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Absorbed
 										<?php } elseif ($Status == 'Applicant') { ?>
 											<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Applicant
 										<?php } elseif ($Status == 'Expired') { ?>
 											<i class="fas fa-square PrintExclude" style="color: #0721DB;"></i> Applicant (Expired)
 										<?php } elseif ($Status == 'Blacklisted') { ?>
 											<i class="fas fa-square PrintExclude" style="color: #000000;"></i> Blacklisted
+										<?php } elseif ($Status == 'Resigned') { ?>
+											<i class="fas fa-square PrintExclude" style="color: #000000;"></i> Resigned
+										<?php } elseif ($Status == 'Terminated') { ?>
+											<i class="fas fa-square PrintExclude" style="color: #000000;"></i> Terminated
 										<?php } else { ?>
 											<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Unknown
 										<?php } ?>
@@ -246,6 +255,50 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 											</div>
 											<div class="col-sm-12 pb-2">
 												This individual is <b>Blacklisted</b>
+											</div>
+											<div class="col-sm-12 col-mb-12 pb-2">
+												<a href="#Violations" class="btn btn-danger"><i class="fas fa-book"></i> Violations</a>
+											</div>
+											<?php if(in_array('ApplicantsEditing', $this->session->userdata('Permissions'))): ?>
+											<div class="col-sm-12 col-mb-12 pb-2" style="min-width: 125px;">
+												<a href="<?=base_url()?>RestoreEmployee?id=<?php echo $ApplicantID; ?>" class="btn btn-success"><i class="fas fa-redo"></i> Restore</a>
+											</div>
+											<?php endif; ?>
+										</div>
+									</div>
+									<?php elseif ($Status == 'Resigned'): ?>
+									<hr>
+									<div class="row ml-auto mr-auto pb-5 w-100">
+										<div class="col-sm-12 col-mb-12 w-100 text-center blacklisted-notice">
+											<div class="col-sm-12 pb-1 pt-4">
+												<h5>
+													<i class="fas fa-exclamation-circle"></i><b>&nbsp;Notice&nbsp;</b>
+												</h5>
+											</div>
+											<div class="col-sm-12 pb-2">
+												This individual is <b>Resigned</b>
+											</div>
+											<div class="col-sm-12 col-mb-12 pb-2">
+												<a href="#Violations" class="btn btn-danger"><i class="fas fa-book"></i> Violations</a>
+											</div>
+											<?php if(in_array('ApplicantsEditing', $this->session->userdata('Permissions'))): ?>
+											<div class="col-sm-12 col-mb-12 pb-2" style="min-width: 125px;">
+												<a href="<?=base_url()?>RestoreEmployee?id=<?php echo $ApplicantID; ?>" class="btn btn-success"><i class="fas fa-redo"></i> Restore</a>
+											</div>
+											<?php endif; ?>
+										</div>
+									</div>
+									<?php elseif ($Status == 'Terminated'): ?>
+									<hr>
+									<div class="row ml-auto mr-auto pb-5 w-100">
+										<div class="col-sm-12 col-mb-12 w-100 text-center blacklisted-notice">
+											<div class="col-sm-12 pb-1 pt-4">
+												<h5>
+													<i class="fas fa-exclamation-circle"></i><b>&nbsp;Notice&nbsp;</b>
+												</h5>
+											</div>
+											<div class="col-sm-12 pb-2">
+												This individual is <b>Terminated</b>
 											</div>
 											<div class="col-sm-12 col-mb-12 pb-2">
 												<a href="#Violations" class="btn btn-danger"><i class="fas fa-book"></i> Violations</a>
@@ -283,7 +336,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 										<div class="employee-tabs-group-content">
 											<div class="employee-content-header">
 												<div class="ml-1 row">
-													<?php if ($Status == 'Employed' || $Status == 'Employed (Permanent)'): ?> 
+													<?php if ($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Absorbed'): ?> 
 														<?php if ($ReminderDate == NULL): ?> 
 															<button id="<?php echo $ApplicantID; ?>" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-exclamation"></i> No reminder set</button>
 														<?php else: ?>
@@ -441,6 +494,14 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 												</div>
 												<div class="col-sm-3 employee-dynamic-item">
 													<?php echo $ATM_No; ?>
+												</div>
+											</div>
+											<div class="row mt-4">
+												<div class="col-sm-3 employee-dynamic-header">
+													<b>Health Maintenance Organization No.</b>
+												</div>
+												<div class="col-sm-3 employee-dynamic-item">
+													<?php echo $HMO; ?>
 												</div>
 											</div>
 											<hr>
@@ -1758,7 +1819,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 											</div>
 												<?php endif; ?>
 											</div>
-											<?php elseif ($Status == 'Employed (Permanent)'): ?>
+											<?php elseif ($Status == 'Employed (Permanent)' || $Status == 'Absorbed'): ?>
 											<div class="employee-content-header">
 												<div class="ml-1 row">
 													<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions'))): ?>
@@ -1767,7 +1828,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 													<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
 													<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions'))): ?>
 													<div class="ml-auto">
-														<!-- <button id="<?php echo $ApplicantID; ?>" class="btn btn-danger btn-sm SuspendButton" data-toggle="modal" data-target="#SuspendModal" type="button"><i class="fas fa-exclamation-triangle"></i> Suspend</button> -->
+														<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm changeemploymenttype-btn mr-auto" data-toggle="modal" data-target="#ChangeEmploymentTypeModal"><i class="fas fa-edit"></i> Change Employment Type</button>
 													</div>
 													<?php endif; ?>
 												</div>
@@ -1775,7 +1836,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 											<hr>
 											<div class="col-sm-12 col-md-12 employee-dynamic-header text-center">
 												<b>
-													Regular since
+													<?php if ($Status == 'Employed (Permanent)') { echo 'Regular'; } elseif ($Status == 'Absorbed') { echo 'Absorbed'; } ?> since
 												</b>
 											</div>
 											<div class="col-sm-12 col-md-12 mb-2 text-center">
@@ -2062,7 +2123,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																		<td colspan="6">
 																			<h5>
 																				No data available.
-																				<?php if((in_array('ApplicantsEditing', $this->session->userdata('Permissions')) && ($Status == 'Applicant' || $Status == 'Expired' || $Status == 'Blacklisted' || $Status == 'Deleted')) || (in_array('EmployeesEditing', $this->session->userdata('Permissions')) && ($Status == 'Employed' || $Status == 'Employed (Permanent)'))): ?>
+																				<?php if((in_array('ApplicantsEditing', $this->session->userdata('Permissions')) && ($Status == 'Applicant' || $Status == 'Expired' || $Status == 'Blacklisted' || $Status == 'Resigned' || $Status == 'Terminated' || $Status == 'Deleted')) || (in_array('EmployeesEditing', $this->session->userdata('Permissions')) && ($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Absorbed'))): ?>
 																				<br>
 																				<a href="ModifyEmployee?id=<?php echo $ApplicantID; ?>#Academic_History" class="btn btn-sm btn-primary mt-2"><i class="fas fa-plus"></i> Add Data</a>
 																				<?php endif; ?>
@@ -2258,7 +2319,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 		<?php } ?>
 		<!-- CONTRACT HISTORY MODAL -->
 		<?php $this->load->view('_template/modals/m_contracthistory'); ?>
-		<?php if($Status == 'Employed' || $Status == 'Employed (Permanent)'): ?>
+		<?php if($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Absorbed'): ?>
 			<!-- EXTEND CONTRACT MODAL -->
 			<?php $this->load->view('_template/modals/m_extendcontract'); ?>
 			<!-- SET A REMINDER MODAL -->
@@ -2270,6 +2331,8 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 			<?php $this->load->view('_template/modals/m_suspend'); ?>
 			<!-- MODIFY CONTRACT MODAL -->
 			<?php $this->load->view('_template/modals/m_modifycontract'); ?>
+			<!-- CHANGE EMPLOYMENT TYPE MODAL -->
+			<?php $this->load->view('_template/modals/m_changeemploymenttype'); ?>
 		<?php else: ?>
 			<!-- CLIENT HIRE MODAL -->
 			<?php $this->load->view('_template/modals/m_clienthire'); ?>
@@ -2677,6 +2740,10 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 				$('#ExtendID').val($(this).attr('id'));
 				console.log($('#ExtendID').val());
 				console.log($('#ExtendDate').val());
+			});
+			$('.changeemploymenttype-btn').on('click', function () {
+				$('#ChangeEmploymentTypeID').val($(this).attr('id'));
+				console.log($('#ChangeEmploymentTypeID').val());
 			});
 			$('.SuspendButton').on('click', function () {
 				$('#SuspendID').val($(this).attr('id'));
