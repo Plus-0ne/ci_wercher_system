@@ -3,7 +3,7 @@ $T_Header;
 
 ?>
 <body>
-	<div class="wrapper wercher-background-lowpoly">
+	<div class="wrapper wercher-background-lowpoly-black">
 		<?php $this->load->view('_template/users/u_sidebar'); ?>
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
@@ -12,7 +12,8 @@ $T_Header;
 					<ul>
 						<li><a href="<?php echo base_url() ?>Employees">Employees (<?php echo $get_employee->num_rows()?>)</a></li>
 						<li><a href="<?php echo base_url() ?>Employees/Regulars">Regulars (<?php echo $GetPermanentEmployees->num_rows()?>)</a></li>
-						<li class="tabs-active"><a href="<?php echo base_url() ?>Employees/Absorbed">Absorbed (<?php echo $GetAbsorbedEmployees->num_rows()?>)</a></li>
+						<li><a href="<?php echo base_url() ?>Employees/Absorbed/Wercher">Absorbed [Wercher] (<?php echo $GetAbsorbedWercherEmployees->num_rows()?>)</a></li>
+						<li class="tabs-active"><a href="<?php echo base_url() ?>Employees/Absorbed/Left">Absorbed [Left] (<?php echo $GetAbsorbedLeftEmployees->num_rows()?>)</a></li>
 						<li><a href="<?php echo base_url() ?>Employees/Resigned">Resigned (<?php echo $GetResignedEmployees->num_rows()?>)</a></li>
 						<li><a href="<?php echo base_url() ?>Employees/Terminated">Terminated (<?php echo $GetTerminatedEmployees->num_rows()?>)</a></li>
 					</ul>
@@ -20,7 +21,7 @@ $T_Header;
 				<div class="row rcontent">
 					<div class="col-sm-12 col-md-9 PrintPageName PrintOut">
 						<i class="fas fa-info-circle"></i>
-						<i>Found <?php echo $GetAbsorbedEmployees->num_rows(); ?> absorbed employee<?php if($GetAbsorbedEmployees->num_rows() != 1): echo 's'; endif;?> in the database. 
+						<i>Found <?php echo $GetAbsorbedLeftEmployees->num_rows(); ?> absorbed (to another company) employee<?php if($GetAbsorbedLeftEmployees->num_rows() != 1): echo 's'; endif;?> in the database. 
 						</i>
 					</div>
 					<div class="col-sm-12 col-md-3 text-right">
@@ -40,14 +41,11 @@ $T_Header;
 										<th class="d-none"> Full Name </th>
 										<th class="d-none"> Position </th>
 										<th> Contact Number </th>
-										<th> Client </th>
-										<th> Employed Since </th>
-										<th class="d-none"> Employed Since </th>
 										<th class="PrintExclude"> Action </th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($GetAbsorbedEmployees->result_array() as $row): 
+									<?php foreach ($GetAbsorbedLeftEmployees->result_array() as $row): 
 
 										// Name Handler
 										$fullName = '';
@@ -124,35 +122,6 @@ $T_Header;
 											<td class="text-center align-middle">
 												<?php echo $row['Phone_No']; ?>
 											</td>
-											<?php foreach ($getClientOption->result_array() as $nrow): ?>
-												<?php if ($row['ClientEmployed'] == $nrow['ClientID']) {
-													echo '<td class="text-center align-middle"><a href="Employee?client_id=' . $nrow['ClientID'] . '">
-													'.$nrow['Name'].'</a>
-													</td>';
-												} ?>
-											<?php endforeach ?>
-											<td class="text-center align-middle">
-												<div class="d-none"> 
-													<?php echo $row['DateStarted']; // For sorting ?>
-												</div>
-												<?php
-													$dateStarts = new DateTime($row['DateStarted']);
-													$dayStarts = $dateStarts->format('Y-m-d');
-													$dayStarts = DateTime::createFromFormat('Y-m-d', $dayStarts)->format('F d, Y');
-
-													echo $dayStarts;
-												?>
-											</td>
-											<td class="text-center align-middle d-none">
-												<?php
-													$dateStarts = new DateTime($row['DateStarted']);
-													$dayStarts = $dateStarts->format('Y-m-d');
-													$dayStarts = DateTime::createFromFormat('Y-m-d', $dayStarts)->format('F d, Y');
-													$hoursStarts = $dateStarts->format('h:i:s A');
-
-													echo $dayStarts . ' at ' . $hoursStarts;
-												?>
-											</td>
 											<td class="text-center align-middle PrintExclude" width="110">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
 												<button id="<?php echo $row['ApplicantID']; ?>" type="button" class="btn btn-info btn-sm w-100 mb-1 doc_btn" data-toggle="modal" data-target="#AddSuppDoc"><i class="fas fa-file-upload"></i> Documents</button>
@@ -202,12 +171,12 @@ $T_Header;
 		var table = $('#emp').DataTable( {
 			sDom: 'lrtip',
 			"bLengthChange": false,
-			"order": [[ 9, "asc" ]],
+			"order": [[ 0, "asc" ]],
 			buttons: [
             {
 	            extend: 'print',
 	            exportOptions: {
-	                columns: [ 0, 2, 3, 4, 5, 7, 8 ]
+	                columns: [ 0, 2, 3, 4 ]
 	            },
 	            customize: function ( doc ) {
 	            	$(doc.document.body).find('h1').prepend('<img src="<?=base_url()?>assets/img/wercher_logo.png" width="63px" height="56px" />');
@@ -218,19 +187,19 @@ $T_Header;
 	        {
 	            extend: 'copyHtml5',
 	            exportOptions: {
-	                columns: [ 0, 2, 3, 4, 5, 7, 8 ]
+	                columns: [ 0, 2, 3, 4 ]
 	            }
 	        },
 	        {
 	            extend: 'excelHtml5',
 	            exportOptions: {
-	                columns: [ 0, 2, 3, 4, 5, 7, 8 ]
+	                columns: [ 0, 2, 3, 4 ]
 	            }
 	        },
 	        {
 	            extend: 'csvHtml5',
 	            exportOptions: {
-	                columns: [ 0, 2, 3, 4, 5, 7, 8 ]
+	                columns: [ 0, 2, 3, 4 ]
 	            }
 	        },
 	        {

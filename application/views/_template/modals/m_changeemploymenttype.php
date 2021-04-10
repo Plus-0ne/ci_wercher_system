@@ -13,7 +13,8 @@
 						<label>Change Employment Type to</label>
 						<select id="EmploymentTypeSelect" class="form-control" name="EmploymentType">
 							<option value="Regular"<?php if($Status == 'Employed (Permanent)') { echo ' selected'; } ?>>Regular</option>
-							<option value="Absorbed"<?php if($Status == 'Absorbed') { echo ' selected'; } ?>>Absorbed</option>
+							<option value="Absorbed (Wercher)"<?php if($Status == 'Absorbed (Wercher)') { echo ' selected'; } ?>>Absorbed (to Wercher)</option>
+							<option value="Absorbed (Left)"<?php if($Status == 'Absorbed (Left)') { echo ' selected'; } ?>>Absorbed (to another company)</option>
 							<option value="Resigned"<?php if($Status == 'Resigned') { echo ' selected'; } ?>>Resigned</option>
 							<option value="Terminated"<?php if($Status == 'Termninated') { echo ' selected'; } ?>>Terminated</option>
 						</select>

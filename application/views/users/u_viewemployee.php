@@ -4,44 +4,39 @@ require 'vendor/autoload.php';
 use Carbon\Carbon;
 
 $currentDate = new DateTime();
-if ($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Absorbed' || $Status == 'Resigned' || $Status == 'Terminated') {
+if ($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Absorbed (Wercher)' || $Status == 'Absorbed (Left)' || $Status == 'Resigned' || $Status == 'Terminated') {
 	if ($SalaryExpected == NULL) {
 		$SalaryExpected = 0;
 	}
 
 	// Contract elapsed
-	$cStarts = new DateTime($DateStarted);
-	$cEnds = new DateTime($DateEnds);
+	$cStarts = Carbon::parse($DateStarted);
+	$cEnds = Carbon::parse($DateEnds);
 
-	$cElapsed = $cStarts->diff($currentDate)->format('%a');
 	$cElapsedText = $cStarts->diff($currentDate)->format('%y years, %m months, %d days');
 
 	// 13th Month Pay Calculation
-	$cDiff = $cEnds->diff($cStarts);
-	if ($cDiff->m > 1) {
-		$cTotalMonths = ($cDiff->y * 12) + ($cDiff->m) + ($cDiff->d / 30);
-	} else {
-		$cTotalMonths = (($cDiff->y) * 12) + ($cDiff->m);
-	}
-	$cDiffDays = $cEnds->diff($cStarts)->format('%a');
-	if ($cDiff->m > 0) {
+	$cDiffInDays = $cEnds->diffInDays($cStarts);
+	$cDiffInMonths = $cEnds->diffInMonths($cStarts);
+	if ($cDiffInMonths > 1) {
 		$isThirteenEligible = true;
 	} else {
 		$isThirteenEligible = false;
 	}
+	$salaryInterval = 0;
 	if ($Status == 'Employed') {
-		if ($cTotalMonths > 0) {
+		if ($cDiffInMonths > 0) {
 			// Monthly salary
-			$salaryInterval = $SalaryExpected / $cTotalMonths;
+			$salaryInterval = $SalaryExpected / $cDiffInMonths;
 		} else {
 			// Calculate to as daily salary instead of monthly salary
-			$salaryInterval = $SalaryExpected / $cDiff->d;
+			$salaryInterval = $SalaryExpected / $cDiffInDays;
 		}
 	} else {
 		// Permanent salary
 		$salaryInterval = $SalaryExpected / 12;
 	}
-	$thirteen = (($salaryInterval * $cElapsed) / 30) / 12;
+	$thirteen = (($salaryInterval * $cDiffInDays) / 30) / 12;
 
 	//Contract Dates
 	$dsdate = new DateTime($DateStarted);
@@ -142,7 +137,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 								<div class="col-10 employee-tabs">
 									<ul>
 										<li id="TabPersonalBtn" class="employee-tabs-select employee-tabs-active"><a href="#Personal" onclick="">Personal</a></li>
-										<li id="TabContractBtn" class="employee-tabs-select"><a href="#Contract" onclick="">Contract</a></li>
+										<li id="TabContractBtn" class="employee-tabs-select"><a href="#Employment" onclick="">Employment</a></li>
 										<?php if($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Blacklisted' || $Status == 'Expired'): ?>
 											<li id="TabDocumentsBtn" class="employee-tabs-select"><a href="#Documents" onclick="">Documents</a></li>
 										<?php endif; ?>
@@ -227,9 +222,11 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 										<?php if ($Status == 'Employed') { ?>
 											<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Employed
 										<?php } elseif ($Status == 'Employed (Permanent)') { ?>
-											<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Employed (Permanent)
-										<?php } elseif ($Status == 'Absorbed') { ?>
-											<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Absorbed
+											<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Regular
+										<?php } elseif ($Status == 'Absorbed (Wercher)') { ?>
+											<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Absorbed to Wercher
+										<?php } elseif ($Status == 'Absorbed (Left)') { ?>
+											<i class="fas fa-square PrintExclude" style="color: #000000;"></i> Absorbed to another company
 										<?php } elseif ($Status == 'Applicant') { ?>
 											<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Applicant
 										<?php } elseif ($Status == 'Expired') { ?>
@@ -336,7 +333,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 										<div class="employee-tabs-group-content">
 											<div class="employee-content-header">
 												<div class="ml-1 row">
-													<?php if ($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Absorbed'): ?> 
+													<?php if ($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Absorbed (Wercher)'): ?> 
 														<?php if ($ReminderDate == NULL): ?> 
 															<button id="<?php echo $ApplicantID; ?>" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-exclamation"></i> No reminder set</button>
 														<?php else: ?>
@@ -837,12 +834,12 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																			if ($isThirteenEligible) {
 																				echo '<span style="user-select: none;">₱ </span>' . round($thirteen, 2);
 																			} else {
-																				echo '<span class="p-1" style="color: #735600;" data-toggle="tooltip" data-placement="top" data-html="true" title="Contract duration is lower than 1 day"><i class="fas fa-info-circle"></i> Not eligible</span>';
+																				echo '<span class="p-1" style="color: #735600;" data-toggle="tooltip" data-placement="top" data-html="true" title="Contract duration is lower than 1 month"><i class="fas fa-info-circle"></i> Not eligible</span>';
 																			}
 																		?>
 																	</div>
 																	<div class="col-sm-12 employee-dynamic-header mt-2">
-																		<b><?php if ($cDiff->m > 0) { echo 'Monthly Salary'; } else { echo 'Daily Salary'; } ?></b>
+																		<b><?php if ($cDiffInMonths > 0) { echo 'Monthly Salary'; } else { echo 'Daily Salary'; } ?></b>
 																	</div>
 																	<div class="col-sm-12">
 																		<?php echo '<span style="user-select: none;">₱ </span>' . round($salaryInterval, 2); ?>
@@ -1819,7 +1816,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 											</div>
 												<?php endif; ?>
 											</div>
-											<?php elseif ($Status == 'Employed (Permanent)' || $Status == 'Absorbed'): ?>
+											<?php elseif ($Status == 'Employed (Permanent)' || $Status == 'Absorbed (Wercher)'): ?>
 											<div class="employee-content-header">
 												<div class="ml-1 row">
 													<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions'))): ?>
@@ -1836,7 +1833,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 											<hr>
 											<div class="col-sm-12 col-md-12 employee-dynamic-header text-center">
 												<b>
-													<?php if ($Status == 'Employed (Permanent)') { echo 'Regular'; } elseif ($Status == 'Absorbed') { echo 'Absorbed'; } ?> since
+													<?php if ($Status == 'Employed (Permanent)') { echo 'Regular'; } elseif ($Status == 'Absorbed (Wercher)') { echo 'Absorbed'; } ?> since
 												</b>
 											</div>
 											<div class="col-sm-12 col-md-12 mb-2 text-center">
@@ -1907,7 +1904,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 												</div>
 												<div class="col-sm-3">
 													<div class="card mb-3" style="max-width: 18rem; height: 300px;">
-														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-dollar-sign"></i> Salary Expected</b></div>
+														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-dollar-sign"></i> Monthly Salary</b></div>
 														<div class="card-body text-dark">
 															<h5 class="card-title text-center wercher-card-title"><span style="user-select: none;">₱ </span><?php echo $SalaryExpected; ?></h5>
 															<p class="card-text">
@@ -1942,7 +1939,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																	</div>
 																	<div class="col-sm-12">
 																		<?php
-																			echo '<span style="user-select: none;">₱ </span>' . round($thirteen, 2);
+																			echo '<span style="user-select: none;">₱ </span>' . round($salaryInterval, 2);
 																		?>
 																	</div>
 																</div>
@@ -2319,7 +2316,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 		<?php } ?>
 		<!-- CONTRACT HISTORY MODAL -->
 		<?php $this->load->view('_template/modals/m_contracthistory'); ?>
-		<?php if($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Absorbed'): ?>
+		<?php if($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Absorbed (Wercher)'): ?>
 			<!-- EXTEND CONTRACT MODAL -->
 			<?php $this->load->view('_template/modals/m_extendcontract'); ?>
 			<!-- SET A REMINDER MODAL -->
@@ -2348,7 +2345,38 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 	<?php $this->load->view('_template/users/u_scripts');?>
 	<script type="text/javascript">
 		$(document).ready(function () {
-			<?php if ($Status == 'Employed' || $Status == 'Employed (Permanent)'): ?>
+			let absorbedClicked = false;
+			$('#EmploymentType').on('change', function() {
+				employmentType = $(this).val();
+				if (employmentType == 'Contractual') {
+					$('.contractual-group').show();
+					$('.absorbed-group').hide();
+					$('.previous-group').hide();
+				} else if (employmentType == 'Regular') {
+					$('.contractual-group').hide();
+					$('.absorbed-group').show();
+					if (absorbedClicked) {
+						$('.previous-group').show();
+					}
+				}
+			});
+			$('.absorbed-btn').on('click', function () {
+				if (!absorbedClicked) {
+					absorbedClicked = true;
+					$(this).addClass('btn-success');
+					$(this).children('i').addClass('wercher-visible');
+					$('.previous-group').fadeIn('fast');
+					$('#EmploymentStatus').val('Absorbed (Wercher)');
+				} else {
+					absorbedClicked = false;
+					$(this).removeClass('btn-success');
+					$(this).children('i').removeClass('wercher-visible');
+					$('.previous-group').fadeOut('fast');
+					$('#EmploymentStatus').val('');
+				}
+				
+			});
+			<?php if ($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Absorbed (Wercher)'): ?>
 			// Initialization
 			function updateCalculation() {
 				$('.payroll-net-pay').each(function() {
@@ -2599,6 +2627,8 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 			$("#Type").change(function(){
 				$('#ViolationNotice').hide();
 				$('#BlacklistNotice').hide();
+				$('#SuspensionNotice').hide();
+				$('.suspension-group').hide();
 				if ( $(this).val() == "Violation" ) { 
 					$("#ViolationNotice").fadeIn();
 			    } else if ( $(this).val() == "Blacklist" ) { 
@@ -2618,7 +2648,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 				$('#TabPersonal').children('.employee-tabs-group-content').show();
 				$('#TabPersonalBtn').addClass('employee-tabs-active');
 			}
-			else if (hashValue == 'Contract') {
+			else if (hashValue == 'Employment') {
 				$('#TabContract').children('.employee-tabs-group-content').show();
 				$('#TabContractBtn').addClass('employee-tabs-active');
 			}
@@ -2659,7 +2689,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 					$('#TabPersonal').children('.employee-tabs-group-content').show();
 					$('#TabPersonalBtn').addClass('employee-tabs-active');
 				}
-				else if (hashValue == 'Contract') {
+				else if (hashValue == 'Employment') {
 					$('#TabContract').children('.employee-tabs-group-content').show();
 					$('#TabContractBtn').addClass('employee-tabs-active');
 				}

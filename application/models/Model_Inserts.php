@@ -87,6 +87,11 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('hours_monthly', $data);
 		return $result;
 	}
+	public function InsertToPrevious($data)
+	{
+		$result = $this->db->insert('previous_company', $data);
+		return $result;
+	}
 	public function InsertDummyHours($data)
 	{
 		$result = $this->db->replace('dummy_hours', $data);

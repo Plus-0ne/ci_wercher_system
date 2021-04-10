@@ -133,13 +133,44 @@ use Carbon\Carbon;
 											$fullName = $fullName . ', ' . $row['NameExtension'];
 											$fullNameHover = $fullNameHover . ', ' . $row['NameExtension'];
 										}
-										if (strlen($fullName) > 35) {
-											$fullName = substr($fullName, 0, 35);
+										if (strlen($fullName) > 30) {
+											$fullName = substr($fullName, 0, 30);
 											$fullName = $fullName . '...';
+										}
+										if ($row['Status'] == 'Employed') {
+											$icon = '<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> ';
+											$employmentStatus = 'Contractual';
+										} elseif ($row['Status'] == 'Employed (Permanent)') {
+											$icon = '<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> ';
+											$employmentStatus = 'Regular';
+										} elseif ($row['Status'] == 'Absorbed (Wercher)') {
+											$icon = '<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> ';
+											$employmentStatus = 'Absorbed to Wercher Coop from another company';
+										} elseif ($row['Status'] == 'Absorbed (Left)') {
+											$icon = '<i class="fas fa-square PrintExclude" style="color: #000000;"></i> ';
+											$employmentStatus = 'Absorbed from Wercher Coop to another company';
+										} elseif ($row['Status'] == 'Applicant') {
+											$icon = '<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> ';
+											$employmentStatus = 'Applicant';
+										} elseif ($row['Status'] == 'Expired') {
+											$icon = '<i class="fas fa-square PrintExclude" style="color: #0721DB;"></i> ';
+											$employmentStatus = 'Expired';
+										} elseif ($row['Status'] == 'Blacklisted') {
+											$icon = '<i class="fas fa-square PrintExclude" style="color: #000000;"></i> ';
+											$employmentStatus = 'Blacklisted';
+										} elseif ($row['Status'] == 'Resigned') {
+											$icon = '<i class="fas fa-square PrintExclude" style="color: #000000;"></i> ';
+											$employmentStatus = 'Resigned';
+										} elseif ($row['Status'] == 'Terminated') {
+											$icon = '<i class="fas fa-square PrintExclude" style="color: #000000;"></i> ';
+											$employmentStatus = 'Terminated';
+										} else {
+											$icon = '<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> ';
+											$employmentStatus = 'Unknown';
 										}
 										?>
 										<tr id="<?php echo $row['SalaryExpected']; ?>" data-clientid="<?php echo $row['ClientEmployed']; ?>" data="<?php echo $row['ApplicantID']; ?>" class='clickable-row' data-toggle="modal" data-target="#HoursWeeklyModal_<?php echo $row['ApplicantID']; ?>">
-											<td data-toggle="tooltip" data-placement="top" data-html="true" title="<b>Employee ID: </b><br><?php echo $row['EmployeeID']; ?><br><br><b>Applicant ID: </b><br><?php echo $row['ApplicantID']; ?>"><a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $fullName; ?></a></td>
+											<td data-toggle="tooltip" data-placement="top" data-html="true" title="<b><?php echo $fullNameHover; ?></b><br><br><b>Status: </b><br><?php echo $employmentStatus; ?><br><br><b>Employee ID: </b><br><?php echo $row['EmployeeID']; ?><br><br><b>Applicant ID: </b><br><?php echo $row['ApplicantID']; ?>"><a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $icon . $fullName; ?></a></td>
 											<td><?php echo $row['SalaryExpected'];?></td>
 											<?php foreach ($GetWeeklyDates->result_array() as $brow):
 												?> <td> <?php

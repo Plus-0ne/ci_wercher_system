@@ -14,6 +14,7 @@
 				<?php else: ?>
 				<input id="idToHire" type="hidden" name="ApplicantID" value="">
 				<?php endif; ?>
+				<input id="EmploymentStatus" type="hidden" name="EmploymentStatus">
 				<div class="form-row">
 					<div class="form-group col-8">
 						<label>Choose Client</label>
@@ -49,7 +50,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-row">
+				<div class="form-row mb-3">
 					<div class="form-row col-12">
 						<div class="col-sm-4" style="margin-top: 5px;">
 							Employee ID
@@ -57,6 +58,14 @@
 						<div class="col-sm-8">
 							<input id="EmployeeID" class="form-control" type="text" name="EmployeeID" value="">
 						</div>
+					</div>
+				</div>
+				<div class="form-row absorbed-group" style="display: none;">
+					<div class="form-group col-sm-9 col-md-10" style="margin-top: 5px;">
+						Absorbed to Wercher from another company/client?
+					</div>
+					<div class="form-group col-sm-3 col-md-2">
+						<button id="AbsorbedBtn" type="button" class="absorbed-btn btn btn-secondary w-100"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
 					</div>
 				</div>
 				<div class="contractual-group">
@@ -81,7 +90,28 @@
 						</div>
 					</div>
 				</div>
-				
+				<div class="previous-group" style="display: none;">
+					<hr>
+					<div class="form-row ml-1 my-2">
+						<h5 class="text-center">
+							Previous Company/Client
+						</h5>
+					</div>
+					<div class="form-row mx-1">
+						<div class="form-group col-8">
+							<label>Name</label>
+							<input class="form-control" type="text" name="PreviousName">
+						</div>
+						<div class="form-group col-4">
+							<label>Contact Number</label>
+							<input class="form-control" type="text" name="PreviousContact">
+						</div>
+						<div class="form-group col-12">
+							<label>Address</label>
+							<input class="form-control" type="text" name="PreviousAddress">
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn btn-success"><i class="fas fa-user-edit"></i> Hire</button>

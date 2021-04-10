@@ -217,12 +217,36 @@ use Carbon\Carbon;
 			}
 			<?php endforeach; ?>
 		});
+		let absorbedClicked = false;
 		$('#EmploymentType').on('change', function() {
-			if ($(this).val() == 'Contractual') {
+			employmentType = $(this).val();
+			if (employmentType == 'Contractual') {
 				$('.contractual-group').show();
-			} else {
+				$('.absorbed-group').hide();
+				$('.previous-group').hide();
+			} else if (employmentType == 'Regular') {
 				$('.contractual-group').hide();
+				$('.absorbed-group').show();
+				if (absorbedClicked) {
+					$('.previous-group').show();
+				}
 			}
+		});
+		$('.absorbed-btn').on('click', function () {
+			if (!absorbedClicked) {
+				absorbedClicked = true;
+				$(this).addClass('btn-success');
+				$(this).children('i').addClass('wercher-visible');
+				$('.previous-group').fadeIn('fast');
+				$('#EmploymentStatus').val('Absorbed (Wercher)');
+			} else {
+				absorbedClicked = false;
+				$(this).removeClass('btn-success');
+				$(this).children('i').removeClass('wercher-visible');
+				$('.previous-group').fadeOut('fast');
+				$('#EmploymentStatus').val('');
+			}
+			
 		});
 		$(".nav-item a[href*='Applicants']").addClass("nactive");
 		var table = $('#emp').DataTable( {

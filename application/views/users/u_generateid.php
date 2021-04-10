@@ -28,7 +28,7 @@ $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 							</div>
 							<div class="wercher-idcard-employeeid">
 								<span>
-									<?php if($Status == 'Employed'): ?>
+									<?php if($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Absorbed (Wercher)'): ?>
 										<?php echo $EmployeeID; ?>
 									<?php else: ?>
 										<?php echo 'NO EMPLOYEE ID ASSIGNED'; ?>
@@ -101,7 +101,7 @@ $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 			debug: true,
 			minFontPixels: 8,
 			maxFontPixels: 22,
-		});
+		});5
 		$('.wercher-idcard-employeeid').textfill({
 			debug: true,
 			minFontPixels: 8,

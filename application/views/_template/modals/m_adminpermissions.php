@@ -147,10 +147,21 @@
 						<img width="32" height="32" src="assets/img/documents-folder-tree-continuous.png">
 					</div>
 					<div class="form-group col-sm-2">
-						<button type="button" class="btn btn-sm btn-secondary w-100" data-permissions="EmployeesAbsorbed"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+						<button type="button" class="btn btn-sm btn-secondary w-100" data-permissions="EmployeesAbsorbedWercher"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
 					</div>
 					<div class="form-group setpermissions-subgroup-text col-sm-8">
-						<i class="fas fa-users"></i> Access to Absorbed
+						<i class="fas fa-users"></i> Access to Absorbed (to Wercher)
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-sm-1">
+						<img width="32" height="32" src="assets/img/documents-folder-tree-continuous.png">
+					</div>
+					<div class="form-group col-sm-2">
+						<button type="button" class="btn btn-sm btn-secondary w-100" data-permissions="EmployeesAbsorbedLeft"><i class="fas fa-check wercher-transparent" style="margin-right: -1px;"></i></button>
+					</div>
+					<div class="form-group setpermissions-subgroup-text col-sm-8">
+						<i class="fas fa-users"></i> Access to Absorbed (to another)
 					</div>
 				</div>
 				<div class="form-row">

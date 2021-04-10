@@ -162,10 +162,20 @@ class Update_Controller extends CI_Controller {
 					}
 					else
 					{
+						$EmploymentStatus = $this->input->post('EmploymentStatus');
+						if ($EmploymentStatus != NULL) {
+							$EmploymentType = $EmploymentStatus;
+						}
+						if ($EmploymentType == 'Regular') {
+							$EmploymentType = 'Employed (Permanent)';
+						}
+						$PreviousCompany = $this->input->post('PreviousName');
+						$PreviousContact = $this->input->post('PreviousContact');
+						$PreviousAddress = $this->input->post('PreviousAddress');
 						$data = array(
 							'EmployeeID' => $EmployeeID,
 							'ClientEmployed' => $ClientID,
-							'Status' => 'Employed (Permanent)',
+							'Status' => $EmploymentType,
 							'SalaryExpected' => $Salary,
 						);
 						$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
@@ -190,6 +200,13 @@ class Update_Controller extends CI_Controller {
 							'Salary' => $row['SalaryExpected'],
 						);
 						$InsertToClient = $this->Model_Inserts->InsertToClient($data);
+						$data = array(
+							'ApplicantID' => $ApplicantID,
+							'CompanyName' => $PreviousCompany,
+							'CompanyContact' => $PreviousContact,
+							'CompanyAddress' => $PreviousAddress,
+						);
+						$InsertToPrevious = $this->Model_Inserts->InsertToPrevious($data);
 						if ($EmployNewApplicant && $InsertToClient) {
 							$this->Model_Logbook->SetPrompts('success', 'success', 'Employed successfully');
 							// LOGBOOK

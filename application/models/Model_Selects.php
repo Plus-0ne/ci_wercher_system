@@ -105,9 +105,15 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function GetAbsorbedEmployees()
+	public function GetAbsorbedWercherEmployees()
 	{
-		$SQL = "SELECT * FROM applicants WHERE Status = 'Absorbed'";
+		$SQL = "SELECT * FROM applicants WHERE Status = 'Absorbed (Wercher)'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetAbsorbedLeftEmployees()
+	{
+		$SQL = "SELECT * FROM applicants WHERE Status = 'Absorbed (Left)'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -895,8 +901,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('Hours');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', NULL);
@@ -917,8 +923,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('GrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', NULL);
@@ -939,8 +945,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('Overtime');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', NULL);
@@ -961,8 +967,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('OvertimeGrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', NULL);
@@ -983,8 +989,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NightHours');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', NULL);
@@ -1005,8 +1011,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NPGrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', NULL);
@@ -1027,8 +1033,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NightOvertime');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', NULL);
@@ -1049,8 +1055,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NPOvertimeGrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', NULL);
@@ -1072,8 +1078,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('Hours');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', NULL);
@@ -1094,8 +1100,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('GrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', NULL);
@@ -1116,8 +1122,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('Overtime');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', NULL);
@@ -1138,8 +1144,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('OvertimeGrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', NULL);
@@ -1160,8 +1166,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NightHours');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', NULL);
@@ -1182,8 +1188,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NPGrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', NULL);
@@ -1204,8 +1210,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NightOvertime');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', NULL);
@@ -1226,8 +1232,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NPOvertimeGrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', NULL);
@@ -1249,8 +1255,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('Hours');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', 1);
 		$this->db->where('NationalHoliday', NULL);
@@ -1271,8 +1277,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('GrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', 1);
 		$this->db->where('NationalHoliday', NULL);
@@ -1293,8 +1299,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('Overtime');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', 1);
 		$this->db->where('NationalHoliday', NULL);
@@ -1315,8 +1321,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('OvertimeGrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', 1);
 		$this->db->where('NationalHoliday', NULL);
@@ -1337,8 +1343,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NightHours');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', 1);
 		$this->db->where('NationalHoliday', NULL);
@@ -1359,8 +1365,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NPGrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', 1);
 		$this->db->where('NationalHoliday', NULL);
@@ -1381,8 +1387,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NightOvertime');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', 1);
 		$this->db->where('NationalHoliday', NULL);
@@ -1403,8 +1409,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NPOvertimeGrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', 1);
 		$this->db->where('NationalHoliday', NULL);
@@ -1426,8 +1432,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('Hours');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', 1);
 		$this->db->where('NationalHoliday', NULL);
@@ -1448,8 +1454,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('GrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', 1);
 		$this->db->where('NationalHoliday', NULL);
@@ -1470,8 +1476,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('Overtime');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', 1);
 		$this->db->where('NationalHoliday', NULL);
@@ -1492,8 +1498,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('OvertimeGrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', 1);
 		$this->db->where('NationalHoliday', NULL);
@@ -1514,8 +1520,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NightHours');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', 1);
 		$this->db->where('NationalHoliday', NULL);
@@ -1536,8 +1542,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NPGrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', 1);
 		$this->db->where('NationalHoliday', NULL);
@@ -1558,8 +1564,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NightOvertime');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', 1);
 		$this->db->where('NationalHoliday', NULL);
@@ -1580,8 +1586,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NPOvertimeGrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', 1);
 		$this->db->where('NationalHoliday', NULL);
@@ -1603,8 +1609,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('Hours');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', 1);
@@ -1625,8 +1631,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('GrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', 1);
@@ -1647,8 +1653,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('Overtime');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', 1);
@@ -1669,8 +1675,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('OvertimeGrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', 1);
@@ -1691,8 +1697,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NightHours');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', 1);
@@ -1713,8 +1719,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NPGrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', 1);
@@ -1735,8 +1741,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NightOvertime');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', 1);
@@ -1757,8 +1763,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NPOvertimeGrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', NULL);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', 1);
@@ -1780,8 +1786,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('Hours');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', 1);
@@ -1802,8 +1808,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('GrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', 1);
@@ -1824,8 +1830,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('Overtime');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', 1);
@@ -1846,8 +1852,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('OvertimeGrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', 1);
@@ -1868,8 +1874,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NightHours');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', 1);
@@ -1890,8 +1896,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NPGrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', 1);
@@ -1912,8 +1918,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NightOvertime');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', 1);
@@ -1934,8 +1940,8 @@ class Model_Selects extends CI_Model {
 		}
 		$this->db->select_sum('NPOvertimeGrossPay');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('RestDay', 1);
 		$this->db->where('SpecialHoliday', NULL);
 		$this->db->where('NationalHoliday', 1);
@@ -1959,8 +1965,8 @@ class Model_Selects extends CI_Model {
 		$this->db->from('payroll_loans');
 		$this->db->where('ApplicantID', $ApplicantID);
 		$this->db->where('Type', $Mode);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('Deleted', NULL);
 		$result = $this->db->get();
 		return $result;
@@ -1982,8 +1988,8 @@ class Model_Selects extends CI_Model {
 		$this->db->from('payroll_provisions');
 		$this->db->where('ApplicantID', $ApplicantID);
 		$this->db->where('Type', $Mode);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$this->db->where('Deleted', NULL);
 		$result = $this->db->get();
 		return $result;
@@ -1991,8 +1997,8 @@ class Model_Selects extends CI_Model {
 	public function GetSSSWeekPaidTotalBetweenPeriod($ApplicantID, $Mode, $FromDate, $ToDate) {
 		$this->db->select_sum('Amount');
 		$this->db->where('ApplicantID', $ApplicantID);
-		$this->db->where('Time >=', $FromDate);
-		$this->db->where('Time <=', $ToDate);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		
 		$result = $this->db->get('sss_weekpaid')->row();  
 		return $result->Amount;
 	}

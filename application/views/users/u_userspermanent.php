@@ -12,7 +12,8 @@ $T_Header;
 					<ul>
 						<li><a href="<?php echo base_url() ?>Employees">Employees (<?php echo $get_employee->num_rows()?>)</a></li>
 						<li class="tabs-active"><a href="<?php echo base_url() ?>Employees/Regulars">Regulars (<?php echo $GetPermanentEmployees->num_rows()?>)</a></li>
-						<li><a href="<?php echo base_url() ?>Employees/Absorbed">Absorbed (<?php echo $GetAbsorbedEmployees->num_rows()?>)</a></li>
+						<li><a href="<?php echo base_url() ?>Employees/Absorbed/Wercher">Absorbed [Wercher] (<?php echo $GetAbsorbedWercherEmployees->num_rows()?>)</a></li>
+						<li><a href="<?php echo base_url() ?>Employees/Absorbed/Left">Absorbed [Left] (<?php echo $GetAbsorbedLeftEmployees->num_rows()?>)</a></li>
 						<li><a href="<?php echo base_url() ?>Employees/Resigned">Resigned (<?php echo $GetResignedEmployees->num_rows()?>)</a></li>
 						<li><a href="<?php echo base_url() ?>Employees/Terminated">Terminated (<?php echo $GetTerminatedEmployees->num_rows()?>)</a></li>
 					</ul>
@@ -126,7 +127,7 @@ $T_Header;
 											</td>
 											<?php foreach ($getClientOption->result_array() as $nrow): ?>
 												<?php if ($row['ClientEmployed'] == $nrow['ClientID']) {
-													echo '<td class="text-center align-middle"><a href="Employee?client_id=' . $nrow['ClientID'] . '">
+													echo '<td class="text-center align-middle"><a href="' . base_url() .'Clients?id=' . $nrow['ClientID'] . '">
 													'.$nrow['Name'].'</a>
 													</td>';
 												} ?>
@@ -202,12 +203,12 @@ $T_Header;
 		var table = $('#emp').DataTable( {
 			sDom: 'lrtip',
 			"bLengthChange": false,
-			"order": [[ 9, "asc" ]],
+			"order": [[ 7, "asc" ]],
 			buttons: [
             {
 	            extend: 'print',
 	            exportOptions: {
-	                columns: [ 0, 2, 3, 4, 5, 7, 8 ]
+	                columns: [ 0, 2, 3, 4, 5, 7 ]
 	            },
 	            customize: function ( doc ) {
 	            	$(doc.document.body).find('h1').prepend('<img src="<?=base_url()?>assets/img/wercher_logo.png" width="63px" height="56px" />');
@@ -218,19 +219,19 @@ $T_Header;
 	        {
 	            extend: 'copyHtml5',
 	            exportOptions: {
-	                columns: [ 0, 2, 3, 4, 5, 7, 8 ]
+	                columns: [ 0, 2, 3, 4, 5, 7 ]
 	            }
 	        },
 	        {
 	            extend: 'excelHtml5',
 	            exportOptions: {
-	                columns: [ 0, 2, 3, 4, 5, 7, 8 ]
+	                columns: [ 0, 2, 3, 4, 5, 7 ]
 	            }
 	        },
 	        {
 	            extend: 'csvHtml5',
 	            exportOptions: {
-	                columns: [ 0, 2, 3, 4, 5, 7, 8 ]
+	                columns: [ 0, 2, 3, 4, 5, 7 ]
 	            }
 	        },
 	        {

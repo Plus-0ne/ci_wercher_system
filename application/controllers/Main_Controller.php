@@ -452,7 +452,8 @@
 			$data['getClientOption'] = $this->Model_Selects->getClientOption();
 			$data['GetTotalEmployees'] = $this->Model_Selects->GetTotalEmployees();
 			$data['GetPermanentEmployees'] = $this->Model_Selects->GetPermanentEmployees();
-			$data['GetAbsorbedEmployees'] = $this->Model_Selects->GetAbsorbedEmployees();
+			$data['GetAbsorbedWercherEmployees'] = $this->Model_Selects->GetAbsorbedWercherEmployees();
+			$data['GetAbsorbedLeftEmployees'] = $this->Model_Selects->GetAbsorbedLeftEmployees();
 			$data['GetResignedEmployees'] = $this->Model_Selects->GetResignedEmployees();
 			$data['GetTerminatedEmployees'] = $this->Model_Selects->GetTerminatedEmployees();
 			$this->load->view('users/u_users',$data);
@@ -483,7 +484,8 @@
 			$data['getClientOption'] = $this->Model_Selects->getClientOption();
 			$data['GetTotalEmployees'] = $this->Model_Selects->GetTotalEmployees();
 			$data['GetPermanentEmployees'] = $this->Model_Selects->GetPermanentEmployees();
-			$data['GetAbsorbedEmployees'] = $this->Model_Selects->GetAbsorbedEmployees();
+			$data['GetAbsorbedWercherEmployees'] = $this->Model_Selects->GetAbsorbedWercherEmployees();
+			$data['GetAbsorbedLeftEmployees'] = $this->Model_Selects->GetAbsorbedLeftEmployees();
 			$data['GetResignedEmployees'] = $this->Model_Selects->GetResignedEmployees();
 			$data['GetTerminatedEmployees'] = $this->Model_Selects->GetTerminatedEmployees();
 			$this->load->view('users/u_userspermanent',$data);
@@ -491,16 +493,16 @@
 			redirect('Forbidden');
 		endif;
 	}
-	public function EmployeeAbsorbed()
+	public function EmployeeAbsorbedWercher()
 	{
-		if($this->Model_Security->CheckPermissions('EmployeesAbsorbed')):
+		if($this->Model_Security->CheckPermissions('EmployeesAbsorbedWercher')):
 			$header['title'] = 'Absorbed Employees | Wercher Solutions and Resources Workers Cooperative';
 			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 			$data['Breadcrumb'] = '
 			<nav aria-label="breadcrumb">
 			<ol class="breadcrumb" style="background-color: transparent;">
 			<li class="breadcrumb-item" aria-current="page"><a href="' . base_url() . 'Employees">Employees</a></li>
-			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="' . base_url() . 'Employees/Absorbed">Absorbed</a></li>
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="' . base_url() . 'Employees/Absorbed/Wercher">Absorbed (Wercher)</a></li>
 			</ol>
 			</nav>';
 
@@ -514,10 +516,43 @@
 			$data['getClientOption'] = $this->Model_Selects->getClientOption();
 			$data['GetTotalEmployees'] = $this->Model_Selects->GetTotalEmployees();
 			$data['GetPermanentEmployees'] = $this->Model_Selects->GetPermanentEmployees();
-			$data['GetAbsorbedEmployees'] = $this->Model_Selects->GetAbsorbedEmployees();
+			$data['GetAbsorbedWercherEmployees'] = $this->Model_Selects->GetAbsorbedWercherEmployees();
+			$data['GetAbsorbedLeftEmployees'] = $this->Model_Selects->GetAbsorbedLeftEmployees();
 			$data['GetResignedEmployees'] = $this->Model_Selects->GetResignedEmployees();
 			$data['GetTerminatedEmployees'] = $this->Model_Selects->GetTerminatedEmployees();
-			$this->load->view('users/u_usersabsorbed',$data);
+			$this->load->view('users/u_usersabsorbedwercher',$data);
+		else:
+			redirect('Forbidden');
+		endif;
+	}
+	public function EmployeeAbsorbedLeft()
+	{
+		if($this->Model_Security->CheckPermissions('EmployeesAbsorbedLeft')):
+			$header['title'] = 'Absorbed Employees | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a href="' . base_url() . 'Employees">Employees</a></li>
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="' . base_url() . 'Employees/Absorbed/Left">Absorbed (to another)</a></li>
+			</ol>
+			</nav>';
+
+			// WEEKLY INCREASE
+			$CurrentDay = date('Y-m-d h:i:s A');
+			$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
+			$data['WeeklyEmployees'] = $this->Model_Selects->GetEmployeesIncrease($CurrentDay, $CurrentDayScope)->num_rows();
+
+			$data['get_employee'] = $this->Model_Selects->GetEmployee();
+			$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+			$data['getClientOption'] = $this->Model_Selects->getClientOption();
+			$data['GetTotalEmployees'] = $this->Model_Selects->GetTotalEmployees();
+			$data['GetPermanentEmployees'] = $this->Model_Selects->GetPermanentEmployees();
+			$data['GetAbsorbedWercherEmployees'] = $this->Model_Selects->GetAbsorbedWercherEmployees();
+			$data['GetAbsorbedLeftEmployees'] = $this->Model_Selects->GetAbsorbedLeftEmployees();
+			$data['GetResignedEmployees'] = $this->Model_Selects->GetResignedEmployees();
+			$data['GetTerminatedEmployees'] = $this->Model_Selects->GetTerminatedEmployees();
+			$this->load->view('users/u_usersabsorbedleft',$data);
 		else:
 			redirect('Forbidden');
 		endif;
@@ -545,7 +580,8 @@
 			$data['getClientOption'] = $this->Model_Selects->getClientOption();
 			$data['GetTotalEmployees'] = $this->Model_Selects->GetTotalEmployees();
 			$data['GetPermanentEmployees'] = $this->Model_Selects->GetPermanentEmployees();
-			$data['GetAbsorbedEmployees'] = $this->Model_Selects->GetAbsorbedEmployees();
+			$data['GetAbsorbedWercherEmployees'] = $this->Model_Selects->GetAbsorbedWercherEmployees();
+			$data['GetAbsorbedLeftEmployees'] = $this->Model_Selects->GetAbsorbedLeftEmployees();
 			$data['GetResignedEmployees'] = $this->Model_Selects->GetResignedEmployees();
 			$data['GetTerminatedEmployees'] = $this->Model_Selects->GetTerminatedEmployees();
 			$this->load->view('users/u_usersresigned',$data);
@@ -576,7 +612,8 @@
 			$data['getClientOption'] = $this->Model_Selects->getClientOption();
 			$data['GetTotalEmployees'] = $this->Model_Selects->GetTotalEmployees();
 			$data['GetPermanentEmployees'] = $this->Model_Selects->GetPermanentEmployees();
-			$data['GetAbsorbedEmployees'] = $this->Model_Selects->GetAbsorbedEmployees();
+			$data['GetAbsorbedWercherEmployees'] = $this->Model_Selects->GetAbsorbedWercherEmployees();
+			$data['GetAbsorbedLeftEmployees'] = $this->Model_Selects->GetAbsorbedLeftEmployees();
 			$data['GetResignedEmployees'] = $this->Model_Selects->GetResignedEmployees();
 			$data['GetTerminatedEmployees'] = $this->Model_Selects->GetTerminatedEmployees();
 			$this->load->view('users/u_usersterminated',$data);
@@ -723,6 +760,42 @@
 						<ol class="breadcrumb" style="background-color: transparent;">
 						<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
 						<li class="breadcrumb-item" aria-current="page"><a href="Employees/Regulars">Regulars</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $breadcrumbFullName . '</a></li>
+						</ol>
+						</nav>';
+					} elseif ($data['Status'] == 'Absorbed (Wercher)') {
+						$data['Breadcrumb'] = '
+						<nav aria-label="breadcrumb">
+						<ol class="breadcrumb" style="background-color: transparent;">
+						<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a href="Employees/Absorbed/Wercher">Absorbed (Wercher)</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $breadcrumbFullName . '</a></li>
+						</ol>
+						</nav>';
+					} elseif ($data['Status'] == 'Absorbed (Left)') {
+						$data['Breadcrumb'] = '
+						<nav aria-label="breadcrumb">
+						<ol class="breadcrumb" style="background-color: transparent;">
+						<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a href="Employees/Absorbed/Left">Absorbed (to another)</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $breadcrumbFullName . '</a></li>
+						</ol>
+						</nav>';
+					} elseif ($data['Status'] == 'Resigned') {
+						$data['Breadcrumb'] = '
+						<nav aria-label="breadcrumb">
+						<ol class="breadcrumb" style="background-color: transparent;">
+						<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a href="Employees/Resigned">Resigned</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $breadcrumbFullName . '</a></li>
+						</ol>
+						</nav>';
+					} elseif ($data['Status'] == 'Terminated') {
+						$data['Breadcrumb'] = '
+						<nav aria-label="breadcrumb">
+						<ol class="breadcrumb" style="background-color: transparent;">
+						<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a href="Employees/Terminated">Terminated</a></li>
 						<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">' . $breadcrumbFullName . '</a></li>
 						</ol>
 						</nav>';
@@ -1234,7 +1307,7 @@
 					redirect('Forbidden');
 				endif;
 				$ApplicantID = $ged['ApplicantID'];
-				if ($data['Status'] == 'Employed' || $data['Status'] == 'Employed (Permanent)') {
+				if ($data['Status'] == 'Employed' || $data['Status'] == 'Employed (Permanent)' || $data['Status'] == 'Absorbed (Wercher)') {
 					$this->load->view('users/u_generateid',$data);
 				} else {
 					redirect('Employees');

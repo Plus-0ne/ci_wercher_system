@@ -11,12 +11,29 @@
 		$toMonth = $_GET['to_month'];
 		$toYear = $_GET['to_year'];
 
-		$fromDate = $fromYear . '-' . $fromMonth . '-' . $fromDay;
+		// ~ search queries
+		$fromMonthWithZeroes = $fromMonth;
+		if ($fromMonth < 10) {
+			$fromMonthWithZeroes = '0' . $fromMonth;
+		}
+		$fromDayWithZeroes = $fromDay;
+		if ($fromDay < 10) {
+			$fromDayWithZeroes = '0' . $fromDay;
+		}
+		$fromDate = $fromYear . '-' . $fromMonthWithZeroes . '-' . $fromDayWithZeroes;
 		$fromMonthRaw = new DateTime($fromDate);
 		$fromMonthConverted = $fromMonthRaw->format('m');
 		$fromMonthShort = DateTime::createFromFormat('m', $fromMonthConverted)->format('M');
 		$fromMonthConverted = DateTime::createFromFormat('m', $fromMonthConverted)->format('F');
-		$toDate = $toYear . '-' . $toMonth . '-' . $toDay;
+		$toMonthWithZeroes = $fromMonth;
+		if ($toMonth < 10) {
+			$toMonthWithZeroes = '0' . $toMonth;
+		}
+		$toDayWithZeroes = $fromDay;
+		if ($toDay < 10) {
+			$toDayWithZeroes = '0' . $toDay;
+		}
+		$toDate = $toYear . '-' . $toMonthWithZeroes . '-' . $toDayWithZeroes;
 		$toMonthRaw = new DateTime($toDate);
 		$toMonthConverted = $toMonthRaw->format('m');
 		$toMonthShort = DateTime::createFromFormat('m', $toMonthConverted)->format('M');
@@ -117,6 +134,7 @@
 				if ($RegularHours <= 0) {
 					$RegularHours = '-';
 				}
+				// var_dump($this->db->last_query());
 				$RegularGrossPay = number_format($this->Model_Selects->GetPayslipRegularGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($RegularGrossPay <= 0) {
 					$RegularGrossPay = '-';
