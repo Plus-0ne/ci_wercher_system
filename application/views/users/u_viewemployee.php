@@ -12,7 +12,11 @@ if ($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Ab
 	// Contract elapsed
 	$cNow = Carbon::parse(date('Y-m-d h:i:s A'));
 	$cStarts = Carbon::parse($DateStarted);
-	$cEnds = Carbon::parse($DateEnds);
+	if ($Status != 'Employed (Permanent)') {
+		$cEnds = Carbon::parse($DateEnds);
+	} else {
+		$cEnds = Carbon::parse($SalaryDistDate);
+	}
 
 	$cElapsedText = $cStarts->diff($currentDate)->format('%y years, %m months, %d days');
 
@@ -21,6 +25,9 @@ if ($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Ab
 		$cDiffInDays = $cEnds->diffInDays($cStarts);
 	} else {
 		$cDiffInDays = $cNow->diffInDays($cStarts);
+	}
+	if ($cDiffInDays <= 0) {
+		$cDiffInDays = 1;
 	}
 	$cDiffInMonths = $cEnds->diffInMonths($cStarts);
 	if ($cDiffInMonths > 1) {

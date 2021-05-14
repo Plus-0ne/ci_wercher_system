@@ -138,7 +138,7 @@ use Carbon\Carbon;
 											$fullName = $fullName . '...';
 										}
 										if ($row['Status'] == 'Employed') {
-											$icon = '<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> ';
+											$icon = '<i class="fas fa-square PrintExclude" style="color: #e83e8c;"></i> ';
 											$employmentStatus = 'Contractual';
 										} elseif ($row['Status'] == 'Employed (Permanent)') {
 											$icon = '<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> ';

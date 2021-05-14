@@ -55,7 +55,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="salarytotal-group my-2" style="display: none;">
+				<div class="salarytotal-group my-2"<?php if ($SalaryType != 'Total') { echo 'style="display: none;"'; } ?>>
 					<div class="form-row mx-1">
 						<div class="form-group col-4">
 							<label>Years</label>
