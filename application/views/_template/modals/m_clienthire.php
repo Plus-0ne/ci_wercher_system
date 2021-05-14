@@ -30,10 +30,24 @@
 						</select>
 					</div>
 					<div class="form-group col-4">
-						<label>Salary Per Month</label>
+						<label>Salary</label>
 						<div class="input-icon-sm">
-							<input class="form-control" type="number" name="Salary" value="">
+							<input class="form-control" type="number" step=".01" name="Salary" value="">
 							<i>₱</i>
+						</div>
+					</div>
+				</div>
+				<div class="form-row my-2">
+					<div class="form-row col-12">
+						<div class="col-sm-4" style="margin-top: 5px;">
+							Salary Distribution
+						</div>
+						<div class="col-sm-8">
+							<select id="SalaryType" class="form-control" name="SalaryType">
+								<option value="Daily" selected>Daily</option>
+								<option value="Monthly">Monthly</option>
+								<option value="Total">Total for duration</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -47,6 +61,27 @@
 								<option value="Contractual" selected>Contractual</option>
 								<option value="Regular">Regular</option>
 							</select>
+						</div>
+					</div>
+				</div>
+				<div class="salarytotal-group my-2" style="display: none;">
+					<div class="form-row ml-1 my-2">
+						<h6 class="text-center">
+							Salary Distribution Duration
+						</h6>
+					</div>
+					<div class="form-row mx-1">
+						<div class="form-group col-4">
+							<label>Years</label>
+							<input class="form-control" type="number" name="ST_Years" value="0">
+						</div>
+						<div class="form-group col-4">
+							<label>Months</label>
+							<input class="form-control" type="number" name="ST_Months" value="0">
+						</div>
+						<div class="form-group col-4">
+							<label>Days</label>
+							<input class="form-control" type="number" name="ST_Days" value="0">
 						</div>
 					</div>
 				</div>

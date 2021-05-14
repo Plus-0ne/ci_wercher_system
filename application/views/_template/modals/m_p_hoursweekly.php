@@ -1,4 +1,19 @@
-<?php foreach ($GetWeeklyListEmployee->result_array() as $erow):
+<?php
+require 'vendor/autoload.php';
+use Carbon\Carbon;
+
+$cNow = Carbon::parse(date('Y-m-d h:i:s A'));
+
+foreach ($GetWeeklyListEmployee->result_array() as $erow):
+
+$cStarts = Carbon::parse($erow['DateStarted']);
+$cEnds = Carbon::parse($erow['DateEnds']);
+if ($erow['Status'] != 'Employed (Permanent)') {
+	$cDiffInDays = $cEnds->diffInDays($cStarts);
+} else {
+	$cDiffInDays = $cNow->diffInDays($cStarts);
+}
+$cDiffInMonths = $cEnds->diffInMonths($cStarts);
 if ($erow['SalaryExpected'] > 0) {
 	$SalaryExpected = $erow['SalaryExpected'];
 } else {
@@ -21,11 +36,11 @@ if ($erow['SalaryExpected'] > 0) {
 						<input id="ModeType" type="hidden" name="ModeType" value="<?php echo $_GET['mode']; ?>">
 						<div class="form-row">
 							<div class="form-group col-sm-12 col-md-2">
-								<label>Type</label>
+								<label>Payroll Mode</label>
 								<input id="SalaryType" class="form-control" type="text" name="" value="<?php echo $Mode==0?"Weekly":($Mode==1?"Semi-monthly":"Monthly"); ?>" readonly>
 							</div>
 							<div class="form-group col-sm-12 col-md-2">
-								<label>Salary</label>
+								<label>Salary (<?php echo $erow['SalaryType']; ?>)</label>
 								<div class="input-icon-sm">
 									<input id="Salary" class="form-control" type="number" name="" value="<?php echo $SalaryExpected; ?>" readonly>
 									<i>₱</i>
@@ -35,20 +50,27 @@ if ($erow['SalaryExpected'] > 0) {
 								<label>Per&nbsp;Month</label>
 								<div class="input-icon-sm">
 									<?php
-										$cStarts = new DateTime($erow['DateStarted']);
-										$cEnds = new DateTime($erow['DateEnds']);
-
-										$cDiff = $cEnds->diff($cStarts);
-										$cTotalMonths = (($cDiff->y) * 12) + ($cDiff->m);
-										$cDiffDays = $cEnds->diff($cStarts)->format('%a');
-										if ($cTotalMonths > 0) {
-											$salaryInterval = $SalaryExpected / $cTotalMonths;
+										if ($erow['SalaryType'] == 'Daily') {
+											$salaryInterval = $SalaryExpected * 30;
+										} elseif ($erow['SalaryType'] == 'Monthly') {
+											$salaryInterval = $SalaryExpected;
 										} else {
-											if ($cDiff->d > 0) {
-												$salaryInterval = $erow['SalaryExpected'] / $cDiff->d;
-											} else {
-												$salaryInterval = 0;
-											}
+											$salaryInterval = $SalaryExpected / $cDiffInMonths;;
+											// $cStarts = new DateTime($erow['DateStarted']);
+											// $cEnds = new DateTime($erow['DateEnds']);
+
+											// $cDiff = $cEnds->diff($cStarts);
+											// $cTotalMonths = (($cDiff->y) * 12) + ($cDiff->m);
+											// $cDiffDays = $cEnds->diff($cStarts)->format('%a');
+											// if ($cTotalMonths > 0) {
+											// 	$salaryInterval = $SalaryExpected / $cTotalMonths;
+											// } else {
+											// 	if ($cDiff->d > 0) {
+											// 		$salaryInterval = $erow['SalaryExpected'] / $cDiff->d;
+											// 	} else {
+											// 		$salaryInterval = 0;
+											// 	}
+											// }
 										}
 										$salaryInterval = round($salaryInterval, 2);
 									?>
@@ -60,23 +82,30 @@ if ($erow['SalaryExpected'] > 0) {
 								<label>Per&nbsp;Day</label>
 								<div class="input-icon-sm">
 									<?php
-										switch ($Mode) {
-											case 0: // (days) Weekly
-												$RatePerDay = $salaryInterval / 24; // (days) Weekly
-												break;
-											case 1: // 
-												$RatePerDay = $salaryInterval / 15; // (days) Semi-monthly
-												break;
-											case 2: // 
-												$RatePerDay = $salaryInterval / 6; // (days) Monthly
-												break;
-											default:
-												$RatePerDay = $salaryInterval / 24; // (days) Weekly
-												break;
+										if ($erow['SalaryType'] == 'Daily') {
+											$dailySalary = $SalaryExpected;
+										} elseif ($erow['SalaryType'] == 'Monthly') {
+											$dailySalary = $SalaryExpected / 30;
+										} else {
+											$dailySalary = $SalaryExpected / $cDiffInDays;
 										}
-										$RatePerDay = round($RatePerDay, 2);
+										// switch ($Mode) {
+										// 	case 0: // (days) Weekly
+										// 		$RatePerDay = $salaryInterval / 24; // (days) Weekly
+										// 		break;
+										// 	case 1: // 
+										// 		$RatePerDay = $salaryInterval / 15; // (days) Semi-monthly
+										// 		break;
+										// 	case 2: // 
+										// 		$RatePerDay = $salaryInterval / 6; // (days) Monthly
+										// 		break;
+										// 	default:
+										// 		$RatePerDay = $salaryInterval / 24; // (days) Weekly
+										// 		break;
+										// }
+										$dailySalary = round($dailySalary, 2);
 									?>
-									<input id="SalaryPerDay" class="form-control" type="number" name="" value="<?=$RatePerDay;?>" readonly>
+									<input id="SalaryPerDay" class="form-control" type="number" name="" value="<?=$dailySalary;?>" readonly>
 									<i>₱</i>
 								</div>
 							</div>
@@ -136,11 +165,11 @@ if ($erow['SalaryExpected'] > 0) {
 											<div class="form-row">
 												<div class="form-group col-7">
 													<span style="font-size: 14px;">Hours</span>
-													<input id="" class="form-control Hours_<?php echo $row['Time']; ?>" type="number" name="Hours_<?php echo $row['Time']; ?>" value="<?php echo $salaryHours; ?>">
+													<input id="" class="form-control Hours_<?php echo $row['Time']; ?>" type="number" step=".01" name="Hours_<?php echo $row['Time']; ?>" value="<?php echo $salaryHours; ?>">
 												</div>
 												<div class="form-group col-5">
 													<span style="font-size: 14px;">Overtime</span>
-													<input class="form-control OTHours_<?php echo $row['Time']; ?>" type="number" name="OTHours_<?php echo $row['Time']; ?>" value="<?php echo $salaryOvertime; ?>">
+													<input class="form-control OTHours_<?php echo $row['Time']; ?>" type="number" step=".01" name="OTHours_<?php echo $row['Time']; ?>" value="<?php echo $salaryOvertime; ?>">
 												</div>
 											</div>
 											<div class="btn-group form-row">
@@ -201,7 +230,7 @@ if ($erow['SalaryExpected'] > 0) {
 														echo $totalhaha;
 														?>">
 														<input class="form-control PerHour" type="text" name="dayRate_<?php echo $row['Time']; ?>" value="<?php 
-														$RatePerHour = $RatePerDay / 8;
+														$RatePerHour = $dailySalary / 8;
 														echo round($RatePerHour, 2);
 																?>" readonly>
 														<i>₱</i>

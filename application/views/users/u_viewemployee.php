@@ -10,33 +10,24 @@ if ($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Ab
 	}
 
 	// Contract elapsed
+	$cNow = Carbon::parse(date('Y-m-d h:i:s A'));
 	$cStarts = Carbon::parse($DateStarted);
 	$cEnds = Carbon::parse($DateEnds);
 
 	$cElapsedText = $cStarts->diff($currentDate)->format('%y years, %m months, %d days');
 
 	// 13th Month Pay Calculation
-	$cDiffInDays = $cEnds->diffInDays($cStarts);
+	if ($Status != 'Employed (Permanent)') {
+		$cDiffInDays = $cEnds->diffInDays($cStarts);
+	} else {
+		$cDiffInDays = $cNow->diffInDays($cStarts);
+	}
 	$cDiffInMonths = $cEnds->diffInMonths($cStarts);
 	if ($cDiffInMonths > 1) {
 		$isThirteenEligible = true;
 	} else {
 		$isThirteenEligible = false;
 	}
-	$salaryInterval = 0;
-	if ($Status == 'Employed') {
-		if ($cDiffInMonths > 0) {
-			// Monthly salary
-			$salaryInterval = $SalaryExpected / $cDiffInMonths;
-		} else {
-			// Calculate to as daily salary instead of monthly salary
-			$salaryInterval = $SalaryExpected / $cDiffInDays;
-		}
-	} else {
-		// Permanent salary
-		$salaryInterval = $SalaryExpected / 12;
-	}
-	$thirteen = (($salaryInterval * $cDiffInDays) / 30) / 12;
 
 	//Contract Dates
 	$dsdate = new DateTime($DateStarted);
@@ -796,37 +787,42 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 												</div>
 												<div class="col-sm-3">
 													<div class="card mb-3" style="max-width: 18rem; height: 300px;">
-														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-dollar-sign"></i> Salary Expected</b></div>
+														<?php
+														$salaryText = '';
+														switch($SalaryType) {
+															case 'Daily':
+																$salaryText = 'Daily Salary';
+																break;
+															case 'Monthly':
+																$salaryText = 'Monthly Salary';
+																break;
+															case 'Total':
+																$salaryText = 'Salary Expected';
+																break;
+															default:
+																$salaryText = 'Salary';
+																break;
+														}
+														?>
+														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-dollar-sign"></i> <?php echo $salaryText; ?></b></div>
 														<div class="card-body text-dark">
 															<h5 class="card-title text-center wercher-card-title"><span style="user-select: none;">₱ </span><?php echo $SalaryExpected; ?></h5>
 															<p class="card-text">
-																<div class="col-sm-12 employee-static-item text-center mt-3">
-																	<div class="col-sm-12 employee-dynamic-header">
-																		<b>Documents (<?php echo $GetDocuments->num_rows(); ?>)</b>
-																	</div>
-																	<div class="col-sm-12">
-																		<a href="#Documents" class="btn-sm btn btn-primary"><i class="far fa-eye"></i> View</a>
-																	</div>
-																</div>
+																<?php
+																$monthlySalary = 0;
+																$dailySalary = 0;
+																if ($SalaryType == 'Daily'):
+																	$monthlySalary = $SalaryExpected * 30;
+																	$thirteen = $monthlySalary / 12;
+																?>
 																<div class="col-sm-12 employee-static-item text-center">
 																	<div class="col-sm-12 employee-dynamic-header">
-																		<b>Violations (<?php echo $GetDocumentsViolations->num_rows(); ?>)</b>
+																		<b>Monthly Salary</b>
 																	</div>
 																	<div class="col-sm-12">
-																		<a href="#Violations" class="btn-sm btn btn-danger"><i class="far fa-eye"></i> View</a>
+																		<?php echo '<span style="user-select: none;">₱ </span>' . round($monthlySalary, 2); ?>
 																	</div>
-																</div>
-															</p>
-														</div>
-													</div>
-												</div>
-												<div class="col-sm-3">
-													<div class="card mb-3" style="max-width: 18rem; height: 300px;">
-														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-dollar-sign"></i> Additional Info</b></div>
-														<div class="card-body text-dark">
-															<p class="card-text">
-																<div class="col-sm-12 employee-static-item text-center">
-																	<div class="col-sm-12 employee-dynamic-header">
+																	<div class="col-sm-12 employee-dynamic-header mt-2">
 																		<b>13th Month Pay</b>
 																	</div>
 																	<div class="col-sm-12">
@@ -838,17 +834,101 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																			}
 																		?>
 																	</div>
-																	<div class="col-sm-12 employee-dynamic-header mt-2">
-																		<b><?php if ($cDiffInMonths > 0) { echo 'Monthly Salary'; } else { echo 'Daily Salary'; } ?></b>
+																</div>
+																<?php
+																elseif ($SalaryType == 'Monthly'):
+																	$dailySalary = $SalaryExpected / 30;
+																	$thirteen = ($SalaryExpected * 12) / 12;
+																?>
+																<div class="col-sm-12 employee-static-item text-center">
+																	<div class="col-sm-12 employee-dynamic-header">
+																		<b>Daily Salary</b>
 																	</div>
 																	<div class="col-sm-12">
-																		<?php echo '<span style="user-select: none;">₱ </span>' . round($salaryInterval, 2); ?>
+																		<?php echo '<span style="user-select: none;">₱ </span>' . round($dailySalary, 2); ?>
 																	</div>
 																	<div class="col-sm-12 employee-dynamic-header mt-2">
-																		<b>Contract Elapsed</b>
+																		<b>13th Month Pay</b>
 																	</div>
 																	<div class="col-sm-12">
-																		<?php echo $cElapsedText; ?>
+																		<?php
+																			if ($isThirteenEligible) {
+																				echo '<span style="user-select: none;">₱ </span>' . round($thirteen, 2);
+																			} else {
+																				echo '<span class="p-1" style="color: #735600;" data-toggle="tooltip" data-placement="top" data-html="true" title="Contract duration is lower than 1 month"><i class="fas fa-info-circle"></i> Not eligible</span>';
+																			}
+																		?>
+																	</div>
+																</div>
+																<?php
+																elseif ($SalaryType == 'Total'): 
+																	$salaryInterval = 0;
+																	// Monthly salary
+																	$monthlySalary = $SalaryExpected / $cDiffInMonths;
+																	// Calculate to as daily salary instead of monthly salary
+																	$dailySalary = $SalaryExpected / $cDiffInDays;
+																	$thirteen = (($dailySalary * $cDiffInDays) / 30) / 12;
+																?>
+																<div class="col-sm-12 employee-static-item text-center">
+																	<div class="col-sm-12 employee-dynamic-header">
+																		<b>Daily Salary</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php echo '<span style="user-select: none;">₱ </span>' . round($dailySalary, 2); ?>
+																	</div>
+																	<div class="col-sm-12 employee-dynamic-header mt-2">
+																		<b>Monthly Salary</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php echo '<span style="user-select: none;">₱ </span>' . round($monthlySalary, 2); ?>
+																	</div>
+																	<div class="col-sm-12 employee-dynamic-header mt-2">
+																		<b>13th Month Pay</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php
+																			if ($isThirteenEligible) {
+																				echo '<span style="user-select: none;">₱ </span>' . round($thirteen, 2);
+																			} else {
+																				echo '<span class="p-1" style="color: #735600;" data-toggle="tooltip" data-placement="top" data-html="true" title="Contract duration is lower than 1 month"><i class="fas fa-info-circle"></i> Not eligible</span>';
+																			}
+																		?>
+																	</div>
+																</div>
+																<?php endif; ?>
+															</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-3">
+													<div class="card mb-3" style="max-width: 18rem; height: 300px;">
+														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-dollar-sign"></i> Additional Info</b></div>
+														<div class="card-body text-dark">
+															<p class="card-text">
+																<div class="col-sm-12 employee-static-item text-center">
+																	<div class="col-sm-12 employee-static-item text-center">
+																		<div class="col-sm-12 employee-dynamic-header">
+																			<b>Documents (<?php echo $GetDocuments->num_rows(); ?>)</b>
+																		</div>
+																		<div class="col-sm-12">
+																			<a href="#Documents" class="btn-sm btn btn-primary"><i class="far fa-eye"></i> View</a>
+																		</div>
+																	</div>
+																	<div class="col-sm-12 employee-static-item text-center">
+																		<div class="col-sm-12 employee-dynamic-header">
+																			<b>Violations (<?php echo $GetDocumentsViolations->num_rows(); ?>)</b>
+																		</div>
+																		<div class="col-sm-12">
+																			<a href="#Violations" class="btn-sm btn btn-danger"><i class="far fa-eye"></i> View</a>
+																		</div>
+																	</div>
+																	<div class="col-sm-12 employee-static-item text-center">
+																		<div class="col-sm-12 employee-dynamic-header mt-2">
+																			<b>Contract Elapsed</b>
+																		</div>
+																		<div class="col-sm-12">
+																			<span style="font-size: 14px;"><?php echo $cElapsedText; ?></span>
+																		</div>
 																	</div>
 																</div>
 															</p>
@@ -857,7 +937,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 												</div>
 												<div class="col-12 mb-2">
 													<hr>
-													<?php echo form_open(base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract','method="GET" name="PayrollFilterForm"');?>
+													<?php echo form_open(base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Employment','method="GET" name="PayrollFilterForm"');?>
 													<div class="form-row ml-2">
 														<input type="hidden" name="id" value="<?php echo $ApplicantID; ?>">
 														<!-- Client -->
@@ -1820,7 +1900,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 											<div class="employee-content-header">
 												<div class="ml-1 row">
 													<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions'))): ?>
-													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm ExtendButton mr-1" data-toggle="modal" data-target="#ModifyContractModal"><i class="fas fa-edit"></i> Modify Contract</button>
+													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm ExtendButton mr-1" data-toggle="modal" data-target="#ModifyContractModal"><i class="fas fa-edit"></i> Modify Employment</button>
 													<?php endif; ?>
 													<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
 													<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions'))): ?>
@@ -1904,26 +1984,110 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 												</div>
 												<div class="col-sm-3">
 													<div class="card mb-3" style="max-width: 18rem; height: 300px;">
-														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-dollar-sign"></i> Monthly Salary</b></div>
+														<?php
+														$salaryText = '';
+														switch($SalaryType) {
+															case 'Daily':
+																$salaryText = 'Daily Salary';
+																break;
+															case 'Monthly':
+																$salaryText = 'Monthly Salary';
+																break;
+															case 'Total':
+																$salaryText = 'Salary Expected';
+																break;
+															default:
+																$salaryText = 'Salary';
+																break;
+														}
+														$salaryInterval = 0;
+														?>
+														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-dollar-sign"></i> <?php echo $salaryText; ?></b></div>
 														<div class="card-body text-dark">
 															<h5 class="card-title text-center wercher-card-title"><span style="user-select: none;">₱ </span><?php echo $SalaryExpected; ?></h5>
 															<p class="card-text">
-																<div class="col-sm-12 employee-static-item text-center mt-3">
-																	<div class="col-sm-12 employee-dynamic-header">
-																		<b>Documents (<?php echo $GetDocuments->num_rows(); ?>)</b>
-																	</div>
-																	<div class="col-sm-12">
-																		<a href="#Documents" class="btn-sm btn btn-primary"><i class="far fa-eye"></i> View</a>
-																	</div>
-																</div>
+																<?php
+																$monthlySalary = 0;
+																$dailySalary = 0;
+																if ($SalaryType == 'Daily'):
+																	$monthlySalary = $SalaryExpected * 30;
+																	$thirteen = (($SalaryExpected * $cDiffInDays) / 30) / 12;
+																?>
 																<div class="col-sm-12 employee-static-item text-center">
 																	<div class="col-sm-12 employee-dynamic-header">
-																		<b>Violations (<?php echo $GetDocumentsViolations->num_rows(); ?>)</b>
+																		<b>Monthly Salary</b>
 																	</div>
 																	<div class="col-sm-12">
-																		<a href="#Violations" class="btn-sm btn btn-danger"><i class="far fa-eye"></i> View</a>
+																		<?php echo '<span style="user-select: none;">₱ </span>' . round($monthlySalary, 2); ?>
+																	</div>
+																	<div class="col-sm-12 employee-dynamic-header mt-2">
+																		<b>13th Month Pay</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php echo '<span style="user-select: none;">₱ </span>' . round($thirteen, 2); ?>
 																	</div>
 																</div>
+																<?php
+																elseif ($SalaryType == 'Monthly'):
+																	$dailySalary = $SalaryExpected / 30;
+																	$thirteen = (($dailySalary * $cDiffInDays) / 30) / 12;
+																?>
+																<div class="col-sm-12 employee-static-item text-center">
+																	<div class="col-sm-12 employee-dynamic-header">
+																		<b>Daily Salary</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php echo '<span style="user-select: none;">₱ </span>' . round($dailySalary, 2); ?>
+																	</div>
+																	<div class="col-sm-12 employee-dynamic-header mt-2">
+																		<b>13th Month Pay</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php
+																			if ($isThirteenEligible) {
+																				echo '<span style="user-select: none;">₱ </span>' . round($thirteen, 2);
+																			} else {
+																				echo '<span class="p-1" style="color: #735600;" data-toggle="tooltip" data-placement="top" data-html="true" title="Contract duration is lower than 1 month"><i class="fas fa-info-circle"></i> Not eligible</span>';
+																			}
+																		?>
+																	</div>
+																</div>
+																<?php
+																elseif ($SalaryType == 'Total'): 
+																	$salaryInterval = 0;
+																	// Monthly salary
+																	$monthlySalary = $SalaryExpected / $cDiffInMonths;
+																	// Calculate to as daily salary instead of monthly salary
+																	$dailySalary = $SalaryExpected / $cDiffInDays;
+																	$thirteen = (($dailySalary * $cDiffInDays) / 30) / 12;
+																?>
+																<div class="col-sm-12 employee-static-item text-center">
+																	<div class="col-sm-12 employee-dynamic-header">
+																		<b>Daily Salary</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php echo '<span style="user-select: none;">₱ </span>' . round($dailySalary, 2); ?>
+																	</div>
+																	<div class="col-sm-12 employee-dynamic-header mt-2">
+																		<b>Monthly Salary</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php echo '<span style="user-select: none;">₱ </span>' . round($monthlySalary, 2); ?>
+																	</div>
+																	<div class="col-sm-12 employee-dynamic-header mt-2">
+																		<b>13th Month Pay</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php
+																			if ($isThirteenEligible) {
+																				echo '<span style="user-select: none;">₱ </span>' . round($thirteen, 2);
+																			} else {
+																				echo '<span class="p-1" style="color: #735600;" data-toggle="tooltip" data-placement="top" data-html="true" title="Contract duration is lower than 1 month"><i class="fas fa-info-circle"></i> Not eligible</span>';
+																			}
+																		?>
+																	</div>
+																</div>
+																<?php endif; ?>
 															</p>
 														</div>
 													</div>
@@ -1932,18 +2096,6 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 													<div class="card mb-3" style="max-width: 18rem; height: 300px;">
 														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-dollar-sign"></i> Additional Info</b></div>
 														<div class="card-body text-dark">
-															<p class="card-text">
-																<div class="col-sm-12 employee-static-item text-center">
-																	<div class="col-sm-12 employee-dynamic-header">
-																		<b>13th Month Pay</b>
-																	</div>
-																	<div class="col-sm-12">
-																		<?php
-																			echo '<span style="user-select: none;">₱ </span>' . round($salaryInterval, 2);
-																		?>
-																	</div>
-																</div>
-															</p>
 														</div>
 													</div>
 												</div>
@@ -2804,6 +2956,14 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 		function hideModal() {
 			$("#EmpContractModal").modal('hide');
 		}
+		$('#SalaryType').on('change', function() {
+			salaryType = $(this).val();
+			if (salaryType == 'Total') {
+				$('.salarytotal-group').show();
+			} else {
+				$('.salarytotal-group').hide();
+			}
+		});
 	</script>
 	<style>
 		.dropdown-item:hover {

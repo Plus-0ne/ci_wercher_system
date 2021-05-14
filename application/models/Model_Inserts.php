@@ -31,7 +31,7 @@ class Model_Inserts extends CI_Model {
 	public function InsertNewClient($data, $ClientID)
 	{
 		$date = date('Y-m-d');
-		$dateHours = date('Y-m-d H:i:s A');
+		$dateHours = date('Y-m-d h:i:s A');
 		$salary_data = array(
 			'ClientID' => $ClientID,
 			'WeekStart' => $date,
@@ -176,6 +176,33 @@ class Model_Inserts extends CI_Model {
 	{
 		$data['Time'] = date('Y-m-d H:i:s A');
 		$result = $this->db->insert('sss_weekpaid', $data);
+		return $result;
+	}
+	public function CloneSSSBatchToHistory($currentBatch = 0)
+	{
+		$GetSSSBatchRowsUnfiltered = $this->Model_Selects->GetSSSBatchRowsUnfiltered();
+		if($GetSSSBatchRowsUnfiltered->num_rows() > 0) {
+			foreach($GetSSSBatchRowsUnfiltered->result_array() as $row) {
+				$data['batch'] = $row['batch'];
+				$data['f_range'] = $row['f_range'];
+				$data['t_range'] = $row['t_range'];
+				$data['contribution_er'] = $row['contribution_er'];
+				$data['contribution_ee'] = $row['contribution_ee'];
+				$data['contribution_ec'] = $row['contribution_ec'];
+				$data['total'] = $row['total'];
+				$data['total_with_ec'] = $row['total_with_ec'];
+				$data['DateAdded'] = date('Y-m-d h:i:s A');
+				$result = $this->db->insert('sss_table_history', $data);
+			}
+		}
+		return $result;
+	}
+	public function InsertNewSSSBatch($currentBatch = 0)
+	{
+		$newBatch = $currentBatch + 1;
+		$data['Batch'] = $newBatch;
+		$data['DateAdded'] = date('Y-m-d h:i:s A');
+		$result = $this->db->insert('sss_batches', $data);
 		return $result;
 	}
 }

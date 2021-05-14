@@ -311,4 +311,16 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->update('applicants', $data);
 		return $result;
 	}
+	public function UpdateSSSBatchForTable($currentBatch = 0)
+	{
+		$newBatch = $currentBatch + 1;
+		$GetSSSBatchRowsUnfiltered = $this->Model_Selects->GetSSSBatchRowsUnfiltered();
+		if($GetSSSBatchRowsUnfiltered->num_rows() > 0) {
+			foreach($GetSSSBatchRowsUnfiltered->result_array() as $row) {
+				$data['batch'] = $newBatch;
+				$result = $this->db->update('sss_table', $data);
+			}
+		}
+		return $result;
+	}
 }

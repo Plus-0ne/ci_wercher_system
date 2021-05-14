@@ -1,9 +1,17 @@
 <div class="modal fade" id="ModifyContractModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<?php echo form_open(base_url().'ModifyContract','method="POST"');?>
+			<?php echo form_open(base_url().'ModifyContract','method="POST"');
+				$modifyText = 'Employment';
+				if ($Status == 'Employed') {
+					$modifyText = 'Contract';
+				} else {
+					$modifyText = 'Employment';
+				}
+
+			?>
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Modify Contract</h5>
+				<h5 class="modal-title" id="exampleModalLongTitle">Modify <?php echo $modifyText; ?></h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -28,12 +36,43 @@
 					<div class="form-group col-4">
 						<label>Salary</label>
 						<div class="input-icon-sm">
-							<input class="form-control" type="number" name="M_Salary" value="<?php echo $SalaryExpected ?>">
+							<input class="form-control" type="number" step=".01" name="M_Salary" value="<?php echo $SalaryExpected ?>">
 							<i>₱</i>
 						</div>
 					</div>
 				</div>
+				<div class="form-row my-2">
+					<div class="form-row col-12">
+						<div class="col-sm-4" style="margin-top: 5px;">
+							Salary Distribution
+						</div>
+						<div class="col-sm-8">
+							<select id="SalaryType" class="form-control" name="M_SalaryType">
+								<option value="Daily"<?php if ($SalaryType == 'Daily') { echo ' selected'; } ?>>Daily</option>
+								<option value="Monthly"<?php if ($SalaryType == 'Monthly') { echo ' selected'; } ?>>Monthly</option>
+								<option value="Total"<?php if ($SalaryType == 'Total') { echo ' selected'; } ?>>Total for duration</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="salarytotal-group my-2" style="display: none;">
+					<div class="form-row mx-1">
+						<div class="form-group col-4">
+							<label>Years</label>
+							<input class="form-control" type="number" name="M_ST_Years" value="0">
+						</div>
+						<div class="form-group col-4">
+							<label>Months</label>
+							<input class="form-control" type="number" name="M_ST_Months" value="0">
+						</div>
+						<div class="form-group col-4">
+							<label>Days</label>
+							<input class="form-control" type="number" name="M_ST_Days" value="0">
+						</div>
+					</div>
+				</div>
 				<div class="form-row my-1">
+				<?php if($Status == 'Employed'): ?>
 					<div class="form-group col-sm-12 col-md-6">
 						<?php
 							$ds = new DateTime($DateStarted);
@@ -54,7 +93,6 @@
 						<input class="form-control" type="date" name="M_DateStarted" value="<?php echo $dsText; ?>">
 					</div>
 					<div class="form-group col-sm-12 col-md-6">
-						<?php if($Status == 'Employed'): ?>
 						<?php
 							$de = new DateTime($DateEnds);
 							$deText = $de->format('Y-m-d');
@@ -72,7 +110,6 @@
 						?>
 						<label>Contract Ends</label>
 						<input class="form-control" type="date" name="M_DateEnds" value="<?php echo $deText; ?>">
-						<?php endif; ?>
 					</div>
 					<div class="form-row col-sm-6">
 						<div class="form-group col-sm-4">
@@ -92,7 +129,6 @@
 						</div>
 					</div>
 					<div class="form-row col-sm-6 ml-auto">
-						<?php if($Status == 'Employed'): ?>
 						<div class="form-group col-sm-4">
 							<input class="form-control" type="number" name="M_DateEndsHour" value="<?php echo $deH; ?>">
 						</div>
@@ -108,7 +144,6 @@
 								<i>:</i>
 							</div>
 						</div>
-						<?php endif; ?>
 					</div>
 					<div class="form-row col-sm-6 mr-auto">
 						<div class="form-group col-sm-6">
@@ -128,6 +163,56 @@
 						</div>
 						<?php endif; ?>
 					</div>
+				<?php else: ?>
+					<div class="form-row col-sm-12 col-md-12">
+						<?php
+							$ds = new DateTime($DateStarted);
+							$dsText = $ds->format('Y-m-d');
+							$dsH = $ds->format('H');
+							$dsi = $ds->format('i');
+							$dss = $ds->format('s');
+							$dsType = $ds->format('A');
+
+							if ($dsH > 12) {
+								$dsH = $dsH - 12;
+								if ($dsH < 10) {
+									$dsH = '0' . $dsH;
+								}
+							}
+						?>
+						<div class="col-sm-4" style="margin-top: 5px;">
+							Employment Started
+						</div>
+						<div class="col-sm-8">
+							<input class="form-control" type="date" name="M_DateStarted" value="<?php echo $dsText; ?>">
+						</div>
+					</div>
+					<div class="form-row col-sm-6 mt-2">
+						<div class="form-group col-sm-4">
+							<input class="form-control" type="number" name="M_DateStartedHour" value="<?php echo $dsH; ?>">
+						</div>
+						<div class="form-group col-sm-4">
+							<div class="input-icon-sm">
+								<input class="form-control" type="number" name="M_DateStartedMinute" value="<?php echo $dsi; ?>">
+								<i>:</i>
+							</div>
+						</div>
+						<div class="form-group col-sm-4">
+							<div class="input-icon-sm">
+								<input class="form-control" type="number" name="M_DateStartedSecond" value="<?php echo $dss; ?>">
+								<i>:</i>
+							</div>
+						</div>
+					</div>
+					<div class="form-row col-sm-6 mr-auto mt-3">
+						<div class="form-group col-sm-6">
+							<input type="radio" id="M_DateStartedHourTypeAM" name="M_DateStartedHourType" value="AM" <?php if($dsType == 'AM') { echo 'checked'; } ?>>
+							<label for="M_DateStartedHourTypeAM">AM</label>
+							<input type="radio" id="M_DateStartedHourTypePM" name="M_DateStartedHourType" value="PM" <?php if($dsType == 'PM') { echo 'checked'; } ?>>
+							<label for="M_DateStartedHourTypePM">PM</label>
+						</div>
+					</div>
+				<?php endif; // End of contract check ?>
 				</div>
 				<div class="form-row">
 					<div class="form-group col-12">

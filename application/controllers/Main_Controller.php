@@ -643,6 +643,8 @@
 						'PositionDesired' => $ged['PositionDesired'],
 						'PositionGroup' => $ged['PositionGroup'],
 						'SalaryExpected' => $ged['SalaryExpected'],
+						'SalaryType' => $ged['SalaryType'],
+						'SalaryDistDate' => $ged['SalaryDistDate'],
 						'LastName' => $ged['LastName'],
 						'FirstName' => $ged['FirstName'],
 						'MiddleName' => $ged['MiddleName'],
@@ -1059,7 +1061,6 @@
 			}
 			$data['latestBatch'] = $latestBatch;
 			$data['createdDate'] = $createdDate;
-			$data['GetSSSBatchRows'] = $this->Model_Selects->GetSSSBatchRows($latestBatch);
 			$this->load->view('payroll/p_sssPage',$data);
 		else:
 			redirect('Forbidden');

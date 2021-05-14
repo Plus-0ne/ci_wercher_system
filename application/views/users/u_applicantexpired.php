@@ -218,17 +218,25 @@ use Carbon\Carbon;
 			<?php endforeach; ?>
 		});
 		let absorbedClicked = false;
+		let isRegular = false;
+		let isTotal = false;
 		$('#EmploymentType').on('change', function() {
 			employmentType = $(this).val();
 			if (employmentType == 'Contractual') {
+				isRegular = false;
 				$('.contractual-group').show();
 				$('.absorbed-group').hide();
 				$('.previous-group').hide();
+				$('.salarytotal-group').hide();
 			} else if (employmentType == 'Regular') {
+				isRegular = true;
 				$('.contractual-group').hide();
 				$('.absorbed-group').show();
 				if (absorbedClicked) {
 					$('.previous-group').show();
+				}
+				if (isTotal) {
+					$('.salarytotal-group').show();
 				}
 			}
 		});
@@ -246,7 +254,20 @@ use Carbon\Carbon;
 				$('.previous-group').fadeOut('fast');
 				$('#EmploymentStatus').val('');
 			}
-			
+		});
+		$('#SalaryType').on('change', function() {
+			salaryType = $(this).val();
+			if (salaryType == 'Total') {
+				isTotal = true;
+				if(isRegular) {
+					$('.salarytotal-group').show();
+				} else {
+					$('.salarytotal-group').hide();
+				}
+			} else {
+				isTotal = false;
+				$('.salarytotal-group').hide();
+			}
 		});
 		$(".nav-item a[href*='Applicants']").addClass("nactive");
 		var table = $('#emp').DataTable( {

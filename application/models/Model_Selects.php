@@ -2002,19 +2002,44 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->get('sss_weekpaid')->row();  
 		return $result->Amount;
 	}
+	public function GetSSSBatches() {
+		$this->db->select('*');
+		$this->db->from('sss_batches');
+		$this->db->order_by('ID', 'desc');
+		$result = $this->db->get();
+		return $result;
+	}
 	public function GetSSSLatestBatch() {
 		$this->db->select('*');
 		$this->db->from('sss_batches');
-		$this->db->where('Active', '1');
-		$this->db->order_by('DateAdded', 'desc');
+		$this->db->order_by('ID', 'desc');
 		$this->db->limit(1);
 		$result = $this->db->get();
 		return $result;
 	}
-	public function GetSSSBatchRows($Batch) {
+	public function GetSSSBatchRows($Batch, $table = 'current', $active = 1) {
 		$this->db->select('*');
-		$this->db->from('sss_table');
+		if ($table != 'current') {
+			$this->db->from($table);
+		} else {
+			$this->db->from('sss_table');
+		}
 		$this->db->where('batch', $Batch);
+		if ($active == 1) {
+			$this->db->where('active', 1);
+		}
+		$this->db->order_by('total', 'asc');
+		$result = $this->db->get();
+		return $result;
+	}
+	public function GetSSSBatchRowsUnfiltered($table = 'current') {
+		$this->db->select('*');
+		if ($table != 'current') {
+			$this->db->from($table);
+		} else {
+			$this->db->from('sss_table');
+		}
+		$this->db->where('active', 1);
 		$this->db->order_by('total', 'asc');
 		$result = $this->db->get();
 		return $result;

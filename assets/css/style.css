@@ -1093,6 +1093,11 @@ a[data-toggle="collapse"] {
 .sss-row:hover {
 	border-radius: 10px;
 	background-color: rgba(75, 75, 75, 0.14);
+	cursor: pointer;
+}
+.sss-inactive-row:hover {
+	border-radius: 10px;
+	background-color: rgba(75, 75, 75, 0.06);
 }
 .logbook-log-container {
 	border-radius: 4px;
@@ -1406,6 +1411,11 @@ a[data-toggle="collapse"] {
 	height: 425px;
 	background-color: rgba(0, 0, 0, 0.08);
 	border-radius: 16px;
+}
+.wercher-btn-sm {
+	padding: 2px 4px;
+	font-size: 12px;
+	cursor: pointer;
 }
 /*form {
 	display: none;

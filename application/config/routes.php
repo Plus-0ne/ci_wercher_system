@@ -129,6 +129,7 @@ $route['EmployUserPermanent'] = 'Update_Controller/EmployUserPermanent';
 $route['EditClient'] = 'Update_Controller/EditClient';
 $route['EditAdmin'] = 'Update_Controller/EditAdmin';
 $route['ChangeEmploymentType'] = 'Update_Controller/UpdateEmploymentType';
+$route['SSSNewBatch'] = 'Update_Controller/SSSNewBatch';
 
 // AJAX
 $route['AJAX_addLogbookNotes'] = 'Main_Controller/AJAX_addLogbookNotes';

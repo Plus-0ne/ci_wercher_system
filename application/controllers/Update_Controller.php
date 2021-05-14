@@ -25,6 +25,10 @@ class Update_Controller extends CI_Controller {
 			$H_Months = $this->input->post('H_Months',TRUE);
 			$H_Years = $this->input->post('H_Years',TRUE);
 			$Salary = $this->input->post('Salary',TRUE);
+			$SalaryType = $this->input->post('SalaryType',TRUE);
+			$ST_Days = $this->input->post('ST_Days',TRUE);
+			$ST_Months = $this->input->post('ST_Months',TRUE);
+			$ST_Years = $this->input->post('ST_Years',TRUE);
 			$EmployeeID = $this->input->post('EmployeeID',TRUE);
 			$EmploymentType = $this->input->post('EmploymentType',TRUE);
 			if($H_Days == NULL) {
@@ -35,6 +39,15 @@ class Update_Controller extends CI_Controller {
 			}
 			if($H_Years == NULL) {
 				$H_Years = 0;
+			}
+			if($ST_Days == NULL) {
+				$ST_Days = 0;
+			}
+			if($ST_Months == NULL) {
+				$ST_Months = 0;
+			}
+			if($ST_Years == NULL) {
+				$ST_Years = 0;
 			}
 			$Temp_ApplicantID = $ApplicantID;
 			$Temp_ApplicantID++;
@@ -47,7 +60,24 @@ class Update_Controller extends CI_Controller {
 			{
 				$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
 				if ($CheckApplicant->num_rows() > 0) {
+					// General data
 					$row = $CheckApplicant->row_array();
+					if ($ST_Months == NULL) {
+						$SalaryDistDate = date('Y-m-d h:i:s A', strtotime('+0 months', strtotime($DateStarted)));
+					} else {
+						$SalaryDistDate = date('Y-m-d h:i:s A', strtotime('+'.$ST_Months.' months', strtotime($DateStarted)));
+					}
+					if ($ST_Days == NULL) {
+						$SalaryDistDate = date('Y-m-d h:i:s A', strtotime('+0 days', strtotime($DateEnds)));
+					} else {
+						$SalaryDistDate = date('Y-m-d h:i:s A', strtotime('+'.$ST_Days.' days', strtotime($DateEnds)));
+					}
+					if ($ST_Years == NULL) {
+						$SalaryDistDate = date('Y-m-d h:i:s A', strtotime('+0 days', strtotime($DateEnds)));
+					} else {
+						$SalaryDistDate = date('Y-m-d h:i:s A', strtotime('+'.$ST_Years.' years', strtotime($DateEnds)));
+					}
+					// =============
 					if ($EmploymentType == 'Contractual') {
 						$DateStarted = date('Y-m-d h:i:s A');
 
@@ -74,7 +104,11 @@ class Update_Controller extends CI_Controller {
 							'DateEnds' => $DateEnds,
 							'Status' => 'Employed',
 							'SalaryExpected' => $Salary,
+							'SalaryType' => $SalaryType,
 						);
+						if ($ST_Years != 0 && $ST_Months != 0 && $ST_Days != 0) {
+							$data['SalaryDistDate'] = $SalaryDistDate;
+						}
 						$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
 						$fullName = '';
 						if ($row['LastName']) {
@@ -149,7 +183,7 @@ class Update_Controller extends CI_Controller {
 							} else {
 								$ClientName = 'N/A';
 							}
-							$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' employed <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a> to <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $ClientID . '" target="_blank">' . $ClientName . '</a>');
+							$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' employed <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Employment" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a> to <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $ClientID . '" target="_blank">' . $ClientName . '</a>');
 							$this->Model_Logbook->LogbookExtendedEntry(0, 'Status changed from <b>Applicant</b> to <b>Employed</b>');
 							$this->Model_Logbook->LogbookExtendedEntry(0, 'Contract Duration: <b>' . $now . '</b> to <b>' . $duration . '</b>');
 							redirect($_SERVER['HTTP_REFERER']);
@@ -176,7 +210,10 @@ class Update_Controller extends CI_Controller {
 							'EmployeeID' => $EmployeeID,
 							'ClientEmployed' => $ClientID,
 							'Status' => $EmploymentType,
+							'DateStarted' => date('Y-m-d h:i:s A'),
 							'SalaryExpected' => $Salary,
+							'SalaryType' => $SalaryType,
+							'SalaryDistDate' => $SalaryDistDate,
 						);
 						$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
 						$fullName = '';
@@ -230,7 +267,7 @@ class Update_Controller extends CI_Controller {
 							} else {
 								$ClientName = 'N/A';
 							}
-							$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' employed <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a> to <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $ClientID . '" target="_blank">' . $ClientName . '</a>');
+							$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' employed <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Employment" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a> to <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $ClientID . '" target="_blank">' . $ClientName . '</a>');
 							$this->Model_Logbook->LogbookExtendedEntry(0, 'Status changed from <b>Applicant</b> to <b>Regular</b>');
 							redirect($_SERVER['HTTP_REFERER']);
 						}
@@ -313,7 +350,7 @@ class Update_Controller extends CI_Controller {
 						$logbookBeforeDate = DateTime::createFromFormat('Y-m-d', $logbookBeforeDate)->format('F d, Y');
 						$logbookAfterDate = DateTime::createFromFormat('Y-m-d', $logbookAfterDate)->format('F d, Y');
 						$this->Model_Logbook->SetPrompts('success', 'success', 'Contract extended to ' . $logbookAfterDate);
-						$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' updated contract duration for <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a>');
+						$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' updated contract duration for <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Employment" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a>');
 						$this->Model_Logbook->LogbookExtendedEntry(0, 'Contract changed from <b>' . $logbookBeforeDate . '</b> to <b>' . $logbookAfterDate . '</b>');
 						redirect($_SERVER['HTTP_REFERER']);
 					}
@@ -401,7 +438,7 @@ class Update_Controller extends CI_Controller {
 					$logbookBeforeDate = DateTime::createFromFormat('Y-m-d', $logbookBeforeDate)->format('F d, Y');
 					$logbookAfterDate = DateTime::createFromFormat('Y-m-d', $logbookAfterDate)->format('F d, Y');
 					$this->Model_Logbook->SetPrompts('success', 'success', 'Added suspension until ' . $logbookAfterDate);
-					$this->Model_Logbook->LogbookEntry('Red', 'Employee', ' suspended <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a>');
+					$this->Model_Logbook->LogbookEntry('Red', 'Employee', ' suspended <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Employment" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a>');
 					$this->Model_Logbook->LogbookExtendedEntry(0, 'Suspended for <b>' . $logbookBeforeDate . '</b> to <b>' . $logbookAfterDate . '</b>');
 					redirect($_SERVER['HTTP_REFERER']);
 				}
@@ -2265,6 +2302,10 @@ class Update_Controller extends CI_Controller {
 			$DateEndsSecond = $this->input->post('M_DateEndsSecond',TRUE);
 			$EmployeeID = $this->input->post('M_EmployeeID',TRUE);
 			$Salary = $this->input->post('M_Salary',TRUE);
+			$SalaryType = $this->input->post('M_SalaryType',TRUE);
+			$ST_Years = $this->input->post('M_ST_Years',TRUE);
+			$ST_Months = $this->input->post('M_ST_Months',TRUE);
+			$ST_Days = $this->input->post('M_ST_Days',TRUE);
 			$DateStartedHourType = $this->input->post('M_DateStartedHourType',TRUE);
 			$DateEndsHourType = $this->input->post('M_DateEndsHourType',TRUE);
 			// Previous data for logbook
@@ -2276,6 +2317,7 @@ class Update_Controller extends CI_Controller {
 					$prevDateEnds = $row['DateEnds'];
 					$prevEmployeeID = $row['EmployeeID'];
 					$prevSalary = $row['SalaryExpected'];
+					$prevSalaryType = $row['SalaryType'];
 				}
 			} else {
 				$prevClientID = 'N/A';
@@ -2283,9 +2325,19 @@ class Update_Controller extends CI_Controller {
 				$prevDateEnds = 'N/A';
 				$prevEmployeeID = 'N/A';
 				$prevSalary = 'N/A';
+				$prevSalaryType = 'N/A';
 			}
 			
 			// Concatenating date and hours
+			if($ST_Days == NULL) {
+				$ST_Days = 0;
+			}
+			if($ST_Months == NULL) {
+				$ST_Months = 0;
+			}
+			if($ST_Years == NULL) {
+				$ST_Years = 0;
+			}
 			if($DateStartedHour == NULL) {
 				$DateStartedHour = 0;
 			}
@@ -2379,7 +2431,11 @@ class Update_Controller extends CI_Controller {
 						'DateStarted' => $DateStartedFull,
 						'DateEnds' => $DateEndsFull,
 						'SalaryExpected' => $Salary,
+						'SalaryType' => $SalaryType,
 					);
+					if ($ST_Years != 0 && $ST_Months != 0 && $ST_Days != 0) {
+						$data['SalaryDistDate'] = $SalaryDistDate;
+					}
 					$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
 					$fullName = '';
 					if ($row['LastName']) {
@@ -2417,7 +2473,7 @@ class Update_Controller extends CI_Controller {
 							$MiddleName = 'N/A';
 						}
 						$changeCounter = 0;
-						$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' updated <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a>\'s contract details');
+						$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' updated <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Employment" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a>\'s contract details');
 						if ($ClientID != $prevClientID) {
 							$this->Model_Logbook->LogbookExtendedEntry(0, 'Client changed from <b>' . $prevClientID . '</b> to <b>' . $ClientID . '</b>');
 							$changeCounter++;
@@ -2438,30 +2494,38 @@ class Update_Controller extends CI_Controller {
 							$this->Model_Logbook->LogbookExtendedEntry(0, 'Salary changed from <b>' . $prevSalary . '</b> to <b>' . $Salary . '</b>');
 							$changeCounter++;
 						}
+						if ($SalaryType != $prevSalaryType) {
+							$this->Model_Logbook->LogbookExtendedEntry(0, 'Salary changed from <b>' . $prevSalary . '</b> to <b>' . $Salary . '</b>');
+							$changeCounter++;
+						}
+						if ($SalaryDistDate != $prevSalaryDistDate) {
+							$this->Model_Logbook->LogbookExtendedEntry(0, 'Salary changed from <b>' . $prevSalary . '</b> to <b>' . $Salary . '</b>');
+							$changeCounter++;
+						}
 						if ($changeCounter > 0) {
 							$this->Model_Logbook->SetPrompts('success', 'success', 'Updated successfully');
 						} else {
 							$this->Model_Logbook->SetPrompts('info', 'info', 'No changes made');
 						}
-						redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');
+						redirect('ViewEmployee?id=' . $ApplicantID . '#Employment');
 					}
 					else
 					{
 						$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
-						redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');
+						redirect('ViewEmployee?id=' . $ApplicantID . '#Employment');
 					}
 				}
 				else
 				{
 					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
-					redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');;
+					redirect('ViewEmployee?id=' . $ApplicantID . '#Employment');;
 				}
 			}
 		}
 		else
 		{
 			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
-			redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');
+			redirect('ViewEmployee?id=' . $ApplicantID . '#Employment');
 		}
 	}
 	public function EmployUserPermanent()
@@ -2500,21 +2564,21 @@ class Update_Controller extends CI_Controller {
 					} else {
 						$ClientName = 'N/A';
 					}
-					$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' employed <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a> permanently to <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $ClientID . '" target="_blank">' . $ClientName . '</a>');
-					$this->Model_Logbook->LogbookExtendedEntry(0, 'Status changed from <b>' . $prevStatus . '</b> to <b>Employed (Permanent)</b>');
-					redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');
+					$this->Model_Logbook->LogbookEntry('Blue', 'Employee', ' employed <a class="logbook-tooltip-highlight" href="' . base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Employment" target="_blank">' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleName) . '</a> permanently to <a class="logbook-tooltip-highlight" href="' . base_url() . 'Clients?id=' . $ClientID . '" target="_blank">' . $ClientName . '</a>');
+					$this->Model_Logbook->LogbookExtendedEntry(0, 'Status changed from <b>' . $prevStatus . '</b> to <b>Regular</b>');
+					redirect('ViewEmployee?id=' . $ApplicantID . '#Employment');
 				}
 				else
 				{
 					$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
-					redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');
+					redirect('ViewEmployee?id=' . $ApplicantID . '#Employment');
 				}
 			}
 		}
 		else
 		{
 			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
-			redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');
+			redirect('ViewEmployee?id=' . $ApplicantID . '#Employment');
 		}
 	}
 	public function UpdateEmploymentType()
@@ -2528,10 +2592,10 @@ class Update_Controller extends CI_Controller {
 			$ChangeEmploymentType = $this->Model_Updates->ChangeEmploymentType($ApplicantID, $EmploymentType);
 			if ($ChangeEmploymentType) {
 				$this->Model_Logbook->SetPrompts('success', 'success', 'Changed successfully');
-				redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');
+				redirect('ViewEmployee?id=' . $ApplicantID . '#Employment');
 			} else {
 				$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
-				redirect('ViewEmployee?id=' . $ApplicantID . '#Contract');
+				redirect('ViewEmployee?id=' . $ApplicantID . '#Employment');
 			}
 		}
 	}
@@ -2610,7 +2674,7 @@ class Update_Controller extends CI_Controller {
 				if ($changesCounter == 0) {
 					$this->Model_Logbook->SetPrompts('info', 'info', 'No changes made');
 				} else {
-					$this->Model_Logbook->SetPrompts('success', 'success', 'Updated client succesfully');
+					$this->Model_Logbook->SetPrompts('success', 'success', 'Updated client successfully');
 				}
 				redirect('Clients');
 			}
@@ -2829,7 +2893,7 @@ class Update_Controller extends CI_Controller {
 								$this->Model_Logbook->SetPrompts('info', 'info', 'No changes made');
 							} else {
 								$this->Model_Logbook->LogbookEntry('Blue', 'Admin', ' updated <a class="logbook-tooltip-highlight" href="' . base_url() . 'Admins?id=' . $AdminID . '" target="_blank">' . $AdminID . '</a>');
-								$this->Model_Logbook->SetPrompts('success', 'success', 'Updated admin succesfully');
+								$this->Model_Logbook->SetPrompts('success', 'success', 'Updated admin successfully');
 							}
 							redirect('Admins');
 						}
@@ -2841,6 +2905,27 @@ class Update_Controller extends CI_Controller {
 					}
 				}
 			}
+		}
+	}
+	public function SSSNewBatch()
+	{
+		$currentBatch = 0;
+		$GetSSSLatestBatch = $this->Model_Selects->GetSSSLatestBatch();
+		if($GetSSSLatestBatch->num_rows() > 0) {
+			foreach($GetSSSLatestBatch->result_array() as $row) {
+				$currentBatch = $row['Batch'];
+			}
+		}
+		$CloneSSSBatchToHistory = $this->Model_Inserts->CloneSSSBatchToHistory($currentBatch);
+		$UpdateSSSBatchForTable = $this->Model_Updates->UpdateSSSBatchForTable($currentBatch);
+		$InsertNewSSSBatch = $this->Model_Inserts->InsertNewSSSBatch($currentBatch);
+		if ($CloneSSSBatchToHistory && $UpdateSSSBatchForTable && $InsertNewSSSBatch) {
+			$this->Model_Logbook->SetPrompts('success', 'success', 'New batch created successfully');
+			// LOGBOOK
+			$this->Model_Logbook->LogbookEntry('Blue', 'Salary', ' created a new SSS batch.');
+			redirect(base_url() . 'SSS_Table');
+		} else {
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Error creating a new batch');
 		}
 	}
 }
