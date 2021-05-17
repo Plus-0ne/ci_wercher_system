@@ -819,6 +819,60 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->get($Mode)->row();  
 		return $result->GrossPay;
 	}
+	public function GetPayrollWeekOTGrossPay($ApplicantID, $Year, $Month, $Week, $Mode) { // Does not return any other row and column except for the sum of day_pay.
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('OvertimeGrossPay');
+		$array = array('ApplicantID' => $ApplicantID, 't_year' => $Year, 'Month' => $Month, 'Week' => $Week);
+		$this->db->where($array);
+		$result = $this->db->get($Mode)->row();  
+		return $result->OvertimeGrossPay;
+	}
+	public function GetPayrollWeekNPGrossPay($ApplicantID, $Year, $Month, $Week, $Mode) { // Does not return any other row and column except for the sum of day_pay.
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NPGrossPay');
+		$array = array('ApplicantID' => $ApplicantID, 't_year' => $Year, 'Month' => $Month, 'Week' => $Week);
+		$this->db->where($array);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NPGrossPay;
+	}
+	public function GetPayrollWeekNPOTGrossPay($ApplicantID, $Year, $Month, $Week, $Mode) { // Does not return any other row and column except for the sum of day_pay.
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NPOvertimeGrossPay');
+		$array = array('ApplicantID' => $ApplicantID, 't_year' => $Year, 'Month' => $Month, 'Week' => $Week);
+		$this->db->where($array);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NPOvertimeGrossPay;
+	}
 	public function GetPayrollWeekHours($ApplicantID, $Year, $Month, $Week, $Mode) { // Does not return any other row and column except for the sum of Hours.
 		switch($Mode) {
 			case 0:
@@ -834,7 +888,7 @@ class Model_Selects extends CI_Model {
 		$this->db->select_sum('Hours');
 		$array = array('ApplicantID' => $ApplicantID, 't_year' => $Year, 'Month' => $Month, 'Week' => $Week);
 		$this->db->where($array);
-		$result = $this->db->get($Mode)->row();  
+		$result = $this->db->get($Mode)->row();
 		return $result->Hours;
 	}
 	public function GetPayrollWeekOTHours($ApplicantID, $Year, $Month, $Week, $Mode) { // Does not return any other row and column except for the sum of Overtime.
@@ -854,6 +908,42 @@ class Model_Selects extends CI_Model {
 		$this->db->where($array);
 		$result = $this->db->get($Mode)->row();  
 		return $result->Overtime;
+	}
+	public function GetPayrollWeekNPHours($ApplicantID, $Year, $Month, $Week, $Mode) { // Does not return any other row and column except for the sum of Hours.
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NightHours');
+		$array = array('ApplicantID' => $ApplicantID, 't_year' => $Year, 'Month' => $Month, 'Week' => $Week);
+		$this->db->where($array);
+		$result = $this->db->get($Mode)->row();
+		return $result->NightHours;
+	}
+	public function GetPayrollWeekNPOTHours($ApplicantID, $Year, $Month, $Week, $Mode) { // Does not return any other row and column except for the sum of Overtime.
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select_sum('NightOvertime');
+		$array = array('ApplicantID' => $ApplicantID, 't_year' => $Year, 'Month' => $Month, 'Week' => $Week);
+		$this->db->where($array);
+		$result = $this->db->get($Mode)->row();  
+		return $result->NightOvertime;
 	}
 	public function GetSSSToBePaid($ApplicantID, $ClientID, $Year, $Month, $Mode) {
 		$SQL = "SELECT * FROM sss_tobepaid WHERE ApplicantID = '$ApplicantID' AND ClientID = '$ClientID' AND Year = '$Year' AND Month = '$Month' AND Mode = '$Mode'";

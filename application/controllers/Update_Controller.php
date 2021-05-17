@@ -1341,12 +1341,10 @@ class Update_Controller extends CI_Controller {
 					$CurrentPrimaryWeek = new DateTime($prow['WeekStart']);
 					$DateToday = new DateTime();
 
-					
+					$diff = $DateToday->diff($CurrentPrimaryWeek)->format("%a");
 					switch ($Mode) {
 
 						case '0': ### WEEKLY
-
-							$diff = $DateToday->diff($CurrentPrimaryWeek)->format("%a");
 							if ($diff <= 7) {
 								$Week = 1;
 							} elseif ($diff <= 14 && $diff > 7) {
@@ -1361,12 +1359,10 @@ class Update_Controller extends CI_Controller {
 								$this->Model_Updates->SetPrimaryWeek($PrimaryWeek, $ClientID);
 								$Week = 1;
 							}
-
 							$Month = $CurrentPrimaryWeek->format('m');
-						break;
+							break;
 
 						case '1': ### SEMI-MONTHLY
-
 							if ($diff <= 15) {
 								$Week = 1;
 							} elseif ($diff > 15 || $diff <= 30) {
@@ -1379,10 +1375,8 @@ class Update_Controller extends CI_Controller {
 								$this->Model_Updates->SetPrimaryWeek($PrimaryWeek, $ClientID);
 								$Week = 1;
 							}
-
 							$Month = $CurrentPrimaryWeek->format('m');
-
-						break;
+							break;
 
 						case '2': ### MONTHLY
 							if ($diff < 31) {
@@ -1392,12 +1386,10 @@ class Update_Controller extends CI_Controller {
 								$PrimaryWeek = $PrimaryWeek->format('Y-m-d');
 								$this->Model_Updates->SetPrimaryWeek($PrimaryWeek, $ClientID);
 							}
-
 							$Month = $CurrentPrimaryWeek->format('m');
-						break;
+							break;
 
 						default:
-							$diff = $DateToday->diff($CurrentPrimaryWeek)->format("%a");
 							if ($diff <= 7) {
 								$Week = 1;
 							} elseif ($diff <= 14 && $diff > 7) {
@@ -1412,9 +1404,8 @@ class Update_Controller extends CI_Controller {
 								$this->Model_Updates->SetPrimaryWeek($PrimaryWeek, $ClientID);
 								$Week = 1;
 							}
-
 							$Month = $CurrentPrimaryWeek->format('m');
-						break;
+							break;
 					}
 					
 					

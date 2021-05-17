@@ -125,6 +125,10 @@ if ($erow['SalaryExpected'] > 0) {
 									$RestDay = false;
 									$SpecialHoliday = false;
 									$NationalHoliday = false;
+									$regGrossPay = 0;
+									$overtimeGrossPay = 0;
+									$npGrossPay = 0;
+									$npOvertimeGrossPay = 0;
 									foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'], $_GET['mode'])->result_array() as $nrow):
 										if($nrow['Hours']) {
 											$salaryHours = $nrow['Hours'];
@@ -147,12 +151,24 @@ if ($erow['SalaryExpected'] > 0) {
 										if($nrow['NationalHoliday']) {
 											$NationalHoliday = true;
 										}
+										if($nrow['GrossPay']) {
+											$regGrossPay = $nrow['GrossPay'];
+										}
+										if($nrow['OvertimeGrossPay']) {
+											$overtimeGrossPay = $nrow['OvertimeGrossPay'];
+										}
+										if($nrow['NPGrossPay']) {
+											$npGrossPay = $nrow['NPGrossPay'];
+										}
+										if($nrow['NPOvertimeGrossPay']) {
+											$npOvertimeGrossPay = $nrow['NPOvertimeGrossPay'];
+										}
 									endforeach;
 								?>
-								<input class="form-control regular_pay_<?php echo $row['Time']; ?>" type="hidden" name="RegularGrossPay_<?php echo $row['Time']; ?>">
-								<input class="form-control overtime_pay_<?php echo $row['Time']; ?>" type="hidden" name="OvertimeGrossPay_<?php echo $row['Time']; ?>">
-								<input class="form-control nightpremium_pay_<?php echo $row['Time']; ?>" type="hidden" name="NPGrossPay_<?php echo $row['Time']; ?>">
-								<input class="form-control nightpremiumovertime_pay_<?php echo $row['Time']; ?>" type="hidden" name="NPOvertimeGrossPay_<?php echo $row['Time']; ?>">
+								<input class="form-control regular_pay_<?php echo $row['Time']; ?>" type="hidden" name="RegularGrossPay_<?php echo $row['Time']; ?>" value="<?php echo $regGrossPay; ?>">
+								<input class="form-control overtime_pay_<?php echo $row['Time']; ?>" type="hidden" name="OvertimeGrossPay_<?php echo $row['Time']; ?>" value="<?php echo $overtimeGrossPay; ?>">
+								<input class="form-control nightpremium_pay_<?php echo $row['Time']; ?>" type="hidden" name="NPGrossPay_<?php echo $row['Time']; ?>" value="<?php echo $npGrossPay; ?>">
+								<input class="form-control nightpremiumovertime_pay_<?php echo $row['Time']; ?>" type="hidden" name="NPOvertimeGrossPay_<?php echo $row['Time']; ?>" value="<?php echo $npOvertimeGrossPay; ?>">
 								<div class="day-container_<?php echo $row['Time']; ?> col-sm-12 col-md-2" style="margin-left: 25px;">
 									<div class="card mb-3">
 										<input id="<?php echo $row['Time']; ?>" type="hidden" name="<?php echo $row['Time']; ?>" value="<?php echo $row['Time']; ?>">

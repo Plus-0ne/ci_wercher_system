@@ -63,16 +63,33 @@ use Carbon\Carbon;
 										$elapsed = Carbon::parse($PrimaryWeek);
 
 										$diff = $currentDate->diff($date)->format("%a");
-										if ($diff <= 7) {
-											$Week = '1st';
-										} elseif ($diff <= 14 && $diff > 7) {
-											$Week = '2nd';
-										} elseif ($diff <= 21 && $diff > 14) {
-											$Week = '3rd';
-										} elseif ($diff <= 28 && $diff > 21) {
-											$Week = '4th';
-										} else {
-											$Week = '1st'; // Default;
+										$ModeText = '';
+										if ($Mode == 0) {
+											if ($diff <= 7) {
+												$Week = '1st';
+											} elseif ($diff <= 14 && $diff > 7) {
+												$Week = '2nd';
+											} elseif ($diff <= 21 && $diff > 14) {
+												$Week = '3rd';
+											} elseif ($diff <= 28 && $diff > 21) {
+												$Week = '4th';
+											} else {
+												$Week = '1st'; // Default;
+											}
+											$ModeText = 'the <b>' . $Week . ' week</b>';
+										} elseif ($Mode == 1) {
+											if ($diff <= 15) {
+												$Week = '1st';
+											} elseif ($diff > 15 && $diff <= 30) {
+												$Week = '2nd';
+											} else {
+												$Week = '1st'; // Default;
+											}
+											$ModeText = 'the <b>' . $Week . ' period</b>';
+										} elseif ($Mode == 2) {
+											$modeMonth = new DateTime();
+											$modeMonth = $modeMonth->format('Y-m-d');
+											$ModeText = '<b>' . DateTime::createFromFormat('Y-m-d', $modeMonth)->format('F') . '</b>';
 										}
 									}
 								} else {
@@ -80,7 +97,7 @@ use Carbon\Carbon;
 								}
 						  		?>
 						  		<button id="<?php echo $ClientID; ?>" type="button" class="btn btn-primary btn-sm SetPrimaryClientIDButton" data-toggle="modal" data-target="#ModalSetWeek"><i class="fas fa-calendar"></i> Set Starting Week</button>
-						  		<i class="fas fa-info-circle"></i> <i>The starting week for this client is <b><?php echo $day; ?></b>. It is currently the <b><?php echo $Week; ?></b> week.</i>
+						  		<i class="fas fa-info-circle"></i> <i>The starting week for this client is on <b><?php echo $day; ?></b>. It is currently <?php echo $ModeText; ?>.</i>
 						  	</div>
 						</div>
 					</div>
@@ -102,11 +119,15 @@ use Carbon\Carbon;
 									<?php endforeach; ?>
 									<th style="min-width: 50px;">Reg. Hrs</th>
 									<th style="min-width: 50px;">OT Hrs</th>
+									<th style="min-width: 50px;">NP Hrs</th>
+									<th style="min-width: 50px;">NPOT Hrs</th>
 								</thead>
 								<tbody>
 									<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
 										$TotalRegHours = 0;
 										$TotalOTHours = 0;
+										$TotalNPHours = 0;
+										$TotalNPOTHours = 0;
 
 										// Name Handler
 										$fullName = '';
@@ -178,10 +199,14 @@ use Carbon\Carbon;
 													foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'], $_GET['mode'])->result_array() as $nrow):
 														$Hours = $nrow['Hours'];
 														$OT = $nrow['Overtime'];
-														$totalh =  $nrow['Hours'] + $nrow['Overtime'];
-														echo '<div data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: '. $Hours . '<br>Overtime: ' . $nrow['Overtime'] . '">' . $totalh . '</div>';
-														$TotalRegHours = $TotalRegHours + $Hours;
-														$TotalOTHours = $TotalOTHours + $OT;
+														$NP = $nrow['NightHours'];
+														$NPOT = $nrow['NightOvertime'];
+														$totalh =  $nrow['Hours'] + $nrow['Overtime'] + $nrow['NightHours'] + $nrow['NightOvertime'];
+														echo '<div data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: <b>'. $Hours . '</b><br>Overtime: <b>' . $nrow['Overtime'] . '</b><br>Night Hours: <b>' . $NP . '</b><br>Night Overtime Hours: <b>' . $NPOT . '</b>">' . $totalh . '</div>';
+														$TotalRegHours += $Hours;
+														$TotalOTHours += $OT;
+														$TotalNPHours += $NP;
+														$TotalNPOTHours += $NPOT;
 													endforeach;
 												} else {
 													echo '0';
@@ -189,6 +214,8 @@ use Carbon\Carbon;
 											<?php endforeach; ?>
 											<td><?php echo $TotalRegHours; ?></td>
 											<td><?php echo $TotalOTHours; ?></td>
+											<td><?php echo $TotalNPHours; ?></td>
+											<td><?php echo $TotalNPOTHours; ?></td>
 										</tr>
 									<?php endforeach; ?>
 								</tbody>

@@ -25,6 +25,9 @@ table td {
 	word-break: break-all;
 	overflow: hidden;
 }
+.tooltip {
+	/*pointer-events: none;*/
+}
 
 /* Text highlight */
 ::-moz-selection { /* Firefox */

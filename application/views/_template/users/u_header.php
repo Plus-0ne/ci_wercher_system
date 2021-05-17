@@ -33,7 +33,7 @@ __        _______ ____   ____ _   _ _____ ____
 	<!-- FONTAWESOME -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/css/all.min.css">
 	<!-- CUSTOM STYLE -->
-	<link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/css/style.css">
+	<link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/css/style.css?v2">
 	<link rel="icon" href="<?=base_url()?>/favicon.ico" type="image/gif">
 	<!-- CUSTOM LIBRARIES -->
 	<link href="<?=base_url()?>assets/css/bootstrap4-toggle.min.css" rel="stylesheet">

@@ -47,7 +47,7 @@
 				</div>
 				<div class="form-row mt-3 ajax-load-container" style="display: none;">
 					<div class="col-sm-12">
-						<button type="button" class="new-provision-add-btn btn btn-info w-100"><i class="fas fa-plus"></i> Add More Loan</button>
+						<button type="button" class="new-provision-add-btn btn btn-info w-100"><i class="fas fa-plus"></i> Add More Provision</button>
 					</div>
 				</div>
 			</div>
