@@ -2169,9 +2169,9 @@ class Update_Controller extends CI_Controller {
 			// 	}
 			// }
 		}
-		public function UpdateSSSField()
-		{
-			if (isset($_POST['id'])) {
+	public function UpdateSSSField()
+	{
+		if (isset($_POST['id'])) {
 			$id = $this->input->post('id',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 			$f_range = $this->input->post('f_range',TRUE);
 			$t_range = $this->input->post('t_range',TRUE);

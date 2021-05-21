@@ -131,1138 +131,425 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 									// echo $this->db->last_query();
 									// echo '<br>' . $GetPayrollMonth->num_rows();
 									// exit();
+									$GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
+									$payrollStart = '';
+									$payrollEnd = '';
+									if ($GetWeeklyDates->num_rows() > 0) {
+										$payrollFetchIteration = 0;
+										foreach($GetWeeklyDates->result_array() as $gwdrow) {
+											$payrollFetchIteration++;
+											if ($payrollFetchIteration == 1) {
+												$payrollStart = $gwdrow['Time'];
+											} elseif ($payrollFetchIteration == $GetWeeklyDates->num_rows()) {
+												$payrollEnd = $gwdrow['Time'];
+											}
+										}
+									}
 									if ($GetPayrollMonth->num_rows() > 0): 
 										$ReadableMonth   = DateTime::createFromFormat('!m', $FetchMonth);
 										$ReadableMonth = $ReadableMonth->format('F');
 										?>
 										<div class="payroll-month-container col-sm-12">
-											<?php if($Mode == 0): // Weekly ?>
-												<?php for($Week=1; $Week<=4; $Week++): ?>
-												<div class="payroll-week-container col-sm-12">
-													<div class="payroll-week col-sm-12">
-														<b>Week <?php echo $Week; ?></b>
-													</div>
-													<div class="payroll-data col-sm-12 col-mb-12">
-														<div class="table-responsive w-100">
-															<table id="WeeklyTable" class="table table-condensed">
-																<thead>
-																	<th>Applicant ID</th>
-																	<th>Hours</th>
-																	<th>Gross Pay</th>
-																	<th>PhilHealth</th>
-																	<th>HDMF</th>
-																	<th>Tax</th>
-																	<th>SSS</th>
-																	<th style="width: 50px;"><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></th>
-																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount left to be paid for this week's SSS contribution">To be paid <i style="color: gray">(?)</i></th>
-																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount that is paid for this week's SSS contribution. Used to subtract next week's SSS contribution." style="width: 225px;">Paid this week <i style="color: gray">(?)</i></th>
-																	<th>Inputs</th>
-																	<th>Net Pay</th>
-																	<th>Generate</th>
-																</thead>
-																<tbody>
-																	<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
-																		// Name Handler
-																		$fullName = '';
-																		$fullNameHover = '';
-																		$isFullNameHoverable = false;
-																		if ($row['LastName']) {
-																			$fullName = $fullName . $row['LastName'] . ', ';
-																			$fullNameHover = $fullNameHover . $row['LastName'] . ', ';
-																		} else {
-																			$fullNameHover = $fullNameHover . '[<i>No Last Name</i>], ';
-																			$isFullNameHoverable = true;
-																		}
-																		if ($row['FirstName']) {
-																			$fullName = $fullName . $row['FirstName'] . ' ';
-																			$fullNameHover = $fullNameHover . $row['FirstName'] . ' ';
-																		} else {
-																			$fullNameHover = $fullNameHover . '[<i>No First Name</i>] ';
-																			$isFullNameHoverable = true;
-																		}
-																		if ($row['MiddleName']) {
-																			$fullName = $fullName . $row['MiddleName'][0] . '.';
-																			$fullNameHover = $fullNameHover . $row['MiddleName'][0] . '.';
-																		} else {
-																			$fullNameHover = $fullNameHover . '[<i>No MI</i>].';
-																			$isFullNameHoverable = true;
-																		}
-																		if ($row['NameExtension']) {
-																			$fullName = $fullName . ', ' . $row['NameExtension'];
-																			$fullNameHover = $fullNameHover . ', ' . $row['NameExtension'];
-																		}
-																		if (strlen($fullName) > 45) {
-																			$fullName = substr($fullName, 0, 45);
-																			$fullName = $fullName . '...';
-																			$isFullNameHoverable = true;
-																		}
-																		$ApplicantID = $row['ApplicantID'];
-																		$ApplicantName = $fullName;
-																		$GetPayrollWeekGrossPay = $this->Model_Selects->GetPayrollWeekGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekGrossPay == NULL) {
-																			$GetPayrollWeekGrossPay = 0;
-																		}
-																		$GetPayrollWeekOTGrossPay = $this->Model_Selects->GetPayrollWeekOTGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekOTGrossPay == NULL) {
-																			$GetPayrollWeekOTGrossPay = 0;
-																		}
-																		$GetPayrollWeekNPGrossPay = $this->Model_Selects->GetPayrollWeekNPGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekNPGrossPay == NULL) {
-																			$GetPayrollWeekNPGrossPay = 0;
-																		}
-																		$GetPayrollWeekNPOTGrossPay = $this->Model_Selects->GetPayrollWeekNPOTGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekNPOTGrossPay == NULL) {
-																			$GetPayrollWeekNPOTGrossPay = 0;
-																		}
-																		$TotalGrossPay = $GetPayrollWeekGrossPay + $GetPayrollWeekOTGrossPay + $GetPayrollWeekNPGrossPay + $GetPayrollWeekNPOTGrossPay;
-																		$GetPayrollWeekHours = $this->Model_Selects->GetPayrollWeekHours($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekHours == NULL) {
-																			$GetPayrollWeekHours = 0;
-																		}
-																		$GetPayrollWeekOTHours = $this->Model_Selects->GetPayrollWeekOTHours($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekOTHours == NULL) {
-																			$GetPayrollWeekOTHours = 0;
-																		}
-																		$GetPayrollWeekNPHours = $this->Model_Selects->GetPayrollWeekNPHours($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekNPHours == NULL) {
-																			$GetPayrollWeekNPHours = 0;
-																		}
-																		$GetPayrollWeekNPOTHours = $this->Model_Selects->GetPayrollWeekNPOTHours($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekNPOTHours == NULL) {
-																			$GetPayrollWeekNPOTHours = 0;
-																		}
-																		$TotalHours = $GetPayrollWeekHours + $GetPayrollWeekOTHours + $GetPayrollWeekNPHours + $GetPayrollWeekNPOTHours;
-																		$sssTable = $this->Model_Selects->GetAllSSSTable();
-																		$hdmfTable = $this->Model_Selects->GetAllHDMFTable();
-																		$philhealthTable = $this->Model_Selects->GetAllPhilHealthTable();
-																		// SSS Table
-																		foreach ($sssTable->result_array() as $srow) {
-																			if ($TotalGrossPay >= $srow['f_range'] && $TotalGrossPay <= $srow['t_range']) {
-																				$sss_contri = $srow['contribution_ee'];
-																			}
-																		}
-																		// HDMF Table
-																		foreach ($hdmfTable->result_array() as $hrow) {
-																			if ($TotalGrossPay >= $hrow['f_range'] && $TotalGrossPay <= $hrow['t_range']) {
-																				$hdmf_rate = $hrow['contribution_ee'];
-																			}
-																		}
-																		// PhilHealth Table
-																		$philhealthArray=$philhealthTable->result_array();
-																		if ($TotalGrossPay >= $philhealthArray[0]['f_range'] && $TotalGrossPay <= $philhealthArray[0]['t_range'])
-																		{
-																			$philhealth_percentage=300;
-																		}
-																		else if($TotalGrossPay >= $philhealthArray[1]['f_range'] && $TotalGrossPay <= $philhealthArray[1]['t_range'])
-																		{
-																			$philhealth_percentage=($TotalGrossPay * 0.03);
-
-																		}
-																		else
-																		{
-																			$philhealth_percentage=1800;
-																		}
-
-																		if($Mode==0)//weekly
-																		{
-																			$cutoffTaxDivider=4;
-																		}
-																		else if($Mode==1)//semi monthly
-																		{
-																			$cutoffTaxDivider=2;
-																		}
-																		else if($Mode==2) //monthly
-																		{
-																			$cutoffTaxDivider=1;
-																		}
-
-																		$sss_contriCalc = $sss_contri/$cutoffTaxDivider;
-																		$hdmf_contri = $TotalGrossPay*$hdmf_rate;
-																		$hdmf_contriCalc = $hdmf_contri/$cutoffTaxDivider;
-																		$hdmf_contriText = $hdmf_contri * 100;
-																		$philhealth_contri=$philhealth_percentage/$cutoffTaxDivider;
-
-																		// Tax
-																		$cNow = Carbon::parse(date('Y-m-d h:i:s A'));
-																		$cStarts = Carbon::parse($row['DateStarted']);
-																		if ($row['Status'] != 'Employed (Permanent)') {
-																			$cEnds = Carbon::parse($row['DateEnds']);
-																		} else {
-																			$cEnds = Carbon::parse($row['SalaryDistDate']);
-																		}
-
-																		// Calculating monthly salary to annual salary
-																		$cDiffInMonths = $cEnds->diffInMonths($cStarts);
-																		$salaryMonthly = 0;
-																		if ($row['SalaryExpected'] == NULL) {
-																			$salary = 0;
-																		} else {
-																			$salary = $row['SalaryExpected'];
-																		}
-																		switch($row['SalaryType']) {
-																			case 'Daily':
-																				$salaryMonthly = $salary * 30;
-																				break;
-																			case 'Monthly':
-																				$salaryMonthly = $salary;
-																				break;
-																			case 'Total':
-																				$salaryMonthly = $salary / $cDiffInMonths;
-																			default:
-																				break;
-																		}
-																		$annualSalary = $salaryMonthly * 12;
-																		$year=date("Y");
-																		if($year<=2022)
-																		{
-																			if($annualSalary<=250000) //Not over P250,000 -- 0%
-																			{
-																				$tax=0; 
-																			}
-																			else if($annualSalary>=250000.01 && $annualSalary <= 400000) 	//Over P250,000 but not over P400,000 -- 20% of the excess over P250,000
-																			{
-																				$tax=((($annualSalary-250000)*0.2)/12)/$cutoffTaxDivider;
-																			} 
-																			else if($annualSalary>=400000.01 && $annualSalary <= 800000) 	//Over P400,000 but not over P800,000 -- P30,000 + 25% of the excess over P400,000
-																			{
-																				$tax=((30000+(($annualSalary-400000)*0.25))/12)/$cutoffTaxDivider; 		 	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																			else if($annualSalary>=800000.01 && $annualSalary <= 2000000) 	//Over P800,000 but not over P2,000,000 -- P130,000 + 30% of the excess over P800,000
-																			{
-																				$tax=((130000+(($annualSalary-800000)*0.3))/12)/$cutoffTaxDivider; 		  	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																			else if($annualSalary>=2000000.01 && $annualSalary <= 8000000) 	//Over P2,000,000 but not over P8,000,000 -- P490,000 + 32% of the excess over P2,000,000
-																			{
-																				$tax=((490000+(($annualSalary-2000000)*0.32))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																			else 															//Over P8,000,000 -- P2,410,000 + 35% of the excess over P8,000,000
-																			{
-																				$tax=((2410000+(($annualSalary-8000000)*0.35))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-
-																		}
-																		else
-																		{
-																			if($annualSalary<=250000) //Not over P250,000 -- 0%
-																			{
-																				$tax=0; 
-																			}
-																			else if($annualSalary>=250000.01 && $annualSalary <= 400000) 	//Over P250,000 but not over P400,000 -- 15% of the excess over P250,000
-																			{
-																				$tax=((($annualSalary-250000)*0.15)/12)/$cutoffTaxDivider;
-																			} 
-																			else if($annualSalary>=400000.01 && $annualSalary <= 800000) 	//Over P400,000 but not over P800,000 -- P22,500 + 20% of the excess over P400,000
-																			{
-																				$tax=((22500+(($annualSalary-400000)*0.20))/12)/$cutoffTaxDivider; 		 	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																			else if($annualSalary>=800000.01 && $annualSalary <= 2000000) 	//Over P800,000 but not over P2,000,000 -- P102,500 + 25% of the excess over P800,000
-																			{
-																				$tax=((102500+(($annualSalary-800000)*0.25))/12)/$cutoffTaxDivider; 		  	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																			else if($annualSalary>=2000000.01 && $annualSalary <= 8000000) 	//Over P2,000,000 but not over P8,000,000 -- P402,500 + 30% of the excess over P2,000,000
-																			{
-																				$tax=((402500+(($annualSalary-2000000)*0.30))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, tthen divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																			else 															//Over P8,000,000 -- P2,202,500 + 35% of the excess over P8,000,000
-																			{
-																				$tax=((202500+(($annualSalary-8000000)*0.35))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																		}
-
-																		$SSSToBePaid = $this->Model_Selects->GetSSSToBePaid($ApplicantID, $ClientID, $FetchYear, $FetchMonth, $Mode);
-																		if ($SSSToBePaid->num_rows() > 0) {
-																			$stbprow = $SSSToBePaid->result_array()[0];
-																			switch($Week) {
-																				case 1:
-																					$WeekAmount = $sss_contriCalc;
-																					$WeekPaid = $stbprow['Week1Paid'];
-																					$toBePaid = $WeekAmount;
-																					break;
-																				case 2:
-																					$WeekAmountPrevious = $stbprow['Week1Amount'];
-																					$WeekAmount = $stbprow['Week2Amount'];
-																					$WeekPaidPrevious = $stbprow['Week1Paid'];
-																					$WeekPaid = $stbprow['Week2Paid'];
-
-																					$toBePaid = ($WeekAmount + $WeekAmountPrevious) - $WeekPaidPrevious;
-																					break;
-																				case 3:
-																					$WeekAmountPreviousPrevious = $stbprow['Week1Amount'];
-																					$WeekAmountPrevious = $stbprow['Week2Amount'];
-																					$WeekAmount = $stbprow['Week3Amount'];
-
-																					$WeekPaidPreviousPrevious = $stbprow['Week1Paid'];
-																					$WeekPaidPrevious = $stbprow['Week2Paid'];
-																					$WeekPaid = $stbprow['Week3Paid'];
-
-																					$toBePaid = ($WeekAmount + $WeekAmountPrevious + $WeekAmountPreviousPrevious) - ($WeekPaidPrevious + $WeekPaidPreviousPrevious);
-																					break;
-																				case 4:
-																					$WeekAmountPreviousPreviousPrevious = $stbprow['Week1Amount'];
-																					$WeekAmountPreviousPrevious = $stbprow['Week2Amount'];
-																					$WeekAmountPrevious = $stbprow['Week3Amount'];
-																					$WeekAmount = $stbprow['Week4Amount'];
-
-																					$WeekPaidPreviousPreviousPrevious = $stbprow['Week1Paid'];
-																					$WeekPaidPreviousPrevious = $stbprow['Week2Paid'];
-																					$WeekPaidPrevious = $stbprow['Week3Paid'];
-																					$WeekPaid = $stbprow['Week4Paid'];
-
-																					$toBePaid = ($WeekAmount + $WeekAmountPrevious + $WeekAmountPreviousPrevious + $WeekAmountPreviousPreviousPrevious) - ($WeekPaidPrevious + $WeekPaidPreviousPrevious + $WeekPaidPreviousPreviousPrevious);
-																					break;
-																				default:
-																					$WeekAmount = $sss_contriCalc;
-																					$WeekPaid = $stbprow['Week1Paid'];
-																					$toBePaid = $WeekAmount;
-																					break;
-																			}
-																		} else {
-																			$WeekPaid = 0;
-																			$toBePaid = $sss_contriCalc;
-																			$now = new DateTime();
-																			$DateAdded = $now->format('Y-m-d H:i:s');
-																			$data = array(
-																				'Amount' => $sss_contriCalc,
-																				'ApplicantID' => $ApplicantID,
-																				'ClientID' => $ClientID,
-																				'Month' => $FetchMonth,
-																				'Year' => $FetchYear,
-																				'Week' => $Week,
-																				'Mode' => $Mode,
-																				'DateAdded' => $DateAdded,
-																			);
-																			$AddSSSToBePaidAmount = $this->Model_Updates->AddSSSToBePaidAmount($data);
-																		}
-																		$data = array(
-																			'Amount' => $sss_contriCalc,
-																			'ApplicantID' => $ApplicantID,
-																			'ClientID' => $ClientID,
-																			'Month' => $FetchMonth,
-																			'Year' => $FetchYear,
-																			'Week' => $Week,
-																			'Mode' => $Mode
-																		);
-																		$UpdateSSSToBePaidAmount = $this->Model_Updates->UpdateSSSToBePaidAmount($data);
-
-																		$ShowPayrollLoans = $this->Model_Selects->ShowPayrollLoans($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		$loansTotal = 0;
-																		if ($ShowPayrollLoans->num_rows() > 0) {
-																			foreach($ShowPayrollLoans->result_array() as $lrow) {
-																				$loansTotal = $loansTotal + $lrow['Amount'];
-																			}
-																		}
-																		$ShowPayrollProvisions = $this->Model_Selects->ShowPayrollProvisions($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		$provisionsTotal = 0;
-																		if ($ShowPayrollProvisions->num_rows() > 0) {
-																			foreach($ShowPayrollProvisions->result_array() as $prrow) {
-																				$provisionsTotal = $provisionsTotal + $prrow['Amount'];
-																			}
-																		}
-
-																		$totalDeduction = $hdmf_contriCalc + $philhealth_contri + $tax + $loansTotal + $toBePaid;
-																		$net_pay = ($TotalGrossPay + $provisionsTotal) - $totalDeduction;
-																		if ($net_pay < 0) {
-																			$net_pay = 0;
-																		}
-
-																		?>
-																		<tr class="payroll-week-row">
-																			<td><a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $fullName; ?></a></td>
-																			<td class="payroll-hours" data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: <b><?php echo round($GetPayrollWeekHours, 2) . '</b><br>Overtime Hours: <b>' . round($GetPayrollWeekOTHours, 2) . '</b><br><br>Night Hours: <b>' . round($GetPayrollWeekNPHours, 2) . '</b><br>Night Overtime Hours: <b>' . round($GetPayrollWeekNPOTHours, 2) . '</b><br>-------<br>Total: <b>' . $TotalHours . '</b> hours'; ?>">
-																				<?php
-																					if ($TotalHours == 0) {
-																						echo '<span style="color: rgba(0, 0, 0, 0.16);">' . $TotalHours . '</span>';
-																					} else {
-																						echo $TotalHours;
-																					}
-																				?>
-																			</td>
-																			<td class="payroll-grosspay" data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Pay: <b><?php echo round($GetPayrollWeekGrossPay, 2) . '</b><br>Overtime Pay: <b>' . round($GetPayrollWeekOTGrossPay, 2) . '</b><br><br>Night Pay: <b>' . round($GetPayrollWeekNPGrossPay, 2) . '</b><br>Night Overtime Pay: <b>' . round($GetPayrollWeekNPOTGrossPay, 2) . '</b><br>-------<br>Total Gross Pay: <b>' . round($TotalGrossPay, 2) . '</b>'; ?>"><?php echo round($TotalGrossPay, 2); ?></td>
-																			<td class="payroll-philhealth" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($philhealth_percentage, 2) . ' / ' . $cutoffTaxDivider . '<br><i>PhilHealth Percentage x Mode</i>'; ?>"><?php echo round($philhealth_contri, 2); ?></td>
-																			<td class="payroll-hdmf" data-toggle="tooltip" data-placement="top" data-html="true" title="(<?php echo round($TotalGrossPay, 2) . ' x ' . $hdmf_rate . ') / ' . $cutoffTaxDivider . '<br><i>(Gross Pay x HDMF Rate) / Mode</i>'; ?>"><?php echo round($hdmf_contriCalc, 2); ?></td>
-
-																			<td class="payroll-tax" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo 'Annual Salary: ' . round($annualSalary, 2) . '<br>Monthly Salary: ' . round($salaryMonthly, 2); ?>"><?php echo round($tax, 2); ?></td>
-																			<td class="payroll-sss" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $sss_contri . ' / ' . $cutoffTaxDivider; ?><br><i>SSS Contribution / Mode</i>"><?php echo $sss_contriCalc; ?></td>
-																			<td><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></td>
-																			<td class="payroll-tobepaid"><?php echo $toBePaid; ?></td>
-																			<td>
-																				<div class="row">
-																					<div class="col-sm-12 col-md-8">
-																						<input type="number" class="payroll-paidthisweek payroll-weekrow-input form-control" step="0.01" value="<?php echo $WeekPaid; ?>">
-																					</div>
-																					<div class="col-sm-12 col-md-4">
-																						<button class="payroll-weekrow-btn btn btn-success btn-sm w-100" data-payroll-weekrow-applicantid="<?php echo $ApplicantID; ?>" data-payroll-weekrow-clientid="<?php echo $ClientID; ?>" data-payroll-weekrow-year="<?php echo $FetchYear; ?>" data-payroll-weekrow-month="<?php echo $FetchMonth; ?>" data-payroll-weekrow-week="<?php echo $Week; ?>" style="margin-left: -25px; padding-top: 5px; padding-bottom: 5px; margin-top: 1px; display: none;"><i class="fas fa-check" style="margin-right: -1px;"></i></button>
-																					</div>
-																				</div>
-																			</td>
-																			<td>
-																				<button type="button" class="loans-btn btn btn-info btn-sm w-100" data-toggle="modal" data-target="#ModalLoans" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-loanstotal="<?php echo $loansTotal; ?>"><i class="fas fa-piggy-bank"></i> Loans</button>
-																				<button type="button" class="provisions-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#ModalProvisions" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-provisionstotal="<?php echo $provisionsTotal; ?>" style="margin-top: 1px;"><i class="fas fa-donate"></i> Provisions</button>
-																			</td>
-																			<td class="payroll-net-pay" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo '(' . round($TotalGrossPay, 2) . ' + ' . round($provisionsTotal, 2) . ') - (' . round($hdmf_contriCalc, 2) . ' + ' . round($philhealth_contri, 2) . ' + ' . round($tax, 2) . ' + ' . round($toBePaid, 2) . ' + ' . round($loansTotal, 2) . ')<br><i>(Gross Pay + Provisions) - (HDMF Contribution + PhilHealth Contribution + Tax + SSS left to be paid + Loans)</i>'; ?>"><?php echo round($net_pay, 2); ?></td>
-																			<td>
-																				<button type="button" class="individual-payslip-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#GeneratePayslipModal" data-applicantid="<?php echo $ApplicantID; ?>" data-periodmode="<?php echo $Mode; ?>"><i class="fas fa-file-invoice-dollar"></i> Payslip</button>
-																			</td>
-																		</tr>
-																	<?php endforeach; ?>
-																</tbody>
-															</table>
-														</div>
-													</div>
-												</div>
-											<?php endfor; ?>
-										<?php elseif($Mode == 1): // Semi-monthly
-												for($Week=1; $Week<=2; $Week++): ?>
-												<div class="payroll-week-container col-sm-12">
-													<div class="payroll-week col-sm-12">
-														<b>Period <?php echo $Week; ?></b>
-													</div>
-													<div class="payroll-data col-sm-12 col-mb-12">
-														<div class="table-responsive w-100">
-															<table id="WeeklyTable" class="table table-condensed">
-																<thead>
-																	<th>Applicant ID</th>
-																	<th>Hours</th>
-																	<th>Gross Pay</th>
-																	<th>PhilHealth</th>
-																	<th>HDMF</th>
-																	<th>Tax</th>
-																	<th>SSS</th>
-																	<th style="width: 50px;"><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></th>
-																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount left to be paid for this week's SSS contribution">To be paid <i style="color: gray">(?)</i></th>
-																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount that is paid for this week's SSS contribution. Used to subtract next week's SSS contribution." style="width: 225px;">Paid this week <i style="color: gray">(?)</i></th>
-																	<th>Inputs</th>
-																	<th>Net Pay</th>
-																	<th>Generate</th>
-																</thead>
-																<tbody>
-																	<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
-
-																		// Name Handler
-																		$fullName = '';
-																		$fullNameHover = '';
-																		$isFullNameHoverable = false;
-																		if ($row['LastName']) {
-																			$fullName = $fullName . $row['LastName'] . ', ';
-																			$fullNameHover = $fullNameHover . $row['LastName'] . ', ';
-																		} else {
-																			$fullNameHover = $fullNameHover . '[<i>No Last Name</i>], ';
-																			$isFullNameHoverable = true;
-																		}
-																		if ($row['FirstName']) {
-																			$fullName = $fullName . $row['FirstName'] . ' ';
-																			$fullNameHover = $fullNameHover . $row['FirstName'] . ' ';
-																		} else {
-																			$fullNameHover = $fullNameHover . '[<i>No First Name</i>] ';
-																			$isFullNameHoverable = true;
-																		}
-																		if ($row['MiddleName']) {
-																			$fullName = $fullName . $row['MiddleName'][0] . '.';
-																			$fullNameHover = $fullNameHover . $row['MiddleName'][0] . '.';
-																		} else {
-																			$fullNameHover = $fullNameHover . '[<i>No MI</i>].';
-																			$isFullNameHoverable = true;
-																		}
-																		if ($row['NameExtension']) {
-																			$fullName = $fullName . ', ' . $row['NameExtension'];
-																			$fullNameHover = $fullNameHover . ', ' . $row['NameExtension'];
-																		}
-																		if (strlen($fullName) > 45) {
-																			$fullName = substr($fullName, 0, 45);
-																			$fullName = $fullName . '...';
-																			$isFullNameHoverable = true;
-																		}
-																		$ApplicantID = $row['ApplicantID'];
-																		$ApplicantName = $fullName;
-																		$GetPayrollWeekGrossPay = $this->Model_Selects->GetPayrollWeekGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekGrossPay == NULL) {
-																			$GetPayrollWeekGrossPay = 0;
-																		}
-																		$GetPayrollWeekOTGrossPay = $this->Model_Selects->GetPayrollWeekOTGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekOTGrossPay == NULL) {
-																			$GetPayrollWeekOTGrossPay = 0;
-																		}
-																		$GetPayrollWeekNPGrossPay = $this->Model_Selects->GetPayrollWeekNPGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekNPGrossPay == NULL) {
-																			$GetPayrollWeekNPGrossPay = 0;
-																		}
-																		$GetPayrollWeekNPOTGrossPay = $this->Model_Selects->GetPayrollWeekNPOTGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekNPOTGrossPay == NULL) {
-																			$GetPayrollWeekNPOTGrossPay = 0;
-																		}
-																		$TotalGrossPay = $GetPayrollWeekGrossPay + $GetPayrollWeekOTGrossPay + $GetPayrollWeekNPGrossPay + $GetPayrollWeekNPOTGrossPay;
-																		$GetPayrollWeekHours = $this->Model_Selects->GetPayrollWeekHours($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekHours == NULL) {
-																			$GetPayrollWeekHours = 0;
-																		}
-																		$GetPayrollWeekOTHours = $this->Model_Selects->GetPayrollWeekOTHours($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekOTHours == NULL) {
-																			$GetPayrollWeekOTHours = 0;
-																		}
-																		$GetPayrollWeekNPHours = $this->Model_Selects->GetPayrollWeekNPHours($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekNPHours == NULL) {
-																			$GetPayrollWeekNPHours = 0;
-																		}
-																		$GetPayrollWeekNPOTHours = $this->Model_Selects->GetPayrollWeekNPOTHours($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekNPOTHours == NULL) {
-																			$GetPayrollWeekNPOTHours = 0;
-																		}
-																		$TotalHours = $GetPayrollWeekHours + $GetPayrollWeekOTHours + $GetPayrollWeekNPHours + $GetPayrollWeekNPOTHours;
-																		$sssTable = $this->Model_Selects->GetAllSSSTable();
-																		$hdmfTable = $this->Model_Selects->GetAllHDMFTable();
-																		$philhealthTable = $this->Model_Selects->GetAllPhilHealthTable();
-																		// SSS Table
-																		foreach ($sssTable->result_array() as $srow) {
-																			if ($TotalGrossPay >= $srow['f_range'] && $TotalGrossPay <= $srow['t_range']) {
-																				$sss_contri = $srow['contribution_ee'];
-																			}
-																		}
-																		// HDMF Table
-																		foreach ($hdmfTable->result_array() as $hrow) {
-																			if ($TotalGrossPay >= $hrow['f_range'] && $TotalGrossPay <= $hrow['t_range']) {
-																				$hdmf_rate = $hrow['contribution_ee'];
-																			}
-																		}
-																		// PhilHealth Table
-																		$philhealthArray=$philhealthTable->result_array();
-																		if ($TotalGrossPay >= $philhealthArray[0]['f_range'] && $TotalGrossPay <= $philhealthArray[0]['t_range'])
-																		{
-																			$philhealth_percentage=300;
-																		}
-																		else if($TotalGrossPay >= $philhealthArray[1]['f_range'] && $TotalGrossPay <= $philhealthArray[1]['t_range'])
-																		{
-																			$philhealth_percentage=($TotalGrossPay * 0.03);
-
-																		}
-																		else
-																		{
-																			$philhealth_percentage=1800;
-																		}
-
-																		if($Mode==0)//weekly
-																		{
-																			$cutoffTaxDivider=4;
-																		}
-																		else if($Mode==1)//semi monthly
-																		{
-																			$cutoffTaxDivider=2;
-																		}
-																		else if($Mode==2) //monthly
-																		{
-																			$cutoffTaxDivider=1;
-																		}
-
-																		$sss_contriCalc = $sss_contri/$cutoffTaxDivider;
-																		$hdmf_contri = $TotalGrossPay*$hdmf_rate;
-																		$hdmf_contriCalc = $hdmf_contri/$cutoffTaxDivider;
-																		$hdmf_contriText = $hdmf_contri * 100;
-																		$philhealth_contri=$philhealth_percentage/$cutoffTaxDivider;
-
-																		// Tax
-																		$cNow = Carbon::parse(date('Y-m-d h:i:s A'));
-																		$cStarts = Carbon::parse($row['DateStarted']);
-																		if ($row['Status'] != 'Employed (Permanent)') {
-																			$cEnds = Carbon::parse($row['DateEnds']);
-																		} else {
-																			$cEnds = Carbon::parse($row['SalaryDistDate']);
-																		}
-
-																		// Calculating monthly salary to annual salary
-																		$cDiffInMonths = $cEnds->diffInMonths($cStarts);
-																		$salaryMonthly = 0;
-																		if ($row['SalaryExpected'] == NULL) {
-																			$salary = 0;
-																		} else {
-																			$salary = $row['SalaryExpected'];
-																		}
-																		switch($row['SalaryType']) {
-																			case 'Daily':
-																				$salaryMonthly = $salary * 30;
-																				break;
-																			case 'Monthly':
-																				$salaryMonthly = $salary;
-																				break;
-																			case 'Total':
-																				$salaryMonthly = $salary / $cDiffInMonths;
-																			default:
-																				break;
-																		}
-																		$annualSalary = $salaryMonthly * 12;
-																		$year=date("Y");
-																		if($year<=2022)
-																		{
-																			if($annualSalary<=250000) //Not over P250,000 -- 0%
-																			{
-																				$tax=0; 
-																			}
-																			else if($annualSalary>=250000.01 && $annualSalary <= 400000) 	//Over P250,000 but not over P400,000 -- 20% of the excess over P250,000
-																			{
-																				$tax=((($annualSalary-250000)*0.2)/12)/$cutoffTaxDivider;
-																			} 
-																			else if($annualSalary>=400000.01 && $annualSalary <= 800000) 	//Over P400,000 but not over P800,000 -- P30,000 + 25% of the excess over P400,000
-																			{
-																				$tax=((30000+(($annualSalary-400000)*0.25))/12)/$cutoffTaxDivider; 		 	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																			else if($annualSalary>=800000.01 && $annualSalary <= 2000000) 	//Over P800,000 but not over P2,000,000 -- P130,000 + 30% of the excess over P800,000
-																			{
-																				$tax=((130000+(($annualSalary-800000)*0.3))/12)/$cutoffTaxDivider; 		  	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																			else if($annualSalary>=2000000.01 && $annualSalary <= 8000000) 	//Over P2,000,000 but not over P8,000,000 -- P490,000 + 32% of the excess over P2,000,000
-																			{
-																				$tax=((490000+(($annualSalary-2000000)*0.32))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																			else 															//Over P8,000,000 -- P2,410,000 + 35% of the excess over P8,000,000
-																			{
-																				$tax=((2410000+(($annualSalary-8000000)*0.35))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-
-																		}
-																		else
-																		{
-																			if($annualSalary<=250000) //Not over P250,000 -- 0%
-																			{
-																				$tax=0; 
-																			}
-																			else if($annualSalary>=250000.01 && $annualSalary <= 400000) 	//Over P250,000 but not over P400,000 -- 15% of the excess over P250,000
-																			{
-																				$tax=((($annualSalary-250000)*0.15)/12)/$cutoffTaxDivider;
-																			} 
-																			else if($annualSalary>=400000.01 && $annualSalary <= 800000) 	//Over P400,000 but not over P800,000 -- P22,500 + 20% of the excess over P400,000
-																			{
-																				$tax=((22500+(($annualSalary-400000)*0.20))/12)/$cutoffTaxDivider; 		 	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																			else if($annualSalary>=800000.01 && $annualSalary <= 2000000) 	//Over P800,000 but not over P2,000,000 -- P102,500 + 25% of the excess over P800,000
-																			{
-																				$tax=((102500+(($annualSalary-800000)*0.25))/12)/$cutoffTaxDivider; 		  	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																			else if($annualSalary>=2000000.01 && $annualSalary <= 8000000) 	//Over P2,000,000 but not over P8,000,000 -- P402,500 + 30% of the excess over P2,000,000
-																			{
-																				$tax=((402500+(($annualSalary-2000000)*0.30))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, tthen divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																			else 															//Over P8,000,000 -- P2,202,500 + 35% of the excess over P8,000,000
-																			{
-																				$tax=((202500+(($annualSalary-8000000)*0.35))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																		}
-
-																		$SSSToBePaid = $this->Model_Selects->GetSSSToBePaid($ApplicantID, $ClientID, $FetchYear, $FetchMonth, $Mode);
-																		if ($SSSToBePaid->num_rows() > 0) {
-																			$stbprow = $SSSToBePaid->result_array()[0];
-																			switch($Week) {
-																				case 1:
-																					$WeekAmount = $sss_contriCalc;
-																					$WeekPaid = $stbprow['Week1Paid'];
-																					$toBePaid = $WeekAmount;
-																					break;
-																				case 2:
-																					$WeekAmountPrevious = $stbprow['Week1Amount'];
-																					$WeekAmount = $stbprow['Week2Amount'];
-																					$WeekPaidPrevious = $stbprow['Week1Paid'];
-																					$WeekPaid = $stbprow['Week2Paid'];
-
-																					$toBePaid = ($WeekAmount + $WeekAmountPrevious) - $WeekPaidPrevious;
-																					break;
-																				case 3:
-																					$WeekAmountPreviousPrevious = $stbprow['Week1Amount'];
-																					$WeekAmountPrevious = $stbprow['Week2Amount'];
-																					$WeekAmount = $stbprow['Week3Amount'];
-
-																					$WeekPaidPreviousPrevious = $stbprow['Week1Paid'];
-																					$WeekPaidPrevious = $stbprow['Week2Paid'];
-																					$WeekPaid = $stbprow['Week3Paid'];
-
-																					$toBePaid = ($WeekAmount + $WeekAmountPrevious + $WeekAmountPreviousPrevious) - ($WeekPaidPrevious + $WeekPaidPreviousPrevious);
-																					break;
-																				case 4:
-																					$WeekAmountPreviousPreviousPrevious = $stbprow['Week1Amount'];
-																					$WeekAmountPreviousPrevious = $stbprow['Week2Amount'];
-																					$WeekAmountPrevious = $stbprow['Week3Amount'];
-																					$WeekAmount = $stbprow['Week4Amount'];
-
-																					$WeekPaidPreviousPreviousPrevious = $stbprow['Week1Paid'];
-																					$WeekPaidPreviousPrevious = $stbprow['Week2Paid'];
-																					$WeekPaidPrevious = $stbprow['Week3Paid'];
-																					$WeekPaid = $stbprow['Week4Paid'];
-
-																					$toBePaid = ($WeekAmount + $WeekAmountPrevious + $WeekAmountPreviousPrevious + $WeekAmountPreviousPreviousPrevious) - ($WeekPaidPrevious + $WeekPaidPreviousPrevious + $WeekPaidPreviousPreviousPrevious);
-																					break;
-																				default:
-																					$WeekAmount = $sss_contriCalc;
-																					$WeekPaid = $stbprow['Week1Paid'];
-																					$toBePaid = $WeekAmount;
-																					break;
-																			}
-																		} else {
-																			$WeekPaid = 0;
-																			$toBePaid = $sss_contriCalc;
-																			$now = new DateTime();
-																			$DateAdded = $now->format('Y-m-d H:i:s');
-																			$data = array(
-																				'Amount' => $sss_contriCalc,
-																				'ApplicantID' => $ApplicantID,
-																				'ClientID' => $ClientID,
-																				'Month' => $FetchMonth,
-																				'Year' => $FetchYear,
-																				'Week' => $Week,
-																				'Mode' => $Mode,
-																				'DateAdded' => $DateAdded,
-																			);
-																			$AddSSSToBePaidAmount = $this->Model_Updates->AddSSSToBePaidAmount($data);
-																		}
-																		$data = array(
-																			'Amount' => $sss_contriCalc,
-																			'ApplicantID' => $ApplicantID,
-																			'ClientID' => $ClientID,
-																			'Month' => $FetchMonth,
-																			'Year' => $FetchYear,
-																			'Week' => $Week,
-																			'Mode' => $Mode
-																		);
-																		$UpdateSSSToBePaidAmount = $this->Model_Updates->UpdateSSSToBePaidAmount($data);
-
-																		$ShowPayrollLoans = $this->Model_Selects->ShowPayrollLoans($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		$loansTotal = 0;
-																		if ($ShowPayrollLoans->num_rows() > 0) {
-																			foreach($ShowPayrollLoans->result_array() as $lrow) {
-																				$loansTotal = $loansTotal + $lrow['Amount'];
-																			}
-																		}
-																		$ShowPayrollProvisions = $this->Model_Selects->ShowPayrollProvisions($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		$provisionsTotal = 0;
-																		if ($ShowPayrollProvisions->num_rows() > 0) {
-																			foreach($ShowPayrollProvisions->result_array() as $prrow) {
-																				$provisionsTotal = $provisionsTotal + $prrow['Amount'];
-																			}
-																		}
-
-																		$totalDeduction = $hdmf_contriCalc + $philhealth_contri + $tax + $loansTotal + $toBePaid;
-																		$net_pay = ($TotalGrossPay + $provisionsTotal) - $totalDeduction;
-																		if ($net_pay < 0) {
-																			$net_pay = 0;
-																		}
-
-																		?>
-																		<tr class="payroll-week-row">
-																			<td><a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $fullName; ?></a></td>
-																			<td class="payroll-hours" data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: <b><?php echo round($GetPayrollWeekHours, 2) . '</b><br>Overtime Hours: <b>' . round($GetPayrollWeekOTHours, 2) . '</b><br><br>Night Hours: <b>' . round($GetPayrollWeekNPHours, 2) . '</b><br>Night Overtime Hours: <b>' . round($GetPayrollWeekNPOTHours, 2) . '</b><br>-------<br>Total: <b>' . $TotalHours . '</b> hours'; ?>">
-																				<?php
-																					if ($TotalHours == 0) {
-																						echo '<span style="color: rgba(0, 0, 0, 0.16);">' . $TotalHours . '</span>';
-																					} else {
-																						echo $TotalHours;
-																					}
-																				?>
-																			</td>
-																			<td class="payroll-grosspay" data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Pay: <b><?php echo round($GetPayrollWeekGrossPay, 2) . '</b><br>Overtime Pay: <b>' . round($GetPayrollWeekOTGrossPay, 2) . '</b><br><br>Night Pay: <b>' . round($GetPayrollWeekNPGrossPay, 2) . '</b><br>Night Overtime Pay: <b>' . round($GetPayrollWeekNPOTGrossPay, 2) . '</b><br>-------<br>Total Gross Pay: <b>' . round($TotalGrossPay, 2) . '</b>'; ?>"><?php echo round($TotalGrossPay, 2); ?></td>
-																			<td class="payroll-philhealth" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($philhealth_percentage, 2) . ' / ' . $cutoffTaxDivider . '<br><i>PhilHealth Percentage x Mode</i>'; ?>"><?php echo round($philhealth_contri, 2); ?></td>
-																			<td class="payroll-hdmf" data-toggle="tooltip" data-placement="top" data-html="true" title="(<?php echo round($TotalGrossPay, 2) . ' x ' . $hdmf_rate . ') / ' . $cutoffTaxDivider . '<br><i>(Gross Pay x HDMF Rate) / Mode</i>'; ?>"><?php echo round($hdmf_contriCalc, 2); ?></td>
-
-																			<td class="payroll-tax" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo 'Annual Salary: ' . round($annualSalary, 2) . '<br>Monthly Salary: ' . round($salaryMonthly, 2); ?>"><?php echo round($tax, 2); ?></td>
-																			<td class="payroll-sss" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $sss_contri . ' / ' . $cutoffTaxDivider; ?><br><i>SSS Contribution / Mode</i>"><?php echo $sss_contriCalc; ?></td>
-																			<td><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></td>
-																			<td class="payroll-tobepaid"><?php echo $toBePaid; ?></td>
-																			<td>
-																				<div class="row">
-																					<div class="col-sm-12 col-md-8">
-																						<input type="number" class="payroll-paidthisweek payroll-weekrow-input form-control" step="0.01" value="<?php echo $WeekPaid; ?>">
-																					</div>
-																					<div class="col-sm-12 col-md-4">
-																						<button class="payroll-weekrow-btn btn btn-success btn-sm w-100" data-payroll-weekrow-applicantid="<?php echo $ApplicantID; ?>" data-payroll-weekrow-clientid="<?php echo $ClientID; ?>" data-payroll-weekrow-year="<?php echo $FetchYear; ?>" data-payroll-weekrow-month="<?php echo $FetchMonth; ?>" data-payroll-weekrow-week="<?php echo $Week; ?>" style="margin-left: -25px; padding-top: 5px; padding-bottom: 5px; margin-top: 1px; display: none;"><i class="fas fa-check" style="margin-right: -1px;"></i></button>
-																					</div>
-																				</div>
-																			</td>
-																			<td>
-																				<button type="button" class="loans-btn btn btn-info btn-sm w-100" data-toggle="modal" data-target="#ModalLoans" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-loanstotal="<?php echo $loansTotal; ?>"><i class="fas fa-piggy-bank"></i> Loans</button>
-																				<button type="button" class="provisions-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#ModalProvisions" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-provisionstotal="<?php echo $provisionsTotal; ?>" style="margin-top: 1px;"><i class="fas fa-donate"></i> Provisions</button>
-																			</td>
-																			<td class="payroll-net-pay" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo '(' . round($TotalGrossPay, 2) . ' + ' . round($provisionsTotal, 2) . ') - (' . round($hdmf_contriCalc, 2) . ' + ' . round($philhealth_contri, 2) . ' + ' . round($tax, 2) . ' + ' . round($toBePaid, 2) . ' + ' . round($loansTotal, 2) . ')<br><i>(Gross Pay + Provisions) - (HDMF Contribution + PhilHealth Contribution + Tax + SSS left to be paid + Loans)</i>'; ?>"><?php echo round($net_pay, 2); ?></td>
-																			<td>
-																				<button type="button" class="individual-payslip-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#GeneratePayslipModal" data-applicantid="<?php echo $ApplicantID; ?>" data-periodmode="<?php echo $Mode; ?>"><i class="fas fa-file-invoice-dollar"></i> Payslip</button>
-																			</td>
-																		</tr>
-																	<?php endforeach; ?>
-																</tbody>
-															</table>
-														</div>
-													</div>
-												</div>
-											<?php endfor; ?>
-										<?php elseif($Mode == 2): // Monthly 
-												$Week = 1;?>
-												<div class="payroll-week-container col-sm-12">
-													<div class="payroll-week col-sm-12">
-														<b><?php echo $selectedMonthReadable; ?></b>
-													</div>
-													<div class="payroll-data col-sm-12 col-mb-12">
-														<div class="table-responsive w-100">
-															<table id="WeeklyTable" class="table table-condensed">
-																<thead>
-																	<th>Applicant ID</th>
-																	<th>Hours</th>
-																	<th>Gross Pay</th>
-																	<th>PhilHealth</th>
-																	<th>HDMF</th>
-																	<th>Tax</th>
-																	<th>SSS</th>
-																	<th style="width: 50px;"><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></th>
-																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount left to be paid for this week's SSS contribution">To be paid <i style="color: gray">(?)</i></th>
-																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount that is paid for this week's SSS contribution. Used to subtract next week's SSS contribution." style="width: 225px;">Paid this week <i style="color: gray">(?)</i></th>
-																	<th>Inputs</th>
-																	<th>Net Pay</th>
-																	<th>Generate</th>
-																</thead>
-																<tbody>
-																	<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
-																		// Name Handler
-																		$fullName = '';
-																		$fullNameHover = '';
-																		$isFullNameHoverable = false;
-																		if ($row['LastName']) {
-																			$fullName = $fullName . $row['LastName'] . ', ';
-																			$fullNameHover = $fullNameHover . $row['LastName'] . ', ';
-																		} else {
-																			$fullNameHover = $fullNameHover . '[<i>No Last Name</i>], ';
-																			$isFullNameHoverable = true;
-																		}
-																		if ($row['FirstName']) {
-																			$fullName = $fullName . $row['FirstName'] . ' ';
-																			$fullNameHover = $fullNameHover . $row['FirstName'] . ' ';
-																		} else {
-																			$fullNameHover = $fullNameHover . '[<i>No First Name</i>] ';
-																			$isFullNameHoverable = true;
-																		}
-																		if ($row['MiddleName']) {
-																			$fullName = $fullName . $row['MiddleName'][0] . '.';
-																			$fullNameHover = $fullNameHover . $row['MiddleName'][0] . '.';
-																		} else {
-																			$fullNameHover = $fullNameHover . '[<i>No MI</i>].';
-																			$isFullNameHoverable = true;
-																		}
-																		if ($row['NameExtension']) {
-																			$fullName = $fullName . ', ' . $row['NameExtension'];
-																			$fullNameHover = $fullNameHover . ', ' . $row['NameExtension'];
-																		}
-																		if (strlen($fullName) > 45) {
-																			$fullName = substr($fullName, 0, 45);
-																			$fullName = $fullName . '...';
-																			$isFullNameHoverable = true;
-																		}
-																		$ApplicantID = $row['ApplicantID'];
-																		$ApplicantName = $fullName;
-																		$GetPayrollWeekGrossPay = $this->Model_Selects->GetPayrollWeekGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekGrossPay == NULL) {
-																			$GetPayrollWeekGrossPay = 0;
-																		}
-																		$GetPayrollWeekOTGrossPay = $this->Model_Selects->GetPayrollWeekOTGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekOTGrossPay == NULL) {
-																			$GetPayrollWeekOTGrossPay = 0;
-																		}
-																		$GetPayrollWeekNPGrossPay = $this->Model_Selects->GetPayrollWeekNPGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekNPGrossPay == NULL) {
-																			$GetPayrollWeekNPGrossPay = 0;
-																		}
-																		$GetPayrollWeekNPOTGrossPay = $this->Model_Selects->GetPayrollWeekNPOTGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekNPOTGrossPay == NULL) {
-																			$GetPayrollWeekNPOTGrossPay = 0;
-																		}
-																		$TotalGrossPay = $GetPayrollWeekGrossPay + $GetPayrollWeekOTGrossPay + $GetPayrollWeekNPGrossPay + $GetPayrollWeekNPOTGrossPay;
-																		$GetPayrollWeekHours = $this->Model_Selects->GetPayrollWeekHours($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekHours == NULL) {
-																			$GetPayrollWeekHours = 0;
-																		}
-																		$GetPayrollWeekOTHours = $this->Model_Selects->GetPayrollWeekOTHours($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekOTHours == NULL) {
-																			$GetPayrollWeekOTHours = 0;
-																		}
-																		$GetPayrollWeekNPHours = $this->Model_Selects->GetPayrollWeekNPHours($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekNPHours == NULL) {
-																			$GetPayrollWeekNPHours = 0;
-																		}
-																		$GetPayrollWeekNPOTHours = $this->Model_Selects->GetPayrollWeekNPOTHours($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		if ($GetPayrollWeekNPOTHours == NULL) {
-																			$GetPayrollWeekNPOTHours = 0;
-																		}
-																		$TotalHours = $GetPayrollWeekHours + $GetPayrollWeekOTHours + $GetPayrollWeekNPHours + $GetPayrollWeekNPOTHours;
-																		$sssTable = $this->Model_Selects->GetAllSSSTable();
-																		$hdmfTable = $this->Model_Selects->GetAllHDMFTable();
-																		$philhealthTable = $this->Model_Selects->GetAllPhilHealthTable();
-																		// SSS Table
-																		foreach ($sssTable->result_array() as $srow) {
-																			if ($TotalGrossPay >= $srow['f_range'] && $TotalGrossPay <= $srow['t_range']) {
-																				$sss_contri = $srow['contribution_ee'];
-																			}
-																		}
-																		// HDMF Table
-																		foreach ($hdmfTable->result_array() as $hrow) {
-																			if ($TotalGrossPay >= $hrow['f_range'] && $TotalGrossPay <= $hrow['t_range']) {
-																				$hdmf_rate = $hrow['contribution_ee'];
-																			}
-																		}
-																		// PhilHealth Table
-																		$philhealthArray=$philhealthTable->result_array();
-																		if ($TotalGrossPay >= $philhealthArray[0]['f_range'] && $TotalGrossPay <= $philhealthArray[0]['t_range'])
-																		{
-																			$philhealth_percentage=300;
-																		}
-																		else if($TotalGrossPay >= $philhealthArray[1]['f_range'] && $TotalGrossPay <= $philhealthArray[1]['t_range'])
-																		{
-																			$philhealth_percentage=($TotalGrossPay * 0.03);
-
-																		}
-																		else
-																		{
-																			$philhealth_percentage=1800;
-																		}
-
-																		if($Mode==0)//weekly
-																		{
-																			$cutoffTaxDivider=4;
-																		}
-																		else if($Mode==1)//semi monthly
-																		{
-																			$cutoffTaxDivider=2;
-																		}
-																		else if($Mode==2) //monthly
-																		{
-																			$cutoffTaxDivider=1;
-																		}
-
-																		$sss_contriCalc = $sss_contri/$cutoffTaxDivider;
-																		$hdmf_contri = $TotalGrossPay*$hdmf_rate;
-																		$hdmf_contriCalc = $hdmf_contri/$cutoffTaxDivider;
-																		$hdmf_contriText = $hdmf_contri * 100;
-																		$philhealth_contri=$philhealth_percentage/$cutoffTaxDivider;
-
-																		// Tax
-																		$cNow = Carbon::parse(date('Y-m-d h:i:s A'));
-																		$cStarts = Carbon::parse($row['DateStarted']);
-																		if ($row['Status'] != 'Employed (Permanent)') {
-																			$cEnds = Carbon::parse($row['DateEnds']);
-																		} else {
-																			$cEnds = Carbon::parse($row['SalaryDistDate']);
-																		}
-
-																		// Calculating monthly salary to annual salary
-																		$cDiffInMonths = $cEnds->diffInMonths($cStarts);
-																		$salaryMonthly = 0;
-																		if ($row['SalaryExpected'] == NULL) {
-																			$salary = 0;
-																		} else {
-																			$salary = $row['SalaryExpected'];
-																		}
-																		switch($row['SalaryType']) {
-																			case 'Daily':
-																				$salaryMonthly = $salary * 30;
-																				break;
-																			case 'Monthly':
-																				$salaryMonthly = $salary;
-																				break;
-																			case 'Total':
-																				$salaryMonthly = $salary / $cDiffInMonths;
-																			default:
-																				break;
-																		}
-																		$annualSalary = $salaryMonthly * 12;
-																		$year=date("Y");
-																		if($year<=2022)
-																		{
-																			if($annualSalary<=250000) //Not over P250,000 -- 0%
-																			{
-																				$tax=0; 
-																			}
-																			else if($annualSalary>=250000.01 && $annualSalary <= 400000) 	//Over P250,000 but not over P400,000 -- 20% of the excess over P250,000
-																			{
-																				$tax=((($annualSalary-250000)*0.2)/12)/$cutoffTaxDivider;
-																			} 
-																			else if($annualSalary>=400000.01 && $annualSalary <= 800000) 	//Over P400,000 but not over P800,000 -- P30,000 + 25% of the excess over P400,000
-																			{
-																				$tax=((30000+(($annualSalary-400000)*0.25))/12)/$cutoffTaxDivider; 		 	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																			else if($annualSalary>=800000.01 && $annualSalary <= 2000000) 	//Over P800,000 but not over P2,000,000 -- P130,000 + 30% of the excess over P800,000
-																			{
-																				$tax=((130000+(($annualSalary-800000)*0.3))/12)/$cutoffTaxDivider; 		  	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																			else if($annualSalary>=2000000.01 && $annualSalary <= 8000000) 	//Over P2,000,000 but not over P8,000,000 -- P490,000 + 32% of the excess over P2,000,000
-																			{
-																				$tax=((490000+(($annualSalary-2000000)*0.32))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																			else 															//Over P8,000,000 -- P2,410,000 + 35% of the excess over P8,000,000
-																			{
-																				$tax=((2410000+(($annualSalary-8000000)*0.35))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-
-																		}
-																		else
-																		{
-																			if($annualSalary<=250000) //Not over P250,000 -- 0%
-																			{
-																				$tax=0; 
-																			}
-																			else if($annualSalary>=250000.01 && $annualSalary <= 400000) 	//Over P250,000 but not over P400,000 -- 15% of the excess over P250,000
-																			{
-																				$tax=((($annualSalary-250000)*0.15)/12)/$cutoffTaxDivider;
-																			} 
-																			else if($annualSalary>=400000.01 && $annualSalary <= 800000) 	//Over P400,000 but not over P800,000 -- P22,500 + 20% of the excess over P400,000
-																			{
-																				$tax=((22500+(($annualSalary-400000)*0.20))/12)/$cutoffTaxDivider; 		 	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																			else if($annualSalary>=800000.01 && $annualSalary <= 2000000) 	//Over P800,000 but not over P2,000,000 -- P102,500 + 25% of the excess over P800,000
-																			{
-																				$tax=((102500+(($annualSalary-800000)*0.25))/12)/$cutoffTaxDivider; 		  	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																			else if($annualSalary>=2000000.01 && $annualSalary <= 8000000) 	//Over P2,000,000 but not over P8,000,000 -- P402,500 + 30% of the excess over P2,000,000
-																			{
-																				$tax=((402500+(($annualSalary-2000000)*0.30))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, tthen divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																			else 															//Over P8,000,000 -- P2,202,500 + 35% of the excess over P8,000,000
-																			{
-																				$tax=((202500+(($annualSalary-8000000)*0.35))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
-																			}
-																		}
-
-																		$SSSToBePaid = $this->Model_Selects->GetSSSToBePaid($ApplicantID, $ClientID, $FetchYear, $FetchMonth, $Mode);
-																		if ($SSSToBePaid->num_rows() > 0) {
-																			$stbprow = $SSSToBePaid->result_array()[0];
-																			switch($Week) {
-																				case 1:
-																					$WeekAmount = $sss_contriCalc;
-																					$WeekPaid = $stbprow['Week1Paid'];
-																					$toBePaid = $WeekAmount;
-																					break;
-																				case 2:
-																					$WeekAmountPrevious = $stbprow['Week1Amount'];
-																					$WeekAmount = $stbprow['Week2Amount'];
-																					$WeekPaidPrevious = $stbprow['Week1Paid'];
-																					$WeekPaid = $stbprow['Week2Paid'];
-
-																					$toBePaid = ($WeekAmount + $WeekAmountPrevious) - $WeekPaidPrevious;
-																					break;
-																				case 3:
-																					$WeekAmountPreviousPrevious = $stbprow['Week1Amount'];
-																					$WeekAmountPrevious = $stbprow['Week2Amount'];
-																					$WeekAmount = $stbprow['Week3Amount'];
-
-																					$WeekPaidPreviousPrevious = $stbprow['Week1Paid'];
-																					$WeekPaidPrevious = $stbprow['Week2Paid'];
-																					$WeekPaid = $stbprow['Week3Paid'];
-
-																					$toBePaid = ($WeekAmount + $WeekAmountPrevious + $WeekAmountPreviousPrevious) - ($WeekPaidPrevious + $WeekPaidPreviousPrevious);
-																					break;
-																				case 4:
-																					$WeekAmountPreviousPreviousPrevious = $stbprow['Week1Amount'];
-																					$WeekAmountPreviousPrevious = $stbprow['Week2Amount'];
-																					$WeekAmountPrevious = $stbprow['Week3Amount'];
-																					$WeekAmount = $stbprow['Week4Amount'];
-
-																					$WeekPaidPreviousPreviousPrevious = $stbprow['Week1Paid'];
-																					$WeekPaidPreviousPrevious = $stbprow['Week2Paid'];
-																					$WeekPaidPrevious = $stbprow['Week3Paid'];
-																					$WeekPaid = $stbprow['Week4Paid'];
-
-																					$toBePaid = ($WeekAmount + $WeekAmountPrevious + $WeekAmountPreviousPrevious + $WeekAmountPreviousPreviousPrevious) - ($WeekPaidPrevious + $WeekPaidPreviousPrevious + $WeekPaidPreviousPreviousPrevious);
-																					break;
-																				default:
-																					$WeekAmount = $sss_contriCalc;
-																					$WeekPaid = $stbprow['Week1Paid'];
-																					$toBePaid = $WeekAmount;
-																					break;
-																			}
-																		} else {
-																			$WeekPaid = 0;
-																			$toBePaid = $sss_contriCalc;
-																			$now = new DateTime();
-																			$DateAdded = $now->format('Y-m-d H:i:s');
-																			$data = array(
-																				'Amount' => $sss_contriCalc,
-																				'ApplicantID' => $ApplicantID,
-																				'ClientID' => $ClientID,
-																				'Month' => $FetchMonth,
-																				'Year' => $FetchYear,
-																				'Week' => $Week,
-																				'Mode' => $Mode,
-																				'DateAdded' => $DateAdded,
-																			);
-																			$AddSSSToBePaidAmount = $this->Model_Updates->AddSSSToBePaidAmount($data);
-																		}
-																		$data = array(
-																			'Amount' => $sss_contriCalc,
-																			'ApplicantID' => $ApplicantID,
-																			'ClientID' => $ClientID,
-																			'Month' => $FetchMonth,
-																			'Year' => $FetchYear,
-																			'Week' => $Week,
-																			'Mode' => $Mode
-																		);
-																		$UpdateSSSToBePaidAmount = $this->Model_Updates->UpdateSSSToBePaidAmount($data);
-
-																		$ShowPayrollLoans = $this->Model_Selects->ShowPayrollLoans($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		$loansTotal = 0;
-																		if ($ShowPayrollLoans->num_rows() > 0) {
-																			foreach($ShowPayrollLoans->result_array() as $lrow) {
-																				$loansTotal = $loansTotal + $lrow['Amount'];
-																			}
-																		}
-																		$ShowPayrollProvisions = $this->Model_Selects->ShowPayrollProvisions($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
-																		$provisionsTotal = 0;
-																		if ($ShowPayrollProvisions->num_rows() > 0) {
-																			foreach($ShowPayrollProvisions->result_array() as $prrow) {
-																				$provisionsTotal = $provisionsTotal + $prrow['Amount'];
-																			}
-																		}
-
-																		$totalDeduction = $hdmf_contriCalc + $philhealth_contri + $tax + $loansTotal + $toBePaid;
-																		$net_pay = ($TotalGrossPay + $provisionsTotal) - $totalDeduction;
-																		if ($net_pay < 0) {
-																			$net_pay = 0;
-																		}
-
-																		?>
-																		<tr class="payroll-week-row">
-																			<td><a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $fullName; ?></a></td>
-																			<td class="payroll-hours" data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: <b><?php echo round($GetPayrollWeekHours, 2) . '</b><br>Overtime Hours: <b>' . round($GetPayrollWeekOTHours, 2) . '</b><br><br>Night Hours: <b>' . round($GetPayrollWeekNPHours, 2) . '</b><br>Night Overtime Hours: <b>' . round($GetPayrollWeekNPOTHours, 2) . '</b><br>-------<br>Total: <b>' . $TotalHours . '</b> hours'; ?>">
-																				<?php
-																					if ($TotalHours == 0) {
-																						echo '<span style="color: rgba(0, 0, 0, 0.16);">' . $TotalHours . '</span>';
-																					} else {
-																						echo $TotalHours;
-																					}
-																				?>
-																			</td>
-																			<td class="payroll-grosspay" data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Pay: <b><?php echo round($GetPayrollWeekGrossPay, 2) . '</b><br>Overtime Pay: <b>' . round($GetPayrollWeekOTGrossPay, 2) . '</b><br><br>Night Pay: <b>' . round($GetPayrollWeekNPGrossPay, 2) . '</b><br>Night Overtime Pay: <b>' . round($GetPayrollWeekNPOTGrossPay, 2) . '</b><br>-------<br>Total Gross Pay: <b>' . round($TotalGrossPay, 2) . '</b>'; ?>"><?php echo round($TotalGrossPay, 2); ?></td>
-																			<td class="payroll-philhealth" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($philhealth_percentage, 2) . ' / ' . $cutoffTaxDivider . '<br><i>PhilHealth Percentage x Mode</i>'; ?>"><?php echo round($philhealth_contri, 2); ?></td>
-																			<td class="payroll-hdmf" data-toggle="tooltip" data-placement="top" data-html="true" title="(<?php echo round($TotalGrossPay, 2) . ' x ' . $hdmf_rate . ') / ' . $cutoffTaxDivider . '<br><i>(Gross Pay x HDMF Rate) / Mode</i>'; ?>"><?php echo round($hdmf_contriCalc, 2); ?></td>
-
-																			<td class="payroll-tax" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo 'Annual Salary: ' . round($annualSalary, 2) . '<br>Monthly Salary: ' . round($salaryMonthly, 2); ?>"><?php echo round($tax, 2); ?></td>
-																			<td class="payroll-sss" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $sss_contri . ' / ' . $cutoffTaxDivider; ?><br><i>SSS Contribution / Mode</i>"><?php echo $sss_contriCalc; ?></td>
-																			<td><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></td>
-																			<td class="payroll-tobepaid"><?php echo $toBePaid; ?></td>
-																			<td>
-																				<div class="row">
-																					<div class="col-sm-12 col-md-8">
-																						<input type="number" class="payroll-paidthisweek payroll-weekrow-input form-control" step="0.01" value="<?php echo $WeekPaid; ?>">
-																					</div>
-																					<div class="col-sm-12 col-md-4">
-																						<button class="payroll-weekrow-btn btn btn-success btn-sm w-100" data-payroll-weekrow-applicantid="<?php echo $ApplicantID; ?>" data-payroll-weekrow-clientid="<?php echo $ClientID; ?>" data-payroll-weekrow-year="<?php echo $FetchYear; ?>" data-payroll-weekrow-month="<?php echo $FetchMonth; ?>" data-payroll-weekrow-week="<?php echo $Week; ?>" style="margin-left: -25px; padding-top: 5px; padding-bottom: 5px; margin-top: 1px; display: none;"><i class="fas fa-check" style="margin-right: -1px;"></i></button>
-																					</div>
-																				</div>
-																			</td>
-																			<td>
-																				<button type="button" class="loans-btn btn btn-info btn-sm w-100" data-toggle="modal" data-target="#ModalLoans" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-loanstotal="<?php echo $loansTotal; ?>"><i class="fas fa-piggy-bank"></i> Loans</button>
-																				<button type="button" class="provisions-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#ModalProvisions" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-provisionstotal="<?php echo $provisionsTotal; ?>" style="margin-top: 1px;"><i class="fas fa-donate"></i> Provisions</button>
-																			</td>
-																			<td class="payroll-net-pay" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo '(' . round($TotalGrossPay, 2) . ' + ' . round($provisionsTotal, 2) . ') - (' . round($hdmf_contriCalc, 2) . ' + ' . round($philhealth_contri, 2) . ' + ' . round($tax, 2) . ' + ' . round($toBePaid, 2) . ' + ' . round($loansTotal, 2) . ')<br><i>(Gross Pay + Provisions) - (HDMF Contribution + PhilHealth Contribution + Tax + SSS left to be paid + Loans)</i>'; ?>"><?php echo round($net_pay, 2); ?></td>
-																			<td>
-																				<button type="button" class="individual-payslip-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#GeneratePayslipModal" data-applicantid="<?php echo $ApplicantID; ?>" data-periodmode="<?php echo $Mode; ?>"><i class="fas fa-file-invoice-dollar"></i> Payslip</button>
-																			</td>
-																		</tr>
-																	<?php endforeach; ?>
-																</tbody>
-															</table>
-														</div>
-													</div>
-												</div>
 											<?php
-										endif; ?>
+											$weekMax = 1;
+											$weekText = '';
+											switch($Mode) {
+												case 0: // Weekly
+													$weekMax = 4;
+													$weekText = 'Week ';
+													break;
+												case 1: // Semi-monthly
+													$weekMax = 2;
+													$weekText = 'Period ';
+													break;
+												case 2: // Monthly
+													$weekMax = 1;
+													$weekText = '';
+													break;
+												default:
+													$weekMax = 1;
+													$weekText = 'Unknown Period ';
+													break;
+											}
+											for($Week = 1; $Week <= $weekMax; $Week++): 
+												if ($Mode != 2) {
+													$weekNumber = $Week;
+												} else {
+													$weekNumber = $selectedMonthReadable;
+												} ?>
+												<div class="payroll-week-container col-sm-12">
+													<div class="payroll-week col-sm-12">
+														<b><?php echo $weekText . $weekNumber; ?></b>
+													</div>
+													<div class="payroll-data col-sm-12 col-mb-12">
+														<div class="table-responsive w-100">
+															<table id="WeeklyTable_<?=$Week?>" class="table table-condensed">
+																<thead>
+																	<th>Applicant</th>
+																	<th>Hours</th>
+																	<th>Gross Pay</th>
+																	<th>PhilHealth</th>
+																	<th>HDMF</th>
+																	<th>Tax</th>
+																	<th>SSS</th>
+																	<th style="width: 50px;"><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></th>
+																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount left to be paid for this week's SSS contribution">To be paid <i style="color: gray">(?)</i></th>
+																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount that is paid for this week's SSS contribution. Used to subtract next week's SSS contribution." style="width: 185px;">VL / SL <i style="color: gray">(?)</i></th>
+																	<th>Additional</th>
+																	<th>Net Pay</th>
+																	<th>Generate</th>
+																</thead>
+																<tbody>
+																	<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
+																		// Name Handler
+																		$fullName = '';
+																		$fullNameHover = '';
+																		$isFullNameHoverable = false;
+																		if ($row['LastName']) {
+																			$fullName = $fullName . $row['LastName'] . ', ';
+																			$fullNameHover = $fullNameHover . $row['LastName'] . ', ';
+																		} else {
+																			$fullNameHover = $fullNameHover . '[<i>No Last Name</i>], ';
+																			$isFullNameHoverable = true;
+																		}
+																		if ($row['FirstName']) {
+																			$fullName = $fullName . $row['FirstName'] . ' ';
+																			$fullNameHover = $fullNameHover . $row['FirstName'] . ' ';
+																		} else {
+																			$fullNameHover = $fullNameHover . '[<i>No First Name</i>] ';
+																			$isFullNameHoverable = true;
+																		}
+																		if ($row['MiddleName']) {
+																			$fullName = $fullName . $row['MiddleName'][0] . '.';
+																			$fullNameHover = $fullNameHover . $row['MiddleName'][0] . '.';
+																		} else {
+																			$fullNameHover = $fullNameHover . '[<i>No MI</i>].';
+																			$isFullNameHoverable = true;
+																		}
+																		if ($row['NameExtension']) {
+																			$fullName = $fullName . ', ' . $row['NameExtension'];
+																			$fullNameHover = $fullNameHover . ', ' . $row['NameExtension'];
+																		}
+																		if (strlen($fullName) > 45) {
+																			$fullName = substr($fullName, 0, 45);
+																			$fullName = $fullName . '...';
+																			$isFullNameHoverable = true;
+																		}
+																		$ApplicantID = $row['ApplicantID'];
+																		$ApplicantName = $fullName;
+																		$GetPayrollWeekGrossPay = $this->Model_Selects->GetPayrollWeekGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
+																		if ($GetPayrollWeekGrossPay == NULL) {
+																			$GetPayrollWeekGrossPay = 0;
+																		}
+																		$GetPayrollWeekOTGrossPay = $this->Model_Selects->GetPayrollWeekOTGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
+																		if ($GetPayrollWeekOTGrossPay == NULL) {
+																			$GetPayrollWeekOTGrossPay = 0;
+																		}
+																		$GetPayrollWeekNPGrossPay = $this->Model_Selects->GetPayrollWeekNPGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
+																		if ($GetPayrollWeekNPGrossPay == NULL) {
+																			$GetPayrollWeekNPGrossPay = 0;
+																		}
+																		$GetPayrollWeekNPOTGrossPay = $this->Model_Selects->GetPayrollWeekNPOTGrossPay($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
+																		if ($GetPayrollWeekNPOTGrossPay == NULL) {
+																			$GetPayrollWeekNPOTGrossPay = 0;
+																		}
+																		$TotalGrossPay = $GetPayrollWeekGrossPay + $GetPayrollWeekOTGrossPay + $GetPayrollWeekNPGrossPay + $GetPayrollWeekNPOTGrossPay;
+																		$GetPayrollWeekHours = $this->Model_Selects->GetPayrollWeekHours($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
+																		if ($GetPayrollWeekHours == NULL) {
+																			$GetPayrollWeekHours = 0;
+																		}
+																		$GetPayrollWeekOTHours = $this->Model_Selects->GetPayrollWeekOTHours($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
+																		if ($GetPayrollWeekOTHours == NULL) {
+																			$GetPayrollWeekOTHours = 0;
+																		}
+																		$GetPayrollWeekNPHours = $this->Model_Selects->GetPayrollWeekNPHours($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
+																		if ($GetPayrollWeekNPHours == NULL) {
+																			$GetPayrollWeekNPHours = 0;
+																		}
+																		$GetPayrollWeekNPOTHours = $this->Model_Selects->GetPayrollWeekNPOTHours($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
+																		if ($GetPayrollWeekNPOTHours == NULL) {
+																			$GetPayrollWeekNPOTHours = 0;
+																		}
+																		$TotalHours = $GetPayrollWeekHours + $GetPayrollWeekOTHours + $GetPayrollWeekNPHours + $GetPayrollWeekNPOTHours;
+																		$sssTable = $this->Model_Selects->GetAllSSSTable();
+																		$hdmfTable = $this->Model_Selects->GetAllHDMFTable();
+																		$philhealthTable = $this->Model_Selects->GetAllPhilHealthTable();
+																		// SSS Table
+																		foreach ($sssTable->result_array() as $srow) {
+																			if ($TotalGrossPay >= $srow['f_range'] && $TotalGrossPay <= $srow['t_range']) {
+																				$sss_contri = $srow['contribution_ee'];
+																			}
+																		}
+																		// HDMF Table
+																		foreach ($hdmfTable->result_array() as $hrow) {
+																			if ($TotalGrossPay >= $hrow['f_range'] && $TotalGrossPay <= $hrow['t_range']) {
+																				$hdmf_rate = $hrow['contribution_ee'];
+																			}
+																		}
+																		// PhilHealth Table
+																		$philhealthArray=$philhealthTable->result_array();
+																		if ($TotalGrossPay >= $philhealthArray[0]['f_range'] && $TotalGrossPay <= $philhealthArray[0]['t_range'])
+																		{
+																			$philhealth_percentage=300;
+																		}
+																		else if($TotalGrossPay >= $philhealthArray[1]['f_range'] && $TotalGrossPay <= $philhealthArray[1]['t_range'])
+																		{
+																			$philhealth_percentage=($TotalGrossPay * 0.03);
+
+																		}
+																		else
+																		{
+																			$philhealth_percentage=1800;
+																		}
+
+																		if($Mode==0)//weekly
+																		{
+																			$cutoffTaxDivider=4;
+																		}
+																		else if($Mode==1)//semi monthly
+																		{
+																			$cutoffTaxDivider=2;
+																		}
+																		else if($Mode==2) //monthly
+																		{
+																			$cutoffTaxDivider=1;
+																		}
+
+																		$sss_contriCalc = $sss_contri/$cutoffTaxDivider;
+																		$hdmf_contri = $TotalGrossPay*$hdmf_rate;
+																		$hdmf_contriCalc = $hdmf_contri/$cutoffTaxDivider;
+																		$hdmf_contriText = $hdmf_contri * 100;
+																		$philhealth_contri=$philhealth_percentage/$cutoffTaxDivider;
+
+																		// Tax
+																		$cNow = Carbon::parse(date('Y-m-d h:i:s A'));
+																		$cStarts = Carbon::parse($row['DateStarted']);
+																		if ($row['Status'] != 'Employed (Permanent)') {
+																			$cEnds = Carbon::parse($row['DateEnds']);
+																		} else {
+																			$cEnds = Carbon::parse($row['SalaryDistDate']);
+																		}
+
+																		// Calculating monthly salary to annual salary
+																		$cDiffInMonths = $cEnds->diffInMonths($cStarts);
+																		$salaryMonthly = 0;
+																		if ($row['SalaryExpected'] == NULL) {
+																			$salary = 0;
+																		} else {
+																			$salary = $row['SalaryExpected'];
+																		}
+																		switch($row['SalaryType']) {
+																			case 'Daily':
+																				$salaryMonthly = $salary * 30;
+																				break;
+																			case 'Monthly':
+																				$salaryMonthly = $salary;
+																				break;
+																			case 'Total':
+																				$salaryMonthly = $salary / $cDiffInMonths;
+																			default:
+																				break;
+																		}
+																		$annualSalary = $salaryMonthly * 12;
+																		$year=date("Y");
+																		if($year<=2022)
+																		{
+																			if($annualSalary<=250000) //Not over P250,000 -- 0%
+																			{
+																				$tax=0; 
+																			}
+																			else if($annualSalary>=250000.01 && $annualSalary <= 400000) 	//Over P250,000 but not over P400,000 -- 20% of the excess over P250,000
+																			{
+																				$tax=((($annualSalary-250000)*0.2)/12)/$cutoffTaxDivider;
+																			} 
+																			else if($annualSalary>=400000.01 && $annualSalary <= 800000) 	//Over P400,000 but not over P800,000 -- P30,000 + 25% of the excess over P400,000
+																			{
+																				$tax=((30000+(($annualSalary-400000)*0.25))/12)/$cutoffTaxDivider; 		 	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
+																			}
+																			else if($annualSalary>=800000.01 && $annualSalary <= 2000000) 	//Over P800,000 but not over P2,000,000 -- P130,000 + 30% of the excess over P800,000
+																			{
+																				$tax=((130000+(($annualSalary-800000)*0.3))/12)/$cutoffTaxDivider; 		  	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
+																			}
+																			else if($annualSalary>=2000000.01 && $annualSalary <= 8000000) 	//Over P2,000,000 but not over P8,000,000 -- P490,000 + 32% of the excess over P2,000,000
+																			{
+																				$tax=((490000+(($annualSalary-2000000)*0.32))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
+																			}
+																			else 															//Over P8,000,000 -- P2,410,000 + 35% of the excess over P8,000,000
+																			{
+																				$tax=((2410000+(($annualSalary-8000000)*0.35))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
+																			}
+
+																		}
+																		else
+																		{
+																			if($annualSalary<=250000) //Not over P250,000 -- 0%
+																			{
+																				$tax=0; 
+																			}
+																			else if($annualSalary>=250000.01 && $annualSalary <= 400000) 	//Over P250,000 but not over P400,000 -- 15% of the excess over P250,000
+																			{
+																				$tax=((($annualSalary-250000)*0.15)/12)/$cutoffTaxDivider;
+																			} 
+																			else if($annualSalary>=400000.01 && $annualSalary <= 800000) 	//Over P400,000 but not over P800,000 -- P22,500 + 20% of the excess over P400,000
+																			{
+																				$tax=((22500+(($annualSalary-400000)*0.20))/12)/$cutoffTaxDivider; 		 	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
+																			}
+																			else if($annualSalary>=800000.01 && $annualSalary <= 2000000) 	//Over P800,000 but not over P2,000,000 -- P102,500 + 25% of the excess over P800,000
+																			{
+																				$tax=((102500+(($annualSalary-800000)*0.25))/12)/$cutoffTaxDivider; 		  	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
+																			}
+																			else if($annualSalary>=2000000.01 && $annualSalary <= 8000000) 	//Over P2,000,000 but not over P8,000,000 -- P402,500 + 30% of the excess over P2,000,000
+																			{
+																				$tax=((402500+(($annualSalary-2000000)*0.30))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, tthen divided by 4 for weekly, 2 for semi monthly, 1 for monthly
+																			}
+																			else 															//Over P8,000,000 -- P2,202,500 + 35% of the excess over P8,000,000
+																			{
+																				$tax=((202500+(($annualSalary-8000000)*0.35))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
+																			}
+																		}
+
+																		$SSSToBePaid = $this->Model_Selects->GetSSSToBePaid($ApplicantID, $ClientID, $FetchYear, $FetchMonth, $Mode);
+																		if ($SSSToBePaid->num_rows() > 0) {
+																			$stbprow = $SSSToBePaid->result_array()[0];
+																			switch($Week) {
+																				case 1:
+																					$WeekAmount = $sss_contriCalc;
+																					$WeekPaid = $stbprow['Week1Paid'];
+																					$toBePaid = $WeekAmount;
+																					break;
+																				case 2:
+																					$WeekAmountPrevious = $stbprow['Week1Amount'];
+																					$WeekAmount = $stbprow['Week2Amount'];
+																					$WeekPaidPrevious = $stbprow['Week1Paid'];
+																					$WeekPaid = $stbprow['Week2Paid'];
+
+																					$toBePaid = ($WeekAmount + $WeekAmountPrevious) - $WeekPaidPrevious;
+																					break;
+																				case 3:
+																					$WeekAmountPreviousPrevious = $stbprow['Week1Amount'];
+																					$WeekAmountPrevious = $stbprow['Week2Amount'];
+																					$WeekAmount = $stbprow['Week3Amount'];
+
+																					$WeekPaidPreviousPrevious = $stbprow['Week1Paid'];
+																					$WeekPaidPrevious = $stbprow['Week2Paid'];
+																					$WeekPaid = $stbprow['Week3Paid'];
+
+																					$toBePaid = ($WeekAmount + $WeekAmountPrevious + $WeekAmountPreviousPrevious) - ($WeekPaidPrevious + $WeekPaidPreviousPrevious);
+																					break;
+																				case 4:
+																					$WeekAmountPreviousPreviousPrevious = $stbprow['Week1Amount'];
+																					$WeekAmountPreviousPrevious = $stbprow['Week2Amount'];
+																					$WeekAmountPrevious = $stbprow['Week3Amount'];
+																					$WeekAmount = $stbprow['Week4Amount'];
+
+																					$WeekPaidPreviousPreviousPrevious = $stbprow['Week1Paid'];
+																					$WeekPaidPreviousPrevious = $stbprow['Week2Paid'];
+																					$WeekPaidPrevious = $stbprow['Week3Paid'];
+																					$WeekPaid = $stbprow['Week4Paid'];
+
+																					$toBePaid = ($WeekAmount + $WeekAmountPrevious + $WeekAmountPreviousPrevious + $WeekAmountPreviousPreviousPrevious) - ($WeekPaidPrevious + $WeekPaidPreviousPrevious + $WeekPaidPreviousPreviousPrevious);
+																					break;
+																				default:
+																					$WeekAmount = $sss_contriCalc;
+																					$WeekPaid = $stbprow['Week1Paid'];
+																					$toBePaid = $WeekAmount;
+																					break;
+																			}
+																		} else {
+																			$WeekPaid = 0;
+																			$toBePaid = $sss_contriCalc;
+																			$now = new DateTime();
+																			$DateAdded = $now->format('Y-m-d H:i:s');
+																			$data = array(
+																				'Amount' => $sss_contriCalc,
+																				'ApplicantID' => $ApplicantID,
+																				'ClientID' => $ClientID,
+																				'Month' => $FetchMonth,
+																				'Year' => $FetchYear,
+																				'Week' => $Week,
+																				'Mode' => $Mode,
+																				'DateAdded' => $DateAdded,
+																			);
+																			$AddSSSToBePaidAmount = $this->Model_Updates->AddSSSToBePaidAmount($data);
+																		}
+																		$data = array(
+																			'Amount' => $sss_contriCalc,
+																			'ApplicantID' => $ApplicantID,
+																			'ClientID' => $ClientID,
+																			'Month' => $FetchMonth,
+																			'Year' => $FetchYear,
+																			'Week' => $Week,
+																			'Mode' => $Mode
+																		);
+																		$UpdateSSSToBePaidAmount = $this->Model_Updates->UpdateSSSToBePaidAmount($data);
+
+																		$ShowPayrollLoans = $this->Model_Selects->ShowPayrollLoans($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
+																		$loansTotal = 0;
+																		if ($ShowPayrollLoans->num_rows() > 0) {
+																			foreach($ShowPayrollLoans->result_array() as $lrow) {
+																				$loansTotal = $loansTotal + $lrow['Amount'];
+																			}
+																		}
+																		$ShowPayrollProvisions = $this->Model_Selects->ShowPayrollProvisions($ApplicantID, $FetchYear, $FetchMonth, $Week, $Mode);
+																		$provisionsTotal = 0;
+																		if ($ShowPayrollProvisions->num_rows() > 0) {
+																			foreach($ShowPayrollProvisions->result_array() as $prrow) {
+																				$provisionsTotal = $provisionsTotal + $prrow['Amount'];
+																			}
+																		}
+
+																		$totalDeduction = $hdmf_contriCalc + $philhealth_contri + $tax + $loansTotal + $toBePaid;
+																		$net_pay = ($TotalGrossPay + $provisionsTotal) - $totalDeduction;
+																		if ($net_pay < 0) {
+																			$net_pay = 0;
+																		}
+
+																		?>
+																		<tr class="payroll-week-row">
+																			<td><a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $fullName; ?></a></td>
+																			<td class="payroll-hours" data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: <b><?php echo round($GetPayrollWeekHours, 2) . '</b><br>Overtime Hours: <b>' . round($GetPayrollWeekOTHours, 2) . '</b><br><br>Night Hours: <b>' . round($GetPayrollWeekNPHours, 2) . '</b><br>Night Overtime Hours: <b>' . round($GetPayrollWeekNPOTHours, 2) . '</b><br>-------<br>Total: <b>' . $TotalHours . '</b> hours'; ?>">
+																				<?php
+																					if ($TotalHours == 0) {
+																						echo '<span style="color: rgba(0, 0, 0, 0.16);">' . $TotalHours . '</span>';
+																					} else {
+																						echo $TotalHours;
+																					}
+																				?>
+																			</td>
+																			<td class="payroll-grosspay" data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Pay: <b><?php echo round($GetPayrollWeekGrossPay, 2) . '</b><br>Overtime Pay: <b>' . round($GetPayrollWeekOTGrossPay, 2) . '</b><br><br>Night Pay: <b>' . round($GetPayrollWeekNPGrossPay, 2) . '</b><br>Night Overtime Pay: <b>' . round($GetPayrollWeekNPOTGrossPay, 2) . '</b><br>-------<br>Total Gross Pay: <b>' . round($TotalGrossPay, 2) . '</b>'; ?>"><?php echo round($TotalGrossPay, 2); ?></td>
+																			<td class="payroll-philhealth" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($philhealth_percentage, 2) . ' / ' . $cutoffTaxDivider . '<br><i>PhilHealth Percentage x Mode</i>'; ?>"><?php echo round($philhealth_contri, 2); ?></td>
+																			<td class="payroll-hdmf" data-toggle="tooltip" data-placement="top" data-html="true" title="(<?php echo round($TotalGrossPay, 2) . ' x ' . $hdmf_rate . ') / ' . $cutoffTaxDivider . '<br><i>(Gross Pay x HDMF Rate) / Mode</i>'; ?>"><?php echo round($hdmf_contriCalc, 2); ?></td>
+
+																			<td class="payroll-tax" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo 'Annual Salary: ' . round($annualSalary, 2) . '<br>Monthly Salary: ' . round($salaryMonthly, 2); ?>"><?php echo round($tax, 2); ?></td>
+																			<td class="payroll-sss" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $sss_contri . ' / ' . $cutoffTaxDivider; ?><br><i>SSS Contribution / Mode</i>"><?php echo $sss_contriCalc; ?></td>
+																			<td><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></td>
+																			<td class="payroll-tobepaid"><?php echo $toBePaid; ?></td>
+																			<td>
+																				<div class="row">
+																					<div class="col-sm-12 col-md-8">
+																						<input type="number" class="payroll-paidthisweek payroll-weekrow-input form-control" step="0.01" value="<?php echo $WeekPaid; ?>">
+																					</div>
+																					<div class="col-sm-12 col-md-4">
+																						<button class="payroll-weekrow-btn btn btn-success btn-sm w-100" data-payroll-weekrow-applicantid="<?php echo $ApplicantID; ?>" data-payroll-weekrow-clientid="<?php echo $ClientID; ?>" data-payroll-weekrow-year="<?php echo $FetchYear; ?>" data-payroll-weekrow-month="<?php echo $FetchMonth; ?>" data-payroll-weekrow-week="<?php echo $Week; ?>" style="margin-left: -25px; padding-top: 5px; padding-bottom: 5px; margin-top: 1px; display: none;"><i class="fas fa-check" style="margin-right: -1px;"></i></button>
+																					</div>
+																				</div>
+																			</td>
+																			<td>
+																				<button type="button" class="loans-btn btn btn-info btn-sm w-100" data-toggle="modal" data-target="#ModalLoans" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-loanstotal="<?php echo $loansTotal; ?>"><i class="fas fa-piggy-bank"></i> Loans</button>
+																				<button type="button" class="provisions-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#ModalProvisions" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-provisionstotal="<?php echo $provisionsTotal; ?>" style="margin-top: 1px;"><i class="fas fa-donate"></i> Provisions</button>
+																			</td>
+																			<td class="payroll-net-pay" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo '(' . round($TotalGrossPay, 2) . ' + ' . round($provisionsTotal, 2) . ') - (' . round($hdmf_contriCalc, 2) . ' + ' . round($philhealth_contri, 2) . ' + ' . round($tax, 2) . ' + ' . round($toBePaid, 2) . ' + ' . round($loansTotal, 2) . ')<br><i>(Gross Pay + Provisions) - (HDMF Contribution + PhilHealth Contribution + Tax + SSS left to be paid + Loans)</i>'; ?>"><?php echo round($net_pay, 2); ?></td>
+																			<td>
+																				<button type="button" class="individual-payslip-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#GeneratePayslipModal" data-applicantid="<?php echo $ApplicantID; ?>" data-periodmode="<?php echo $Mode; ?>" data-payrollstart="<?php echo $payrollStart; ?>" data-payrollend="<?php echo $payrollEnd; ?>"><i class="fas fa-file-invoice-dollar"></i> Payslip</button>
+																			</td>
+																		</tr>
+																	<?php endforeach; ?>
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+											<?php endfor; ?>
 										</div>
 									<?php
 									else:
@@ -1474,7 +761,7 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 			}
 
 			});
-			updateCalculation();
+			// updateCalculation();
 		});
 		// Loan discard
 		$('body').on('click', '.loan-discard', function () { // Using body for dynamic appends.
@@ -1654,8 +941,26 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 					mode = 'Weekly';
 					break;
 			}
+			let payslipFrom = $(this).data('payrollstart');
+			let payslipEnd = $(this).data('payrollend');
 			$('#PayslipApplicantID').val(applicantID);
 			$('#PayslipModeSelect option[value=' + mode + ']').attr('selected', 'selected');
+			$('#PayslipFromDate').val(payslipFrom);
+			$('#PayslipToDate').val(payslipEnd);
+			$('.gpm-locked-group').hide();
+			$('.gpm-valid-group').show();
+
+			let payslipApplicantID = $('#PayslipApplicantID').val();
+			let payslipMode = $('#PayslipModeSelect').val();
+			let payslipFromDate = new Date($('#PayslipFromDate').val());
+			let payslipFromDateDay = payslipFromDate.getUTCDate();
+			let payslipFromDateMonth = payslipFromDate.getUTCMonth() + 1;
+			let payslipFromDateYear = payslipFromDate.getFullYear();
+			let payslipToDate = new Date($('#PayslipToDate').val());
+			let payslipToDateDay = payslipToDate.getUTCDate();
+			let payslipToDateMonth = payslipToDate.getUTCMonth() + 1;
+			let payslipToDateYear = payslipToDate.getFullYear();
+			$('#GeneratePayslipLink').attr('href', 'GeneratePayslip?id=' + payslipApplicantID + '&mode=' + payslipMode + '&from_day=' + payslipFromDateDay + '&from_month=' + payslipFromDateMonth + '&from_year=' + payslipFromDateYear + '&to_day=' + payslipToDateDay + '&to_month=' + payslipToDateMonth + '&to_year=' + payslipToDateYear);
 			console.log(modeRaw);
 		});
 		$('.payslip-inputs').bind('input', function() {
@@ -1696,7 +1001,63 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 
 			}, 2000);
 		});
-
+		// var table = $('#WeeklyTable').DataTable( {
+		// 	paging: false,
+		// 	sDom: '',
+		// 	"bLengthChange": false,
+	 //        buttons: [
+	 //            {
+		//             extend: 'print',
+		//             exportOptions: {
+		//                 columns: [ 0, 1, 2, 3, 4, 5, 6, 8, 10 ]
+		//             },
+		//             customize: function ( doc ) {
+		//             	$(doc.document.body).find('h1').prepend('<img src="<?=base_url()?>assets/img/wercher_logo.png" width="63px" height="56px" />');
+		// 				$(doc.document.body).find('h1').css('font-size', '24px');
+		// 				$(doc.document.body).find('h1').css('text-align', 'center'); 
+		// 			}
+		//         },
+		//         {
+		//             extend: 'copyHtml5',
+		//             exportOptions: {
+		//                 columns: [ 0, 1, 2, 3, 4, 5, 6, 8, 10 ]
+		//             }
+		//         },
+		//         {
+		//             extend: 'excelHtml5',
+		//             exportOptions: {
+		//                 columns: [ 0, 1, 2, 3, 4, 5, 6, 8, 10 ]
+		//             }
+		//         },
+		//         {
+		//             extend: 'csvHtml5',
+		//             exportOptions: {
+		//                 columns: [ 0, 1, 2, 3, 4, 5, 6, 8, 10 ]
+		//             }
+		//         },
+		//         {
+		//             extend: 'pdfHtml5',
+		//             exportOptions: {
+		//                 columns: [ 0, 1, 2, 3, 4, 5, 6, 8, 10 ]
+		//             }
+		//         }
+	 //        ]
+	 //    } );
+	 //   $('#ExportPrint').on('click', function () {
+	 //        table.button('0').trigger();
+	 //    });
+	 //    $('#ExportCopy').on('click', function () {
+	 //        table.button('1').trigger();
+	 //    });
+	 //    $('#ExportExcel').on('click', function () {
+	 //        table.button('2').trigger();
+	 //    });
+	 //    $('#ExportCSV').on('click', function () {
+	 //        table.button('3').trigger();
+	 //    });
+	 //    $('#ExportPDF').on('click', function () {
+	 //        table.button('4').trigger();
+	 //    });
 		var dd_buttons = new $.fn.dataTable.Buttons(table, {
 			buttons: [
 			{

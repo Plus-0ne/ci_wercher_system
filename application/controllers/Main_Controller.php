@@ -2139,10 +2139,10 @@
 		$this->load->model('Model_Deletes');
 
 		$ApplicantID = $this->input->post('ApplicantID');
-		$ProvisionsArray = json_decode($_POST['ProvisionsArray']);
+		$ProvisionsArray = json_decode($this->input->post('ProvisionsArray'));
 		if (count($ProvisionsArray) > 0) {
 			for($index = 0; $index < count($ProvisionsArray); $index++) {
-				$ProvisionID = $ProvisionArray[$index];
+				$ProvisionID = $ProvisionsArray[$index];
 				if(is_numeric($ProvisionID)) {
 					// Only numbers allowed
 					$RemovePayrollProvisions = $this->Model_Deletes->RemovePayrollProvisions($ApplicantID, $ProvisionID);

@@ -50,6 +50,7 @@ $count = 0;
 						</h4>
 					</div>
 					<div class="col-sm-12 col-mb-12 mt-2">
+						<form method="POST" action="UpdateSSSField">
 						<div class="table-responsive">
 							<table id="SSSTable" class="table table-condensed">
 								<thead>
@@ -67,15 +68,14 @@ $count = 0;
 									<?php endif; ?>
 								</thead>
 								<tbody>
-									<form method="POST" action="UpdateSSSField">
 									<?php foreach ($GetSSSBatchRows->result_array() as $row) { 
 										$count++; ?>
-										<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
-											<input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-										<?php endif; ?>
 										<tr id="<?php echo $row['id']; ?>"<?php if (!$fromGet): ?> class="sss-row"<?php else: ?> class="sss-inactive-row"<?php endif; ?>>
+											<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
+												<input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+											<?php endif; ?>
 											<td style="color: rgba(0, 0, 0, 0.45); font-style: italic; font-size: 12px;">
-												#<?php echo $count; ?>
+												<?php echo $count; ?>
 											</td>
 											<td>
 												<?php if(isset($_GET['row']) && ($_GET['row'] == $row['id'])): ?>
@@ -140,10 +140,11 @@ $count = 0;
 											<?php endif; ?>
 										</tr>
 									<?php } ?>
-									</form>
+									
 								</tbody>
 							</table>
 						</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -218,6 +219,7 @@ $count = 0;
 			window.location.replace('<?php echo base_url(); ?>SSS_Table?row=' + id + '#' + idHash);
 		});
 		var table = $('#SSSTable').DataTable( {
+			paging: false,
 			sDom: '',
 			"bLengthChange": false,
 	        buttons: [

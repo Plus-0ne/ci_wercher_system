@@ -25,11 +25,11 @@
 		$fromMonthConverted = $fromMonthRaw->format('m');
 		$fromMonthShort = DateTime::createFromFormat('m', $fromMonthConverted)->format('M');
 		$fromMonthConverted = DateTime::createFromFormat('m', $fromMonthConverted)->format('F');
-		$toMonthWithZeroes = $fromMonth;
+		$toMonthWithZeroes = $toMonth;
 		if ($toMonth < 10) {
 			$toMonthWithZeroes = '0' . $toMonth;
 		}
-		$toDayWithZeroes = $fromDay;
+		$toDayWithZeroes = $toDay;
 		if ($toDay < 10) {
 			$toDayWithZeroes = '0' . $toDay;
 		}
@@ -66,7 +66,7 @@
 				break;
 			case 'SEMI-MONTHLY':
 				$Mode = 1;
-				$ModeRaw = 'Semi';
+				$ModeRaw = 'Semi-monthly';
 				$cutoffTaxDivider = 2;
 				break;
 			case 'MONTHLY':
@@ -126,6 +126,7 @@
 				}
 				// Salary Rate
 				$rate = number_format($row['SalaryExpected']);
+				$salaryType = $row['SalaryType'];
 				// Salary Data
 				// ~ regular
 				$EarningsTotal = 0;
@@ -521,7 +522,7 @@
 				$ProvisionsNetPay = '₱' . number_format($ProvisionsNetPay, 2, '.', '');
 			}
 		} else {
-			$fullName = 'N/A';
+			redirect('FourOhFour');
 		}
 	}
 ?>
@@ -561,20 +562,92 @@
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
-					<div class="row m-5 p-2">
-						<div class="col-sm-6 mt-4 eprint-commandcard-text">
-							<div class="row mt-2">
-								<div class="row">
-									<div class="col-sm-12">
-										<button type="button" class="btn btn-success glow-gold" onClick="printContent('PrintOut')" style="width: 400px;"><i class="fas fa-print"></i> Print</button>
+					<div class="my-3" style="margin-left: 10px;">
+						<div class="row">
+							<div class="col-sm-12">
+								<button type="button" class="btn btn-success glow-gold" onClick="printContent('PrintOut')" style="width: 400px;"><i class="fas fa-print"></i> Print</button>
+								<button type="button" class="new-earnings-row-btn btn btn-info"><i class="fas fa-plus"></i> Earnings</button>
+								<button type="button" class="new-deductions-row-btn btn btn-info"><i class="fas fa-plus"></i> Deductions</button>
+								<button type="button" class="new-provisions-row-btn btn btn-info"><i class="fas fa-plus"></i> Provisions</button>
+								<button type="button" class="payroll-changedates-btn btn btn-primary" style="width: 155px;"><i class="fas fa-edit"></i> Change Set</button>
+							</div>
+						</div>
+						<div class="row payroll-changedates-group mt-4" style="margin-left: 10px; border-top: 2px solid rgba(0, 0, 0, 0.16); display: none;">
+							<?php echo form_open(base_url().'GeneratePayslip','method="GET" name="PayrollFilterForm"');?>
+								<div class="form-row">
+									<!-- Applicant -->
+									<div class="form-group col-sm-6 col-md-6">
+										<label><b>Applicant ID</b></label>
+										<input class="form-control" type="text" name="id" value="<?php echo $ApplicantID; ?>">
 									</div>
-									<div class="col-sm-12 mt-2">
-										<button type="button" class="new-earnings-row-btn btn btn-info"><i class="fas fa-plus"></i> Earnings</button>
-										<button type="button" class="new-deductions-row-btn btn btn-info"><i class="fas fa-plus"></i> Deductions</button>
-										<button type="button" class="new-provisions-row-btn btn btn-info"><i class="fas fa-plus"></i> Provisions</button>
+									<!-- Mode -->
+									<div class="form-group col-sm-6 col-md-5">
+										<label><b>Mode</b></label>
+										<select id="ModeSelect" class="payroll-select form-control" name="mode">
+											<option value="Weekly" <?php if ($Mode == 0) { echo 'selected'; } ?>>Weekly</option>
+											<option value="Semi-monthly" <?php if ($Mode == 1) { echo 'selected'; } ?>>Semi-monthly</option>
+											<option value="Monthly" <?php if ($Mode == 2) { echo 'selected'; } ?>>Monthly</option>
+										</select>
+									</div>
+									<!-- From -->
+									<div class="form-group col-sm-4 col-md-2">
+										<label><b>From</b></label>
+										<select id="FromMonthSelect" class="payroll-select form-control" name="from_month">
+											<option value="1" <?php if ($fromMonth == 1) { echo 'selected'; } ?>>January</option>
+											<option value="2" <?php if ($fromMonth == 2) { echo 'selected'; } ?>>February</option>
+											<option value="3" <?php if ($fromMonth == 3) { echo 'selected'; } ?>>March</option>
+											<option value="4" <?php if ($fromMonth == 4) { echo 'selected'; } ?>>April</option>
+											<option value="5" <?php if ($fromMonth == 5) { echo 'selected'; } ?>>May</option>
+											<option value="6" <?php if ($fromMonth == 6) { echo 'selected'; } ?>>June</option>
+											<option value="7" <?php if ($fromMonth == 7) { echo 'selected'; } ?>>July</option>
+											<option value="8" <?php if ($fromMonth == 8) { echo 'selected'; } ?>>August</option>
+											<option value="9" <?php if ($fromMonth == 9) { echo 'selected'; } ?>>September</option>
+											<option value="10" <?php if ($fromMonth == 10) { echo 'selected'; } ?>>October</option>
+											<option value="11" <?php if ($fromMonth == 11) { echo 'selected'; } ?>>November</option>
+											<option value="12" <?php if ($fromMonth == 12) { echo 'selected'; } ?>>December</option>
+										</select>
+									</div>
+									<div class="form-group col-sm-4 col-md-1">
+										<label>&nbsp;</label>
+										<input class="form-control" type="number" name="from_day" value="<?php echo $fromDay; ?>">
+									</div>
+									<div class="form-group col-sm-4 col-md-2">
+										<label>&nbsp;</label>
+										<input class="form-control" type="number" name="from_year" value="<?php echo $fromYear; ?>">
+									</div>
+									<!-- To -->
+									<div class="form-group col-sm-4 col-md-2">
+										<label><b>To</b></label>
+										<select id="FromMonthSelect" class="payroll-select form-control" name="to_month">
+											<option value="1" <?php if ($toMonth == 1) { echo 'selected'; } ?>>January</option>
+											<option value="2" <?php if ($toMonth == 2) { echo 'selected'; } ?>>February</option>
+											<option value="3" <?php if ($toMonth == 3) { echo 'selected'; } ?>>March</option>
+											<option value="4" <?php if ($toMonth == 4) { echo 'selected'; } ?>>April</option>
+											<option value="5" <?php if ($toMonth == 5) { echo 'selected'; } ?>>May</option>
+											<option value="6" <?php if ($toMonth == 6) { echo 'selected'; } ?>>June</option>
+											<option value="7" <?php if ($toMonth == 7) { echo 'selected'; } ?>>July</option>
+											<option value="8" <?php if ($toMonth == 8) { echo 'selected'; } ?>>August</option>
+											<option value="9" <?php if ($toMonth == 9) { echo 'selected'; } ?>>September</option>
+											<option value="10" <?php if ($toMonth == 10) { echo 'selected'; } ?>>October</option>
+											<option value="11" <?php if ($toMonth == 11) { echo 'selected'; } ?>>November</option>
+											<option value="12" <?php if ($toMonth == 12) { echo 'selected'; } ?>>December</option>
+										</select>
+									</div>
+									<div class="form-group col-sm-4 col-md-1">
+										<label>&nbsp;</label>
+										<input class="form-control" type="number" name="to_day" value="<?php echo $toDay; ?>">
+									</div>
+									<div class="form-group col-sm-4 col-md-2">
+										<label>&nbsp;</label>
+										<input class="form-control" type="number" name="to_year" value="<?php echo $toYear; ?>">
+									</div>
+									<!-- Filter -->
+									<div class="form-group col-sm-6 col-md-1">
+										<label>&nbsp;</label>
+										<button type="submit" class="btn btn-primary w-100"><i class="fas fa-search"></i> Find</button>
 									</div>
 								</div>
-							</div>
+							<?php echo form_close();?>
 						</div>
 					</div>
 					<div class="row PrintOut" style="margin-left: 20px;">
@@ -616,7 +689,17 @@
 												<input type="text" value="RATE:">
 											</div>
 											<div class="payslip-field-value col-sm-10">
-												<input style="font-weight: bold;" type="text" value="<?php echo $rate ; ?> (<?php echo $ClientName ; ?>)">
+												<input style="font-weight: bold;" type="text" value="PHP <?php echo $rate ; ?> (<?php echo $salaryType; ?>)">
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="row">
+											<div class="payslip-field col-sm-2">
+												<input type="text" value="CLIENT:">
+											</div>
+											<div class="payslip-field-value col-sm-10">
+												<input style="font-weight: bold;" type="text" value="<?php echo $ClientName ; ?>">
 											</div>
 										</div>
 									</div>
@@ -902,7 +985,7 @@
 									<div class="col-sm-12">
 										<div class="row">
 											<div class="col-sm-6">
-												<input type="text" value="SSS AMOUNT PAID:">
+												<input type="text" value="VL / SL:">
 											</div>
 											<div class="col-sm-6 text-right">
 												<input class="payslip-number" type="text" value="<?php echo $SSSAmountPaidTotal; ?>">
@@ -1097,6 +1180,18 @@
 		});
 		$('.new-provisions-row-btn').on('click', function () {
 			$('.NewProvisionsContainer').append('<div class="payslip-field col-sm-3"><input type="text" value="#####:"></div><div class="col-sm-3 text-right"><input class="payslip-number" type="text" value="####"></div>');
+		});
+		let changePayroll = false;
+		$('.payroll-changedates-btn').on('click', function() {
+			if (!changePayroll) {
+				changePayroll = true;
+				$(this).html('<i class="fas fa-times"></i> Change Set');
+				$('.payroll-changedates-group').show();
+			} else {
+				changePayroll = false;
+				$(this).html('<i class="fas fa-edit"></i> Change Set');
+				$('.payroll-changedates-group').hide();
+			}
 		});
 	});
 </script>

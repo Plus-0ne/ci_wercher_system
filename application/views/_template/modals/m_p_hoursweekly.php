@@ -39,14 +39,14 @@ if ($erow['SalaryExpected'] > 0) {
 								<label>Payroll Mode</label>
 								<input id="SalaryType" class="form-control" type="text" name="" value="<?php echo $Mode==0?"Weekly":($Mode==1?"Semi-monthly":"Monthly"); ?>" readonly>
 							</div>
-							<div class="form-group col-sm-12 col-md-2">
-								<label>Salary (<?php echo $erow['SalaryType']; ?>)</label>
+							<div class="form-group col-sm-12 col-md-2" style="max-width: 200px;">
+								<label>Salary <?php echo $erow['SalaryType']; ?>)</label>
 								<div class="input-icon-sm">
 									<input id="Salary" class="form-control" type="number" name="" value="<?php echo $SalaryExpected; ?>" readonly>
 									<i>₱</i>
 								</div>
 							</div>
-							<div class="form-group col-sm-12 col-md-2">
+							<div class="form-group col-sm-12 col-md-2" style="max-width: 200px;">
 								<label>Per&nbsp;Month</label>
 								<div class="input-icon-sm">
 									<?php
@@ -78,7 +78,7 @@ if ($erow['SalaryExpected'] > 0) {
 									<i>₱</i>
 								</div>
 							</div>
-							<div class="form-group col-sm-12 col-md-2">
+							<div class="form-group col-sm-12 col-md-2" style="max-width: 200px;">
 								<label>Per&nbsp;Day</label>
 								<div class="input-icon-sm">
 									<?php
