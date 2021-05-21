@@ -38,13 +38,13 @@ use Carbon\Carbon;
 							<table id="ListClients" class="table PrintOut" style="width: 100%;">
 								<thead>
 									<tr class="text-center align-middle">
-										<th> Name </th>
+										<th> Client </th>
 										<th> Address </th>
 										<th> Contact </th>
 										<th style="width: 25px;"> Employees </th>
 										<th>Starting Week</th>
 										<th style="width: 25px;">Current Week</th>
-										<th class="text-center PrintExclude" style="width: 125px;"> Attendance </th>
+										<th class="text-center PrintExclude" style="width: 125px;"> Payroll </th>
 									</tr>
 								</thead>
 								<tbody>
@@ -72,9 +72,18 @@ use Carbon\Carbon;
 													} else {
 														$Week = 1; // Default;
 													}
+
+													$sssFrom = $prow['SSSDayFrom'];
+													$sssTo = $prow['SSSDayTo'];
+													$hdmfFrom = $prow['HDMFDayFrom'];
+													$hdmfTo = $prow['HDMFDayTo'];
 												}
 											} else {
 												$PrimaryWeek = 'N/A';
+												$sssFrom = 'N/A';
+												$sssTo = 'N/A';
+												$hdmfFrom = 'N/A';
+												$hdmfTo = 'N/A';
 											}
 
 											$clientName = $row['Name'];
@@ -114,8 +123,8 @@ use Carbon\Carbon;
 												<?php echo $Week; ?>
 											</td>
 											<td class="text-center PrintExclude">
-												<button id="<?php echo $row['ClientID']; ?>" type="button" class="btn btn-primary btn-sm w-100 mb-1 ViewClientIDButton"  data-toggle="modal" data-target="#ModalClientView"><i class="fas fa-calendar-alt"></i> Date Range</button>
-												<button id="<?php echo $row['ClientID']; ?>" type="button" class="btn btn-primary btn-sm w-100 mb-1 SetPrimaryClientIDButton" data-toggle="modal" data-target="#ModalSetWeek"><i class="fas fa-calendar"></i> Starting Week</button>
+												<button id="<?php echo $row['ClientID']; ?>" type="button" class="btn btn-info glow-gold btn-sm w-100 mb-1 ViewClientIDButton"  data-toggle="modal" data-target="#ModalClientView"><i class="fas fa-calendar-alt"></i> Attendance</button>
+												<button id="<?php echo $row['ClientID']; ?>" type="button" class="payrollconfig-btn btn btn-info btn-sm w-100 mb-1 SetPrimaryClientIDButton" data-toggle="modal" data-target="#ModalSetWeek" data-startingweek="<?php echo $PrimaryWeek ?>" data-sssfrom="<?php echo $sssFrom; ?>" data-sssto="<?php echo $sssTo; ?>" data-hdmffrom="<?php echo $hdmfFrom; ?>" data-hdmfto="<?php echo $hdmfTo; ?>"><i class="fas fa-cog"></i> Payroll Config</button>
 												<button id="<?php echo $row['ClientID']; ?>" type="button" class="excel_formatbtn btn btn-success btn-sm w-100 mb-1"  data-toggle="modal" data-target="#DateFroto_modal" value="<?php echo $row['Name']; ?>"><i class="fas fa-file-download"></i> Download Excel</button>
 											</td>
 										</tr>
@@ -245,6 +254,18 @@ use Carbon\Carbon;
 			$('#idforFormatex').val($(this).attr('id'));
 			$('#DesignatedClientName').val($(this).attr('value'));
 			// $('#ExportFileName').val('');
+		});
+		$('.payrollconfig-btn').on('click', function() {
+			let week = $(this).data('startingweek');
+			let sssFrom = $(this).data('sssfrom');
+			let sssTo = $(this).data('sssto');
+			let hdmfFrom = $(this).data('hdmffrom');
+			let hdmfTo = $(this).data('hdmfto');
+			$('#Week').val(week);
+			$('#PayrollHDMFDayStart').val(hdmfFrom);
+			$('#PayrollHDMFDayEnds').val(hdmfTo);
+			$('#PayrollSSSDayStart').val(sssFrom);
+			$('#PayrollSSSDayEnds').val(sssTo);
 		});
 	});
 </script>

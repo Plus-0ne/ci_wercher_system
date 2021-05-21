@@ -283,7 +283,7 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetWeeklyListEmployee($ClientID)
 	{
-		$SQL = "SELECT * FROM applicants WHERE ClientEmployed = '$ClientID'";
+		$SQL = "SELECT * FROM applicants WHERE ClientEmployed = '$ClientID' AND Status IN ('Employed', 'Employed (Permanent)', 'Absorbed (Wercher)')";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -749,6 +749,11 @@ class Model_Selects extends CI_Model {
 		return $result;
 	}
 	public function GetCurrentPrimaryWeek($ClientID) {
+		$SQL = "SELECT * FROM salary WHERE ClientID = '$ClientID' ORDER BY TimeAdded DESC LIMIT 1";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetClientSalaryConfig($ClientID) {
 		$SQL = "SELECT * FROM salary WHERE ClientID = '$ClientID' ORDER BY TimeAdded DESC LIMIT 1";
 		$result = $this->db->query($SQL);
 		return $result;

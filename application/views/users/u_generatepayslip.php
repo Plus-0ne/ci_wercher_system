@@ -386,14 +386,33 @@
 				$sssTable = $this->Model_Selects->GetAllSSSTable();
 				$hdmfTable = $this->Model_Selects->GetAllHDMFTable();
 				$philhealthTable = $this->Model_Selects->GetAllPhilHealthTable();
+				$SSSTotal = 0;
+				$hdmf_rate = 0;
+				$GetClientSalaryConfig = $this->Model_Selects->GetClientSalaryConfig($row['ClientEmployed']);
+				$hdmfFrom = 0;
+				$hdmfTo = 0;
+				$sssFrom = 0;
+				$sssTo = 0;
+				if ($GetClientSalaryConfig->num_rows() > 0) {
+					foreach($GetClientSalaryConfig->result_array() as $gcscrow) {
+						$sssFrom = $gcscrow['SSSDayFrom'];
+						$sssTo = $gcscrow['SSSDayTo'];
+						$hdmfFrom = $gcscrow['HDMFDayFrom'];
+						$hdmfTo = $gcscrow['HDMFDayTo'];
+					}
+				}
 				foreach ($sssTable->result_array() as $srow) {
-					if ($GrossPayTotal >= $srow['f_range'] && $GrossPayTotal <= $srow['t_range']) {
-						$SSSTotal = $srow['contribution_ee'];
+					if (($fromDay >= $sssFrom && $fromDay <= $sssTo) || ($toDay >= $sssFrom && $toDay <= $sssTo)) {
+						if ($GrossPayTotal >= $srow['f_range'] && $GrossPayTotal <= $srow['t_range']) {
+							$SSSTotal = $srow['contribution_ee'];
+						}
 					}
 				}
 				foreach ($hdmfTable->result_array() as $hrow) {
-					if ($GrossPayTotal >= $hrow['f_range'] && $GrossPayTotal <= $hrow['t_range']) {
-						$hdmf_rate = $hrow['contribution_ee'];
+					if (($fromDay >= $hdmfFrom && $fromDay <= $hdmfTo) || ($toDay >= $hdmfFrom && $toDay <= $hdmfTo)) {
+						if ($GrossPayTotal >= $hrow['f_range'] && $GrossPayTotal <= $hrow['t_range']) {
+							$hdmf_rate = $hrow['contribution_ee'];
+						}
 					}
 				}
 				$philhealthArray=$philhealthTable->result_array();

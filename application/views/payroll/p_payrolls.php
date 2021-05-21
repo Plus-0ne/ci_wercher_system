@@ -274,6 +274,11 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 																		$sssTable = $this->Model_Selects->GetAllSSSTable();
 																		$hdmfTable = $this->Model_Selects->GetAllHDMFTable();
 																		$philhealthTable = $this->Model_Selects->GetAllPhilHealthTable();
+																		// $GetClientSalaryConfig = $this->Model_Selects->GetClientSalaryConfig();
+																		// $hdmfDayFrom = 0;
+																		// $hdmfDayTo = 0;
+																		// $sssDayFrom = 0;
+																		// $sssDayTo = 0;
 																		// SSS Table
 																		foreach ($sssTable->result_array() as $srow) {
 																			if ($TotalGrossPay >= $srow['f_range'] && $TotalGrossPay <= $srow['t_range']) {
@@ -653,7 +658,7 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 		$("#ModalLoans").on("hidden.bs.modal", function () { // Resets modal on close
 			$('#NewLoanContainer').empty();
 			$('.new-loan-row').hide();
-			updateCalculation();
+			// updateCalculation();
 		});
 		var AJAX_onCall = false; <?php // Prevents repeated button mashing. ?>
 		var Mode = <?php echo $_GET['mode']; ?>;
@@ -721,7 +726,7 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 								$('.loans-btn[data-applicantid=' + ApplicantID + '][data-year=' + Year + '][data-month=' + Month + '][data-week=' + Week + ']').data('loanstotal', totalCounter);
 							})
 							AJAX_onCall = false;
-							updateCalculation();
+							// updateCalculation();
 						}
 					})
 				})

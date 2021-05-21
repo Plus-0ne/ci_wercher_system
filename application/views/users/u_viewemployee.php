@@ -2148,7 +2148,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 			$("#ModalLoans").on("hidden.bs.modal", function () { // Resets modal on close
 				$('#NewLoanContainer').empty();
 				$('.new-loan-row').hide();
-				updateCalculation();
+				// updateCalculation();
 			});
 			var AJAX_onCall = false; <?php // Prevents repeated button mashing. ?>
 			var Mode = <?php echo $Mode; ?>;

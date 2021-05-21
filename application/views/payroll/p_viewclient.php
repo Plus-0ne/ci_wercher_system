@@ -96,7 +96,7 @@ use Carbon\Carbon;
 									$PrimaryWeek = 'N/A';
 								}
 						  		?>
-						  		<button id="<?php echo $ClientID; ?>" type="button" class="btn btn-primary btn-sm SetPrimaryClientIDButton" data-toggle="modal" data-target="#ModalSetWeek"><i class="fas fa-calendar"></i> Set Starting Week</button>
+						  		<!-- <button id="<?php echo $ClientID; ?>" type="button" class="btn btn-primary btn-sm SetPrimaryClientIDButton" data-toggle="modal" data-target="#ModalSetWeek"><i class="fas fa-calendar"></i> Set Starting Week</button> -->
 						  		<i class="fas fa-info-circle"></i> <i>The starting week for this client is on <b><?php echo $day; ?></b>. It is currently <?php echo $ModeText; ?>.</i>
 						  	</div>
 						</div>

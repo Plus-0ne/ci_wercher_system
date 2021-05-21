@@ -2223,7 +2223,11 @@ class Update_Controller extends CI_Controller {
 	}
 	public function SetPrimaryWeek()
 	{
-		$Week = $this->input->post('Week',TRUE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
+		$Week = $this->input->post('Week',TRUE);
+		$hdmfFrom = $this->input->post('PayrollHDMFDayStart');
+		$hdmfTo = $this->input->post('PayrollHDMFDayEnds');
+		$sssFrom = $this->input->post('PayrollSSSDayStart');
+		$sssTo = $this->input->post('PayrollSSSDayEnds');
 		$ClientID = $this->input->post('PrimaryClientID', TRUE);
 		if ($Week == NULL) {
 			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
@@ -2231,9 +2235,18 @@ class Update_Controller extends CI_Controller {
 		}
 		else
 		{
-			$SetPrimaryWeek = $this->Model_Updates->SetPrimaryWeek($Week, $ClientID);
+			$data = array(
+				'WeekStart' => $Week,
+				'SSSDayFrom' => $sssFrom,
+				'SSSDayTo' => $sssTo,
+				'HDMFDayFrom' => $hdmfFrom,
+				'HDMFDayTo' => $hdmfTo,
+				'ClientID' => $ClientID,
+				'TimeAdded' => date('Y-m-d H:i:s'),
+			);
+			$SetPrimaryWeek = $this->Model_Updates->SetPrimaryWeek($data);
 			if ($SetPrimaryWeek == TRUE) {
-				$this->Model_Logbook->SetPrompts('success', 'success', 'New primary week set.');
+				$this->Model_Logbook->SetPrompts('success', 'success', 'Config saved!');
 				$this->Model_Logbook->LogbookEntry('Blue', 'Salary', ' updated the primary week');
 				redirect('Payroll');
 			}

@@ -134,13 +134,8 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->update('sss_table', $data);
 		return $result;
 	}
-	public function SetPrimaryWeek($Week, $ClientID)
+	public function SetPrimaryWeek($data)
 	{
-		$data = array(
-			'WeekStart' => $Week,
-			'ClientID' => $ClientID,
-			'TimeAdded' => date('Y-m-d H:i:s'),
-		);
 		$result = $this->db->insert('salary', $data);
 		return $result;
 	}
