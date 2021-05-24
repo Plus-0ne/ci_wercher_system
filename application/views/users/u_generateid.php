@@ -14,9 +14,9 @@ $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 					<div class="col-8 col-sm-8 col-md-8 text-right">
 					</div>
 					<div class="col-sm-6">
-						<div id="WercherIDFront" style="width: 530px; height: 770px; user-select: none;">
+						<div id="WercherIDFront" style="width: 345px; height: 501px; user-select: none;">
 							<img class="wercher-idcard-container" src="<?php echo base_url(); ?>assets/img/wercher_id_front.png">
-							<img class="wercher-idcard-photo" src="<?php echo $ApplicantImage; ?>" width="200" height="200">
+							<img class="wercher-idcard-photo" src="<?php echo $ApplicantImage; ?>" width="125" height="125">
 							<div class="wercher-idcard-name">
 								<span><b><?php echo $LastName . ', ' . $FirstName . ' ' . $MiddleName[0] . '.'; if ($NameExtension != NULL): echo ', ' . $NameExtension; endif; ?></b></span>
 							</div>
@@ -39,7 +39,7 @@ $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 						<button id="FrontSaveBtn" type="button" class="btn btn-primary wercher-idcard-frontbtn"><i class="fas fa-download"></i> Save Front to Computer</button>
 					</div>
 					<div class="col-sm-6">
-						<div id="WercherIDBack" style="width: 530px; height: 770px; user-select: none;">
+						<div id="WercherIDBack" style="width: 345px; height: 501px; user-select: none;">
 							<img class="wercher-idcard-container" src="<?php echo base_url(); ?>assets/img/wercher_id_back.png">
 							<div class="wercher-idcard-address">
 								<span><?php echo $Address_Present; ?></span>
@@ -89,33 +89,33 @@ $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 		});
 		$('.wercher-idcard-name').textfill({
 			debug: true,
-			minFontPixels: 8,
-			maxFontPixels: 40,
+			minFontPixels: 10,
+			maxFontPixels: 12,
 		});
 		$('.wercher-idcard-designation').textfill({
 			debug: true,
-			minFontPixels: 8,
-			maxFontPixels: 22,
+			minFontPixels: 10,
+			maxFontPixels: 15,
 		});
 		$('.wercher-idcard-dateissused').textfill({
 			debug: true,
-			minFontPixels: 8,
-			maxFontPixels: 22,
-		});5
+			minFontPixels: 10,
+			maxFontPixels: 15,
+		});
 		$('.wercher-idcard-employeeid').textfill({
 			debug: true,
-			minFontPixels: 8,
-			maxFontPixels: 18,
+			minFontPixels: 10,
+			maxFontPixels: 15,
 		});
 		$('.wercher-idcard-address, .wercher-idcard-emergency').textfill({
 			debug: true,
-			minFontPixels: 9,
-			maxFontPixels: 22,
+			minFontPixels: 10,
+			maxFontPixels: 15,
 		});
 		$('.wercher-idcard-telno, .wercher-idcard-sssno, .wercher-idcard-tin, .wercher-idcard-pagibig, .wercher-idcard-philhealth, .wercher-idcard-hmo').textfill({
 			debug: true,
-			minFontPixels: 8,
-			maxFontPixels: 22,
+			minFontPixels: 10,
+			maxFontPixels: 15,
 		});
 		$('[data-toggle="tooltip"]').tooltip();
 		function saveAs(uri, filename) {
