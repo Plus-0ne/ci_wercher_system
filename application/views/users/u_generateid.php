@@ -15,7 +15,9 @@ $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 					</div>
 					<div class="col-sm-6">
 						<div id="WercherIDFront" style="width: 345px; height: 501px; user-select: none;">
-							<img class="wercher-idcard-container" src="<?php echo base_url(); ?>assets/img/wercher_id_front.png">
+							<div class="mx-auto d-block">
+								<img class="wercher-idcard-container" src="<?php echo base_url(); ?>assets/img/wercher_id_front.png">
+							</div>
 							<img class="wercher-idcard-photo" src="<?php echo $ApplicantImage; ?>" width="125" height="125">
 							<div class="wercher-idcard-name">
 								<span><b><?php echo $LastName . ', ' . $FirstName . ' ' . $MiddleName[0] . '.'; if ($NameExtension != NULL): echo ', ' . $NameExtension; endif; ?></b></span>
@@ -40,7 +42,9 @@ $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 					</div>
 					<div class="col-sm-6">
 						<div id="WercherIDBack" style="width: 345px; height: 501px; user-select: none;">
-							<img class="wercher-idcard-container" src="<?php echo base_url(); ?>assets/img/wercher_id_back.png">
+							<div class="mx-auto d-block">
+								<img class="wercher-idcard-container" src="<?php echo base_url(); ?>assets/img/wercher_id_back.png">
+							</div>
 							<div class="wercher-idcard-address">
 								<span><?php echo $Address_Present; ?></span>
 							</div>
@@ -79,6 +83,7 @@ $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.textfill.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('#WercherIDFront').css({ transform: 'scale(.5)' });
 		$('.wercher-idcard-container').attr('draggable', false);
 		$('.wercher-idcard-photo').attr('draggable', false);
 		$('#WercherIDFront').on('contextmenu', 'img', function(e){ 
