@@ -1347,64 +1347,76 @@ class Update_Controller extends CI_Controller {
 						case '0': ### WEEKLY
 							if ($diff <= 7) {
 								$Week = 1;
+								$Month = $CurrentPrimaryWeek->format('m');
 							} elseif ($diff <= 14 && $diff > 7) {
 								$Week = 2;
+								$Month = $CurrentPrimaryWeek->format('m');
 							} elseif ($diff <= 21 && $diff > 14) {
 								$Week = 3;
+								$Month = $CurrentPrimaryWeek->format('m');
 							} elseif ($diff <= 28 && $diff > 21) {
 								$Week = 4;
+								$Month = $CurrentPrimaryWeek->format('m');
 							} else {
-								$PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P29D'));
-								$PrimaryWeek = $PrimaryWeek->format('Y-m-d');
-								$this->Model_Updates->SetPrimaryWeek($PrimaryWeek, $ClientID);
+								// $PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P29D'));
+								$PrimaryWeek = $DateToday->format('Y-m-d');
+								$this->Model_Updates->UpdatePrimaryWeek($PrimaryWeek, $ClientID);
 								$Week = 1;
+								$Month = $PrimaryWeek->format('m');
 							}
-							$Month = $CurrentPrimaryWeek->format('m');
 							break;
 
 						case '1': ### SEMI-MONTHLY
 							if ($diff <= 15) {
 								$Week = 1;
+								$Month = $CurrentPrimaryWeek->format('m');
 							} elseif ($diff > 15 || $diff <= 30) {
 								$Week = 2;
+								$Month = $CurrentPrimaryWeek->format('m');
 							}
 							else
 							{
-								$PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P31D'));
-								$PrimaryWeek = $PrimaryWeek->format('Y-m-d');
-								$this->Model_Updates->SetPrimaryWeek($PrimaryWeek, $ClientID);
+								// $PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P31D'));
+								$PrimaryWeek = $DateToday->format('Y-m-d');
+								$this->Model_Updates->UpdatePrimaryWeek($PrimaryWeek, $ClientID);
 								$Week = 1;
+								$Month = $PrimaryWeek->format('m');
 							}
-							$Month = $CurrentPrimaryWeek->format('m');
 							break;
 
 						case '2': ### MONTHLY
 							if ($diff < 31) {
 								$Week = 1;
+								$Month = $CurrentPrimaryWeek->format('m');
 							} else {
-								$PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P31D'));
-								$PrimaryWeek = $PrimaryWeek->format('Y-m-d');
-								$this->Model_Updates->SetPrimaryWeek($PrimaryWeek, $ClientID);
+								// $PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P31D'));
+								$PrimaryWeek = $DateToday->format('Y-m-d');
+								$this->Model_Updates->UpdatePrimaryWeek($PrimaryWeek, $ClientID);
+								$Week = 1;
+								$Month = $PrimaryWeek->format('m');
 							}
-							$Month = $CurrentPrimaryWeek->format('m');
 							break;
 
 						default:
 							if ($diff <= 7) {
 								$Week = 1;
+								$Month = $CurrentPrimaryWeek->format('m');
 							} elseif ($diff <= 14 && $diff > 7) {
 								$Week = 2;
+								$Month = $CurrentPrimaryWeek->format('m');
 							} elseif ($diff <= 21 && $diff > 14) {
 								$Week = 3;
+								$Month = $CurrentPrimaryWeek->format('m');
 							} elseif ($diff <= 28 && $diff > 21) {
 								$Week = 4;
+								$Month = $CurrentPrimaryWeek->format('m');
 							} else {
-								$PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P29D'));
-								$PrimaryWeek = $PrimaryWeek->format('Y-m-d');
-								$this->Model_Updates->SetPrimaryWeek($PrimaryWeek, $ClientID);
+								// $PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P29D'));
+								$PrimaryWeek = $DateToday->format('Y-m-d');
+								$this->Model_Updates->UpdatePrimaryWeek($PrimaryWeek, $ClientID);
 								$Week = 1;
+								$Month = $PrimaryWeek->format('m');
 							}
-							$Month = $CurrentPrimaryWeek->format('m');
 							break;
 					}
 					
@@ -1433,6 +1445,7 @@ class Update_Controller extends CI_Controller {
 				$RegCheck = $this->input->post('REGCheck_' . $nrow['Time'],TRUE);
 				$RestCheck = $this->input->post('RESTCheck_' . $nrow['Time'],TRUE);
 				$SpecialCheck = $this->input->post('SPCheck_' . $nrow['Time'],TRUE);
+				$NationalOneHundredCheck = $this->input->post('NHOneHundredCheck_' . $nrow['Time'],TRUE);
 				$NationalCheck = $this->input->post('NHCheck_' . $nrow['Time'],TRUE);
 				$RegularGrossPay = $this->input->post('RegularGrossPay_' . $nrow['Time'],TRUE);
 				$OvertimeGrossPay = $this->input->post('OvertimeGrossPay_' . $nrow['Time'],TRUE);
@@ -1469,7 +1482,11 @@ class Update_Controller extends CI_Controller {
 				}
 				else
 				{
-					$GrossPay = $total_hoursperday * $dayRate;
+					if ($NationalOneHundredCheck) {
+						$GrossPay = ($total_hoursperday * $dayRate) + ($dayRate * 8);
+					} else {
+						$GrossPay = $total_hoursperday * $dayRate;
+					}
 
 					$data = array(
 						'ApplicantID' => $ApplicantID,
@@ -1501,6 +1518,9 @@ class Update_Controller extends CI_Controller {
 					}
 					if ($SpecialCheck) {
 						$data['SpecialHoliday'] = 1;
+					}
+					if ($NationalOneHundredCheck) {
+						$data['NationalHolidayOneHundred'] = 1;
 					}
 					if ($NationalCheck) {
 						$data['NationalHoliday'] = 1;

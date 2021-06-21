@@ -1689,6 +1689,26 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->get($Mode)->row();  
 		return $result->NPOvertimeGrossPay;
 	}
+	// ~ national 100% holiday
+	public function GetPayslipNationalHolidayOneHundredHours($ApplicantID, $Mode, $FromDate, $ToDate) {
+		switch($Mode) {
+			case 0:
+				$Mode = 'hours_weekly';
+				break;
+			case 1:
+				$Mode = 'hours_semimonthly';
+				break;
+			case 2:
+				$Mode = 'hours_monthly';
+				break;
+		}
+		$this->db->select('*');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		$this->db->where('NationalHolidayOneHundred', 1);
+		$result = $this->db->get($Mode);  
+		return $result;
+	}
 	// ~ national holiday
 	public function GetPayslipNationalHolidayHours($ApplicantID, $Mode, $FromDate, $ToDate) {
 		switch($Mode) {

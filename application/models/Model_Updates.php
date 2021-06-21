@@ -139,7 +139,25 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->insert('salary', $data);
 		return $result;
 	}
-
+	public function UpdatePrimaryWeek($week, $clientID)
+	{
+		$GetCurrentPrimaryWeek = $this->Model_Selects->GetCurrentPrimaryWeek($clientID);
+		$data = array(
+			'WeekStart' => $week,
+			'ClientID' => $clientID,
+			'TimeAdded' => date('Y-m-d h:i:s A'), 
+		);
+		if ($GetCurrentPrimaryWeek->num_rows() > 0) {
+			foreach($GetCurrentPrimaryWeek->result_array() as $row) {
+				$data['SSSDayFrom'] = $row['SSSDayFrom'];
+				$data['SSSDayTo'] = $row['SSSDayTo'];
+				$data['HDMFDayFrom'] = $row['HDMFDayFrom'];
+				$data['HDMFDayTo'] = $row['HDMFDayTo'];
+			}
+		}
+		$result = $this->db->insert('salary', $data);
+		return $result;
+	}
 	public function PayDeferredDeductions($id)
 	{
 		$SQL = "update deferred_deduction set is_paid=1 where id=$id";

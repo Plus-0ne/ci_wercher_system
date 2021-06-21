@@ -74,6 +74,8 @@ use Carbon\Carbon;
 											} elseif ($diff <= 28 && $diff > 21) {
 												$Week = '4th';
 											} else {
+												$PrimaryWeek = $currentDate->format('Y-m-d');
+												$this->Model_Updates->UpdatePrimaryWeek($PrimaryWeek, $row['ClientID']);
 												$Week = '1st'; // Default;
 											}
 											$ModeText = 'the <b>' . $Week . ' week</b>';
@@ -83,6 +85,8 @@ use Carbon\Carbon;
 											} elseif ($diff > 15 && $diff <= 30) {
 												$Week = '2nd';
 											} else {
+												$PrimaryWeek = $currentDate->format('Y-m-d');
+												$this->Model_Updates->UpdatePrimaryWeek($PrimaryWeek, $row['ClientID']);
 												$Week = '1st'; // Default;
 											}
 											$ModeText = 'the <b>' . $Week . ' period</b>';
@@ -97,7 +101,7 @@ use Carbon\Carbon;
 								}
 						  		?>
 						  		<!-- <button id="<?php echo $ClientID; ?>" type="button" class="btn btn-primary btn-sm SetPrimaryClientIDButton" data-toggle="modal" data-target="#ModalSetWeek"><i class="fas fa-calendar"></i> Set Starting Week</button> -->
-						  		<i class="fas fa-info-circle"></i> <i>The starting week for this client is on <b><?php echo $day; ?></b>. It is currently <?php echo $ModeText; ?>.</i>
+						  		<i class="fas fa-info-circle"></i> <i>The current week for this client is <b><?php echo $day; ?></b>. It is currently <?php echo $ModeText; ?>.</i>
 						  	</div>
 						</div>
 					</div>
@@ -279,8 +283,17 @@ use Carbon\Carbon;
 				$(this).closest('.special-btn-group').find('input[type=checkbox]').attr('checked', true);
 			}
 		});
-		$('.national-btn').on('click', function () {
+		$('.national100-btn').on('click', function () {
 			$(this).toggleClass('btn-flag-ph btn-secondary');
+			$(this).children('i').toggleClass('text-primary');
+			if ($(this).closest('.national100-btn-group').find('input[type=checkbox]').is(':checked')) {
+				$(this).closest('.national100-btn-group').find('input[type=checkbox]').attr('checked', false);
+			} else {
+				$(this).closest('.national100-btn-group').find('input[type=checkbox]').attr('checked', true);
+			}
+		});
+		$('.national-btn').on('click', function () {
+			$(this).toggleClass('btn-success btn-secondary');
 			$(this).children('i').toggleClass('text-primary');
 			if ($(this).closest('.national-btn-group').find('input[type=checkbox]').is(':checked')) {
 				$(this).closest('.national-btn-group').find('input[type=checkbox]').attr('checked', false);
@@ -393,6 +406,7 @@ use Carbon\Carbon;
 	                let OvertimePay;
 	                let NightPremiumPay;
 	                let NightPremiumOvertimePay;
+	                let NationalBonus = 0;
 	                // Regular
 	                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
 	                	RegularPay = Regular;
@@ -438,7 +452,11 @@ use Carbon\Carbon;
 		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 	           			}
 	           		}
-	           		// National
+	           		// National 100%
+	           		if($(this).closest("#SalaryDays").find('.NHOneHundredCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                NationalBonus = PerHour * 8;
+	           		}
+	           		// National 200%
 	           		if($(this).closest("#SalaryDays").find('.NHCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                	RegularPay = Regular * 2.0;
@@ -461,7 +479,7 @@ use Carbon\Carbon;
 		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 	           			}
 	           		}
-	           		let Result = TotalPerDay + NightTotalPerDay;
+	           		let Result = TotalPerDay + NightTotalPerDay + NationalBonus;
 	           		NightPremiumPay = NightPremiumPay * 1.1;
 	           		NightPremiumOvertimePay = NightPremiumOvertimePay * 1.1;
 
@@ -492,6 +510,7 @@ use Carbon\Carbon;
 	                let OvertimePay;
 	                let NightPremiumPay;
 	                let NightPremiumOvertimePay;
+	                let NationalBonus = 0;
 	                // Regular
 	                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
 	                	RegularPay = Regular;
@@ -537,7 +556,11 @@ use Carbon\Carbon;
 		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 	           			}
 	           		}
-	           		// National
+	           		// National 100%
+	           		if($(this).closest("#SalaryDays").find('.NHOneHundredCheck_<?php echo $row['Time']; ?>').is(":checked")){
+		                NationalBonus = PerHour * 8;
+	           		}
+	           		// National 200%
 	           		if($(this).closest("#SalaryDays").find('.NHCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                if($(this).closest("#SalaryDays").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                	RegularPay = Regular * 2.0;
@@ -560,7 +583,7 @@ use Carbon\Carbon;
 		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 	           			}
 	           		}
-	           		let Result = TotalPerDay + NightTotalPerDay;
+	           		let Result = TotalPerDay + NightTotalPerDay + NationalBonus;
 	           		NightPremiumPay = NightPremiumPay * 1.1;
 	           		NightPremiumOvertimePay = NightPremiumOvertimePay * 1.1;
 

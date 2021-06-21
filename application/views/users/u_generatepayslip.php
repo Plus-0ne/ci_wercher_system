@@ -295,7 +295,24 @@
 				} else {
 					$NightPremiumTotal = $NightPremiumTotal + $SPHRDNPOvertimeGrossPay;
 				}
-				// ~ national holiday
+				// ~ national holiday 100%
+				$NHOHPHoursRaw = 0; // National Holiday One Hundred Percent Hours
+				$NHOHPHours = 0;
+				$NationalHolidayOneHundredHours = $this->Model_Selects->GetPayslipNationalHolidayOneHundredHours($ApplicantID, $Mode, $fromDate, $toDate);
+				if ($NationalHolidayOneHundredHours->num_rows() > 0) {
+					$NHOHPHoursRaw = $NationalHolidayOneHundredHours->num_rows();
+					$NHOHPHours = number_format(($NHOHPHoursRaw * 8), 2, '.', '');
+				}
+				$NHOHPGrossPay = number_format(($NHOHPHoursRaw * $rate), 2, '.', '');
+				if ($NHOHPHours <= 0) {
+					$NHOHPHours = '-';
+				}
+				if ($NHOHPGrossPay <= 0) {
+					$NHOHPGrossPay = '-';
+				} else {
+					$EarningsTotal = $EarningsTotal + $NHOHPGrossPay;
+				}
+				// ~ national holiday 200%
 				$NationalHolidayHours = number_format($this->Model_Selects->GetPayslipNationalHolidayHours($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($NationalHolidayHours <= 0) {
 					$NationalHolidayHours = '-';
@@ -405,7 +422,8 @@
 					if (($fromDay >= $sssFrom && $fromDay <= $sssTo) || ($toDay >= $sssFrom && $toDay <= $sssTo)) {
 						if ($GrossPayTotal >= $srow['f_range'] && $GrossPayTotal <= $srow['t_range']) {
 							$SSSTotal = $srow['contribution_ee'];
-						}
+							echo ($fromDay >= $sssFrom && $fromDay <= $sssTo);
+ 						}
 					}
 				}
 				foreach ($hdmfTable->result_array() as $hrow) {
@@ -811,7 +829,16 @@
 												<input class="payslip-number" type="text" value="<?php echo $SPHRDOvertimeGrossPay; ?>">
 											</div>
 											<div class="payslip-field col-sm-3">
-												<input type="text" value="NH:">
+												<input type="text" value="NH100:">
+											</div>
+											<div class="col-sm-4 text-right">
+												<input class="payslip-number" type="text" value="<?php echo $NHOHPHours; ?>">
+											</div>
+											<div class="col-sm-5 text-right">
+												<input class="payslip-number" type="text" value="<?php echo $NHOHPGrossPay; ?>">
+											</div>
+											<div class="payslip-field col-sm-3">
+												<input type="text" value="NH200:">
 											</div>
 											<div class="col-sm-4 text-right">
 												<input class="payslip-number" type="text" value="<?php echo $NationalHolidayHours; ?>">

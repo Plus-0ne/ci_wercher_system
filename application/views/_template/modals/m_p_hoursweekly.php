@@ -124,6 +124,7 @@ if ($erow['SalaryExpected'] > 0) {
 									$salaryNightOvertime = 0;
 									$RestDay = false;
 									$SpecialHoliday = false;
+									$NationalHolidayOneHundred = false;
 									$NationalHoliday = false;
 									$regGrossPay = 0;
 									$overtimeGrossPay = 0;
@@ -147,6 +148,9 @@ if ($erow['SalaryExpected'] > 0) {
 										}
 										if($nrow['SpecialHoliday']) {
 											$SpecialHoliday = true;
+										}
+										if($nrow['NationalHolidayOneHundred']) {
+											$NationalHolidayOneHundred = true;
 										}
 										if($nrow['NationalHoliday']) {
 											$NationalHoliday = true;
@@ -201,8 +205,12 @@ if ($erow['SalaryExpected'] > 0) {
 													<button type="button" class="special-btn btn <?php if ($SpecialHoliday) { echo 'btn-danger'; } else { echo 'btn-secondary'; } ?> SalaryButtons" data-placement="top" data-html="true" title="Special Holiday"><i class="fas fa-candy-cane wercher-visible <?php if ($SpecialHoliday) { echo 'text-primary'; } ?>" style="margin-right: -1px;"></i></button>
 													<input class="SPCheck_<?php echo $row['Time']; ?>" type="checkbox" <?php if ($SpecialHoliday) { echo 'checked'; } ?> name="SPCheck_<?php echo $row['Time']; ?>">
 												</div>
-												<div class="national-btn-group form-group col-sm-1 col-md-2 mr-5">
-													<button type="button" class="national-btn btn <?php if ($NationalHoliday) { echo 'btn-flag-ph'; } else { echo 'btn-secondary'; } ?> SalaryButtons" data-placement="top" data-html="true" title="National Holiday"><i class="fas fa-flag wercher-visible <?php if ($NationalHoliday) { echo 'text-primary'; } ?>" style="margin-right: -1px;"></i></button>
+												<div class="national100-btn-group form-group col-sm-1 col-md-2 mr-1">
+													<button type="button" class="national100-btn btn <?php if ($NationalHolidayOneHundred) { echo 'btn-flag-ph'; } else { echo 'btn-secondary'; } ?> SalaryButtons" data-placement="top" data-html="true" title="National Holiday 100%"><i class="fas fa-flag wercher-visible <?php if ($NationalHolidayOneHundred) { echo 'text-primary'; } ?>" style="margin-right: -1px;"></i></button>
+													<input class="NHOneHundredCheck_<?php echo $row['Time']; ?>" type="checkbox" <?php if ($NationalHolidayOneHundred) { echo 'checked'; } ?> name="NHOneHundredCheck_<?php echo $row['Time']; ?>">
+												</div>
+												<div class="national-btn-group form-group col-sm-1 col-md-2 mr-1">
+													<button type="button" class="national-btn btn <?php if ($NationalHoliday) { echo 'btn-flag-ph'; } else { echo 'btn-secondary'; } ?> SalaryButtons" data-placement="top" data-html="true" title="National Holiday 200%"><i class="fas fa-flag wercher-visible <?php if ($NationalHoliday) { echo 'text-primary'; } ?>" style="margin-right: -1px;"></i></button>
 													<input class="NHCheck_<?php echo $row['Time']; ?>" type="checkbox" <?php if ($NationalHoliday) { echo 'checked'; } ?> name="NHCheck_<?php echo $row['Time']; ?>">
 												</div>
 												<div class="night-btn-group form-group col-sm-1 col-md-2">
@@ -247,7 +255,7 @@ if ($erow['SalaryExpected'] > 0) {
 														?>">
 														<input class="form-control PerHour" type="text" name="dayRate_<?php echo $row['Time']; ?>" value="<?php 
 														$RatePerHour = $dailySalary / 8;
-														echo round($RatePerHour, 2);
+														echo round($RatePerHour, 3);
 																?>" readonly>
 														<i>₱</i>
 													</div>

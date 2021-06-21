@@ -1,47 +1,71 @@
 <?php
 $T_Header;
 
+$employeeArray = [];
+if ($this->session->userdata('IDCardGroup') != NULL) {
+	$employeeArray = $this->session->userdata('IDCardGroup');
+}
+$id = $this->input->get('id'); // to be added
+if ($id != NULL && !in_array($id, $employeeArray)) {
+	array_push($employeeArray, $id);
+}
+$this->session->set_userdata('IDCardGroup', $employeeArray);
+
+$maxSize = count($employeeArray);
 $date = new DateTime();
 $day = $date->format('Y-m-d');
 $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 <body>
-	<div class="wrapper wercher-background-lowpoly">
-		<div id="content">
+	<div class="wrapper">
+		<?php $this->load->view('_template/users/u_sidebar'); ?>
+		<div id="content" class="ncontent wercher-background-lowpoly">
 			<div class="container-fluid">
-				<div class="row">
-					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
-					</div>
-					<div class="col-8 col-sm-8 col-md-8 text-right">
-					</div>
-					<div class="col-sm-6">
-						<div id="WercherIDFront" style="width: 345px; height: 501px; user-select: none;">
-							<div class="mx-auto d-block">
-								<img class="wercher-idcard-container" src="<?php echo base_url(); ?>assets/img/wercher_id_front.png">
-							</div>
-							<img class="wercher-idcard-photo" src="<?php echo $ApplicantImage; ?>" width="125" height="125">
-							<div class="wercher-idcard-name">
-								<span><b><?php echo $LastName . ', ' . $FirstName . ' ' . $MiddleName[0] . '.'; if ($NameExtension != NULL): echo ', ' . $NameExtension; endif; ?></b></span>
-							</div>
-							<div class="wercher-idcard-designation">
-								<span><?php echo $PositionDesired; ?></span>
-							</div>
-							<div class="wercher-idcard-dateissued">
-								<span><?php echo $day; ?></span>
-							</div>
-							<div class="wercher-idcard-employeeid">
-								<span>
-									<?php if($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Absorbed (Wercher)'): ?>
-										<?php echo $EmployeeID; ?>
-									<?php else: ?>
-										<?php echo 'NO EMPLOYEE ID ASSIGNED'; ?>
-									<?php endif; ?>
-								</span>
-							</div>
+				<?php $this->load->view('_template/users/u_notifications'); ?>
+					<div class="row">
+						<div class="col-sm-12 mt-2">
+							<button type="button" class="btn btn-success glow-gold" onClick="printContent('PrintOut')" style="width: 400px;"><i class="fas fa-print"></i> Print</button>
+							<button type="button" class="new-earnings-row-btn btn btn-secondary"><i class="fas fa-lock"></i> Add Employee (Work in Progress)</button>
+							<span style="color: #fff;">Scale: <input class="idcard-scale" type="number" step="0.01" min="1" max="100" value="100"> %</span>
 						</div>
-						<button id="FrontSaveBtn" type="button" class="btn btn-primary wercher-idcard-frontbtn"><i class="fas fa-download"></i> Save Front to Computer</button>
 					</div>
-					<div class="col-sm-6">
-						<div id="WercherIDBack" style="width: 345px; height: 501px; user-select: none;">
+					<div class="row wercher-idcard-group PrintOut ml-2">
+						<?php for($i = 0; $i < $maxSize; $i++):
+							$getEmployeeDetails = $this->Model_Selects->GetEmployeeDetails($employeeArray[$i]);
+							if ($getEmployeeDetails->num_rows() > 0):
+								foreach($getEmployeeDetails->result_array() as $erow): ?>
+								<div class="wercher-idcard-holder" style="user-select: none;">
+									<div class="WercherIDFront" style="transform-origin: right top;">
+										<div class="wercher-idcard-container mx-auto d-block">
+											<img src="<?php echo base_url(); ?>assets/img/wercher_id_front.png">
+										</div>
+										<img class="wercher-idcard-photo" src="<?php echo $erow['ApplicantImage']; ?>" width="125" height="125">
+										<div class="wercher-idcard-name">
+											<span><b><?php echo $erow['LastName'] . ', ' . $erow['FirstName'] . ' ' . $erow['MiddleName'][0] . '.'; if ($erow['NameExtension'] != NULL): echo ', ' . $erow['NameExtension']; endif; ?></b></span>
+										</div>
+										<div class="wercher-idcard-designation">
+											<span><?php echo $erow['PositionDesired']; ?></span>
+										</div>
+										<div class="wercher-idcard-dateissued">
+											<span><?php echo $day; ?></span>
+										</div>
+										<div class="wercher-idcard-employeeid">
+											<span>
+												<?php if($erow['Status'] == 'Employed' || $erow['Status'] == 'Employed (Permanent)' || $erow['Status'] == 'Absorbed (Wercher)'): ?>
+													<?php echo $erow['EmployeeID']; ?>
+												<?php else: ?>
+													<?php echo 'NO EMPLOYEE ID ASSIGNED'; ?>
+												<?php endif; ?>
+											</span>
+										</div>
+									</div>
+								</div>
+								<?php endforeach;?>
+							<?php endif; ?>
+						<?php endfor;?>
+					</div>
+				</div>
+					<!-- <div class="col-sm-6">
+						<div class="WercherIDBack" style="width: 345px; height: 501px; user-select: none;">
 							<div class="mx-auto d-block">
 								<img class="wercher-idcard-container" src="<?php echo base_url(); ?>assets/img/wercher_id_back.png">
 							</div>
@@ -71,10 +95,7 @@ $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 							</div>
 						</div>
 						<button id="BackSaveBtn" type="button" class="btn btn-primary wercher-idcard-backbtn"><i class="fas fa-download"></i> Save Back to Computer</button>
-					</div>
-				</div>
-			</div>
-		</div>
+					</div> -->
 	</div>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
@@ -83,7 +104,12 @@ $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.textfill.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function () {
-		$('#WercherIDFront').css({ transform: 'scale(.5)' });
+		$('.idcard-scale').bind('input', function() {
+			let scale = $(this).val() / 100;
+			$('.WercherIDFront').css({transform: 'scale(' + scale + ')'});
+			$('.WercherIDFront').parent('.wercher-idcard-holder').css({width: (345 * scale) + "px",
+	      height: (501 * scale) + "px"});
+		});
 		$('.wercher-idcard-container').attr('draggable', false);
 		$('.wercher-idcard-photo').attr('draggable', false);
 		$('#WercherIDFront').on('contextmenu', 'img', function(e){ 
