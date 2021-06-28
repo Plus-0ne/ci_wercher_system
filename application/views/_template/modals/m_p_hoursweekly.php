@@ -109,6 +109,10 @@ if ($erow['SalaryExpected'] > 0) {
 									<i>₱</i>
 								</div>
 							</div>
+							<div class="form-group col-sm-12 col-md-2" style="max-width: 200px;">
+								<label>--</label>
+								<button type="button" class="refresh-calculation-btn btn btn-info form-control"> Refresh Calculations</button>
+							</div>
 						</div>
 						<div id="SalaryDays" class="form-row">
 							<?php foreach ($GetWeeklyDates->result_array() as $row): ?>

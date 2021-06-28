@@ -331,7 +331,6 @@ endif;
 		    var isVisible = $('.link').is(":visible"); 
 		    localStorage.setItem('visible', isVisible);
 		});
-		$('[data-toggle="tooltip"]').tooltip();
 		$("#Type").change(function(){
 			$('#ViolationNotice').hide();
 			$('#BlacklistNotice').hide();

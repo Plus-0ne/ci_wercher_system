@@ -1239,90 +1239,14 @@
 	}
 	public function GenerateIDCard()
 	{
-		if (isset($_GET['id'])) {
-
-			$id = $_GET['id'];
-
-			$header['title'] = 'Generate ID Card | Wercher Solutions and Resources Workers Cooperative';
-			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
-
-			$GetEmployeeDetails = $this->Model_Selects->GetEmployeeDetails($id);
-
-			if ($GetEmployeeDetails->num_rows() > 0) {
-				$ged = $GetEmployeeDetails->row_array();
-				$data = array(
-					'ApplicantNo' => $ged['ApplicantNo'],
-					'ApplicantImage' => $ged['ApplicantImage'],
-					'EmployeeID' => $ged['EmployeeID'],
-					'ApplicantID' => $ged['ApplicantID'],
-					'PositionDesired' => $ged['PositionDesired'],
-					'PositionGroup' => $ged['PositionGroup'],
-					'SalaryExpected' => $ged['SalaryExpected'],
-					'LastName' => $ged['LastName'],
-					'FirstName' => $ged['FirstName'],
-					'MiddleName' => $ged['MiddleName'],
-					'Gender' => $ged['Gender'],
-					'Age' => $ged['Age'],
-					'Height' => $ged['Height'],
-					'Weight' => $ged['Weight'],
-					'Religion' => $ged['Religion'],
-					'BirthDate' => $ged['BirthDate'],
-					'BirthPlace' => $ged['BirthPlace'],
-					'Citizenship' => $ged['Citizenship'],
-					'CivilStatus' => $ged['CivilStatus'],
-					'No_OfChildren' => $ged['No_OfChildren'],
-					'Phone_No' => $ged['Phone_No'],
-					'EmailAddress' => $ged['EmailAddress'],
-					'Address_Present' => $ged['Address_Present'],
-					'Address_Provincial' => $ged['Address_Provincial'],
-					'Address_Manila' => $ged['Address_Manila'],
-
-					'SSS_No' => $ged['SSS_No'],
-					'EffectiveDateCoverage' => $ged['EffectiveDateCoverage'],
-					'ResidenceCertificateNo' => $ged['ResidenceCertificateNo'],
-					'TIN' => $ged['TIN'],
-					'HDMF' => $ged['HDMF'],
-					'PhilHealth' => $ged['PhilHealth'],
-					'HMO' => $ged['HMO'],
-					'ATM_No' => $ged['ATM_No'],
-
-					'Status' => $ged['Status'],
-
-					'ClientEmployed' => $ged['ClientEmployed'],
-					'DateStarted' => $ged['DateStarted'],
-					'DateEnds' => $ged['DateEnds'],
-					'AppliedOn' => $ged['AppliedOn'],
-
-					'ReminderDate' => $ged['ReminderDate'],
-					'ReminderDateString' => $ged['ReminderDateString'],
-
-					'NameExtension' => $ged['NameExtension'],
-					'EmergencyPerson' => $ged['EmergencyPerson'],
-					'EmergencyContact' => $ged['EmergencyContact'],
-					'Referral' => $ged['Referral'],
-
-				);
-				if(!$this->Model_Security->CheckPermissions('Applicants') && ($ged['Status'] == 'Applicant' || $ged['Status'] == 'Expired' || $ged['Status'] == 'Blacklisted' || $ged['Status'] == 'Deleted')):
-					redirect('Forbidden');
-				elseif(!$this->Model_Security->CheckPermissions('Employees') && ($ged['Status'] == 'Employed' || $ged['Status'] == 'Employed (Permanent)')):
-					redirect('Forbidden');
-				endif;
-				$ApplicantID = $ged['ApplicantID'];
-				if ($data['Status'] == 'Employed' || $data['Status'] == 'Employed (Permanent)' || $data['Status'] == 'Absorbed (Wercher)') {
-					$this->load->view('users/u_generateid',$data);
-				} else {
-					redirect('Employees');
-				}
-			}
-			else
-			{
-				redirect('Employees');
-			}
-		}
-		else
-		{
-			redirect('Employees');
-		}
+		$header['title'] = 'Generate ID Card | Wercher Solutions and Resources Workers Cooperative';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		if(!$this->Model_Security->CheckPermissions('Applicants') && ($ged['Status'] == 'Applicant' || $ged['Status'] == 'Expired' || $ged['Status'] == 'Blacklisted' || $ged['Status'] == 'Deleted')):
+			redirect('Forbidden');
+		elseif(!$this->Model_Security->CheckPermissions('Employees') && ($ged['Status'] == 'Employed' || $ged['Status'] == 'Employed (Permanent)')):
+			redirect('Forbidden');
+		endif;
+		$this->load->view('users/u_generateid',$data);
 	}
 	public function NewEmployee()
 	{
