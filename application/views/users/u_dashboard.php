@@ -108,7 +108,7 @@ $GetLogbookNotes = $this->Model_Selects->GetLogbookNotes();
 					</div>
 					<div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
-							<a href="Employee">
+							<a href="Employees">
 								<div class="card-headers bcolorD9B319">
 									<div class="row ml-2">
 										<span class="head-text">

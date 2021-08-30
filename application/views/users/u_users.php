@@ -296,7 +296,7 @@ endif;
 												</a>
 											</td>
 											<td class="text-center align-middle PrintExclude" width="110">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
+												<a class="btn btn-primary btn-sm standard-btn-loading-animation w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
 												<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions'))): ?>
 												<button id="<?php echo $row['ApplicantID']; ?>" type="button" class="btn btn-info btn-sm w-100 mb-1 doc_btn" data-toggle="modal" data-target="#AddSuppDoc"><i class="fas fa-file-upload"></i> Documents</button>
 												<?php endif; ?>

@@ -53,7 +53,7 @@ class Update_Controller extends CI_Controller {
 			$Temp_ApplicantID++;
 
 			if ($ApplicantID == NULL || $ClientID == NULL) {
-				$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again. 1');
+				$this->Model_Logbook->SetPrompts('error', 'error', 'No connection to server. Please try again. 1a');
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else

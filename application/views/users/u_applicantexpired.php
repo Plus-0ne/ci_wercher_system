@@ -36,7 +36,7 @@ use Carbon\Carbon;
 							<input id="DTSearch" type="search" class="input-bootstrap" placeholder="Sorting table..." readonly>
 						</span>
 						<?php if($this->Model_Security->CheckPermissions('ApplicantsEditing')): ?>
-						<a href="<?=base_url()?>NewEmployee" class="btn btn-success">
+						<a href="<?=base_url()?>NewEmployee" class="btn btn-success standard-btn-loading-animation">
 							<i class="fas fa-user-plus"></i> New
 						</a>
 						<?php endif; ?>
@@ -170,7 +170,7 @@ use Carbon\Carbon;
 												<?php if($row['DateEnds'] != NULL) { echo $eday . ' at ' . $ehours; } ?>
 											</td>
 											<td class="text-center align-middle PrintExclude" width="100">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
+												<a class="btn btn-primary btn-sm standard-btn-loading-animation w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
 												<?php if($this->Model_Security->CheckPermissions('EmployeesHiring')): ?>
 												<button id="<?php echo $row['ApplicantID']; ?>" type="button" class="btn btn-info btn-sm w-100 mb-1 ModalHire"  data-toggle="modal" data-target="#hirthis"><i class="fas fa-user-edit"></i> Hire</button>
 												<?php endif; ?>

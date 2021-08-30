@@ -127,7 +127,7 @@ use Carbon\Carbon;
 											</td>
 											<?php endif; ?>
 											<td class="text-center PrintExclude">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>Clients?id=<?php echo $row['ClientID']; ?>"><i class="fas fa-users"></i> Employees</a>
+												<a class="btn btn-primary btn-sm standard-btn-loading-animation w-100 mb-1" href="<?=base_url()?>Clients?id=<?php echo $row['ClientID']; ?>"><i class="fas fa-users"></i> Employees</a>
 												<?php if($this->Model_Security->CheckPermissions('ClientsEditing')): ?>
 												<button type="button" class="btn btn-info btn-sm w-100 edit-client-btn" data-toggle="modal" data-target="#editClient" data-clientid="<?php echo $row['ClientID']; ?>" data-clientname="<?php echo $clientName; ?>" data-clientaddress="<?php echo $clientAddress; ?>" data-clientcontact="<?php echo $clientContact; ?>" data-clientsuffix="<?php echo $row['EmployeeIDSuffix']; ?>" data-clientsuffixpreview="<?php echo $clientSuffixNoColor; ?>" data-clientstatus="<?php echo $row['Status']; ?>"><i class="fas fa-edit"></i> Edit</button>
 												<?php endif; ?>

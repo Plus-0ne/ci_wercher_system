@@ -76,6 +76,16 @@
 		$('.prompts-tray').on('click', function () {
 			$(this).animate({left: "-1000px"});
 		});
+		// ~ little loading animation when clicking on a sidebar link
+		$('body').on('click', '.nav-item a.link-s', function() {
+			let defaultText = $(this).text();
+			$(this).html('<i class="spinner-border spinner-border-sm mr-2"></i> <span>' + defaultText + "</span>");
+		});
+		$('body').on('click', '.standard-btn-loading-animation', function() {
+			let defaultText = $(this).text();
+			let defaultWidth = $(this).width();
+			$(this).html('<i class="spinner-border spinner-border-sm"></i> <span>' + defaultText + "</span>");
+		});
 	});
 </script>
 <script type="text/javascript">

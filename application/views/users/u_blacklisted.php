@@ -31,7 +31,7 @@ use Carbon\Carbon;
 							<input id="DTSearch" type="search" class="input-bootstrap" placeholder="Sorting table..." readonly>
 						</span>
 						<?php if($this->Model_Security->CheckPermissions('ApplicantsEditing')): ?>
-						<a href="<?=base_url()?>NewEmployee" class="btn btn-success">
+						<a href="<?=base_url()?>NewEmployee" class="btn btn-success standard-btn-loading-animation">
 							<i class="fas fa-user-plus"></i> New
 						</a>
 						<?php endif; ?>
@@ -143,7 +143,7 @@ use Carbon\Carbon;
 												<?php echo $day . ' at ' . $hours; ?>
 											</td>
 											<td class="text-center align-middle PrintExclude" width="100">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
+												<a class="btn btn-primary btn-sm standard-btn-loading-animation w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
 												<a class="btn btn-danger btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>#Violations"><i class="fas fa-book"></i> Violations</a>
 											</td>
 										</tr>
