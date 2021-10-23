@@ -111,7 +111,7 @@ if ($erow['SalaryExpected'] > 0) {
 							</div>
 							<div class="form-group col-sm-12 col-md-2" style="max-width: 200px;">
 								<label>--</label>
-								<button type="button" class="refresh-calculation-btn btn btn-info form-control"> Refresh Calculations</button>
+								<button type="button" class="refresh-calculation-btn btn btn-info form-control" style="width: 200px;"><i class="fas fa-redo"></i> Refresh Calculations</button>
 							</div>
 						</div>
 						<div id="SalaryDays" class="form-row">

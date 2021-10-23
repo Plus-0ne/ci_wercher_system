@@ -126,6 +126,7 @@
 				}
 				// Salary Rate
 				$rate = number_format($row['SalaryExpected']);
+				$rate = str_replace(',', '', $rate);
 				$salaryType = $row['SalaryType'];
 				// Salary Data
 				// ~ regular

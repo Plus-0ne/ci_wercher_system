@@ -21,7 +21,7 @@ use Carbon\Carbon;
 						<li><a href="<?php echo base_url() ?>ViewPayroll?id=<?php echo $ClientID; ?>&mode=<?php echo $Mode; ?>">Payroll</a></li>
 					</ul>
 				</div>
-				<div class="rcontent">
+				<div class="rcontent w-100">
 				<div class="row">
 					<div class="col-8 mb-2">
 						<div class="form-row">
@@ -109,22 +109,24 @@ use Carbon\Carbon;
 						<div class="table-responsive w-100">
 							<table id="WeeklyTable" class="table table-condensed" style="font-size: 14px;">
 								<thead>
-									<th style="min-width: 200px;">Name</th>
-									<th style="min-width: 50px;">Salary (₱)</th>
-									<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
-										<th><?php 
+									<tr>
+										<th style="min-width: 200px; font-size: 12px;">Name</th>
+										<th style="min-width: 75px; font-size: 12px;">Salary (₱)</th>
+										<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
+											<th style="min-width: 75px; font-size: 12px;"><?php 
 
-										$date = new DateTime($row['Time']);
-										$day = $date->format('Y-m-d');
-										$day = DateTime::createFromFormat('Y-m-d', $day)->format('M d, Y');
-										echo $day; 
+											$date = new DateTime($row['Time']);
+											$day = $date->format('Y-m-d');
+											$day = DateTime::createFromFormat('Y-m-d', $day)->format('M d, Y');
+											echo $day; 
 
-										?></th>
-									<?php endforeach; ?>
-									<th style="min-width: 50px;">Reg. Hrs</th>
-									<th style="min-width: 50px;">OT Hrs</th>
-									<th style="min-width: 50px;">NP Hrs</th>
-									<th style="min-width: 50px;">NPOT Hrs</th>
+											?></th>
+										<?php endforeach; ?>
+										<th style="min-width: 50px; font-size: 12px;">Reg. Hrs</th>
+										<th style="min-width: 50px; font-size: 12px;">OT Hrs</th>
+										<th style="min-width: 50px; font-size: 12px;">NP Hrs</th>
+										<th style="min-width: 50px; font-size: 12px;">NPOT Hrs</th>
+									</tr>
 								</thead>
 								<tbody>
 									<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
@@ -195,7 +197,7 @@ use Carbon\Carbon;
 										}
 										?>
 										<tr id="<?php echo $row['SalaryExpected']; ?>" data-clientid="<?php echo $row['ClientEmployed']; ?>" data="<?php echo $row['ApplicantID']; ?>" class='clickable-row' data-toggle="modal" data-target="#HoursWeeklyModal_<?php echo $row['ApplicantID']; ?>">
-											<td data-toggle="tooltip" data-placement="top" data-html="true" title="<b><?php echo $fullNameHover; ?></b><br><br><b>Status: </b><br><?php echo $employmentStatus; ?><br><br><b>Employee ID: </b><br><?php echo $row['EmployeeID']; ?><br><br><b>Applicant ID: </b><br><?php echo $row['ApplicantID']; ?>"><a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $icon . $fullName; ?></a></td>
+											<td data-toggle="tooltip" data-placement="top" data-html="true" title="<b><?php echo $fullNameHover; ?></b><br><br><b>Status: </b><br><?php echo $employmentStatus; ?><br><br><b>Employee ID: </b><br><?php echo $row['EmployeeID']; ?><br><br><b>Applicant ID: </b><br><?php echo $row['ApplicantID']; ?>" style="font-size: 12px;"><a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $icon . $fullName; ?></a></td>
 											<td><?php echo $row['SalaryExpected'];?></td>
 											<?php foreach ($GetWeeklyDates->result_array() as $brow):
 												?> <td> <?php

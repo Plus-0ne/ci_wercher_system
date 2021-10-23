@@ -2,7 +2,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">Provisions for <a href="" id="ProvisionsApplicantName"></a> on this week</h5>
+				<h5 class="modal-title">Provisions for <a href="" id="ProvisionsApplicantName"></a></h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -14,7 +14,7 @@
 				<input id="ProvisionsWeek" type="hidden" readonly>
 				<div class="form-row ml-1 my-2" style="position: sticky;">
 					<div class="col-sm-7">
-						Provision Name
+						Name
 					</div>
 					<div class="col-sm-4">
 						Amount
@@ -34,7 +34,7 @@
 				</div>
 				<div class="new-provision-row form-row ml-1 my-2" style="position: sticky; display: none;">
 					<div class="col-sm-7">
-						Provision Name
+						Name
 					</div>
 					<div class="col-sm-4">
 						Amount

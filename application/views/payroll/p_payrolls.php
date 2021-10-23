@@ -863,6 +863,7 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 			}
 		});
 		$('.new-provision-add-btn').on('click', function () {
+			let today = <?php echo date('Y-m-d'); ?>;
 			$('.new-provision-row').show();
 			$('.new-provision-row').animate({opacity: '1.0'});
 			$('#NewProvisionContainer').append('<div class="form-row provision-input w-100"><input class="form-control provision-id" type="hidden" value="-1"><div class="col-sm-7 mt-1"><input class="form-control provision-name" type="text" name="ProvisionName[]"></div><div class="col-sm-4 mt-1"><input class="form-control provision-amount" type="number" name="ProvisionAmount[]"></div><div class="col-sm-1 mt-1"><button class="form-control provision-discard btn-danger" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Discard?"><i class="fas fa-times" style="font-size: 12px; margin-left: -4px;"></i></button></div></div>')

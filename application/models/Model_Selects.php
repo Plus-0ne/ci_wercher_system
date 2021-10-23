@@ -956,12 +956,12 @@ class Model_Selects extends CI_Model {
 		return $result;
 	}
 	public function ShowPayrollLoans($ApplicantID, $Year, $Month, $Week, $Mode) {
-		$SQL = "SELECT * FROM payroll_loans WHERE ApplicantID = '$ApplicantID' AND Year = '$Year' AND $Month = '$Month' AND Week = '$Week' AND Type = '$Mode' AND (Deleted <> '1' || Deleted IS NULL)";
+		$SQL = "SELECT * FROM payroll_loans WHERE ApplicantID = '$ApplicantID' AND Year = '$Year' AND Month = '$Month' AND Week = '$Week' AND Type = '$Mode' AND (Deleted <> '1' || Deleted IS NULL)";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
 	public function ShowPayrollProvisions($ApplicantID, $Year, $Month, $Week, $Mode) {
-		$SQL = "SELECT * FROM payroll_provisions WHERE ApplicantID = '$ApplicantID' AND Year = '$Year' AND $Month = '$Month' AND Week = '$Week' AND Type = '$Mode' AND (Deleted <> '1' || Deleted IS NULL)";
+		$SQL = "SELECT * FROM payroll_provisions WHERE ApplicantID = '$ApplicantID' AND Year = '$Year' AND Month = '$Month' AND Week = '$Week' AND Type = '$Mode' AND (Deleted <> '1' || Deleted IS NULL)";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

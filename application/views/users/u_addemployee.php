@@ -315,6 +315,10 @@
 										</div>
 									</div>
 									<div class="form-group col-sm-12 col-md-4">
+										<div class="col-sm-12 col-md-12 mb-4">
+											<label>Applied to Wercher on</label>
+											<input id="AppliedOn" class="form-control" type="date" name="AppliedOn" value="<?php echo date('Y-m-d'); ?>">
+										</div>
 										<b>Source of Application / Referral</b>
 										<input id="Referral" type="hidden" name="Referral">
 										<div class="form-row col-sm-12 mt-2">
