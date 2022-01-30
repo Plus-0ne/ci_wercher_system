@@ -135,11 +135,19 @@
 													</td>
 													<?php
 														$currTime = time();
-														$strDateEnds = strtotime($row['DateEnds']);
-														$strDateStarted = strtotime($row['DateStarted']);
+														$strDateStarted = 1;
+														$strDateEnds = 1;
+														if ($row['DateEnds']) {
+															$strDateEnds = strtotime($row['DateEnds']);
+														}
+														if ($row['DateStarted']) {
+															$strDateStarted = strtotime($row['DateStarted']);
+														}
 														// PERCENTAGE
-														$rPercentage = (($strDateEnds - $currTime) * 100) / ($strDateEnds - $strDateStarted);
-														$rPercentage = round($rPercentage);
+														if ($row['DateStarted'] && $row['DateEnds']):
+															$rPercentage = (($strDateEnds - $currTime) * 100) / ($strDateEnds - $strDateStarted);
+															$rPercentage = round($rPercentage);
+														endif;
 														// DAYS REMAINING
 														$dateTimeZone = new DateTimeZone("Asia/Manila");
 														$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
@@ -247,7 +255,9 @@
 														} ?>
 													 	</div>
 														<a href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>#Contract" class="employee-table-progress-bar" style="position: relative; box-shadow: none; background-color: rgba(0, 0, 0, 0.11);">
+															<?php if ($row['DateStarted'] && $row['DateEnds']): ?>
 															<div class="progress-bar wercher-progress-bar" role="progressbar" style="width: <?php echo $rPercentage; ?>%;" aria-valuenow="<?php echo $rPercentage; ?>" aria-valuemin="0" aria-valuemax="100"><?php echo $rPercentage; ?>%</div>
+															<?php endif; ?>
 														</a>
 													</td>
 													<?php elseif ($row['Status'] == 'Employed (Permanent)'): ?>

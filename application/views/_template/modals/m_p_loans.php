@@ -13,11 +13,14 @@
 				<input id="LoansMonth" type="hidden" readonly>
 				<input id="LoansWeek" type="hidden" readonly>
 				<div class="form-row ml-1 my-2" style="position: sticky;">
-					<div class="col-sm-7">
+					<div class="col-sm-3">
 						Loan Name
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-3">
 						Amount
+					</div>
+					<div class="col-sm-5">
+						Date
 					</div>
 					<div class="col-sm-1">
 					</div>
@@ -33,11 +36,14 @@
 					</div>
 				</div>
 				<div class="new-loan-row form-row ml-1 my-2" style="position: sticky; display: none;">
-					<div class="col-sm-7">
+					<div class="col-sm-3">
 						Loan Name
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-3">
 						Amount
+					</div>
+					<div class="col-sm-5">
+						Date
 					</div>
 					<div class="col-sm-1">
 					</div>

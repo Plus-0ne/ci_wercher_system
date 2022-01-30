@@ -40,7 +40,7 @@ if ($erow['SalaryExpected'] > 0) {
 								<input id="SalaryType" class="form-control" type="text" name="" value="<?php echo $Mode==0?"Weekly":($Mode==1?"Semi-monthly":"Monthly"); ?>" readonly>
 							</div>
 							<div class="form-group col-sm-12 col-md-2" style="max-width: 200px;">
-								<label>Salary <?php echo $erow['SalaryType']; ?>)</label>
+								<label>Salary (<?php echo $erow['SalaryType']; ?>)</label>
 								<div class="input-icon-sm">
 									<input id="Salary" class="form-control" type="number" name="" value="<?php echo $SalaryExpected; ?>" readonly>
 									<i>₱</i>
@@ -85,7 +85,7 @@ if ($erow['SalaryExpected'] > 0) {
 										if ($erow['SalaryType'] == 'Daily') {
 											$dailySalary = $SalaryExpected;
 										} elseif ($erow['SalaryType'] == 'Monthly') {
-											$dailySalary = $SalaryExpected / 30;
+											$dailySalary = $SalaryExpected / 26.16667;
 										} else {
 											$dailySalary = $SalaryExpected / $cDiffInDays;
 										}
@@ -177,7 +177,7 @@ if ($erow['SalaryExpected'] > 0) {
 								<input class="form-control overtime_pay_<?php echo $row['Time']; ?>" type="hidden" name="OvertimeGrossPay_<?php echo $row['Time']; ?>" value="<?php echo $overtimeGrossPay; ?>">
 								<input class="form-control nightpremium_pay_<?php echo $row['Time']; ?>" type="hidden" name="NPGrossPay_<?php echo $row['Time']; ?>" value="<?php echo $npGrossPay; ?>">
 								<input class="form-control nightpremiumovertime_pay_<?php echo $row['Time']; ?>" type="hidden" name="NPOvertimeGrossPay_<?php echo $row['Time']; ?>" value="<?php echo $npOvertimeGrossPay; ?>">
-								<div class="day-container_<?php echo $row['Time']; ?> col-sm-12 col-md-2" style="margin-left: 25px;">
+								<div class="day-container_<?php echo $row['Time']; ?> col-sm-12 col-md-2 <?php if ($pdayTooltip == 'Sunday') { echo 'day-sunday'; } ?>" style="margin-left: 25px;">
 									<div class="card mb-3">
 										<input id="<?php echo $row['Time']; ?>" type="hidden" name="<?php echo $row['Time']; ?>" value="<?php echo $row['Time']; ?>">
 										<div class="card-header" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $pdayTooltip; ?>">

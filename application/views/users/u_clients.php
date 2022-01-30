@@ -252,9 +252,17 @@ use Carbon\Carbon;
 		$('#DTSearch').attr('placeholder', 'Search table');
 		$('#DTSearch').attr('readonly', false);
 		<?php if (isset($_GET['id'])):
-			$GetClientID = $this->Model_Selects->GetClientID($_GET['id']);?>
+			$GetClientID = $this->Model_Selects->GetClientID($_GET['id']);
+			$clientName = 'N/A';
+			if ($GetClientID->num_rows() > 0) {
+				foreach ($GetClientID->result_array() as $row) {
+					if ($row['Name']) {
+						$clientName = $row['Name'];
+					}
+				}
+			} ?>
 			$('#ClientsEmployedModal').modal('show');
-			$(document).attr('title', 'Employees of')
+			$(document).attr('title', '<?=$clientName;?>\'s Employees')
 		<?php endif; ?>
 		$("#ClientsEmployedModal").on("hidden.bs.modal", function () { // Change URL on modal close
 		    history.pushState(null, null, '<?php echo base_url() . 'Clients';  ?>');

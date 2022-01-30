@@ -113,13 +113,13 @@
 			<a class="link-s" href="#siteInfo" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-info fa-fw"></i> Site Info <i class="fas fa-caret-down fa-fw" style="float: right; margin-top: 4px;"></i> </a>
 			<ul class="collapse list-unstyled collapseSettings animated fadeIn" id="siteInfo">
 				<li>
-					<a class="link-s" class="sublink" href="#"><span style="color: gold;"><i class="fas fa-info-circle"></i> Build: August 28, 2021</span></a>
+					<a class="link-s" class="sublink" href="#"><span style="color: gold;"><i class="fas fa-info-circle"></i> Build: January 28, 2022</span></a>
 				</li>
 			</ul>
 		</li>
 		<?php if($this->session->userdata('is_logged_in') == 'Active'): ?>
 		<li class="nav-item mb-4">
-			<a class="link-s" class="sublink" href="<?=base_url()?>Logout"><span class="fas fa-sign-out-alt fa-fw"></span> Logout </a>
+			<a class="link-s" class="sublink" href="<?=base_url()?>Logout" style="color: #f15b4c;"><span class="fas fa-sign-out-alt fa-fw"></span> Logout </a>
 		</li>
 		<?php else: ?>
 		<li class="nav-item mb-4">

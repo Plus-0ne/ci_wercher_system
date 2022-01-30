@@ -2064,6 +2064,10 @@ class Model_Selects extends CI_Model {
 		return $result->NPOvertimeGrossPay;
 	}
 	public function GetPayrollLoansBetweenPeriod($ApplicantID, $Mode, $FromDate, $ToDate) {
+		$newFromDate = new DateTime($FromDate);
+		$newFromDate = $newFromDate->format('Y-m-d') . '%';
+		$newToDate = new DateTime($ToDate);
+		$newToDate = $newToDate->format('Y-m-d') . '%';
 		$Mode = strtoupper($Mode);
 		switch($Mode) {
 			case 'WEEKLY':
@@ -2080,13 +2084,18 @@ class Model_Selects extends CI_Model {
 		$this->db->from('payroll_loans');
 		$this->db->where('ApplicantID', $ApplicantID);
 		$this->db->where('Type', $Mode);
-		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		$this->db->where('Time >=', $newFromDate);
+		$this->db->where('Time <=', $newToDate);
 		
 		$this->db->where('Deleted', NULL);
 		$result = $this->db->get();
 		return $result;
 	}
 	public function GetPayrollProvisionsBetweenPeriod($ApplicantID, $Mode, $FromDate, $ToDate) {
+		$newFromDate = new DateTime($FromDate);
+		$newFromDate = $newFromDate->format('Y-m-d');
+		$newToDate = new DateTime($ToDate);
+		$newToDate = $newToDate->format('Y-m-d');
 		$Mode = strtoupper($Mode);
 		switch($Mode) {
 			case 'WEEKLY':
@@ -2103,7 +2112,8 @@ class Model_Selects extends CI_Model {
 		$this->db->from('payroll_provisions');
 		$this->db->where('ApplicantID', $ApplicantID);
 		$this->db->where('Type', $Mode);
-		$this->db->where("(Time BETWEEN '$FromDate' AND '$ToDate')");
+		$this->db->where('Time >=', $newFromDate);
+		$this->db->where('Time <=', $newToDate);
 		
 		$this->db->where('Deleted', NULL);
 		$result = $this->db->get();

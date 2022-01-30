@@ -201,7 +201,23 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 																</thead>
 																<tbody>
 																	<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
-																		// Name Handler
+																		// Week handler (Added Jan 29, 2022)
+																		// $actualWeekNumber = 0;
+
+																		// $listTime = new DateTime($row['Time']);
+																		// $listDay = $listTime->format('d');
+																		// if ($listDay <= 7) {
+																		// 	$actualWeekNumber = 1;
+																		// } elseif ($listDay > 7 && $listDay <= 14) {
+																		// 	$actualWeekNumber = 2;
+																		// } elseif ($listDay > 14 && $listDay <= 21) {
+																		// 	$actualWeekNumber = 3;
+																		// } elseif ($listDay > 21 && $listDay <= 31) {
+																		// 	$actualWeekNumber = 4;
+																		// } else {
+																		// 	$actualWeekNumber = 0;
+																		// }
+																		// Name handler
 																		$fullName = '';
 																		$fullNameHover = '';
 																		$isFullNameHoverable = false;
@@ -695,6 +711,7 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 					let LoanName = $(this).find(".loan-name").val();
 					let Amount = $(this).find(".loan-amount").val();
 					let ID = $(this).find(".loan-id").val();
+					let LoanDate = $(this).find(".loan-date").val();
 					// console.log(ApplicantID);
 					// console.log(LoanName);
 					// console.log(Amount);
@@ -703,7 +720,7 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 					$.ajax({
 						url : "<?php echo base_url() . 'AJAX_insertPayrollLoans';?>",
 						method : "POST",
-						data: {ID: ID, ApplicantID: ApplicantID, LoanName: LoanName, Amount: Amount, Year: Year, Month: Month, Week: Week, Mode: Mode},
+						data: {ID: ID, ApplicantID: ApplicantID, LoanName: LoanName, Amount: Amount, LoanDate: LoanDate, Year: Year, Month: Month, Week: Week, Mode: Mode},
 						dataType: "html",
 						success: function(data){
 							console.log('success');
@@ -735,7 +752,7 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 		$('.new-loan-add-btn').on('click', function () {
 			$('.new-loan-row').show();
 			$('.new-loan-row').animate({opacity: '1.0'});
-			$('#NewLoanContainer').append('<div class="form-row loan-input w-100"><input class="form-control loan-id" type="hidden" value="-1"><div class="col-sm-7 mt-1"><input class="form-control loan-name" type="text" name="LoanName[]"></div><div class="col-sm-4 mt-1"><input class="form-control loan-amount" type="number" name="LoanAmount[]"></div><div class="col-sm-1 mt-1"><button class="form-control loan-discard btn-danger" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Discard?"><i class="fas fa-times" style="font-size: 12px; margin-left: -4px;"></i></button></div></div>');
+			$('#NewLoanContainer').append('<div class="form-row loan-input w-100"><input class="form-control loan-id" type="hidden" value="-1"><div class="col-sm-3 mt-1"><input class="form-control loan-name" type="text" name="LoanName[]"></div><div class="col-sm-3 mt-1"><input class="form-control loan-amount" type="number" name="LoanAmount[]"></div><div class="col-sm-5 mt-1"><input class="form-control loan-date" type="date" name="LoanDate[]"></div><div class="col-sm-1 mt-1"><button class="form-control loan-discard btn-danger" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Discard?"><i class="fas fa-times" style="font-size: 12px; margin-left: -4px;"></i></button></div></div>');
 		});
 		$('.loans-btn').on('click', function () {
 			$('#LoansApplicantID').text($(this).data('applicantid'));
@@ -830,11 +847,12 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 					let ProvisionName = $(this).find(".provision-name").val();
 					let Amount = $(this).find(".provision-amount").val();
 					let ID = $(this).find(".provision-id").val();
+					let ProvisionDate = $(this).find(".provision-date").val();
 					let totalCounter = 0;
 					$.ajax({
 						url : "<?php echo base_url() . 'AJAX_insertPayrollProvisions';?>",
 						method : "POST",
-						data: {ID: ID, ApplicantID: ApplicantID, ProvisionName: ProvisionName, Amount: Amount, Year: Year, Month: Month, Week: Week, Mode: Mode},
+						data: {ID: ID, ApplicantID: ApplicantID, ProvisionName: ProvisionName, Amount: Amount, ProvisionDate: ProvisionDate, Year: Year, Month: Month, Week: Week, Mode: Mode},
 						dataType: "html",
 						success: function(data){
 							console.log('success');
@@ -866,7 +884,7 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 			let today = <?php echo date('Y-m-d'); ?>;
 			$('.new-provision-row').show();
 			$('.new-provision-row').animate({opacity: '1.0'});
-			$('#NewProvisionContainer').append('<div class="form-row provision-input w-100"><input class="form-control provision-id" type="hidden" value="-1"><div class="col-sm-7 mt-1"><input class="form-control provision-name" type="text" name="ProvisionName[]"></div><div class="col-sm-4 mt-1"><input class="form-control provision-amount" type="number" name="ProvisionAmount[]"></div><div class="col-sm-1 mt-1"><button class="form-control provision-discard btn-danger" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Discard?"><i class="fas fa-times" style="font-size: 12px; margin-left: -4px;"></i></button></div></div>')
+			$('#NewProvisionContainer').append('<div class="form-row provision-input w-100"><input class="form-control provision-id" type="hidden" value="-1"><div class="col-sm-3 mt-1"><input class="form-control provision-name" type="text" name="ProvisionName[]"></div><div class="col-sm-3 mt-1"><input class="form-control provision-amount" type="number" name="ProvisionAmount[]"></div><div class="col-sm-5 mt-1"><input class="form-control provision-date" type="date" name="ProvisionDate[]"></div><div class="col-sm-1 mt-1"><button class="form-control provision-discard btn-danger" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Discard?"><i class="fas fa-times" style="font-size: 12px; margin-left: -4px;"></i></button></div></div>')
 		});
 		$('.provisions-btn').on('click', function () {
 			$('#ProvisionsApplicantID').text($(this).data('applicantid'));

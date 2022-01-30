@@ -1970,11 +1970,14 @@
 				echo '
 				<div class="form-row loan-input w-100">
 					<input class="form-control loan-id" type="hidden" value="' . $row['ID'] . '">
-					<div class="col-sm-7 mt-1">
+					<div class="col-sm-3 mt-1">
 						<input class="form-control loan-name" type="text" name="LoanName[]" value="' . $row['LoanName'] . '">
 					</div>
-					<div class="col-sm-4 mt-1">
+					<div class="col-sm-3 mt-1">
 						<input class="form-control loan-amount" type="number" name="LoanAmount[]" value="' . $row['Amount'] . '">
+					</div>
+					<div class="col-sm-5 mt-1">
+						<input class="form-control loan-date" type="date" name="LoanDate[]" value="' . $row['Time'] . '">
 					</div>
 					<div class="col-sm-1 mt-1">
 						<button class="form-control loan-remove btn-secondary" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Remove?"><i class="fas fa-trash" style="font-size: 12px; margin-left: -5px;"></i></button>
@@ -1993,6 +1996,7 @@
 		$Month = $this->input->post('Month');
 		$Week = $this->input->post('Week');
 		$Mode = $this->input->post('Mode');
+		$time = $this->input->post('LoanDate');
 		if ($ApplicantID == NULL || $LoanName == NULL || $Amount == NULL || $Year == NULL || $Month == NULL || $Week == NULL || $Mode == NULL) {
 			echo "Error. Please refresh.";
 		}
@@ -2005,6 +2009,7 @@
 				'Year' => $Year,
 				'Month' => $Month,
 				'Week' => $Week,
+				'Time' => $time,
 				'Type' => $Mode,
 			);
 			if ($ID == -1 || $ID == NULL) {
@@ -2017,11 +2022,14 @@
 							echo '
 							<div class="form-row loan-input w-100">
 								<input class="form-control loan-id" type="hidden" value="' . $row['ID'] . '">
-								<div class="col-sm-7 mt-1">
+								<div class="col-sm-3 mt-1">
 									<input class="form-control loan-name" type="text" name="LoanName[]" value="' . $row['LoanName'] . '">
 								</div>
-								<div class="col-sm-4 mt-1">
+								<div class="col-sm-3 mt-1">
 									<input class="form-control loan-amount" type="number" name="LoanAmount[]" value="' . $row['Amount'] . '">
+								</div>
+								<div class="col-sm-5 mt-1">
+									<input class="form-control loan-date" type="date" name="LoanDate[]" value="' . $row['Time'] . '">
 								</div>
 								<div class="col-sm-1 mt-1">
 									<button class="form-control loan-remove btn-secondary" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Remove?"><i class="fas fa-trash" style="font-size: 12px; margin-left: -5px;"></i></button>
@@ -2040,11 +2048,14 @@
 							echo '
 							<div class="form-row loan-input w-100">
 								<input class="form-control loan-id" type="hidden" value="' . $row['ID'] . '">
-								<div class="col-sm-7 mt-1">
+								<div class="col-sm-3 mt-1">
 									<input class="form-control loan-name" type="text" name="LoanName[]" value="' . $row['LoanName'] . '">
 								</div>
-								<div class="col-sm-4 mt-1">
+								<div class="col-sm-3 mt-1">
 									<input class="form-control loan-amount" type="number" name="LoanAmount[]" value="' . $row['Amount'] . '">
+								</div>
+								<div class="col-sm-5 mt-1">
+									<input class="form-control loan-date" type="date" name="LoanDate[]" value="' . $row['Time'] . '">
 								</div>
 								<div class="col-sm-1 mt-1">
 									<button class="form-control loan-remove btn-secondary" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Remove?"><i class="fas fa-trash" style="font-size: 12px; margin-left: -5px;"></i></button>
@@ -2087,11 +2098,14 @@
 				echo '
 				<div class="form-row provision-input w-100">
 					<input class="form-control provision-id" type="hidden" value="' . $row['ID'] . '">
-					<div class="col-sm-7 mt-1">
+					<div class="col-sm-3 mt-1">
 						<input class="form-control provision-name" type="text" name="ProvisionName[]" value="' . $row['ProvisionName'] . '">
 					</div>
-					<div class="col-sm-4 mt-1">
+					<div class="col-sm-3 mt-1">
 						<input class="form-control provision-amount" type="number" name="ProvisionAmount[]" value="' . $row['Amount'] . '">
+					</div>
+					<div class="col-sm-5 mt-1">
+						<input class="form-control provision-date" type="date" name="ProvisionDate[]" value="' . $row['Time'] . '">
 					</div>
 					<div class="col-sm-1 mt-1">
 						<button class="form-control provision-remove btn-secondary" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Remove?"><i class="fas fa-trash" style="font-size: 12px; margin-left: -5px;"></i></button>
@@ -2110,6 +2124,7 @@
 		$Month = $this->input->post('Month');
 		$Week = $this->input->post('Week');
 		$Mode = $this->input->post('Mode');
+		$time = $this->input->post('ProvisionDate');
 		if ($ApplicantID == NULL || $ProvisionName == NULL || $Amount == NULL || $Year == NULL || $Month == NULL || $Week == NULL || $Mode == NULL) {
 			echo "Error. Please refresh.";
 		}
@@ -2122,6 +2137,7 @@
 				'Year' => $Year,
 				'Month' => $Month,
 				'Week' => $Week,
+				'Time' => $time,
 				'Type' => $Mode,
 			);
 			if ($ID == -1 || $ID == NULL) {
@@ -2134,11 +2150,14 @@
 							echo '
 							<div class="form-row provision-input w-100">
 								<input class="form-control provision-id" type="hidden" value="' . $row['ID'] . '">
-								<div class="col-sm-7 mt-1">
+								<div class="col-sm-3 mt-1">
 									<input class="form-control provision-name" type="text" name="ProvisionName[]" value="' . $row['ProvisionName'] . '">
 								</div>
-								<div class="col-sm-4 mt-1">
+								<div class="col-sm-3 mt-1">
 									<input class="form-control provision-amount" type="number" name="ProvisionAmount[]" value="' . $row['Amount'] . '">
+								</div>
+								<div class="col-sm-5 mt-1">
+									<input class="form-control provision-date" type="date" name="ProvisionDate[]" value="' . $row['Time'] . '">
 								</div>
 								<div class="col-sm-1 mt-1">
 									<button class="form-control provision-remove btn-secondary" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Remove?"><i class="fas fa-trash" style="font-size: 12px; margin-left: -5px;"></i></button>
@@ -2157,11 +2176,14 @@
 							echo '
 							<div class="form-row provision-input w-100">
 								<input class="form-control provision-id" type="hidden" value="' . $row['ID'] . '">
-								<div class="col-sm-7 mt-1">
+								<div class="col-sm-3 mt-1">
 									<input class="form-control provision-name" type="text" name="ProvisionName[]" value="' . $row['ProvisionName'] . '">
 								</div>
-								<div class="col-sm-4 mt-1">
+								<div class="col-sm-3 mt-1">
 									<input class="form-control provision-amount" type="number" name="ProvisionAmount[]" value="' . $row['Amount'] . '">
+								</div>
+								<div class="col-sm-5 mt-1">
+									<input class="form-control provision-date" type="date" name="ProvisionDate[]" value="' . $row['Time'] . '">
 								</div>
 								<div class="col-sm-1 mt-1">
 									<button class="form-control provision-remove btn-secondary" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Remove?"><i class="fas fa-trash" style="font-size: 12px; margin-left: -5px;"></i></button>

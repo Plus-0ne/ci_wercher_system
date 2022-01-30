@@ -1437,6 +1437,9 @@ a[data-toggle="collapse"] {
 	font-size: 12px;
 	cursor: pointer;
 }
+.day-sunday {
+	opacity: 0.33;
+}
 /*form {
 	display: none;
 }*/

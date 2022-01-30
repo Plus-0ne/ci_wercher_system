@@ -1332,102 +1332,62 @@ class Update_Controller extends CI_Controller {
 			$gross_pay=0;
 
 			//record attendance for each workday
-			$GetCurrentPrimaryWeek = $this->Model_Selects->GetCurrentPrimaryWeek($ClientID);
-			if ($GetCurrentPrimaryWeek->num_rows() <= 0) {
-				$this->Model_Logbook->SetPrompts('error', 'error', 'Primary week not found. Please set it first on Salary page.');
-				redirect($_SERVER['HTTP_REFERER']);
-			} elseif ($GetCurrentPrimaryWeek->num_rows() > 0) {
-				foreach($GetCurrentPrimaryWeek->result_array() as $prow) {
-					$CurrentPrimaryWeek = new DateTime($prow['WeekStart']);
-					$DateToday = new DateTime();
-
-					$diff = $DateToday->diff($CurrentPrimaryWeek)->format("%a");
-					switch ($Mode) {
-
-						case '0': ### WEEKLY
-							if ($diff <= 7) {
-								$Week = 1;
-								$Month = $CurrentPrimaryWeek->format('m');
-							} elseif ($diff <= 14 && $diff > 7) {
-								$Week = 2;
-								$Month = $CurrentPrimaryWeek->format('m');
-							} elseif ($diff <= 21 && $diff > 14) {
-								$Week = 3;
-								$Month = $CurrentPrimaryWeek->format('m');
-							} elseif ($diff <= 28 && $diff > 21) {
-								$Week = 4;
-								$Month = $CurrentPrimaryWeek->format('m');
-							} else {
-								// $PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P29D'));
-								$PrimaryWeek = $DateToday->format('Y-m-d');
-								$this->Model_Updates->UpdatePrimaryWeek($PrimaryWeek, $ClientID);
-								$Week = 1;
-								$Month = $PrimaryWeek->format('m');
-							}
-							break;
-
-						case '1': ### SEMI-MONTHLY
-							if ($diff <= 15) {
-								$Week = 1;
-								$Month = $CurrentPrimaryWeek->format('m');
-							} elseif ($diff > 15 || $diff <= 30) {
-								$Week = 2;
-								$Month = $CurrentPrimaryWeek->format('m');
-							}
-							else
-							{
-								// $PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P31D'));
-								$PrimaryWeek = $DateToday->format('Y-m-d');
-								$this->Model_Updates->UpdatePrimaryWeek($PrimaryWeek, $ClientID);
-								$Week = 1;
-								$Month = $PrimaryWeek->format('m');
-							}
-							break;
-
-						case '2': ### MONTHLY
-							if ($diff < 31) {
-								$Week = 1;
-								$Month = $CurrentPrimaryWeek->format('m');
-							} else {
-								// $PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P31D'));
-								$PrimaryWeek = $DateToday->format('Y-m-d');
-								$this->Model_Updates->UpdatePrimaryWeek($PrimaryWeek, $ClientID);
-								$Week = 1;
-								$Month = $PrimaryWeek->format('m');
-							}
-							break;
-
-						default:
-							if ($diff <= 7) {
-								$Week = 1;
-								$Month = $CurrentPrimaryWeek->format('m');
-							} elseif ($diff <= 14 && $diff > 7) {
-								$Week = 2;
-								$Month = $CurrentPrimaryWeek->format('m');
-							} elseif ($diff <= 21 && $diff > 14) {
-								$Week = 3;
-								$Month = $CurrentPrimaryWeek->format('m');
-							} elseif ($diff <= 28 && $diff > 21) {
-								$Week = 4;
-								$Month = $CurrentPrimaryWeek->format('m');
-							} else {
-								// $PrimaryWeek = $CurrentPrimaryWeek->add(new DateInterval('P29D'));
-								$PrimaryWeek = $DateToday->format('Y-m-d');
-								$this->Model_Updates->UpdatePrimaryWeek($PrimaryWeek, $ClientID);
-								$Week = 1;
-								$Month = $PrimaryWeek->format('m');
-							}
-							break;
-					}
-					
-					
-					
-
-					
-					// $this->Model_Logbook->SetPrompts('info', 'info', $diff);
-				}
-			}
 			foreach ($GetWeeklyDates->result_array() as $nrow):
+				$dateValue = new DateTime($nrow['Time']);
+				$dayValue = $dateValue->format('d');
+				$Month = $dateValue->format('m');
+				$year = $dateValue->format('Y');
+				switch ($Mode) {
+					case '0': ### WEEKLY
+						if ($dayValue <= 7) {
+							$Week = 1;	
+						} elseif ($dayValue <= 14 && $dayValue > 7) {
+							$Week = 2;
+						} elseif ($dayValue <= 21 && $dayValue > 14) {
+							$Week = 3;
+						} elseif ($dayValue <= 31 && $dayValue > 21) {
+							$Week = 4;
+						} else {
+							$Week = 1;
+						}
+						break;
+
+					case '1': ### SEMI-MONTHLY
+						if ($dayValue <= 15) {
+							$Week = 1;
+						} elseif ($dayValue > 15 || $dayValue <= 31) {
+							$Week = 2;
+						}
+						else
+						{
+							$Week = 1;
+						}
+						break;
+
+					case '2': ### MONTHLY
+						if ($dayValue <= 31) {
+							$Week = 1;
+						} else {
+							$Week = 1;
+						}
+						break;
+
+					default:
+						if ($dayValue <= 7) {
+							$Week = 1;
+						} elseif ($dayValue <= 14 && $dayValue > 7) {
+							$Week = 2;
+						} elseif ($dayValue <= 21 && $dayValue > 14) {
+							$Week = 3;
+						} elseif ($dayValue <= 31 && $dayValue > 21) {
+							$Week = 4;
+						} else {
+							$Week = 1;
+						}
+						break;
+				}
+
+
 				$ArrayInt++;
 				$Type = $this->input->post('Type_' . $nrow['Time'],TRUE);
 				$Hours = $this->input->post('Hours_' . $nrow['Time'],TRUE);
@@ -1494,7 +1454,7 @@ class Update_Controller extends CI_Controller {
 						'Time' => $Date,
 						'Week' => $Week,
 						'Month' => $Month,
-						't_year' => $CurrentPrimaryWeek->format('Y'),
+						't_year' => $year,
 						'Hours' => $Hours,
 						'Overtime' => $Overtime,
 						'NightHours' => $NightHours,
@@ -2287,7 +2247,7 @@ class Update_Controller extends CI_Controller {
 		$Week = $this->input->post('Week');
 		$Mode = $this->input->post('Mode');
 		$now = new DateTime();
-		$DateUpdated = $now->format('Y-m-d H:i:s A');
+		$DateUpdated = $now->format('Y-m-d h:i:s A');
 
 		$data = array(
 			'Input' => $Input,

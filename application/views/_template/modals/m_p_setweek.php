@@ -9,14 +9,14 @@
 				</button>
 			</div>
 			<div class="load-container modal-body">
-				<div class="form-row mx-1">
+				<!-- <div class="form-row mx-1">
 					<div class="form-group col-sm-8 mt-2">
 						<input id="SetPrimaryClientID" name="PrimaryClientID" type="hidden">
 						<label><b>Client Starting Week</b></label>
 						<input id="Week" class="form-control" type="date" name="Week">
 					</div>
-				</div>
-				<div class="form-row mx-1 mt-4">
+				</div> -->
+				<div class="form-row mx-1">
 					<div class="form-group col-sm-4">
 						<label><b>HDMF Days</b></label>
 						<input id="PayrollHDMFDayStart" class="form-control" type="number" name="PayrollHDMFDayStart">

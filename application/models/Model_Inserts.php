@@ -109,6 +109,7 @@ class Model_Inserts extends CI_Model {
 	}
 	public function InsertToGraph()
 	{
+		$this->db->query("SET sql_mode=(SELECT REPLACE(@@sql_mode, 'ONLY_FULL_GROUP_BY', ''));");
 		$SQL = "REPLACE INTO dashboard_months (Year, Month, Total) SELECT DATE_FORMAT(AppliedOn, '%Y') as 'Year', DATE_FORMAT(AppliedOn, '%m') as 'Month', COUNT(ApplicantID) as 'Total' FROM applicants GROUP BY DATE_FORMAT(AppliedOn, '%Y%m')";
 		$result = $this->db->query($SQL);
 		return $result;
@@ -142,7 +143,6 @@ class Model_Inserts extends CI_Model {
 	}
 	public function InsertPayrollLoans($data)
 	{
-		$data['Time'] = date('Y-m-d H:i:s A');
 		$result = $this->db->insert('payroll_loans', $data);
 		return $result;
 	}
@@ -154,7 +154,6 @@ class Model_Inserts extends CI_Model {
 	}
 	public function InsertPayrollProvisions($data)
 	{
-		$data['Time'] = date('Y-m-d H:i:s A');
 		$result = $this->db->insert('payroll_provisions', $data);
 		return $result;
 	}

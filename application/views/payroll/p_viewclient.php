@@ -125,7 +125,14 @@ use Carbon\Carbon;
 										<th style="min-width: 50px; font-size: 12px;">Reg. Hrs</th>
 										<th style="min-width: 50px; font-size: 12px;">OT Hrs</th>
 										<th style="min-width: 50px; font-size: 12px;">NP Hrs</th>
-										<th style="min-width: 50px; font-size: 12px;">NPOT Hrs</th>
+										<th style="min-width: 50px; font-size: 12px;">NP+OT Hrs</th>
+										<th style="min-width: 50px; font-size: 12px;">SH Days</th>
+										<th style="min-width: 50px; font-size: 12px;">NH100 Days</th>
+										<th style="min-width: 50px; font-size: 12px;">NH200 Days</th>
+										<th style="min-width: 50px; font-size: 12px;">Gross</th>
+										<th style="min-width: 50px; font-size: 12px;">OT Gross</th>
+										<th style="min-width: 50px; font-size: 12px;">NP Gross</th>
+										<th style="min-width: 50px; font-size: 12px;">NP+OT Gross</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -134,6 +141,13 @@ use Carbon\Carbon;
 										$TotalOTHours = 0;
 										$TotalNPHours = 0;
 										$TotalNPOTHours = 0;
+										$SpecialHDays = 0;
+										$NationalHOneDays = 0;
+										$NationalHTwoDays = 0;
+										$GrossPay = 0;
+										$OTGrossPay = 0;
+										$NPGrossPay = 0;
+										$NPOTGrossPay = 0;
 
 										// Name Handler
 										$fullName = '';
@@ -213,6 +227,19 @@ use Carbon\Carbon;
 														$TotalOTHours += $OT;
 														$TotalNPHours += $NP;
 														$TotalNPOTHours += $NPOT;
+														if ($nrow['SpecialHoliday'] == 1) {
+															$SpecialHDays += 1;
+														}
+														if ($nrow['NationalHolidayOneHundred'] == 1) {
+															$NationalHOneDays += 1;
+														}
+														if ($nrow['NationalHoliday'] == 1) {
+															$NationalHTwoDays += 1;
+														}
+														$GrossPay += $nrow['GrossPay'];
+														$OTGrossPay += $nrow['OvertimeGrossPay'];
+														$NPGrossPay += $nrow['NPGrossPay'];
+														$NPOTGrossPay += $nrow['NPOvertimeGrossPay'];
 													endforeach;
 												} else {
 													echo '0';
@@ -222,6 +249,13 @@ use Carbon\Carbon;
 											<td><?php echo $TotalOTHours; ?></td>
 											<td><?php echo $TotalNPHours; ?></td>
 											<td><?php echo $TotalNPOTHours; ?></td>
+											<td><?php echo $SpecialHDays; ?></td>
+											<td><?php echo $NationalHOneDays; ?></td>
+											<td><?php echo $NationalHTwoDays; ?></td>
+											<td><?php echo $GrossPay; ?></td>
+											<td><?php echo $OTGrossPay; ?></td>
+											<td><?php echo $NPGrossPay; ?></td>
+											<td><?php echo $NPOTGrossPay; ?></td>
 										</tr>
 									<?php endforeach; ?>
 								</tbody>
@@ -254,6 +288,9 @@ use Carbon\Carbon;
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('.day-sunday').on('click', function() {
+			$(this).removeClass('day-sunday');
+		});
 		$('.SetPrimaryClientIDButton').on('click', function () {
 			$('#SetPrimaryClientID').val($(this).attr('id'));
 			console.log($('#SetPrimaryClientID').val());
