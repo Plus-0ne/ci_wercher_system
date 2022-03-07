@@ -905,96 +905,162 @@ a[data-toggle="collapse"] {
 	position: absolute;
 	top: 56%;
 	left: 8.5%;
-	width: 80%;
-	height: 10%;
+	width: 280px;
+	height: 35px;
+	line-height: 95%;
+}
+.wercher-idcard-name span {
+	display: inline;
+}
 
+.name-field-small {
+	top: 54% !important;
 }
 
 .wercher-idcard-designation {
 	position: absolute;
 	top: 66.5%;
-	left: 8.5%;
+	left: 8%;
 	width: 40%;
-	height: 10%;
+	height: 25px;
+}
+
+.wercher-idcard-designation span {
+	display: inline;
 }
 
 .wercher-idcard-dateissued {
 	position: absolute;
 	top: 66.5%;
-	left: 58.5%;
+	left: 58%;
 	width: 40%;
-	height: 10%;
+	height: 25px;
 	/*font-size: 19px;*/
+}
+
+.wercher-idcard-dateissued span {
+	display: inline;
 }
 
 .wercher-idcard-employeeid {
 	color: #ffde00;
 	text-align: center;
 	position: absolute;
-	bottom: -2%;
-	left: 4.5%;
-	width: 85%;
-	height: 7.5%;
+	bottom: 0.25%;
+	left: 18%;
+	width: 200px;
+	height: 25px;
+	font-family: courier;
+}
+
+.wercher-idcard-employeeid span {
+	display: inline;
 }
 
 .wercher-idcard-address {
 	position: absolute;
 	top: 10%;
 	left: 5%;
-	width: 80%;
-	height: 10%;
+	width: 300px;
+	height: 35px;
+	line-height: 95%;
+}
+
+.wercher-idcard-address span {
+	display: inline;
+}
+
+.address-field-small {
+	top: 6% !important;
 }
 
 .wercher-idcard-emergency {
 	position: absolute;
-	top: 21%;
+	top: 21.5%;
 	left: 5%;
-	width: 80%;
-	height: 10%;
+	width: 300px;
+	height: 35px;
+	line-height: 95%;
+}
+
+.wercher-idcard-emergency span {
+	display: inline;
+}
+
+.emergency-field-small {
+	top: 17.5% !important;
 }
 
 .wercher-idcard-telno {
 	position: absolute;
 	top: 29%;
 	left: 32%;
-	width: 70%;
-	height: 10%;
+	width: 210px;
+	height: 25px;
+}
+
+.wercher-idcard-telno span {
+	display: inline;
 }
 
 .wercher-idcard-sssno {
 	position: absolute;
 	top: 36.5%;
 	left: 32%;
-	width: 70%;
-	height: 10%;
+	width: 210px;
+	height: 25px;
 }
+
+.wercher-idcard-sssno span {
+	display: inline;
+}
+
 .wercher-idcard-tin {
 	position: absolute;
 	top: 44%;
 	left: 32%;
-	width: 70%;
-	height: 10%;
+	width: 210px;
+	height: 25px;
 }
+
+.wercher-idcard-tin span {
+	display: inline;
+}
+
 .wercher-idcard-pagibig {
 	position: absolute;
 	top: 51.5%;
 	left: 32%;
-	width: 70%;
-	height: 10%;
+	width: 210px;
+	height: 25px;
 }
+
+.wercher-idcard-pagibig span {
+	display: inline;
+}
+
 .wercher-idcard-philhealth {
 	position: absolute;
 	top: 59%;
 	left: 32%;
-	width: 70%;
-	height: 10%;
+	width: 210px;
+	height: 25px;
 }
+
+.wercher-idcard-philhealth span {
+	display: inline;
+}
+
 .wercher-idcard-hmo {
 	position: absolute;
 	top: 65.75%;
 	left: 32%;
-	width: 70%;
-	height: 10%;
+	width: 210px;
+	height: 25px;
+}
+
+.wercher-idcard-hmo span {
+	display: inline;
 }
 
 .wercher-idcard-frontbtn {

@@ -678,6 +678,7 @@
 						'ClientEmployed' => $ged['ClientEmployed'],
 						'DateStarted' => $ged['DateStarted'],
 						'DateEnds' => $ged['DateEnds'],
+						'SickLeave' => $ged['SickLeave'],
 						'AppliedOn' => $ged['AppliedOn'],
 
 						'SuspensionStarted' => $ged['SuspensionStarted'],
@@ -2315,6 +2316,68 @@
 		else:
 			redirect('Forbidden');
 		endif;
+	}
+	public function Receivables()
+	{
+		if($this->Model_Security->CheckPermissions('Payroll')):
+			$header['title'] = 'Receivables | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Payroll">Payroll</a></li>
+			</ol>
+			</nav>';
+
+			// WEEKLY INCREASE
+			$CurrentDay = date('Y-m-d h:i:s A');
+			$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
+			$data['WeeklyApplicants'] = $this->Model_Selects->GetApplicantsIncrease($CurrentDay, $CurrentDayScope)->num_rows();
+
+			$data['GetAllApplicants'] = $this->Model_Selects->GetAllApplicants()->num_rows();
+			$data['get_employee'] = $this->Model_Selects->GetAllEmployee();
+			$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+			$data['getClientOption'] = $this->Model_Selects->getClientOption();
+			$data['ShowClients'] = $this->Model_Selects->GetClients();
+			$this->load->view('payroll/p_receivables',$data);
+		else:
+			redirect('Forbidden');
+		endif;
+
+	}
+	public function Loans()
+	{
+		if($this->Model_Security->CheckPermissions('Payroll')):
+			$header['title'] = 'Payroll Loans | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Payroll">Payroll</a></li>
+			</ol>
+			</nav>';
+			$this->load->view('payroll/p_loans',$data);
+		else:
+			redirect('Forbidden');
+		endif;
+
+	}
+	public function Provisions()
+	{
+		if($this->Model_Security->CheckPermissions('Payroll')):
+			$header['title'] = 'Payroll Provisions | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Payroll">Payroll</a></li>
+			</ol>
+			</nav>';
+			$this->load->view('payroll/p_provisions',$data);
+		else:
+			redirect('Forbidden');
+		endif;
+
 	}
 	// // Relatives
 	// public function ShowRelatives()

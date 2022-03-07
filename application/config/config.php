@@ -25,6 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 #### $config['base_url'] = 'http://localhost:81/ci_wercher_system/';//'http://localhost/ci_wercher_system/'; condoriano
 $config['base_url'] = 'https://localhost/ci_wercher_system/';
+// $config['base_url'] = 'http://system.werchercoop.xyz/';
 /*
 |--------------------------------------------------------------------------
 | Index File

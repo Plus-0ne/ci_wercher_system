@@ -3,6 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_Selects extends CI_Model {
 
+	public function GetAllEmployee()
+	{
+		$SQL = "SELECT * FROM applicants WHERE Status <> 'Applicant' AND Status <> 'Blacklisted' AND Status <> 'Deleted' AND Status <> 'Expired'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function GetEmployee()
 	{
 		$SQL = "SELECT * FROM applicants WHERE Status = 'Employed'";
@@ -963,6 +969,20 @@ class Model_Selects extends CI_Model {
 	public function ShowPayrollProvisions($ApplicantID, $Year, $Month, $Week, $Mode) {
 		$SQL = "SELECT * FROM payroll_provisions WHERE ApplicantID = '$ApplicantID' AND Year = '$Year' AND Month = '$Month' AND Week = '$Week' AND Type = '$Mode' AND (Deleted <> '1' || Deleted IS NULL)";
 		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetAllPayrollLoans() {
+		$this->db->select('*');
+		$this->db->where('Deleted', NULL);
+		$this->db->order_by('ID', 'desc');
+		$result = $this->db->get('payroll_loans');  
+		return $result;
+	}
+	public function GetAllPayrollProvisions() {
+		$this->db->select('*');
+		$this->db->where('Deleted', NULL);
+		$this->db->order_by('ID', 'desc');
+		$result = $this->db->get('payroll_provisions');  
 		return $result;
 	}
 	public function CheckIfLoanExists($ID) {

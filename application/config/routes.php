@@ -79,6 +79,9 @@ $route['Payroll'] = 'Main_Controller/PayrollClients';
 $route['ViewClient'] = 'Main_Controller/ViewClient';
 $route['ViewPayroll'] = 'Main_Controller/ViewPayroll';
 $route['ExcelImportSuccessful'] = 'Main_Controller/ExcelImportSuccessful';
+$route['Receivables'] = 'Main_Controller/Receivables';
+$route['Loans'] = 'Main_Controller/Loans';
+$route['Provisions'] = 'Main_Controller/Provisions';
 
 $route['GenerateIDCard'] = 'Main_Controller/GenerateIDCard';
 $route['PrintEmployee'] = 'Main_Controller/PrintEmployee';

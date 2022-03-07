@@ -9,9 +9,9 @@
 				</button>
 			</div>
 			<div class="load-container modal-body">
+				<input id="SetPrimaryClientID" name="PrimaryClientID" type="hidden">
 				<!-- <div class="form-row mx-1">
 					<div class="form-group col-sm-8 mt-2">
-						<input id="SetPrimaryClientID" name="PrimaryClientID" type="hidden">
 						<label><b>Client Starting Week</b></label>
 						<input id="Week" class="form-control" type="date" name="Week">
 					</div>

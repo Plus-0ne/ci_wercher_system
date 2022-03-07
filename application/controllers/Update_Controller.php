@@ -1391,11 +1391,6 @@ class Update_Controller extends CI_Controller {
 				$ArrayInt++;
 				$Type = $this->input->post('Type_' . $nrow['Time'],TRUE);
 				$Hours = $this->input->post('Hours_' . $nrow['Time'],TRUE);
-				if ($Hours != NULL) {
-					$Hours = $this->input->post('Hours_' . $nrow['Time'],TRUE);
-				} else {
-					$Hours = 0;
-				}
 				$HoursTotal+=$Hours;
 				$Overtime = $this->input->post('OTHours_' . $nrow['Time'],TRUE);
 				$NightHours = $this->input->post('NightHours_' . $nrow['Time'],TRUE);
@@ -1416,6 +1411,7 @@ class Update_Controller extends CI_Controller {
 				$Philhealth = $this->input->post('Philhealth_' . $nrow['Time'],TRUE);
 				$SSS = $this->input->post('SSS_' . $nrow['Time'],TRUE);
 				$Tax = $this->input->post('Tax_' . $nrow['Time'],TRUE);
+				$isSickLeave = $this->input->post('isSickLeave_' . $nrow['Time'], TRUE);
 
 				$Date = $this->input->post($nrow['Time'],TRUE);
 
@@ -1447,7 +1443,49 @@ class Update_Controller extends CI_Controller {
 					} else {
 						$GrossPay = $total_hoursperday * $dayRate;
 					}
-
+					// WERCHER CUT
+					// $salary = 0;
+					// $salaryType = 'Daily';
+					// $monthlySalary = 0;
+					// $checkApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
+					// if ($checkApplicant->num_rows() > 0) {
+					// 	foreach ($checkApplicant->result_array() as $crow) {
+					// 		$salary = $crow['SalaryExpected'];
+					// 		$salaryType = $crow['SalaryType'];
+					// 	};
+					// }
+					// if ($salaryType == 'Daily') {
+					// 	$monthlySalary = $salary * 26;
+					// }
+					// if ($salaryType == 'Monthly') {
+					// 	$monthlySalary = $salary;
+					// }
+					// if ($salaryType == 'Semi-Monthly') {
+					// 	$monthlySalary = $salary / 2;
+					// }
+					// switch($Mode) {
+					// 	case 0:
+					// 		if ($HoursTotal == 48) {
+					// 			$RegularGrossPay = $monthlySalary / 4; 
+					// 		}
+					// 		break;
+					// 	case 1:
+					// 		if ($HoursTotal == 104) {
+					// 			$RegularGrossPay = $monthlySalary / 2;
+					// 		}
+					// 		break;
+					// 	case 2:
+					// 		if ($HoursTotal == 208) {
+					// 			$RegularGrossPay = $monthlySalary;
+					// 		}
+					// 		break;
+					// 	default:
+					// 		if ($HoursTotal == 48) {
+					// 			$RegularGrossPay = $monthlySalary / 4; 
+					// 		}
+					// 		break;
+					// }
+					// ===========
 					$data = array(
 						'ApplicantID' => $ApplicantID,
 						'ClientID' => $ClientID,
@@ -1484,6 +1522,22 @@ class Update_Controller extends CI_Controller {
 					}
 					if ($NationalCheck) {
 						$data['NationalHoliday'] = 1;
+					}
+					if ($isSickLeave) {
+						$data['isSickLeave'] = 1;
+						$checkApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
+						if ($checkApplicant->num_rows() > 0) {
+							foreach ($checkApplicant->result_array() as $crow) {
+								$sickLeave = $crow['SickLeave'] ?? 0;
+								if ($sickLeave > 0) {
+									$sickLeave--;
+								}
+							}
+						}
+						$edata = [
+							'SickLeave' => $sickLeave,
+						];
+						$UpdateEmployee = $this->Model_Updates->UpdateEmployee($ApplicantID, $edata);
 					}
 					$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($data, $Mode);
 					if ($UpdateWeeklyHours == TRUE) {
@@ -1645,7 +1699,7 @@ class Update_Controller extends CI_Controller {
 				//tax
 				$year=date("Y");
 				$annualSalary=$employeeSalary*12;
-				if($year<=2022)
+				if($year<=2025)
 				{
 					if($annualSalary<=250000) //Not over P250,000 -- 0%
 					{
@@ -2209,7 +2263,7 @@ class Update_Controller extends CI_Controller {
 		$sssFrom = $this->input->post('PayrollSSSDayStart');
 		$sssTo = $this->input->post('PayrollSSSDayEnds');
 		$ClientID = $this->input->post('PrimaryClientID', TRUE);
-		if ($Week == NULL) {
+		if (isset($hdmdFrom, $hdmfTo, $sssFrom, $sssTo) ) {
 			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
@@ -2222,7 +2276,7 @@ class Update_Controller extends CI_Controller {
 				'HDMFDayFrom' => $hdmfFrom,
 				'HDMFDayTo' => $hdmfTo,
 				'ClientID' => $ClientID,
-				'TimeAdded' => date('Y-m-d H:i:s'),
+				'TimeAdded' => date('Y-m-d h:i:s A'),
 			);
 			$SetPrimaryWeek = $this->Model_Updates->SetPrimaryWeek($data);
 			if ($SetPrimaryWeek == TRUE) {

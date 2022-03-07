@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	if (!$_GET['id'] || !$_GET['mode'] || !$_GET['from_day'] || !$_GET['from_month'] || !$_GET['from_year'] || !$_GET['to_day'] || !$_GET['to_month'] || !$_GET['to_year']) {
 		redirect('FourOhFour');
 	} else {
@@ -128,6 +128,24 @@
 				$rate = number_format($row['SalaryExpected']);
 				$rate = str_replace(',', '', $rate);
 				$salaryType = $row['SalaryType'];
+				switch ($salaryType) {
+					case 'Daily':
+						$dailySalary = $rate;
+						$monthlySalary = $rate * 26.16667;
+						break;
+					case 'Monthly':
+						$dailySalary = $rate / 26.16667;
+						$monthlySalary = $rate;
+						break;
+					case 'Semi-Monthly':
+						$monthlySalary = $rate / 2;
+						$dailySalary = $monthlySalary / 8;
+						break;
+					default:
+						$dailySalary = $rate;
+						$monthlySalary = $rate * 26.16667;
+						break;
+				}
 				// Salary Data
 				// ~ regular
 				$EarningsTotal = 0;
@@ -135,17 +153,43 @@
 				$RegularHours = number_format($this->Model_Selects->GetPayslipRegularHours($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($RegularHours <= 0) {
 					$RegularHours = '-';
+				} else {
+					$RegularHours = $RegularHours / 8;
 				}
 				// var_dump($this->db->last_query());
-				$RegularGrossPay = number_format($this->Model_Selects->GetPayslipRegularGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
+				$RegularGrossPay = number_format($this->Model_Selects->GetPayslipRegularGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 1, '.', '');
 				if ($RegularGrossPay <= 0) {
 					$RegularGrossPay = '-';
 				} else {
+					switch($Mode) {
+						case 0:
+							if ($RegularHours == 6) { // days
+								$RegularGrossPay = $monthlySalary / 4;
+							}
+							break;
+						case 1:
+							if ($RegularHours == 13) { // days
+								$RegularGrossPay = $monthlySalary / 2;
+							}
+							break;
+						case 2:
+							if ($RegularHours == 26) { // days
+								$RegularGrossPay = $monthlySalary;
+							}
+							break;
+						default:
+							if ($RegularHours == 6) { // days
+								$RegularGrossPay = $monthlySalary / 4;
+							}
+							break;
+					}
 					$EarningsTotal = $EarningsTotal + $RegularGrossPay;
 				}
 				$RegularOvertime = number_format($this->Model_Selects->GetPayslipRegularOvertime($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($RegularOvertime <= 0) {
 					$RegularOvertime = '-';
+				} else {
+					$RegularOvertime = $RegularOvertime / 8;
 				}
 				$RegularOvertimeGrossPay = number_format($this->Model_Selects->GetPayslipRegularOvertimeGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($RegularOvertimeGrossPay <= 0) {
@@ -156,6 +200,8 @@
 				$RegularNightHours = number_format($this->Model_Selects->GetPayslipRegularNightHours($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($RegularNightHours <= 0) {
 					$RegularNightHours = '-';
+				} else {
+					$RegularNightHours = $RegularNightHours / 8;
 				}
 				$RegularNPGrossPay = number_format($this->Model_Selects->GetPayslipRegularNPGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($RegularNPGrossPay <= 0) {
@@ -166,6 +212,8 @@
 				$RegularNightOvertime = number_format($this->Model_Selects->GetPayslipRegularNightOvertime($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($RegularNightOvertime <= 0) {
 					$RegularNightOvertime = '-';
+				} else {
+					$RegularNightOvertime = $RegularNightOvertime / 8;
 				}
 				$RegularNPOvertimeGrossPay = number_format($this->Model_Selects->GetPayslipRegularNPOvertimeGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($RegularNPOvertimeGrossPay <= 0) {
@@ -177,6 +225,8 @@
 				$RestDayHours = number_format($this->Model_Selects->GetPayslipRestDayHours($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($RestDayHours <= 0) {
 					$RestDayHours = '-';
+				} else {
+					$RestDayHours = $RestDayHours / 8;
 				}
 				$RestDayGrossPay = number_format($this->Model_Selects->GetPayslipRestDayGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($RestDayGrossPay <= 0) {
@@ -187,6 +237,8 @@
 				$RestDayOvertime = number_format($this->Model_Selects->GetPayslipRestDayOvertime($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($RestDayOvertime <= 0) {
 					$RestDayOvertime = '-';
+				} else {
+					$RestDayOvertime = $RestDayOvertime / 8;
 				}
 				$RestDayOvertimeGrossPay = number_format($this->Model_Selects->GetPayslipRestDayOvertimeGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($RestDayOvertimeGrossPay <= 0) {
@@ -197,6 +249,8 @@
 				$RestDayNightHours = number_format($this->Model_Selects->GetPayslipRestDayNightHours($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($RestDayNightHours <= 0) {
 					$RestDayNightHours = '-';
+				} else {
+					$RestDayNightHours = $RestDayNightHours / 8;
 				}
 				$RestDayNPGrossPay = number_format($this->Model_Selects->GetPayslipRestDayNPGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($RestDayNPGrossPay <= 0) {
@@ -207,6 +261,8 @@
 				$RestDayNightOvertime = number_format($this->Model_Selects->GetPayslipRestDayNightOvertime($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($RestDayNightOvertime <= 0) {
 					$RestDayNightOvertime = '-';
+				} else {
+					$RestDayNightOvertime = $RestDayNightOvertime / 8;
 				}
 				$RestDayNPOvertimeGrossPay = number_format($this->Model_Selects->GetPayslipRestDayNPOvertimeGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($RestDayNPOvertimeGrossPay <= 0) {
@@ -218,6 +274,8 @@
 				$SpecialHolidayHours = number_format($this->Model_Selects->GetPayslipSpecialHolidayHours($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($SpecialHolidayHours <= 0) {
 					$SpecialHolidayHours = '-';
+				} else {
+					$SpecialHolidayHours = $SpecialHolidayHours / 8;
 				}
 				$SpecialHolidayGrossPay = number_format($this->Model_Selects->GetPayslipSpecialHolidayGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($SpecialHolidayGrossPay <= 0) {
@@ -228,6 +286,8 @@
 				$SpecialHolidayOvertime = number_format($this->Model_Selects->GetPayslipSpecialHolidayOvertime($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($SpecialHolidayOvertime <= 0) {
 					$SpecialHolidayOvertime = '-';
+				} else {
+					$SpecialHolidayOvertime = $SpecialHolidayOvertime / 8;
 				}
 				$SpecialHolidayOvertimeGrossPay = number_format($this->Model_Selects->GetPayslipSpecialHolidayOvertimeGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($SpecialHolidayOvertimeGrossPay <= 0) {
@@ -238,6 +298,8 @@
 				$SpecialHolidayNightHours = number_format($this->Model_Selects->GetPayslipSpecialHolidayNightHours($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($SpecialHolidayNightHours <= 0) {
 					$SpecialHolidayNightHours = '-';
+				} else {
+					$SpecialHolidayNightHours = $SpecialHolidayNightHours / 8;
 				}
 				$SpecialHolidayNPGrossPay = number_format($this->Model_Selects->GetPayslipSpecialHolidayNPGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($SpecialHolidayNPGrossPay <= 0) {
@@ -248,6 +310,8 @@
 				$SpecialHolidayNightOvertime = number_format($this->Model_Selects->GetPayslipSpecialHolidayNightOvertime($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($SpecialHolidayNightOvertime <= 0) {
 					$SpecialHolidayNightOvertime = '-';
+				} else {
+					$SpecialHolidayNightOvertime = $SpecialHolidayNightOvertime / 8;
 				}
 				$SpecialHolidayNPOvertimeGrossPay = number_format($this->Model_Selects->GetPayslipSpecialHolidayNPOvertimeGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($SpecialHolidayNPOvertimeGrossPay <= 0) {
@@ -259,6 +323,8 @@
 				$SPHRDHours = number_format($this->Model_Selects->GetPayslipSPHRDHours($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($SPHRDHours <= 0) {
 					$SPHRDHours = '-';
+				} else {
+					$SPHRDHours = $SPHRDHours / 8;
 				}
 				$SPHRDGrossPay = number_format($this->Model_Selects->GetPayslipSPHRDGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($SPHRDGrossPay <= 0) {
@@ -269,6 +335,8 @@
 				$SPHRDOvertime = number_format($this->Model_Selects->GetPayslipSPHRDOvertime($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($SPHRDOvertime <= 0) {
 					$SPHRDOvertime = '-';
+				} else {
+					$SPHRDOvertime = $SPHRDOvertime / 8;
 				}
 				$SPHRDOvertimeGrossPay = number_format($this->Model_Selects->GetPayslipSPHRDOvertimeGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($SPHRDOvertimeGrossPay <= 0) {
@@ -279,6 +347,8 @@
 				$SPHRDNightHours = number_format($this->Model_Selects->GetPayslipSPHRDNightHours($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($SPHRDNightHours <= 0) {
 					$SPHRDNightHours = '-';
+				} else {
+					$SPHRDNightHours = $SPHRDNightHours / 8;
 				}
 				$SPHRDNPGrossPay = number_format($this->Model_Selects->GetPayslipSPHRDNPGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($SPHRDNPGrossPay <= 0) {
@@ -289,6 +359,8 @@
 				$SPHRDNightOvertime = number_format($this->Model_Selects->GetPayslipSPHRDNightOvertime($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($SPHRDNightOvertime <= 0) {
 					$SPHRDNightOvertime = '-';
+				} else {
+					$SPHRDNightOvertime = $SPHRDNightOvertime / 8;
 				}
 				$SPHRDNPOvertimeGrossPay = number_format($this->Model_Selects->GetPayslipSPHRDNPOvertimeGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($SPHRDNPOvertimeGrossPay <= 0) {
@@ -307,6 +379,8 @@
 				$NHOHPGrossPay = number_format(($NHOHPHoursRaw * $rate), 2, '.', '');
 				if ($NHOHPHours <= 0) {
 					$NHOHPHours = '-';
+				} else {
+					$NHOHPHours = $NHOHPHours / 8;
 				}
 				if ($NHOHPGrossPay <= 0) {
 					$NHOHPGrossPay = '-';
@@ -317,6 +391,8 @@
 				$NationalHolidayHours = number_format($this->Model_Selects->GetPayslipNationalHolidayHours($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($NationalHolidayHours <= 0) {
 					$NationalHolidayHours = '-';
+				} else {
+					$NationalHolidayHours = $NationalHolidayHours / 8;
 				}
 				$NationalHolidayGrossPay = number_format($this->Model_Selects->GetPayslipNationalHolidayGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($NationalHolidayGrossPay <= 0) {
@@ -327,6 +403,8 @@
 				$NationalHolidayOvertime = number_format($this->Model_Selects->GetPayslipNationalHolidayOvertime($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($NationalHolidayOvertime <= 0) {
 					$NationalHolidayOvertime = '-';
+				} else {
+					$NationalHolidayOvertime = $NationalHolidayOvertime / 8;
 				}
 				$NationalHolidayOvertimeGrossPay = number_format($this->Model_Selects->GetPayslipNationalHolidayOvertimeGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($NationalHolidayOvertimeGrossPay <= 0) {
@@ -337,6 +415,8 @@
 				$NationalHolidayNightHours = number_format($this->Model_Selects->GetPayslipNationalHolidayNightHours($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($NationalHolidayNightHours <= 0) {
 					$NationalHolidayNightHours = '-';
+				} else {
+					$NationalHolidayNightHours = $NationalHolidayNightHours / 8;
 				}
 				$NationalHolidayNPGrossPay = number_format($this->Model_Selects->GetPayslipNationalHolidayNPGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($NationalHolidayNPGrossPay <= 0) {
@@ -347,6 +427,8 @@
 				$NationalHolidayNightOvertime = number_format($this->Model_Selects->GetPayslipNationalHolidayNightOvertime($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($NationalHolidayNightOvertime <= 0) {
 					$NationalHolidayNightOvertime = '-';
+				} else {
+					$NationalHolidayNightOvertime = $NationalHolidayNightOvertime / 8;
 				}
 				$NationalHolidayNPOvertimeGrossPay = number_format($this->Model_Selects->GetPayslipNationalHolidayNPOvertimeGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($NationalHolidayNPOvertimeGrossPay <= 0) {
@@ -358,6 +440,8 @@
 				$NHRDHours = number_format($this->Model_Selects->GetPayslipNHRDHours($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($NHRDHours <= 0) {
 					$NHRDHours = '-';
+				} else {
+					$NHRDHours = $NHRDHours / 8;
 				}
 				$NHRDGrossPay = number_format($this->Model_Selects->GetPayslipNHRDGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($NHRDGrossPay <= 0) {
@@ -368,6 +452,8 @@
 				$NHRDOvertime = number_format($this->Model_Selects->GetPayslipNHRDOvertime($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($NHRDOvertime <= 0) {
 					$NHRDOvertime = '-';
+				} else {
+					$NHRDOvertime = $NHRDOvertime / 8;
 				}
 				$NHRDOvertimeGrossPay = number_format($this->Model_Selects->GetPayslipNHRDOvertimeGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($NHRDOvertimeGrossPay <= 0) {
@@ -378,6 +464,8 @@
 				$NHRDNightHours = number_format($this->Model_Selects->GetPayslipNHRDNightHours($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($NHRDNightHours <= 0) {
 					$NHRDNightHours = '-';
+				} else {
+					$NHRDNightHours = $NHRDNightHours / 8;
 				}
 				$NHRDNPGrossPay = number_format($this->Model_Selects->GetPayslipNHRDNPGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($NHRDNPGrossPay <= 0) {
@@ -388,6 +476,8 @@
 				$NHRDNightOvertime = number_format($this->Model_Selects->GetPayslipNHRDNightOvertime($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($NHRDNightOvertime <= 0) {
 					$NHRDNightOvertime = '-';
+				} else {
+					$NHRDNightOvertime = $NHRDNightOvertime / 8;
 				}
 				$NHRDNPOvertimeGrossPay = number_format($this->Model_Selects->GetPayslipNHRDNPOvertimeGrossPay($ApplicantID, $Mode, $fromDate, $toDate), 2, '.', '');
 				if ($NHRDNPOvertimeGrossPay <= 0) {
@@ -400,6 +490,8 @@
 				if ($GrossPayTotal < 0) {
 					$GrossPayTotal = 0;
 				}
+				$sickLeave = $row['SickLeave'] ?? 0;
+				$sickLeaveValue = number_format($sickLeave * $dailySalary, 2, '.', '');
 				// ~ deductions
 				$sssTable = $this->Model_Selects->GetAllSSSTable();
 				$hdmfTable = $this->Model_Selects->GetAllHDMFTable();
@@ -423,7 +515,6 @@
 					if (($fromDay >= $sssFrom && $fromDay <= $sssTo) || ($toDay >= $sssFrom && $toDay <= $sssTo)) {
 						if ($GrossPayTotal >= $srow['f_range'] && $GrossPayTotal <= $srow['t_range']) {
 							$SSSTotal = $srow['contribution_ee'];
-							echo ($fromDay >= $sssFrom && $fromDay <= $sssTo);
  						}
 					}
 				}
@@ -604,9 +695,9 @@
 						<div class="row">
 							<div class="col-sm-12">
 								<button type="button" class="btn btn-success glow-gold" onClick="printContent('PrintOut')" style="width: 400px;"><i class="fas fa-print"></i> Print</button>
-								<button type="button" class="new-earnings-row-btn btn btn-info"><i class="fas fa-plus"></i> Earnings</button>
+								<!-- <button type="button" class="new-earnings-row-btn btn btn-info"><i class="fas fa-plus"></i> Earnings</button>
 								<button type="button" class="new-deductions-row-btn btn btn-info"><i class="fas fa-plus"></i> Deductions</button>
-								<button type="button" class="new-provisions-row-btn btn btn-info"><i class="fas fa-plus"></i> Provisions</button>
+								<button type="button" class="new-provisions-row-btn btn btn-info"><i class="fas fa-plus"></i> Provisions</button> -->
 								<button type="button" class="payroll-changedates-btn btn btn-primary" style="width: 155px;"><i class="fas fa-edit"></i> Change Set</button>
 							</div>
 						</div>
@@ -744,7 +835,7 @@
 									<div class="col-sm-12">
 										<div class="row">
 											<div style="margin-bottom: 2px;" class="col-sm-12">
-												<input class="payslip-header" type="text" value="GROSS PAY Breakdown (Hours / Rate):">
+												<input class="payslip-header" type="text" value="GROSS PAY Breakdown (Days / Rate):">
 											</div>
 										</div>
 									</div>
@@ -1016,7 +1107,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="row">
+								<!-- <div class="row">
 									<div class="col-sm-12">
 										<div class="row">
 											<div class="col-sm-6">
@@ -1027,7 +1118,7 @@
 											</div>
 										</div>
 									</div>
-								</div>
+								</div> -->
 								<div class="row">
 									<div class="col-sm-12">
 										<div class="row">
@@ -1035,7 +1126,7 @@
 												<input type="text" value="VL / SL:">
 											</div>
 											<div class="col-sm-6 text-right">
-												<input class="payslip-number" type="text" value="<?php echo $SSSAmountPaidTotal; ?>">
+												<input class="payslip-number" type="text" value="<?php echo $sickLeave; ?> (₱<?=$sickLeaveValue;?>)">
 											</div>
 										</div>
 									</div>

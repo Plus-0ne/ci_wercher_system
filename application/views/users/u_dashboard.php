@@ -214,8 +214,12 @@ $GetLogbookNotes = $this->Model_Selects->GetLogbookNotes();
 									$thumbnail = $row['ApplicantImage'];
 									$thumbnail = substr($thumbnail, 0, -4);
 									$thumbnail = $thumbnail . '_thumb.jpg';
-									$employeeName = '<div class="col-sm-12"><a href="ViewEmployee?id=' . $row['ApplicantID'] . '">' . '<img src="' . $thumbnail .'" height="18px; width: 18px;" class="rounded-circle"> ' . $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName'][0]  .'.';
-									if ($row['NameExtension'] != NULL) {
+									$middleName = '';
+									if ($row['MiddleName']) {
+										$middleName = $row['MiddleName'][0];
+									}
+									$employeeName = '<div class="col-sm-12"><a href="ViewEmployee?id=' . $row['ApplicantID'] . '">' . '<img src="' . $thumbnail .'" height="18px; width: 18px;" class="rounded-circle"> ' . $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $middleName  .'.';
+									if ($row['NameExtension']) {
 										$employeeName = $employeeName . ', ' . $row['NameExtension'];
 									}
 									$GetClientID = $this->Model_Selects->GetClientID($row['ClientEmployed']);

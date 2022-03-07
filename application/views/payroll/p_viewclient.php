@@ -217,10 +217,10 @@ use Carbon\Carbon;
 												?> <td> <?php
 												if($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'], $_GET['mode'])->num_rows() > 0) {
 													foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'], $_GET['mode'])->result_array() as $nrow):
-														$Hours = $nrow['Hours'];
-														$OT = $nrow['Overtime'];
-														$NP = $nrow['NightHours'];
-														$NPOT = $nrow['NightOvertime'];
+														$Hours = $nrow['Hours'] ?? 0;
+														$OT = $nrow['Overtime'] ?? 0;
+														$NP = $nrow['NightHours'] ?? 0;
+														$NPOT = $nrow['NightOvertime'] ?? 0;
 														$totalh =  $nrow['Hours'] + $nrow['Overtime'] + $nrow['NightHours'] + $nrow['NightOvertime'];
 														echo '<div data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: <b>'. $Hours . '</b><br>Overtime: <b>' . $nrow['Overtime'] . '</b><br>Night Hours: <b>' . $NP . '</b><br>Night Overtime Hours: <b>' . $NPOT . '</b>">' . $totalh . '</div>';
 														$TotalRegHours += $Hours;
@@ -236,7 +236,47 @@ use Carbon\Carbon;
 														if ($nrow['NationalHoliday'] == 1) {
 															$NationalHTwoDays += 1;
 														}
+														// WERCHER CUT
+														$salary = $row['SalaryExpected'] ?? 0;
+														$salaryType = $row['SalaryType'] ?? 'Daily';
+														$monthlySalary = 0;
+														if ($salaryType == 'Daily') {
+															$monthlySalary = $salary * 26;
+														}
+														if ($salaryType == 'Monthly') {
+															$monthlySalary = $salary;
+														}
+														if ($salaryType == 'Semi-Monthly') {
+															$monthlySalary = $salary / 2;
+														}
 														$GrossPay += $nrow['GrossPay'];
+														switch($Mode) {
+															case 0:
+																if ($TotalRegHours == 48) {
+																	$GrossPay = 0;
+																	$GrossPay = $monthlySalary / 4; 
+																}
+																break;
+															case 1:
+																if ($TotalRegHours == 104) {
+																	$GrossPay = 0;
+																	$GrossPay = $monthlySalary / 2;
+																}
+																break;
+															case 2:
+																if ($TotalRegHours == 208) {
+																	$GrossPay = 0;
+																	$GrossPay = $monthlySalary;
+																}
+																break;
+															default:
+																if ($TotalRegHours == 48) {
+																	$GrossPay = 0;
+																	$GrossPay = $monthlySalary / 4; 
+																}
+																break;
+														}
+														// ===========
 														$OTGrossPay += $nrow['OvertimeGrossPay'];
 														$NPGrossPay += $nrow['NPGrossPay'];
 														$NPOTGrossPay += $nrow['NPOvertimeGrossPay'];
@@ -348,6 +388,21 @@ use Carbon\Carbon;
 			} else {
 				$(this).closest('.night-btn-group').find('input[type=checkbox]').attr('checked', true);
 			}
+		});
+		$('.sick-leave-btn').on('click', function () {
+			$(this).toggleClass('btn-night btn-secondary');
+			$(this).children('i').toggleClass('text-primary');
+			if ($(this).closest('.sick-leave-btn-group').find('input[type=checkbox]').is(':checked')) {
+				$(this).closest('.sick-leave-btn-group').find('input[type=checkbox]').attr('checked', false);
+			} else {
+				$(this).closest('.sick-leave-btn-group').find('input[type=checkbox]').attr('checked', true);
+			}
+			let id = $(this).data('id');
+			$(`.set-hours[data-id="${id}"]`).val(8);
+			$(`.set-othours[data-id="${id}"]`).val(0);
+			$(`.set-nphours[data-id="${id}"]`).val(0);
+			$(`.set-npothours[data-id="${id}"]`).val(0);
+			$('.refresh-calculation-btn').trigger('click');
 		});
 		$(".nav-item a[href*='Payroll']").addClass("nactive");
 		$('[data-toggle="tooltip"]').tooltip();
@@ -498,13 +553,13 @@ use Carbon\Carbon;
 	           		// National 200%
 	           		if($(this).closest(".modal-body").find('.NHCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                if($(this).closest(".modal-body").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
-		                	RegularPay = Regular * 2.0;
-		                	OvertimePay = Overtime * 2.0;
-		                	TotalPerDay = (Regular + Overtime) * 2.0;
+		                	RegularPay = Regular * 3.0;
+		                	OvertimePay = Overtime * 3.0;
+		                	TotalPerDay = (Regular + Overtime) * 3.0;
 
-		                	NightPremiumPay = NightPremium * 2.0;
-		                	NightPremiumOvertimePay = NightPremiumOvertime * 2.0;
-		                	NightTotalPerDay = (NightPremium + NightPremiumOvertime) * 2.0;
+		                	NightPremiumPay = NightPremium * 3.0;
+		                	NightPremiumOvertimePay = NightPremiumOvertime * 3.0;
+		                	NightTotalPerDay = (NightPremium + NightPremiumOvertime) * 3.0;
 		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 		            	}
 		                if($(this).closest(".modal-body").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
@@ -529,7 +584,6 @@ use Carbon\Carbon;
 	           		$(this).closest(".modal-body").find('.nightpremiumovertime_pay_<?php echo $row['Time']; ?>').val(NightPremiumOvertimePay.toFixed(2));
 	         });
 		 	$(".SalaryButtons, .refresh-calculation-btn").on("click", function () {
-		 			console.log('test');
 		 			// General
 	                var PerHour = $(this).closest(".modal-body").find('.PerHour').val();
 	                var PerDay = $(this).closest(".modal-body").find('.PerDay').val();
@@ -603,13 +657,13 @@ use Carbon\Carbon;
 	           		// National 200%
 	           		if($(this).closest(".modal-body").find('.NHCheck_<?php echo $row['Time']; ?>').is(":checked")){
 		                if($(this).closest(".modal-body").find('.REGCheck_<?php echo $row['Time']; ?>').is(":checked")){
-		                	RegularPay = Regular * 2.0;
-		                	OvertimePay = Overtime * 2.0;
-		                	TotalPerDay = (Regular + Overtime) * 2.0;
+		                	RegularPay = Regular * 3.0;
+		                	OvertimePay = Overtime * 3.0;
+		                	TotalPerDay = (Regular + Overtime) * 3.0;
 
-		                	NightPremiumPay = NightPremium * 2.0;
-		                	NightPremiumOvertimePay = NightPremiumOvertime * 2.0;
-		                	NightTotalPerDay = (NightPremium + NightPremiumOvertime) * 2.0;
+		                	NightPremiumPay = NightPremium * 3.0;
+		                	NightPremiumOvertimePay = NightPremiumOvertime * 3.0;
+		                	NightTotalPerDay = (NightPremium + NightPremiumOvertime) * 3.0;
 		                	NightTotalPerDay = NightTotalPerDay * 1.1;
 		            	}
 		                if($(this).closest(".modal-body").find('.RESTCheck_<?php echo $row['Time']; ?>').is(":checked")){
@@ -637,7 +691,6 @@ use Carbon\Carbon;
 	 	<?php endforeach; ?>
 		function refreshCalculations() {
 			$('.refresh-calculation-btn').trigger('click');
-			console.log('test2');
 		}
 		setInterval(refreshCalculations, 1000);
 		// refreshCalculations();

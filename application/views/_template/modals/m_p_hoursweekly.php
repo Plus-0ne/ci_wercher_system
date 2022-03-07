@@ -6,6 +6,11 @@ $cNow = Carbon::parse(date('Y-m-d h:i:s A'));
 
 foreach ($GetWeeklyListEmployee->result_array() as $erow):
 
+$SickLeave = $erow['SickLeave'];
+$isOutOfSIL = false;
+if ($SickLeave <= 0) {
+	$isOutOfSIL = true;
+}
 $cStarts = Carbon::parse($erow['DateStarted']);
 $cEnds = Carbon::parse($erow['DateEnds']);
 if ($erow['Status'] != 'Employed (Permanent)') {
@@ -51,7 +56,7 @@ if ($erow['SalaryExpected'] > 0) {
 								<div class="input-icon-sm">
 									<?php
 										if ($erow['SalaryType'] == 'Daily') {
-											$salaryInterval = $SalaryExpected * 30;
+											$salaryInterval = $SalaryExpected * 26.16667;
 										} elseif ($erow['SalaryType'] == 'Monthly') {
 											$salaryInterval = $SalaryExpected;
 										} else {
@@ -75,6 +80,38 @@ if ($erow['SalaryExpected'] > 0) {
 										$salaryInterval = round($salaryInterval, 2);
 									?>
 									<input id="SalaryPerMonth" class="form-control" type="number" name="" value="<?=$salaryInterval;?>" readonly>
+									<i>₱</i>
+								</div>
+							</div>
+							<div class="form-group col-sm-12 col-md-2" style="max-width: 200px;">
+								<label>Per&nbsp;Semi</label>
+								<div class="input-icon-sm">
+									<?php
+										if ($erow['SalaryType'] == 'Daily') {
+											$salaryInterval = $SalaryExpected * 13;
+										} elseif ($erow['SalaryType'] == 'Monthly') {
+											$salaryInterval = $SalaryExpected / 2;
+										} else {
+											$salaryInterval = $SalaryExpected / $cDiffInMonths;;
+											// $cStarts = new DateTime($erow['DateStarted']);
+											// $cEnds = new DateTime($erow['DateEnds']);
+
+											// $cDiff = $cEnds->diff($cStarts);
+											// $cTotalMonths = (($cDiff->y) * 12) + ($cDiff->m);
+											// $cDiffDays = $cEnds->diff($cStarts)->format('%a');
+											// if ($cTotalMonths > 0) {
+											// 	$salaryInterval = $SalaryExpected / $cTotalMonths;
+											// } else {
+											// 	if ($cDiff->d > 0) {
+											// 		$salaryInterval = $erow['SalaryExpected'] / $cDiff->d;
+											// 	} else {
+											// 		$salaryInterval = 0;
+											// 	}
+											// }
+										}
+										$salaryInterval = round($salaryInterval, 2);
+									?>
+									<input id="SalaryPerSemi" class="form-control" type="number" name="" value="<?=$salaryInterval;?>" readonly>
 									<i>₱</i>
 								</div>
 							</div>
@@ -109,9 +146,13 @@ if ($erow['SalaryExpected'] > 0) {
 									<i>₱</i>
 								</div>
 							</div>
-							<div class="form-group col-sm-12 col-md-2" style="max-width: 200px;">
-								<label>--</label>
-								<button type="button" class="refresh-calculation-btn btn btn-info form-control" style="width: 200px;"><i class="fas fa-redo"></i> Refresh Calculations</button>
+							<div class="form-group col-sm-12 col-md-2" style="max-width: 150px;">
+								<label>Remaining&nbsp;SIL</label>
+								<input id="SalaryPerDay" class="form-control" type="number" name="" value="<?=$SickLeave;?>" readonly>
+							</div>
+							<div class="form-group col-sm-12 col-md-2" style="max-width: 2px;">
+								<label>Refresh</label>
+								<button type="button" class="refresh-calculation-btn btn btn-info form-control" style="width: 100px;"><i class="fas fa-redo"></i></button>
 							</div>
 						</div>
 						<div id="SalaryDays" class="form-row">
@@ -130,23 +171,16 @@ if ($erow['SalaryExpected'] > 0) {
 									$SpecialHoliday = false;
 									$NationalHolidayOneHundred = false;
 									$NationalHoliday = false;
+									$isSickLeave = false;
 									$regGrossPay = 0;
 									$overtimeGrossPay = 0;
 									$npGrossPay = 0;
 									$npOvertimeGrossPay = 0;
 									foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'], $_GET['mode'])->result_array() as $nrow):
-										if($nrow['Hours']) {
-											$salaryHours = $nrow['Hours'];
-										}
-										if($nrow['Overtime']) {
-											$salaryOvertime = $nrow['Overtime'];
-										}
-										if($nrow['NightHours']) {
-											$salaryNightHours = $nrow['NightHours'];
-										}
-										if($nrow['NightOvertime']) {
-											$salaryNightOvertime = $nrow['NightOvertime'];
-										}
+										$salaryHours = $nrow['Hours'] ?? 0;
+										$salaryOvertime = $nrow['Overtime'] ?? 0;
+										$salaryNightHours = $nrow['NightHours'] ?? 0;
+										$salaryNightOvertime = $nrow['NightOvertime'] ?? 0;
 										if($nrow['RestDay']) {
 											$RestDay = true;
 										}
@@ -159,29 +193,24 @@ if ($erow['SalaryExpected'] > 0) {
 										if($nrow['NationalHoliday']) {
 											$NationalHoliday = true;
 										}
-										if($nrow['GrossPay']) {
-											$regGrossPay = $nrow['GrossPay'];
+										if($nrow['isSickLeave']) {
+											$isSickLeave = true;
 										}
-										if($nrow['OvertimeGrossPay']) {
-											$overtimeGrossPay = $nrow['OvertimeGrossPay'];
-										}
-										if($nrow['NPGrossPay']) {
-											$npGrossPay = $nrow['NPGrossPay'];
-										}
-										if($nrow['NPOvertimeGrossPay']) {
-											$npOvertimeGrossPay = $nrow['NPOvertimeGrossPay'];
-										}
+										$regGrossPay = $nrow['GrossPay'] ?? 0;
+										$overtimeGrossPay = $nrow['OvertimeGrossPay'] ?? 0;
+										$npGrossPay = $nrow['NPGrossPay'] ?? 0;
+										$npOvertimeGrossPay = $nrow['NPOvertimeGrossPay'] ?? 0;
 									endforeach;
 								?>
 								<input class="form-control regular_pay_<?php echo $row['Time']; ?>" type="hidden" name="RegularGrossPay_<?php echo $row['Time']; ?>" value="<?php echo $regGrossPay; ?>">
 								<input class="form-control overtime_pay_<?php echo $row['Time']; ?>" type="hidden" name="OvertimeGrossPay_<?php echo $row['Time']; ?>" value="<?php echo $overtimeGrossPay; ?>">
 								<input class="form-control nightpremium_pay_<?php echo $row['Time']; ?>" type="hidden" name="NPGrossPay_<?php echo $row['Time']; ?>" value="<?php echo $npGrossPay; ?>">
 								<input class="form-control nightpremiumovertime_pay_<?php echo $row['Time']; ?>" type="hidden" name="NPOvertimeGrossPay_<?php echo $row['Time']; ?>" value="<?php echo $npOvertimeGrossPay; ?>">
-								<div class="day-container_<?php echo $row['Time']; ?> col-sm-12 col-md-2 <?php if ($pdayTooltip == 'Sunday') { echo 'day-sunday'; } ?>" style="margin-left: 25px;">
+								<div class="day-container day-container_<?php echo $row['Time']; ?> col-sm-12 col-md-2 <?php if ($pdayTooltip == 'Sunday') { echo 'day-sunday'; } ?>" data-id="<?=$row['Time'];?>" style="margin-left: 25px;">
 									<div class="card mb-3">
 										<input id="<?php echo $row['Time']; ?>" type="hidden" name="<?php echo $row['Time']; ?>" value="<?php echo $row['Time']; ?>">
 										<div class="card-header" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $pdayTooltip; ?>">
-											<div class="col-sm-12 day-container-date text-center">
+											<div class="col-sm-12 day-container-date text-center" style="font-size: 15px;">
 												<b><?php echo $pday . ' - ' . strtoupper($pdayText); ?></b>
 											</div>
 										</div>
@@ -189,11 +218,11 @@ if ($erow['SalaryExpected'] > 0) {
 											<div class="form-row">
 												<div class="form-group col-7">
 													<span style="font-size: 14px;">Hours</span>
-													<input id="" class="form-control Hours_<?php echo $row['Time']; ?>" type="number" step=".01" name="Hours_<?php echo $row['Time']; ?>" value="<?php echo $salaryHours; ?>">
+													<input id="" class="form-control set-hours Hours_<?php echo $row['Time']; ?>" type="number" step=".01" name="Hours_<?php echo $row['Time']; ?>" value="<?php echo $salaryHours; ?>" data-id="<?=$row['Time'];?>">
 												</div>
 												<div class="form-group col-5">
 													<span style="font-size: 14px;">Overtime</span>
-													<input class="form-control OTHours_<?php echo $row['Time']; ?>" type="number" step=".01" name="OTHours_<?php echo $row['Time']; ?>" value="<?php echo $salaryOvertime; ?>">
+													<input class="form-control set-othours OTHours_<?php echo $row['Time']; ?>" type="number" step=".01" name="OTHours_<?php echo $row['Time']; ?>" value="<?php echo $salaryOvertime; ?>">
 												</div>
 											</div>
 											<div class="btn-group form-row">
@@ -233,16 +262,14 @@ if ($erow['SalaryExpected'] > 0) {
 												</div>
 												<div class="form-group col-7 NightPremium">
 													<span style="font-size: 14px;">Hours</span>
-													<input id="" class="form-control NightHours_<?php echo $row['Time']; ?>" type="number" name="NightHours_<?php echo $row['Time']; ?>" value="<?php echo $salaryNightHours; ?>">
+													<input id="" class="form-control set-nphours NightHours_<?php echo $row['Time']; ?>" type="number" name="NightHours_<?php echo $row['Time']; ?>" value="<?php echo $salaryNightHours; ?>">
 												</div>
 												<div class="form-group col-5 NightPremium">
 													<span style="font-size: 14px;">Overtime</span>
-													<input class="form-control NightOTHours_<?php echo $row['Time']; ?>" type="number" name="NightOTHours_<?php echo $row['Time']; ?>" value="<?php echo $salaryNightOvertime; ?>">
+													<input class="form-control set-npothours NightOTHours_<?php echo $row['Time']; ?>" type="number" name="NightOTHours_<?php echo $row['Time']; ?>" value="<?php echo $salaryNightOvertime; ?>">
 												</div>
-											</div>
-											<div class="form-row hhhh">
-												<div class="form-group col-6 input-icon">
-													<label><span style="font-size: 14px;">Per Hour</span></label>
+												<div class="form-group col-6 NightPremium input-icon">
+													<label><span style="font-size: 14px;">Daily Pay</span></label>
 													<div class="input-icon-sm">
 														<input class="form-control  h_valueh" type="hidden" name="total_hoursperday_<?php echo $row['Time']; ?>" value="<?php if(isset($nrow['Hours'])) {
 															$totalho = $nrow['Hours'];
@@ -253,6 +280,38 @@ if ($erow['SalaryExpected'] > 0) {
 															$totalover = $nrow['Overtime'];
 														} else {
 															$totalover = '0';
+														}
+														$totalhaha = $totalho + $totalover;
+														echo $totalhaha;
+														?>">
+														<input class="form-control nightpremium_pay_<?php echo $row['Time']; ?>" type="text" name="dayRate_<?php echo $row['Time']; ?>" value="<?php 
+														$RatePerHour = $dailySalary / 8;
+														echo round($RatePerHour, 3);
+																?>" readonly>
+														<i>₱</i>
+													</div>
+												</div>
+												<div class="form-group NightPremium col-6 input-icon">
+													<label><span style="font-size: 14px;">OT Pay</span></label>
+													<div class="input-icon-sm">
+														<input id="t_pay" class="form-control nightpremiumovertime_pay_<?php echo $row['Time']; ?>" type="text" name="TdRate_<?php echo $row['Time']; ?>" value="" readonly>
+														<i>₱</i>
+													</div>
+												</div>
+											</div>
+											<div class="form-row hhhh">
+												<div class="form-group col-6 input-icon">
+													<label><span style="font-size: 14px;">Per Hour</span></label>
+													<div class="input-icon-sm">
+														<input class="form-control  h_valueh" type="hidden" name="total_hoursperday_<?php echo $row['Time']; ?>" value="<?php if(isset($nrow['Hours'])) {
+															$totalho = $nrow['Hours'];
+														} else {
+															$totalho = 0;
+														}
+														if(isset($nrow['Overtime'])) {
+															$totalover = $nrow['Overtime'];
+														} else {
+															$totalover = 0;
 														}
 														$totalhaha = $totalho + $totalover;
 														echo $totalhaha;
@@ -270,6 +329,42 @@ if ($erow['SalaryExpected'] > 0) {
 														<input id="t_pay" class="form-control t_pay_<?php echo $row['Time']; ?>" type="text" name="TdRate_<?php echo $row['Time']; ?>" value="" readonly>
 														<i>₱</i>
 													</div>
+												</div>
+												<div class="form-group col-6 input-icon">
+													<label><span style="font-size: 14px;">Daily Pay</span></label>
+													<div class="input-icon-sm">
+														<input class="form-control  h_valueh" type="hidden" name="total_hoursperday_<?php echo $row['Time']; ?>" value="<?php if(isset($nrow['Hours'])) {
+															$totalho = $nrow['Hours'];
+														} else {
+															$totalho = '0';
+														}
+														if(isset($nrow['Overtime'])) {
+															$totalover = $nrow['Overtime'];
+														} else {
+															$totalover = '0';
+														}
+														$totalhaha = $totalho + $totalover;
+														echo $totalhaha;
+														?>">
+														<input class="form-control regular_pay_<?php echo $row['Time']; ?>" type="text" name="dayRate_<?php echo $row['Time']; ?>" value="<?php 
+														$RatePerHour = $dailySalary / 8;
+														echo round($RatePerHour, 3);
+																?>" readonly>
+														<i>₱</i>
+													</div>
+												</div>
+												<div class="form-group col-6 input-icon">
+													<label><span style="font-size: 14px;">OT Pay</span></label>
+													<div class="input-icon-sm">
+														<input id="t_pay" class="form-control overtime_pay_<?php echo $row['Time']; ?>" type="text" name="TdRate_<?php echo $row['Time']; ?>" value="" readonly>
+														<i>₱</i>
+													</div>
+												</div>
+												<div class="form-group sick-leave-btn-group col-sm-12">
+													<?php if (!$isOutOfSIL): ?>
+													<button type="button" data-id="<?=$row['Time'];?>" class="sick-leave-btn btn <?php if ($isSickLeave) { echo 'btn-night'; } else { echo 'btn-secondary'; } ?> SalaryButtons" data-placement="top" data-html="true" title="Sick Leave?"><i class="fas fa-thermometer wercher-visible <?php if ($isSickLeave) { echo 'text-primary'; } ?>" style="margin-right: -1px;"></i></button>
+													<input class="isSickLeave_<?php echo $row['Time']; ?>" type="checkbox" <?php if ($isSickLeave) { echo 'checked'; } ?> name="isSickLeave_<?php echo $row['Time']; ?>">
+													<?php endif; ?>
 												</div>
 												<div class="form-group col-12">
 													<label><span style="font-size: 14px;">Remarks</span></label>
@@ -310,14 +405,14 @@ if ($erow['SalaryExpected'] > 0) {
 					</div>											
 				</div>
 				<div class="modal-footer">
-					<button id="MoreOptions" type="button" class="btn btn-primary mr-auto"><i class="fas fa-cog"></i> More Options</button>
+					<!-- <button id="MoreOptions" type="button" class="btn btn-primary mr-auto"><i class="fas fa-cog"></i> More Options</button> -->
 					<input type="hidden" name="CutoffMode" value="<?php echo $Mode ?>" />
-					<input type="radio" id="" name="DeductionOption" value="0">
+					<!-- <input type="radio" id="" name="DeductionOption" value="0">
 					<label for="rdNoDeductions">No Deductions</label><br>
 					<input type="radio" id="rdWithDeductions" name="DeductionOption" value="1" checked>
 					<label for="rdWithDeductions">With Deductions</label><br>
 					<input type="radio" id="rdDeferredDeductions" name="DeductionOption" value="2">
-					<label for="rdDeferredDeductions">Defer Deductions</label>
+					<label for="rdDeferredDeductions">Defer Deductions</label> -->
 					<button type="submit" class="btn btn-primary"><i class="fas fa-clock"></i> Set</button>
 				</div>
 				</form>

@@ -134,7 +134,7 @@ $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 					</div>
 					<?php $employeeArray = array_reverse($employeeArray); ?>
 					<!-- Back -->
-					<div class="row wercher-idcard-back wercher-idcard-group PrintOut ml-2" style="display: none;">
+					<div class="row wercher-idcard-back wercher-idcard-group PrintOut ml-2">
 						<!-- First Row -->
 						<!-- ~ pre padding -->
 						<?php for($i = 0; $i < $paddingRowOne; $i++): ?>
@@ -156,7 +156,7 @@ $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 											<span><?php echo $erow['Address_Present']; ?></span>
 										</div>
 										<div class="wercher-idcard-emergency">
-											<span><?php echo $erow['EmergencyPerson']; ?></span>
+											<span><?php echo $erow['EmergencyPerson']; ?> (<?=$erow['EmergencyContact'];?>)</span>
 										</div>
 										<div class="wercher-idcard-telno">
 											<span><?php echo $erow['Phone_No']; ?></span>
@@ -202,7 +202,7 @@ $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 											<span><?php echo $erow['Address_Present']; ?></span>
 										</div>
 										<div class="wercher-idcard-emergency">
-											<span><?php echo $erow['EmergencyPerson']; ?></span>
+											<span><?php echo $erow['EmergencyPerson']; ?> (<?=$erow['EmergencyContact'];?>)</span>
 										</div>
 										<div class="wercher-idcard-telno">
 											<span><?php echo $erow['Phone_No']; ?></span>
@@ -248,7 +248,7 @@ $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 											<span><?php echo $erow['Address_Present']; ?></span>
 										</div>
 										<div class="wercher-idcard-emergency">
-											<span><?php echo $erow['EmergencyPerson']; ?></span>
+											<span><?php echo $erow['EmergencyPerson']; ?> (<?=$erow['EmergencyContact'];?>)</span>
 										</div>
 										<div class="wercher-idcard-telno">
 											<span><?php echo $erow['Phone_No']; ?></span>
@@ -305,19 +305,24 @@ $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 		$('#WercherIDBack').on('contextmenu', 'img', function(e){ 
 			return false;
 		});
+		$('.wercher-idcard-name').each(function() {
+			if ($(this).find('span b').text().length > 40) {
+				$(this).addClass('name-field-small');
+			}
+		});
 		$('.wercher-idcard-name').textfill({
 			debug: true,
-			minFontPixels: 10,
-			maxFontPixels: 12,
+			minFontPixels: 5,
+			maxFontPixels: 24,
 		});
 		$('.wercher-idcard-designation').textfill({
 			debug: true,
-			minFontPixels: 10,
+			minFontPixels: 5,
 			maxFontPixels: 15,
 		});
-		$('.wercher-idcard-dateissused').textfill({
+		$('.wercher-idcard-dateissued').textfill({
 			debug: true,
-			minFontPixels: 10,
+			minFontPixels: 5,
 			maxFontPixels: 15,
 		});
 		$('.wercher-idcard-employeeid').textfill({
@@ -327,14 +332,25 @@ $day = DateTime::createFromFormat('Y-m-d', $day)->format('F d, Y');?>
 		});
 		$('.wercher-idcard-address, .wercher-idcard-emergency').textfill({
 			debug: true,
-			minFontPixels: 10,
+			minFontPixels: 5,
 			maxFontPixels: 15,
+		});
+		$('.wercher-idcard-address').each(function() {
+			if ($(this).find('span').text().length > 40) {
+				$(this).addClass('address-field-small');
+			}
+		});
+		$('.wercher-idcard-emergency').each(function() {
+			if ($(this).find('span').text().length > 40) {
+				$(this).addClass('emergency-field-small');
+			}
 		});
 		$('.wercher-idcard-telno, .wercher-idcard-sssno, .wercher-idcard-tin, .wercher-idcard-pagibig, .wercher-idcard-philhealth, .wercher-idcard-hmo').textfill({
 			debug: true,
-			minFontPixels: 10,
+			minFontPixels: 5,
 			maxFontPixels: 15,
 		});
+		$('.wercher-idcard-back').hide(); // textfill only works if its shown first
 		$('[data-toggle="tooltip"]').tooltip();
 		let flip = false;
 		$('.flip-btn').on('click', function() {

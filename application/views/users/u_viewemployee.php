@@ -22,15 +22,15 @@ if ($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Ab
 
 	// 13th Month Pay Calculation
 	if ($Status != 'Employed (Permanent)') {
-		$cDiffInDays = $cEnds->diffInDays($cStarts);
+		$cDiffInDays = $cNow->diffInDays($cStarts);
 	} else {
 		$cDiffInDays = $cNow->diffInDays($cStarts);
 	}
 	if ($cDiffInDays <= 0) {
 		$cDiffInDays = 1;
 	}
-	$cDiffInMonths = $cEnds->diffInMonths($cStarts);
-	if ($cDiffInMonths > 1) {
+	$cDiffInMonths = $cNow->diffInMonths($cStarts);
+	if ($cDiffInMonths >= 1) {
 		$isThirteenEligible = true;
 	} else {
 		$isThirteenEligible = false;
@@ -819,8 +819,10 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																$monthlySalary = 0;
 																$dailySalary = 0;
 																if ($SalaryType == 'Daily'):
-																	$monthlySalary = $SalaryExpected * 30;
+																	$monthlySalary = $SalaryExpected * 26.16667;
+																	$annualSalary = $monthlySalary * 12;
 																	$thirteen = $monthlySalary / 12;
+																	$finalPay = ($annualSalary / 52) / 6;
 																?>
 																<div class="col-sm-12 employee-static-item text-center">
 																	<div class="col-sm-12 employee-dynamic-header">
@@ -841,11 +843,24 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																			}
 																		?>
 																	</div>
+																	<div class="col-sm-12 employee-dynamic-header mt-2">
+																		<b>Final Pay</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php
+																			if ($isThirteenEligible) {
+																				echo '<span style="user-select: none;">₱ </span>' . round($finalPay, 2);
+																			} else {
+																				echo '<span class="p-1" style="color: #735600;" data-toggle="tooltip" data-placement="top" data-html="true" title="Contract duration is lower than 1 month"><i class="fas fa-info-circle"></i> Not eligible</span>';
+																			}
+																		?>
+																	</div>
 																</div>
 																<?php
 																elseif ($SalaryType == 'Monthly'):
-																	$dailySalary = $SalaryExpected / 30;
+																	$dailySalary = $SalaryExpected / 26.16667;
 																	$thirteen = ($SalaryExpected * 12) / 12;
+																	$finalPay = ($monthlySalary * 12) / 313;
 																?>
 																<div class="col-sm-12 employee-static-item text-center">
 																	<div class="col-sm-12 employee-dynamic-header">
@@ -866,6 +881,18 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																			}
 																		?>
 																	</div>
+																	<div class="col-sm-12 employee-dynamic-header mt-2">
+																		<b>Final Pay</b>
+																	</div>
+																	<div class="col-sm-12">
+																		<?php
+																			if ($isThirteenEligible) {
+																				echo '<span style="user-select: none;">₱ </span>' . round($finalPay, 2);
+																			} else {
+																				echo '<span class="p-1" style="color: #735600;" data-toggle="tooltip" data-placement="top" data-html="true" title="Contract duration is lower than 1 month"><i class="fas fa-info-circle"></i> Not eligible</span>';
+																			}
+																		?>
+																	</div>
 																</div>
 																<?php
 																elseif ($SalaryType == 'Total'): 
@@ -874,7 +901,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																	$monthlySalary = $SalaryExpected / $cDiffInMonths;
 																	// Calculate to as daily salary instead of monthly salary
 																	$dailySalary = $SalaryExpected / $cDiffInDays;
-																	$thirteen = (($dailySalary * $cDiffInDays) / 30) / 12;
+																	$thirteen = (($dailySalary * $cDiffInDays) / 26.16667) / 12;
 																?>
 																<div class="col-sm-12 employee-static-item text-center">
 																	<div class="col-sm-12 employee-dynamic-header">
@@ -914,19 +941,27 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 															<p class="card-text">
 																<div class="col-sm-12 employee-static-item text-center">
 																	<div class="col-sm-12 employee-static-item text-center">
-																		<div class="col-sm-12 employee-dynamic-header">
-																			<b>Documents (<?php echo $GetDocuments->num_rows(); ?>)</b>
+																		<div class="col-sm-12 empl(#oyee-dynamic-header">
+																			<b>Sick Leave (#) Remaining</b>
 																		</div>
 																		<div class="col-sm-12">
-																			<a href="#Documents" class="btn-sm btn btn-primary"><i class="far fa-eye"></i> View</a>
+																			<?=$SickLeave;?>
 																		</div>
 																	</div>
 																	<div class="col-sm-12 employee-static-item text-center">
 																		<div class="col-sm-12 employee-dynamic-header">
-																			<b>Violations (<?php echo $GetDocumentsViolations->num_rows(); ?>)</b>
+																			<b>Sick Leave Pay</b>
 																		</div>
 																		<div class="col-sm-12">
-																			<a href="#Violations" class="btn-sm btn btn-danger"><i class="far fa-eye"></i> View</a>
+																			<?php
+																			$sickLeavePay = 0;
+																			if ($SickLeave > 0) {
+																				$sickLeavePay = $SickLeave * $dailySalary;
+																				echo '<span style="user-select: none;">₱ </span>' . round($sickLeavePay, 2);
+																			} else {
+																				echo 'None';
+																			}
+																			?>
 																		</div>
 																	</div>
 																	<div class="col-sm-12 employee-static-item text-center">
@@ -1057,8 +1092,8 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																$monthlySalary = 0;
 																$dailySalary = 0;
 																if ($SalaryType == 'Daily'):
-																	$monthlySalary = $SalaryExpected * 30;
-																	$thirteen = (($SalaryExpected * $cDiffInDays) / 30) / 12;
+																	$monthlySalary = $SalaryExpected * 26;
+																	$thirteen = (($SalaryExpected * $cDiffInDays) / 26) / 12;
 																?>
 																<div class="col-sm-12 employee-static-item text-center">
 																	<div class="col-sm-12 employee-dynamic-header">
@@ -1076,8 +1111,8 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																</div>
 																<?php
 																elseif ($SalaryType == 'Monthly'):
-																	$dailySalary = $SalaryExpected / 30;
-																	$thirteen = (($dailySalary * $cDiffInDays) / 30) / 12;
+																	$dailySalary = $SalaryExpected / 26;
+																	$thirteen = (($dailySalary * $cDiffInDays) / 26) / 12;
 																?>
 																<div class="col-sm-12 employee-static-item text-center">
 																	<div class="col-sm-12 employee-dynamic-header">
@@ -1106,7 +1141,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																	$monthlySalary = $SalaryExpected / $cDiffInMonths;
 																	// Calculate to as daily salary instead of monthly salary
 																	$dailySalary = $SalaryExpected / $cDiffInDays;
-																	$thirteen = (($dailySalary * $cDiffInDays) / 30) / 12;
+																	$thirteen = (($dailySalary * $cDiffInDays) / 26) / 12;
 																?>
 																<div class="col-sm-12 employee-static-item text-center">
 																	<div class="col-sm-12 employee-dynamic-header">

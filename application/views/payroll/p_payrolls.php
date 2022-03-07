@@ -187,15 +187,15 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 																<thead>
 																	<th>Applicant</th>
 																	<th>Hours</th>
-																	<th>Gross Pay</th>
+																	<!-- <th>Gross Pay</th> -->
 																	<th>PhilHealth</th>
 																	<th>HDMF</th>
 																	<th>Tax</th>
 																	<th>SSS</th>
-																	<th style="width: 50px;"><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></th>
-																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount left to be paid for this week's SSS contribution">To be paid <i style="color: gray">(?)</i></th>
-																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount that is paid for this week's SSS contribution. Used to subtract next week's SSS contribution." style="width: 185px;">VL / SL <i style="color: gray">(?)</i></th>
-																	<th>Additional</th>
+																	<!-- <th style="width: 50px;"><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></th>
+																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount left to be paid for this week's deductions">To be paid <i style="color: gray">(?)</i></th> -->
+																	<!-- <th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount that is paid for this week's SSS contribution. Used to subtract next week's SSS contribution." style="width: 185px;">SSS, PhilHealth, Tax, HDMI N.D. <i style="color: gray">(?)</i></th> -->
+																	<!-- <th>Total Balance</th> -->
 																	<th>Net Pay</th>
 																	<th>Generate</th>
 																</thead>
@@ -316,7 +316,6 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 																		else if($TotalGrossPay >= $philhealthArray[1]['f_range'] && $TotalGrossPay <= $philhealthArray[1]['t_range'])
 																		{
 																			$philhealth_percentage=($TotalGrossPay * 0.03);
-
 																		}
 																		else
 																		{
@@ -480,7 +479,7 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 																			$WeekPaid = 0;
 																			$toBePaid = $sss_contriCalc;
 																			$now = new DateTime();
-																			$DateAdded = $now->format('Y-m-d H:i:s');
+																			$DateAdded = $now->format('Y-m-d h:i:s A');
 																			$data = array(
 																				'Amount' => $sss_contriCalc,
 																				'ApplicantID' => $ApplicantID,
@@ -537,24 +536,33 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 																					}
 																				?>
 																			</td>
-																			<td class="payroll-grosspay" data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Pay: <b><?php echo round($GetPayrollWeekGrossPay, 2) . '</b><br>Overtime Pay: <b>' . round($GetPayrollWeekOTGrossPay, 2) . '</b><br><br>Night Pay: <b>' . round($GetPayrollWeekNPGrossPay, 2) . '</b><br>Night Overtime Pay: <b>' . round($GetPayrollWeekNPOTGrossPay, 2) . '</b><br>-------<br>Total Gross Pay: <b>' . round($TotalGrossPay, 2) . '</b>'; ?>"><?php echo round($TotalGrossPay, 2); ?></td>
-																			<td class="payroll-philhealth" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($philhealth_percentage, 2) . ' / ' . $cutoffTaxDivider . '<br><i>PhilHealth Percentage x Mode</i>'; ?>"><?php echo round($philhealth_contri, 2); ?></td>
-																			<td class="payroll-hdmf" data-toggle="tooltip" data-placement="top" data-html="true" title="(<?php echo round($TotalGrossPay, 2) . ' x ' . $hdmf_rate . ') / ' . $cutoffTaxDivider . '<br><i>(Gross Pay x HDMF Rate) / Mode</i>'; ?>"><?php echo round($hdmf_contriCalc, 2); ?></td>
+																			<!-- <td class="payroll-grosspay" data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Pay: <b><?php echo round($GetPayrollWeekGrossPay, 2) . '</b><br>Overtime Pay: <b>' . round($GetPayrollWeekOTGrossPay, 2) . '</b><br><br>Night Pay: <b>' . round($GetPayrollWeekNPGrossPay, 2) . '</b><br>Night Overtime Pay: <b>' . round($GetPayrollWeekNPOTGrossPay, 2) . '</b><br>-------<br>Total Gross Pay: <b>' . round($TotalGrossPay, 2) . '</b>'; ?>"><?php echo round($TotalGrossPay, 2); ?></td> -->
+																			<td class="payroll-philhealth text-center" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($philhealth_percentage, 2) . ' / ' . $cutoffTaxDivider . '<br><i>PhilHealth Percentage x Mode</i>'; ?>">
+																				<?php echo round($philhealth_contri, 2); ?>
+																			</td>
+																			<td class="payroll-hdmf text-center" data-toggle="tooltip" data-placement="top" data-html="true" title="(<?php echo round($TotalGrossPay, 2) . ' x ' . $hdmf_rate . ') / ' . $cutoffTaxDivider . '<br><i>(Gross Pay x HDMF Rate) / Mode</i>'; ?>">
+																				<?php echo round($hdmf_contriCalc, 2); ?>
+																			</td>
 
-																			<td class="payroll-tax" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo 'Annual Salary: ' . round($annualSalary, 2) . '<br>Monthly Salary: ' . round($salaryMonthly, 2); ?>"><?php echo round($tax, 2); ?></td>
-																			<td class="payroll-sss" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $sss_contri . ' / ' . $cutoffTaxDivider; ?><br><i>SSS Contribution / Mode</i>"><?php echo $sss_contriCalc; ?></td>
+																			<td class="payroll-tax text-center" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo 'Annual Salary: ' . round($annualSalary, 2) . '<br>Monthly Salary: ' . round($salaryMonthly, 2); ?>">
+																				<?php echo round($tax, 2); ?>
+																			</td>
+																			<!-- <td class="payroll-sss text-center" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $sss_contri . ' / ' . $cutoffTaxDivider; ?><br><i>SSS Contribution / Mode</i>">
+																				<?php echo $sss_contriCalc; ?>
+																			</td>
 																			<td><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></td>
-																			<td class="payroll-tobepaid"><?php echo $toBePaid; ?></td>
-																			<td>
+																			<td class="payroll-tobepaid"><?php echo $toBePaid; ?></td> -->
+																			<!-- <td>
 																				<div class="row">
-																					<div class="col-sm-12 col-md-8">
-																						<input type="number" class="payroll-paidthisweek payroll-weekrow-input form-control" step="0.01" value="<?php echo $WeekPaid; ?>">
-																					</div>
+																					<div class="col-sm-12 col-md-12">
+																						<span class="payroll-paidthisweek">0</span> -->
+																						<!-- <input type="number" class="payroll-paidthisweek payroll-weekrow-input form-control" step="0.01" value="<?php echo $WeekPaid; ?>"> -->
+																					<!-- </div>
 																					<div class="col-sm-12 col-md-4">
 																						<button class="payroll-weekrow-btn btn btn-success btn-sm w-100" data-payroll-weekrow-applicantid="<?php echo $ApplicantID; ?>" data-payroll-weekrow-clientid="<?php echo $ClientID; ?>" data-payroll-weekrow-year="<?php echo $FetchYear; ?>" data-payroll-weekrow-month="<?php echo $FetchMonth; ?>" data-payroll-weekrow-week="<?php echo $Week; ?>" style="margin-left: -25px; padding-top: 5px; padding-bottom: 5px; margin-top: 1px; display: none;"><i class="fas fa-check" style="margin-right: -1px;"></i></button>
 																					</div>
 																				</div>
-																			</td>
+																			</td> -->
 																			<td>
 																				<button type="button" class="loans-btn btn btn-info btn-sm w-100" data-toggle="modal" data-target="#ModalLoans" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-loanstotal="<?php echo $loansTotal; ?>"><i class="fas fa-piggy-bank"></i> Loans</button>
 																				<button type="button" class="provisions-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#ModalProvisions" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-provisionstotal="<?php echo $provisionsTotal; ?>" style="margin-top: 1px;"><i class="fas fa-donate"></i> Provisions</button>
@@ -597,6 +605,14 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$('.payroll-balance-input').on('input', function() {
+			let philhealth = $(this).closest('.payroll-week-row').find('.payroll-philhealth-input').val();
+			let hdmf = $(this).closest('.payroll-week-row').find('.payroll-hdmf-input').val();
+			let tax = $(this).closest('.payroll-week-row').find('.payroll-tax-input').val();
+			let sss = $(this).closest('.payroll-week-row').find('.payroll-sss-input').val();
+			let total = parseInt(philhealth) + parseInt(hdmf) + parseInt(tax) + parseInt(sss);
+			$(this).closest('.payroll-week-row').find('.payroll-paidthisweek').html(total);
+		});
 		// Initialization
 		function updateCalculation() {
 			$('.payroll-net-pay').each(function() {

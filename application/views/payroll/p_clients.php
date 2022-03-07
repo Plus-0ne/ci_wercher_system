@@ -14,6 +14,9 @@ use Carbon\Carbon;
 				<div class="col-12 col-sm-12 tabs">
 					<ul>
 						<li class="tabs-active"><a href="<?php echo base_url() ?>Salary">Salary (<?php echo $ShowClients->num_rows()?>)</a></li>
+						<li><a href="<?php echo base_url() ?>Receivables">Receivables</a></li>
+						<li><a href="<?php echo base_url() ?>Loans">Loans</a></li>
+						<li><a href="<?php echo base_url() ?>Provisions">Provisions</a></li>
 					</ul>
 				</div>
 				<div class="row rcontent">
@@ -42,8 +45,8 @@ use Carbon\Carbon;
 										<th> Address </th>
 										<th> Contact </th>
 										<th style="width: 25px;"> Employees </th>
-										<th>Starting Week</th>
-										<th style="width: 25px;">Current Week</th>
+										<!-- <th>Starting Week</th>
+										<th style="width: 25px;">Current Week</th> -->
 										<th class="text-center PrintExclude" style="width: 125px;"> Payroll </th>
 									</tr>
 								</thead>
@@ -116,12 +119,12 @@ use Carbon\Carbon;
 											<td>
 												<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['ClientID'])->num_rows(); ?>
 											</td>
-											<td <?php if(!empty($elapsed)): ?> data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $elapsed->diffForHumans(); ?>"<?php endif; ?>>
+											<!-- <td <?php if(!empty($elapsed)): ?> data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $elapsed->diffForHumans(); ?>"<?php endif; ?>>
 												<?php echo $day; ?>
 											</td>
 											<td>
 												<?php echo $Week; ?>
-											</td>
+											</td> -->
 											<td class="text-center PrintExclude">
 												<button id="<?php echo $row['ClientID']; ?>" type="button" class="btn btn-info glow-gold btn-sm w-100 mb-1 ViewClientIDButton"  data-toggle="modal" data-target="#ModalClientView"><i class="fas fa-calendar-alt"></i> Attendance</button>
 												<button id="<?php echo $row['ClientID']; ?>" type="button" class="payrollconfig-btn btn btn-info btn-sm w-100 mb-1 SetPrimaryClientIDButton" data-toggle="modal" data-target="#ModalSetWeek" data-startingweek="<?php echo $PrimaryWeek ?>" data-sssfrom="<?php echo $sssFrom; ?>" data-sssto="<?php echo $sssTo; ?>" data-hdmffrom="<?php echo $hdmfFrom; ?>" data-hdmfto="<?php echo $hdmfTo; ?>"><i class="fas fa-cog"></i> Payroll Config</button>
