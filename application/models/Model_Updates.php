@@ -57,6 +57,12 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->update('applicants', $data);
 		return $result;
 	}
+	public function UpdateApplicant($ApplicantNo, $data)
+	{
+		$this->db->where('ApplicantNo', $ApplicantNo);
+		$result = $this->db->update('applicants', $data);
+		return $result;
+	}
 	public function ReminderLocked($ApplicantID)
 	{
 		$data = array(
@@ -334,6 +340,15 @@ class Model_Updates extends CI_Model {
 				$result = $this->db->update('sss_table', $data);
 			}
 		}
+		return $result;
+	}
+	public function ModifySIL($ApplicantID, $value)
+	{
+		$data = array(
+			'SickLeave' => $value,
+		);
+		$this->db->where('ApplicantID', $ApplicantID);
+		$result = $this->db->update('applicants', $data);
 		return $result;
 	}
 }

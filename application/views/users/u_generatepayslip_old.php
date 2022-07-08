@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	if (!$_GET['id'] || !$_GET['mode'] || !$_GET['from_day'] || !$_GET['from_month'] || !$_GET['from_year'] || !$_GET['to_day'] || !$_GET['to_month'] || !$_GET['to_year']) {
 		redirect('FourOhFour');
 	} else {
@@ -489,6 +489,8 @@
 				if ($GrossPayTotal < 0) {
 					$GrossPayTotal = 0;
 				}
+				$sickLeave = $row['SickLeave'] ?? 0;
+				$sickLeaveValue = number_format($sickLeave * $dailySalary, 2, '.', '');
 				// ~ deductions
 				$sssTable = $this->Model_Selects->GetAllSSSTable();
 				$hdmfTable = $this->Model_Selects->GetAllHDMFTable();
@@ -523,98 +525,37 @@
 					}
 				}
 				$philhealthArray=$philhealthTable->result_array();
-				// if ($GrossPayTotal >= $philhealthArray[0]['f_range'] && $GrossPayTotal <= $philhealthArray[0]['t_range']) {
-				// 	$philhealth_percentage=300;
-				// } else if($GrossPayTotal >= $philhealthArray[1]['f_range'] && $GrossPayTotal <= $philhealthArray[1]['t_range']) {
-				// 	$philhealth_percentage=($GrossPayTotal * 0.04);
+				if ($GrossPayTotal >= $philhealthArray[0]['f_range'] && $GrossPayTotal <= $philhealthArray[0]['t_range']) {
+					$philhealth_percentage=300;
+				} else if($GrossPayTotal >= $philhealthArray[1]['f_range'] && $GrossPayTotal <= $philhealthArray[1]['t_range']) {
+					$philhealth_percentage=($GrossPayTotal * 0.03);
 
-				// } else {
-				// 	$philhealth_percentage=1800;
-				// }
-				$philhealth_percentage = 0.04;
+				} else {
+					$philhealth_percentage=1800;
+				}
 
 				$SSSTotal = $SSSTotal/$cutoffTaxDivider;
-				// $HDMFTotal = $GrossPayTotal*$hdmf_rate;
-				// $HDMFTotal = $HDMFTotal/$cutoffTaxDivider;
-				$HDMFTotal = 100;
+				$HDMFTotal = $GrossPayTotal*$hdmf_rate;
+				$HDMFTotal = $HDMFTotal/$cutoffTaxDivider;
 				$HDMFTotalText = $HDMFTotal * 100;
-				// $PhilHealthTotal = $philhealth_percentage/$cutoffTaxDivider;
-				$PhilHealthTotal = ($GrossPayTotal * $philhealth_percentage) / $cutoffTaxDivider;
+				$PhilHealthTotal = $philhealth_percentage/$cutoffTaxDivider;
 
 				$tStarts = new DateTime($row['DateStarted']);
 				$tEnds = new DateTime($row['DateEnds']);
 
-				$totalWeeklyHours = 0;
-				$totalSemiHours = 0;
-				$totalMonthlyHours = 0;
-				$getTotalWeeklyHours = $this->Model_Selects->GetTotalWeeklyHours($ApplicantID);
-				$getTotalSemiHours = $this->Model_Selects->GetTotalSemiHours($ApplicantID);
-				$getTotalMonthlyHours = $this->Model_Selects->GetTotalMonthlyHours($ApplicantID);
-				if ($getTotalWeeklyHours->num_rows() > 0) {
-					foreach ($getTotalWeeklyHours->result_array() as $gtwhrow) {
-						$totalWeeklyHours = $gtwhrow['Total'];
-					}
+				// Calculating monthly salary to annual salary
+				$tDiff = $tEnds->diff($tStarts);
+				if ($tDiff->m > 1) {
+					$tTotalMonths = $tDiff->y * 12 + $tDiff->m + $tDiff->d / 30;
+				} else {
+					$tTotalMonths = $tDiff->d;
 				}
-				if ($getTotalSemiHours->num_rows() > 0) {
-					foreach ($getTotalSemiHours->result_array() as $gtshrow) {
-						$totalSemiHours = $gtshrow['Total'];
-					}
+				if ($row['SalaryExpected'] != NULL && $tTotalMonths > 0) {
+					$salaryMonthly = $row['SalaryExpected'] / $tTotalMonths;
+				} else {
+					$salaryMonthly = 0;
 				}
-				if ($getTotalMonthlyHours->num_rows() > 0) {
-					foreach ($getTotalMonthlyHours->result_array() as $gtmhrow) {
-						$totalMonthlyHours = $gtmhrow['Total'];
-					}
-				}
-				$totalWorkHours = $totalWeeklyHours + $totalSemiHours + $totalMonthlyHours;
-				$totalWorkDays = round(($totalWorkHours / 8), 2);
-				$totalWorkMonths = round(($totalWorkDays / 26.16667), 2);
-				$totalWorkYears = round(($totalWorkMonths / 12), 1);
-
-				$dailySalary = 0.0;
-				$semiSalary = 0.0;
-				$monthlySalary = 0.0;
-				$annualSalary = 0.0;
-				$thirteen = 0.0;
-				$finalPay = 0.0;
-				switch($salaryType) {
-					case 'Daily':
-						$dailySalary = $rate;
-						$monthlySalary = $rate * 26.16667;
-						$semiSalary = $monthlySalary / 2;
-						$annualSalary = $monthlySalary * 12;
-						$thirteen = ($dailySalary * $totalWorkDays) / 12;
-						$finalPay = ($annualSalary / 52) / 6;
-						break;
-					case 'Monthly':
-						$dailySalary = $rate / 26.16667;
-						$monthlySalary = $rate;
-						$semiSalary = $monthlySalary / 2;
-						$annualSalary = $rate * 12;
-						$thirteen = ($dailySalary * $totalWorkDays) / 12;
-						$finalPay = ($monthlySalary * 12) / 313;
-						break;
-					case 'Total':
-						$salaryInterval = 0;
-						// Monthly salary
-						$monthlySalary = $rate / $cDiffInMonths;
-						$semiSalary = $monthlySalary / 2;
-						// Calculate to as daily salary instead of monthly salary
-						$dailySalary = $rate / $cDiffInDays;
-						$thirteen = ($dailySalary * $totalWorkDays) / 12;
-						break;
-					default:
-						$dailySalary = $rate;
-						$monthlySalary = $rate * 26.16667;
-						$semiSalary = $monthlySalary / 2;
-						$annualSalary = $monthlySalary * 12;
-						$thirteen = ($dailySalary * $totalWorkDays) / 12;
-						$finalPay = ($annualSalary / 52) / 6;
-						break;
-				}
-
-				$seperationPay = ($monthlySalary / 2) * $totalWorkYears;
-				$sickLeave = $row['SickLeave'] ?? 0;
-
+				$annualSalary = $salaryMonthly * 12;
 				$year=date("Y");
 				if($year<=2022)
 				{
@@ -722,7 +663,7 @@
 		margin: 0;
 		padding: 0;
 	}
-	.payslip-container input[type]:focus {
+	input[type]:focus {
 		box-shadow: none !important;
 		background-color: rgba(0, 0, 0, 0.08);
 	}
@@ -753,7 +694,6 @@
 								<button type="button" class="new-deductions-row-btn btn btn-info"><i class="fas fa-plus"></i> Deductions</button>
 								<button type="button" class="new-provisions-row-btn btn btn-info"><i class="fas fa-plus"></i> Provisions</button> -->
 								<button type="button" class="payroll-changedates-btn btn btn-primary" style="width: 155px;"><i class="fas fa-edit"></i> Change Set</button>
-								<b>SIL:</b> Use <input type="number" min="0" max="<?=$sickLeave;?>" class="proratedleave-input form-control" value="0" style="width: 65px; display: inline-block;"> / <?=$sickLeave;?> leaves as prorated
 							</div>
 						</div>
 						<div class="row payroll-changedates-group mt-4" style="margin-left: 10px; border-top: 2px solid rgba(0, 0, 0, 0.16); display: none;">
@@ -1181,7 +1121,7 @@
 												<input type="text" value="VL / SL:">
 											</div>
 											<div class="col-sm-6 text-right">
-												<input class="total-vlsl payslip-number" type="text" value="0 (₱0.00)">
+												<input class="payslip-number" type="text" value="<?php echo $sickLeave; ?> (₱<?=$sickLeaveValue;?>)">
 											</div>
 										</div>
 									</div>
@@ -1195,7 +1135,7 @@
 												<input style="font-weight: bold;" type="text" value="TOTAL GROSS PAY:">
 											</div>
 											<div class="col-sm-6 text-right" style="margin-top: 1px; margin-bottom: 1px;">
-												<input style="font-size: 17px; font-weight: bold;" class="total-grosspay payslip-number" type="text" data-original="<?php echo $GrossPayTotal; ?>" value="<?php echo $GrossPayTotal; ?>">
+												<input style="font-size: 17px; font-weight: bold;" class="payslip-number" type="text" value="<?php echo $GrossPayTotal; ?>">
 											</div>
 										</div>
 									</div>
@@ -1275,7 +1215,7 @@
 												<input style="font-weight: bold; font-size: 19px" type="text" value="NET PAY:">
 											</div>
 											<div class="col-sm-8 text-right" style="margin-top: 1px; margin-bottom: 1px;">
-												<input style="font-family: Courier; font-size: 19px; font-weight: bold;" class="total-netpay payslip-number" type="text" data-original="<?php echo $NetPay; ?>" value="<?php echo $NetPay; ?>">
+												<input style="font-family: Courier; font-size: 19px; font-weight: bold;" class="payslip-number" type="text" value="<?php echo $NetPay; ?>">
 											</div>
 										</div>
 									</div>
@@ -1385,20 +1325,6 @@
 				$(this).html('<i class="fas fa-edit"></i> Change Set');
 				$('.payroll-changedates-group').hide();
 			}
-		});
-		$('.proratedleave-input').on('input', function() {
-			let proratedLeave = parseFloat($(this).val());
-			let sickLeavePay = <?=$dailySalary;?> * proratedLeave;
-			let totalGrossPay = parseFloat($('.total-grosspay').data('original').substr(1));
-			totalGrossPay = totalGrossPay + sickLeavePay;
-			totalGrossPay = totalGrossPay.toFixed(2);
-			let totalNetPay = parseFloat($('.total-netpay').data('original').substr(1));
-			totalNetPay = totalNetPay + sickLeavePay;
-			totalNetPay = totalNetPay.toFixed(2);
-
-			$('.total-vlsl').val(`${proratedLeave} (₱${sickLeavePay.toFixed(2)})`);
-			$('.total-grosspay').val('₱' + totalGrossPay);
-			$('.total-netpay').val('₱' + totalNetPay);
 		});
 	});
 </script>

@@ -51,6 +51,16 @@
 				<div id="NewProvisionContainer" class="new-provision-row form-row ml-1" style="display: none; opacity: 0.5;">
 					<!-- New rows goes here... -->
 				</div>
+				<datalist id="payroll-provisions">
+					<?php
+					$getProvisions = $this->Model_Selects->GetDistinctPayrollProvisionsNames();
+					if ($getProvisions->num_rows() > 0) {
+						foreach ($getProvisions->result_array() as $row) {
+							echo '<option value="' . $row['ProvisionName'] . '">' ?? 'Unknown';
+						}
+					}
+					?>
+				</datalist>
 				<div class="form-row mt-3 ajax-load-container" style="display: none;">
 					<div class="col-sm-12">
 						<button type="button" class="new-provision-add-btn btn btn-info w-100"><i class="fas fa-plus"></i> Add More Provision</button>

@@ -56,6 +56,16 @@
 						<button type="button" class="new-loan-add-btn btn btn-info w-100"><i class="fas fa-plus"></i> Add More Loan</button>
 					</div>
 				</div>
+				<datalist id="payroll-loans">
+					<?php
+					$getLoans = $this->Model_Selects->GetDistinctPayrollLoansNames();
+					if ($getLoans->num_rows() > 0) {
+						foreach ($getLoans->result_array() as $row) {
+							echo '<option value="' . $row['LoanName'] . '">' ?? 'Unknown';
+						}
+					}
+					?>
+				</datalist>
 			</div>
 			<div class="modal-footer ajax-load-container" style="display: none;">
 				<span class="mr-auto" style="font-size: 14px;">TOTAL: <b id="LoanTotal"></b></span>

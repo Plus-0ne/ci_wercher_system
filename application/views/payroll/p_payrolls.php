@@ -186,18 +186,20 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 															<table id="WeeklyTable_<?=$Week?>" class="table table-condensed">
 																<thead>
 																	<th>Applicant</th>
-																	<th>Hours</th>
+																	<th style="width: 250px;">Work Hours</th>
+																	<th style="width: 250px;">SIL Remaining</th>
+																	<th style="width: 250px;">ATM No.</th>
 																	<!-- <th>Gross Pay</th> -->
-																	<th>PhilHealth</th>
+																	<!-- <th>PhilHealth</th>
 																	<th>HDMF</th>
-																	<th>Tax</th>
-																	<th>SSS</th>
+																	<th>Tax</th> -->
+																	<th style="width: 150px;">Additionals</th>
 																	<!-- <th style="width: 50px;"><i class="fas fa-arrow-right" style="margin-right: -1px; color: rgba(0, 0, 0, 0.55);"></i></th>
 																	<th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount left to be paid for this week's deductions">To be paid <i style="color: gray">(?)</i></th> -->
 																	<!-- <th data-toggle="tooltip" data-placement="top" data-html="true" title="Amount that is paid for this week's SSS contribution. Used to subtract next week's SSS contribution." style="width: 185px;">SSS, PhilHealth, Tax, HDMI N.D. <i style="color: gray">(?)</i></th> -->
 																	<!-- <th>Total Balance</th> -->
-																	<th>Net Pay</th>
-																	<th>Generate</th>
+																	<!-- <th>Net Pay</th> -->
+																	<th style="width: 200px;">Generate</th>
 																</thead>
 																<tbody>
 																	<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
@@ -354,23 +356,81 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 																		$cDiffInMonths = $cEnds->diffInMonths($cStarts);
 																		$salaryMonthly = 0;
 																		if ($row['SalaryExpected'] == NULL) {
-																			$salary = 0;
+																			$rate = 0;
 																		} else {
-																			$salary = $row['SalaryExpected'];
+																			$rate = $row['SalaryExpected'];
 																		}
-																		switch($row['SalaryType']) {
+																		$salaryType = $row['SalaryType'] ?? 'Daily';
+																		$totalWeeklyHours = 0;
+																		$totalSemiHours = 0;
+																		$totalMonthlyHours = 0;
+																		$getTotalWeeklyHours = $this->Model_Selects->GetTotalWeeklyHours($ApplicantID);
+																		$getTotalSemiHours = $this->Model_Selects->GetTotalSemiHours($ApplicantID);
+																		$getTotalMonthlyHours = $this->Model_Selects->GetTotalMonthlyHours($ApplicantID);
+																		if ($getTotalWeeklyHours->num_rows() > 0) {
+																			foreach ($getTotalWeeklyHours->result_array() as $gtwhrow) {
+																				$totalWeeklyHours = $gtwhrow['Total'];
+																			}
+																		}
+																		if ($getTotalSemiHours->num_rows() > 0) {
+																			foreach ($getTotalSemiHours->result_array() as $gtshrow) {
+																				$totalSemiHours = $gtshrow['Total'];
+																			}
+																		}
+																		if ($getTotalMonthlyHours->num_rows() > 0) {
+																			foreach ($getTotalMonthlyHours->result_array() as $gtmhrow) {
+																				$totalMonthlyHours = $gtmhrow['Total'];
+																			}
+																		}
+																		$totalWorkHours = $totalWeeklyHours + $totalSemiHours + $totalMonthlyHours;
+																		$totalWorkDays = round(($totalWorkHours / 8), 2);
+																		$totalWorkMonths = round(($totalWorkDays / 26.16667), 2);
+																		$totalWorkYears = round(($totalWorkMonths / 12), 1);
+
+																		$dailySalary = 0.0;
+																		$semiSalary = 0.0;
+																		$monthlySalary = 0.0;
+																		$annualSalary = 0.0;
+																		$thirteen = 0.0;
+																		$finalPay = 0.0;
+																		switch($salaryType) {
 																			case 'Daily':
-																				$salaryMonthly = $salary * 30;
+																				$dailySalary = $rate;
+																				$monthlySalary = $rate * 26.16667;
+																				$semiSalary = $monthlySalary / 2;
+																				$annualSalary = $monthlySalary * 12;
+																				$thirteen = ($dailySalary * $totalWorkDays) / 12;
+																				$finalPay = ($annualSalary / 52) / 6;
 																				break;
 																			case 'Monthly':
-																				$salaryMonthly = $salary;
+																				$dailySalary = $rate / 26.16667;
+																				$monthlySalary = $rate;
+																				$semiSalary = $monthlySalary / 2;
+																				$annualSalary = $rate * 12;
+																				$thirteen = ($dailySalary * $totalWorkDays) / 12;
+																				$finalPay = ($monthlySalary * 12) / 313;
 																				break;
 																			case 'Total':
-																				$salaryMonthly = $salary / $cDiffInMonths;
+																				$salaryInterval = 0;
+																				// Monthly salary
+																				$monthlySalary = $rate / $cDiffInMonths;
+																				$semiSalary = $monthlySalary / 2;
+																				// Calculate to as daily salary instead of monthly salary
+																				$dailySalary = $rate / $cDiffInDays;
+																				$thirteen = ($dailySalary * $totalWorkDays) / 12;
+																				break;
 																			default:
+																				$dailySalary = $rate;
+																				$monthlySalary = $rate * 26.16667;
+																				$semiSalary = $monthlySalary / 2;
+																				$annualSalary = $monthlySalary * 12;
+																				$thirteen = ($dailySalary * $totalWorkDays) / 12;
+																				$finalPay = ($annualSalary / 52) / 6;
 																				break;
 																		}
-																		$annualSalary = $salaryMonthly * 12;
+
+																		$seperationPay = ($monthlySalary / 2) * $totalWorkYears;
+																		$sickLeave = $row['SickLeave'] ?? 0;
 																		$year=date("Y");
 																		if($year<=2022)
 																		{
@@ -527,7 +587,7 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 																		?>
 																		<tr class="payroll-week-row">
 																			<td><a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $fullName; ?></a></td>
-																			<td class="payroll-hours" data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: <b><?php echo round($GetPayrollWeekHours, 2) . '</b><br>Overtime Hours: <b>' . round($GetPayrollWeekOTHours, 2) . '</b><br><br>Night Hours: <b>' . round($GetPayrollWeekNPHours, 2) . '</b><br>Night Overtime Hours: <b>' . round($GetPayrollWeekNPOTHours, 2) . '</b><br>-------<br>Total: <b>' . $TotalHours . '</b> hours'; ?>">
+																			<!-- <td class="payroll-hours" data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: <b><?php echo round($GetPayrollWeekHours, 2) . '</b><br>Overtime Hours: <b>' . round($GetPayrollWeekOTHours, 2) . '</b><br><br>Night Hours: <b>' . round($GetPayrollWeekNPHours, 2) . '</b><br>Night Overtime Hours: <b>' . round($GetPayrollWeekNPOTHours, 2) . '</b><br>-------<br>Total: <b>' . $TotalHours . '</b> hours'; ?>">
 																				<?php
 																					if ($TotalHours == 0) {
 																						echo '<span style="color: rgba(0, 0, 0, 0.16);">' . $TotalHours . '</span>';
@@ -535,9 +595,30 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 																						echo $TotalHours;
 																					}
 																				?>
+																			</td> -->
+																			<td style="font-size: 20px;">
+																				<?php
+																					if ($totalWorkHours <= 0) { 
+																						echo '<span style="color: rgba(0, 0, 0, 0.25);">' . $totalWorkHours . '</span>'; 
+																					} else {
+																						echo $totalWorkHours;
+																					}
+																				?>
+																			</td>
+																			<td style="font-size: 20px;">
+																				<?php 
+																					if ($sickLeave <= 0) { 
+																						echo '<span style="color: rgba(0, 0, 0, 0.25);">' . $sickLeave . ' / 5</span>'; 
+																					} else {
+																						echo $sickLeave . ' / 5';
+																					}
+																				?> 
+																			</td>
+																			<td style="font-size: 18px;">
+																				<?php echo $row['ATM_No'] ?? 'N/A'; ?>
 																			</td>
 																			<!-- <td class="payroll-grosspay" data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Pay: <b><?php echo round($GetPayrollWeekGrossPay, 2) . '</b><br>Overtime Pay: <b>' . round($GetPayrollWeekOTGrossPay, 2) . '</b><br><br>Night Pay: <b>' . round($GetPayrollWeekNPGrossPay, 2) . '</b><br>Night Overtime Pay: <b>' . round($GetPayrollWeekNPOTGrossPay, 2) . '</b><br>-------<br>Total Gross Pay: <b>' . round($TotalGrossPay, 2) . '</b>'; ?>"><?php echo round($TotalGrossPay, 2); ?></td> -->
-																			<td class="payroll-philhealth text-center" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($philhealth_percentage, 2) . ' / ' . $cutoffTaxDivider . '<br><i>PhilHealth Percentage x Mode</i>'; ?>">
+																			<!-- <td class="payroll-philhealth text-center" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo round($philhealth_percentage, 2) . ' / ' . $cutoffTaxDivider . '<br><i>PhilHealth Percentage x Mode</i>'; ?>">
 																				<?php echo round($philhealth_contri, 2); ?>
 																			</td>
 																			<td class="payroll-hdmf text-center" data-toggle="tooltip" data-placement="top" data-html="true" title="(<?php echo round($TotalGrossPay, 2) . ' x ' . $hdmf_rate . ') / ' . $cutoffTaxDivider . '<br><i>(Gross Pay x HDMF Rate) / Mode</i>'; ?>">
@@ -546,7 +627,7 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 
 																			<td class="payroll-tax text-center" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo 'Annual Salary: ' . round($annualSalary, 2) . '<br>Monthly Salary: ' . round($salaryMonthly, 2); ?>">
 																				<?php echo round($tax, 2); ?>
-																			</td>
+																			</td> -->
 																			<!-- <td class="payroll-sss text-center" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $sss_contri . ' / ' . $cutoffTaxDivider; ?><br><i>SSS Contribution / Mode</i>">
 																				<?php echo $sss_contriCalc; ?>
 																			</td>
@@ -567,7 +648,7 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 																				<button type="button" class="loans-btn btn btn-info btn-sm w-100" data-toggle="modal" data-target="#ModalLoans" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-loanstotal="<?php echo $loansTotal; ?>"><i class="fas fa-piggy-bank"></i> Loans</button>
 																				<button type="button" class="provisions-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#ModalProvisions" data-applicantid="<?php echo $ApplicantID; ?>" data-applicantname="<?php echo $ApplicantName; ?>" data-year="<?php echo $FetchYear; ?>" data-month="<?php echo $FetchMonth; ?>" data-week="<?php echo $Week; ?>" data-provisionstotal="<?php echo $provisionsTotal; ?>" style="margin-top: 1px;"><i class="fas fa-donate"></i> Provisions</button>
 																			</td>
-																			<td class="payroll-net-pay" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo '(' . round($TotalGrossPay, 2) . ' + ' . round($provisionsTotal, 2) . ') - (' . round($hdmf_contriCalc, 2) . ' + ' . round($philhealth_contri, 2) . ' + ' . round($tax, 2) . ' + ' . round($toBePaid, 2) . ' + ' . round($loansTotal, 2) . ')<br><i>(Gross Pay + Provisions) - (HDMF Contribution + PhilHealth Contribution + Tax + SSS left to be paid + Loans)</i>'; ?>"><?php echo round($net_pay, 2); ?></td>
+																			<!-- <td class="payroll-net-pay" data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo '(' . round($TotalGrossPay, 2) . ' + ' . round($provisionsTotal, 2) . ') - (' . round($hdmf_contriCalc, 2) . ' + ' . round($philhealth_contri, 2) . ' + ' . round($tax, 2) . ' + ' . round($toBePaid, 2) . ' + ' . round($loansTotal, 2) . ')<br><i>(Gross Pay + Provisions) - (HDMF Contribution + PhilHealth Contribution + Tax + SSS left to be paid + Loans)</i>'; ?>"><?php echo round($net_pay, 2); ?></td> -->
 																			<td>
 																				<button type="button" class="individual-payslip-btn btn btn-success btn-sm w-100" data-toggle="modal" data-target="#GeneratePayslipModal" data-applicantid="<?php echo $ApplicantID; ?>" data-periodmode="<?php echo $Mode; ?>" data-payrollstart="<?php echo $payrollStart; ?>" data-payrollend="<?php echo $payrollEnd; ?>"><i class="fas fa-file-invoice-dollar"></i> Payslip</button>
 																			</td>
@@ -768,7 +849,7 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 		$('.new-loan-add-btn').on('click', function () {
 			$('.new-loan-row').show();
 			$('.new-loan-row').animate({opacity: '1.0'});
-			$('#NewLoanContainer').append('<div class="form-row loan-input w-100"><input class="form-control loan-id" type="hidden" value="-1"><div class="col-sm-3 mt-1"><input class="form-control loan-name" type="text" name="LoanName[]"></div><div class="col-sm-3 mt-1"><input class="form-control loan-amount" type="number" name="LoanAmount[]"></div><div class="col-sm-5 mt-1"><input class="form-control loan-date" type="date" name="LoanDate[]"></div><div class="col-sm-1 mt-1"><button class="form-control loan-discard btn-danger" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Discard?"><i class="fas fa-times" style="font-size: 12px; margin-left: -4px;"></i></button></div></div>');
+			$('#NewLoanContainer').append('<div class="form-row loan-input w-100"><input class="form-control loan-id" type="hidden" value="-1"><div class="col-sm-3 mt-1"><input list="payroll-loans" class="form-control loan-name" type="text" name="LoanName[]"></div><div class="col-sm-3 mt-1"><input class="form-control loan-amount" type="number" name="LoanAmount[]"></div><div class="col-sm-5 mt-1"><input class="form-control loan-date" type="date" name="LoanDate[]"></div><div class="col-sm-1 mt-1"><button class="form-control loan-discard btn-danger" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Discard?"><i class="fas fa-times" style="font-size: 12px; margin-left: -4px;"></i></button></div></div>');
 		});
 		$('.loans-btn').on('click', function () {
 			$('#LoansApplicantID').text($(this).data('applicantid'));
@@ -900,7 +981,7 @@ $selectedMonthReadable = $selectedMonthReadable->format('F');
 			let today = <?php echo date('Y-m-d'); ?>;
 			$('.new-provision-row').show();
 			$('.new-provision-row').animate({opacity: '1.0'});
-			$('#NewProvisionContainer').append('<div class="form-row provision-input w-100"><input class="form-control provision-id" type="hidden" value="-1"><div class="col-sm-3 mt-1"><input class="form-control provision-name" type="text" name="ProvisionName[]"></div><div class="col-sm-3 mt-1"><input class="form-control provision-amount" type="number" name="ProvisionAmount[]"></div><div class="col-sm-5 mt-1"><input class="form-control provision-date" type="date" name="ProvisionDate[]"></div><div class="col-sm-1 mt-1"><button class="form-control provision-discard btn-danger" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Discard?"><i class="fas fa-times" style="font-size: 12px; margin-left: -4px;"></i></button></div></div>')
+			$('#NewProvisionContainer').append('<div class="form-row provision-input w-100"><input class="form-control provision-id" type="hidden" value="-1"><div class="col-sm-3 mt-1"><input class="form-control provision-name" list="payroll-provisions" type="text" name="ProvisionName[]"></div><div class="col-sm-3 mt-1"><input class="form-control provision-amount" type="number" name="ProvisionAmount[]"></div><div class="col-sm-5 mt-1"><input class="form-control provision-date" type="date" name="ProvisionDate[]"></div><div class="col-sm-1 mt-1"><button class="form-control provision-discard btn-danger" type="button" data-toggle="tooltip" data-placement="top" data-html="true" title="Discard?"><i class="fas fa-times" style="font-size: 12px; margin-left: -4px;"></i></button></div></div>')
 		});
 		$('.provisions-btn').on('click', function () {
 			$('#ProvisionsApplicantID').text($(this).data('applicantid'));

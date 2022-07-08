@@ -360,7 +360,11 @@ $GetLogbookNotes = $this->Model_Selects->GetLogbookNotes();
 									$thumbnail = $row['ApplicantImage'];
 									$thumbnail = substr($thumbnail, 0, -4);
 									$thumbnail = $thumbnail . '_thumb.jpg';
-									$employeeName = '<a href="ViewEmployee?id=' . $row['ApplicantID'] . '">' . '<img src="' . $thumbnail .'" height="18px; width: 18px;" class="rounded-circle"> ' . $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName'][0]  .'.';
+									$middleName = '';
+									if ($row['MiddleName']) {
+										$middleName = $row['MiddleName'][0];
+									}
+									$employeeName = '<a href="ViewEmployee?id=' . $row['ApplicantID'] . '">' . '<img src="' . $thumbnail .'" height="18px; width: 18px;" class="rounded-circle"> ' . $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $middleName  .'.';
 									if ($row['NameExtension'] != NULL) {
 										$employeeName = $employeeName . ', ' . $row['NameExtension'];
 									}
@@ -414,7 +418,11 @@ $GetLogbookNotes = $this->Model_Selects->GetLogbookNotes();
 									$thumbnail = $row['ApplicantImage'];
 									$thumbnail = substr($thumbnail, 0, -4);
 									$thumbnail = $thumbnail . '_thumb.jpg';
-									$employeeName = '<a href="ViewEmployee?id=' . $row['ApplicantID'] . '">' . '<img src="' . $thumbnail .'" height="18px; width: 18px;" class="rounded-circle"> ' . $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName'][0]  .'.';
+									$middleName = '';
+									if ($row['MiddleName']) {
+										$middleName = $row['MiddleName'][0];
+									}
+									$employeeName = '<a href="ViewEmployee?id=' . $row['ApplicantID'] . '">' . '<img src="' . $thumbnail .'" height="18px; width: 18px;" class="rounded-circle"> ' . $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $middleName  .'.';
 									if ($row['NameExtension'] != NULL) {
 										$employeeName = $employeeName . ', ' . $row['NameExtension'];
 									}

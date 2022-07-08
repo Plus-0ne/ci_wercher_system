@@ -1972,7 +1972,7 @@
 				<div class="form-row loan-input w-100">
 					<input class="form-control loan-id" type="hidden" value="' . $row['ID'] . '">
 					<div class="col-sm-3 mt-1">
-						<input class="form-control loan-name" type="text" name="LoanName[]" value="' . $row['LoanName'] . '">
+						<input class="form-control loan-name" list="payroll-loans" type="text" name="LoanName[]" value="' . $row['LoanName'] . '">
 					</div>
 					<div class="col-sm-3 mt-1">
 						<input class="form-control loan-amount" type="number" name="LoanAmount[]" value="' . $row['Amount'] . '">
@@ -2024,7 +2024,7 @@
 							<div class="form-row loan-input w-100">
 								<input class="form-control loan-id" type="hidden" value="' . $row['ID'] . '">
 								<div class="col-sm-3 mt-1">
-									<input class="form-control loan-name" type="text" name="LoanName[]" value="' . $row['LoanName'] . '">
+									<input class="form-control loan-name" list="payroll-loans" type="text" name="LoanName[]" value="' . $row['LoanName'] . '">
 								</div>
 								<div class="col-sm-3 mt-1">
 									<input class="form-control loan-amount" type="number" name="LoanAmount[]" value="' . $row['Amount'] . '">
@@ -2050,7 +2050,7 @@
 							<div class="form-row loan-input w-100">
 								<input class="form-control loan-id" type="hidden" value="' . $row['ID'] . '">
 								<div class="col-sm-3 mt-1">
-									<input class="form-control loan-name" type="text" name="LoanName[]" value="' . $row['LoanName'] . '">
+									<input class="form-control loan-name" list="payroll-loans" type="text" name="LoanName[]" value="' . $row['LoanName'] . '">
 								</div>
 								<div class="col-sm-3 mt-1">
 									<input class="form-control loan-amount" type="number" name="LoanAmount[]" value="' . $row['Amount'] . '">
@@ -2100,7 +2100,7 @@
 				<div class="form-row provision-input w-100">
 					<input class="form-control provision-id" type="hidden" value="' . $row['ID'] . '">
 					<div class="col-sm-3 mt-1">
-						<input class="form-control provision-name" type="text" name="ProvisionName[]" value="' . $row['ProvisionName'] . '">
+						<input class="form-control provision-name" list="payroll-provisions" type="text" name="ProvisionName[]" value="' . $row['ProvisionName'] . '">
 					</div>
 					<div class="col-sm-3 mt-1">
 						<input class="form-control provision-amount" type="number" name="ProvisionAmount[]" value="' . $row['Amount'] . '">
@@ -2152,7 +2152,7 @@
 							<div class="form-row provision-input w-100">
 								<input class="form-control provision-id" type="hidden" value="' . $row['ID'] . '">
 								<div class="col-sm-3 mt-1">
-									<input class="form-control provision-name" type="text" name="ProvisionName[]" value="' . $row['ProvisionName'] . '">
+									<input class="form-control provision-name" list="payroll-provisions" type="text" name="ProvisionName[]" value="' . $row['ProvisionName'] . '">
 								</div>
 								<div class="col-sm-3 mt-1">
 									<input class="form-control provision-amount" type="number" name="ProvisionAmount[]" value="' . $row['Amount'] . '">
@@ -2178,7 +2178,7 @@
 							<div class="form-row provision-input w-100">
 								<input class="form-control provision-id" type="hidden" value="' . $row['ID'] . '">
 								<div class="col-sm-3 mt-1">
-									<input class="form-control provision-name" type="text" name="ProvisionName[]" value="' . $row['ProvisionName'] . '">
+									<input class="form-control provision-name" list="payroll-provisions" type="text" name="ProvisionName[]" value="' . $row['ProvisionName'] . '">
 								</div>
 								<div class="col-sm-3 mt-1">
 									<input class="form-control provision-amount" type="number" name="ProvisionAmount[]" value="' . $row['Amount'] . '">
@@ -2312,7 +2312,23 @@
 			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="GeneratePayslip">Generate Payslip</a></li>
 			</ol>
 			</nav>';
-			$this->load->view('users/u_generatepayslip',$data);
+			$this->load->view('users/u_generatepayslip');
+		else:
+			redirect('Forbidden');
+		endif;
+	}
+	public function GenerateFinalPay()
+	{
+		if ($this->Model_Security->CheckPermissions('Payroll')):
+			$header['title'] = 'Generate Payslip | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="GenerateFinalPay">Generate Final Pay</a></li>
+			</ol>
+			</nav>';
+			$this->load->view('users/u_generatefinalpay',$data);
 		else:
 			redirect('Forbidden');
 		endif;
@@ -2374,6 +2390,84 @@
 			</ol>
 			</nav>';
 			$this->load->view('payroll/p_provisions',$data);
+		else:
+			redirect('Forbidden');
+		endif;
+
+	}
+	public function PayrollAttendance()
+	{
+		if($this->Model_Security->CheckPermissions('Payroll')):
+			$header['title'] = 'Payroll Attendance | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Payroll">Payroll</a></li>
+			</ol>
+			</nav>';
+			$CurrentDay = date('Y-m-d h:i:s A');
+			$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
+			$data['WeeklyApplicants'] = $this->Model_Selects->GetApplicantsIncrease($CurrentDay, $CurrentDayScope)->num_rows();
+
+			$data['GetAllApplicants'] = $this->Model_Selects->GetAllApplicants()->num_rows();
+			$data['get_employee'] = $this->Model_Selects->GetAllEmployee();
+			$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+			$data['getClientOption'] = $this->Model_Selects->getClientOption();
+			$data['ShowClients'] = $this->Model_Selects->GetClients();
+			$this->load->view('payroll/p_payrollattendance',$data);
+		else:
+			redirect('Forbidden');
+		endif;
+
+	}
+	public function PayrollGrossPay()
+	{
+		if($this->Model_Security->CheckPermissions('Payroll')):
+			$header['title'] = 'Payroll Gross Pay | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Payroll">Payroll</a></li>
+			</ol>
+			</nav>';
+			$CurrentDay = date('Y-m-d h:i:s A');
+			$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
+			$data['WeeklyApplicants'] = $this->Model_Selects->GetApplicantsIncrease($CurrentDay, $CurrentDayScope)->num_rows();
+
+			$data['GetAllApplicants'] = $this->Model_Selects->GetAllApplicants()->num_rows();
+			$data['get_employee'] = $this->Model_Selects->GetAllEmployee();
+			$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+			$data['getClientOption'] = $this->Model_Selects->getClientOption();
+			$data['ShowClients'] = $this->Model_Selects->GetClients();
+			$this->load->view('payroll/p_payrollgrosspay',$data);
+		else:
+			redirect('Forbidden');
+		endif;
+
+	}
+	public function PayrollSummary()
+	{
+		if($this->Model_Security->CheckPermissions('Payroll')):
+			$header['title'] = 'Payroll Summary | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Payroll">Payroll</a></li>
+			</ol>
+			</nav>';
+			$CurrentDay = date('Y-m-d h:i:s A');
+			$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
+			$data['WeeklyApplicants'] = $this->Model_Selects->GetApplicantsIncrease($CurrentDay, $CurrentDayScope)->num_rows();
+
+			$data['GetAllApplicants'] = $this->Model_Selects->GetAllApplicants()->num_rows();
+			$data['get_employee'] = $this->Model_Selects->GetAllEmployee();
+			$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+			$data['getClientOption'] = $this->Model_Selects->getClientOption();
+			$data['ShowClients'] = $this->Model_Selects->GetClients();
+			$this->load->view('payroll/p_payrollsummary',$data);
 		else:
 			redirect('Forbidden');
 		endif;

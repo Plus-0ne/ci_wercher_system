@@ -82,6 +82,11 @@ $route['ExcelImportSuccessful'] = 'Main_Controller/ExcelImportSuccessful';
 $route['Receivables'] = 'Main_Controller/Receivables';
 $route['Loans'] = 'Main_Controller/Loans';
 $route['Provisions'] = 'Main_Controller/Provisions';
+$route['PayrollAttendance'] = 'Main_Controller/PayrollAttendance';
+$route['PayrollGrossPay'] = 'Main_Controller/PayrollGrossPay';
+$route['PayrollMandatoryDed'] = 'Main_Controller/PayrollMandatoryDed';
+$route['PayrollNetPay'] = 'Main_Controller/PayrollNetPay';
+$route['PayrollSummary'] = 'Main_Controller/PayrollSummary';
 
 $route['GenerateIDCard'] = 'Main_Controller/GenerateIDCard';
 $route['PrintEmployee'] = 'Main_Controller/PrintEmployee';
@@ -90,6 +95,7 @@ $route['Search'] = 'Main_Controller/Search';
 $route['Logbook'] = 'Main_Controller/Logbook';
 
 $route['GeneratePayslip'] = 'Main_Controller/GeneratePayslip';
+$route['GenerateFinalPay'] = 'Main_Controller/GenerateFinalPay';
 
 // LOGIN
 $route['LoginValidation'] = 'Login_Controller/LoginValidation';
@@ -133,6 +139,9 @@ $route['EditClient'] = 'Update_Controller/EditClient';
 $route['EditAdmin'] = 'Update_Controller/EditAdmin';
 $route['ChangeEmploymentType'] = 'Update_Controller/UpdateEmploymentType';
 $route['SSSNewBatch'] = 'Update_Controller/SSSNewBatch';
+$route['updatePhotosDirectory'] = 'Update_Controller/adminUpdatePhotosDirectory';
+$route['ModifySIL'] = 'Update_Controller/ModifySIL';
+$route['SeperateEmployee'] = 'Update_Controller/SeperateEmployee';
 
 // AJAX
 $route['AJAX_addLogbookNotes'] = 'Main_Controller/AJAX_addLogbookNotes';

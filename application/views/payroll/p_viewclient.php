@@ -101,7 +101,7 @@ use Carbon\Carbon;
 								}
 						  		?>
 						  		<!-- <button id="<?php echo $ClientID; ?>" type="button" class="btn btn-primary btn-sm SetPrimaryClientIDButton" data-toggle="modal" data-target="#ModalSetWeek"><i class="fas fa-calendar"></i> Set Starting Week</button> -->
-						  		<i class="fas fa-info-circle"></i> <i>The current week for this client is <b><?php echo $day; ?></b>. It is currently <?php echo $ModeText; ?>.</i>
+						  		<i class="fas fa-info-circle"></i> <i>The current year is <b><?php echo $currentDate->format('Y'); ?></b>. It is currently <?php echo $ModeText; ?>.</i>
 						  	</div>
 						</div>
 					</div>
@@ -117,18 +117,18 @@ use Carbon\Carbon;
 
 											$date = new DateTime($row['Time']);
 											$day = $date->format('Y-m-d');
-											$day = DateTime::createFromFormat('Y-m-d', $day)->format('M d, Y');
+											$day = DateTime::createFromFormat('Y-m-d', $day)->format('F jS');
 											echo $day; 
 
 											?></th>
 										<?php endforeach; ?>
-										<th style="min-width: 50px; font-size: 12px;">Reg. Hrs</th>
+										<th style="min-width: 50px; font-size: 12px;">Reg. Days</th>
 										<th style="min-width: 50px; font-size: 12px;">OT Hrs</th>
 										<th style="min-width: 50px; font-size: 12px;">NP Hrs</th>
 										<th style="min-width: 50px; font-size: 12px;">NP+OT Hrs</th>
-										<th style="min-width: 50px; font-size: 12px;">SH Days</th>
-										<th style="min-width: 50px; font-size: 12px;">NH100 Days</th>
-										<th style="min-width: 50px; font-size: 12px;">NH200 Days</th>
+										<th style="min-width: 50px; font-size: 12px;">SH Hrs</th>
+										<th style="min-width: 50px; font-size: 12px;">NH100 Hrs</th>
+										<th style="min-width: 50px; font-size: 12px;">NH200 Hrs</th>
 										<th style="min-width: 50px; font-size: 12px;">Gross</th>
 										<th style="min-width: 50px; font-size: 12px;">OT Gross</th>
 										<th style="min-width: 50px; font-size: 12px;">NP Gross</th>
@@ -217,7 +217,7 @@ use Carbon\Carbon;
 												?> <td> <?php
 												if($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'], $_GET['mode'])->num_rows() > 0) {
 													foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'], $_GET['mode'])->result_array() as $nrow):
-														$Hours = $nrow['Hours'] ?? 0;
+														$Hours = ($nrow['Hours'] / 8) ?? 0;
 														$OT = $nrow['Overtime'] ?? 0;
 														$NP = $nrow['NightHours'] ?? 0;
 														$NPOT = $nrow['NightOvertime'] ?? 0;
@@ -398,10 +398,10 @@ use Carbon\Carbon;
 				$(this).closest('.sick-leave-btn-group').find('input[type=checkbox]').attr('checked', true);
 			}
 			let id = $(this).data('id');
-			$(`.set-hours[data-id="${id}"]`).val(8);
-			$(`.set-othours[data-id="${id}"]`).val(0);
-			$(`.set-nphours[data-id="${id}"]`).val(0);
-			$(`.set-npothours[data-id="${id}"]`).val(0);
+			// $(`.set-hours[data-id="${id}"]`).val(1);
+			// $(`.set-othours[data-id="${id}"]`).val(0);
+			// $(`.set-nphours[data-id="${id}"]`).val(0);
+			// $(`.set-npothours[data-id="${id}"]`).val(0);
 			$('.refresh-calculation-btn').trigger('click');
 		});
 		$(".nav-item a[href*='Payroll']").addClass("nactive");
@@ -492,7 +492,7 @@ use Carbon\Carbon;
 
 	                let TotalPerDay;
 	                let NightTotalPerDay;
-	                let Regular = PerHour * Hours;
+	                let Regular = (PerHour * Hours) * 8;
 	                let Overtime = (PerHour * OT) * 1.25;
 	                let NightPremium = PerHour * NightHours;
 	                let NightPremiumOvertime = (PerHour * NightOT) * 1.25;
@@ -596,7 +596,7 @@ use Carbon\Carbon;
 
 	                let TotalPerDay;
 	                let NightTotalPerDay;
-	                let Regular = PerHour * Hours;
+	                let Regular = (PerHour * Hours) * 8;
 	                let Overtime = (PerHour * OT) * 1.25;
 	                let NightPremium = PerHour * NightHours;
 	                let NightPremiumOvertime = (PerHour * NightOT) * 1.25;

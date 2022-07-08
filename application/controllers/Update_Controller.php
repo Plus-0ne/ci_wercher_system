@@ -1391,6 +1391,7 @@ class Update_Controller extends CI_Controller {
 				$ArrayInt++;
 				$Type = $this->input->post('Type_' . $nrow['Time'],TRUE);
 				$Hours = $this->input->post('Hours_' . $nrow['Time'],TRUE);
+				$Hours = $Hours * 8;
 				$HoursTotal+=$Hours;
 				$Overtime = $this->input->post('OTHours_' . $nrow['Time'],TRUE);
 				$NightHours = $this->input->post('NightHours_' . $nrow['Time'],TRUE);
@@ -2964,6 +2965,74 @@ class Update_Controller extends CI_Controller {
 			redirect(base_url() . 'SSS_Table');
 		} else {
 			$this->Model_Logbook->SetPrompts('error', 'error', 'Error creating a new batch');
+		}
+	}
+	public function adminUpdatePhotosDirectory()
+	{
+		$newDirectory = '';
+		$siteUrl = explode('/', base_url());
+		$getAllApplicants = $this->Model_Selects->GetAllApplicants();
+		if ($getAllApplicants->num_rows() > 0) {
+			foreach ($getAllApplicants->result_array() as $row) {
+				if ($row['ApplicantImage']) {
+					$url = explode('/', $row['ApplicantImage']);
+					if ($siteUrl[2] == 'localhost') {
+						$url[2] = 'localhost/' . $siteUrl[3];
+					} else {
+						$url[2] = $siteUrl[2];
+					}
+					if ($url[3] == 'ci_wercher_system') {
+						$url[3] = '';
+					}
+					$newDirectory = implode('/', $url);
+					$data = [
+						'ApplicantImage' => $newDirectory,
+					];
+					echo $row['ApplicantNo'] . ': ' .  $newDirectory . '<br>';
+					$updateChoice = $this->Model_Updates->UpdateApplicant($row['ApplicantNo'], $data);
+					redirect('Admins');
+				}
+			}
+		}
+		// redirect(base_url() . 'Dashboard?return=success');
+	}
+	public function ModifySIL()
+	{
+		$ApplicantID = $this->input->post('ApplicantID', TRUE);
+		$value = $this->input->post('ModifySILValue', TRUE);
+		if ($ApplicantID == NULL || $value == NULL) {
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+			redirect($_SERVER['HTTP_REFERER']);
+		} else {
+			$modifySIL = $this->Model_Updates->ModifySIL($ApplicantID, $value);
+			if ($modifySIL) {
+				$this->Model_Logbook->SetPrompts('success', 'success', 'Modified successfully');
+				redirect('ViewEmployee?id=' . $ApplicantID . '#Employment');
+			} else {
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+				redirect('ViewEmployee?id=' . $ApplicantID . '#Employment');
+			}
+		}
+	}
+	public function SeperateEmployee()
+	{
+		$ApplicantID = $this->input->post('ApplicantID', TRUE);
+		$date = $this->input->post('SeperationDate', TRUE);
+		if ($ApplicantID == NULL || $date == NULL) {
+			$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+			redirect($_SERVER['HTTP_REFERER']);
+		} else {
+			$data = [
+				'DateOfSeperation' => $date,
+			];
+			$UpdateApplicant = $this->Model_Updates->UpdateEmployee($ApplicantID, $data);
+			if ($UpdateApplicant) {
+				$this->Model_Logbook->SetPrompts('success', 'success', 'Modified successfully');
+				redirect('ViewEmployee?id=' . $ApplicantID . '#Employment');
+			} else {
+				$this->Model_Logbook->SetPrompts('error', 'error', 'Error uploading data. Please try again.');
+				redirect('ViewEmployee?id=' . $ApplicantID . '#Employment');
+			}
 		}
 	}
 }

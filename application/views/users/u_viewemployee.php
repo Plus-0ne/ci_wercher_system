@@ -12,11 +12,12 @@ if ($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Ab
 	// Contract elapsed
 	$cNow = Carbon::parse(date('Y-m-d h:i:s A'));
 	$cStarts = Carbon::parse($DateStarted);
-	if ($Status != 'Employed (Permanent)') {
-		$cEnds = Carbon::parse($DateEnds);
-	} else {
-		$cEnds = Carbon::parse($SalaryDistDate);
-	}
+	$cEnds = Carbon::parse($DateEnds);
+	// if ($Status != 'Employed (Permanent)') {
+	// 	$cEnds = Carbon::parse($DateEnds);
+	// } else {
+	// 	$cEnds = Carbon::parse($SalaryDistDate);
+	// }
 
 	$cElapsedText = $cStarts->diff($currentDate)->format('%y years, %m months, %d days');
 
@@ -112,6 +113,78 @@ if ($Status == 'Employed' || $Status == 'Employed (Permanent)' || $Status == 'Ab
 	$selectedMonthReadable = DateTime::createFromFormat('!m', $Month);
 	$selectedMonthReadable = $selectedMonthReadable->format('F');
 
+	// Payroll
+	$totalWeeklyHours = 0;
+	$totalSemiHours = 0;
+	$totalMonthlyHours = 0;
+	$getTotalWeeklyHours = $this->Model_Selects->GetTotalWeeklyHours($ApplicantID);
+	$getTotalSemiHours = $this->Model_Selects->GetTotalSemiHours($ApplicantID);
+	$getTotalMonthlyHours = $this->Model_Selects->GetTotalMonthlyHours($ApplicantID);
+	if ($getTotalWeeklyHours->num_rows() > 0) {
+		foreach ($getTotalWeeklyHours->result_array() as $row) {
+			$totalWeeklyHours = $row['Total'];
+		}
+	}
+	if ($getTotalSemiHours->num_rows() > 0) {
+		foreach ($getTotalSemiHours->result_array() as $row) {
+			$totalSemiHours = $row['Total'];
+		}
+	}
+	if ($getTotalMonthlyHours->num_rows() > 0) {
+		foreach ($getTotalMonthlyHours->result_array() as $row) {
+			$totalMonthlyHours = $row['Total'];
+		}
+	}
+	$totalWorkHours = $totalWeeklyHours + $totalSemiHours + $totalMonthlyHours;
+	$totalWorkDays = round(($totalWorkHours / 8), 2);
+	$totalWorkMonths = round(($totalWorkDays / 26.16667), 2);
+	$totalWorkYears = round(($totalWorkMonths / 12), 1);
+
+	$dailySalary = 0;
+	$semiSalary = 0;
+	$monthlySalary = 0;
+	$annualSalary = 0;
+	$thirteen = 0;
+	$finalPay = 0;
+	switch($SalaryType) {
+		case 'Daily':
+			$dailySalary = $SalaryExpected;
+			$monthlySalary = $SalaryExpected * 26.16667;
+			$semiSalary = $monthlySalary / 2;
+			$annualSalary = $monthlySalary * 12;
+			$thirteen = ($dailySalary * $totalWorkDays) / 12;
+			$finalPay = ($annualSalary / 52) / 6;
+			break;
+		case 'Monthly':
+			$dailySalary = $SalaryExpected / 26.16667;
+			$monthlySalary = $SalaryExpected;
+			$semiSalary = $monthlySalary / 2;
+			$annualSalary = $SalaryExpected * 12;
+			$thirteen = ($dailySalary * $totalWorkDays) / 12;
+			$finalPay = ($monthlySalary * 12) / 313;
+			break;
+		case 'Total':
+			$salaryInterval = 0;
+			// Monthly salary
+			$monthlySalary = $SalaryExpected / $cDiffInMonths;
+			$semiSalary = $monthlySalary / 2;
+			// Calculate to as daily salary instead of monthly salary
+			$dailySalary = $SalaryExpected / $cDiffInDays;
+			$thirteen = ($dailySalary * $totalWorkDays) / 12;
+			break;
+		default:
+			$dailySalary = $SalaryExpected;
+			$monthlySalary = $SalaryExpected * 26.16667;
+			$semiSalary = $monthlySalary / 2;
+			$annualSalary = $monthlySalary * 12;
+			$thirteen = ($dailySalary * $totalWorkDays) / 12;
+			$finalPay = ($annualSalary / 52) / 6;
+			break;
+	}
+
+	$seperationPay = ($monthlySalary / 2) * $totalWorkYears;
+
+	// SELECT (SUM(Hours) + SUM(NightHours) + SUM(Overtime) + SUM(NightOvertime)) AS Total FROM hours_weekly WHERE ApplicantID = '';
 }
 //Calculate Age
 $pBirthdate = new DateTime($BirthDate);
@@ -530,6 +603,10 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-info btn-sm ExtendButton mr-1" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-plus"></i> Extend Contract</button>
 													<?php endif; ?>
 													<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
+													<span class="mx-3"><b>| Tabs: </b></span>
+													<button class="employment-tab-btn btn btn-success btn-sm mr-1" data-type="info"><i class="fas fa-dollar-sign"></i> Information</button>
+													<button class="employment-tab-btn btn btn-info btn-sm" data-type="payroll"><i class="fas fa-dollar-sign"></i> Payroll</button>
+													<span class="mx-3"><b>|</b></span>
 												</div>
 											</div>
 											<hr>
@@ -725,7 +802,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 													<div class="progress_value">45%</div>
 												</div>
 											</div>
-											<div class="row">
+											<div class="row tab-info-group">
 												<div class="col-sm-3">
 													<div class="card mb-3" style="max-width: 18rem; height: 300px;">
 														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-user-tag"></i> Client</b></div>
@@ -815,15 +892,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 														<div class="card-body text-dark">
 															<h5 class="card-title text-center wercher-card-title"><span style="user-select: none;">₱ </span><?php echo $SalaryExpected; ?></h5>
 															<p class="card-text">
-																<?php
-																$monthlySalary = 0;
-																$dailySalary = 0;
-																if ($SalaryType == 'Daily'):
-																	$monthlySalary = $SalaryExpected * 26.16667;
-																	$annualSalary = $monthlySalary * 12;
-																	$thirteen = $monthlySalary / 12;
-																	$finalPay = ($annualSalary / 52) / 6;
-																?>
+																<?php if ($SalaryType == 'Daily'): ?>
 																<div class="col-sm-12 employee-static-item text-center">
 																	<div class="col-sm-12 employee-dynamic-header">
 																		<b>Monthly Salary</b>
@@ -858,9 +927,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																</div>
 																<?php
 																elseif ($SalaryType == 'Monthly'):
-																	$dailySalary = $SalaryExpected / 26.16667;
-																	$thirteen = ($SalaryExpected * 12) / 12;
-																	$finalPay = ($monthlySalary * 12) / 313;
+																	
 																?>
 																<div class="col-sm-12 employee-static-item text-center">
 																	<div class="col-sm-12 employee-dynamic-header">
@@ -896,12 +963,6 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																</div>
 																<?php
 																elseif ($SalaryType == 'Total'): 
-																	$salaryInterval = 0;
-																	// Monthly salary
-																	$monthlySalary = $SalaryExpected / $cDiffInMonths;
-																	// Calculate to as daily salary instead of monthly salary
-																	$dailySalary = $SalaryExpected / $cDiffInDays;
-																	$thirteen = (($dailySalary * $cDiffInDays) / 26.16667) / 12;
 																?>
 																<div class="col-sm-12 employee-static-item text-center">
 																	<div class="col-sm-12 employee-dynamic-header">
@@ -941,11 +1002,16 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 															<p class="card-text">
 																<div class="col-sm-12 employee-static-item text-center">
 																	<div class="col-sm-12 employee-static-item text-center">
-																		<div class="col-sm-12 empl(#oyee-dynamic-header">
+																		<div class="col-sm-12 employee-dynamic-header">
 																			<b>Sick Leave (#) Remaining</b>
 																		</div>
 																		<div class="col-sm-12">
-																			<?=$SickLeave;?>
+																			<?php if ($SickLeave > 0) {
+																				echo $SickLeave;
+																			} else {
+																				echo 'None';
+																			}
+																			?>
 																		</div>
 																	</div>
 																	<div class="col-sm-12 employee-static-item text-center">
@@ -978,6 +1044,154 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 													</div>
 												</div>
 											</div>
+											<div class="row tab-payroll-group" style="display: none;">
+												<div class="col-sm-12 mt-2 pb-4" style="border-bottom: 1px solid #ccc">
+													<div class="row">
+														<div class="col-sm-3 employee-dynamic-header">
+															<b>Contract Elapsed</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>Total Work Hours</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>Total Work Days</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>Total Work Months</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>Total Work Years</b>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-sm-3 employee-dynamic-item">
+															<?php echo $cElapsedText; ?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php echo $totalWorkHours; ?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php echo $totalWorkDays; ?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php echo $totalWorkMonths; ?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php echo $totalWorkYears; ?>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-12 mt-2 pb-4" style="border-bottom: 1px solid #ccc">
+													<div class="row">
+														<div class="col-sm-3 employee-dynamic-header">
+															<b>Rate Per Hour</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>Rate Per Day</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>Rate Per Semi-Monthly</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>Rate Per Month</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>Rate Per Year</b>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-sm-3 employee-dynamic-item">
+															<?php echo '<span style="user-select: none;">₱ </span>' .  round(($dailySalary / 8), 2); ?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php echo '<span style="user-select: none;">₱ </span>' .  round($dailySalary, 2); ?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php echo '<span style="user-select: none;">₱ </span>' .  round($semiSalary, 2); ?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php echo '<span style="user-select: none;">₱ </span>' .  round($monthlySalary, 2); ?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php echo '<span style="user-select: none;">₱ </span>' .  round($annualSalary, 2); ?>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-12 mt-2 pb-4" style="border-bottom: 1px solid #ccc">
+													<div class="row">
+														<div class="col-sm-3 employee-dynamic-header">
+															<b>SIL Remaining (#)</b>
+															<button id="modifySILBtn" applicant-id="<?php echo $ApplicantID; ?>" class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#ModifySILModal"><i class="fas fa-edit" style="margin-right: -1px;"></i></button>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>Prorated Leave (#)</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>SIL No. of Days</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>SIL Pay</b>
+														</div>
+														<div class="col-sm-3 employee-dynamic-header">
+															<b>13th Month Pay</b>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-sm-3 employee-dynamic-item">
+															<?php if ($SickLeave > 0) {
+																echo $SickLeave . ' / 5';
+															} else {
+																echo 'None';
+															}
+															?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php echo 'None'; ?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php
+																$silDays = $SickLeave * (5/12) ?? 0;
+																echo round($silDays, 2);
+															?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php
+															$sickLeavePay = 0;
+															if ($SickLeave > 0) {
+																$sickLeavePay = $dailySalary * ($SickLeave * (5/12));
+																echo '<span style="user-select: none;">₱ </span>' . round($sickLeavePay, 2);
+															} else {
+																echo 'None';
+															}
+															?>
+														</div>
+														<div class="col-sm-3 employee-dynamic-item">
+															<?php echo '<span style="user-select: none;">₱ </span>' . round($thirteen, 2); ?>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-12 mt-2 pb-4 text-center" style="border-bottom: 1px solid #ccc">
+													<div class="row">
+														<div class="col-sm-6 employee-dynamic-header">
+															<b>Seperation Pay</b>
+														</div>
+														<div class="col-sm-6 employee-dynamic-header">
+															<b>Date of Seperation</b>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-sm-6 employee-dynamic-item">
+															<?php echo '<span style="user-select: none;">₱ </span>' .  round(($seperationPay / 8), 2); ?>
+														</div>
+														<div class="col-sm-6 employee-dynamic-item">
+															<button class="seperate-prompt-btn btn btn-danger btn-sm" data-toggle="modal" data-target="#SeperateEmployeeModal"><i class="fas fa-book"></i> Seperate Employee</button>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-12 mt-2 pb-4 text-center" style="border-bottom: 1px solid #ccc">
+													<a href="<?=base_url();?>GenerateFinalPay?id=<?=$ApplicantID;?>" target="_blank" class="btn btn-success"><i class="fas fa-book"></i> Generate Final Pay</a>
+												</div>
+											</div>
 											<?php elseif ($Status == 'Employed (Permanent)' || $Status == 'Absorbed (Wercher)'): ?>
 											<div class="employee-content-header">
 												<div class="ml-1 row">
@@ -985,6 +1199,10 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm ExtendButton mr-1" data-toggle="modal" data-target="#ModifyContractModal"><i class="fas fa-edit"></i> Modify Employment</button>
 													<?php endif; ?>
 													<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
+													<span class="mx-3"><b>| Tabs: </b></span>
+													<button class="employment-tab-btn btn btn-success btn-sm mr-1" data-type="info"><i class="fas fa-dollar-sign"></i> Information</button>
+													<button class="employment-tab-btn btn btn-info btn-sm" data-type="payroll"><i class="fas fa-dollar-sign"></i> Payroll</button>
+													<span class="mx-3"><b>|</b></span>
 													<?php if(in_array('EmployeesEditing', $this->session->userdata('Permissions'))): ?>
 													<div class="ml-auto">
 														<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm changeemploymenttype-btn mr-auto" data-toggle="modal" data-target="#ChangeEmploymentTypeModal"><i class="fas fa-edit"></i> Change Employment Type</button>
@@ -1005,7 +1223,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 													?>
 												</b>
 											</div>
-											<div class="row">
+											<div class="row tab-info-group">
 												<div class="col-sm-3">
 													<div class="card mb-3" style="max-width: 18rem; height: 300px;">
 														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-user-tag"></i> Client</b></div>
@@ -1089,11 +1307,7 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 															<h5 class="card-title text-center wercher-card-title"><span style="user-select: none;">₱ </span><?php echo $SalaryExpected; ?></h5>
 															<p class="card-text">
 																<?php
-																$monthlySalary = 0;
-																$dailySalary = 0;
 																if ($SalaryType == 'Daily'):
-																	$monthlySalary = $SalaryExpected * 26;
-																	$thirteen = (($SalaryExpected * $cDiffInDays) / 26) / 12;
 																?>
 																<div class="col-sm-12 employee-static-item text-center">
 																	<div class="col-sm-12 employee-dynamic-header">
@@ -1111,8 +1325,6 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																</div>
 																<?php
 																elseif ($SalaryType == 'Monthly'):
-																	$dailySalary = $SalaryExpected / 26;
-																	$thirteen = (($dailySalary * $cDiffInDays) / 26) / 12;
 																?>
 																<div class="col-sm-12 employee-static-item text-center">
 																	<div class="col-sm-12 employee-dynamic-header">
@@ -1136,12 +1348,6 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																</div>
 																<?php
 																elseif ($SalaryType == 'Total'): 
-																	$salaryInterval = 0;
-																	// Monthly salary
-																	$monthlySalary = $SalaryExpected / $cDiffInMonths;
-																	// Calculate to as daily salary instead of monthly salary
-																	$dailySalary = $SalaryExpected / $cDiffInDays;
-																	$thirteen = (($dailySalary * $cDiffInDays) / 26) / 12;
 																?>
 																<div class="col-sm-12 employee-static-item text-center">
 																	<div class="col-sm-12 employee-dynamic-header">
@@ -1196,6 +1402,154 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 												</div>
 											</div>
 											<?php endif; ?>
+											<div class="row tab-payroll-group" style="display: none;">
+												<div class="col-sm-12 mt-2 pb-4" style="border-bottom: 1px solid #ccc">
+													<div class="row">
+														<div class="col-sm-3 employee-dynamic-header">
+															<b>Contract Elapsed</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>Total Work Hours</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>Total Work Days</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>Total Work Months</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>Total Work Years</b>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-sm-3 employee-dynamic-item">
+															<?php echo $cElapsedText; ?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php echo $totalWorkHours; ?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php echo $totalWorkDays; ?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php echo $totalWorkMonths; ?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php echo $totalWorkYears; ?>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-12 mt-2 pb-4" style="border-bottom: 1px solid #ccc">
+													<div class="row">
+														<div class="col-sm-3 employee-dynamic-header">
+															<b>Rate Per Hour</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>Rate Per Day</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>Rate Per Semi-Monthly</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>Rate Per Month</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>Rate Per Year</b>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-sm-3 employee-dynamic-item">
+															<?php echo '<span style="user-select: none;">₱ </span>' .  round(($dailySalary / 8), 2); ?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php echo '<span style="user-select: none;">₱ </span>' .  round($dailySalary, 2); ?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php echo '<span style="user-select: none;">₱ </span>' .  round($semiSalary, 2); ?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php echo '<span style="user-select: none;">₱ </span>' .  round($monthlySalary, 2); ?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php echo '<span style="user-select: none;">₱ </span>' .  round($annualSalary, 2); ?>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-12 mt-2 pb-4" style="border-bottom: 1px solid #ccc">
+													<div class="row">
+														<div class="col-sm-3 employee-dynamic-header">
+															<b>SIL Remaining (#)</b>
+															<button id="modifySILBtn" applicant-id="<?php echo $ApplicantID; ?>" class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#ModifySILModal"><i class="fas fa-edit" style="margin-right: -1px;"></i></button>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>Prorated Leave (#)</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>SIL No. of Days</b>
+														</div>
+														<div class="col-sm-2 employee-dynamic-header">
+															<b>SIL Pay</b>
+														</div>
+														<div class="col-sm-3 employee-dynamic-header">
+															<b>13th Month Pay</b>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-sm-3 employee-dynamic-item">
+															<?php if ($SickLeave > 0) {
+																echo $SickLeave . ' / 5';
+															} else {
+																echo 'None';
+															}
+															?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php echo 'None'; ?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php
+																$silDays = $SickLeave * (5/12) ?? 0;
+																echo round($silDays, 2);
+															?>
+														</div>
+														<div class="col-sm-2 employee-dynamic-item">
+															<?php
+															$sickLeavePay = 0;
+															if ($SickLeave > 0) {
+																$sickLeavePay = $dailySalary * ($SickLeave * (5/12));
+																echo '<span style="user-select: none;">₱ </span>' . round($sickLeavePay, 2);
+															} else {
+																echo 'None';
+															}
+															?>
+														</div>
+														<div class="col-sm-3 employee-dynamic-item">
+															<?php echo '<span style="user-select: none;">₱ </span>' . round($thirteen, 2); ?>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-12 mt-2 pb-4 text-center" style="border-bottom: 1px solid #ccc">
+													<div class="row">
+														<div class="col-sm-6 employee-dynamic-header">
+															<b>Seperation Pay</b>
+														</div>
+														<div class="col-sm-6 employee-dynamic-header">
+															<b>Date of Seperation</b>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-sm-6 employee-dynamic-item">
+															<?php echo '<span style="user-select: none;">₱ </span>' .  round(($seperationPay / 8), 2); ?>
+														</div>
+														<div class="col-sm-6 employee-dynamic-item">
+															<button class="seperate-prompt-btn btn btn-danger btn-sm" data-toggle="modal" data-target="#SeperateEmployeeModal"><i class="fas fa-book"></i> Seperate Employee</button>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-12 mt-2 pb-4 text-center" style="border-bottom: 1px solid #ccc">
+													<a href="<?=base_url();?>GenerateFinalPay?id=<?=$ApplicantID;?>" target="_blank" class="btn btn-success"><i class="fas fa-book"></i> Generate Final Pay</a>
+												</div>
+											</div>
 										</div>
 									</div>
 									<div id="TabDocuments">
@@ -1714,11 +2068,12 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 																				// Tax
 																				$cNow = Carbon::parse(date('Y-m-d h:i:s A'));
 																				$cStarts = Carbon::parse($row['DateStarted']);
-																				if ($row['Status'] != 'Employed (Permanent)') {
-																					$cEnds = Carbon::parse($row['DateEnds']);
-																				} else {
-																					$cEnds = Carbon::parse($row['SalaryDistDate']);
-																				}
+																				$cEnds = Carbon::parse($row['DateStarted']);
+																				// if ($row['Status'] != 'Employed (Permanent)') {
+																				// 	$cEnds = Carbon::parse($row['DateEnds']);
+																				// } else {
+																				// 	$cEnds = Carbon::parse($row['SalaryDistDate']);
+																				// }
 
 																				// Calculating monthly salary to annual salary
 																				$cDiffInMonths = $cEnds->diffInMonths($cStarts);
@@ -2063,6 +2418,9 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 			<?php $this->load->view('_template/modals/m_modifycontract'); ?>
 			<!-- CHANGE EMPLOYMENT TYPE MODAL -->
 			<?php $this->load->view('_template/modals/m_changeemploymenttype'); ?>
+			<!-- CHANGE EMPLOYMENT TYPE MODAL -->
+			<?php $this->load->view('_template/modals/m_modifysil'); ?>
+			<?php $this->load->view('_template/modals/m_seperateemployee'); ?>
 		<?php else: ?>
 			<!-- CLIENT HIRE MODAL -->
 			<?php $this->load->view('_template/modals/m_clienthire'); ?>
@@ -2734,6 +3092,16 @@ $pAge = $currentDate->diff($pBirthdate)->format('%y');
 			} else {
 				$('.salarytotal-group').hide();
 			}
+		});
+		$('.employment-tab-btn').on('click', function() {
+			let type = $(this).data('type') ?? 'info';
+			$('.tab-info-group').hide();
+			$('.tab-payroll-group').hide();
+			$('.employment-tab-btn').removeClass('btn-success');
+			$('.employment-tab-btn').addClass('btn-info');
+			$(`.tab-${type}-group`).show();
+			$(this).addClass('btn-success');
+			$(this).removeClass('btn-info');
 		});
 	</script>
 	<style>

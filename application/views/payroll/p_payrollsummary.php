@@ -4,22 +4,87 @@ $T_Header;
 require 'vendor/autoload.php';
 use Carbon\Carbon;
 
-$now = new DateTime();
-$toDate = $now->format('Y-m-d');
-$fromDate = $now;
-$fromDate = $fromDate->modify('-1 month');
-$fromDate = $fromDate->format('Y-m-d');
+$mode = $_GET['mode'] ?? 1;
+$isSearching = $_GET['searching'] ?? false;
 
+$now = new DateTime();
+$fromDate = $now;
+if (!empty($_GET['toDate'])) {
+	$toDate = $_GET['toDate'];
+} else {
+	$toDate = $now->format('Y-m-d');
+}
+if (!empty($_GET['fromDate'])) {
+	$fromDate = $_GET['fromDate'];	
+} else {
+	$fromDate = $fromDate->modify('-15 days');
+	$fromDate = $fromDate->format('Y-m-d');
+}
+
+$rowCount = 1;
+
+$date = new DateTime();
+$currentDay = $date->format('d');
+$currentYear = $date->format('Y');
+$currentMonth = $date->format('m');
+$currentMonthReadable = DateTime::createFromFormat('!m', $currentMonth);
+$currentMonthReadable = $currentMonthReadable->format('F');
+
+if (!$isSearching) {
+	if ($mode == 0) {
+		if ($currentDay <= 7) {
+			$fromDate = $date->format('Y-m-01');
+			$toDate = $date->format('Y-m-07');
+		} else if ($currentDay > 7 && $currentDay <= 14) {
+			$fromDate = $date->format('Y-m-08');
+			$toDate = $date->format('Y-m-15');
+		} else if ($currentDay > 15 && $currentDay <= 21) {
+			$fromDate = $date->format('Y-m-16');
+			$toDate = $date->format('Y-m-21');
+		} else {
+			$fromDate = $date->format('Y-m-21');
+			$toDate = $date->format('Y-m-31');
+		}
+	} else if ($mode == 1) {
+		if ($currentDay <= 15) {
+			$fromDate = $date->format('Y-m-01');
+			$toDate = $date->format('Y-m-16');
+		} else {
+			$fromDate = $date->format('Y-m-16');
+			$toDate = $date->format('Y-m-31');
+		}
+	} else {
+		$fromDate = $date->format('Y-m-01');
+		$toDate = $date->format('Y-m-31');
+	}
+}
+
+// Identifier
+$ClientID = $_GET['id'] ?? 0;
+$Mode = $_GET['mode'] ?? 0;
+if (!empty($_GET['year']) && !$_GET['year']) {
+	$Year = $_GET['year'];
+} else {
+	$Year = $currentYear;
+}
+if (!empty($_GET['month']) && $_GET['month']) {
+	$Month = $_GET['month'];
+} else {
+	$Month = $currentMonth;
+}
 
 ?>
 <style>
+	table {
+		font-size: 14px;
+	}
+	.table td {
+		padding: 0.15rem;
+	}
 	@media print {
 		@page { 
 	        size: landscape;
 	    }
-		table {
-			font-size: 10px;
-		}
 	}
 </style>
 <body>
@@ -31,18 +96,63 @@ $fromDate = $fromDate->format('Y-m-d');
 				<div class="col-12 col-sm-12 tabs">
 					<ul>
 						<li><a href="<?php echo base_url() ?>Payroll">Salary (<?php echo $ShowClients->num_rows()?>)</a></li>
-						<li class="tabs-active"><a href="<?php echo base_url() ?>Receivables">Receivables</a></li>
+						<li><a href="<?php echo base_url() ?>Receivables">Receivables</a></li>
 						<li><a href="<?php echo base_url() ?>Loans">Loans</a></li>
 						<li><a href="<?php echo base_url() ?>Provisions">Provisions</a></li>
 						<li><a href="<?php echo base_url() ?>PayrollAttendance">Attendance</a></li>
 						<li><a href="<?php echo base_url() ?>PayrollGrossPay">Gross Pay</a></li>
 						<li><a href="<?php echo base_url() ?>PayrollMandatoryDed">Mandatory Ded.</a></li>
 						<li><a href="<?php echo base_url() ?>PayrollNetPay">Net Pay</a></li>
-						<li><a href="<?php echo base_url() ?>PayrollSummary">Summary</a></li>
+						<li class="tabs-active"><a href="<?php echo base_url() ?>PayrollSummary">Summary</a></li>
 					</ul>
 				</div>
 				<div class="row rcontent">
-					<div class="col-12">
+					<div class="col-8">
+						<?php echo form_open(base_url().'PayrollAttendance','method="GET" name="PayrollFilterForm"');?>
+							<div class="form-row">
+								<!-- Client -->
+								<div class="form-group col-sm-4 col-md-2">
+									<select id="ClientSelect" class="payroll-select form-control" name="id">
+										<?php
+										$GetClients = $this->Model_Selects->GetClients($ClientID);
+										if ($GetClients->num_rows() > 0) {
+											foreach($GetClients->result_array() as $row) { ?>
+												<option value="<?php echo $row['ClientID']; ?>" <?php if ($row['ClientID'] == $ClientID) { echo 'selected'; } ?>><?php echo $row['Name']; ?></option>
+											<?php }
+										}
+										?>
+									</select>
+								</div>
+								<!-- Mode -->
+								<div class="form-group col-sm-4 col-md-2">
+									<select id="ModeSelect" class="payroll-select form-control" name="mode">
+										<option value="0" <?php if ($mode == 0) { echo 'selected'; } ?>>Weekly</option>
+										<option value="1" <?php if ($mode == 1) { echo 'selected'; } ?>>Semi-monthly</option>
+										<option value="2" <?php if ($mode == 2) { echo 'selected'; } ?>>Monthly</option>
+									</select>
+								</div>
+								<!-- Date -->
+								<div class="form-group col-sm-4 col-md-2">
+									<input type="date" class="form-control" name="fromDate" value="<?=$fromDate;?>">
+								</div>
+								<div class="form-group col-sm-1 col-md-1">
+									<input type="text" class="form-control" value="to" disabled style="width: 50px;">
+								</div>
+								<div class="form-group col-sm-4 col-md-2">
+									<input type="date" class="form-control" name="toDate" style="margin-left: -28px;" value="<?=$toDate;?>">
+								</div>
+								<!-- Filter -->
+								<div class="form-group col-sm-6 col-md-2">
+									<button type="submit" class="btn btn-primary" style="margin-left: -28px;"><i class="fas fa-search"></i> Find</button>
+								</div>
+								<div class="form-group col-sm-6 col-md-1">
+									<a href="<?=base_url();?>PayrollAttendance" class="btn btn-primary" style="margin-left: -110px;"><i class="fas fa-redo" style="margin-right: -1px;"></i></a>
+								</div>
+								<input type="hidden" name="searching" value="true">
+							</div>
+						<?php echo form_close();?>
+					</div>
+					<div class="col-4">
 						<div class="text-left">
 							<!-- <input class="form-control" type="date" name="fromDate" value="<?=$fromDate;?>">
 						 	<input class="form-control" type="date" name="toDate" value="<?=$toDate;?>"> -->
@@ -59,17 +169,13 @@ $fromDate = $fromDate->format('Y-m-d');
 						<div class="table-responsive pt-2 pl-2 pr-2">
 							<table id="ListClients" class="table PrintOut" style="width: 100%;">
 								<thead>
-									<tr class="text-center align-middle">
-										<th>Applicant</th>
-										<th>Name</th>
-										<th style="display: none;">Name</th>
-										<th style="display: none;">Position</th>
-										<th>Client</th>
-										<th>Salary</th>
-										<th>13th Month</th>
-										<th>Seperation Pay</th>
-										<th>Final Pay</th>
-										<th>VL / SL Remaining</th>
+									<tr class="align-middle">
+										<th style="width: 250px;">NAME</th>
+										<th style="width:">NET PAY</th>
+										<th>ATM</th>
+										<th>BPI FAMILY ATM</th>
+										<th>CASH</th>
+										<th>NOTES</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -304,83 +410,30 @@ $fromDate = $fromDate->format('Y-m-d');
 										$seperationPay = ($monthlySalary / 2) * $totalWorkYears;
 									?>
 										<tr class="table-row-hover">
-											<td class="text-center">
-												<div class="col-sm-12">
-													<a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><img src="<?php echo $thumbnail; ?>" width="70" height="70" class="rounded-circle" loading="lazy"></a>
-												</div>
-												<div class="col-sm-12 align-middle">
-													<a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><?php echo $row['ApplicantID']; ?></a>
-												</div>
-											</td>
-											<td class="text-center align-middle">
+											<td class="align-middle">
 												<a href="ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"<?php if($isFullNameHoverable): ?> data-toggle="tooltip" data-placement="top" data-html="true" title="<?php echo $fullNameHover; ?>"<?php endif; ?>><?php echo $fullName; ?></a>
-												<br>
-												<i style="color: gray;"><?php echo $row['PositionDesired']; ?></i>
-												<br>
 											</td>
-											<td class="text-center align-middle d-none">
-												<?php echo $fullName; ?>
+											<td class="align-middle">
+												TBD
 											</td>
-											<td class="text-center align-middle d-none">
-												<?php echo $row['PositionDesired']; ?>
-											</td>
-											<td class="text-center align-middle">
+											<!-- regular day -->
+											<td class="align-middle">
 												<?php
-												$clientEmployed = $row['ClientEmployed'] ?? 0;
-												$clientName = 'N/A';
-												$getClientFromID = $this->Model_Selects->GetClientDet($clientEmployed);
-												if ($getClientFromID->num_rows() > 0) {
-													foreach ($getClientFromID->result_array() as $crow) {
-														$clientName = $crow['Name'] ?? 'N/A';
+													if ($row['ATM_No']) {
+														echo $row['ATM_No'];
+													} else {
+														echo '<span style="color: red;">NO ATM FOUND</span>';
 													}
-												}
-												echo $clientName;
 												?>
 											</td>
-											<td class="text-center align-middle">
-												<?php
-													$salary = $row['SalaryExpected'] ?? 0;
-													$salaryType = $row['SalaryType'];
-													$salaryText = '/ day';
-													if ($salaryType) {
-														switch ($salaryType) {
-															case 'Daily':
-																$salaryText = '/ day';
-																break;
-															case 'Monthly':
-																$salaryText = '/ mo';
-																break;
-															case 'Semi-Monthly':
-																$salaryText = '/ semi';
-																break;
-															default:
-																$salaryText = '/ day';
-																break;
-														}
-													}
-													echo $salary . ' ' . $salaryText;
-												?>
+											<td>
+												TBD
 											</td>
-											<td class="text-center align-middle">
-												<?php
-													echo round($thirteen, 2);
-												?>
+											<td>
+												TBD
 											</td>
-											<td class="text-center align-middle">
-												<?php
-													echo round($seperationPay, 2);
-												?>
-											</td>
-											<td class="text-center align-middle">
-												<?php
-													echo round($finalPay, 2);
-												?>
-											</td>
-											<td class="text-center align-middle">
-												<?php
-													$sickLeave = $row['SickLeave'] ?? 0;
-													echo $sickLeave;
-												?>
+											<td>
+												TBD
 											</td>
 										</tr>
 									<?php endforeach ?>
@@ -438,44 +491,48 @@ $fromDate = $fromDate->format('Y-m-d');
 		var table = $('#ListClients').DataTable( {
 			sDom: 'lrtip',
 			"bLengthChange": false,
-			"order": [[ 1, "desc" ]],
+			"order": [[ 0, "asc" ]],
 			buttons: [
-            {
-	            extend: 'print',
-	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 6, 7, 8 ]
-	            },
-	            customize: function ( doc ) {
-	            	$(doc.document.body).find('h1').prepend('<img src="<?=base_url()?>assets/img/wercher_logo.png" width="63px" height="56px" />');
-					$(doc.document.body).find('h1').css('font-size', '24px');
-					$(doc.document.body).find('h1').css('text-align', 'center'); 
-				}
-	        },
-	        {
-	            extend: 'copyHtml5',
-	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 6, 7, 8 ]
-	            }
-	        },
-	        {
-	            extend: 'excelHtml5',
-	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 6, 7, 8 ]
-	            }
-	        },
-	        {
-	            extend: 'csvHtml5',
-	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 6, 7, 8 ]
-	            }
-	        },
-	        {
-	            extend: 'pdfHtml5',
-	            exportOptions: {
-	                columns: [ 2, 3, 4, 5, 6, 7, 8 ]
-	            }
-	        }
-        ]
+	            {
+		            extend: 'print',
+		            exportOptions: {
+		                columns: [ 0, 1, 2, 3, 4, 5 ]
+		            },
+		            customize: function ( doc ) {
+		            	$(doc.document.body).find('h1').prepend('<img src="<?=base_url()?>assets/img/wercher_logo.png" width="63px" height="56px" />');
+						$(doc.document.body).find('h1').css('font-size', '24px');
+						$(doc.document.body).find('h1').css('text-align', 'center'); 
+					}
+		        },
+		        {
+		            extend: 'copyHtml5',
+		            exportOptions: {
+		                columns: [ 0, 1, 2, 3, 4, 5 ]
+		            }
+		        },
+		        {
+		            extend: 'excelHtml5',
+		            exportOptions: {
+		                columns: [ 0, 1, 2, 3, 4, 5 ]
+		            }
+		        },
+		        {
+		            extend: 'csvHtml5',
+		            exportOptions: {
+		                columns: [ 0, 1, 2, 3, 4, 5 ]
+		            }
+		        },
+		        {
+		            extend: 'pdfHtml5',
+		            exportOptions: {
+		                columns: [ 0, 1, 2, 3, 4, 5 ]
+		            }
+		        }
+       		],
+       		lengthMenu: [
+	            [50, 100, 200, -1],
+	            [500, 100, 200, 'All'],
+	        ],
    		});
 		$('#ExportPrint').on('click', function () {
 			$('table').css('font-size', '10px');

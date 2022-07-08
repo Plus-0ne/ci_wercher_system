@@ -26,6 +26,11 @@ $GetPayrollLoans = $this->Model_Selects->GetAllPayrollLoans();
 						<li><a href="<?php echo base_url() ?>Receivables">Receivables</a></li>
 						<li class="tabs-active"><a href="<?php echo base_url() ?>Loans">Loans</a></li>
 						<li><a href="<?php echo base_url() ?>Provisions">Provisions</a></li>
+						<li><a href="<?php echo base_url() ?>PayrollAttendance">Attendance</a></li>
+						<li><a href="<?php echo base_url() ?>PayrollGrossPay">Gross Pay</a></li>
+						<li><a href="<?php echo base_url() ?>PayrollMandatoryDed">Mandatory Ded.</a></li>
+						<li><a href="<?php echo base_url() ?>PayrollNetPay">Net Pay</a></li>
+						<li><a href="<?php echo base_url() ?>PayrollSummary">Summary</a></li>
 					</ul>
 				</div>
 				<div class="row rcontent">
@@ -124,7 +129,7 @@ $GetPayrollLoans = $this->Model_Selects->GetAllPayrollLoans();
 												<?=$fullName;?>
 											</td>
 											<td class="text-center align-middle">
-												<?=$amount;?>
+												₱<?=$amount;?>
 											</td>
 											<td class="text-center align-middle">
 												<?=$modeText;?>

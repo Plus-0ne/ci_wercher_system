@@ -330,7 +330,7 @@ use Carbon\Carbon;
 	        table.button('4').trigger();
 	    });
 
-		$('.ModalHire').on('click', function () {
+		$('body').on('click', '.ModalHire', function () {
 			$('#idToHire').val($(this).attr('id'));
 			console.log($('#idToHire').val());
 		});

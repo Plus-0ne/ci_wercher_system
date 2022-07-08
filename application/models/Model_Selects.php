@@ -985,6 +985,22 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->get('payroll_provisions');  
 		return $result;
 	}
+	public function GetDistinctPayrollLoansNames() {
+		$this->db->distinct();
+		$this->db->select('LoanName');
+		$this->db->where('Deleted', NULL);
+		$this->db->order_by('ID', 'desc');
+		$result = $this->db->get('payroll_loans');
+		return $result;
+	}
+	public function GetDistinctPayrollProvisionsNames() {
+		$this->db->distinct();
+		$this->db->select('ProvisionName');
+		$this->db->where('Deleted', NULL);
+		$this->db->order_by('ID', 'desc');
+		$result = $this->db->get('payroll_provisions');
+		return $result;
+	}
 	public function CheckIfLoanExists($ID) {
 		$SQL = "SELECT * FROM payroll_loans WHERE ID = '$ID'";
 		$result = $this->db->query($SQL);
@@ -2203,6 +2219,24 @@ class Model_Selects extends CI_Model {
 		$this->db->order_by('DateEnds', 'asc');
 		$this->db->limit($limit);
 		$result = $this->db->get();
+		return $result;
+	}
+	public function GetTotalWeeklyHours($applicantID)
+	{
+		$SQL = "SELECT (SUM(Hours) + SUM(NightHours) + SUM(Overtime) + SUM(NightOvertime)) AS Total FROM hours_weekly WHERE ApplicantID = '$applicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetTotalSemiHours($applicantID)
+	{
+		$SQL = "SELECT (SUM(Hours) + SUM(NightHours) + SUM(Overtime) + SUM(NightOvertime)) AS Total FROM hours_semimonthly WHERE ApplicantID = '$applicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetTotalMonthlyHours($applicantID)
+	{
+		$SQL = "SELECT (SUM(Hours) + SUM(NightHours) + SUM(Overtime) + SUM(NightOvertime)) AS Total FROM hours_monthly WHERE ApplicantID = '$applicantID'";
+		$result = $this->db->query($SQL);
 		return $result;
 	}
 }

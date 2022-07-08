@@ -147,6 +147,16 @@ if ($erow['SalaryExpected'] > 0) {
 								</div>
 							</div>
 							<div class="form-group col-sm-12 col-md-2" style="max-width: 150px;">
+								<label>Per&nbsp;Hour</label>
+								<?php
+									$RatePerHour = round($dailySalary / 8, 3);
+								?>
+								<div class="input-icon-sm">
+									<input id="SalaryPerDay" class="form-control" type="number" name="" value="<?=$RatePerHour;?>" readonly>
+									<i>₱</i>
+								</div>
+							</div>
+							<div class="form-group col-sm-12 col-md-2" style="max-width: 150px;">
 								<label>Remaining&nbsp;SIL</label>
 								<input id="SalaryPerDay" class="form-control" type="number" name="" value="<?=$SickLeave;?>" readonly>
 							</div>
@@ -217,8 +227,8 @@ if ($erow['SalaryExpected'] > 0) {
 										<div class="card-body">
 											<div class="form-row">
 												<div class="form-group col-7">
-													<span style="font-size: 14px;">Hours</span>
-													<input id="" class="form-control set-hours Hours_<?php echo $row['Time']; ?>" type="number" step=".01" name="Hours_<?php echo $row['Time']; ?>" value="<?php echo $salaryHours; ?>" data-id="<?=$row['Time'];?>">
+													<span style="font-size: 14px;">Day</span>
+													<input id="" class="form-control set-hours Hours_<?php echo $row['Time']; ?>" type="number" step=".01" name="Hours_<?php echo $row['Time']; ?>" value="<?php echo ($salaryHours / 8); ?>" data-id="<?=$row['Time'];?>">
 												</div>
 												<div class="form-group col-5">
 													<span style="font-size: 14px;">Overtime</span>

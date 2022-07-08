@@ -29,6 +29,9 @@ use Carbon\Carbon;
 							<input id="DTSearch" type="search" class="input-bootstrap" placeholder="Sorting table..." readonly>
 						</span>
 						<?php if($this->Model_Security->CheckPermissions('AdminsEditing')): ?>
+						<a href="<?=base_url();?>updatePhotosDirectory" class="btn btn-primary">
+							<i class="fas fa-user-plus"></i> Update Photos Directory
+						</a>
 						<button class="btn btn-success" data-toggle="modal" data-target="#add_UserAdmin">
 							<i class="fas fa-user-plus"></i> New
 						</button>
