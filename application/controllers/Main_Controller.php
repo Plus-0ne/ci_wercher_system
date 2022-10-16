@@ -2447,6 +2447,32 @@
 		endif;
 
 	}
+	public function PayrollMandatoryDed()
+	{
+		if($this->Model_Security->CheckPermissions('Payroll')):
+			$header['title'] = 'Payroll Mandatory Deductions | Wercher Solutions and Resources Workers Cooperative';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+			$data['Breadcrumb'] = '
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a class="wercher-breadcrumb-active" href="Payroll">Payroll</a></li>
+			</ol>
+			</nav>';
+			$CurrentDay = date('Y-m-d h:i:s A');
+			$CurrentDayScope = date('Y-m-d h:i:s A', strtotime('-7 days', strtotime($CurrentDay)));
+			$data['WeeklyApplicants'] = $this->Model_Selects->GetApplicantsIncrease($CurrentDay, $CurrentDayScope)->num_rows();
+
+			$data['GetAllApplicants'] = $this->Model_Selects->GetAllApplicants()->num_rows();
+			$data['get_employee'] = $this->Model_Selects->GetAllEmployee();
+			$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
+			$data['getClientOption'] = $this->Model_Selects->getClientOption();
+			$data['ShowClients'] = $this->Model_Selects->GetClients();
+			$this->load->view('payroll/p_payrollmandatory',$data);
+		else:
+			redirect('Forbidden');
+		endif;
+
+	}
 	public function PayrollSummary()
 	{
 		if($this->Model_Security->CheckPermissions('Payroll')):

@@ -147,6 +147,48 @@
 						</div>
 					</div>
 				</div>
+				<hr>
+				<div class="form-row ml-1 my-2">
+					<h5 class="text-center">
+						Payroll
+					</h5>
+				</div>
+				<div class="form-row mb-3">
+					<div class="form-row col-6">
+						<div class="col-sm-12" style="margin-top: 5px;">
+							SSS MPI
+						</div>
+						<div class="col-sm-12">
+							<input id="SSSMPI" class="form-control" type="text" name="SSSMPI" value="">
+						</div>
+					</div>
+					<div class="form-row col-6">
+						<div class="col-sm-12" style="margin-top: 5px;">
+							SSS CAI
+						</div>
+						<div class="col-sm-12">
+							<input id="SSSCAI" class="form-control" type="text" name="SSSCAI" value="">
+						</div>
+					</div>
+				</div>
+				<div class="form-row mb-3">
+					<div class="form-row col-6">
+						<div class="col-sm-12" style="margin-top: 5px;">
+							PAG-IBIG MPI
+						</div>
+						<div class="col-sm-12">
+							<input id="PagIbigMPI" class="form-control" type="text" name="PagIbigMPI" value="">
+						</div>
+					</div>
+					<div class="form-row col-6">
+						<div class="col-sm-12" style="margin-top: 5px;">
+							PAG-IBIG CAI
+						</div>
+						<div class="col-sm-12">
+							<input id="PagIbigCAI" class="form-control" type="text" name="PagIbigCAI" value="">
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn btn-success"><i class="fas fa-user-edit"></i> Hire</button>
